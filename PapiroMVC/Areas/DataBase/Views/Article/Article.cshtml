@@ -1,0 +1,20 @@
+﻿@model PapiroMVC.Models.Article
+
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodArticle)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ArticleName)           
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ArticleName)
+            @Html.ValidationMessageFor(model => model.ArticleName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.UnitOfMeasure)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.UnitOfMeasure)
+            @Html.ValidationMessageFor(model => model.UnitOfMeasure)
+        </div>

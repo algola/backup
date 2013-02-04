@@ -1,0 +1,76 @@
+﻿@model List<PapiroMVC.Models.Article>
+@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid 
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");               
+    }
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@(Html.jqGrid("ArticleGrid")
+    
+    // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setCustomFormatter("editArticle")
+        .setSortable(false))
+    .addColumn(new Column("CodArticle")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodArticleCaption"))
+        .setWidth(80)
+        .setSortable(true))
+    .addColumn(new Column("ArticleName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ArticleCaption"))
+        .setWidth(200)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("SupplierName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
+        .setWidth(200))
+
+    .setUrl(Url.Action("ArticleList", "Article"))
+
+    .setHeight(300)
+    .setRowNum(10)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("CustomGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true) 
+    .setSearchToolbar(true)
+  
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+                            
+    // render the html
+    .Render()
+)
+
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle")
+
+<a href="#" id="a1">Get data from selected row</a>
+
+<script type="text/javascript">
+    function editArticle(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"})';
+
+        return link.replace("-1", cellvalue);
+    }
+
+    /*
+
+    javascript molto utile per associare un'azione alla riga selezionata
+
+    //click function on jqGrid selectedRow
+    jQuery("#a1").click(function () {
+        var id = jQuery("#CustomGrid").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#CustomGrid").jqGrid('getRowData', id);
+            alert("id=" + ret.CodArticle + " invdate=" + ret.BusinessName + "...");
+        } else { alert("Please select row"); }
+    });
+
+    */
+</script>

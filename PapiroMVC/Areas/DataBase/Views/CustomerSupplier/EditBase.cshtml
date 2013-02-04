@@ -1,0 +1,59 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.CustomerSupplierBase
+
+@{        
+    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleEditCustomerBase");
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>CustomerSupplierBase</legend>
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodCustomerSupplier)
+            @Html.HiddenFor(model => model.CodCustomerSupplierBase)       
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CodTypeOfBase)
+        </div>
+
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.CodTypeOfBase,
+            new SelectList(ViewBag.TypeOfBaseList, "CodTypeOfBase", "BaseName"))
+        </div>
+
+            @Html.AlgolaEditorFor(model => model.Address)
+            @Html.AlgolaEditorFor(model => model.City)
+            @Html.AlgolaEditorFor(model => model.PostalCode)
+            @Html.AlgolaEditorFor(model => model.Country)
+            @Html.AlgolaEditorFor(model => model.Phone)
+            @Html.AlgolaEditorFor(model => model.Fax)
+            @Html.AlgolaEditorFor(model => model.Email)
+            @Html.AlgolaEditorFor(model => model.Note)
+            @Html.AlgolaEditorFor(model => model.Referee)
+            @Html.AlgolaEditorFor(model => model.Pec)
+            @Html.AlgolaEditorFor(model => model.Province)
+
+        <p>
+            <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"),
+                     "IndexBase",
+                     "CustomerSupplier",(object) new { id = Model.CodCustomerSupplier },
+                     null)
+
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,9 @@
+﻿@model PapiroMVC.Areas.DataBase.ViewModels.CustomerSupplierIndexViewModel
+
+<div id='customersupplierlist'>
+    @Html.Partial("_List", Model.List)
+</div>
+
+@section footer {
+    @{ Html.RenderPartial("_footer"); }
+}

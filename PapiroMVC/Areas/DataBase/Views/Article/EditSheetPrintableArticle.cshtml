@@ -1,0 +1,81 @@
+﻿@using System.Linq
+@model PapiroMVC.Models.SheetPrintableArticleViewModel
+
+@{
+    ViewBag.Title = "Modifica dell'articolo: " + @Model.Article.ArticleName;   
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>SheetPrintableArticleViewModel</legend>
+        @Html.EditorFor(model => model.Article)   
+       
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.TimeStampTable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.TimeStampTable)
+            @Html.ValidationMessageFor(model => model.Article.TimeStampTable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.CodArticle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.CodArticle)
+            @Html.ValidationMessageFor(model => model.Article.CodArticle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.ArticleName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.ArticleName)
+            @Html.ValidationMessageFor(model => model.Article.ArticleName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.CodSupplierBuy)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.CodSupplierBuy)
+            @Html.ValidationMessageFor(model => model.Article.CodSupplierBuy)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.UnitOfMeasure)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.UnitOfMeasure)
+            @Html.ValidationMessageFor(model => model.Article.UnitOfMeasure)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Article.CodSupplierMaker)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Article.CodSupplierMaker)
+            @Html.ValidationMessageFor(model => model.Article.CodSupplierMaker)
+        </div>
+
+    </fieldset>
+    
+        @Html.EditorFor(model => Model.SheetPrintableArticleCuttedCost)
+        @Html.EditorFor(model => Model.SheetPrintableArticlePalletCost)
+        @Html.EditorFor(model => Model.SheetPrintableArticlePakedCost)
+        
+     <p>
+        <input type="submit" value="Save" />
+     </p>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+             
+</>

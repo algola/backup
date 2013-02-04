@@ -1,0 +1,47 @@
+﻿@model PapiroMVC.ViewModel.Order
+
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>Order</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>OrderViewModel</legend>
+        @Html.ActionLink("Select a new customer", "SelectCustomerOrder", Model)
+        <br />       
+        @Html.Partial("_DisplayCustomer", @Model.Customer)
+        <br />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OrderCode)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OrderCode)
+            @Html.ValidationMessageFor(model => model.OrderCode)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+            
+        <p>
+            
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,27 @@
+﻿@model PapiroMVC.Models.Customer
+
+<fieldset>
+    <legend>Customer</legend>
+
+    <table> 
+        <tr>    
+            <td class="display-label">
+                 @Html.DisplayNameFor(model => model.BusinessName) :            
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.BusinessName)
+            </td>
+        </tr>
+            
+        <tr>    
+            <td class="display-label">
+                 @Html.DisplayNameFor(model => model.VatNumber) :
+            </td>
+            <td class="display-field">
+                @Html.DisplayFor(model => model.VatNumber)
+            </td>    
+        </tr>
+
+    </table>
+
+</fieldset>

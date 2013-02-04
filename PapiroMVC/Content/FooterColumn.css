@@ -1,0 +1,24 @@
+﻿.footerleft1{
+   position: relative;
+   float: left;
+   left: 0.0%;
+   width: 32.00%;
+}
+.footerleft2{
+   position: relative;
+   float: left;
+   left: 0.0%;
+   width: 32.00%;
+}
+.footerright{
+   position: relative;
+   float: right;
+   right: 0.0%;
+   width: 33.00%;
+}
+.footer{
+   position: relative;
+   float: left;
+   left: 0.00%;
+   width: 100.00%;
+}

@@ -1,0 +1,59 @@
+﻿@model PapiroMVC.Models.Printable
+
+<p>Inizio del Printable</p>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TypeOfMaterial)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TypeOfMaterial)
+            @Html.ValidationMessageFor(model => model.TypeOfMaterial)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NameOfMaterial)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NameOfMaterial)
+            @Html.ValidationMessageFor(model => model.NameOfMaterial)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Weight)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Weight)
+            @Html.ValidationMessageFor(model => model.Weight)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Color)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Color)
+            @Html.ValidationMessageFor(model => model.Color)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Thikness)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Thikness)
+            @Html.ValidationMessageFor(model => model.Thikness)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NoBv)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NoBv)
+            @Html.ValidationMessageFor(model => model.NoBv)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Hand)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Hand)
+            @Html.ValidationMessageFor(model => model.Hand)
+        </div>
+<p>Fine del Printable</p>

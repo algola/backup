@@ -1,0 +1,17 @@
+﻿@model PapiroMVC.Models.SheetPrintableArticleCost
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CostPerKg)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CostPerKg)
+            @Html.ValidationMessageFor(model => model.CostPerKg)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CostPerSheet)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CostPerSheet)
+            @Html.ValidationMessageFor(model => model.CostPerSheet)
+        </div>

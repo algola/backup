@@ -1,0 +1,10 @@
+﻿@{
+    string strings = "~/Views/Account/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleConfirmation");               
+}
+
+<h2>Confirmation</h2>
+<br />
+<p class="message-info">
+    @HttpContext.GetLocalResourceObject(strings, "ConfirmationMessage").
+</p>

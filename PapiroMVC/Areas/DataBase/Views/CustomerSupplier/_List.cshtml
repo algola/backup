@@ -1,0 +1,84 @@
+﻿@model List<PapiroMVC.Models.CustomerSupplier>
+@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid 
+
+@{
+    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");               
+    }
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@(Html.jqGrid("CustomGrid")
+    
+    // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setCustomFormatter("editCustomerSupplier")
+        .setSortable(false))
+    .addColumn(new Column("CodCustomerSupplier")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodCustomerSupplierCaption"))
+        .setWidth(80)
+        .setSortable(true))
+    .addColumn(new Column("BusinessName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BusinessNameCaption"))
+        .setWidth(200)
+        .setSortable(true))
+    .addColumn(new Column("VatNumber")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "VatNumberCaption"))
+        .setWidth(200))
+    .addColumn(new Column("TaxCode")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaxCodeCaption"))
+        .setWidth(200))
+    .setUrl(Url.Action("CustomerSupplierList", "CustomerSupplier"))
+
+    .setHeight(300)
+    .setRowNum(10)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("CustomGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true) 
+    .setSearchToolbar(true)
+  
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+                            
+    // render the html
+    .Render()
+)
+
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateCustomer"), "CreateCustomer")
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSupplier"), "CreateSupplier")
+
+<a href="#" id="a1">Get data from selected row</a>
+
+<script type="text/javascript">
+    function editCustomerSupplier(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"})';
+
+        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
+                                          "IndexBase",
+                                          "CustomerSupplier",
+                                          (object) new { id = -1 },
+                                          null)';
+
+        return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
+    }
+
+    /*
+
+    javascript molto utile per associare un'azione alla riga selezionata
+
+    //click function on jqGrid selectedRow
+    jQuery("#a1").click(function () {
+        var id = jQuery("#CustomGrid").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#CustomGrid").jqGrid('getRowData', id);
+            alert("id=" + ret.CodCustomerSupplier + " invdate=" + ret.BusinessName + "...");
+        } else { alert("Please select row"); }
+    });
+
+    */
+</script>

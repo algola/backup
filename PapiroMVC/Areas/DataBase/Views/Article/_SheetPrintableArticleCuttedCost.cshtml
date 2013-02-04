@@ -1,0 +1,32 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.SheetPrintableArticleViewModel
+
+    <fieldset>
+        <legend>SheetPrintableArticleCuttedCost</legend>
+
+        <h3>Costi di acquisto a formato speciale</h3>
+        <br />
+
+        @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.CostPerKg)
+        @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.CostPerSheet)
+
+        <div class="editor-label">
+            @Html.CheckBox("UseTheSameCostOfPalletAfterKg", @Model.SheetPrintableArticleCuttedCost.UseTheSameCostOfPalletAfterKg)            
+            @Html.LabelFor(model => model.SheetPrintableArticleCuttedCost.UseTheSameCostOfPalletAfterKg)
+        </div>
+
+        <br />
+        @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.KgPallet)
+
+        <div class="editor-label">
+            @Html.CheckBox("UseTheSameCostOfSheetAfterSheet", @Model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)            
+            @Html.LabelFor(model => model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)
+        </div>
+        <br />
+        @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.KgSheet)
+
+        @Html.HiddenFor(model => model.SheetPrintableArticleCuttedCost.TimeStampTable)
+        @Html.HiddenFor(model => model.SheetPrintableArticleCuttedCost.CodArticleCost)
+        @Html.HiddenFor(model => model.SheetPrintableArticleCuttedCost.CodArticle)
+
+    </fieldset>

@@ -1,0 +1,34 @@
+﻿.slidingDiv {
+    height:auto;
+    background-color:#7ac0da;
+    padding:0px;
+    padding-top:5px;
+    padding-left:10px;
+    margin-top:10px;
+    border-bottom:5px solid #3399FF;
+    border-radius: 10px; 
+    -moz-border-radius: 10px; /* firefox */
+    -webkit-border-radius: 10px; /* safari, chrome */}
+
+.show_hide {
+    display:none;
+}
+
+div.my_left_box{
+    float: left;
+    padding: 2px;
+    width: 30%;
+}
+
+div.my_right_box{
+    float: left;
+    padding: 2px;
+    width: 30%;
+}
+
+a.show_hide {
+    font-size:medium; 
+    font-weight:bold; 
+    text-decoration:none;
+    color:#7ac0da
+}

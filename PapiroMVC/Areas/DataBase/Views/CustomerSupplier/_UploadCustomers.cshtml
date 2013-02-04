@@ -1,0 +1,25 @@
+﻿@using PapiroMVC.Validation
+
+<a href="#2" id="show_hide_upload" class="show_hide">Upload Customer from Excel file</a>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+    $("#slidingDivUploadCustomers").hide();
+    $("#show_hide_upload").show();
+ 
+    $('#show_hide_upload').click(function () {
+        $("#slidingDivUploadCustomers").slideToggle();
+    }); 
+});
+</script>
+
+
+<div id="slidingDivUploadCustomers" class="slidingDiv">
+    @using (Html.BeginForm("FileUpload", "CustomerSupplier", FormMethod.Post, new { @id = "UploadForm", @enctype = "multipart/form-data" }))
+        {
+            <label for="template">Upload Template</label><input name="uploadFile" type="file" />              
+            <input type="submit" value= upload />               
+        }
+</div>

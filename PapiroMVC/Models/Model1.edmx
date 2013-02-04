@@ -1,0 +1,1696 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="dbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="dbModelStoreContainer">
+          <EntitySet Name="articlecost" EntityType="dbModel.Store.articlecost" store:Type="Tables" Schema="db" />
+          <EntitySet Name="articles" EntityType="dbModel.Store.articles" store:Type="Tables" Schema="db" />
+          <EntitySet Name="customersupplierbases" EntityType="dbModel.Store.customersupplierbases" store:Type="Tables" Schema="db" />
+          <EntitySet Name="customersuppliers" EntityType="dbModel.Store.customersuppliers" store:Type="Tables" Schema="db" />
+          <EntitySet Name="printerestimatedon" EntityType="dbModel.Store.printerestimatedon" store:Type="Tables" Schema="db" />
+          <EntitySet Name="printermachines" EntityType="dbModel.Store.printermachines" store:Type="Tables" Schema="db" />
+          <EntitySet Name="steps" EntityType="dbModel.Store.steps" store:Type="Tables" Schema="db" />
+          <EntitySet Name="typeofbase" EntityType="dbModel.Store.typeofbase" store:Type="Tables" Schema="db" />
+          <AssociationSet Name="FK_ArticleCost_CodArticle" Association="dbModel.Store.FK_ArticleCost_CodArticle">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlecost" EntitySet="articlecost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_customersuppliers" Association="dbModel.Store.FK_articles_customersuppliers">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_customersuppliers_2" Association="dbModel.Store.FK_articles_customersuppliers_2">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerSupplierBases_CodCustomerSupplier" Association="dbModel.Store.FK_CustomerSupplierBases_CodCustomerSupplier">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerSupplierBases_CodTypeOfBase" Association="dbModel.Store.FK_CustomerSupplierBases_CodTypeOfBase">
+            <End Role="typeofbase" EntitySet="typeofbase" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PrinterEstimatedOn_CodPrinterMachine" Association="dbModel.Store.FK_PrinterEstimatedOn_CodPrinterMachine">
+            <End Role="printermachines" EntitySet="printermachines" />
+            <End Role="printerestimatedon" EntitySet="printerestimatedon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.Store.FK_Steps_CodPrinterEstimatedOn">
+            <End Role="printerestimatedon" EntitySet="printerestimatedon" />
+            <End Role="steps" EntitySet="steps" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="articlecost">
+          <Key>
+            <PropertyRef Name="CodArticleCost" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodArticleCost" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="CodArticle" Type="char" MaxLength="50" />
+          <Property Name="SelectorArticleCost" Type="int" />
+          <Property Name="CostPerKg" Type="tinytext" />
+          <Property Name="CostPerSheet" Type="double" />
+          <Property Name="CostPerUnit" Type="double" />
+          <Property Name="SelectorArticleSheetPrintableCost" Type="int" />
+          <Property Name="UseTheSameCostOfPalletAfterKg" Type="bit" />
+          <Property Name="UseTheSameCostOfSheetAfterSheet" Type="bit" />
+          <Property Name="KgPallet" Type="int" />
+          <Property Name="KgSheet" Type="int" />
+          <Property Name="CostPerMq" Type="double" />
+          <Property Name="CostPerMl" Type="double" />
+          <Property Name="SelectorArticleRollPrintableCost" Type="int" />
+          <Property Name="UseTheSameCostOfStandardWidthAfterKg" Type="bit" />
+          <Property Name="UseTheSameCostOfStandardWidthAfterMl" Type="bit" />
+          <Property Name="Kg" Type="double" />
+          <Property Name="Ml" Type="int" />
+          <Property Name="SelectorArticleRigidPrintableCost" Type="int" />
+          <Property Name="SelectorArticleObjectPrintableCost" Type="int" />
+        </EntityType>
+        <EntityType Name="articles">
+          <Key>
+            <PropertyRef Name="CodArticle" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodArticle" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="ArticleName" Type="char" MaxLength="100" />
+          <Property Name="CodSupplierBuy" Type="char" MaxLength="50" />
+          <Property Name="CodSupplierMaker" Type="char" MaxLength="50" />
+          <Property Name="UnitOfMeasure" Type="char" MaxLength="50" />
+          <Property Name="SelectorPrintable" Type="int" />
+          <Property Name="TypeOfMaterial" Type="char" MaxLength="200" />
+          <Property Name="NameOfMaterial" Type="char" MaxLength="200" />
+          <Property Name="Color" Type="char" MaxLength="100" />
+          <Property Name="Weight" Type="uint" />
+          <Property Name="Hand" Type="double" />
+          <Property Name="SelectorSheetRollWide" Type="int" />
+          <Property Name="Format" Type="char" MaxLength="9" />
+          <Property Name="NoPinza" Type="bit" />
+          <Property Name="NoBv" Type="bit" />
+          <Property Name="SheetPerPacked" Type="uint" />
+          <Property Name="SheetPerPallet" Type="uint" />
+          <Property Name="Width" Type="uint" />
+          <Property Name="Thikness" Type="double" />
+          <Property Name="Size" Type="char" MaxLength="50" />
+          <Property Name="PrintableFormat" Type="char" MaxLength="9" />
+        </EntityType>
+        <EntityType Name="customersupplierbases">
+          <Key>
+            <PropertyRef Name="CodCustomerSupplierBase" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodCustomerSupplier" Type="char" MaxLength="70" />
+          <Property Name="CodCustomerSupplierBase" Type="char" Nullable="false" MaxLength="100" />
+          <Property Name="CodTypeOfBase" Type="char" MaxLength="50" />
+          <Property Name="Address" Type="char" />
+          <Property Name="City" Type="char" />
+          <Property Name="Province" Type="char" />
+          <Property Name="PostalCode" Type="char" MaxLength="10" />
+          <Property Name="Country" Type="char" MaxLength="250" />
+          <Property Name="Phone" Type="char" MaxLength="50" />
+          <Property Name="Fax" Type="char" MaxLength="50" />
+          <Property Name="Email" Type="char" />
+          <Property Name="Note" Type="text" />
+          <Property Name="Referee" Type="char" MaxLength="200" />
+          <Property Name="Pec" Type="char" />
+        </EntityType>
+        <EntityType Name="customersuppliers">
+          <Key>
+            <PropertyRef Name="CodCustomerSupplier" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodCustomerSupplier" Type="char" Nullable="false" MaxLength="70" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="BusinessName" Type="char" />
+          <Property Name="VatNumber" Type="char" MaxLength="50" />
+          <Property Name="TaxCode" Type="char" MaxLength="50" />
+          <Property Name="Outdated" Type="bit" />
+        </EntityType>
+        <EntityType Name="printerestimatedon">
+          <Key>
+            <PropertyRef Name="CodPrinterEstimatedOn" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodPrinterMachine" Type="char" MaxLength="50" />
+          <Property Name="CodPrinterEstimatedOn" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="SelectorUnitTime" Type="int" />
+          <Property Name="SelectorMqRun" Type="int" />
+          <Property Name="AvarageRunPerHour" Type="uint" />
+          <Property Name="UseDifferentRunPerHour" Type="bit" />
+          <Property Name="UseDifferentDeficitForWeightStep" Type="bit" />
+          <Property Name="StartingTime1" Type="time" />
+          <Property Name="StartingTime2" Type="time" />
+          <Property Name="TimeForfait" Type="time" />
+          <Property Name="CostPerHourRunning" Type="double" />
+          <Property Name="CostPerHourStarting" Type="double" />
+          <Property Name="AvarageRunPerHour4" Type="uint" />
+          <Property Name="StartingTime4" Type="time" />
+          <Property Name="AvarageRunPerHour6" Type="uint" />
+          <Property Name="StartingTime6" Type="time" />
+          <Property Name="AvarageRunPerHour8" Type="uint" />
+          <Property Name="StartingTime8" Type="time" />
+          <Property Name="AvarageRunPerHour12" Type="uint" />
+          <Property Name="StartingTime12" Type="time" />
+          <Property Name="AvarageRunPerHour16" Type="uint" />
+          <Property Name="StartingTime16" Type="time" />
+          <Property Name="AvarageRunPerHour24" Type="uint" />
+          <Property Name="StartingTime24" Type="time" />
+          <Property Name="AvarageRunPerHour32" Type="uint" />
+          <Property Name="StartingTime32" Type="time" />
+          <Property Name="AvarageRunPerHourBinding" Type="uint" />
+          <Property Name="StartingTimeBinding" Type="time" />
+          <Property Name="CostPerUnit" Type="double" />
+          <Property Name="UseDifferentCostPerUnit" Type="bit" />
+          <Property Name="UseDifferentDeficitOnCostForWeightStep" Type="bit" />
+          <Property Name="StartingCost1" Type="double" />
+          <Property Name="StartingCost2" Type="double" />
+          <Property Name="CostForfait" Type="double" />
+          <Property Name="CostForfaitForSheet" Type="double" />
+          <Property Name="CostPerUnit4" Type="double" />
+          <Property Name="StartingCost4" Type="double" />
+          <Property Name="CostPerUnit6" Type="double" />
+          <Property Name="StartingCost6" Type="double" />
+          <Property Name="CostPerUnit8" Type="double" />
+          <Property Name="StartingCost8" Type="double" />
+          <Property Name="CostPerUnit12" Type="double" />
+          <Property Name="StartingCost12" Type="double" />
+          <Property Name="CostPerUnit16" Type="double" />
+          <Property Name="StartingCost16" Type="double" />
+          <Property Name="CostPerUnit24" Type="double" />
+          <Property Name="StartingCost24" Type="double" />
+          <Property Name="CostPerUnit32" Type="double" />
+          <Property Name="StartingCost32" Type="double" />
+          <Property Name="BindingCost" Type="double" />
+          <Property Name="BindingStartingCost" Type="double" />
+        </EntityType>
+        <EntityType Name="printermachines">
+          <Key>
+            <PropertyRef Name="CodPrinterMachine" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodPrinterMachine" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="PrinterName" Type="char" MaxLength="100" />
+          <Property Name="Version" Type="char" MaxLength="4" />
+          <Property Name="Dismissed" Type="bit" />
+          <Property Name="FormatMin" Type="char" MaxLength="9" />
+          <Property Name="FormatMax" Type="char" MaxLength="9" />
+          <Property Name="WeightMin" Type="uint" />
+          <Property Name="WeightMax" Type="uint" />
+          <Property Name="Pinza" Type="double" />
+          <Property Name="ControPinza" Type="double" />
+          <Property Name="Laterale" Type="double" />
+          <Property Name="InkUsage" Type="double" />
+          <Property Name="InkUsageForfait" Type="double" />
+          <Property Name="PrintingUnit" Type="uint" />
+          <Property Name="SheetwiseAfterPrintingUnit" Type="uint" />
+          <Property Name="Sheetwise" Type="bit" />
+          <Property Name="WashUpTime" Type="time" />
+          <Property Name="ChangePlateTime" Type="time" />
+          <Property Name="SelectorLithoDigital" Type="int" />
+          <Property Name="SelectorBindingPrePostPress" Type="int" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="SelectorExecutor" Type="int" />
+          <Property Name="ProofSheetFirstStart" Type="uint" />
+          <Property Name="ProofSheetSecondsStart" Type="uint" />
+          <Property Name="ProductionWaste" Type="double" />
+          <Property Name="PaperFirstStartLenght" Type="uint" />
+          <Property Name="BWSide1" Type="bit" />
+          <Property Name="BWSide2" Type="bit" />
+          <Property Name="ColorSide1" Type="bit" />
+          <Property Name="ColorSide2" Type="bit" />
+          <Property Name="Width" Type="uint" />
+          <Property Name="IsUnitComputationManual" Type="bit" />
+          <Property Name="IsEstimatedOnTime" Type="bit" />
+          <Property Name="IsEstimatedOnRun" Type="bit" />
+          <Property Name="IsEstimatedOnMq" Type="bit" />
+        </EntityType>
+        <EntityType Name="steps">
+          <Key>
+            <PropertyRef Name="IdStep" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodPrinterEstimatedOn" Type="char" MaxLength="50" />
+          <Property Name="IdStep" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FromUnit" Type="double" />
+          <Property Name="ToUnit" Type="double" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="AvarageRunPerHour" Type="uint" />
+          <Property Name="CostPerUnit" Type="double" />
+          <Property Name="DeficitRate" Type="double" />
+          <Property Name="AvarageRunPerHour4" Type="uint" />
+          <Property Name="StartingTime4" Type="time" />
+          <Property Name="AvarageRunPerHour6" Type="uint" />
+          <Property Name="StartingTime6" Type="time" />
+          <Property Name="AvarageRunPerHour8" Type="uint" />
+          <Property Name="StartingTime8" Type="time" />
+          <Property Name="AvarageRunPerHour12" Type="uint" />
+          <Property Name="StartingTime12" Type="time" />
+          <Property Name="AvarageRunPerHour16" Type="uint" />
+          <Property Name="StartingTime16" Type="time" />
+          <Property Name="AvarageRunPerHour24" Type="uint" />
+          <Property Name="StartingTime24" Type="time" />
+          <Property Name="AvarageRunPerHour32" Type="uint" />
+          <Property Name="StartingTime32" Type="time" />
+          <Property Name="AvarageRunPerHourBinding" Type="uint" />
+          <Property Name="StartingTimeBinding" Type="time" />
+          <Property Name="CostPerUnit4" Type="double" />
+          <Property Name="StartingCost4" Type="double" />
+          <Property Name="CostPerUnit6" Type="double" />
+          <Property Name="StartingCost6" Type="double" />
+          <Property Name="CostPerUnit8" Type="double" />
+          <Property Name="StartingCost8" Type="double" />
+          <Property Name="CostPerUnit12" Type="double" />
+          <Property Name="StartingCost12" Type="double" />
+          <Property Name="CostPerUnit16" Type="double" />
+          <Property Name="StartingCost16" Type="double" />
+          <Property Name="CostPerUnit24" Type="double" />
+          <Property Name="StartingCost24" Type="double" />
+          <Property Name="CostPerUnit32" Type="double" />
+          <Property Name="StartingCost32" Type="double" />
+          <Property Name="BindingCost" Type="double" />
+        </EntityType>
+        <EntityType Name="typeofbase">
+          <Key>
+            <PropertyRef Name="CodTypeOfBase" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodTypeOfBase" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="BaseName" Type="char" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_ArticleCost_CodArticle">
+          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articlecost" Type="dbModel.Store.articlecost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="CodArticle" />
+            </Principal>
+            <Dependent Role="articlecost">
+              <PropertyRef Name="CodArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_customersuppliers">
+          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1" />
+          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="CodSupplierBuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_customersuppliers_2">
+          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1" />
+          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="CodSupplierMaker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerSupplierBases_CodCustomerSupplier">
+          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="customersupplierbases" Type="dbModel.Store.customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerSupplierBases_CodTypeOfBase">
+          <End Role="typeofbase" Type="dbModel.Store.typeofbase" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="customersupplierbases" Type="dbModel.Store.customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeofbase">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PrinterEstimatedOn_CodPrinterMachine">
+          <End Role="printermachines" Type="dbModel.Store.printermachines" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="printerestimatedon" Type="dbModel.Store.printerestimatedon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="printermachines">
+              <PropertyRef Name="CodPrinterMachine" />
+            </Principal>
+            <Dependent Role="printerestimatedon">
+              <PropertyRef Name="CodPrinterMachine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Steps_CodPrinterEstimatedOn">
+          <End Role="printerestimatedon" Type="dbModel.Store.printerestimatedon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="steps" Type="dbModel.Store.steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="printerestimatedon">
+              <PropertyRef Name="CodPrinterEstimatedOn" />
+            </Principal>
+            <Dependent Role="steps">
+              <PropertyRef Name="CodPrinterEstimatedOn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dbModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="printermachines" EntityType="dbModel.TaskExecutor" />
+          <EntitySet Name="printerestimatedon" EntityType="dbModel.TaskEstimatedOn" />
+          <AssociationSet Name="FK_PrinterEstimatedOn_CodPrinterMachine" Association="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine">
+            <End Role="TaskExecutor" EntitySet="printermachines" />
+            <End Role="TaskEstimatedOn" EntitySet="printerestimatedon" />
+          </AssociationSet>
+          <EntitySet Name="steps" EntityType="dbModel.Step" />
+          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.FK_Steps_CodPrinterEstimatedOn">
+            <End Role="PrinterEstimatedOn" EntitySet="printerestimatedon" />
+            <End Role="steps" EntitySet="steps" />
+          </AssociationSet>
+          <EntitySet Name="articlecost" EntityType="dbModel.ArticleCost" />
+          <EntitySet Name="articles" EntityType="dbModel.Article" />
+          <AssociationSet Name="FK_ArticleCost_CodArticle" Association="dbModel.FK_ArticleCost_CodArticle">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlecost" EntitySet="articlecost" />
+          </AssociationSet>
+          <EntitySet Name="customersupplierbases" EntityType="dbModel.CustomerSupplierBase" />
+          <EntitySet Name="customersuppliers" EntityType="dbModel.CustomerSupplier" />
+          <EntitySet Name="typeofbase" EntityType="dbModel.TypeOfBase" />
+          <AssociationSet Name="FK_CustomerSupplierBases_CodCustomerSupplier" Association="dbModel.FK_CustomerSupplierBases_CodCustomerSupplier">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerSupplierBases_CodTypeOfBase" Association="dbModel.FK_CustomerSupplierBases_CodTypeOfBase">
+            <End Role="typeofbase" EntitySet="typeofbase" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_customersuppliers" Association="dbModel.FK_articles_customersuppliers">
+            <End Role="CustomerSupplier" EntitySet="customersuppliers" />
+            <End Role="Article" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_customersuppliers_2" Association="dbModel.FK_articles_customersuppliers_2">
+            <End Role="CustomerSupplier" EntitySet="customersuppliers" />
+            <End Role="Article" EntitySet="articles" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="TaskExecutor" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodPrinterMachine" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CodPrinterMachine" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Name="PrinterName" Type="String" MaxLength="100" Unicode="false" FixedLength="true" />
+          <Property Name="Version" Type="String" MaxLength="4" Unicode="false" FixedLength="true" />
+          <Property Name="Dismissed" Type="Boolean" />
+          <Property Name="FormatMin" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="FormatMax" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="WeightMin" Type="Int64" />
+          <Property Name="WeightMax" Type="Int64" />
+          <Property Name="Pinza" Type="Double" />
+          <Property Name="ControPinza" Type="Double" />
+          <Property Name="Laterale" Type="Double" />
+          <NavigationProperty Name="SetPrinterEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
+          <Property Type="Boolean" Name="IsEstimatedOnTime" />
+          <Property Type="Boolean" Name="IsEstimatedOnRun" />
+          <Property Type="Boolean" Name="IsEstimatedOnMq" />
+        </EntityType>
+        <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
+          <Property Type="Int64" Name="PrintingUnit" />
+          <Property Type="Int64" Name="SheetwiseAfterPrintingUnit" />
+          <Property Type="Boolean" Name="Sheetwise" />
+          <Property Type="Time" Name="WashUpTime" Precision="0" />
+          <Property Type="Time" Name="ChangePlateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="LithoSheet" BaseType="dbModel.Litho">
+          <Property Type="Int64" Name="ProofSheetFirstStart" />
+          <Property Type="Int64" Name="ProofSheetSecondsStart" />
+          <Property Type="Double" Name="ProductionWaste" />
+        </EntityType>
+        <EntityType Name="LithoWeb" BaseType="dbModel.Litho">
+          <Property Type="Int64" Name="PaperFirstStartLenght" />
+        </EntityType>
+        <EntityType Name="Digital" Abstract="true" BaseType="dbModel.PrinterMachine">
+          <Property Type="Boolean" Name="BWSide1" />
+          <Property Type="Boolean" Name="BWSide2" />
+          <Property Type="Boolean" Name="ColorSide1" />
+          <Property Type="Boolean" Name="ColorSide2" />
+        </EntityType>
+        <EntityType Name="DigitalSheet" BaseType="dbModel.Digital">
+          <Property Type="Int64" Name="ProofSheetFirstStart" />
+          <Property Type="Int64" Name="ProofSheetSecondsStart" />
+          <Property Type="Double" Name="ProductionWaste" />
+        </EntityType>
+        <EntityType Name="DigitalWeb" BaseType="dbModel.Digital">
+          <Property Type="Int64" Name="PaperFirstStartLenght" />
+        </EntityType>
+        <EntityType Name="Plotter" BaseType="dbModel.Digital">
+          <Property Type="Int64" Name="Width" />
+        </EntityType>
+        <EntityType Name="TaskEstimatedOn" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodPrinterEstimatedOn" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodPrinterMachine" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodPrinterEstimatedOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="Double" Name="CostForfait" />
+          <Property Type="Double" Name="CostForfaitForSheet" />
+          <NavigationProperty Name="printermachines" Relationship="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
+          <NavigationProperty Name="steps" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="PrinterEstimatedOn" ToRole="steps" />
+        </EntityType>
+        <Association Name="FK_PrinterEstimatedOn_CodPrinterMachine">
+          <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1" />
+          <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskExecutor">
+              <PropertyRef Name="CodPrinterMachine" />
+            </Principal>
+            <Dependent Role="TaskEstimatedOn">
+              <PropertyRef Name="CodPrinterMachine" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TaskEstimatedOnTime" BaseType="dbModel.TaskEstimatedOn">
+          <Property Type="Int64" Name="AvarageRunPerHour" />
+          <Property Type="Boolean" Name="UseDifferentRunPerHour" />
+          <Property Type="Time" Name="StartingTime1" Precision="0" />
+          <Property Type="Time" Name="StartingTime2" Precision="0" />
+          <Property Type="Time" Name="TimeForfait" Precision="0" />
+          <Property Type="Double" Name="CostPerHourRunning" />
+          <Property Type="Double" Name="CostPerHourStarting" />
+          <Property Type="Boolean" Name="UseDifferentDeficitForWeightStep" />
+        </EntityType>
+        <EntityType Name="TaskEstimatedOnUnit" BaseType="dbModel.TaskEstimatedOn" Abstract="true">
+          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="Boolean" Name="UseDifferentCostPerUnit" />
+          <Property Type="Double" Name="StartingCost1" />
+          <Property Type="Double" Name="StartingCost2" />
+          <Property Type="Boolean" Name="UseDifferentDeficitOnCostForWeightStep" />
+        </EntityType>
+        <EntityType Name="TaskEstimatedOnRun" BaseType="dbModel.TaskEstimatedOnUnit">
+        </EntityType>
+        <EntityType Name="TaskEstimatedOnMq" BaseType="dbModel.TaskEstimatedOnUnit">
+        </EntityType>
+        <EntityType Name="Step" Abstract="true">
+          <Key>
+            <PropertyRef Name="IdStep" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodPrinterEstimatedOn" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="Int64" Name="IdStep" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <NavigationProperty Name="printerestimatedon" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="steps" ToRole="PrinterEstimatedOn" />
+          <Property Type="Double" Name="FromUnit" />
+          <Property Type="Double" Name="ToUnit" />
+        </EntityType>
+        <Association Name="FK_Steps_CodPrinterEstimatedOn">
+          <End Type="dbModel.TaskEstimatedOn" Role="PrinterEstimatedOn" Multiplicity="0..1" />
+          <End Type="dbModel.Step" Role="steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PrinterEstimatedOn">
+              <PropertyRef Name="CodPrinterEstimatedOn" />
+            </Principal>
+            <Dependent Role="steps">
+              <PropertyRef Name="CodPrinterEstimatedOn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CostPerRunStep" BaseType="dbModel.Step">
+          <Property Type="Double" Name="CostPerUnit" />
+        </EntityType>
+        <EntityType Name="AvarageRunPerRunStep" BaseType="dbModel.Step">
+          <Property Type="Int64" Name="AvarageRunPerHour" />
+        </EntityType>
+        <EntityType Name="DeficitForWeightStep" BaseType="dbModel.Step">
+          <Property Type="Double" Name="DeficitRate" />
+        </EntityType>
+        <EntityType Name="CostPerMqStep" BaseType="dbModel.Step">
+          <Property Type="Double" Name="CostPerUnit" />
+        </EntityType>
+        <EntityType Name="DeficitOnCostForWeightStep" BaseType="dbModel.Step">
+          <Property Type="Double" Name="DeficitRate" />
+        </EntityType>
+        <EntityType Name="ArticleCost" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodArticleCost" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodArticleCost" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodArticle" MaxLength="50" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Articles" Relationship="dbModel.FK_ArticleCost_CodArticle" FromRole="articlecost" ToRole="articles" />
+          </EntityType>
+        <EntityType Name="Article" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodArticle" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodArticle" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="ArticleName" MaxLength="100" Unicode="false" FixedLength="true" />
+          <Property Name="CodSupplierBuy" MaxLength="50" FixedLength="true" Unicode="false" Type="String" />
+          <Property Type="String" Name="UnitOfMeasure" MaxLength="50" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="ArticleCosts" Relationship="dbModel.FK_ArticleCost_CodArticle" FromRole="articles" ToRole="articlecost" a:SetterAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+          <Property Type="String" Name="CodSupplierMaker" MaxLength="50" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="CustomerSupplierBuy" Relationship="dbModel.FK_articles_customersuppliers" FromRole="Article" ToRole="CustomerSupplier" />
+          <NavigationProperty Name="CustomerSupplierMaker" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="Article" ToRole="CustomerSupplier" />
+          </EntityType>
+        <Association Name="FK_ArticleCost_CodArticle">
+          <End Type="dbModel.Article" Role="articles" Multiplicity="0..1" />
+          <End Type="dbModel.ArticleCost" Role="articlecost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="CodArticle" />
+            </Principal>
+            <Dependent Role="articlecost">
+              <PropertyRef Name="CodArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Printable" BaseType="dbModel.Article" Abstract="true">
+          <Property Type="String" Name="TypeOfMaterial" MaxLength="200" Unicode="false" FixedLength="true" />
+          <Property Type="Int64" Name="Weight" />
+          <Property Type="String" Name="Color" MaxLength="100" Unicode="false" FixedLength="true" />
+          <Property Type="Double" Name="Thikness" />
+          <Property Type="String" Name="NameOfMaterial" MaxLength="200" Unicode="false" FixedLength="true" />
+          <Property Type="Boolean" Name="NoBv" />
+          <Property Type="Double" Name="Hand" />
+        </EntityType>
+        <EntityType Name="NoPrintable" BaseType="dbModel.Article" Abstract="false" />
+        <EntityType Name="SheetPrintableArticle" BaseType="dbModel.Printable">
+          <Property Type="String" Name="Format" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Type="Boolean" Name="NoPinza" />
+          <Property Type="Int64" Name="SheetPerPacked" />
+          <Property Type="Int64" Name="SheetPerPallet" />
+        </EntityType>
+        <EntityType Name="RollPrintableArticle" BaseType="dbModel.Printable">
+          <Property Type="Int64" Name="Width" />
+        </EntityType>
+        <EntityType Name="SheetPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
+          <Property Type="String" Name="CostPerKg" />
+          <Property Type="Double" Name="CostPerSheet" />
+        </EntityType>
+        <EntityType Name="SheetPrintableArticlePakedCost" BaseType="dbModel.SheetPrintableArticleCost">
+          </EntityType>
+        <EntityType Name="SheetPrintableArticleCuttedCost" BaseType="dbModel.SheetPrintableArticleCost">
+          <Property Type="Boolean" Name="UseTheSameCostOfPalletAfterKg" />
+          <Property Type="Boolean" Name="UseTheSameCostOfSheetAfterSheet" />
+          <Property Type="Int32" Name="KgPallet" />
+          <Property Type="Int32" Name="KgSheet" />
+        </EntityType>
+        <EntityType Name="SheetPrintableArticlePalletCost" BaseType="dbModel.SheetPrintableArticleCost" />
+        <EntityType Name="RollPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
+          <Property Type="Double" Name="CostPerMl" />
+          <Property Type="Double" Name="CostPerMq" />
+        </EntityType>
+        <EntityType Name="RollPrintableArticleStandardCost" BaseType="dbModel.RollPrintableArticleCost" />
+        <EntityType Name="RollPrintableArticleCuttedCost" BaseType="dbModel.RollPrintableArticleCost">
+          <Property Type="Boolean" Name="UseTheSameCostOfStandardWidthAfterKg" />
+          <Property Type="Boolean" Name="UseTheSameCostOfStandardWidthAfterMl" />
+          <Property Type="Double" Name="Kg" />
+          <Property Type="Int32" Name="Ml" />
+        </EntityType>
+        <EntityType Name="RigidPrintableArticle" BaseType="dbModel.Printable">
+          <Property Type="String" Name="Format" MaxLength="9" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="ObjectPrintableArticle" BaseType="dbModel.Printable">
+          <Property Type="String" Name="Size" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="PrintableFormat" MaxLength="9" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="RigidPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
+          <Property Type="Double" Name="CostPerMq" />
+        </EntityType>
+        <EntityType Name="ObjectPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
+          <Property Type="Double" Name="CostPerUnit" />
+        </EntityType>
+        <EntityType Name="ObjectPrintableArticleStandardCost" BaseType="dbModel.ObjectPrintableArticleCost" />
+        <EntityType Name="RigidPrintableArticleStandardCost" BaseType="dbModel.RigidPrintableArticleCost" />
+        <EntityType Name="CustomerSupplierBase" Abstract="false">
+          <Key>
+            <PropertyRef Name="CodCustomerSupplierBase" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodCustomerSupplier" MaxLength="70" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodCustomerSupplierBase" Nullable="false" MaxLength="100" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodTypeOfBase" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Address" MaxLength="255" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="City" MaxLength="255" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="PostalCode" MaxLength="10" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Country" MaxLength="250" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Phone" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Fax" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Email" MaxLength="255" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Note" MaxLength="65535" Unicode="false" FixedLength="false" />
+          <Property Type="String" Name="Referee" MaxLength="200" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="Pec" MaxLength="255" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="CustomerSupplier" Relationship="dbModel.FK_CustomerSupplierBases_CodCustomerSupplier" FromRole="customersupplierbases" ToRole="customersuppliers" />
+          <NavigationProperty Name="TypeOfBase" Relationship="dbModel.FK_CustomerSupplierBases_CodTypeOfBase" FromRole="customersupplierbases" ToRole="typeofbase" />
+          <Property Type="String" Name="Province" MaxLength="255" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="CustomerSupplier" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodCustomerSupplier" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodCustomerSupplier" Nullable="false" MaxLength="70" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="BusinessName" MaxLength="255" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="VatNumber" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="TaxCode" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="Boolean" Name="Outdated" />
+          <NavigationProperty Name="CustomerSupplierBases" Relationship="dbModel.FK_CustomerSupplierBases_CodCustomerSupplier" FromRole="customersuppliers" ToRole="customersupplierbases" />
+          <NavigationProperty Name="articles" Relationship="dbModel.FK_articles_customersuppliers" FromRole="CustomerSupplier" ToRole="Article" />
+          <NavigationProperty Name="articles1" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="CustomerSupplier" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="TypeOfBase">
+          <Key>
+            <PropertyRef Name="CodTypeOfBase" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
+          <Property Type="String" Name="CodTypeOfBase" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="BaseName" MaxLength="100" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="CustomerSupplierBases" Relationship="dbModel.FK_CustomerSupplierBases_CodTypeOfBase" FromRole="typeofbase" ToRole="customersupplierbases" />
+        </EntityType>
+        <Association Name="FK_CustomerSupplierBases_CodCustomerSupplier">
+          <End Type="dbModel.CustomerSupplier" Role="customersuppliers" Multiplicity="0..1" />
+          <End Type="dbModel.CustomerSupplierBase" Role="customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerSupplierBases_CodTypeOfBase">
+          <End Type="dbModel.TypeOfBase" Role="typeofbase" Multiplicity="0..1" />
+          <End Type="dbModel.CustomerSupplierBase" Role="customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeofbase">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer" BaseType="dbModel.CustomerSupplier" />
+        <EntityType Name="Supplier" BaseType="dbModel.CustomerSupplier" />
+        <EntityType Name="PrinterMachine" BaseType="dbModel.TaskExecutor" Abstract="true">
+          <Property Type="Double" Name="InkUsage" />
+          <Property Type="Double" Name="InkUsageForfait" />
+        </EntityType>
+        <EntityType Name="PrePostPress" BaseType="dbModel.TaskExecutor">
+          <Property Type="Boolean" Name="IsUnitComputationManual" />
+        </EntityType>
+        <EntityType Name="BindingTsk" BaseType="dbModel.PrePostPress" />
+        <EntityType Name="BindingEstimatedOnTime" BaseType="dbModel.TaskEstimatedOn">
+          <Property Type="Int64" Name="AvarageRunPerHour4" />
+          <Property Type="Time" Name="StartingTime4" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour6" />
+          <Property Type="Time" Name="StartingTime6" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour8" />
+          <Property Type="Time" Name="StartingTime8" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour12" />
+          <Property Type="Time" Name="StartingTime12" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour16" />
+          <Property Type="Time" Name="StartingTime16" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour24" />
+          <Property Type="Time" Name="StartingTime24" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour32" />
+          <Property Type="Time" Name="StartingTime32" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHourBinding" />
+          <Property Type="Time" Name="StartingTimeBinding" Precision="0" />
+          <Property Type="Double" Name="CostPerHourRunning" />
+          <Property Type="Double" Name="CostPerHourStarting" />
+        </EntityType>
+        <EntityType Name="BindingEstimatedOnRun" BaseType="dbModel.TaskEstimatedOn">
+          <Property Type="Double" Name="CostPerUnit4" />
+          <Property Type="Double" Name="StartingCost4" />
+          <Property Type="Double" Name="CostPerUnit6" />
+          <Property Type="Double" Name="StartingCost6" />
+          <Property Type="Double" Name="CostPerUnit8" />
+          <Property Type="Double" Name="StartingCost8" />
+          <Property Type="Double" Name="CostPerUnit12" />
+          <Property Type="Double" Name="StartingCost12" />
+          <Property Type="Double" Name="CostPerUnit16" />
+          <Property Type="Double" Name="StartingCost16" />
+          <Property Type="Double" Name="CostPerUnit24" />
+          <Property Type="Double" Name="StartingCost24" />
+          <Property Type="Double" Name="CostPerUnit32" />
+          <Property Type="Double" Name="StartingCost32" />
+          <Property Type="Double" Name="BindingCost" />
+          <Property Type="Boolean" Name="UseDifferentCostPerUnit" />
+          <Property Type="Double" Name="BindingStartingCost" />
+        </EntityType>
+        <EntityType Name="BindingAvarageRunPerRunStep" BaseType="dbModel.Step">
+          <Property Type="Int64" Name="AvarageRunPerHour4" />
+          <Property Type="Time" Name="StartingTime4" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour6" />
+          <Property Type="Time" Name="StartingTime6" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour8" />
+          <Property Type="Time" Name="StartingTime8" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour12" />
+          <Property Type="Time" Name="StartingTime12" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour16" />
+          <Property Type="Time" Name="StartingTime16" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour24" />
+          <Property Type="Time" Name="StartingTime24" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHour32" />
+          <Property Type="Time" Name="StartingTime32" Precision="0" />
+          <Property Type="Int64" Name="AvarageRunPerHourBinding" />
+          <Property Type="Time" Name="StartingTimeBinding" Precision="0" />
+        </EntityType>
+        <EntityType Name="BindingCostPerRunStep" BaseType="dbModel.Step">
+          <Property Type="Double" Name="CostPerUnit4" />
+          <Property Type="Double" Name="StartingCost4" />
+          <Property Type="Double" Name="CostPerUnit6" />
+          <Property Type="Double" Name="StartingCost6" />
+          <Property Type="Double" Name="CostPerUnit8" />
+          <Property Type="Double" Name="StartingCost8" />
+          <Property Type="Double" Name="CostPerUnit12" />
+          <Property Type="Double" Name="StartingCost12" />
+          <Property Type="Double" Name="CostPerUnit16" />
+          <Property Type="Double" Name="StartingCost16" />
+          <Property Type="Double" Name="CostPerUnit24" />
+          <Property Type="Double" Name="StartingCost24" />
+          <Property Type="Double" Name="CostPerUnit32" />
+          <Property Type="Double" Name="StartingCost32" />
+          <Property Type="Double" Name="BindingCost" />
+        </EntityType>
+        <Association Name="FK_articles_customersuppliers">
+          <End Type="dbModel.CustomerSupplier" Role="CustomerSupplier" Multiplicity="0..1" />
+          <End Type="dbModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSupplier">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="CodSupplierBuy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_customersuppliers_2">
+          <End Type="dbModel.CustomerSupplier" Role="CustomerSupplier" Multiplicity="0..1" />
+          <End Type="dbModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerSupplier">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="CodSupplierMaker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+          <EntitySetMapping Name="printermachines">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="IsEstimatedOnMq" ColumnName="IsEstimatedOnMq" />
+                <ScalarProperty Name="IsEstimatedOnRun" ColumnName="IsEstimatedOnRun" />
+                <ScalarProperty Name="IsEstimatedOnTime" ColumnName="IsEstimatedOnTime" />
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="Laterale" ColumnName="Laterale" />
+                <ScalarProperty Name="ControPinza" ColumnName="ControPinza" />
+                <ScalarProperty Name="Pinza" ColumnName="Pinza" />
+                <ScalarProperty Name="WeightMax" ColumnName="WeightMax" />
+                <ScalarProperty Name="WeightMin" ColumnName="WeightMin" />
+                <ScalarProperty Name="FormatMax" ColumnName="FormatMax" />
+                <ScalarProperty Name="FormatMin" ColumnName="FormatMin" />
+                <ScalarProperty Name="Dismissed" ColumnName="Dismissed" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="PrinterName" ColumnName="PrinterName" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Litho)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="ChangePlateTime" ColumnName="ChangePlateTime" />
+                <ScalarProperty Name="WashUpTime" ColumnName="WashUpTime" />
+                <ScalarProperty Name="Sheetwise" ColumnName="Sheetwise" />
+                <ScalarProperty Name="SheetwiseAfterPrintingUnit" ColumnName="SheetwiseAfterPrintingUnit" />
+                <ScalarProperty Name="PrintingUnit" ColumnName="PrintingUnit" />
+                <Condition ColumnName="SelectorLithoDigital" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoSheet)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
+                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
+                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoWeb)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Digital)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="ColorSide2" ColumnName="ColorSide2" />
+                <ScalarProperty Name="ColorSide1" ColumnName="ColorSide1" />
+                <ScalarProperty Name="BWSide2" ColumnName="BWSide2" />
+                <ScalarProperty Name="BWSide1" ColumnName="BWSide1" />
+                <Condition ColumnName="SelectorLithoDigital" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalSheet)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
+                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
+                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
+                <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalWeb)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
+                <Condition ColumnName="Selector" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Plotter)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <Condition ColumnName="Selector" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrinterMachine)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="InkUsageForfait" ColumnName="InkUsageForfait" />
+                <ScalarProperty Name="InkUsage" ColumnName="InkUsage" />
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <Condition ColumnName="SelectorExecutor" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrePostPress)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="IsUnitComputationManual" ColumnName="IsUnitComputationManual" />
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <Condition ColumnName="SelectorExecutor" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingTsk)">
+              <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <Condition ColumnName="SelectorBindingPrePostPress" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            </EntitySetMapping>
+          <EntitySetMapping Name="printerestimatedon">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CostForfaitForSheet" ColumnName="CostForfaitForSheet" />
+                <ScalarProperty Name="CostForfait" ColumnName="CostForfait" />
+                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
+                <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
+                <ScalarProperty Name="TimeForfait" ColumnName="TimeForfait" />
+                <ScalarProperty Name="StartingTime2" ColumnName="StartingTime2" />
+                <ScalarProperty Name="StartingTime1" ColumnName="StartingTime1" />
+                <ScalarProperty Name="UseDifferentRunPerHour" ColumnName="UseDifferentRunPerHour" />
+                <ScalarProperty Name="AvarageRunPerHour" ColumnName="AvarageRunPerHour" />
+                <Condition ColumnName="SelectorUnitTime" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnUnit)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStep" ColumnName="UseDifferentDeficitOnCostForWeightStep" />
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="StartingCost2" ColumnName="StartingCost2" />
+                <ScalarProperty Name="StartingCost1" ColumnName="StartingCost1" />
+                <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <Condition ColumnName="SelectorUnitTime" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnRun)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <Condition ColumnName="SelectorMqRun" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <Condition ColumnName="SelectorMqRun" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnTime)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
+                <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
+                <ScalarProperty Name="StartingTime32" ColumnName="StartingTime32" />
+                <ScalarProperty Name="AvarageRunPerHour32" ColumnName="AvarageRunPerHour32" />
+                <ScalarProperty Name="StartingTime24" ColumnName="StartingTime24" />
+                <ScalarProperty Name="AvarageRunPerHour24" ColumnName="AvarageRunPerHour24" />
+                <ScalarProperty Name="StartingTime16" ColumnName="StartingTime16" />
+                <ScalarProperty Name="AvarageRunPerHour16" ColumnName="AvarageRunPerHour16" />
+                <ScalarProperty Name="StartingTime12" ColumnName="StartingTime12" />
+                <ScalarProperty Name="AvarageRunPerHour12" ColumnName="AvarageRunPerHour12" />
+                <ScalarProperty Name="StartingTime8" ColumnName="StartingTime8" />
+                <ScalarProperty Name="AvarageRunPerHour8" ColumnName="AvarageRunPerHour8" />
+                <ScalarProperty Name="StartingTime6" ColumnName="StartingTime6" />
+                <ScalarProperty Name="AvarageRunPerHour6" ColumnName="AvarageRunPerHour6" />
+                <ScalarProperty Name="StartingTime4" ColumnName="StartingTime4" />
+                <ScalarProperty Name="AvarageRunPerHour4" ColumnName="AvarageRunPerHour4" />
+                <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
+                <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
+                <Condition ColumnName="SelectorUnitTime" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnRun)">
+              <MappingFragment StoreEntitySet="printerestimatedon">
+                <ScalarProperty Name="BindingStartingCost" ColumnName="BindingStartingCost" />
+                <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="BindingCost" ColumnName="BindingCost" />
+                <ScalarProperty Name="StartingCost32" ColumnName="StartingCost32" />
+                <ScalarProperty Name="CostPerUnit32" ColumnName="CostPerUnit32" />
+                <ScalarProperty Name="StartingCost24" ColumnName="StartingCost24" />
+                <ScalarProperty Name="CostPerUnit24" ColumnName="CostPerUnit24" />
+                <ScalarProperty Name="StartingCost16" ColumnName="StartingCost16" />
+                <ScalarProperty Name="CostPerUnit16" ColumnName="CostPerUnit16" />
+                <ScalarProperty Name="StartingCost12" ColumnName="StartingCost12" />
+                <ScalarProperty Name="CostPerUnit12" ColumnName="CostPerUnit12" />
+                <ScalarProperty Name="StartingCost8" ColumnName="StartingCost8" />
+                <ScalarProperty Name="CostPerUnit8" ColumnName="CostPerUnit8" />
+                <ScalarProperty Name="StartingCost6" ColumnName="StartingCost6" />
+                <ScalarProperty Name="CostPerUnit6" ColumnName="CostPerUnit6" />
+                <ScalarProperty Name="StartingCost4" ColumnName="StartingCost4" />
+                <ScalarProperty Name="CostPerUnit4" ColumnName="CostPerUnit4" />
+                <Condition ColumnName="SelectorUnitTime" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="steps">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Step)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="ToUnit" ColumnName="ToUnit" />
+                <ScalarProperty Name="FromUnit" ColumnName="FromUnit" />
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.AvarageRunPerRunStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="AvarageRunPerHour" ColumnName="AvarageRunPerHour" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostPerRunStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DeficitForWeightStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="DeficitRate" ColumnName="DeficitRate" />
+                <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostPerMqStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <Condition ColumnName="Selector" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DeficitOnCostForWeightStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="DeficitRate" ColumnName="DeficitRate" />
+                <Condition ColumnName="Selector" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingAvarageRunPerRunStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
+                <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
+                <ScalarProperty Name="StartingTime32" ColumnName="StartingTime32" />
+                <ScalarProperty Name="AvarageRunPerHour32" ColumnName="AvarageRunPerHour32" />
+                <ScalarProperty Name="StartingTime24" ColumnName="StartingTime24" />
+                <ScalarProperty Name="AvarageRunPerHour24" ColumnName="AvarageRunPerHour24" />
+                <ScalarProperty Name="StartingTime16" ColumnName="StartingTime16" />
+                <ScalarProperty Name="AvarageRunPerHour16" ColumnName="AvarageRunPerHour16" />
+                <ScalarProperty Name="StartingTime12" ColumnName="StartingTime12" />
+                <ScalarProperty Name="AvarageRunPerHour12" ColumnName="AvarageRunPerHour12" />
+                <ScalarProperty Name="StartingTime8" ColumnName="StartingTime8" />
+                <ScalarProperty Name="AvarageRunPerHour8" ColumnName="AvarageRunPerHour8" />
+                <ScalarProperty Name="StartingTime6" ColumnName="StartingTime6" />
+                <ScalarProperty Name="AvarageRunPerHour6" ColumnName="AvarageRunPerHour6" />
+                <ScalarProperty Name="StartingTime4" ColumnName="StartingTime4" />
+                <ScalarProperty Name="AvarageRunPerHour4" ColumnName="AvarageRunPerHour4" />
+                <Condition ColumnName="Selector" Value="5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingCostPerRunStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <ScalarProperty Name="BindingCost" ColumnName="BindingCost" />
+                <ScalarProperty Name="StartingCost32" ColumnName="StartingCost32" />
+                <ScalarProperty Name="CostPerUnit32" ColumnName="CostPerUnit32" />
+                <ScalarProperty Name="StartingCost24" ColumnName="StartingCost24" />
+                <ScalarProperty Name="CostPerUnit24" ColumnName="CostPerUnit24" />
+                <ScalarProperty Name="StartingCost16" ColumnName="StartingCost16" />
+                <ScalarProperty Name="CostPerUnit16" ColumnName="CostPerUnit16" />
+                <ScalarProperty Name="StartingCost12" ColumnName="StartingCost12" />
+                <ScalarProperty Name="CostPerUnit12" ColumnName="CostPerUnit12" />
+                <ScalarProperty Name="StartingCost8" ColumnName="StartingCost8" />
+                <ScalarProperty Name="CostPerUnit8" ColumnName="CostPerUnit8" />
+                <ScalarProperty Name="StartingCost6" ColumnName="StartingCost6" />
+                <ScalarProperty Name="CostPerUnit6" ColumnName="CostPerUnit6" />
+                <ScalarProperty Name="StartingCost4" ColumnName="StartingCost4" />
+                <ScalarProperty Name="CostPerUnit4" ColumnName="CostPerUnit4" />
+                <Condition ColumnName="Selector" Value="6" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articlecost">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ArticleCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SheetPrintableArticleCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CostPerSheet" ColumnName="CostPerSheet" />
+                <ScalarProperty Name="CostPerKg" ColumnName="CostPerKg" />
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SheetPrintableArticlePakedCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleSheetPrintableCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SheetPrintableArticleCuttedCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="KgSheet" ColumnName="KgSheet" />
+                <ScalarProperty Name="KgPallet" ColumnName="KgPallet" />
+                <ScalarProperty Name="UseTheSameCostOfSheetAfterSheet" ColumnName="UseTheSameCostOfSheetAfterSheet" />
+                <ScalarProperty Name="UseTheSameCostOfPalletAfterKg" ColumnName="UseTheSameCostOfPalletAfterKg" />
+                <Condition ColumnName="SelectorArticleSheetPrintableCost" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollPrintableArticleStandardCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleRollPrintableCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollPrintableArticleCuttedCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="Ml" ColumnName="Ml" />
+                <ScalarProperty Name="Kg" ColumnName="Kg" />
+                <ScalarProperty Name="UseTheSameCostOfStandardWidthAfterMl" ColumnName="UseTheSameCostOfStandardWidthAfterMl" />
+                <ScalarProperty Name="UseTheSameCostOfStandardWidthAfterKg" ColumnName="UseTheSameCostOfStandardWidthAfterKg" />
+                <Condition ColumnName="SelectorArticleRollPrintableCost" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SheetPrintableArticlePalletCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleSheetPrintableCost" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollPrintableArticleCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="CostPerMq" ColumnName="CostPerMq" />
+                <ScalarProperty Name="CostPerMl" ColumnName="CostPerMl" />
+                <Condition ColumnName="SelectorArticleCost" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RigidPrintableArticleCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="CostPerMq" ColumnName="CostPerMq" />
+                <Condition ColumnName="SelectorArticleCost" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ObjectPrintableArticleCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleCost" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ObjectPrintableArticleStandardCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleObjectPrintableCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RigidPrintableArticleStandardCost)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleRigidPrintableCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articles">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodSupplierMaker" ColumnName="CodSupplierMaker" />
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="CodSupplierBuy" ColumnName="CodSupplierBuy" />
+                <ScalarProperty Name="ArticleName" ColumnName="ArticleName" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Printable)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="Hand" ColumnName="Hand" />
+                <ScalarProperty Name="Thikness" ColumnName="Thikness" />
+                <ScalarProperty Name="NoBv" ColumnName="NoBv" />
+                <ScalarProperty Name="NameOfMaterial" ColumnName="NameOfMaterial" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="TypeOfMaterial" ColumnName="TypeOfMaterial" />
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <Condition ColumnName="SelectorPrintable" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.NoPrintable)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <Condition ColumnName="SelectorPrintable" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SheetPrintableArticle)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="SheetPerPallet" ColumnName="SheetPerPallet" />
+                <ScalarProperty Name="SheetPerPacked" ColumnName="SheetPerPacked" />
+                <ScalarProperty Name="NoPinza" ColumnName="NoPinza" />
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <Condition ColumnName="SelectorSheetRollWide" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollPrintableArticle)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <Condition ColumnName="SelectorSheetRollWide" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RigidPrintableArticle)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <Condition ColumnName="SelectorSheetRollWide" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ObjectPrintableArticle)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="PrintableFormat" ColumnName="PrintableFormat" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <Condition ColumnName="SelectorSheetRollWide" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customersupplierbases">
+            <EntityTypeMapping TypeName="dbModel.CustomerSupplierBase">
+              <MappingFragment StoreEntitySet="customersupplierbases">
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="Pec" ColumnName="Pec" />
+                <ScalarProperty Name="Referee" ColumnName="Referee" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CodTypeOfBase" ColumnName="CodTypeOfBase" />
+                <ScalarProperty Name="CodCustomerSupplierBase" ColumnName="CodCustomerSupplierBase" />
+                <ScalarProperty Name="CodCustomerSupplier" ColumnName="CodCustomerSupplier" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customersuppliers">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.CustomerSupplier)">
+              <MappingFragment StoreEntitySet="customersuppliers">
+                <ScalarProperty Name="CodCustomerSupplier" ColumnName="CodCustomerSupplier" />
+                <ScalarProperty Name="Outdated" ColumnName="Outdated" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="VatNumber" ColumnName="VatNumber" />
+                <ScalarProperty Name="BusinessName" ColumnName="BusinessName" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Customer)">
+              <MappingFragment StoreEntitySet="customersuppliers">
+                <ScalarProperty Name="CodCustomerSupplier" ColumnName="CodCustomerSupplier" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Supplier)">
+              <MappingFragment StoreEntitySet="customersuppliers">
+                <ScalarProperty Name="CodCustomerSupplier" ColumnName="CodCustomerSupplier" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="typeofbase">
+            <EntityTypeMapping TypeName="dbModel.TypeOfBase">
+              <MappingFragment StoreEntitySet="typeofbase">
+                <ScalarProperty Name="BaseName" ColumnName="BaseName" />
+                <ScalarProperty Name="CodTypeOfBase" ColumnName="CodTypeOfBase" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Nessuno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="Model1" ZoomLevel="63">
+        <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.5" PointY="0.5" Height="4.480205078125" IsExpanded="true" />
+        <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="8" Height="1.9802864583333335" />
+        <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="10.75" Height="1.5956835937499996" />
+        <InheritanceConnector EntityType="dbModel.LithoSheet" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.875" PointY="9.9802864583333335" />
+          <ConnectorPoint PointX="1.875" PointY="10.375" />
+          <ConnectorPoint PointX="1.25" PointY="10.375" />
+          <ConnectorPoint PointX="1.25" PointY="10.75" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.LithoWeb" Width="1.5" PointX="2.125" PointY="10.75" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.LithoWeb" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.875" PointY="9.9802864583333335" />
+          <ConnectorPoint PointX="1.875" PointY="10.375" />
+          <ConnectorPoint PointX="2.875" PointY="10.375" />
+          <ConnectorPoint PointX="2.875" PointY="10.75" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.Digital" Width="1.5" PointX="4.375" PointY="8" Height="1.7879850260416657" />
+        <EntityTypeShape EntityType="dbModel.DigitalSheet" Width="1.5" PointX="3.875" PointY="10.75" Height="1.5956835937499996" />
+        <InheritanceConnector EntityType="dbModel.DigitalSheet" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.125" PointY="9.7879850260416656" />
+          <ConnectorPoint PointX="5.125" PointY="10.375" />
+          <ConnectorPoint PointX="4.625" PointY="10.375" />
+          <ConnectorPoint PointX="4.625" PointY="10.75" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.DigitalWeb" Width="1.5" PointX="5.5" PointY="10.75" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.DigitalWeb" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.125" PointY="9.7879850260416656" />
+          <ConnectorPoint PointX="5.125" PointY="10.375" />
+          <ConnectorPoint PointX="6.25" PointY="10.375" />
+          <ConnectorPoint PointX="6.25" PointY="10.75" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.Plotter" Width="1.5" PointX="7.125" PointY="10.75" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.Plotter" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.125" PointY="9.7879850260416656" />
+          <ConnectorPoint PointX="5.125" PointY="10.375" />
+          <ConnectorPoint PointX="7.875" PointY="10.375" />
+          <ConnectorPoint PointX="7.875" PointY="10.75" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.Digital" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.5" PointY="6.9033821614583326" />
+          <ConnectorPoint PointX="2.5" PointY="7.625" />
+          <ConnectorPoint PointX="5.125" PointY="7.625" />
+          <ConnectorPoint PointX="5.125" PointY="8" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.Litho" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.5" PointY="6.9033821614583326" />
+          <ConnectorPoint PointX="2.5" PointY="7.6249999999999991" />
+          <ConnectorPoint PointX="1.875" PointY="7.6249999999999991" />
+          <ConnectorPoint PointX="1.875" PointY="8" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOn" Width="2.5" PointX="10.25" PointY="1.625" Height="2.3648893229166661" />
+        <AssociationConnector Association="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine">
+          <ConnectorPoint PointX="4.75" PointY="2.8074446614583328" />
+          <ConnectorPoint PointX="10.25" PointY="2.8074446614583328" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnTime" Width="2.125" PointX="8.875" PointY="7.25" Height="2.7494921874999996" />
+        <InheritanceConnector EntityType="dbModel.TaskEstimatedOnTime" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.5" PointY="3.9898893229166661" />
+          <ConnectorPoint PointX="11.5" PointY="6.8749999999999982" />
+          <ConnectorPoint PointX="9.9375" PointY="6.8749999999999982" />
+          <ConnectorPoint PointX="9.9375" PointY="7.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnUnit" Width="3.375" PointX="11.75" PointY="7.25" Height="1.9802864583333335" />
+        <InheritanceConnector EntityType="dbModel.TaskEstimatedOnUnit" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.5" PointY="3.9898893229166661" />
+          <ConnectorPoint PointX="11.5" PointY="6.875" />
+          <ConnectorPoint PointX="13.4375" PointY="6.875" />
+          <ConnectorPoint PointX="13.4375" PointY="7.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnRun" Width="2.125" PointX="10.375" PointY="10.625" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.TaskEstimatedOnRun" ManuallyRouted="false">
+          <ConnectorPoint PointX="13.4375" PointY="9.2302864583333335" />
+          <ConnectorPoint PointX="13.4375" PointY="10.25" />
+          <ConnectorPoint PointX="11.4375" PointY="10.25" />
+          <ConnectorPoint PointX="11.4375" PointY="10.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnMq" Width="2" PointX="13.375" PointY="10.625" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.TaskEstimatedOnMq" ManuallyRouted="false">
+          <ConnectorPoint PointX="13.4375" PointY="9.2302864583333335" />
+          <ConnectorPoint PointX="13.4375" PointY="10.25" />
+          <ConnectorPoint PointX="14.375" PointY="10.25" />
+          <ConnectorPoint PointX="14.375" PointY="10.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.Step" Width="2.125" PointX="16.25" PointY="1.75" Height="2.1725878906249991" />
+        <AssociationConnector Association="dbModel.FK_Steps_CodPrinterEstimatedOn">
+          <ConnectorPoint PointX="12.75" PointY="2.8362939453125" />
+          <ConnectorPoint PointX="16.25" PointY="2.8362939453125" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="dbModel.CostPerRunStep" Width="1.5" PointX="15.5" PointY="5.25" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="dbModel.CostPerRunStep" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="16.25" PointY="4.875" />
+          <ConnectorPoint PointX="16.25" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.AvarageRunPerRunStep" Width="1.5" PointX="13.75" PointY="5.25" Height="1.2110807291666665" IsExpanded="true" />
+        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="14.5" PointY="4.875" />
+          <ConnectorPoint PointX="14.5" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.DeficitForWeightStep" Width="1.5" PointX="17.125" PointY="5.25" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="dbModel.DeficitForWeightStep" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="17.875" PointY="4.875" />
+          <ConnectorPoint PointX="17.875" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.CostPerMqStep" Width="1.5" PointX="18.75" PointY="5.25" Height="1.2110807291666674" />
+        <InheritanceConnector EntityType="dbModel.CostPerMqStep" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="19.5" PointY="4.875" />
+          <ConnectorPoint PointX="19.5" PointY="5.25" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep">
+          <ConnectorPoint PointX="17" PointY="3.922587890625" />
+          <ConnectorPoint PointX="17" PointY="4.875" />
+          <ConnectorPoint PointX="14.25" PointY="4.875" />
+          <ConnectorPoint PointX="14.25" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.DeficitOnCostForWeightStep" Width="1.5" PointX="20.375" PointY="5.25" Height="1.2110807291666674" />
+        <InheritanceConnector EntityType="dbModel.DeficitOnCostForWeightStep" ManuallyRouted="false">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="21.125" PointY="4.875" />
+          <ConnectorPoint PointX="21.125" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ArticleCost" Width="3.375" PointX="33.75" PointY="1.375" Height="1.787985026041667" />
+        <EntityTypeShape EntityType="dbModel.Article" Width="3.25" PointX="40.875" PointY="1.375" Height="2.364889322916667" />
+        <AssociationConnector Association="dbModel.FK_ArticleCost_CodArticle">
+          <ConnectorPoint PointX="40.875" PointY="2.2689925130208337" />
+          <ConnectorPoint PointX="37.125" PointY="2.2689925130208337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="dbModel.Printable" Width="1.5" PointX="40.375" PointY="4.625" Height="2.3648893229166656" IsExpanded="true" />
+        <InheritanceConnector EntityType="dbModel.Printable" ManuallyRouted="false">
+          <ConnectorPoint PointX="42.5" PointY="3.739889322916667" />
+          <ConnectorPoint PointX="42.5" PointY="4.25" />
+          <ConnectorPoint PointX="41.125" PointY="4.25" />
+          <ConnectorPoint PointX="41.125" PointY="4.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.NoPrintable" Width="1.5" PointX="43.375" PointY="4.625" Height="0.4" IsExpanded="true" />
+        <InheritanceConnector EntityType="dbModel.NoPrintable" ManuallyRouted="false">
+          <ConnectorPoint PointX="42.5" PointY="3.739889322916667" />
+          <ConnectorPoint PointX="42.5" PointY="4.25" />
+          <ConnectorPoint PointX="44.125" PointY="4.25" />
+          <ConnectorPoint PointX="44.125" PointY="4.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticle" Width="1.5" PointX="39.5" PointY="8.375" Height="1.7879850260416657" />
+        <InheritanceConnector EntityType="dbModel.SheetPrintableArticle" ManuallyRouted="false">
+          <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
+          <ConnectorPoint PointX="41.125" PointY="8" />
+          <ConnectorPoint PointX="40.25" PointY="8" />
+          <ConnectorPoint PointX="40.25" PointY="8.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RollPrintableArticle" Width="1.5" PointX="41.5" PointY="8.375" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.RollPrintableArticle" ManuallyRouted="false">
+          <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
+          <ConnectorPoint PointX="41.125" PointY="8" />
+          <ConnectorPoint PointX="42.25" PointY="8" />
+          <ConnectorPoint PointX="42.25" PointY="8.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticleCost" Width="2.125" PointX="33.125" PointY="4.375" Height="1.4033821614583335" />
+        <InheritanceConnector EntityType="dbModel.SheetPrintableArticleCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="35.4375" PointY="3.162985026041667" />
+          <ConnectorPoint PointX="35.4375" PointY="4" />
+          <ConnectorPoint PointX="34.1875" PointY="4" />
+          <ConnectorPoint PointX="34.1875" PointY="4.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticlePakedCost" Width="1.5" PointX="30.375" PointY="6.625" Height="1.0187792968749996" />
+        <InheritanceConnector EntityType="dbModel.SheetPrintableArticlePakedCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="34.1875" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="34.1875" PointY="6.25" />
+          <ConnectorPoint PointX="31.125" PointY="6.25" />
+          <ConnectorPoint PointX="31.125" PointY="6.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticleCuttedCost" Width="2.5" PointX="32" PointY="6.625" Height="1.7879850260416657" />
+        <InheritanceConnector EntityType="dbModel.SheetPrintableArticleCuttedCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="34.1875" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="34.1875" PointY="6.25" />
+          <ConnectorPoint PointX="33.25" PointY="6.25" />
+          <ConnectorPoint PointX="33.25" PointY="6.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticlePalletCost" Width="1.5" PointX="34.625" PointY="6.625" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.SheetPrintableArticlePalletCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="34.1875" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="34.1875" PointY="6.25" />
+          <ConnectorPoint PointX="35.375" PointY="6.25" />
+          <ConnectorPoint PointX="35.375" PointY="6.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RollPrintableArticleCost" Width="2.125" PointX="35.625" PointY="4.375" Height="1.4033821614583335" />
+        <InheritanceConnector EntityType="dbModel.RollPrintableArticleCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="35.4375" PointY="3.162985026041667" />
+          <ConnectorPoint PointX="35.4375" PointY="4" />
+          <ConnectorPoint PointX="36.6875" PointY="4" />
+          <ConnectorPoint PointX="36.6875" PointY="4.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RollPrintableArticleStandardCost" Width="2.375" PointX="33.875" PointY="9.25" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.RollPrintableArticleStandardCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="36.6875" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="36.6875" PointY="8.875" />
+          <ConnectorPoint PointX="35.0625" PointY="8.875" />
+          <ConnectorPoint PointX="35.0625" PointY="9.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RollPrintableArticleCuttedCost" Width="2.5" PointX="36.375" PointY="9.25" Height="1.7879850260416657" />
+        <InheritanceConnector EntityType="dbModel.RollPrintableArticleCuttedCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="36.6875" PointY="5.7783821614583335" />
+          <ConnectorPoint PointX="36.6875" PointY="8.875" />
+          <ConnectorPoint PointX="37.625" PointY="8.875" />
+          <ConnectorPoint PointX="37.625" PointY="9.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RigidPrintableArticle" Width="1.5" PointX="43.5" PointY="8.375" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.RigidPrintableArticle" ManuallyRouted="false">
+          <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
+          <ConnectorPoint PointX="41.125" PointY="8" />
+          <ConnectorPoint PointX="44.25" PointY="8" />
+          <ConnectorPoint PointX="44.25" PointY="8.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ObjectPrintableArticle" Width="1.5" PointX="45.625" PointY="8.375" Height="1.4033821614583335" />
+        <InheritanceConnector EntityType="dbModel.ObjectPrintableArticle" ManuallyRouted="false">
+          <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
+          <ConnectorPoint PointX="41.125" PointY="8" />
+          <ConnectorPoint PointX="46.375" PointY="8" />
+          <ConnectorPoint PointX="46.375" PointY="8.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RigidPrintableArticleCost" Width="1.5" PointX="38" PointY="4.375" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="dbModel.RigidPrintableArticleCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="35.4375" PointY="3.162985026041667" />
+          <ConnectorPoint PointX="35.4375" PointY="4" />
+          <ConnectorPoint PointX="38.75" PointY="4" />
+          <ConnectorPoint PointX="38.75" PointY="4.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ObjectPrintableArticleCost" Width="2.625" PointX="30.375" PointY="4.375" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="dbModel.ObjectPrintableArticleCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="35.4375" PointY="3.162985026041667" />
+          <ConnectorPoint PointX="35.4375" PointY="4" />
+          <ConnectorPoint PointX="31.6875" PointY="4" />
+          <ConnectorPoint PointX="31.6875" PointY="4.375" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ObjectPrintableArticleStandardCost" Width="3.125" PointX="27.125" PointY="6.625" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.ObjectPrintableArticleStandardCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="31.6875" PointY="5.5860807291666665" />
+          <ConnectorPoint PointX="31.6875" PointY="6" />
+          <ConnectorPoint PointX="29.5" PointY="6" />
+          <ConnectorPoint PointX="29.5" PointY="6.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.RigidPrintableArticleStandardCost" Width="2.5" PointX="37.375" PointY="6.625" Height="1.0187792968750031" />
+        <InheritanceConnector EntityType="dbModel.RigidPrintableArticleStandardCost" ManuallyRouted="false">
+          <ConnectorPoint PointX="38.75" PointY="5.5860807291666665" />
+          <ConnectorPoint PointX="38.75" PointY="6.25" />
+          <ConnectorPoint PointX="38.875" PointY="6.25" />
+          <ConnectorPoint PointX="38.875" PointY="6.625" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.CustomerSupplierBase" Width="2.375" PointX="23.5" PointY="13" Height="4.2879036458333353" />
+        <EntityTypeShape EntityType="dbModel.CustomerSupplier" Width="2.125" PointX="17.5" PointY="12.875" Height="2.3648893229166656" />
+        <EntityTypeShape EntityType="dbModel.TypeOfBase" Width="1.875" PointX="21.25" PointY="17.25" Height="1.7879850260416674" />
+        <AssociationConnector Association="dbModel.FK_CustomerSupplierBases_CodCustomerSupplier">
+          <ConnectorPoint PointX="19.625" PointY="14.009475911458335" />
+          <ConnectorPoint PointX="23.5" PointY="14.009475911458335" />
+        </AssociationConnector>
+        <AssociationConnector Association="dbModel.FK_CustomerSupplierBases_CodTypeOfBase">
+          <ConnectorPoint PointX="22.1875" PointY="17.25" />
+          <ConnectorPoint PointX="22.1875" PointY="15.143951822916669" />
+          <ConnectorPoint PointX="23.5" PointY="15.143951822916669" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="dbModel.Customer" Width="1.5" PointX="16.625" PointY="17.25" Height="1.018779296874996" />
+        <InheritanceConnector EntityType="dbModel.Customer" ManuallyRouted="false">
+          <ConnectorPoint PointX="18.5625" PointY="15.239889322916666" />
+          <ConnectorPoint PointX="18.5625" PointY="16.875" />
+          <ConnectorPoint PointX="17.375" PointY="16.875" />
+          <ConnectorPoint PointX="17.375" PointY="17.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.Supplier" Width="1.5" PointX="18.75" PointY="17.25" Height="1.018779296874996" />
+        <InheritanceConnector EntityType="dbModel.Supplier" ManuallyRouted="false">
+          <ConnectorPoint PointX="18.5625" PointY="15.239889322916666" />
+          <ConnectorPoint PointX="18.5625" PointY="16.875" />
+          <ConnectorPoint PointX="19.5" PointY="16.875" />
+          <ConnectorPoint PointX="19.5" PointY="17.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.PrinterMachine" Width="1.5" PointX="1.75" PointY="5.5" Height="1.4033821614583326" />
+        <InheritanceConnector EntityType="dbModel.PrinterMachine" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.625" PointY="4.980205078125" />
+          <ConnectorPoint PointX="3.625" PointY="5.2" />
+          <ConnectorPoint PointX="2.5" PointY="5.2" />
+          <ConnectorPoint PointX="2.5" PointY="5.5" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.Litho">
+          <ConnectorPoint PointX="3.75" PointY="7.268779296874996" />
+          <ConnectorPoint PointX="3.75" PointY="7.6249999999999991" />
+          <ConnectorPoint PointX="1.875" PointY="7.6249999999999991" />
+          <ConnectorPoint PointX="1.875" PointY="8" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.Digital">
+          <ConnectorPoint PointX="3.75" PointY="7.268779296874996" />
+          <ConnectorPoint PointX="3.75" PointY="7.625" />
+          <ConnectorPoint PointX="5.5" PointY="7.625" />
+          <ConnectorPoint PointX="5.5" PointY="8" />
+        </InheritanceConnector>
+        <InheritanceConnector EntityType="dbModel.PrinterMachine">
+          <ConnectorPoint PointX="3.625" PointY="5.3648079427083326" />
+          <ConnectorPoint PointX="3.625" PointY="5.875" />
+          <ConnectorPoint PointX="3.75" PointY="5.875" />
+          <ConnectorPoint PointX="3.75" PointY="6.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.PrePostPress" Width="1.5" PointX="4.625" PointY="5.5" Height="1.2110807291666665" />
+        <InheritanceConnector EntityType="dbModel.PrePostPress" ManuallyRouted="false">
+          <ConnectorPoint PointX="3.625" PointY="4.980205078125" />
+          <ConnectorPoint PointX="3.625" PointY="5.125" />
+          <ConnectorPoint PointX="5.375" PointY="5.125" />
+          <ConnectorPoint PointX="5.375" PointY="5.5" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.BindingTsk" Width="1.5" PointX="6.625" PointY="8" Height="1.018779296874996" />
+        <InheritanceConnector EntityType="dbModel.BindingTsk" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.375" PointY="6.7110807291666665" />
+          <ConnectorPoint PointX="5.375" PointY="7.625" />
+          <ConnectorPoint PointX="7.375" PointY="7.625" />
+          <ConnectorPoint PointX="7.375" PointY="8" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.BindingEstimatedOnTime" Width="2.125" PointX="16" PointY="7.25" Height="4.480205078125" />
+        <InheritanceConnector EntityType="dbModel.BindingEstimatedOnTime" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.5" PointY="3.9898893229166661" />
+          <ConnectorPoint PointX="11.5" PointY="6.8750000000000018" />
+          <ConnectorPoint PointX="17.0625" PointY="6.8750000000000018" />
+          <ConnectorPoint PointX="17.0625" PointY="7.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.BindingEstimatedOnRun" Width="2" PointX="18.375" PointY="7.25" Height="3.9033007812499996" />
+        <InheritanceConnector EntityType="dbModel.BindingEstimatedOnRun" ManuallyRouted="false">
+          <ConnectorPoint PointX="11.5" PointY="3.9898893229166661" />
+          <ConnectorPoint PointX="11.5" PointY="6.8750000000000018" />
+          <ConnectorPoint PointX="19.375" PointY="6.8750000000000018" />
+          <ConnectorPoint PointX="19.375" PointY="7.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.BindingAvarageRunPerRunStep" Width="1.5" PointX="22.125" PointY="5.25" Height="4.0956022135416656" />
+        <InheritanceConnector EntityType="dbModel.BindingAvarageRunPerRunStep">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="22.875" PointY="4.875" />
+          <ConnectorPoint PointX="22.875" PointY="5.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.BindingCostPerRunStep" Width="1.5" PointX="23.875" PointY="5.25" Height="3.9033007812499996" />
+        <InheritanceConnector EntityType="dbModel.BindingCostPerRunStep">
+          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
+          <ConnectorPoint PointX="17.3125" PointY="4.875" />
+          <ConnectorPoint PointX="24.625" PointY="4.875" />
+          <ConnectorPoint PointX="24.625" PointY="5.25" />
+        </InheritanceConnector>
+        <AssociationConnector Association="dbModel.FK_articles_customersuppliers" />
+        <AssociationConnector Association="dbModel.FK_articles_customersuppliers_2" />
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

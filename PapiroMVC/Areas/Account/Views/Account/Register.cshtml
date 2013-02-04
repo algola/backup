@@ -1,0 +1,89 @@
+﻿@model PapiroMVC.Models.RegisterModel
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleRegister");               
+}
+
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>Create a new account.</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend> @HttpContext.GetLocalResourceObject(strings, "RegistrationLegend")</legend>
+            <div class="editor-label">
+                @Html.LabelFor(m => m.UserName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.UserName)
+                @Html.ValidationMessageFor(m => m.UserName)        
+            </div>
+
+            <p class="message-info">
+                @HttpContext.GetLocalResourceObject(strings, "EmailWarning")
+            </p>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Email)
+            </div>
+
+            <div class="editor-field">
+                @Html.EditorFor(m => m.Email)            
+                @Html.ValidationMessageFor(m => m.Email)
+            </div>
+
+            <p class="message-info">
+                @HttpContext.GetLocalResourceObject(strings, "PasswordWarning1") @Membership.MinRequiredPasswordLength @HttpContext.GetLocalResourceObject(strings, "PasswordWarning2").
+            </p>
+    
+            <div class="editor-label">
+                @Html.LabelFor(m => m.Password)
+            </div>
+
+            <div class="editor-field">
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.ConfirmPassword)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.ConfirmPassword)
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.OrganizationName)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.OrganizationName)
+                @Html.ValidationMessageFor(m => m.OrganizationName)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.VatNumber)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.VatNumber)
+                @Html.ValidationMessageFor(m => m.VatNumber)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.TaxCode)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(m => m.TaxCode)
+                @Html.ValidationMessageFor(m => m.TaxCode)
+            </div>
+        <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "RegisterSubmit")' />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

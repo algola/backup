@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PapiroMVC", "PapiroMVC\PapiroMVC.csproj", "{9F7731F9-AADD-4185-A0A5-B3C3BB4830F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestPapiroMVC", "UnitTestPapiroMVC\UnitTestPapiroMVC.csproj", "{1BD8AEA7-DF2C-4BDA-A62E-61DE20F67151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchemaManagemet", "SchemaManagement\SchemaManagemet\SchemaManagemet.csproj", "{4F756F7E-1A8E-4BC9-BFAC-62B4EE18EA55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.HtmlHelper.jqGrid", "Mvc.HtmlHelper.jqGrid\Mvc.HtmlHelper.jqGrid.csproj", "{6E40CC48-8EDF-4608-9BD3-D43A9B649409}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9F7731F9-AADD-4185-A0A5-B3C3BB4830F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7731F9-AADD-4185-A0A5-B3C3BB4830F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7731F9-AADD-4185-A0A5-B3C3BB4830F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7731F9-AADD-4185-A0A5-B3C3BB4830F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BD8AEA7-DF2C-4BDA-A62E-61DE20F67151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BD8AEA7-DF2C-4BDA-A62E-61DE20F67151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BD8AEA7-DF2C-4BDA-A62E-61DE20F67151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BD8AEA7-DF2C-4BDA-A62E-61DE20F67151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F756F7E-1A8E-4BC9-BFAC-62B4EE18EA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F756F7E-1A8E-4BC9-BFAC-62B4EE18EA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F756F7E-1A8E-4BC9-BFAC-62B4EE18EA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F756F7E-1A8E-4BC9-BFAC-62B4EE18EA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E40CC48-8EDF-4608-9BD3-D43A9B649409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E40CC48-8EDF-4608-9BD3-D43A9B649409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E40CC48-8EDF-4608-9BD3-D43A9B649409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E40CC48-8EDF-4608-9BD3-D43A9B649409}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,20 @@
+﻿
+@if (Request.IsAuthenticated) {
+    <ul>
+        <li>@Html.ActionLink("[English]", "ChangeCulture", "Home", new { area = "", id = "en-US" },null)</li>
+        <li>@Html.ActionLink("[Italiano]", "ChangeCulture", "Home", new { area = "", id = "it-IT" }, null)</li>
+        <li>    
+            <p>
+                Hello, @Html.ActionLink(User.Identity.Name, "ChangePassword", "Account", routeValues: new { area = "Account" }, htmlAttributes: new { @class = "username", title = "Change password" })!
+                @Html.ActionLink("Log off", "LogOff", "Account")
+            </p>
+        </li>
+    </ul>
+} else {
+    <ul>
+        <li>@Html.ActionLink("[English]", "ChangeCulture", "Home", new { area = "", id = "en-US" },null)</li>
+        <li>@Html.ActionLink("[Italiano]", "ChangeCulture", "Home", new { area = "", id = "it-IT" }, null)</li>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

@@ -1,0 +1,16 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.SheetPrintableArticleViewModel
+
+    <fieldset>
+        <legend>SheetPrintableArticlePalletCost</legend>
+
+        <h3>Costi di acquisto a pallet</h3>
+        <br />
+            @Html.AlgolaEditorFor(model => model.SheetPrintableArticlePalletCost.CostPerKg)
+            @Html.AlgolaEditorFor(model => model.SheetPrintableArticlePalletCost.CostPerSheet)
+
+            @Html.HiddenFor(model => model.SheetPrintableArticlePalletCost.TimeStampTable)
+            @Html.HiddenFor(model => model.SheetPrintableArticlePalletCost.CodArticleCost)
+            @Html.HiddenFor(model => model.SheetPrintableArticlePalletCost.CodArticle)
+
+    </fieldset>

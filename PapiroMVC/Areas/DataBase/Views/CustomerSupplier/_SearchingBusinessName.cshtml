@@ -1,0 +1,51 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Areas.DataBase.ViewModels.SearchOption
+
+<a href="#1" id="show_hide_search" class="show_hide">Show/hide Search options</a>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+        $("#slidingDivSearchCustomer").hide();
+        $("#show_hide_search").show();
+ 
+        $('#show_hide_search').click(function () {
+            $("#slidingDivSearchCustomer").slideToggle();
+        });
+});
+</script>
+
+<div id="slidingDivSearchCustomer" class="slidingDiv">
+@using (Ajax.BeginForm("Searching", new AjaxOptions { UpdateTargetId = "customersupplierlist" }))
+{
+        <fieldset>
+            <legend>Business Name and City</legend>
+        <div class="my_left_box">
+            <div class="ui-widget">
+            @Html.AlgolaAutocompleteFor(model => model.BusinessName,"CustomerSupplierBusinessNameAutoComplete","CustomerSupplier")
+            @Html.AlgolaAutocompleteFor(model => model.City,"CustomerSupplierCityAutoComplete","CustomerSupplier")
+            </div>
+        </div>
+        
+        <div class="my_left_box">
+            @Html.AlgolaEditorFor(model => model.VatNumber)
+        </div>        
+    
+        <div class="my_right_box">
+            <div style ="overflow: auto;">
+                @Html.CheckBoxFor(model => model.IsCustomer, new { style = "float:left"})
+                @Html.LabelFor(model => model.IsCustomer)
+            </div>
+            <div style ="overflow: auto;">
+                @Html.CheckBoxFor(model => model.IsSupplier, new { style = "float:left"})
+                @Html.LabelFor(model => model.IsSupplier)
+            </div>                          
+        
+            <input type="submit" value="Search" />
+        
+        </div>
+    
+        </fieldset>    
+}
+</div>
