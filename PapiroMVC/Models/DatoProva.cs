@@ -7,7 +7,7 @@ namespace PapiroMVC.Models
 {
     public class DatoProva
     {
-        public String City
+        public String Citytr
         {
             get;
             set;
