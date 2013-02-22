@@ -285,18 +285,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (!string.IsNullOrEmpty(typeOfArticleFilter))
             {
+                Boolean isRoll = false, isSheet = false, isObject = false, isRigid = false;
+
                 //to match with language we have to compare filter with resource
-                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
-                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.RollPrintableArticle);
+                isRoll = (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isSheet = (sheetType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isObject = (objectType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isRigid = (rigidType.ToLower().Contains(typeOfArticleFilter.ToLower()));
 
-                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
-                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.SheetPrintableArticle);
+                var a = isRoll ? (IQueryable<Article>)q.OfType<RollPrintableArticle>() : articleRepository.FindBy(x=>x.CodArticle=="");
+                var b = isSheet ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+                var c = isObject ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+                var d = isRigid ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
 
-                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
-                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.ObjectPrintableArticle);
-
-                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
-                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.RigidPrintableArticle);
+                var res = (a.Union(b).Union(c).Union(d));
+                q = (IQueryable<Article>)res;                            
             }
 
             switch (gridSettings.sortColumn)
