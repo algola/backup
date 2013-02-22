@@ -178,10 +178,16 @@
     <value>Sheet</value>
     <comment>used for searching in view</comment>
   </data>
+  <data name="SheetPrintableArticleViewModelWizard" xml:space="preserve">
+    <value>Automatic Creation of Sheet Printable Articles</value>
+  </data>
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Supplier</value>
   </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Multiple creation of Roll Printable Article</value>
+  </data>
+  <data name="WizardSheetPrintableArticle" xml:space="preserve">
+    <value>Multiple creation of Sheet Printable Article</value>
   </data>
 </root>

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace PapiroMVC.Models
 {
 
-    [MetadataType(typeof(ArticleViewModelVizard_Metadata))]
+    [MetadataType(typeof(RollPrintableArticleViewModelWizard_Metadata))]
     public class RollPrintableArticleViewModelWizard : ArticleViewModel
     {
         RollPrintableArticle article;
@@ -95,6 +95,127 @@ namespace PapiroMVC.Models
                 weights = value;
             }
         }
+    }
+
+    [MetadataType(typeof(SheetPrintableArticleViewModelWizard_Metadata))]
+    public class SheetPrintableArticleViewModelWizard : ArticleViewModel
+    {
+        SheetPrintableArticle article;
+        List<string> formats;
+        List<double> weights;
+
+        public SheetPrintableArticle Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new SheetPrintableArticle();
+                    article.Format = "10x10";
+                    article.SheetPerPacked = 0;
+                    article.SheetPerPallet = 0;
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
+                    article.ArticleCosts.Add(new SheetPrintableArticlePakedCost());
+                    article.ArticleCosts.Add(new SheetPrintableArticlePalletCost());
+                }
+                return article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+        }
+        /*
+        public SheetPrintableArticleStandardCost SheetPrintableArticleStandardCost
+        {
+            get
+            {
+                return (SheetPrintableArticleStandardCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleStandardCost);
+            }
+        }
+        */
+
+        public List<string> Formats
+        {
+            get
+            {
+                if (formats == null)
+                {
+                    formats = new List<string>();
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                    formats.Add("");
+                }
+                return formats;
+            }
+            set
+            {
+                formats = value;
+            }
+        }
+
+        public List<double> Weights
+        {
+            get
+            {
+                if (weights == null)
+                {
+                    weights = new List<double>();
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                    weights.Add(0);
+                }
+                return weights;
+            }
+            set
+            {
+                weights = value;
+            }
+        }
+
+        public SheetPrintableArticleCuttedCost SheetPrintableArticleCuttedCost
+        {
+            get
+            {
+                return (SheetPrintableArticleCuttedCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost);
+            }
+        }
+
+        public SheetPrintableArticlePalletCost SheetPrintableArticlePalletCost
+        {
+            get
+            {
+                return (SheetPrintableArticlePalletCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePalletCost);
+            }
+        }
+
+        public SheetPrintableArticlePakedCost SheetPrintableArticlePakedCost
+        {
+            get
+            {
+                return (SheetPrintableArticlePakedCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost);
+            }
+        }
+
+
     }
 
 }

@@ -236,6 +236,71 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
             return View(c);
         }
+
+        [HttpGet]
+        public ActionResult WizardSheetPrintableArticle()
+        {
+            return View(new SheetPrintableArticleViewModelWizard());
+        }
+
+        public ActionResult WizardSheetPrintableArticle(SheetPrintableArticleViewModelWizard c)
+        {
+            SheetPrintableArticle a;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //we have to count weights and widths and use 2 counter to 
+
+                    //WeightS
+                    foreach (var weight in c.Weights)
+                    {
+                        //control if weigth is valid
+                        if (weight > 0)
+                            foreach (var format in c.Formats)
+                            {
+                                if (format != "")
+                                {
+
+                                    c.Article.Weight = (long)weight;
+                                    c.Article.Format = format;
+
+                                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                                    c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
+                                    c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
+                                    c.SheetPrintableArticlePalletCost.TimeStampTable = DateTime.Now;
+
+                                    c.SheetPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
+                                    c.SheetPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                                    c.SheetPrintableArticlePakedCost.CodArticle = c.Article.CodArticle;
+                                    c.SheetPrintableArticlePakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
+                                    c.SheetPrintableArticlePalletCost.CodArticle = c.Article.CodArticle;
+                                    c.SheetPrintableArticlePalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
+
+                                    c.Article.ArticleName = c.Article.ToString();
+
+                                    c.Article.TimeStampTable = DateTime.Now;
+
+                                    a = (SheetPrintableArticle)c.Article.Clone();
+
+                                    articleRepository.Add(a);
+                                    articleRepository.Save();
+                                }
+                            }
+                    }
+
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+            return View(c);
+        }
   
 
         //
