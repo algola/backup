@@ -59,11 +59,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult CreateSheetPrintableArticle(SheetPrintableArticleViewModel c)
         {
 
-            foreach (var item in ModelState)
-            {
-                
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -111,10 +106,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     }
 
                     //rigeneration name of article
-                    c.Article.ArticleName = c.Article.TypeOfMaterial + " " +
-                                            c.Article.NameOfMaterial + " " +
-                                            c.Article.Weight + " " +
-                                            c.Article.Format;                                                                                        
+                    c.Article.ArticleName = c.Article.ToString();
+                                                                                        
 
                     c.Article.TimeStampTable = DateTime.Now;
                     articleRepository.Add(c.Article);
@@ -129,7 +122,122 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(c);
         }
 
-                
+
+        [HttpGet]
+        public ActionResult CreateRollPrintableArticle()
+        {
+            return View(new RollPrintableArticleViewModel());
+        }
+
+        public ActionResult CreateRollPrintableArticle(RollPrintableArticleViewModel c)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    if (c.Article.CodArticle == null)
+                    {
+                        c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository,c.SupplierMaker,c.SupplyerBuy);                    
+                    }
+
+                    //                        c.RollPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
+                    c.RollPrintableArticleStandardCost.TimeStampTable = DateTime.Now;
+
+                    //                       c.RollPrintableArticleCuttedCost.CodArticle = a.CodArticle;
+                    //                       c.RollPrintableArticleCuttedCost.CodArticleCost = a.CodArticle + "_CTC";
+                    c.RollPrintableArticleStandardCost.CodArticle = c.Article.CodArticle;
+                    c.RollPrintableArticleStandardCost.CodArticleCost = c.Article.CodArticle + "_STD";
+
+                    //rigeneration name of article
+                    c.Article.ArticleName = c.Article.ToString();
+
+                    c.Article.TimeStampTable = DateTime.Now;
+
+                    articleRepository.Add(c.Article);
+                    articleRepository.Save();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+            return View(c);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult WizardRollPrintableArticle()
+        {
+            return View(new RollPrintableArticleViewModelWizard());
+        }
+
+        public ActionResult WizardRollPrintableArticle(RollPrintableArticleViewModelWizard c)
+        {
+            RollPrintableArticle a;
+            RollPrintableArticleStandardCost cost;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //we have to count weights and widths and use 2 counter to 
+
+                    //WeightS
+                    foreach (var weight in c.Weights)
+	                {
+                        //control if weigth is valid
+                        if (weight > 0)
+                        foreach (var width in c.Widths)
+                        {
+                            if (width > 0)
+                            {
+
+                                c.Article.Weight = (long)weight;
+                                c.Article.Width = width;
+
+                                c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
+
+                                //c.RollPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
+                                c.RollPrintableArticleStandardCost.TimeStampTable = DateTime.Now;
+
+                                //                       c.RollPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
+                                //                       c.RollPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                                c.RollPrintableArticleStandardCost.CodArticle = c.Article.CodArticle;
+                                c.RollPrintableArticleStandardCost.CodArticleCost = c.Article.CodArticle + "_STD";
+
+
+                                c.Article.ArticleName = c.Article.ToString();
+
+                                c.Article.TimeStampTable = DateTime.Now;
+
+                                a = (RollPrintableArticle)c.Article.Clone();
+                                
+                                //cost = (RollPrintableArticleStandardCost)c.RollPrintableArticleStandardCost.Clone();
+                                //a.ArticleCosts.Clear();
+                                //a.ArticleCosts.Add(cost);
+                                
+                                articleRepository.Add(a);
+                                articleRepository.Save();
+                            }
+                        }
+	                }
+
+                   
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+            return View(c);
+        }
+  
+
         //
         // GET: /Article/Edit/5
         public ActionResult Edit(string id)
@@ -190,71 +298,112 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             SheetPrintableArticleViewModel viewModel=new SheetPrintableArticleViewModel();
             viewModel.Article = (SheetPrintableArticle) articleRepository.GetSingle(id);
 
+            //get producer and maker
+
             if (viewModel.Article.CodArticle == "")
                 return HttpNotFound();
 
             return View(viewModel);
         }
 
-        [HttpGet]
+
         public ActionResult EditRollPrintableArticle(string id)
         {
             RollPrintableArticleViewModel viewModel = new RollPrintableArticleViewModel();
             viewModel.Article = (RollPrintableArticle)articleRepository.GetSingle(id);
 
-            if (viewModel.Article.CodArticle == "")
-                return HttpNotFound();
-
-            return View(viewModel);
-        }
-
-        public ActionResult EditObjectPrintableArticle(string id)
-        {
-            ObjectPrintableArticleViewModel viewModel = new ObjectPrintableArticleViewModel();
-            viewModel.Article = (ObjectPrintableArticle)articleRepository.GetSingle(id);
+            //get producer and maker
 
             if (viewModel.Article.CodArticle == "")
                 return HttpNotFound();
 
             return View(viewModel);
         }
-
-        public ActionResult EditRigidPrintableArticle(string id)
-        {
-            RigidPrintableArticleViewModel viewModel = new RigidPrintableArticleViewModel();
-            viewModel.Article = (RigidPrintableArticle)articleRepository.GetSingle(id);
-
-            if (viewModel.Article.CodArticle == "")
-                return HttpNotFound();
-
-            return View(viewModel);
-        }
-
 
         #endregion
 
         //
         // POST: /Article/Edit/5
         [HttpPost]
-        public ActionResult EditSheetPrintableArticle(SheetPrintableArticleViewModel item)
+        public ActionResult EditSheetPrintableArticle(SheetPrintableArticleViewModel c)
         {                                
             if (ModelState.IsValid) 
-            {            
-                try 
+            {
+                try
                 {
-                    articleRepository.Edit(item.Article);
+
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems2 = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems2.Count() == 0) throw new Exception();
+
+                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                    c.Article.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
+
+                    articleRepository.Edit(c.Article);
                     articleRepository.Save();
                     return RedirectToAction("Index");
-                } 
-                
-                catch (Exception ex) 
-                {                
+                }
+                catch (Exception ex)
+                {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
 
             //If we come here, something went wrong. Return it back.        
-            return View(item);       
+            return View(c);       
+        }
+
+        [HttpPost]
+        public ActionResult EditRollPrintableArticle(RollPrintableArticleViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems2 = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems2.Count() == 0) throw new Exception();
+
+                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                    c.Article.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
+
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back.        
+            return View(c);
         }
 
         /*

@@ -199,6 +199,8 @@
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD_Metadata.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierIndex.cs" />
     <Compile Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -629,6 +631,13 @@
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleCuttedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePakedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePalletCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleCuttedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle_old.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\WizardRollPrintableArticle.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

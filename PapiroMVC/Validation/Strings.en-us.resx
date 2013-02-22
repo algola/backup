@@ -294,4 +294,26 @@
   <data name="SupplyerBuyError" xml:space="preserve">
     <value>Supplier doesn't compare in list</value>
   </data>
+  <data name="MqForafait" xml:space="preserve">
+    <value>Minial Mq</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="ObjectPrintableArticleType" xml:space="preserve">
+    <value>Generic</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="RigidPrintableArticleType" xml:space="preserve">
+    <value>Rigid/Banner</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="RollPrintableArticleType" xml:space="preserve">
+    <value>Roll</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="SheetPrintableArticleType" xml:space="preserve">
+    <value>Sheet</value>
+    <comment>used for searching in view</comment>
+  </data>
 </root>

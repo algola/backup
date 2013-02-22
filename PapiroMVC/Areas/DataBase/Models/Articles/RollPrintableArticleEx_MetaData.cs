@@ -8,9 +8,10 @@ namespace PapiroMVC.Models
 {
     public class RollPrintableArticle_MetaData : Printable_MetaData
     {
-        [DisplayNameLocalized(typeof(Strings),"CostPerMl")]
-        public Nullable<double> CostPerMl { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"CostPerMq")]
-        public Nullable<double> CostPerMq { get; set; }
+        [DisplayNameLocalized(typeof(Strings), "Width")]
+        public Nullable<bool> Width { get; set; }
+        [DisplayNameLocalized(typeof(Strings), "MqForafait")]
+        public Nullable<double> MqForafait { get; set; }
+
     }
 }

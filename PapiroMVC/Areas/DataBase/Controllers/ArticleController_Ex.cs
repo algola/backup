@@ -9,13 +9,13 @@ using Services;
 using Ninject.Planning.Bindings;
 using System.Web.Security;
 using Mvc.HtmlHelpers;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class ArticleController : PapiroMVC.Controllers.ControllerBase
     {
-
-        
+    
         /// <summary>
         /// AutoComplete
         /// </summary>
@@ -191,7 +191,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-
         /// <summary>
         /// AutoComplete
         /// </summary>
@@ -215,7 +214,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        
         /*
         /// <summary>
         /// AutoComplete
@@ -244,6 +242,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string codArticleFilter = string.Empty;
             string articleNameFilter = string.Empty;
             string supplierNameFilter = string.Empty;
+            string typeOfArticleFilter = string.Empty;
+
+            //read from validation's language file
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string rollType = resman.GetString("RollPrintableArticleType");
+            string sheetType = resman.GetString("SheetPrintableArticleType");
+            string objectType = resman.GetString("ObjectPrintableArticleType");
+            string rigidType = resman.GetString("RigidPrintableArticleType");
 
             if (gridSettings.isSearch)
             {
@@ -256,7 +262,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
 
+                typeOfArticleFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfArticle").data : string.Empty;
             }
+
             var q = articleRepository.GetAll();
 
             if (!string.IsNullOrEmpty(codArticleFilter))
@@ -272,6 +281,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (!string.IsNullOrEmpty(supplierNameFilter))
             {
                 q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(typeOfArticleFilter))
+            {
+                //to match with language we have to compare filter with resource
+                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
+                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.RollPrintableArticle);
+
+                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
+                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.SheetPrintableArticle);
+
+                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
+                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.ObjectPrintableArticle);
+
+                if (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()))
+                    q = q.Where(c => c.TypeOfArticle == Article.ArticleType.RigidPrintableArticle);
             }
 
             switch (gridSettings.sortColumn)
@@ -316,6 +341,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         {                       
                             a.CodArticle,
                             a.CodArticle,
+                            a.TypeOfArticle.ToString(),
                             a.ArticleName,
                             a.CustomerSupplierMaker.BusinessName
                         }

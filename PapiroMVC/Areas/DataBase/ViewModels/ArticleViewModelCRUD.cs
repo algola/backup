@@ -44,7 +44,7 @@ namespace PapiroMVC.Models
     //    }
     //}
 
-    public class ObjectPrintableArticleViewModel
+    public class ObjectPrintableArticleViewModel : ArticleViewModel
     {
         ObjectPrintableArticle article;
         public ObjectPrintableArticle Article
@@ -54,6 +54,8 @@ namespace PapiroMVC.Models
                 if (article == null)
                 {
                     article = new ObjectPrintableArticle();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
                     article.ArticleCosts.Add(new ObjectPrintableArticleStandardCost());
                 }
                 return article;
@@ -61,6 +63,8 @@ namespace PapiroMVC.Models
             set
             {
                 article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
             }
         }
         public ObjectPrintableArticleStandardCost ObjectPrintableArticleStandardCost
@@ -72,7 +76,7 @@ namespace PapiroMVC.Models
         }
     }
 
-    public class RollPrintableArticleViewModel
+    public class RollPrintableArticleViewModel : ArticleViewModel
     {
         RollPrintableArticle article;
         public RollPrintableArticle Article
@@ -82,7 +86,9 @@ namespace PapiroMVC.Models
                 if (article == null)
                 {
                     article = new RollPrintableArticle();
-                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
+                    SupplyerBuy = "";
+                    SupplierMaker = "";
+//                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new RollPrintableArticleStandardCost());
                 }
                 return article;
@@ -90,9 +96,12 @@ namespace PapiroMVC.Models
             set
             {
                 article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
             }
         }
 
+        /*
         public RollPrintableArticleCuttedCost RollPrintableArticleCuttedCost
         {
             get
@@ -100,6 +109,8 @@ namespace PapiroMVC.Models
                 return (RollPrintableArticleCuttedCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleCuttedCost);
             }
         }
+        */
+
         public RollPrintableArticleStandardCost RollPrintableArticleStandardCost
         {
             get
@@ -142,6 +153,8 @@ namespace PapiroMVC.Models
             set 
             {
                 article = value;
+                SupplierMaker = article.CustomerSupplierMaker==null?null:article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy==null?null:article.CustomerSupplierBuy.BusinessName;
             }
         }
 
@@ -168,7 +181,7 @@ namespace PapiroMVC.Models
         }
     }
 
-    public class RigidPrintableArticleViewModel
+    public class RigidPrintableArticleViewModel : ArticleViewModel
     {
         RigidPrintableArticle article;
         public RigidPrintableArticle Article
@@ -178,6 +191,8 @@ namespace PapiroMVC.Models
                 if (article == null)
                 {
                     article = new RigidPrintableArticle();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
                     article.ArticleCosts.Add(new RigidPrintableArticleStandardCost());
                 }
                 return article;
@@ -185,6 +200,8 @@ namespace PapiroMVC.Models
             set
             {
                 article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
             }
         }
 

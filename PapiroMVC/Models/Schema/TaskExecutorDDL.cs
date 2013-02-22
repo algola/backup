@@ -155,7 +155,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("Steps", "FromUnit", SchemaDb.Double, "0");
             dbS.AddColumnToTable("Steps", "ToUnit", SchemaDb.Double, "0");
 
-            //0 step per run //1 cost per run //2 percentage for weigth // 3 binding time // 4 binding cost
+            //0 step per run //1 cost per run //2 percentage for Weight // 3 binding time // 4 binding cost
             dbS.AddColumnToTable("Steps", "Selector", SchemaDb.Int, "0");
             dbS.AddColumnToTable("Steps", "AvarageRunPerHour", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("Steps", "CostPerUnit", SchemaDb.Double, "0");

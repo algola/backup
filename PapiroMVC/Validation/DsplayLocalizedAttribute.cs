@@ -63,12 +63,34 @@ namespace PapiroMVC.Validation
             private Type resourceName { get; set; }
         }
 
+ 
     public static class HtmlHelperExtension
     {
+
+
+        private static bool IsPropertyACollection(PropertyInfo property)
+        {
+            return property.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null;
+        }
+
         private static String GetToolTip<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
         {
+
+            Console.WriteLine(expression.Body);
+            MemberExpression exp;
+
             var ret = String.Empty;
-            var exp = (MemberExpression)expression.Body;
+            try
+            {
+                exp = (MemberExpression)expression.Body;
+            }
+            catch  (Exception e)
+            {
+                if (expression.CanReduce)
+                    expression.Reduce();
+                exp = (MemberExpression)expression.Body;
+                Console.WriteLine(e);
+            }
 
             MetadataTypeAttribute[] metadataTypes = typeof(TModel).GetCustomAttributes(typeof(MetadataTypeAttribute), true).OfType<MetadataTypeAttribute>().ToArray();
             MetadataTypeAttribute metadata = metadataTypes.FirstOrDefault();

@@ -8,6 +8,7 @@ namespace Services
 {
     public interface IArticleRepository : IGenericRepository<Article>
     {
+        string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy);
         Article GetSingle(string codArticle);
     }
 }

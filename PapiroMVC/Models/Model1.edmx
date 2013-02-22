@@ -91,10 +91,12 @@
           <Property Name="NoBv" Type="bit" />
           <Property Name="SheetPerPacked" Type="uint" />
           <Property Name="SheetPerPallet" Type="uint" />
-          <Property Name="Width" Type="uint" />
+          <Property Name="Width" Type="double" />
           <Property Name="Thikness" Type="double" />
           <Property Name="Size" Type="char" MaxLength="50" />
           <Property Name="PrintableFormat" Type="char" MaxLength="9" />
+          <Property Name="SupplierMaker" Type="char" MaxLength="50" />
+          <Property Name="MqForafait" Type="double" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -191,7 +193,7 @@
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
           <Property Name="CodPrinterMachine" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="PrinterName" Type="char" MaxLength="100" />
+          <Property Name="PrinterName" Type="char" MaxLength="160" />
           <Property Name="Version" Type="char" MaxLength="4" />
           <Property Name="Dismissed" Type="bit" />
           <Property Name="FormatMin" Type="char" MaxLength="9" />
@@ -225,6 +227,7 @@
           <Property Name="IsEstimatedOnTime" Type="bit" />
           <Property Name="IsEstimatedOnRun" Type="bit" />
           <Property Name="IsEstimatedOnMq" Type="bit" />
+          <Property Name="Percent" Type="double" />
         </EntityType>
         <EntityType Name="steps">
           <Key>
@@ -435,6 +438,7 @@
           <Property Type="Boolean" Name="IsEstimatedOnTime" />
           <Property Type="Boolean" Name="IsEstimatedOnRun" />
           <Property Type="Boolean" Name="IsEstimatedOnMq" />
+          <Property Type="Double" Name="Percent" />
         </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int64" Name="PrintingUnit" />
@@ -594,8 +598,12 @@
           <Property Type="String" Name="NameOfMaterial" MaxLength="200" Unicode="false" FixedLength="true" />
           <Property Type="Boolean" Name="NoBv" />
           <Property Type="Double" Name="Hand" />
+          <Property Type="String" Name="SupplierMaker" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="NoPrintable" BaseType="dbModel.Article" Abstract="false" />
+        <EntityType Name="NoPrintable" BaseType="dbModel.Article" Abstract="false" >
+          <Property Type="String" Name="SupplierMaker" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="MqForafait" />
+        </EntityType>
         <EntityType Name="SheetPrintableArticle" BaseType="dbModel.Printable">
           <Property Type="String" Name="Format" MaxLength="9" Unicode="false" FixedLength="true" />
           <Property Type="Boolean" Name="NoPinza" />
@@ -603,7 +611,8 @@
           <Property Type="Int64" Name="SheetPerPallet" />
         </EntityType>
         <EntityType Name="RollPrintableArticle" BaseType="dbModel.Printable">
-          <Property Type="Int64" Name="Width" />
+          <Property Type="Double" Name="Width" />
+          <Property Type="Double" Name="MqForafait" />
         </EntityType>
         <EntityType Name="SheetPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
           <Property Type="String" Name="CostPerKg" />
@@ -830,6 +839,7 @@
           <EntitySetMapping Name="printermachines">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
               <MappingFragment StoreEntitySet="printermachines">
+                <ScalarProperty Name="Percent" ColumnName="Percent" />
                 <ScalarProperty Name="IsEstimatedOnMq" ColumnName="IsEstimatedOnMq" />
                 <ScalarProperty Name="IsEstimatedOnRun" ColumnName="IsEstimatedOnRun" />
                 <ScalarProperty Name="IsEstimatedOnTime" ColumnName="IsEstimatedOnTime" />
@@ -1203,18 +1213,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="articles">
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
-              <MappingFragment StoreEntitySet="articles">
-                <ScalarProperty Name="CodSupplierMaker" ColumnName="CodSupplierMaker" />
-                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
-                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
-                <ScalarProperty Name="CodSupplierBuy" ColumnName="CodSupplierBuy" />
-                <ScalarProperty Name="ArticleName" ColumnName="ArticleName" />
-                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
-              </MappingFragment>
-            </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Printable)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="SupplierMaker" ColumnName="SupplierMaker" />
                 <ScalarProperty Name="Hand" ColumnName="Hand" />
                 <ScalarProperty Name="Thikness" ColumnName="Thikness" />
                 <ScalarProperty Name="NoBv" ColumnName="NoBv" />
@@ -1228,6 +1229,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.NoPrintable)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="MqForafait" ColumnName="MqForafait" />
+                <ScalarProperty Name="SupplierMaker" ColumnName="SupplierMaker" />
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <Condition ColumnName="SelectorPrintable" Value="1" />
               </MappingFragment>
@@ -1244,6 +1247,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollPrintableArticle)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="MqForafait" ColumnName="MqForafait" />
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <Condition ColumnName="SelectorSheetRollWide" Value="1" />
@@ -1262,6 +1266,16 @@
                 <ScalarProperty Name="PrintableFormat" ColumnName="PrintableFormat" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
                 <Condition ColumnName="SelectorSheetRollWide" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="CodSupplierMaker" ColumnName="CodSupplierMaker" />
+                <ScalarProperty Name="CodSupplierBuy" ColumnName="CodSupplierBuy" />
+                <ScalarProperty Name="ArticleName" ColumnName="ArticleName" />
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -285,4 +285,22 @@
   <data name="SupplyerBuy" xml:space="preserve">
     <value>Fornitore</value>
   </data>
+  <data name="MqForafait" xml:space="preserve">
+    <value>Mq minimali</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Larghezza</value>
+  </data>
+  <data name="ObjectPrintableArticleType" xml:space="preserve">
+    <value>Generico</value>
+  </data>
+  <data name="RigidPrintableArticleType" xml:space="preserve">
+    <value>Rigido/Banner/Mq</value>
+  </data>
+  <data name="RollPrintableArticleType" xml:space="preserve">
+    <value>Rotolo</value>
+  </data>
+  <data name="SheetPrintableArticleType" xml:space="preserve">
+    <value>Foglio</value>
+  </data>
 </root>

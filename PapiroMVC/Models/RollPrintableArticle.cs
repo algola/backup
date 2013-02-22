@@ -14,6 +14,7 @@ namespace PapiroMVC.Models
     
     public partial class RollPrintableArticle : Printable
     {
-        public Nullable<long> Width { get; set; }
+        public Nullable<double> Width { get; set; }
+        public Nullable<double> MqForafait { get; set; }
     }
 }

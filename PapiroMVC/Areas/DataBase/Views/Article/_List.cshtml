@@ -11,16 +11,23 @@
 <br />
 
 @(Html.jqGrid("ArticleGrid")
-    
+
     // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setWidth(40)
         .setCustomFormatter("editArticle")
         .setSortable(false))
     .addColumn(new Column("CodArticle")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodArticleCaption"))
         .setWidth(80)
         .setSortable(true))
+    .addColumn(new Column("TypeOfArticle")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfArticleCaption"))
+        .setWidth(100)
+        .setCustomFormatter("typeOfArticle")
+        .setSearch(true)
+        .setSortable(false))
     .addColumn(new Column("ArticleName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ArticleCaption"))
         .setWidth(200)
@@ -28,6 +35,7 @@
         .setSearch(true))
     .addColumn(new Column("SupplierName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
+        .setSearch(true)
         .setWidth(200))
 
     .setUrl(Url.Action("ArticleList", "Article"))
@@ -38,19 +46,24 @@
     .setPager("CustomGridAccountPager")
     .setPrint(true)
     .setLoadText("")
-    .setAutoWidth(true) 
+    .setAutoWidth(true)
     .setSearchToolbar(true)
-  
+
     // error handler
     .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
-                            
+
     // render the html
     .Render()
 )
 
 @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle")
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateRollPrintableArticle"), "CreateRollPrintableArticle")
+
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardRollPrintableArticle"), "WizardRollPrintableArticle")
 
 <a href="#" id="a1">Get data from selected row</a>
+<a href="#" id="s1"></a>
+
 
 <script type="text/javascript">
     function editArticle(cellvalue, options, rowobject) {
@@ -59,6 +72,32 @@
         return link.replace("-1", cellvalue);
     }
 
+    function typeOfArticle(cellvalue, options, rowobject) {
+
+        var link = "type"; 
+        var sheet = '@HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType")';
+        var roll = '@HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType")';
+        var object = '@HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType")';
+        var rigid = '@HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType")';
+
+        if (cellvalue == "SheetPrintableArticle")
+            return link.replace("type", sheet);
+
+        if (cellvalue == "ObjectPrintableArticle")
+            return link.replace("type", object);
+
+        if (cellvalue == "RollPrintableArticle")
+            return link.replace("type", roll);
+
+        if (cellvalue == "RigidPrintableArticle")
+            return link.replace("type", rigid);
+
+        return link;
+    }
+
+    jQuery("#s1").click( function() {
+        jQuery("#ArticleGrid").jqGrid('setGridParam',{url:"@Url.Action("ArticleList", "Article")"}).trigger("reloadGrid");
+    });
     /*
 
     javascript molto utile per associare un'azione alla riga selezionata

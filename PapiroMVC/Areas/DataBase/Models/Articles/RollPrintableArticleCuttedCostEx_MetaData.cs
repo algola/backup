@@ -6,7 +6,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Models
 {
-    public class RollPrintableArticleCuttedCost_MetaData
+    public class RollPrintableArticleCuttedCost_MetaData : RollPrintableArticleCost_MetaData
     {
         [DisplayNameLocalized(typeof(Strings),"UseTheSameCostOfStandardWidthAfterKg")]
         public Nullable<bool> UseTheSameCostOfStandardWidthAfterKg { get; set; }

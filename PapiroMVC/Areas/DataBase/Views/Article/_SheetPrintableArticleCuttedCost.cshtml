@@ -1,10 +1,16 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.SheetPrintableArticleViewModel
 
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleCuttedCostTitle");
+}
+
+<h3>@ViewBag.Title</h3>
+
     <fieldset>
         <legend>SheetPrintableArticleCuttedCost</legend>
 
-        <h3>Costi di acquisto a formato speciale</h3>
         <br />
 
         @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.CostPerKg)

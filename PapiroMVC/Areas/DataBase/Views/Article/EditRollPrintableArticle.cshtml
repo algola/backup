@@ -1,32 +1,10 @@
-﻿@using System.Linq
+﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.RollPrintableArticleViewModel
 
 @{
-    ViewBag.Title = "Modifica dell'articolo: " + @Model.Article.ArticleName;   
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingArticleTitle") + @Model.Article.ArticleName;
 }
-
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>RollPrintableArticleViewModel</legend>
-        @Html.EditorFor(model => model.Article)   
-       
-    </fieldset>
-    
-        @Html.EditorFor(model => Model.RollPrintableArticleCuttedCost)
-        @Html.EditorFor(model => Model.RollPrintableArticleStandardCost)
-        
-     <p>
-        <input type="submit" value="Save" />
-     </p>
-
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-             
-</>
+@Html.Partial("_EditAndCreateRollPrintableArticle", Model)

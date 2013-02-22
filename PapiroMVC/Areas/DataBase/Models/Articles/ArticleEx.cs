@@ -136,5 +136,11 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+        public override string ToString()
+        {
+           return "";
+        }
+
     }
 }

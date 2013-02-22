@@ -73,6 +73,12 @@ namespace PapiroMVC.Models
 
         #endregion
 
+
+        public override string ToString()
+        {
+            return base.ToString() + this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Weight + " ";
+        }
+
     }
 }
 

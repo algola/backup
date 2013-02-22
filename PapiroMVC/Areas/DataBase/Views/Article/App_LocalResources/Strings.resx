@@ -117,10 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArticleCaption" xml:space="preserve">
+    <value>Articolo</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="CodArticleCaption" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="CreateRollPrintableArticle" xml:space="preserve">
+    <value>Nuovo Materiale in Rotolo</value>
+  </data>
   <data name="CreateSheetPrintableArticle" xml:space="preserve">
     <value>Nuovo materiale a Foglio</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
+  </data>
+  <data name="EditingArticleTitle" xml:space="preserve">
+    <value>Modifica dell'articolo: </value>
+  </data>
+  <data name="ObjectPrintableArticleType" xml:space="preserve">
+    <value>Generico</value>
+  </data>
+  <data name="OperationsCaption" xml:space="preserve">
+    <value>Operazioni</value>
+  </data>
+  <data name="RigidPrintableArticleType" xml:space="preserve">
+    <value>Rigido/Banner/Mq</value>
+  </data>
+  <data name="RollPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a formato speciale</value>
+  </data>
+  <data name="RollPrintableArticleStandardCostTitle" xml:space="preserve">
+    <value>Costi di acquisto standard</value>
+  </data>
+  <data name="RollPrintableArticleType" xml:space="preserve">
+    <value>Rotolo</value>
+  </data>
+  <data name="RollPrintableArticleViewModelWizard" xml:space="preserve">
+    <value>Creazione Automatica degli Articoli in rotolo</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a formato speciale</value>
+  </data>
+  <data name="SheetPrintableArticlePakedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a pacco</value>
+  </data>
+  <data name="SheetPrintableArticlePalletCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a pallet</value>
+  </data>
+  <data name="SheetPrintableArticleType" xml:space="preserve">
+    <value>Foglio</value>
+  </data>
+  <data name="SupplierNameCaption" xml:space="preserve">
+    <value>Fornitore</value>
+  </data>
+  <data name="WizardRollPrintableArticle" xml:space="preserve">
+    <value>Creazione multipla articoli a rotolo</value>
   </data>
 </root>

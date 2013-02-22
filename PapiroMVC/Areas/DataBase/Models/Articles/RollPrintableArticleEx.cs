@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(RollPrintableArticle_MetaData))]
-    public partial class RollPrintableArticle : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class RollPrintableArticle : Printable, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public RollPrintableArticle()
         {
@@ -63,6 +63,7 @@ namespace PapiroMVC.Models
             base.Copy(to);
 
             ((RollPrintableArticle)to).Width = this.Width;
+            ((RollPrintableArticle)to).MqForafait = this.MqForafait;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
@@ -71,5 +72,9 @@ namespace PapiroMVC.Models
 
         #endregion
 
+        public override string ToString()
+        {
+            return base.ToString() + this.Width + " ";
+        }
     }
 }

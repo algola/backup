@@ -21,5 +21,6 @@ namespace PapiroMVC.Models
         public string NameOfMaterial { get; set; }
         public Nullable<bool> NoBv { get; set; }
         public Nullable<double> Hand { get; set; }
+        public string SupplierMaker { get; set; }
     }
 }

@@ -117,10 +117,71 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ArticleCaption" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CodArticleCaption" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="CreateRollPrintableArticle" xml:space="preserve">
+    <value>New Roll Article</value>
+  </data>
   <data name="CreateSheetPrintableArticle" xml:space="preserve">
     <value>New Sheet Article</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
+  </data>
+  <data name="EditingArticleTitle" xml:space="preserve">
+    <value>Editing Article: </value>
+  </data>
+  <data name="ObjectPrintableArticleType" xml:space="preserve">
+    <value>Generic</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="OperationsCaption" xml:space="preserve">
+    <value>Operations</value>
+  </data>
+  <data name="RigidPrintableArticleType" xml:space="preserve">
+    <value>Rigid/Banner</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="RollPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Cost in case of buying special width</value>
+  </data>
+  <data name="RollPrintableArticleStandardCostTitle" xml:space="preserve">
+    <value>Cost in case of buying normal width</value>
+  </data>
+  <data name="RollPrintableArticleType" xml:space="preserve">
+    <value>Roll</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="RollPrintableArticleViewModelWizard" xml:space="preserve">
+    <value>Automatic Creation of Roll Printable Articles</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Costs in case of buying in a special format</value>
+  </data>
+  <data name="SheetPrintableArticlePakedCostTitle" xml:space="preserve">
+    <value>Costs in case of buying packed</value>
+  </data>
+  <data name="SheetPrintableArticlePalletCostTitle" xml:space="preserve">
+    <value>Costs in case of buying not packed</value>
+  </data>
+  <data name="SheetPrintableArticleType" xml:space="preserve">
+    <value>Sheet</value>
+    <comment>used for searching in view</comment>
+  </data>
+  <data name="SupplierNameCaption" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="WizardRollPrintableArticle" xml:space="preserve">
+    <value>Multiple creation of Roll Printable Article</value>
   </data>
 </root>

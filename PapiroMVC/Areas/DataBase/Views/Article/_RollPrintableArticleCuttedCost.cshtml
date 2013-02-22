@@ -1,0 +1,38 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RollPrintableArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleCuttedCostTitle");
+}
+
+<h3>@ViewBag.Title</h3>
+
+    <fieldset>
+        <legend>RollPrintableArticleCuttedCost</legend>
+
+        <br />
+
+        @Html.AlgolaEditorFor(model => model.RollPrintableArticleCuttedCost.CostPerMq)
+        @Html.AlgolaEditorFor(model => model.RollPrintableArticleCuttedCost.CostPerMl)
+
+        <div class="editor-label">
+            @Html.CheckBox(".UseTheSameCostOfStandardWidthAfterKg", @Model.RollPrintableArticleCuttedCost.UseTheSameCostOfStandardWidthAfterKg)            
+            @Html.LabelFor(model => model.RollPrintableArticleCuttedCost.UseTheSameCostOfStandardWidthAfterKg)
+        </div>
+
+        <br />
+        @Html.AlgolaEditorFor(model => model.RollPrintableArticleCuttedCost.Kg)
+
+        <div class="editor-label">
+            @Html.CheckBox("UseTheSameCostOfRollAfterRoll", @Model.RollPrintableArticleCuttedCost.UseTheSameCostOfStandardWidthAfterMl)            
+            @Html.LabelFor(model => model.RollPrintableArticleCuttedCost.UseTheSameCostOfStandardWidthAfterMl)
+        </div>
+        <br />
+        @Html.AlgolaEditorFor(model => model.RollPrintableArticleCuttedCost.Ml)
+
+        @Html.HiddenFor(model => model.RollPrintableArticleCuttedCost.TimeStampTable)
+        @Html.HiddenFor(model => model.RollPrintableArticleCuttedCost.CodArticleCost)
+        @Html.HiddenFor(model => model.RollPrintableArticleCuttedCost.CodArticle)
+
+    </fieldset>

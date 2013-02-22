@@ -9,6 +9,7 @@ namespace PapiroMVC.DbCodeManagement
         {
             public enum ExpandLevel
             {
+                Decimal = 10,
                 A = 11,
                 B,
                 C,
@@ -100,9 +101,9 @@ namespace PapiroMVC.DbCodeManagement
             {
                 //NOTE: UseCaseSensitive Level selected and the value 
                 //to convert is larger that the previus example.
-                long IntValue = ToInt64(code, ExpandLevel.UseCaseSensitive);
+                long IntValue = ToInt64(code, ExpandLevel.Decimal);
 
-                string HexValue = ToHex(IntValue+1, ExpandLevel.UseCaseSensitive);
+                string HexValue = ToHex(IntValue + 1, ExpandLevel.Decimal);
                 return HexValue;                
             }
         }

@@ -14,5 +14,7 @@ namespace PapiroMVC.Models
     
     public partial class NoPrintable : Article
     {
+        public string SupplierMaker { get; set; }
+        public Nullable<double> MqForafait { get; set; }
     }
 }

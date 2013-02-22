@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public class RollPrintableArticleStandardCost_MetaData
+    public class RollPrintableArticleStandardCost_MetaData : RollPrintableArticleCost_MetaData
     {
     }
 }
