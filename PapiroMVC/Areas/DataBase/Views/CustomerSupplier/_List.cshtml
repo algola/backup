@@ -21,6 +21,12 @@
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodCustomerSupplierCaption"))
         .setWidth(80)
         .setSortable(true))
+            .addColumn(new Column("TypeOfCustomerSupplier")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfCustomerSupplierCaption"))
+        .setWidth(100)
+        .setCustomFormatter("typeOfCustomerSupplier")
+        .setSearch(true)
+        .setSortable(false))
     .addColumn(new Column("BusinessName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BusinessNameCaption"))
         .setWidth(200)
@@ -66,6 +72,24 @@
 
         return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
     }
+
+    function typeOfCustomerSupplier(cellvalue, options, rowobject) {
+
+        var link = "type";
+
+        //following string has to be located in view and in validation (metadata)
+        var customer = '@HttpContext.GetLocalResourceObject(strings, "CustomerType")';
+        var supplier = '@HttpContext.GetLocalResourceObject(strings, "SupplierType")';
+
+            if (cellvalue == "Customer")
+                return link.replace("type", customer);
+
+            if (cellvalue == "Supplier")
+                return link.replace("type", supplier);
+
+            return link;
+        }
+
 
     /*
 

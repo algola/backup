@@ -223,6 +223,15 @@ namespace PapiroMVC.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cliente.
+        /// </summary>
+        public static string CustomerType {
+            get {
+                return ResourceManager.GetString("CustomerType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -489,6 +498,15 @@ namespace PapiroMVC.Validation {
         public static string SupplierMaker {
             get {
                 return ResourceManager.GetString("SupplierMaker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fornitore.
+        /// </summary>
+        public static string SupplierType {
+            get {
+                return ResourceManager.GetString("SupplierType", resourceCulture);
             }
         }
         

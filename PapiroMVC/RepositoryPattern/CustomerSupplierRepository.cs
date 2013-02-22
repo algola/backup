@@ -1,11 +1,31 @@
 ﻿using System.Linq;
 using PapiroMVC.Models;
+using PapiroMVC.DbCodeManagement;
 
 namespace Services
 {
 
     public class CustomerSupplierRepository : GenericRepository<dbEntities, CustomerSupplier>, ICustomerSupplierRepository
     {
+        /// <summary>
+        /// Take next code in string numerical order.
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public string GetNewCode(CustomerSupplier c)
+        {
+
+            var codes = (from COD in this.GetAll() select COD.CodCustomerSupplier).ToArray().OrderBy(x => x, new SemiNumericComparer());
+
+            var csCode = codes.Last();
+
+            if (csCode == null)
+                csCode = "0";
+            return AlphaCode.GetNextCode(csCode);
+
+        }
+
+        
         public override IQueryable<CustomerSupplier> GetAll()
         {
             return Context.customersuppliers.Include("customersupplierbases").Include("customersupplierbases.typeofbase");

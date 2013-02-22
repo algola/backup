@@ -177,6 +177,9 @@
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Fornitore</value>
   </data>
+  <data name="TypeOfCustomerSupplierCaption" xml:space="preserve">
+    <value>Cliente/Fornitore</value>
+  </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a rotolo</value>
   </data>

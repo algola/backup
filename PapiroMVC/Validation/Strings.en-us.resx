@@ -316,4 +316,10 @@
     <value>Sheet</value>
     <comment>used for searching in view</comment>
   </data>
+  <data name="CustomerType" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="SupplierType" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
 </root>

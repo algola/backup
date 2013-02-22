@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using PapiroMVC.Models;
 using Mvc.HtmlHelpers;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {   
@@ -84,7 +85,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string businessNameFilter = string.Empty;
             string vatNumberFilter = string.Empty;
             string taxCodeFilter = string.Empty;
-            
+
+            string typeOfCustomerSupplierFilter = string.Empty;
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string customerType = resman.GetString("CustomerType");
+            string supplierType = resman.GetString("SupplierType");
+
             if (gridSettings.isSearch)
             {
                 codCustomerSupplierFilter = gridSettings.where.rules.Any(r => r.field == "CodCustomerSupplier") ?
@@ -98,7 +107,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 
                 taxCodeFilter = gridSettings.where.rules.Any(r => r.field == "TaxCode") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "TaxCode").data : string.Empty;
-                
+
+                typeOfCustomerSupplierFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfCustomerSupplier") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfCustomerSupplier").data : string.Empty;
+        
             }
             var q = customerSupplierRepository.GetAll();
 
@@ -120,6 +132,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (!string.IsNullOrEmpty(taxCodeFilter))
             {
                 q = q.Where(c => c.TaxCode.ToLower().Contains(taxCodeFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(typeOfCustomerSupplierFilter))
+            {
+                Boolean isCust = false, isSupp = false, isObject = false, isRigid = false;
+
+                //to match with language we have to compare filter with resource
+                isCust = (customerType.ToLower().Contains(typeOfCustomerSupplierFilter.ToLower()));
+                isSupp = (supplierType.ToLower().Contains(typeOfCustomerSupplierFilter.ToLower()));
+
+                var a = isCust ? (IQueryable<CustomerSupplier>)q.OfType<Customer>() : customerSupplierRepository.FindBy(x => x.CodCustomerSupplier == "");
+                var b = isSupp ? (IQueryable<CustomerSupplier>)q.OfType<Supplier>() : customerSupplierRepository.FindBy(x => x.CodCustomerSupplier == "");
+
+                var res = (a.Union(b));
+                q = (IQueryable<CustomerSupplier>)res;
             }
 
             switch (gridSettings.sortColumn)
@@ -167,6 +194,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         {                       
                             a.CodCustomerSupplier,
                             a.CodCustomerSupplier,
+                            a.TypeOfCustomerSupplier.ToString(),
                             a.BusinessName, 
                             a.VatNumber, 
                             a.TaxCode, 

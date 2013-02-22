@@ -150,6 +150,9 @@
   <data name="CreateSupplier" xml:space="preserve">
     <value>Nuovo Fornitore</value>
   </data>
+  <data name="CustomerType" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
@@ -189,6 +192,9 @@
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
   </data>
+  <data name="SupplierType" xml:space="preserve">
+    <value>Fornitore</value>
+  </data>
   <data name="TaxCodeCaption" xml:space="preserve">
     <value>Codice Fiscale</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="TitleIndexBase" xml:space="preserve">
     <value>Sedi di: </value>
+  </data>
+  <data name="TypeOfCustomerSupplierCaption" xml:space="preserve">
+    <value>Cliente/Fornitore</value>
   </data>
   <data name="VatNumberCaption" xml:space="preserve">
     <value>P. Iva</value>

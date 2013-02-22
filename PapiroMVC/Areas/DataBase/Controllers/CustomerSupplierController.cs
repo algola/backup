@@ -104,10 +104,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     //if code is empty then sistem has to assign one
                     if (c.CodCustomerSupplier == null)
                     {
-                        var csCode = (from COD in dataRepCS.GetAll() select COD.CodCustomerSupplier).Max();
-                        if (csCode == null)
-                            csCode = "0";
-                        c.CodCustomerSupplier = AlphaCode.GetNextCode(csCode);
+                        c.CodCustomerSupplier = customerSupplierRepository.GetNewCode(c);
                     }
                     c.TimeStampTable = DateTime.Now;
                     dataRepCS.Add(c);
