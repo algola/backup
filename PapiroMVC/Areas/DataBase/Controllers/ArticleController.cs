@@ -9,6 +9,7 @@ using Services;
 using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -53,9 +54,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult CreateSheetPrintableArticle()
         {
+            ViewBag.ActionMethod = "CreateSheetPrintableArticle";
             return View(new SheetPrintableArticleViewModel());
         }
 
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateSheetPrintableArticle(SheetPrintableArticleViewModel c)
         {
 
@@ -64,33 +68,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 try
                 {
                     //if code is empty then sistem has to assign one
-                    if (c.Article.CodArticle == null)
+//                    if (c.Article.CodArticle == null)
                     {
-
-                        CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                        var filteredItems = customerSuppliers.Where(
-                            item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                        if (filteredItems.Count() == 0) throw new Exception();
-
-                        c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
-
-                        customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                        var filteredItems2 = customerSuppliers.Where(
-                            item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                        if (filteredItems2.Count() == 0) throw new Exception();
-
-                        //if #suppliers < 1 then no supplier has selected correctly and then thow error
-                        c.Article.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
-
-
-                        var csCode = (from COD in articleRepository.GetAll() select COD.CodArticle).Max();
-                        if (csCode == null)
-                            csCode = "0";
-                        c.Article.CodArticle = AlphaCode.GetNextCode(csCode);
+                        c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
 
                         c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
                         c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
@@ -106,8 +86,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     }
 
                     //rigeneration name of article
-                    c.Article.ArticleName = c.Article.ToString();
-                                                                                        
+                    c.Article.ArticleName = c.Article.ToString();                                                                                        
 
                     c.Article.TimeStampTable = DateTime.Now;
                     articleRepository.Add(c.Article);
@@ -119,16 +98,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return View(c);
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateSheetPrintableArticle";
+            return View("CreateSheetPrintableArticle", c);
         }
 
 
         [HttpGet]
         public ActionResult CreateRollPrintableArticle()
         {
+            ViewBag.ActionMethod = "CreateRollPrintableArticle";
             return View(new RollPrintableArticleViewModel());
         }
 
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateRollPrintableArticle(RollPrintableArticleViewModel c)
         {
 
@@ -137,7 +122,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 try
                 {
                     //if code is empty then sistem has to assign one
-                    if (c.Article.CodArticle == null)
+//                    if (c.Article.CodArticle == null)
                     {
                         c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository,c.SupplierMaker,c.SupplyerBuy);                    
                     }
@@ -164,7 +149,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return View(c);
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateRollPrintableArticle";
+            return View("CreateRollPrintableArticle", c);
+
         }
 
 
@@ -368,6 +357,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (viewModel.Article.CodArticle == "")
                 return HttpNotFound();
 
+            ViewBag.ActionMethod = "EditSheetPrintableArticle";
             return View(viewModel);
         }
 
@@ -382,6 +372,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (viewModel.Article.CodArticle == "")
                 return HttpNotFound();
 
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditRollPrintableArticle";
             return View(viewModel);
         }
 
@@ -389,7 +381,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //
         // POST: /Article/Edit/5
-        [HttpPost]
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditSheetPrintableArticle(SheetPrintableArticleViewModel c)
         {                                
             if (ModelState.IsValid) 
@@ -430,7 +423,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(c);       
         }
 
-        [HttpPost]
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditRollPrintableArticle(RollPrintableArticleViewModel c)
         {
             if (ModelState.IsValid)

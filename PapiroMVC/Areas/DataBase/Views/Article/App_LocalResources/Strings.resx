@@ -162,6 +162,9 @@
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
   </data>
+  <data name="SaveNewBasedOn" xml:space="preserve">
+    <value>Salva Nuovo</value>
+  </data>
   <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
     <value>Costi di acquisto a formato speciale</value>
   </data>

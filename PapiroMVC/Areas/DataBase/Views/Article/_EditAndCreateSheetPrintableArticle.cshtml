@@ -8,7 +8,7 @@
 }
 
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Action","Article")) {
     @Html.ValidationSummary(true)
 
     <fieldset>
@@ -52,9 +52,14 @@
     </div>
                
     <p>
-        <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        <!-- ViewBag.ActionMethod is used to understand where we are coming and so where we have to go -->
+        <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        
+        @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")               
+        {
+            <input type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+        }
     </p>
-    
 }
 
 <div>

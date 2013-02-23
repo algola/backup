@@ -165,6 +165,9 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveNewBasedOn" xml:space="preserve">
+    <value>Save new</value>
+  </data>
   <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
     <value>Costs in case of buying in a special format</value>
   </data>
