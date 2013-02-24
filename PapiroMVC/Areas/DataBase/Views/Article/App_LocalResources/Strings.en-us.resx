@@ -126,6 +126,9 @@
   <data name="CodArticleCaption" xml:space="preserve">
     <value>Code</value>
   </data>
+  <data name="ColorCaption" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="CreateRollPrintableArticle" xml:space="preserve">
     <value>New Roll Article</value>
   </data>
@@ -137,6 +140,12 @@
   </data>
   <data name="EditingArticleTitle" xml:space="preserve">
     <value>Editing Article: </value>
+  </data>
+  <data name="FormatCaption" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="NameOfMaterialCaption" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="ObjectPrintableArticleType" xml:space="preserve">
     <value>Generic</value>
@@ -186,6 +195,12 @@
   </data>
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Supplier</value>
+  </data>
+  <data name="TypeOfMaterialCaption" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="WeightCaption" xml:space="preserve">
+    <value>Gsm</value>
   </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Multiple creation of Roll Printable Article</value>

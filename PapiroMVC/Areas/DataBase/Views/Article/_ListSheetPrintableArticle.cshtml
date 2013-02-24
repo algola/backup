@@ -4,13 +4,22 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");               
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+
+    string[] typeOfArticle = new string[4];
+    typeOfArticle[0] = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType");
+    typeOfArticle[1] = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType");
+    typeOfArticle[2] = (string)HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType");
+    typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");    
+
     }
 
 <h2>@ViewBag.Title</h2>
 <br />
 
 @(Html.jqGrid("ArticleGrid")
+
+    .setCaption("Articoli a foglio")
 
     // columns
     .addColumn(new Column("Id")
@@ -22,33 +31,55 @@
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodArticleCaption"))
         .setWidth(80)
         .setSortable(true))
-    .addColumn(new Column("TypeOfArticle")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfArticleCaption"))
+
+    .addColumn(new Column("TypeOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption"))
         .setWidth(100)
-        .setCustomFormatter("typeOfArticle")
-        .setSearch(true)
-        .setSortable(false))
-    .addColumn(new Column("ArticleName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ArticleCaption"))
-        .setWidth(200)
         .setSortable(true)
         .setSearch(true))
+
+    .addColumn(new Column("NameOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Color")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Weight")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WeightCaption"))
+        .setWidth(50)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Format")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "FormatCaption"))
+        .setWidth(50)
+        .setSortable(true)
+        .setSearch(true))
+
+            
     .addColumn(new Column("SupplierName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
         .setSearch(true)
         .setWidth(200))
 
-    .setUrl(Url.Action("ArticleList", "Article"))
+    .setUrl(Url.Action("SheetPrintableArticleList", "Article"))
 
     .setHeight(300)
-    .setRowNum(10)
+    .setRowNum(20)
     .setRowList(new int[] { 10, 20, 50, 100 })
     .setPager("CustomGridAccountPager")
     .setPrint(true)
     .setLoadText("")
     .setAutoWidth(true)
     .setSearchToolbar(true)
-
+    .setViewRecords(true)
+   
     // error handler
     .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
 

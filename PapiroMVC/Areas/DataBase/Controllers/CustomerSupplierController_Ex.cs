@@ -136,7 +136,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (!string.IsNullOrEmpty(typeOfCustomerSupplierFilter))
             {
-                Boolean isCust = false, isSupp = false, isObject = false, isRigid = false;
+                Boolean isCust = false, isSupp = false;
 
                 //to match with language we have to compare filter with resource
                 isCust = (customerType.ToLower().Contains(typeOfCustomerSupplierFilter.ToLower()));

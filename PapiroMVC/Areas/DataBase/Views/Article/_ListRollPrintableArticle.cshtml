@@ -1,0 +1,135 @@
+﻿@model List<PapiroMVC.Models.Article>
+@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid 
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+
+    string[] typeOfArticle = new string[4];
+    typeOfArticle[0] = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType");
+    typeOfArticle[1] = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType");
+    typeOfArticle[2] = (string)HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType");
+    typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");    
+
+    }
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@(Html.jqGrid("RollPrintableArticleGrid")
+
+    .setCaption("Articoli a rotolo")
+    .setMultiSelect(true)
+    .setLoadText("caricamento dati")
+    // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setWidth(40)
+        .setCustomFormatter("editArticle")
+        .setSortable(false))
+    .addColumn(new Column("CodArticle")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodArticleCaption"))
+        .setWidth(80)
+        .setSortable(true))
+
+    .addColumn(new Column("TypeOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("NameOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Color")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Weight")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WeightCaption"))
+        .setWidth(50)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Width")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WidthCaption"))
+        .setWidth(50)
+        .setSortable(true)
+        .setSearch(true))
+            
+    .addColumn(new Column("SupplierName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
+        .setSearch(true)
+        .setWidth(200))
+
+    .setUrl(Url.Action("RollPrintableArticleList", "Article"))
+
+    .setHeight(300)
+    .setRowNum(20)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("CustomGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true)
+    .setSearchToolbar(true)
+    .setViewRecords(true)
+   
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+
+    // render the html
+    .Render()
+)
+
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateRollPrintableArticle"), "CreateRollPrintableArticle")
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardRollPrintableArticle"), "WizardRollPrintableArticle")
+
+<!-- data to send to RollAutomaticallyChanges action method -->
+<form id="formmqid">
+        @Html.Editor("ciao")
+</form>
+
+<a href="#" id="sendRollAutomaticallyChanges">Elabora Articoli Rotolo</a>
+
+<script type="text/javascript">
+
+    //this function send data to actionmethod of specify control
+    //data are read from jqgrid by using grid.jqGrid('getGridParam', 'selarrrow');
+    jQuery("#sendRollAutomaticallyChanges").click(function () {
+        var grid = jQuery("#RollPrintableArticleGrid");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+        
+        //data are collected into
+        var allData = {
+            Id: ids,
+            //read from specify item
+            FormData: document.getElementById("ciao").value
+        };
+
+        //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).
+        var dataToSend = JSON.stringify(allData);
+        $.ajax({
+            type: "POST",
+            url: "/Article/RollAutomaticallyChanges",
+            dataType: "json",
+            data: dataToSend,
+            contentType: "application/json; charset=utf-8",
+            success: function (response, textStatus, jqXHR) {
+                // display an success message if needed
+                // or reload grid data
+                alert("success");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                // display an error message in any way
+                alert("error");
+            }
+        });
+    });
+
+</script>

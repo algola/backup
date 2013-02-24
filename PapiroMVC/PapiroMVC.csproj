@@ -218,6 +218,7 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\DatoProva.cs" />
+    <Compile Include="Models\ObjectContext.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
@@ -627,7 +628,7 @@
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_Waiting.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\Copy of Index.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_ListBase.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_List.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleCuttedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePakedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePalletCost.cshtml" />
@@ -639,6 +640,8 @@
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\WizardRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\WizardSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListCommonScript.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

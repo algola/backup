@@ -126,6 +126,9 @@
   <data name="CodArticleCaption" xml:space="preserve">
     <value>Codice</value>
   </data>
+  <data name="ColorCaption" xml:space="preserve">
+    <value>Colore</value>
+  </data>
   <data name="CreateRollPrintableArticle" xml:space="preserve">
     <value>Nuovo Materiale in Rotolo</value>
   </data>
@@ -137,6 +140,12 @@
   </data>
   <data name="EditingArticleTitle" xml:space="preserve">
     <value>Modifica dell'articolo: </value>
+  </data>
+  <data name="FormatCaption" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="NameOfMaterialCaption" xml:space="preserve">
+    <value>Nome</value>
   </data>
   <data name="ObjectPrintableArticleType" xml:space="preserve">
     <value>Generico</value>
@@ -185,6 +194,12 @@
   </data>
   <data name="TypeOfCustomerSupplierCaption" xml:space="preserve">
     <value>Cliente/Fornitore</value>
+  </data>
+  <data name="TypeOfMaterialCaption" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="WeightCaption" xml:space="preserve">
+    <value>gr/mq</value>
   </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a rotolo</value>

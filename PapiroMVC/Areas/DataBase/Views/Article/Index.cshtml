@@ -1,8 +1,20 @@
 ﻿@model List<PapiroMVC.Models.Article>
 
-<div id='customersupplierlist'>
-    @Html.Partial("_List", Model)
+<!--
+<div id='sheetprintablearticle'>
+    @Html.Partial("_ListSheetPrintableArticle", Model)
 </div>
+
+    -->
+
+<div id='rollprintablearticle'>
+    @Html.Partial("_ListRollPrintableArticle", Model)
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
 
 @section footer {
     @Html.Partial("_footer")

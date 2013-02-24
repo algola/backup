@@ -380,6 +380,12 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="dbModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <Function Name="ParseDouble" ReturnType="Edm.Double">
+          <Parameter Name="stringvalue" Type="Edm.String" />
+          <DefiningExpression>
+            cast(stringvalue as Edm.Double)
+          </DefiningExpression>
+        </Function>
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="printermachines" EntityType="dbModel.TaskExecutor" />
           <EntitySet Name="printerestimatedon" EntityType="dbModel.TaskEstimatedOn" />
@@ -1354,7 +1360,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="63">
+      <Diagram Name="Model1" ZoomLevel="52">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.5" PointY="0.5" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="8" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="10.75" Height="1.5956835937499996" />
