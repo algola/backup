@@ -1,14 +1,15 @@
-﻿@model List<PapiroMVC.Models.Article>
+﻿@model PapiroMVC.Models.ArticleAutoChangesViewModel
 
 <!--
 <div id='sheetprintablearticle'>
-    @Html.Partial("_ListSheetPrintableArticle", Model)
+    Html.Partial("_ListSheetPrintableArticle", Model)
 </div>
 
     -->
 
 <div id='rollprintablearticle'>
-    @Html.Partial("_ListRollPrintableArticle", Model)
+    <!-- pass RollPrintableArticleAutoChenges is used to can help html filed with facilities -->
+    @Html.Partial("_ListRollPrintableArticle", Model.RollPrintableArticleAutoChanges)
 </div>
 
 <div id='script'>

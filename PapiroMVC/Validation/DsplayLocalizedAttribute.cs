@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -137,7 +138,7 @@ namespace PapiroMVC.Validation
         /// <returns></returns>
         public static IHtmlString AlgolaEditorFor<TModel, TProperty>(
                 this HtmlHelper<TModel> html,
-                Expression<Func<TModel, TProperty>> expression)
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null )
         {
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
 
@@ -150,7 +151,7 @@ namespace PapiroMVC.Validation
 
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("editor-field");
-            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression);
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
             algolaEditFor.InnerHtml += labelFor;
@@ -159,7 +160,7 @@ namespace PapiroMVC.Validation
             return new HtmlString(algolaEditFor + Environment.NewLine);    
         }
 
-        public static MvcHtmlString AlgolaAutocompleteFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, string actionName, string controllerName)
+        public static MvcHtmlString AlgolaAutocompleteFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, string actionName, string controllerName, object htmlAttributes = null)
         {
             string autocompleteUrl = UrlHelper.GenerateUrl(null, actionName, controllerName,
                                                            null,
@@ -197,7 +198,40 @@ namespace PapiroMVC.Validation
             return System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
         }
 
+     
+        static MergedType<T1, T2> Merge<T1, T2>(T1 t1, T2 t2)
+         {
+            return new MergedType<T1, T2>(t1, t2);
+         } 
+
     }
 
 
+  class MergedType<T1, T2> : DynamicObject
+  {
+     T1 t1;
+     T2 t2;
+     Dictionary<string, object> members = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
+
+     public MergedType(T1 t1, T2 t2)
+     {
+        this.t1 = t1;
+        this.t2 = t2;
+        foreach (System.Reflection.PropertyInfo fi in typeof(T1).GetProperties())
+        {
+           members[fi.Name] = fi.GetValue(t1, null);
+        }
+        foreach (System.Reflection.PropertyInfo fi in typeof(T2).GetProperties())
+        {
+           members[fi.Name] = fi.GetValue(t2, null);
+        }
+     }
+
+     public override bool TryGetMember(GetMemberBinder binder, out object result)
+     {
+        string name = binder.Name.ToLower();
+        return members.TryGetValue(name, out result);
+     }
+  }
 }
+

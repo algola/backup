@@ -11,18 +11,23 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using PapiroMVC.Models;
 using PapiroMVC.Model;
+using System.IO;
 
 namespace PapiroMVC.Controllers
 {
 
     public class ControllerBase : Controller
     {
+        //user connected to website
         public MembershipUser CurrentUser
         { 
             get; 
             set; 
         }
 
+        /// <summary>
+        /// database used in this sessione
+        /// </summary>
         public string CurrentDatabase
         {
             get;
@@ -35,6 +40,10 @@ namespace PapiroMVC.Controllers
             set;
         }
 
+        /// <summary>
+        /// This override reads autenticated user and sets right database and user
+        /// </summary>
+        /// <param name="requestContext"></param>
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
@@ -83,5 +92,45 @@ namespace PapiroMVC.Controllers
 
             ctx.Dispose();
         }
+
+        // This method helps to render a partial view into html string.
+        // http://craftycodeblog.com/2010/05/15/asp-net-mvc-render-partial-view-to-string/
+        // Credit: Kevin Craft
+        public string RenderPartialViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult =
+                    ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext,
+                    viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
+        }
+                
+        /// <summary>
+        /// This method helps to get the error information from the MVC "ModelState".
+        /// We can not directly send the ModelState to the client in Json. The "ModelState"
+        /// object has some circular reference that prevents it to be serialized to Json.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, object> GetErrorsFromModelState()
+        {
+            var errors = new Dictionary<string, object>();
+            foreach (var key in ModelState.Keys)
+            {
+                // Only send the errors to the client.
+                if (ModelState[key].Errors.Count > 0)
+                {
+                    errors[key] = ModelState[key].Errors;
+                }
+            }
+
+            return errors;
+        }
+
     }
 }

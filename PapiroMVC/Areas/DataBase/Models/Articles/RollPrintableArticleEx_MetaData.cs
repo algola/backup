@@ -12,6 +12,5 @@ namespace PapiroMVC.Models
         public Nullable<bool> Width { get; set; }
         [DisplayNameLocalized(typeof(Strings), "MqForafait")]
         public Nullable<double> MqForafait { get; set; }
-
     }
 }

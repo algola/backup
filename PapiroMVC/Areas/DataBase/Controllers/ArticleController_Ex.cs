@@ -16,20 +16,41 @@ namespace PapiroMVC.Areas.DataBase.Controllers
     public partial class ArticleController : PapiroMVC.Controllers.ControllerBase
     {
 
-        public class RollAutomaticallyChangesViewModel 
+
+        //sperimentale
+        public ActionResult DataProcessedCorrectly()
         {
-            public string[] id { get; set; }
-            public string formdata { get; set; }
+            return PartialView("_DataProcessedCorrecly");
+        }
+
+
+        [HttpPost]
+        public ActionResult RollAutomaticallyChanges2(RollPrintableArticleAutoChanges x)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return PartialView("_RollPrintableArticleAutoChanges");
+            }
+
+            HttpContext.Response.StatusCode = 500;
+            HttpContext.Response.Clear();
+            return PartialView("_RollPrintableArticleAutoChanges", x);
+
         }
 
         //this method works on data from ajax post in _ListRollPrintableArticle 
         //data contains ids and values of parameters
         [HttpPost]
-        public ActionResult RollAutomaticallyChanges(RollAutomaticallyChangesViewModel x)
-        {           
-            return Json(new { message = "this took multiple model..." });
+        public ActionResult RollAutomaticallyChanges(RollPrintableArticleAutoChanges x)
+        {
+            var valid = TryUpdateModel(x);
+            return Json(new
+            {
+                Valid = valid,
+                Errors = GetErrorsFromModelState()
+            });
         }
-
     
         /// <summary>
         /// AutoComplete

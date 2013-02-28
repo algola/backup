@@ -39,7 +39,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult Index()
         {
-            return View(articleRepository.GetAll().ToList());
+            return View (new ArticleAutoChangesViewModel());
         }
 
         //
@@ -54,6 +54,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult CreateSheetPrintableArticle()
         {
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
             ViewBag.ActionMethod = "CreateSheetPrintableArticle";
             return View(new SheetPrintableArticleViewModel());
         }

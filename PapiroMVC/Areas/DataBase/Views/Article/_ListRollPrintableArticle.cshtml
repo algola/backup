@@ -1,6 +1,7 @@
-﻿@model List<PapiroMVC.Models.Article>
+﻿@model PapiroMVC.Models.RollPrintableArticleAutoChanges
 @using Mvc.HtmlHelpers
-@using MvcContrib.UI.Grid 
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
@@ -12,7 +13,7 @@
     typeOfArticle[2] = (string)HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType");
     typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");    
 
-    }
+}
 
 <h2>@ViewBag.Title</h2>
 <br />
@@ -22,7 +23,7 @@
     .setCaption("Articoli a rotolo")
     .setMultiSelect(true)
     .setLoadText("caricamento dati")
-    // columns
+        // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
         .setWidth(40)
@@ -62,7 +63,7 @@
         .setWidth(50)
         .setSortable(true)
         .setSearch(true))
-            
+
     .addColumn(new Column("SupplierName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
         .setSearch(true)
@@ -79,7 +80,7 @@
     .setAutoWidth(true)
     .setSearchToolbar(true)
     .setViewRecords(true)
-   
+
     // error handler
     .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
 
@@ -90,46 +91,70 @@
 @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateRollPrintableArticle"), "CreateRollPrintableArticle")
 @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardRollPrintableArticle"), "WizardRollPrintableArticle")
 
-<!-- data to send to RollAutomaticallyChanges action method -->
-<form id="formmqid">
-        @Html.Editor("ciao")
-</form>
 
-<a href="#" id="sendRollAutomaticallyChanges">Elabora Articoli Rotolo</a>
+<div id="formcontent">
+    @Html.Partial("_RollPrintableArticleAutoChanges")
+</div>
+<div id="formresults"></div>
+
 
 <script type="text/javascript">
 
     //this function send data to actionmethod of specify control
     //data are read from jqgrid by using grid.jqGrid('getGridParam', 'selarrrow');
-    jQuery("#sendRollAutomaticallyChanges").click(function () {
+    //jQuery("#sendRollAutomaticallyChanges").click(function () {
+
+    function sendRollAutomaticallyChanges() {
+
+        alert("passato da qui mando i dati per l'elaborazione");
+        ClearValidationErrors();
+
         var grid = jQuery("#RollPrintableArticleGrid");
         var ids = grid.jqGrid('getGridParam', 'selarrrow');
-        
+
         //data are collected into
         var allData = {
             Id: ids,
             //read from specify item
-            FormData: document.getElementById("ciao").value
+            SupplierMaker: document.getElementById("SupplierMaker").value,
+            SupplyerBuy: document.getElementById("SupplyerBuy").value,
+            MqForafait: document.getElementById("MqForafait").value,
+            Hand: document.getElementById("Hand").value,
+            CostPerMl: document.getElementById("CostPerMl").value,
+            CostPerMq: document.getElementById("CostPerMq").value,
+            NoBv: document.getElementById("NoBv").value
         };
 
         //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).
-        var dataToSend = JSON.stringify(allData);
+        var data = JSON.stringify(allData);
         $.ajax({
             type: "POST",
             url: "/Article/RollAutomaticallyChanges",
             dataType: "json",
-            data: dataToSend,
+            data: data,
             contentType: "application/json; charset=utf-8",
-            success: function (response, textStatus, jqXHR) {
-                // display an success message if needed
-                // or reload grid data
-                alert("success");
+            success: function (data) {
+                // There is no problem with the validation
+                if (data.Valid) {
+                    return;
+                }
             },
-            error: function (jqXHR, textStatus, errorThrown) {
-                // display an error message in any way
-                alert("error");
+            error: function (xhr) {
+                alert(xhr.responseText);
+                alert("Critical Error!. Failed to call the server.");
             }
         });
-    });
+    }
+    //);
+
+    function ReloadForm(xhr) {
+        $('#contentForm').html(xhr.responseText);
+    }
+    function ClearValidationErrors() {
+        $('.validation-summary-errors').html('');
+        $('.input-validation-error').removeClass('input-validation-error');
+        $('.field-validation-error').remove();
+    }
+
 
 </script>

@@ -7,43 +7,10 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Models
 {
-    //public class ArticleCostBinder : IModelBinder
-    //{
-    //    public object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
-    //    {
-    //        var values = (ValueProviderCollection)bindingContext.ValueProvider;
-
-    //        ArticleCost ret;
-    //        var y = values.GetValue(bindingContext.ModelName + ".TypeOfArticleCost");
-
-    //        var x = ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost;
-    //        if (x == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost)
-    //            ret = new SheetPrintableArticlePakedCost();
-    //        else
-
-    //            if (x == ArticleCost.ArticleCostType.SheetPrintableArticlePalletCost)
-    //                ret = new SheetPrintableArticlePalletCost();
-    //            else
-    //                if (x == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost)
-    //                    ret = new SheetPrintableArticleCuttedCost();
-    //                else
-    //                    if (x == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)
-    //                        ret = new RollPrintableArticleStandardCost();
-    //                    else
-    //                        if (x == ArticleCost.ArticleCostType.RollPrintableArticleCuttedCost)
-    //                            ret = new RollPrintableArticleCuttedCost();
-    //                        else
-    //                            if (x == ArticleCost.ArticleCostType.RigidPrintableArticleStandardCost)
-    //                                ret = new RollPrintableArticleCuttedCost();
-    //                            else
-    //                                if (x == ArticleCost.ArticleCostType.ObjectPrintableArticleStandardCost)
-    //                                    ret = new RollPrintableArticleCuttedCost();
-    //                                else
-    //                                    ret = new SheetPrintableArticleCuttedCost();
-    //        return ret;
-    //    }
-    //}
-
+  
+    /// <summary>
+    /// data used to create and edit
+    /// </summary>
     public class ObjectPrintableArticleViewModel : ArticleViewModel
     {
         ObjectPrintableArticle article;
