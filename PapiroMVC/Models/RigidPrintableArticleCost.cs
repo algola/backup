@@ -14,6 +14,6 @@ namespace PapiroMVC.Models
     
     public abstract partial class RigidPrintableArticleCost : ArticleCost
     {
-        public Nullable<double> CostPerMq { get; set; }
+        public string CostPerMq { get; set; }
     }
 }

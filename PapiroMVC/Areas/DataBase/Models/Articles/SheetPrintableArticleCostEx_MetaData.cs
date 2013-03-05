@@ -10,9 +10,10 @@ namespace PapiroMVC.Models
     public class SheetPrintableArticleCost_MetaData
     {
         [DisplayNameLocalized(typeof(Strings),"CostPerKg")]
-        //[Currency]
+        [CurrencyLocalized(typeof(Strings), "CurrencyValidation", "CurrencyValidationError")]
         public string CostPerKg { get; set; }
         [DisplayNameLocalized(typeof(Strings),"CostPerSheet")]
-        public Nullable<double> CostPerSheet { get; set; }
+        [CurrencyLocalized(typeof(Strings), "CurrencyValidation", "CurrencyValidationError")]
+        public string CostPerSheet { get; set; }
     }
 }

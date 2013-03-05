@@ -15,6 +15,6 @@ namespace PapiroMVC.Models
     public abstract partial class SheetPrintableArticleCost : ArticleCost
     {
         public string CostPerKg { get; set; }
-        public Nullable<double> CostPerSheet { get; set; }
+        public string CostPerSheet { get; set; }
     }
 }

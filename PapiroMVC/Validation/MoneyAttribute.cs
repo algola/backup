@@ -24,7 +24,8 @@ namespace PapiroMVC.Validation
         {
             try
             {
-                return _condition.IsMatch(value.ToString());               
+                var ret = _condition.IsMatch(value.ToString());               
+                return  ret;            
             }
             catch (Exception)
             {

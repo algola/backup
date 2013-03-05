@@ -23,14 +23,20 @@ namespace PapiroMVC.Models
         public double Hand { get; set; }
     }
 
+    //one ore other
+    [XorFieldRequired(new string[] { "CostPerMl", "CostPerMq" }, typeof(Strings), "RollPrintableArticheAutoChangesFieldValidationError")]
     public class RollPrintableArticleAutoChanges_Metadata : PrintableAutoChanges_Metadata
     {
         [DisplayNameLocalized(typeof(Strings), "MqForafait")]
-        public Nullable<double> MqForafait { get; set; }
+        public string MqForafait { get; set; }
+
+        [CurrencyLocalized(typeof(Strings), "AutoChangesValidation", "AutoChangesValidationError")]
         [DisplayNameLocalized(typeof(Strings), "CostPerMl")]
-        public Nullable<double> CostPerMl { get; set; }        
+        public string CostPerMl { get; set; }
+
+        [CurrencyLocalized(typeof(Strings), "AutoChangesValidation", "AutoChangesValidationError")]
         [DisplayNameLocalized(typeof(Strings), "CostPerMq")]
-        public Nullable<double> CostPerMq { get; set; }
+        public string CostPerMq { get; set; }
     }
 
 }

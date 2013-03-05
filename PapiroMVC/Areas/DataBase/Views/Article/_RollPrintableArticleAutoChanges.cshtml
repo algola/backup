@@ -1,33 +1,38 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.RollPrintableArticleAutoChanges
 
+<!-- autocomplete works properly only if script is reloaded in partial view -->
+<script src="/Scripts/autocomplete.js" type="text/javascript"></script>
+ 
 
-@using (Ajax.BeginForm("RollAutomaticallyChanges2", "Article", Model, new AjaxOptions
+@using (Ajax.BeginForm("RollAutomaticallyChangesValidation", new { controller = "Article", area = "DataBase" }, new AjaxOptions
 {
-    UpdateTargetId = "formresults", 
-    HttpMethod = "Post",
-    OnSuccess = "sendRollAutomaticallyChanges", 
-    OnFailure = "ReloadForm(xhr)" }))
-    {
-        @Html.ValidationSummary(true)
+    HttpMethod = "POST",
+//    UpdateTargetId = "rollPrintableArticleAutoChanges",
+//    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+    OnSuccess = "sendRollAutomaticallyChanges",
+    OnFailure = "ReloadForm(xhr)"
 
+}))
+{
+           
+        @Html.ValidationSummary(true)
+    
     <fieldset>
         <legend>RollPrintableArticleViewModelAutoChanges</legend>
 
-            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new {id="SupplierMaker"})
-            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier", new {id="SupplyerBuy"})
+            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
+            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
 
-            @Html.AlgolaAutocompleteFor(model =>  model.MqForafait,"MqForafaitAutoComplete","Article", new {id="MqForafait"})
-            @Html.AlgolaAutocompleteFor(model =>  model.Hand,"HandAutoComplete","Article", new {id="Hand"})
+            @Html.AlgolaAutocompleteFor(model => model.MqForafait, "MqForafaitAutoComplete", "Article", new { id = "MqForafait" })
+            @Html.AlgolaAutocompleteFor(model => model.Hand, "HandAutoComplete", "Article", new { id = "Hand" })
 
-            @Html.AlgolaEditorFor(model => model.CostPerMl, new {id="CostPerMl"})
-            @Html.AlgolaEditorFor(model => model.CostPerMq, new {id="CostPerMq"})
+            @Html.AlgolaEditorFor(model => model.CostPerMl, new { id = "CostPerMl" })
+            @Html.AlgolaEditorFor(model => model.CostPerMq, new { id = "CostPerMq" })
 
             @Html.AlgolaEditorFor(model => model.NoBv, new { id = "NoBv" })
 
     </fieldset>
     
     <input type="submit" value="Elabora")' />
-
-<!--    <a href="#" id="sendRollAutomaticallyChanges">Elabora Articoli Rotolo</a> -->
 }

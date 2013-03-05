@@ -8,7 +8,8 @@ namespace PapiroMVC.Models
 {
     public class ObjectPrintableArticleCost_MetaData
     {
-        [DisplayNameLocalized(typeof(Strings),"CostPerUnit")]
-        public Nullable<double> CostPerUnit { get; set; }
+        [DisplayNameLocalized(typeof(Strings)," CostPerUnit")]
+        [CurrencyLocalized(typeof(Strings),"CurrencyValidation","CurrencyValidationError")]
+        public string CostPerUnit { get; set; }
     }
 }

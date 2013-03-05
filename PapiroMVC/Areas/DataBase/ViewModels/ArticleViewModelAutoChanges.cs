@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Models
 {
+
     public class ArticleAutoChangesViewModel
     { 
         private RollPrintableArticleAutoChanges rollPrintableArticleAutoChanges;
@@ -24,8 +25,6 @@ namespace PapiroMVC.Models
             }
         }
     }
-
-
 
     [MetadataType(typeof(ArticleAutoChanges_Metadata))]
     abstract public class ArticleAutoChanges
@@ -45,8 +44,8 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(RollPrintableArticleAutoChanges_Metadata))]
     public class RollPrintableArticleAutoChanges : PrintableAutoChanges
     {
-        public Nullable<double> MqForafait { get; set; }
-        public Nullable<double> CostPerMl { get; set; }
-        public Nullable<double> CostPerMq { get; set; }
+        public string MqForafait { get; set; }
+        public string CostPerMl { get; set; }
+        public string CostPerMq { get; set; }
     }
 }

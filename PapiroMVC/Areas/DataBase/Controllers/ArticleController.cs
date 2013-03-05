@@ -110,6 +110,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult CreateRollPrintableArticle()
         {
+            //used to understand default actionmethod  when there are more then one submit button
             ViewBag.ActionMethod = "CreateRollPrintableArticle";
             return View(new RollPrintableArticleViewModel());
         }
@@ -292,7 +293,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
             return View(c);
         }
-  
+
+        #region Edit
 
         //
         // GET: /Article/Edit/5
@@ -337,17 +339,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return ret;
         }
 
-        /*
-        public ActionResult EditSheetPrintableArticle(string id)
-        {
-            var model = articleDataRep.GetSingle(id);
-            if (model == null)
-                return HttpNotFound();
-
-            return View(model);
-        }
-        */
-        #region Edit
 
         public ActionResult EditSheetPrintableArticle(string id)
         {
@@ -421,8 +412,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
-            //If we come here, something went wrong. Return it back.        
-            return View(c);       
+            //If we come here, something went wrong. Return it back.      
+
+            ViewBag.ActionMethod = "EditSheetPrintableArticle";
+            return View("EditSheetPrintableArticle", c);       
         }
 
         [HttpParamAction]
@@ -463,40 +456,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
-            //If we come here, something went wrong. Return it back.        
-            return View(c);
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditRollPrintableArticle";
+            return View("EditRollPrintableArticle", c);
         }
 
-        /*
-         * 
-         *         //
-        // POST: /Article/Edit/5
-        [HttpPost]
-        public ActionResult EditSheetPrintableArticle(SheetPrintableArticle item)
-        {
-            
-                    
-            if (ModelState.IsValid) 
-            {            
-                try 
-                {
-                    articleDataRep.Edit(item);
-                    articleDataRep.Save();
-                    return RedirectToAction("Index");
-                } 
-                
-                catch (Exception ex) 
-                {                
-                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
-                }
-            }
-
-            //If we come here, something went wrong. Return it back.        
-            return View(item);       
-        }
-
-
-        */
 
         [HttpPost]
         public ActionResult Edit(string id, FormCollection collection)

@@ -198,6 +198,7 @@
     <Compile Include="Areas\Account\Controllers\AccountController.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
+    <Compile Include="Areas\DataBase\ProvaController.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard.cs" />
@@ -221,10 +222,12 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\DatoProva.cs" />
     <Compile Include="Models\ObjectContext.cs" />
+    <Compile Include="Models\PapiroMVCContext.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
     <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
+    <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
     <Compile Include="Validation\Registration.en-us.Designer.cs">
       <DependentUpon>Registration.en-us.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -623,7 +626,6 @@
     <Content Include="Areas\Account\Views\Web.config" />
     <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Shared\_footer.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\upload.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\Index.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_SearchingBusinessName.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_UploadCustomers.cshtml" />
@@ -646,6 +648,7 @@
     <Content Include="Areas\DataBase\Views\Article\_ListCommonScript.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_DataProcessedCorrectly.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

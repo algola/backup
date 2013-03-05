@@ -129,6 +129,12 @@
   <data name="ColorCaption" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="CostPerMlCaption" xml:space="preserve">
+    <value>Cost/ml</value>
+  </data>
+  <data name="CostPerMqCaption" xml:space="preserve">
+    <value>Cost/mq</value>
+  </data>
   <data name="CreateRollPrintableArticle" xml:space="preserve">
     <value>New Roll Article</value>
   </data>
@@ -160,6 +166,9 @@
   </data>
   <data name="RollPrintableArticleCuttedCostTitle" xml:space="preserve">
     <value>Cost in case of buying special width</value>
+  </data>
+  <data name="RollPrintableArticleGridCaption" xml:space="preserve">
+    <value>Roll Article</value>
   </data>
   <data name="RollPrintableArticleStandardCostTitle" xml:space="preserve">
     <value>Cost in case of buying normal width</value>

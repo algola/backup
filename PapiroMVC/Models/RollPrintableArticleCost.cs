@@ -14,7 +14,7 @@ namespace PapiroMVC.Models
     
     public abstract partial class RollPrintableArticleCost : ArticleCost
     {
-        public Nullable<double> CostPerMl { get; set; }
-        public Nullable<double> CostPerMq { get; set; }
+        public string CostPerMl { get; set; }
+        public string CostPerMq { get; set; }
     }
 }

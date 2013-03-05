@@ -19,6 +19,7 @@ namespace PapiroMVC.Areas.DataBase
                 "DataBase/{controller}/{action}/{id}",
                 new { controller = "DataBase", action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }

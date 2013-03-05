@@ -51,16 +51,13 @@
           <Property Name="CodArticleCost" Type="char" Nullable="false" MaxLength="50" />
           <Property Name="CodArticle" Type="char" MaxLength="50" />
           <Property Name="SelectorArticleCost" Type="int" />
-          <Property Name="CostPerKg" Type="tinytext" />
-          <Property Name="CostPerSheet" Type="double" />
-          <Property Name="CostPerUnit" Type="double" />
-          <Property Name="SelectorArticleSheetPrintableCost" Type="int" />
+          <Property Name="CostPerKg" Type="char" MaxLength="20" />
           <Property Name="UseTheSameCostOfPalletAfterKg" Type="bit" />
           <Property Name="UseTheSameCostOfSheetAfterSheet" Type="bit" />
           <Property Name="KgPallet" Type="int" />
           <Property Name="KgSheet" Type="int" />
-          <Property Name="CostPerMq" Type="double" />
-          <Property Name="CostPerMl" Type="double" />
+          <Property Name="CostPerMq" Type="char" MaxLength="20" />
+          <Property Name="CostPerMl" Type="char" MaxLength="20" />
           <Property Name="SelectorArticleRollPrintableCost" Type="int" />
           <Property Name="UseTheSameCostOfStandardWidthAfterKg" Type="bit" />
           <Property Name="UseTheSameCostOfStandardWidthAfterMl" Type="bit" />
@@ -68,6 +65,9 @@
           <Property Name="Ml" Type="int" />
           <Property Name="SelectorArticleRigidPrintableCost" Type="int" />
           <Property Name="SelectorArticleObjectPrintableCost" Type="int" />
+          <Property Name="CostPerSheet" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
+          <Property Name="SelectorArticleSheetPrintableCost" Type="int" />
         </EntityType>
         <EntityType Name="articles">
           <Key>
@@ -621,8 +621,8 @@
           <Property Type="Double" Name="MqForafait" />
         </EntityType>
         <EntityType Name="SheetPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
-          <Property Type="String" Name="CostPerKg" />
-          <Property Type="Double" Name="CostPerSheet" />
+          <Property Type="String" Name="CostPerKg" Nullable="true" />
+          <Property Type="String" Name="CostPerSheet" Nullable="true" />
         </EntityType>
         <EntityType Name="SheetPrintableArticlePakedCost" BaseType="dbModel.SheetPrintableArticleCost">
           </EntityType>
@@ -634,8 +634,8 @@
         </EntityType>
         <EntityType Name="SheetPrintableArticlePalletCost" BaseType="dbModel.SheetPrintableArticleCost" />
         <EntityType Name="RollPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
-          <Property Type="Double" Name="CostPerMl" />
-          <Property Type="Double" Name="CostPerMq" />
+          <Property Type="String" Name="CostPerMl" />
+          <Property Type="String" Name="CostPerMq" />
         </EntityType>
         <EntityType Name="RollPrintableArticleStandardCost" BaseType="dbModel.RollPrintableArticleCost" />
         <EntityType Name="RollPrintableArticleCuttedCost" BaseType="dbModel.RollPrintableArticleCost">
@@ -652,10 +652,10 @@
           <Property Type="String" Name="PrintableFormat" MaxLength="9" Unicode="false" FixedLength="true" />
         </EntityType>
         <EntityType Name="RigidPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
-          <Property Type="Double" Name="CostPerMq" />
+          <Property Type="String" Name="CostPerMq" />
         </EntityType>
         <EntityType Name="ObjectPrintableArticleCost" BaseType="dbModel.ArticleCost" Abstract="true">
-          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="String" Name="CostPerUnit" Nullable="true" />
         </EntityType>
         <EntityType Name="ObjectPrintableArticleStandardCost" BaseType="dbModel.ObjectPrintableArticleCost" />
         <EntityType Name="RigidPrintableArticleStandardCost" BaseType="dbModel.RigidPrintableArticleCost" />

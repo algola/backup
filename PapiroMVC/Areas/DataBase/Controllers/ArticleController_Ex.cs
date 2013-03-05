@@ -15,19 +15,24 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class ArticleController : PapiroMVC.Controllers.ControllerBase
     {
-
-
         //sperimentale
         public ActionResult DataProcessedCorrectly()
         {
             return PartialView("_DataProcessedCorrecly");
         }
 
+        /// <summary>
+        /// RollAutomaticallyChangesValidation is used to validate parameter and its responses are used in a ajax beginform
+        /// results depend on HttpContext.Response.StatusCode = 500
+        /// 500 shows back that there is an error so ajax beginform runs OnFaliure code (reload form with validation message)
+        /// else ajax beginform runs OnSuccess code (run javacript that collects data and pass to RollAutomaticallyChanges)       
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
 
         [HttpPost]
-        public ActionResult RollAutomaticallyChanges2(RollPrintableArticleAutoChanges x)
+        public ActionResult RollAutomaticallyChangesValidation(RollPrintableArticleAutoChanges x)
         {
-
             if (ModelState.IsValid)
             {
                 return PartialView("_RollPrintableArticleAutoChanges");
@@ -35,8 +40,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             HttpContext.Response.StatusCode = 500;
             HttpContext.Response.Clear();
-            return PartialView("_RollPrintableArticleAutoChanges", x);
-
+            return PartialView("_RollPrintableArticleAutoChanges",x);
         }
 
         //this method works on data from ajax post in _ListRollPrintableArticle 
@@ -44,11 +48,23 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpPost]
         public ActionResult RollAutomaticallyChanges(RollPrintableArticleAutoChanges x)
         {
-            var valid = TryUpdateModel(x);
+            //Console.WriteLine(HttpContext.Request.UrlReferrer.OriginalString);
+            ////model contsins data that will be processed
+            try
+            {
+                if (x.SupplierMaker == "error")
+                    throw new Exception();
+            }
+            catch (Exception e)
+            {
+                HttpContext.Response.StatusCode = 500;
+                HttpContext.Response.Clear();
+                return PartialView("_RollPrintableArticleAutoChanges", x);
+            }
+
             return Json(new
             {
-                Valid = valid,
-                Errors = GetErrorsFromModelState()
+                message = "ok"
             });
         }
     
@@ -550,7 +566,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.Color,
                             a.Weight.ToString(),
                             a.Width.ToString(),
-                            a.CustomerSupplierMaker.BusinessName
+                            a.CustomerSupplierMaker.BusinessName,
+                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
+                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMq,
+                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
+                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMl,            
                         }
                     }
                 ).ToArray()

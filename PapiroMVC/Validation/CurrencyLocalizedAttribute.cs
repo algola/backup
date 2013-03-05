@@ -16,8 +16,9 @@ namespace PapiroMVC.Validation
 
         private readonly Condition _condition = Condition.EqualTo;
 
-        public CurrencyLocalizedAttribute(Type ResourceType, string errorMessageResourceName, string valueToCompareName)
+        public CurrencyLocalizedAttribute(Type ResourceType, string valueToCompareName, string errorMessageResourceName)
         {
+
             base.ErrorMessageResourceName = errorMessageResourceName;
             base.ErrorMessageResourceType = ResourceType;
             string displayName = "";
@@ -27,9 +28,9 @@ namespace PapiroMVC.Validation
             //error message
             displayName = resman.GetString(errorMessageResourceName);
 
-            base.ErrorMessage = string.IsNullOrEmpty(displayName)
-                ? string.Format("[[{0}]]", errorMessageResourceName)
-                : displayName;
+            //base.ErrorMessage = string.IsNullOrEmpty(displayName)
+            //    ? string.Format("[[{0}]]", errorMessageResourceName)
+            //    : displayName;
 
             //value To Compare
             displayName = resman.GetString(valueToCompareName);
@@ -47,6 +48,7 @@ namespace PapiroMVC.Validation
             try
             {
                 Regex reg = new Regex(_valueToCompare.ToString(),RegexOptions.IgnoreCase);
+                if (value == null) value = "";
                 return reg.IsMatch(value.ToString());                       
             }
             catch (Exception)

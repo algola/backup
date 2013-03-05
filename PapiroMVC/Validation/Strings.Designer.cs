@@ -79,6 +79,24 @@ namespace PapiroMVC.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (^(\b|\+|\-|)(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})*(\b|\%|)?$)|(^$).
+        /// </summary>
+        public static string AutoChangesValidation {
+            get {
+                return ResourceManager.GetString("AutoChangesValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inserire un&apos;espressione valita (tipo: +5% oppure -0,50 etc..).
+        /// </summary>
+        public static string AutoChangesValidationError {
+            get {
+                return ResourceManager.GetString("AutoChangesValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ragione Sociale.
         /// </summary>
         public static string BusinessName {
@@ -219,6 +237,24 @@ namespace PapiroMVC.Validation {
         public static string Country {
             get {
                 return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
             }
         }
         
@@ -444,6 +480,15 @@ namespace PapiroMVC.Validation {
         public static string RigidPrintableArticleType {
             get {
                 return ResourceManager.GetString("RigidPrintableArticleType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solo un campo tra  Costo al mq e Costo al Metro Lineare deve essere compilato.
+        /// </summary>
+        public static string RollPrintableArticheAutoChangesFieldValidationError {
+            get {
+                return ResourceManager.GetString("RollPrintableArticheAutoChangesFieldValidationError", resourceCulture);
             }
         }
         
