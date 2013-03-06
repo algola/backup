@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
     {
         public LithoSheet()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoSheet;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.LithoSheet;
         }
 
         #region Added Properties

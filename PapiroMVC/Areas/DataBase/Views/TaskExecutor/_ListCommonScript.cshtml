@@ -1,0 +1,12 @@
+﻿@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+}
+
+<script type="text/javascript">
+    function editRow(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"})';
+
+        return link.replace("-1", cellvalue);
+    }
+</script>
+

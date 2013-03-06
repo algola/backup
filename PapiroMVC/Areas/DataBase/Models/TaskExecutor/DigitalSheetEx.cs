@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
 
         public DigitalSheet()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalSheet;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.DigitalSheet;
         }
 
         #region Added Properties

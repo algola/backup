@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
 
         public BindingTsk()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.Binding;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.Binding;
         }
 
         #region Proprietà aggiuntive

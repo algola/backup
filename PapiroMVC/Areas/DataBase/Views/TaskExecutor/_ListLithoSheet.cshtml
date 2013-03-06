@@ -1,0 +1,97 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@(Html.jqGrid("LithoSheeteGrid")
+    
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "LithoSheeteGridCaption"))
+    .setMultiSelect(true)
+        // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setWidth(40)
+        .setCustomFormatter("editRow")
+        .setSortable(false))
+    .addColumn(new Column("CodExecutor")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
+        .setWidth(80)
+        .setSortable(true))
+/*
+    .addColumn(new Column("TypeOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption"))        
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("NameOfMaterial")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Color")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorCaption"))
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Weight")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WeightCaption"))
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("Width")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WidthCaption"))
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("SupplierName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
+        .setSearch(true)
+        .setWidth(150))
+        
+    .addColumn(new Column("CostPerMq")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerMqCaption"))
+        .setTitle(false)
+        .setEditable(true)
+        .setSearch(true)
+        .setWidth(45)
+        .setAlign(Align.right))
+
+    .addColumn(new Column("CostPerMl")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption"))
+        .setSearch(true)
+        .setWidth(45)
+        .setAlign(Align.right))
+  */
+
+    .setUrl(Url.Action("LithoSheetList", "TaskExecutor"))
+
+    .setHeight(300)
+    .setRowNum(20)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("CustomGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true)
+    .setSearchToolbar(true)
+    .setViewRecords(true)
+
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+
+    // render the html
+    .Render()
+)
+
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateLithoSheet"), "CreateLithoSheet")

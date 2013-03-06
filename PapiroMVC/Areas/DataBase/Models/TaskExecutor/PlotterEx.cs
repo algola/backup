@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
 
         public Plotter()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.Plotter;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.Plotter;
         }
 
         #region Added Properties

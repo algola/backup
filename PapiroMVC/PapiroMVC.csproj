@@ -193,6 +193,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController.cs" />
     <Compile Include="Areas\DataBase\DataBaseAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\AccountController.cs" />
@@ -227,6 +229,8 @@
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
     <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
+    <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
     <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
     <Compile Include="Validation\Registration.en-us.Designer.cs">
       <DependentUpon>Registration.en-us.resx</DependentUpon>
@@ -649,6 +653,9 @@
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_DataProcessedCorrectly.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\Index.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -775,6 +782,8 @@
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx" />
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.en-us.resx" />
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.en-us.resx" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx" />
     <EmbeddedResource Include="Validation\Registration.en-us.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Registration.en-us.Designer.cs</LastGenOutput>

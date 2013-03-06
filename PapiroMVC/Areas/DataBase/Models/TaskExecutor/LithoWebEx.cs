@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
 
         public LithoWeb()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoWeb;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.LithoWeb;
         }
 
         #region Added Properties

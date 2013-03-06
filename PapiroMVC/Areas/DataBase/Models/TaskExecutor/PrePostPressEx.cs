@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
 
         public PrePostPress()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.PrePostPress;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.PrePostPress;
         }
 
         #region Proprietà aggiuntive

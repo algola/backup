@@ -410,7 +410,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult SheetPrintableArticleList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = ArticleList(gridSettings).OfType<SheetPrintableArticle>();
+            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>();
 
             string formatArticleFilter = string.Empty;
             string weightArticleFilter = string.Empty;
@@ -490,7 +490,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult RollPrintableArticleList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = ArticleList(gridSettings).OfType<RollPrintableArticle>();
+            var q = PrintableList(gridSettings).OfType<RollPrintableArticle>();
 
             string widthArticleFilter = string.Empty;
             string weightArticleFilter = string.Empty;
@@ -581,7 +581,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        private IQueryable<Printable> ArticleList(GridSettings gridSettings)
+        private IQueryable<Printable> PrintableList(GridSettings gridSettings)
         {
             string codArticleFilter = string.Empty;
             string articleNameFilter = string.Empty;

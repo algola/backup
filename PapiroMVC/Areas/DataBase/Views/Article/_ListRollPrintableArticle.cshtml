@@ -11,8 +11,7 @@
     typeOfArticle[0] = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType");
     typeOfArticle[1] = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType");
     typeOfArticle[2] = (string)HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType");
-    typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");    
-
+    typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");
 }
 
 <h2>@ViewBag.Title</h2>
@@ -112,18 +111,18 @@
     $(document).ready(function () {
 
         //when document is ready first: hide all div optional operation
-        $("#slidingDivSearchCustomer").hide();
+        $("#slidingDivOption").hide();
 
         //and show each command to toggle div
         $("#showHiderollPrintableArticleAutoChanges").show();
 
         $('#showHiderollPrintableArticleAutoChanges').click(function () {
-            $("#slidingDivSearchCustomer").slideToggle();
+            $("#slidingDivOption").slideToggle();
         });
     });
 </script>
 
-<div id="slidingDivSearchCustomer" class="slidingDiv">
+<div id="slidingDivOption" class="slidingDiv">
 
     <div id="rollPrintableArticleAutoChanges" class="slidingDiv">            
         @Html.Partial("_RollPrintableArticleAutoChanges", Model)

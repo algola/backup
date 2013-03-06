@@ -24,7 +24,7 @@ namespace PapiroMVC.Models
             Binding=6
         }
 
-        public ExecutorType TypeOfPrinter
+        public ExecutorType TypeOfExecutor
         {
             get;
             protected set;

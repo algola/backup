@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
 
         public DigitalWeb()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalWeb;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.DigitalWeb;
         }
 
         #region Added Properties
