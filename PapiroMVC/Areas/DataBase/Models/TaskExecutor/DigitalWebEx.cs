@@ -8,19 +8,19 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class LithoWeb : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DigitalWeb : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public LithoWeb()
+        public DigitalWeb()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoWeb;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalWeb;
         }
 
         #region Added Properties
 
         #endregion
 
-        #region Error Handle
+        #region Error Handler
 
         private static readonly string[] proprietaDaValidare =
                {
@@ -73,7 +73,7 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((LithoWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
+            ((DigitalWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;

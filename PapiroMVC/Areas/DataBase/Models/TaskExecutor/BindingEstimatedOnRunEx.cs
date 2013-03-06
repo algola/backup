@@ -8,12 +8,11 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class TaskEstimatedOnTime: IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class BindingEstimatedOnRun: TaskEstimatedOn, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-
-        public TaskEstimatedOnTime()
+        public BindingEstimatedOnRun()
         {
-            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.OnTime;
+            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.BindingOnRun;
         }
 
         #region Proprietà aggiuntive
@@ -81,13 +80,25 @@ namespace PapiroMVC.Models
             //All properties of object
             //and pointer of sons
             base.Copy(to);
-            ((TaskEstimatedOnTime)to).AvarageRunPerHour = this.AvarageRunPerHour;
-            ((TaskEstimatedOnTime)to).UseDifferentRunPerHour = this.UseDifferentRunPerHour;
-            ((TaskEstimatedOnTime)to).StartingTime1 = this.StartingTime1;
-            ((TaskEstimatedOnTime)to).StartingTime2 = this.StartingTime2;
-            ((TaskEstimatedOnTime)to).TimeForfait = this.TimeForfait;
-            ((TaskEstimatedOnTime)to).CostPerHourRunning = this.CostPerHourRunning;
-            ((TaskEstimatedOnTime)to).CostPerHourStarting = this.CostPerHourStarting;
+            ((BindingEstimatedOnRun)to).StartingCost4 = this.StartingCost4;
+            ((BindingEstimatedOnRun)to).StartingCost6 = this.StartingCost6;
+            ((BindingEstimatedOnRun)to).StartingCost8 = this.StartingCost8;
+            ((BindingEstimatedOnRun)to).StartingCost12 = this.StartingCost12;
+            ((BindingEstimatedOnRun)to).StartingCost16 = this.StartingCost16;
+            ((BindingEstimatedOnRun)to).StartingCost24 = this.StartingCost24;
+            ((BindingEstimatedOnRun)to).StartingCost32 = this.StartingCost32;
+            ((BindingEstimatedOnRun)to).CostPerUnit4 = this.CostPerUnit4;
+            ((BindingEstimatedOnRun)to).CostPerUnit6 = this.CostPerUnit6;
+            ((BindingEstimatedOnRun)to).CostPerUnit8 = this.CostPerUnit8;
+            ((BindingEstimatedOnRun)to).CostPerUnit12 = this.CostPerUnit12;
+            ((BindingEstimatedOnRun)to).CostPerUnit16 = this.CostPerUnit16;
+            ((BindingEstimatedOnRun)to).CostPerUnit24 = this.CostPerUnit24;
+            ((BindingEstimatedOnRun)to).CostPerUnit32 = this.CostPerUnit32;
+
+            ((BindingEstimatedOnRun)to).BindingCost = this.BindingCost;
+            ((BindingEstimatedOnRun)to).UseDifferentCostPerUnit = this.UseDifferentCostPerUnit;
+            ((BindingEstimatedOnRun)to).BindingStartingCost = this.BindingStartingCost;
+        
         }
 
         #endregion

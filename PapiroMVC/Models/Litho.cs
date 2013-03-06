@@ -14,7 +14,7 @@ namespace PapiroMVC.Models
     
     public abstract partial class Litho : PrinterMachine
     {
-        public Nullable<long> PrintingUnit { get; set; }
+        public Nullable<short> PrintingUnit { get; set; }
         public Nullable<long> SheetwiseAfterPrintingUnit { get; set; }
         public Nullable<bool> Sheetwise { get; set; }
         public Nullable<System.TimeSpan> WashUpTime { get; set; }

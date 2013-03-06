@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.ComponentModel;
 
+using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class CostPerRunStep : IDataErrorInfo, ICloneable, IDeleteRelated
+
+    public partial class BindingTsk : PrePostPress, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public CostPerRunStep()
+
+        public BindingTsk()
         {
-            this.TypeOfStep = Step.StepType.CostPerRun;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.Binding;
         }
 
-        #region Added Properties
+        #region Proprietà aggiuntive
 
         #endregion
 
@@ -20,8 +26,6 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
-                   //Specify validation property
-                       ""
                };
 
         public override string this[string proprieta]
@@ -53,15 +57,13 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(Step to)
+        public override void Copy(TaskExecutor to)
         {
-            //All properties of object
-            //and pointer of sons
             base.Copy(to);
-
-            ((CostPerRunStep)to).CostPerUnit = this.CostPerUnit;
         }
 
         #endregion
     }
+
+
 }

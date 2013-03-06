@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.ComponentModel;
 
+using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class CostPerMqStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    [Serializable]
+    public partial class LithoSheet : Litho, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-
-        public CostPerMqStep()
+        public LithoSheet()
         {
-            this.TypeOfStep = Step.StepType.CostPerMq;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoSheet;
         }
 
         #region Added Properties
@@ -19,9 +23,10 @@ namespace PapiroMVC.Models
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
-               {
+               {                  
                    //Specify validation property
-                       ""
+                   //    "FormatMin",
+                   //    "FormatMax",
                };
 
         public override string this[string proprieta]
@@ -45,7 +50,6 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
-
             }
         }
 
@@ -53,15 +57,22 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(Step to)
+        public override void Copy(TaskExecutor to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((CostPerMqStep)to).CostPerUnit = this.CostPerUnit;
+            ((LithoSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
+            ((LithoSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
+            ((LithoSheet)to).ProductionWaste = this.ProductionWaste;
+
+            //to.Quantita = this.Quantita;
+            //to.Prezzo = this.Prezzo;
+            //to.Descrizione = this.Descrizione;
         }
 
         #endregion
+
     }
 }

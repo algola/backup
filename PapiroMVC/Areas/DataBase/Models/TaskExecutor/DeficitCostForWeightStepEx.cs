@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class DigitalSheet : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DeficitOnCostForWeightStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-
-        public DigitalSheet()
+        public DeficitOnCostForWeightStep()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalSheet;
+            this.TypeOfStep = Step.StepType.DeficitOnCostForWeight;
         }
 
         #region Added Properties
@@ -24,10 +19,8 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
-                   "ProofSheetFirstStart"
                    //Specify validation property
-                   //    "FormatMin",
-                   //    "FormatMax",
+                       ""
                };
 
         public override string this[string proprieta]
@@ -35,15 +28,6 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
-
-                if (proprieta == "ProofSheetFirstStart")
-                {
-                    if (this.ProofSheetFirstStart < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
-
                 return result;
             }
         }
@@ -60,6 +44,7 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
+
             }
         }
 
@@ -67,22 +52,15 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(TaskExecutor to)
+        public override void Copy(Step to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((DigitalSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
-            ((DigitalSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
-            ((DigitalSheet)to).ProductionWaste = this.ProductionWaste;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
+            ((DeficitForWeightStep)to).DeficitRate = this.DeficitRate;
         }
 
         #endregion
-
     }
 }

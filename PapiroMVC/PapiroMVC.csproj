@@ -449,30 +449,30 @@
     <Compile Include="Models\TaskExecutor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\BindingAvarageRunPerRunStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\BindingCostPerRunStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\BindingEstimatedOnRunEx.cs" />
-    <Compile Include="Models\TaskExecutor\BindingEstimatedOnTimeEx.cs" />
-    <Compile Include="Models\TaskExecutor\BindingEx.cs" />
-    <Compile Include="Models\TaskExecutor\CostPerMqStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\CostPerRunStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\DeficitCostForWeightStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\DeficitForWeightStepEx.cs" />
-    <Compile Include="Models\TaskExecutor\DigitalEx.cs" />
-    <Compile Include="Models\TaskExecutor\DigitalSheetEx.cs" />
-    <Compile Include="Models\TaskExecutor\DigitalWebEx.cs" />
-    <Compile Include="Models\TaskExecutor\LithoEx.cs" />
-    <Compile Include="Models\TaskExecutor\LithoSheetEx.cs" />
-    <Compile Include="Models\TaskExecutor\LithoWebEx.cs" />
-    <Compile Include="Models\TaskExecutor\PlotterEx.cs" />
-    <Compile Include="Models\TaskExecutor\PrePostPressEx.cs" />
-    <Compile Include="Models\TaskExecutor\PrinterMachineEx.cs" />
-    <Compile Include="Models\TaskExecutor\StepEx.cs" />
-    <Compile Include="Models\TaskExecutor\TaskEstimatedOnEx.cs" />
-    <Compile Include="Models\TaskExecutor\TaskEstimatedOnTimeEx.cs" />
-    <Compile Include="Models\TaskExecutor\TaskEstimatedOnUnitEx.cs" />
-    <Compile Include="Models\TaskExecutor\TaskExecutorEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitForWeightStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalWebEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrePostPressEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx.cs" />
     <Compile Include="Models\TypeOfBase.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

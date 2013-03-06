@@ -8,22 +8,23 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public abstract partial class Step : IDataErrorInfo, ICloneable, IDeleteRelated
+
+    public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated
     {
        
         #region Proprietà aggiuntive
-        public enum StepType
+        public enum ExecutorType : int
         {
-            AvarageRunForRun,
-            CostPerRun,
-            CostPerMq,
-            DeficitForWeight,
-            DeficitOnCostForWeight,
-            BindingAvarageRunPerRunStep,
-            BindingCostPerRunStep
+            LithoSheet=0,
+            LithoWeb=1,
+            DigitalSheet=2,
+            DigitalWeb=3,
+            Plotter=4,
+            PrePostPress=5,
+            Binding=6
         }
 
-        public StepType TypeOfStep
+        public ExecutorType TypeOfPrinter
         {
             get;
             protected set;
@@ -31,10 +32,20 @@ namespace PapiroMVC.Models
 
         #endregion
 
+        public bool IsSelected
+        {
+            get;
+            set;
+        }
+
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
                {
+                   //Specify validation property
+                       "FormatMin",
+                       "FormatMax",
+                       "TaskExecutorName"
                };
 
         public string Error
@@ -50,6 +61,35 @@ namespace PapiroMVC.Models
             get
             {
                 string result = null;
+                if (proprieta == "FormatMin" && this.FormatMin != null)
+                {
+                    Regex exp = new Regex(@"^[0-9.,]{1,5}x[0-9.,]{1,5}$", RegexOptions.IgnoreCase);
+                    if (!exp.IsMatch(this.FormatMin.ToString()))
+                    {
+                        result = "Messagge Error";
+                    }
+                }
+                //Format Validation
+                if (proprieta == "FormatMax" && this.FormatMax != null)
+                {
+                    Regex exp = new Regex(@"^[0-9.,]{1,5}x[0-9.,]{1,5}$", RegexOptions.IgnoreCase);
+                    if (!exp.IsMatch(this.FormatMax.ToString()))
+                    {
+                        result = "Messagge Error";
+                    }
+                }
+                //validazione della proprietà Note
+                if (proprieta == "TaskExecutorName")
+                {
+                    if (this.TaskExecutorName != null)
+                    {
+                        Regex exp = new Regex(@"^[\w\s\x00-\xFF]{0,255}$", RegexOptions.IgnoreCase);
+                        if (!exp.IsMatch(this.TaskExecutorName))
+                        {
+                            result = "Superata la lunghezza delle note consentita";
+                        }
+                    }
+                }
                 return result;
             }
         }
@@ -73,17 +113,24 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public virtual void Copy(Step to)
+        public virtual void Copy(TaskExecutor to)
         {
             //All properties of object
             //and pointer of sons
 
-            to.CodPrinterEstimatedOn = this.CodPrinterEstimatedOn;
-            to.printerestimatedon = this.printerestimatedon;
+            to.CodTaskExecutor = this.CodTaskExecutor;
+            to.TaskExecutorName = this.TaskExecutorName;
             to.TimeStampTable = this.TimeStampTable;
-            to.ToUnit = this.ToUnit;
-            to.FromUnit = this.FromUnit;
-            to.TypeOfStep = this.TypeOfStep;
+            to.Version = this.Version;
+            to.FormatMin = this.FormatMin;
+            to.FormatMax = this.FormatMax;
+            to.WeightMax = this.WeightMax;
+            to.WeightMin = this.WeightMin;
+            to.Pinza = this.Pinza;
+            to.ControPinza = this.ControPinza;
+            to.Laterale = this.Laterale;
+            to.SetTaskExecutorEstimatedOn = this.SetTaskExecutorEstimatedOn;
+
         }
 
         public object Clone()
@@ -92,7 +139,7 @@ namespace PapiroMVC.Models
             var kindOfObject = this.GetType();
 
             //istanzio una copia che sarà gestita dall'invio
-            Step copyOfObject = (Step)Activator.CreateInstance(kindOfObject);
+            TaskExecutor copyOfObject = (TaskExecutor)Activator.CreateInstance(kindOfObject);
             //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
             this.Copy(copyOfObject);
 
@@ -122,6 +169,6 @@ namespace PapiroMVC.Models
         }
 
         #endregion
-
     }
+
 }

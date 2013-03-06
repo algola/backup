@@ -8,17 +8,15 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-
-    public partial class BindingTsk : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class Plotter : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-
-        public BindingTsk()
+        public Plotter()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.Binding;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.Plotter;
         }
 
-        #region Proprietà aggiuntive
+        #region Added Properties
 
         #endregion
 
@@ -26,6 +24,10 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
+                   "Width"
+                   //Specify validation property
+                   //    "FormatMin",
+                   //    "FormatMax",
                };
 
         public override string this[string proprieta]
@@ -33,6 +35,15 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
+
+                if (proprieta == "Width")
+                {
+                    if (this.Width < 0)
+                    {
+                        result = "Messagge Error";
+                    }
+                }
+
                 return result;
             }
         }
@@ -49,7 +60,6 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
-
             }
         }
 
@@ -59,11 +69,18 @@ namespace PapiroMVC.Models
 
         public override void Copy(TaskExecutor to)
         {
+            //All properties of object
+            //and pointer of sons
             base.Copy(to);
+
+            ((Plotter)to).Width = this.Width;
+
+            //to.Quantita = this.Quantita;
+            //to.Prezzo = this.Prezzo;
+            //to.Descrizione = this.Descrizione;
         }
 
         #endregion
+
     }
-
-
 }

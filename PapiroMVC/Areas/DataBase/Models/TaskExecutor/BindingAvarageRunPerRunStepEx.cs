@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace PapiroMVC.Models
 {
-    public partial class BindingAvarageRunPerRunStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class BindingAvarageRunPerRunStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         public BindingAvarageRunPerRunStep()

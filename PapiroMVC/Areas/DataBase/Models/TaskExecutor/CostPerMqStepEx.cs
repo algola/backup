@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public abstract partial class PrinterMachine : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class CostPerMqStep: Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-       
-        #region Proprietà aggiuntive
+
+        public CostPerMqStep()
+        {
+            this.TypeOfStep = Step.StepType.CostPerMq;
+        }
+
+        #region Added Properties
 
         #endregion
 
@@ -20,9 +21,7 @@ namespace PapiroMVC.Models
         private static readonly string[] proprietaDaValidare =
                {
                    //Specify validation property
-                       "FormatMin",
-                       "FormatMax",
-                       "TaskExecutorName"
+                       ""
                };
 
         public override string this[string proprieta]
@@ -54,18 +53,13 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(TaskExecutor to)
+        public override void Copy(Step to)
         {
-            base.Copy(to);
             //All properties of object
             //and pointer of sons
+            base.Copy(to);
 
-            ((PrinterMachine)to).InkUsage = this.InkUsage;
-            ((PrinterMachine)to).InkUsageForfait = this.InkUsageForfait;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
+            ((CostPerMqStep)to).CostPerUnit = this.CostPerUnit;
         }
 
         #endregion

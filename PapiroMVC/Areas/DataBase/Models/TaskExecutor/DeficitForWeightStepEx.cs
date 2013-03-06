@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class Plotter : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DeficitForWeightStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public Plotter()
+        public DeficitForWeightStep()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.Plotter;
+            this.TypeOfStep = Step.StepType.DeficitForWeight;
         }
 
         #region Added Properties
@@ -24,10 +20,8 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
-                   "Width"
                    //Specify validation property
-                   //    "FormatMin",
-                   //    "FormatMax",
+                       ""
                };
 
         public override string this[string proprieta]
@@ -35,15 +29,6 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
-
-                if (proprieta == "Width")
-                {
-                    if (this.Width < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
-
                 return result;
             }
         }
@@ -60,6 +45,7 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
+
             }
         }
 
@@ -67,20 +53,15 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(TaskExecutor to)
+        public override void Copy(Step to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((Plotter)to).Width = this.Width;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
+            ((DeficitForWeightStep)to).DeficitRate = this.DeficitRate;
         }
 
         #endregion
-
     }
 }

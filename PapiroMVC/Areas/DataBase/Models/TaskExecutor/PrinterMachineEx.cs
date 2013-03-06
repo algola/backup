@@ -8,25 +8,21 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    [Serializable]
-    public partial class LithoSheet : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class PrinterMachine : TaskExecutor, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-        public LithoSheet()
-        {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoSheet;
-        }
-
-        #region Added Properties
+       
+        #region Proprietà aggiuntive
 
         #endregion
 
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
-               {                  
+               {
                    //Specify validation property
-                   //    "FormatMin",
-                   //    "FormatMax",
+                       "FormatMin",
+                       "FormatMax",
+                       "TaskExecutorName"
                };
 
         public override string this[string proprieta]
@@ -50,6 +46,7 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
+
             }
         }
 
@@ -59,13 +56,12 @@ namespace PapiroMVC.Models
 
         public override void Copy(TaskExecutor to)
         {
+            base.Copy(to);
             //All properties of object
             //and pointer of sons
-            base.Copy(to);
 
-            ((LithoSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
-            ((LithoSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
-            ((LithoSheet)to).ProductionWaste = this.ProductionWaste;
+            ((PrinterMachine)to).InkUsage = this.InkUsage;
+            ((PrinterMachine)to).InkUsageForfait = this.InkUsageForfait;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
@@ -73,6 +69,5 @@ namespace PapiroMVC.Models
         }
 
         #endregion
-
     }
 }

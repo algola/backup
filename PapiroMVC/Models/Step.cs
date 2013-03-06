@@ -20,6 +20,6 @@ namespace PapiroMVC.Models
         public Nullable<double> FromUnit { get; set; }
         public Nullable<double> ToUnit { get; set; }
     
-        public virtual TaskEstimatedOn printerestimatedon { get; set; }
+        public virtual TaskEstimatedOn taskexecutorestimatedon { get; set; }
     }
 }

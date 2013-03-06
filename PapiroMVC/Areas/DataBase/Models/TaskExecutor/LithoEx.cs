@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public abstract partial class Litho : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class Litho : PrinterMachine, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         public Litho()

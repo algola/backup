@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
-using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public abstract partial class Digital : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class CostPerRunStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
+
+        public CostPerRunStep()
+        {
+            this.TypeOfStep = Step.StepType.CostPerRun;
+        }
 
         #region Added Properties
 
@@ -52,23 +53,15 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(TaskExecutor to)
+        public override void Copy(Step to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((Digital)to).ColorSide1 = this.ColorSide1;
-            ((Digital)to).ColorSide1 = this.ColorSide1;
-            ((Digital)to).BWSide1 = this.BWSide1;
-            ((Digital)to).BWSide2 = this.BWSide2;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
+            ((CostPerRunStep)to).CostPerUnit = this.CostPerUnit;
         }
 
         #endregion
-
     }
 }

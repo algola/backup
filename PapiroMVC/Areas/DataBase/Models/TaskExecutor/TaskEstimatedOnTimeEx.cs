@@ -8,11 +8,12 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class BindingEstimatedOnTime: IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class TaskEstimatedOnTime: TaskEstimatedOn, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-        public BindingEstimatedOnTime()
+
+        public TaskEstimatedOnTime()
         {
-            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.BindingOnTime;
+            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.OnTime;
         }
 
         #region Proprietà aggiuntive
@@ -80,26 +81,13 @@ namespace PapiroMVC.Models
             //All properties of object
             //and pointer of sons
             base.Copy(to);
-            ((BindingEstimatedOnTime)to).CostPerHourRunning = this.CostPerHourRunning;
-            ((BindingEstimatedOnTime)to).CostPerHourStarting = this.CostPerHourStarting;
-            ((BindingEstimatedOnTime)to).StartingTime4 = this.StartingTime4;
-            ((BindingEstimatedOnTime)to).StartingTime6 = this.StartingTime6;
-            ((BindingEstimatedOnTime)to).StartingTime8 = this.StartingTime8;
-            ((BindingEstimatedOnTime)to).StartingTime12 = this.StartingTime12;
-            ((BindingEstimatedOnTime)to).StartingTime16 = this.StartingTime16;
-            ((BindingEstimatedOnTime)to).StartingTime24 = this.StartingTime24;
-            ((BindingEstimatedOnTime)to).StartingTime32 = this.StartingTime32;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour4 = this.AvarageRunPerHour4;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour6 = this.AvarageRunPerHour6;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour8 = this.AvarageRunPerHour8;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour12 = this.AvarageRunPerHour12;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour16 = this.AvarageRunPerHour16;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour24 = this.AvarageRunPerHour24;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHour32 = this.AvarageRunPerHour32;
-
-            ((BindingEstimatedOnTime)to).StartingTimeBinding = this.StartingTimeBinding;
-            ((BindingEstimatedOnTime)to).AvarageRunPerHourBinding = this.AvarageRunPerHourBinding;
-        
+            ((TaskEstimatedOnTime)to).AvarageRunPerHour = this.AvarageRunPerHour;
+            ((TaskEstimatedOnTime)to).UseDifferentRunPerHour = this.UseDifferentRunPerHour;
+            ((TaskEstimatedOnTime)to).StartingTime1 = this.StartingTime1;
+            ((TaskEstimatedOnTime)to).StartingTime2 = this.StartingTime2;
+            ((TaskEstimatedOnTime)to).TimeForfait = this.TimeForfait;
+            ((TaskEstimatedOnTime)to).CostPerHourRunning = this.CostPerHourRunning;
+            ((TaskEstimatedOnTime)to).CostPerHourStarting = this.CostPerHourStarting;
         }
 
         #endregion

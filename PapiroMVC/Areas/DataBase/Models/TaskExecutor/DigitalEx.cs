@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.ComponentModel;
 
+using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class DeficitForWeightStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class Digital : PrinterMachine, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-
-        public DeficitForWeightStep()
-        {
-            this.TypeOfStep = Step.StepType.DeficitForWeight;
-        }
 
         #region Added Properties
 
@@ -53,15 +52,23 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(Step to)
+        public override void Copy(TaskExecutor to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((DeficitForWeightStep)to).DeficitRate = this.DeficitRate;
+            ((Digital)to).ColorSide1 = this.ColorSide1;
+            ((Digital)to).ColorSide1 = this.ColorSide1;
+            ((Digital)to).BWSide1 = this.BWSide1;
+            ((Digital)to).BWSide2 = this.BWSide2;
+
+            //to.Quantita = this.Quantita;
+            //to.Prezzo = this.Prezzo;
+            //to.Descrizione = this.Descrizione;
         }
 
         #endregion
+
     }
 }

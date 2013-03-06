@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.ComponentModel;
 
+using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class AvarageRunPerRunStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class LithoWeb : Litho, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public AvarageRunPerRunStep()
+        public LithoWeb()
         {
-            this.TypeOfStep = Step.StepType.AvarageRunForRun;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.LithoWeb;
         }
 
         #region Added Properties
@@ -20,8 +24,10 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
+                   "PaperFirstStartLenght"
                    //Specify validation property
-                       ""
+                   //    "FormatMin",
+                   //    "FormatMax",
                };
 
         public override string this[string proprieta]
@@ -29,6 +35,15 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
+
+                if (proprieta == "PaperFirstStartLenght")
+                {
+                    if (this.PaperFirstStartLenght < 0)
+                    {
+                        result = "Messagge Error";
+                    }
+                }
+
                 return result;
             }
         }
@@ -45,7 +60,6 @@ namespace PapiroMVC.Models
                         ret = false;
                 }
                 return ret && base.IsValid;
-
             }
         }
 
@@ -53,15 +67,20 @@ namespace PapiroMVC.Models
 
         #region Handle copy for modify
 
-        public override void Copy(Step to)
+        public override void Copy(TaskExecutor to)
         {
             //All properties of object
             //and pointer of sons
             base.Copy(to);
 
-            ((AvarageRunPerRunStep)to).AvarageRunPerHour = this.AvarageRunPerHour;
+            ((LithoWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
+
+            //to.Quantita = this.Quantita;
+            //to.Prezzo = this.Prezzo;
+            //to.Descrizione = this.Descrizione;
         }
 
         #endregion
+
     }
 }

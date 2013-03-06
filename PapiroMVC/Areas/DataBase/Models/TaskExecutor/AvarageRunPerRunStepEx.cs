@@ -4,11 +4,12 @@ using System.ComponentModel;
 
 namespace PapiroMVC.Models
 {
-    public partial class DeficitOnCostForWeightStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class AvarageRunPerRunStep : Step , IDataErrorInfo, ICloneable, IDeleteRelated
     {
-        public DeficitOnCostForWeightStep()
+
+        public AvarageRunPerRunStep()
         {
-            this.TypeOfStep = Step.StepType.DeficitOnCostForWeight;
+            this.TypeOfStep = Step.StepType.AvarageRunForRun;
         }
 
         #region Added Properties
@@ -58,7 +59,7 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((DeficitForWeightStep)to).DeficitRate = this.DeficitRate;
+            ((AvarageRunPerRunStep)to).AvarageRunPerHour = this.AvarageRunPerHour;
         }
 
         #endregion

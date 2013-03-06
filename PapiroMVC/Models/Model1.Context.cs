@@ -26,8 +26,8 @@ namespace PapiroMVC.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<TaskExecutor> printermachines { get; set; }
-        public DbSet<TaskEstimatedOn> printerestimatedon { get; set; }
+        public DbSet<TaskExecutor> taskexecutors { get; set; }
+        public DbSet<TaskEstimatedOn> taskexecutorestimatedon { get; set; }
         public DbSet<Step> steps { get; set; }
         public DbSet<ArticleCost> articlecost { get; set; }
         public DbSet<Article> articles { get; set; }

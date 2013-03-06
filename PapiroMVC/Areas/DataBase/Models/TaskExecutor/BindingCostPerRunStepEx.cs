@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace PapiroMVC.Models
 {
-    public partial class BindingCostPerRunStep : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class BindingCostPerRunStep: Step , IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         public BindingCostPerRunStep()

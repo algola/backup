@@ -421,7 +421,7 @@
           <Property Name="Pinza" Type="Double" />
           <Property Name="ControPinza" Type="Double" />
           <Property Name="Laterale" Type="Double" />
-          <NavigationProperty Name="SetPrinterEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
+          <NavigationProperty Name="SetTaskExecutorEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
           <Property Type="Boolean" Name="IsEstimatedOnTime" />
           <Property Type="Boolean" Name="IsEstimatedOnRun" />
           <Property Type="Boolean" Name="IsEstimatedOnMq" />
@@ -460,11 +460,11 @@
         </EntityType>
         <EntityType Name="TaskEstimatedOn" Abstract="true">
           <Key>
-            <PropertyRef Name="CodPrinterEstimatedOn" />
+            <PropertyRef Name="CodTaskExecutorOn" />
           </Key>
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
           <Property Type="String" Name="CodTaskExecutor" MaxLength="50" Unicode="false" FixedLength="true" />
-          <Property Type="String" Name="CodPrinterEstimatedOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodTaskExecutorOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="Double" Name="CostForfait" />
           <Property Type="Double" Name="CostForfaitForSheet" />
           <NavigationProperty Name="taskexecutors" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
@@ -519,7 +519,7 @@
           <End Type="dbModel.Step" Role="steps" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PrinterEstimatedOn">
-              <PropertyRef Name="CodPrinterEstimatedOn" />
+              <PropertyRef Name="CodTaskExecutorOn" />
             </Principal>
             <Dependent Role="steps">
               <PropertyRef Name="CodPrinterEstimatedOn" />
@@ -927,7 +927,7 @@
           <EntitySetMapping Name="taskexecutorestimatedon">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="CostForfaitForSheet" ColumnName="CostForfaitForSheet" />
                 <ScalarProperty Name="CostForfait" ColumnName="CostForfait" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
@@ -937,7 +937,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
                 <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
                 <ScalarProperty Name="TimeForfait" ColumnName="TimeForfait" />
@@ -951,7 +951,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnUnit)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStep" ColumnName="UseDifferentDeficitOnCostForWeightStep" />
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="StartingCost2" ColumnName="StartingCost2" />
                 <ScalarProperty Name="StartingCost1" ColumnName="StartingCost1" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
@@ -961,19 +961,19 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnRun)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
                 <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
                 <ScalarProperty Name="StartingTime32" ColumnName="StartingTime32" />
@@ -999,7 +999,7 @@
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="BindingStartingCost" ColumnName="BindingStartingCost" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="BindingCost" ColumnName="BindingCost" />
                 <ScalarProperty Name="StartingCost32" ColumnName="StartingCost32" />
                 <ScalarProperty Name="CostPerUnit32" ColumnName="CostPerUnit32" />
@@ -1423,52 +1423,10 @@
           <ConnectorPoint PointX="14.375" PointY="10.25" />
           <ConnectorPoint PointX="14.375" PointY="10.625" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.Step" Width="2.125" PointX="16.25" PointY="1.75" Height="2.1725878906249991" />
-        <AssociationConnector Association="dbModel.FK_Steps_CodPrinterEstimatedOn">
-          <ConnectorPoint PointX="12.75" PointY="2.8362939453125" />
-          <ConnectorPoint PointX="16.25" PointY="2.8362939453125" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="dbModel.CostPerRunStep" Width="1.5" PointX="15.5" PointY="5.25" Height="1.2110807291666665" />
-        <InheritanceConnector EntityType="dbModel.CostPerRunStep" ManuallyRouted="false">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="16.25" PointY="4.875" />
-          <ConnectorPoint PointX="16.25" PointY="5.25" />
-        </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.AvarageRunPerRunStep" Width="1.5" PointX="13.75" PointY="5.25" Height="1.2110807291666665" IsExpanded="true" />
-        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep" ManuallyRouted="false">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="14.5" PointY="4.875" />
-          <ConnectorPoint PointX="14.5" PointY="5.25" />
-        </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.DeficitForWeightStep" Width="1.5" PointX="17.125" PointY="5.25" Height="1.2110807291666665" />
-        <InheritanceConnector EntityType="dbModel.DeficitForWeightStep" ManuallyRouted="false">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="17.875" PointY="4.875" />
-          <ConnectorPoint PointX="17.875" PointY="5.25" />
-        </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.CostPerMqStep" Width="1.5" PointX="18.75" PointY="5.25" Height="1.2110807291666674" />
-        <InheritanceConnector EntityType="dbModel.CostPerMqStep" ManuallyRouted="false">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="19.5" PointY="4.875" />
-          <ConnectorPoint PointX="19.5" PointY="5.25" />
-        </InheritanceConnector>
-        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep">
-          <ConnectorPoint PointX="17" PointY="3.922587890625" />
-          <ConnectorPoint PointX="17" PointY="4.875" />
-          <ConnectorPoint PointX="14.25" PointY="4.875" />
-          <ConnectorPoint PointX="14.25" PointY="5.25" />
-        </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.DeficitOnCostForWeightStep" Width="1.5" PointX="20.375" PointY="5.25" Height="1.2110807291666674" />
-        <InheritanceConnector EntityType="dbModel.DeficitOnCostForWeightStep" ManuallyRouted="false">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="21.125" PointY="4.875" />
-          <ConnectorPoint PointX="21.125" PointY="5.25" />
-        </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.ArticleCost" Width="3.375" PointX="33.75" PointY="1.375" Height="1.787985026041667" />
         <EntityTypeShape EntityType="dbModel.Article" Width="3.25" PointX="40.875" PointY="1.375" Height="2.364889322916667" />
         <AssociationConnector Association="dbModel.FK_ArticleCost_CodArticle">
@@ -1674,21 +1632,20 @@
           <ConnectorPoint PointX="19.375" PointY="7.25" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.BindingAvarageRunPerRunStep" Width="1.5" PointX="22.125" PointY="5.25" Height="4.0956022135416656" />
-        <InheritanceConnector EntityType="dbModel.BindingAvarageRunPerRunStep">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="22.875" PointY="4.875" />
-          <ConnectorPoint PointX="22.875" PointY="5.25" />
-        </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.BindingCostPerRunStep" Width="1.5" PointX="23.875" PointY="5.25" Height="3.9033007812499996" />
-        <InheritanceConnector EntityType="dbModel.BindingCostPerRunStep">
-          <ConnectorPoint PointX="17.3125" PointY="3.9225878906249991" />
-          <ConnectorPoint PointX="17.3125" PointY="4.875" />
-          <ConnectorPoint PointX="24.625" PointY="4.875" />
-          <ConnectorPoint PointX="24.625" PointY="5.25" />
-        </InheritanceConnector>
         <AssociationConnector Association="dbModel.FK_articles_customersuppliers" />
         <AssociationConnector Association="dbModel.FK_articles_customersuppliers_2" />
+        <EntityTypeShape EntityType="dbModel.AvarageRunPerRunStep" Width="1.5" PointX="13.5" PointY="5.25" />
+        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep" />
+        <EntityTypeShape EntityType="dbModel.Step" Width="1.5" PointX="19.875" PointY="0.875" />
+        <InheritanceConnector EntityType="dbModel.CostPerRunStep" />
+        <InheritanceConnector EntityType="dbModel.AvarageRunPerRunStep" />
+        <InheritanceConnector EntityType="dbModel.DeficitForWeightStep" />
+        <InheritanceConnector EntityType="dbModel.CostPerMqStep" />
+        <InheritanceConnector EntityType="dbModel.DeficitOnCostForWeightStep" />
+        <InheritanceConnector EntityType="dbModel.BindingAvarageRunPerRunStep" />
+        <InheritanceConnector EntityType="dbModel.BindingCostPerRunStep" />
+        <AssociationConnector Association="dbModel.FK_Steps_CodPrinterEstimatedOn" />
         </Diagram>
     </Diagrams>
   </Designer>

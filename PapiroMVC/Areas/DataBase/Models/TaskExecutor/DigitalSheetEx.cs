@@ -8,23 +8,23 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public partial class DigitalWeb : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DigitalSheet : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public DigitalWeb()
+        public DigitalSheet()
         {
-            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalWeb;
+            this.TypeOfPrinter = TaskExecutor.ExecutorType.DigitalSheet;
         }
 
         #region Added Properties
 
         #endregion
 
-        #region Error Handler
+        #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
                {
-                   "PaperFirstStartLenght"
+                   "ProofSheetFirstStart"
                    //Specify validation property
                    //    "FormatMin",
                    //    "FormatMax",
@@ -36,9 +36,9 @@ namespace PapiroMVC.Models
             {
                 string result = base[proprieta];
 
-                if (proprieta == "PaperFirstStartLenght")
+                if (proprieta == "ProofSheetFirstStart")
                 {
-                    if (this.PaperFirstStartLenght < 0)
+                    if (this.ProofSheetFirstStart < 0)
                     {
                         result = "Messagge Error";
                     }
@@ -73,7 +73,9 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((DigitalWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
+            ((DigitalSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
+            ((DigitalSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
+            ((DigitalSheet)to).ProductionWaste = this.ProductionWaste;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;

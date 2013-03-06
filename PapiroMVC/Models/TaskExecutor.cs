@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     {
         public TaskExecutor()
         {
-            this.SetPrinterEstimatedOn = new HashSet<TaskEstimatedOn>();
+            this.SetTaskExecutorEstimatedOn = new HashSet<TaskEstimatedOn>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -34,8 +34,7 @@ namespace PapiroMVC.Models
         public Nullable<bool> IsEstimatedOnTime { get; set; }
         public Nullable<bool> IsEstimatedOnRun { get; set; }
         public Nullable<bool> IsEstimatedOnMq { get; set; }
-        public Nullable<double> Percent { get; set; }
     
-        public virtual ICollection<TaskEstimatedOn> SetPrinterEstimatedOn { get; set; }
+        public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }
     }
 }

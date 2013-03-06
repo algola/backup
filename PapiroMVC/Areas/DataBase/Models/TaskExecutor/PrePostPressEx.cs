@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace PapiroMVC.Models
 {
 
-    public partial class PrePostPress : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class PrePostPress : TaskExecutor, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
 
