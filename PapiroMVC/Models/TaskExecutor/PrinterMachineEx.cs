@@ -22,7 +22,7 @@ namespace PapiroMVC.Models
                    //Specify validation property
                        "FormatMin",
                        "FormatMax",
-                       "PrinterName"
+                       "TaskExecutorName"
                };
 
         public override string this[string proprieta]

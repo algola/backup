@@ -45,7 +45,7 @@ namespace PapiroMVC.Models
                    //Specify validation property
                        "FormatMin",
                        "FormatMax",
-                       "PrinterName"
+                       "TaskExecutorName"
                };
 
         public string Error
@@ -79,12 +79,12 @@ namespace PapiroMVC.Models
                     }
                 }
                 //validazione della proprietà Note
-                if (proprieta == "PrinterName")
+                if (proprieta == "TaskExecutorName")
                 {
-                    if (this.PrinterName != null)
+                    if (this.TaskExecutorName != null)
                     {
                         Regex exp = new Regex(@"^[\w\s\x00-\xFF]{0,255}$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.PrinterName))
+                        if (!exp.IsMatch(this.TaskExecutorName))
                         {
                             result = "Superata la lunghezza delle note consentita";
                         }
@@ -118,8 +118,8 @@ namespace PapiroMVC.Models
             //All properties of object
             //and pointer of sons
 
-            to.CodPrinterMachine = this.CodPrinterMachine;
-            to.PrinterName = this.PrinterName;
+            to.CodTaskExecutor = this.CodTaskExecutor;
+            to.TaskExecutorName = this.TaskExecutorName;
             to.TimeStampTable = this.TimeStampTable;
             to.Version = this.Version;
             to.FormatMin = this.FormatMin;

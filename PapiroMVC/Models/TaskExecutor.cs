@@ -20,8 +20,8 @@ namespace PapiroMVC.Models
         }
     
         public System.DateTime TimeStampTable { get; set; }
-        public string CodPrinterMachine { get; set; }
-        public string PrinterName { get; set; }
+        public string CodTaskExecutor { get; set; }
+        public string TaskExecutorName { get; set; }
         public string Version { get; set; }
         public Nullable<bool> Dismissed { get; set; }
         public string FormatMin { get; set; }

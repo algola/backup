@@ -81,7 +81,7 @@ namespace PapiroMVC.Controllers
             }
             var tables = new List<IDDL>();
 
-            tables.Add(new PrinterMachinesDDL());
+            tables.Add(new TaskExecutorsDDL());
             tables.Add(new ArticlesDDL());
             tables.Add(new CustomerSupplierDLL());
 

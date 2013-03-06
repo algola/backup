@@ -20,7 +20,7 @@ namespace PapiroMVC.Models
         }
     
         public System.DateTime TimeStampTable { get; set; }
-        public string CodPrinterMachine { get; set; }
+        public string CodTaskExecutor { get; set; }
         public string CodPrinterEstimatedOn { get; set; }
         public Nullable<double> CostForfait { get; set; }
         public Nullable<double> CostForfaitForSheet { get; set; }

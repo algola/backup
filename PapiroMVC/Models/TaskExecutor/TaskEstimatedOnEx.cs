@@ -100,7 +100,7 @@ namespace PapiroMVC.Models
 
             to.TimeStampTable = this.TimeStampTable;
             to.CostForfait = this.CostForfait;
-            to.CodPrinterMachine = this.CodPrinterMachine;
+            to.CodTaskExecutor = this.CodTaskExecutor;
             to.CostForfaitForSheet = this.CostForfaitForSheet;
 
         }

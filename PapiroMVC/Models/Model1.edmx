@@ -10,9 +10,9 @@
           <EntitySet Name="articles" EntityType="dbModel.Store.articles" store:Type="Tables" Schema="db" />
           <EntitySet Name="customersupplierbases" EntityType="dbModel.Store.customersupplierbases" store:Type="Tables" Schema="db" />
           <EntitySet Name="customersuppliers" EntityType="dbModel.Store.customersuppliers" store:Type="Tables" Schema="db" />
-          <EntitySet Name="printerestimatedon" EntityType="dbModel.Store.printerestimatedon" store:Type="Tables" Schema="db" />
-          <EntitySet Name="printermachines" EntityType="dbModel.Store.printermachines" store:Type="Tables" Schema="db" />
           <EntitySet Name="steps" EntityType="dbModel.Store.steps" store:Type="Tables" Schema="db" />
+          <EntitySet Name="taskexecutorestimatedon" EntityType="dbModel.Store.taskexecutorestimatedon" store:Type="Tables" Schema="db" />
+          <EntitySet Name="taskexecutors" EntityType="dbModel.Store.taskexecutors" store:Type="Tables" Schema="db" />
           <EntitySet Name="typeofbase" EntityType="dbModel.Store.typeofbase" store:Type="Tables" Schema="db" />
           <AssociationSet Name="FK_ArticleCost_CodArticle" Association="dbModel.Store.FK_ArticleCost_CodArticle">
             <End Role="articles" EntitySet="articles" />
@@ -34,13 +34,9 @@
             <End Role="typeofbase" EntitySet="typeofbase" />
             <End Role="customersupplierbases" EntitySet="customersupplierbases" />
           </AssociationSet>
-          <AssociationSet Name="FK_PrinterEstimatedOn_CodPrinterMachine" Association="dbModel.Store.FK_PrinterEstimatedOn_CodPrinterMachine">
-            <End Role="printermachines" EntitySet="printermachines" />
-            <End Role="printerestimatedon" EntitySet="printerestimatedon" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.Store.FK_Steps_CodPrinterEstimatedOn">
-            <End Role="printerestimatedon" EntitySet="printerestimatedon" />
-            <End Role="steps" EntitySet="steps" />
+          <AssociationSet Name="FK_taskexecutorestimatedon_CodTaskExecutor" Association="dbModel.Store.FK_taskexecutorestimatedon_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="articlecost">
@@ -130,12 +126,57 @@
           <Property Name="TaxCode" Type="char" MaxLength="50" />
           <Property Name="Outdated" Type="bit" />
         </EntityType>
-        <EntityType Name="printerestimatedon">
+        <EntityType Name="steps">
+          <Key>
+            <PropertyRef Name="IdStep" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
+          <Property Name="CodPrinterEstimatedOn" Type="char" MaxLength="50" />
+          <Property Name="IdStep" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FromUnit" Type="double" />
+          <Property Name="ToUnit" Type="double" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="AvarageRunPerHour" Type="uint" />
+          <Property Name="CostPerUnit" Type="double" />
+          <Property Name="DeficitRate" Type="double" />
+          <Property Name="AvarageRunPerHour4" Type="uint" />
+          <Property Name="StartingTime4" Type="time" />
+          <Property Name="AvarageRunPerHour6" Type="uint" />
+          <Property Name="StartingTime6" Type="time" />
+          <Property Name="AvarageRunPerHour8" Type="uint" />
+          <Property Name="StartingTime8" Type="time" />
+          <Property Name="AvarageRunPerHour12" Type="uint" />
+          <Property Name="StartingTime12" Type="time" />
+          <Property Name="AvarageRunPerHour16" Type="uint" />
+          <Property Name="StartingTime16" Type="time" />
+          <Property Name="AvarageRunPerHour24" Type="uint" />
+          <Property Name="StartingTime24" Type="time" />
+          <Property Name="AvarageRunPerHour32" Type="uint" />
+          <Property Name="StartingTime32" Type="time" />
+          <Property Name="AvarageRunPerHourBinding" Type="uint" />
+          <Property Name="StartingTimeBinding" Type="time" />
+          <Property Name="CostPerUnit4" Type="double" />
+          <Property Name="StartingCost4" Type="double" />
+          <Property Name="CostPerUnit6" Type="double" />
+          <Property Name="StartingCost6" Type="double" />
+          <Property Name="CostPerUnit8" Type="double" />
+          <Property Name="StartingCost8" Type="double" />
+          <Property Name="CostPerUnit12" Type="double" />
+          <Property Name="StartingCost12" Type="double" />
+          <Property Name="CostPerUnit16" Type="double" />
+          <Property Name="StartingCost16" Type="double" />
+          <Property Name="CostPerUnit24" Type="double" />
+          <Property Name="StartingCost24" Type="double" />
+          <Property Name="CostPerUnit32" Type="double" />
+          <Property Name="StartingCost32" Type="double" />
+          <Property Name="BindingCost" Type="double" />
+        </EntityType>
+        <EntityType Name="taskexecutorestimatedon">
           <Key>
             <PropertyRef Name="CodPrinterEstimatedOn" />
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
-          <Property Name="CodPrinterMachine" Type="char" MaxLength="50" />
+          <Property Name="CodTaskExecutor" Type="char" MaxLength="50" />
           <Property Name="CodPrinterEstimatedOn" Type="char" Nullable="false" MaxLength="50" />
           <Property Name="SelectorUnitTime" Type="int" />
           <Property Name="SelectorMqRun" Type="int" />
@@ -187,13 +228,13 @@
           <Property Name="BindingCost" Type="double" />
           <Property Name="BindingStartingCost" Type="double" />
         </EntityType>
-        <EntityType Name="printermachines">
+        <EntityType Name="taskexecutors">
           <Key>
-            <PropertyRef Name="CodPrinterMachine" />
+            <PropertyRef Name="CodTaskExecutor" />
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
-          <Property Name="CodPrinterMachine" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="PrinterName" Type="char" MaxLength="160" />
+          <Property Name="CodTaskExecutor" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TaskExecutorName" Type="char" MaxLength="100" />
           <Property Name="Version" Type="char" MaxLength="4" />
           <Property Name="Dismissed" Type="bit" />
           <Property Name="FormatMin" Type="char" MaxLength="9" />
@@ -227,52 +268,6 @@
           <Property Name="IsEstimatedOnTime" Type="bit" />
           <Property Name="IsEstimatedOnRun" Type="bit" />
           <Property Name="IsEstimatedOnMq" Type="bit" />
-          <Property Name="Percent" Type="double" />
-        </EntityType>
-        <EntityType Name="steps">
-          <Key>
-            <PropertyRef Name="IdStep" />
-          </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
-          <Property Name="CodPrinterEstimatedOn" Type="char" MaxLength="50" />
-          <Property Name="IdStep" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="FromUnit" Type="double" />
-          <Property Name="ToUnit" Type="double" />
-          <Property Name="Selector" Type="int" />
-          <Property Name="AvarageRunPerHour" Type="uint" />
-          <Property Name="CostPerUnit" Type="double" />
-          <Property Name="DeficitRate" Type="double" />
-          <Property Name="AvarageRunPerHour4" Type="uint" />
-          <Property Name="StartingTime4" Type="time" />
-          <Property Name="AvarageRunPerHour6" Type="uint" />
-          <Property Name="StartingTime6" Type="time" />
-          <Property Name="AvarageRunPerHour8" Type="uint" />
-          <Property Name="StartingTime8" Type="time" />
-          <Property Name="AvarageRunPerHour12" Type="uint" />
-          <Property Name="StartingTime12" Type="time" />
-          <Property Name="AvarageRunPerHour16" Type="uint" />
-          <Property Name="StartingTime16" Type="time" />
-          <Property Name="AvarageRunPerHour24" Type="uint" />
-          <Property Name="StartingTime24" Type="time" />
-          <Property Name="AvarageRunPerHour32" Type="uint" />
-          <Property Name="StartingTime32" Type="time" />
-          <Property Name="AvarageRunPerHourBinding" Type="uint" />
-          <Property Name="StartingTimeBinding" Type="time" />
-          <Property Name="CostPerUnit4" Type="double" />
-          <Property Name="StartingCost4" Type="double" />
-          <Property Name="CostPerUnit6" Type="double" />
-          <Property Name="StartingCost6" Type="double" />
-          <Property Name="CostPerUnit8" Type="double" />
-          <Property Name="StartingCost8" Type="double" />
-          <Property Name="CostPerUnit12" Type="double" />
-          <Property Name="StartingCost12" Type="double" />
-          <Property Name="CostPerUnit16" Type="double" />
-          <Property Name="StartingCost16" Type="double" />
-          <Property Name="CostPerUnit24" Type="double" />
-          <Property Name="StartingCost24" Type="double" />
-          <Property Name="CostPerUnit32" Type="double" />
-          <Property Name="StartingCost32" Type="double" />
-          <Property Name="BindingCost" Type="double" />
         </EntityType>
         <EntityType Name="typeofbase">
           <Key>
@@ -348,31 +343,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PrinterEstimatedOn_CodPrinterMachine">
-          <End Role="printermachines" Type="dbModel.Store.printermachines" Multiplicity="0..1">
+        <Association Name="FK_taskexecutorestimatedon_CodTaskExecutor">
+          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="printerestimatedon" Type="dbModel.Store.printerestimatedon" Multiplicity="*" />
+          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="printermachines">
-              <PropertyRef Name="CodPrinterMachine" />
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
             </Principal>
-            <Dependent Role="printerestimatedon">
-              <PropertyRef Name="CodPrinterMachine" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Steps_CodPrinterEstimatedOn">
-          <End Role="printerestimatedon" Type="dbModel.Store.printerestimatedon" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="steps" Type="dbModel.Store.steps" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="printerestimatedon">
-              <PropertyRef Name="CodPrinterEstimatedOn" />
-            </Principal>
-            <Dependent Role="steps">
-              <PropertyRef Name="CodPrinterEstimatedOn" />
+            <Dependent Role="taskexecutorestimatedon">
+              <PropertyRef Name="CodTaskExecutor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -387,15 +368,15 @@
           </DefiningExpression>
         </Function>
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
-          <EntitySet Name="printermachines" EntityType="dbModel.TaskExecutor" />
-          <EntitySet Name="printerestimatedon" EntityType="dbModel.TaskEstimatedOn" />
-          <AssociationSet Name="FK_PrinterEstimatedOn_CodPrinterMachine" Association="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine">
-            <End Role="TaskExecutor" EntitySet="printermachines" />
-            <End Role="TaskEstimatedOn" EntitySet="printerestimatedon" />
+          <EntitySet Name="taskexecutors" EntityType="dbModel.TaskExecutor" />
+          <EntitySet Name="taskexecutorestimatedon" EntityType="dbModel.TaskEstimatedOn" />
+          <AssociationSet Name="FK_PrinterEstimatedOn_CodTaskExecutor" Association="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor">
+            <End Role="TaskExecutor" EntitySet="taskexecutors" />
+            <End Role="TaskEstimatedOn" EntitySet="taskexecutorestimatedon" />
           </AssociationSet>
           <EntitySet Name="steps" EntityType="dbModel.Step" />
           <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.FK_Steps_CodPrinterEstimatedOn">
-            <End Role="PrinterEstimatedOn" EntitySet="printerestimatedon" />
+            <End Role="PrinterEstimatedOn" EntitySet="taskexecutorestimatedon" />
             <End Role="steps" EntitySet="steps" />
           </AssociationSet>
           <EntitySet Name="articlecost" EntityType="dbModel.ArticleCost" />
@@ -426,11 +407,11 @@
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
-            <PropertyRef Name="CodPrinterMachine" />
+            <PropertyRef Name="CodTaskExecutor" />
           </Key>
           <Property Name="TimeStampTable" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="CodPrinterMachine" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
-          <Property Name="PrinterName" Type="String" MaxLength="100" Unicode="false" FixedLength="true" />
+          <Property Name="CodTaskExecutor" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Name="TaskExecutorName" Type="String" MaxLength="100" Unicode="false" FixedLength="true" />
           <Property Name="Version" Type="String" MaxLength="4" Unicode="false" FixedLength="true" />
           <Property Name="Dismissed" Type="Boolean" />
           <Property Name="FormatMin" Type="String" MaxLength="9" Unicode="false" FixedLength="true" />
@@ -440,14 +421,13 @@
           <Property Name="Pinza" Type="Double" />
           <Property Name="ControPinza" Type="Double" />
           <Property Name="Laterale" Type="Double" />
-          <NavigationProperty Name="SetPrinterEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
+          <NavigationProperty Name="SetPrinterEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
           <Property Type="Boolean" Name="IsEstimatedOnTime" />
           <Property Type="Boolean" Name="IsEstimatedOnRun" />
           <Property Type="Boolean" Name="IsEstimatedOnMq" />
-          <Property Type="Double" Name="Percent" />
         </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
-          <Property Type="Int64" Name="PrintingUnit" />
+          <Property Type="Int16" Name="PrintingUnit" />
           <Property Type="Int64" Name="SheetwiseAfterPrintingUnit" />
           <Property Type="Boolean" Name="Sheetwise" />
           <Property Type="Time" Name="WashUpTime" Precision="0" />
@@ -483,22 +463,22 @@
             <PropertyRef Name="CodPrinterEstimatedOn" />
           </Key>
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
-          <Property Type="String" Name="CodPrinterMachine" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodTaskExecutor" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="CodPrinterEstimatedOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="Double" Name="CostForfait" />
           <Property Type="Double" Name="CostForfaitForSheet" />
-          <NavigationProperty Name="printermachines" Relationship="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
+          <NavigationProperty Name="taskexecutors" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
           <NavigationProperty Name="steps" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="PrinterEstimatedOn" ToRole="steps" />
         </EntityType>
-        <Association Name="FK_PrinterEstimatedOn_CodPrinterMachine">
+        <Association Name="FK_PrinterEstimatedOn_CodTaskExecutor">
           <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1" />
           <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TaskExecutor">
-              <PropertyRef Name="CodPrinterMachine" />
+              <PropertyRef Name="CodTaskExecutor" />
             </Principal>
             <Dependent Role="TaskEstimatedOn">
-              <PropertyRef Name="CodPrinterMachine" />
+              <PropertyRef Name="CodTaskExecutor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -530,7 +510,7 @@
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
           <Property Type="String" Name="CodPrinterEstimatedOn" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="Int64" Name="IdStep" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <NavigationProperty Name="printerestimatedon" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="steps" ToRole="PrinterEstimatedOn" />
+          <NavigationProperty Name="taskexecutorestimatedon" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="steps" ToRole="PrinterEstimatedOn" />
           <Property Type="Double" Name="FromUnit" />
           <Property Type="Double" Name="ToUnit" />
         </EntityType>
@@ -842,14 +822,13 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
-          <EntitySetMapping Name="printermachines">
+          <EntitySetMapping Name="taskexecutors">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="Percent" ColumnName="Percent" />
+              <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="IsEstimatedOnMq" ColumnName="IsEstimatedOnMq" />
                 <ScalarProperty Name="IsEstimatedOnRun" ColumnName="IsEstimatedOnRun" />
                 <ScalarProperty Name="IsEstimatedOnTime" ColumnName="IsEstimatedOnTime" />
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="Laterale" ColumnName="Laterale" />
                 <ScalarProperty Name="ControPinza" ColumnName="ControPinza" />
                 <ScalarProperty Name="Pinza" ColumnName="Pinza" />
@@ -859,13 +838,13 @@
                 <ScalarProperty Name="FormatMin" ColumnName="FormatMin" />
                 <ScalarProperty Name="Dismissed" ColumnName="Dismissed" />
                 <ScalarProperty Name="Version" ColumnName="Version" />
-                <ScalarProperty Name="PrinterName" ColumnName="PrinterName" />
+                <ScalarProperty Name="TaskExecutorName" ColumnName="TaskExecutorName" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Litho)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ChangePlateTime" ColumnName="ChangePlateTime" />
                 <ScalarProperty Name="WashUpTime" ColumnName="WashUpTime" />
                 <ScalarProperty Name="Sheetwise" ColumnName="Sheetwise" />
@@ -875,8 +854,8 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoSheet)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
                 <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
                 <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
@@ -884,15 +863,15 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoWeb)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
                 <Condition ColumnName="Selector" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Digital)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ColorSide2" ColumnName="ColorSide2" />
                 <ScalarProperty Name="ColorSide1" ColumnName="ColorSide1" />
                 <ScalarProperty Name="BWSide2" ColumnName="BWSide2" />
@@ -901,8 +880,8 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalSheet)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
                 <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
                 <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
@@ -910,53 +889,53 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalWeb)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
                 <Condition ColumnName="Selector" Value="3" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Plotter)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <Condition ColumnName="Selector" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrinterMachine)">
-              <MappingFragment StoreEntitySet="printermachines">
+              <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="InkUsageForfait" ColumnName="InkUsageForfait" />
                 <ScalarProperty Name="InkUsage" ColumnName="InkUsage" />
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <Condition ColumnName="SelectorExecutor" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrePostPress)">
-              <MappingFragment StoreEntitySet="printermachines">
+              <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="IsUnitComputationManual" ColumnName="IsUnitComputationManual" />
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <Condition ColumnName="SelectorExecutor" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingTsk)">
-              <MappingFragment StoreEntitySet="printermachines">
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <Condition ColumnName="SelectorBindingPrePostPress" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
             </EntitySetMapping>
-          <EntitySetMapping Name="printerestimatedon">
+          <EntitySetMapping Name="taskexecutorestimatedon">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="CostForfaitForSheet" ColumnName="CostForfaitForSheet" />
                 <ScalarProperty Name="CostForfait" ColumnName="CostForfait" />
-                <ScalarProperty Name="CodPrinterMachine" ColumnName="CodPrinterMachine" />
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
@@ -970,7 +949,7 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnUnit)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStep" ColumnName="UseDifferentDeficitOnCostForWeightStep" />
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="StartingCost2" ColumnName="StartingCost2" />
@@ -981,19 +960,19 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnRun)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnTime)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
                 <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
                 <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
@@ -1017,7 +996,7 @@
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnRun)">
-              <MappingFragment StoreEntitySet="printerestimatedon">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="BindingStartingCost" ColumnName="BindingStartingCost" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
                 <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
@@ -1360,7 +1339,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="52">
+      <Diagram Name="Model1" ZoomLevel="85">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.5" PointY="0.5" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="8" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="10.75" Height="1.5956835937499996" />
@@ -1412,7 +1391,7 @@
           <ConnectorPoint PointX="1.875" PointY="8" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.TaskEstimatedOn" Width="2.5" PointX="10.25" PointY="1.625" Height="2.3648893229166661" />
-        <AssociationConnector Association="dbModel.FK_PrinterEstimatedOn_CodPrinterMachine">
+        <AssociationConnector Association="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor">
           <ConnectorPoint PointX="4.75" PointY="2.8074446614583328" />
           <ConnectorPoint PointX="10.25" PointY="2.8074446614583328" />
         </AssociationConnector>
