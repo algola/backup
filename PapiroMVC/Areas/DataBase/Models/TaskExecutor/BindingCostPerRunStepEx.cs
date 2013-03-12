@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(BindingCostPerRunStep_MetaData))]
     public partial class BindingCostPerRunStep: Step , IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

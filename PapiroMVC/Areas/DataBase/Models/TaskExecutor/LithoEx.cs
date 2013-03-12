@@ -5,9 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(Litho_MetaData))]
     public abstract partial class Litho : PrinterMachine, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

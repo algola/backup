@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(DeficitCostForWeightStep_MetaData))]
     public partial class DeficitOnCostForWeightStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public DeficitOnCostForWeightStep()
@@ -58,7 +60,7 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((DeficitForWeightStep)to).DeficitRate = this.DeficitRate;
+            ((DeficitOnCostForWeightStep)to).DeficitRate = this.DeficitRate;
         }
 
         #endregion

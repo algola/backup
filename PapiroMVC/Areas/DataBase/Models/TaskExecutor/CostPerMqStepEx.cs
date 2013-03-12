@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(CostPerMqStep_MetaData))]
     public partial class CostPerMqStep: Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

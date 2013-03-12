@@ -5,9 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(DigitalWeb_MetaData))]
     public partial class DigitalWeb : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

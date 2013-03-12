@@ -5,10 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-
+    [MetadataType(typeof(TaskExecutor_MetaData))]
     public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated
     {
        

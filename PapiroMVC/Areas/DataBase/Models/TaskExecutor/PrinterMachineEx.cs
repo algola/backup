@@ -5,9 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(PrinterMachine_MetaData))]
     public abstract partial class PrinterMachine : TaskExecutor, IDataErrorInfo, ICloneable, IDeleteRelated
     {
        

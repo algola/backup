@@ -16,12 +16,18 @@ namespace PapiroMVC.Areas.DataBase.Controllers
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerBase
     {
 
-        //example of autocpmplete                
+        //example of autocpmplete
         public ActionResult FormatMaxAutoComplete(string term)
         {
-            TaskExecutor[] filteredItems = taskExecutorRepository.GetAll().Where(
+
+            TaskExecutor[] formats = taskExecutorRepository.GetAll().OfType<Litho>().ToArray();
+
+            var notNull = formats.Except(formats.Where(item => string.IsNullOrEmpty(item.FormatMax)));
+
+            var filteredItems = notNull.Where(
             item => item.FormatMax.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            ).ToArray();
+            );
+
 
             var projection = from art in filteredItems
                              select new
@@ -34,10 +40,81 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        public ActionResult RollPrintableTaskExecutorList(GridSettings gridSettings)
+        private IQueryable<TaskExecutor> TaskExecutorList(GridSettings gridSettings)
+        {
+            //use it in filter
+            string codTaskExecutorFilter = string.Empty;
+            string taskExecutorNameFilter = string.Empty;
+
+            //if gridsetting is a search option
+            if (gridSettings.isSearch)
+            {
+                //pull search field
+                codTaskExecutorFilter = gridSettings.where.rules.Any(r => r.field == "CodExecutor") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodExecutor").data : string.Empty;
+
+                taskExecutorNameFilter = gridSettings.where.rules.Any(r => r.field == "TaskExecutorName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TaskExecutorName").data : string.Empty;
+            }
+
+            //read all
+            var q = taskExecutorRepository.GetAll();
+
+            //execute filter
+            if (!string.IsNullOrEmpty(codTaskExecutorFilter))
+            {
+                q = q.Where(c => c.CodTaskExecutor.ToLower().Contains(codTaskExecutorFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(taskExecutorNameFilter))
+            {
+                q = q.Where(c => c.TaskExecutorName.ToLower().Contains(taskExecutorNameFilter.ToLower()));
+            }
+            
+            /*
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(nameOfMaterialFilter))
+            {
+                q = q.Where(c => c.NameOfMaterial.ToLower().Contains(nameOfMaterialFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(typeOfMaterialFilter))
+            {
+                q = q.Where(c => c.TypeOfMaterial.ToLower().Contains(typeOfMaterialFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(colorFilter))
+            {
+                q = q.Where(c => c.Color.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+             */
+
+            //if is sorting
+            switch (gridSettings.sortColumn)
+            {
+                case "CodTaskExecutor":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodTaskExecutor) : q.OrderBy(c => c.CodTaskExecutor);
+                    break;
+                case "TaskExecutorName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.TaskExecutorName) : q.OrderBy(c => c.TaskExecutorName);
+                    break;
+/*                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+*/            }
+
+            return q;
+        }
+
+        public ActionResult LithoSheetList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = TaskExecutorList(gridSettings).OfType<RollPrintableArticle>();
+            var q = this.TaskExecutorList(gridSettings).OfType<LithoSheet>();
 
             string widthArticleFilter = string.Empty;
             string weightArticleFilter = string.Empty;
@@ -51,6 +128,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Weight").data : string.Empty;
             }
 
+/*
             if (!string.IsNullOrEmpty(widthArticleFilter))
             {
                 try
@@ -77,7 +155,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     Console.WriteLine(e.Message);
                 }
             }
-
+*/
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -103,12 +181,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     from a in q3
                     select new
                     {
-                        id = a.CodArticle,
+                        id = a.CodTaskExecutor,
                         cell = new string[] 
                         {                       
-                            a.CodArticle,
-                            a.CodArticle,
-                            a.TypeOfMaterial,
+                            a.CodTaskExecutor,
+                            a.TaskExecutorName,
+/*                            a.TypeOfMaterial,
                             a.NameOfMaterial,
                             a.Color,
                             a.Weight.ToString(),
@@ -118,7 +196,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                 x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMq,
                             ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
                                 x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMl,            
-                        }
+*/                        }
                     }
                 ).ToArray()
             };
@@ -127,74 +205,5 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
-
-        private IQueryable<TaskExecutor> TaskExecutorList(GridSettings gridSettings)
-        {
-            //use it in filter
-            string codTaskExecutor = string.Empty;
-
-
-            //if gridsetting is a search option
-            if (gridSettings.isSearch)
-            {
-                //pull search field
-                codTaskExecutor = gridSettings.where.rules.Any(r => r.field == "NameOfColumsToSearch") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "NameOfColumsToSearch").data : string.Empty;
-            }
-
-            //read all
-            var q = taskExecutorRepository.GetAll();
-
-
-            //execute filter
-            if (!string.IsNullOrEmpty(codTaskExecutor))
-            {
-                q = q.Where(c => c.CodTaskExecutor.ToLower().Contains(codTaskExecutor.ToLower()));
-            }
-
-            /*
-            if (!string.IsNullOrEmpty(articleNameFilter))
-            {
-                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(supplierNameFilter))
-            {
-                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(nameOfMaterialFilter))
-            {
-                q = q.Where(c => c.NameOfMaterial.ToLower().Contains(nameOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(typeOfMaterialFilter))
-            {
-                q = q.Where(c => c.TypeOfMaterial.ToLower().Contains(typeOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(colorFilter))
-            {
-                q = q.Where(c => c.Color.ToLower().Contains(supplierNameFilter.ToLower()));
-            }
-
-             */
-
-            //if is sorting
-            switch (gridSettings.sortColumn)
-            {
-                case "NameOfColumn":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodTaskExecutor) : q.OrderBy(c => c.CodTaskExecutor);
-                    break;
-/*                case "ArticleName":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
-                    break;
-                case "SupplierName":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
-                    break;
-*/            }
-
-            return q;
-        }
     }
 }

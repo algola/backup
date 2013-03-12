@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(BindingAvarageRunPerRunStep_MetaData))]
     public partial class BindingAvarageRunPerRunStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

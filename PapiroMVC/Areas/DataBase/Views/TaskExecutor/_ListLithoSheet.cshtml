@@ -4,7 +4,7 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleLithoSheetIndex");
 }
 
 <h2>@ViewBag.Title</h2>
@@ -24,13 +24,14 @@
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
         .setWidth(80)
         .setSortable(true))
-/*
-    .addColumn(new Column("TypeOfMaterial")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption"))        
+
+    .addColumn(new Column("TaskExecutorName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaskExecutorNameCaption"))        
         .setWidth(100)
         .setSortable(true)
         .setSearch(true))
 
+        /*
     .addColumn(new Column("NameOfMaterial")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption"))
         .setWidth(100)

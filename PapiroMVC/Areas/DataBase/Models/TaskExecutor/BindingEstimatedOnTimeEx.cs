@@ -5,9 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(BindingEstimatedOnTime_MetaData))]
     public partial class BindingEstimatedOnTime: TaskEstimatedOn, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public BindingEstimatedOnTime()

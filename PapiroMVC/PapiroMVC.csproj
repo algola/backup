@@ -200,6 +200,30 @@
     <Compile Include="Areas\Account\Controllers\AccountController.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitForWeightStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalWebEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrePostPressEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
     <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
       <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -320,6 +344,122 @@
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierIndex.cs" />
+    <Compile Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResAvarageRunPerRunStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingAvarageRunPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingAvarageRunPerRunStep.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingCostPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingCostPerRunStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnRun.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingEstimatedOnRun.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnTime.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingEstimatedOnTime.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResCostPerMqStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCostPerMqStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResCostPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCostPerRunStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDeficitCostForWeightStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDeficitCostForWeightStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDeficitForWeightStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDeficitForWeightStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigital.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigital.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigitalSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigitalSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigitalWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigitalWeb.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLitho.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLitho.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLithoSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLithoSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLithoWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLithoWeb.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPlotter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPlotter.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPrePostPress.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPrePostPress.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPrinterMachine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPrinterMachine.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResStep.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOn.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOn.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnTime.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOnTime.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnUnit.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOnUnit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskExecutor.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskExecutor.resx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.Designer.cs">
       <DependentUpon>ResArticleViewModelAutoChanges.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -891,6 +1031,144 @@
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.en-us.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx" />
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResAvarageRunPerRunStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingAvarageRunPerRunStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingAvarageRunPerRunStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingCostPerRunStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingCostPerRunStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnRun.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingEstimatedOnRun.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnTime.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingEstimatedOnTime.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerMqStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostPerMqStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerRunStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostPerRunStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDeficitCostForWeightStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDeficitCostForWeightStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDeficitForWeightStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDeficitForWeightStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigital.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigital.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigitalSheet.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigitalSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigitalWeb.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigitalWeb.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLitho.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLitho.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoSheet.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLithoSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoWeb.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLithoWeb.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPlotter.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPlotter.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPrePostPress.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrePostPress.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPrinterMachine.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrinterMachine.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResStep.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResStep.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOn.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOn.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnTime.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOnTime.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnUnit.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOnUnit.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskExecutor.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskExecutor.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Articles\ResRigidPrintableArticle.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResRigidPrintableArticle.Designer.cs</LastGenOutput>
@@ -1038,6 +1316,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
+    <Folder Include="Areas\DataBase\Models\TaskExecutor\Resources\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>

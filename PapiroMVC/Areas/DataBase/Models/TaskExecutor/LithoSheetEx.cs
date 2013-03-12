@@ -5,9 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(LithoSheet_MetaData))]
     [Serializable]
     public partial class LithoSheet : Litho, IDataErrorInfo, ICloneable, IDeleteRelated
     {

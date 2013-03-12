@@ -1,9 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(DeficitForWeightStep_MetaData))]
     public partial class DeficitForWeightStep : Step, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

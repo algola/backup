@@ -5,10 +5,11 @@ using System.Text;
 using System.ComponentModel;
 
 using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-
+    [MetadataType(typeof(BindingTsk_MetaData))]
     public partial class BindingTsk : PrePostPress, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
