@@ -200,13 +200,131 @@
     <Compile Include="Areas\Account\Controllers\AccountController.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
-    <Compile Include="Areas\DataBase\ProvaController.cs" />
+    <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
+      <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticleCost.Designer.cs">
+      <DependentUpon>ResRollPrintableArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticle.Designer.cs">
+      <DependentUpon>ResSheetPrintableArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticleCuttedCost.Designer.cs">
+      <DependentUpon>ResSheetPrintableArticleCuttedCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRigidPrintableArticleCost.Designer.cs">
+      <DependentUpon>ResRigidPrintableArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticleCost.Designer.cs">
+      <DependentUpon>ResSheetPrintableArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticle.Designer.cs">
+      <DependentUpon>ResRollPrintableArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticleCuttedCost.Designer.cs">
+      <DependentUpon>ResRollPrintableArticleCuttedCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResPrintable.Designer.cs">
+      <DependentUpon>ResPrintable.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResObjectPrintableArticle.Designer.cs">
+      <DependentUpon>ResObjectPrintableArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResObjectPrintableArticleCost.Designer.cs">
+      <DependentUpon>ResObjectPrintableArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResArticle.Designer.cs">
+      <DependentUpon>ResArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ArticlesVuoto.Designer.cs">
+      <DependentUpon>ArticlesVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResArticleCost.Designer.cs">
+      <DependentUpon>ResArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplier.Designer.cs">
+      <DependentUpon>ResCustomerSupplier.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplierBase.Designer.cs">
+      <DependentUpon>ResCustomerSupplierBase.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomer.Designer.cs">
+      <DependentUpon>ResCustomer.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResSupplier.Designer.cs">
+      <DependentUpon>ResSupplier.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\CustomerSupplierVuoto.Designer.cs">
+      <DependentUpon>CustomerSupplierVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierIndex.cs" />
+    <Compile Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.Designer.cs">
+      <DependentUpon>ResArticleViewModelAutoChanges.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -222,9 +340,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
-    <Compile Include="Models\DatoProva.cs" />
     <Compile Include="Models\ObjectContext.cs" />
-    <Compile Include="Models\PapiroMVCContext.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
@@ -494,7 +610,7 @@
     <Compile Include="Validation\Base\ContingentValidationAttribute.cs" />
     <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
     <Compile Include="Validation\CreditCardAttribute.cs" />
-    <Compile Include="Validation\CurrencyLocalizedAttribute.cs" />
+    <Compile Include="Validation\RegularExpressionLocalizedAttribute.cs" />
     <Compile Include="Validation\MoneyAttribute.cs" />
     <Compile Include="Validation\MustBeAttribute.cs" />
     <Compile Include="Validation\Registration.Designer.cs">
@@ -631,9 +747,6 @@
     <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Shared\_footer.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\Index.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\_SearchingBusinessName.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\_UploadCustomers.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\_Waiting.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\Copy of Index.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_ListBase.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_ListSheetPrintableArticle.cshtml" />
@@ -644,7 +757,6 @@
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleCuttedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle_old.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\WizardRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\WizardSheetPrintableArticle.cshtml" />
@@ -758,15 +870,10 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Areas\DataBase\Views\Article\Article.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\ArticleCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\Index.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\Printable.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\RollPrintableArticleCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\SheetPrintableArticleCost.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateBase.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\EditBase.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\IndexBase.cshtml" />
@@ -784,6 +891,126 @@
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.en-us.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx" />
+    <EmbeddedResource Include="Models\Resources\Articles\ResRigidPrintableArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRigidPrintableArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticleCuttedCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticleCuttedCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRigidPrintableArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRigidPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticleCuttedCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticleCuttedCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResPrintable.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrintable.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResObjectPrintableArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResObjectPrintableArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResObjectPrintableArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResObjectPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ArticlesVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArticlesVuoto.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticleCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplier.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomerSupplier.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplierBase.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomerSupplierBase.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomer.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResSupplier.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSupplier.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\CustomerSupplierVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerSupplierVuoto.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticleViewModelAutoChanges.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.ViewModels</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Validation\Registration.en-us.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Registration.en-us.Designer.cs</LastGenOutput>

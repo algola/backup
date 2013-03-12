@@ -10,13 +10,13 @@ namespace PapiroMVC.Validation
 {
 
     [AttributeUsage(AttributeTargets.Property)]
-    public class CurrencyLocalizedAttribute : ValidationAttribute, IClientValidatable 
+    public class RegularExpressionLocalizedAttribute : ValidationAttribute, IClientValidatable 
     {
         private object _valueToCompare { get; set; }
 
         private readonly Condition _condition = Condition.EqualTo;
 
-        public CurrencyLocalizedAttribute(Type ResourceType, string valueToCompareName, string errorMessageResourceName)
+        public RegularExpressionLocalizedAttribute(Type ResourceType, string valueToCompareName, string errorMessageResourceName)
         {
 
             base.ErrorMessageResourceName = errorMessageResourceName;

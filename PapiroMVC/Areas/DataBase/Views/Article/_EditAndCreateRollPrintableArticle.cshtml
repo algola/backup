@@ -20,7 +20,7 @@
         @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
         @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorComplete","Article")
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorAutoComplete","Article")
         @Html.AlgolaAutocompleteFor(model =>  model.Article.Weight,"WeightAutoComplete","Article")
         
         @Html.AlgolaAutocompleteFor(model =>  model.Article.Width,"WidthAutoComplete","Article")
@@ -31,7 +31,7 @@
         @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
         @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.UnitOfMeasure,"UnitOfMeasuerAutoComplete","Article")
+        @Html.HiddenFor(model =>  model.Article.UnitOfMeasure)
 
     </fieldset>
 

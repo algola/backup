@@ -12,29 +12,31 @@ namespace PapiroMVC.Models
         public System.DateTime TimeStampTable { get; set; }
         public string CodCustomerSupplier { get; set; }
         public string CodCustomerSupplierBase { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"CodTypeOfBaseDropDown")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase), "CodTypeOfBaseDropDown")]
         public string CodTypeOfBase { get; set; }
-        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField"), DisplayNameLocalized(typeof(Strings),"Address")]
+        [Required(ErrorMessageResourceType=typeof(ResCustomerSupplierBase),ErrorMessageResourceName="RequiredField"), 
+        DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Address")]
         public string Address { get; set; }
-        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField"), DisplayNameLocalized(typeof(Strings),"City")]
+        [Required(ErrorMessageResourceType=typeof(ResCustomerSupplierBase),ErrorMessageResourceName="RequiredField"), 
+        DisplayNameLocalized(typeof(ResCustomerSupplierBase),"City")]
         public string City { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"PostalCode")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"PostalCode")]
         public string PostalCode { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Country")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Country")]
         public string Country { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Phone")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Phone")]
         public string Phone { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Fax")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Fax")]
         public string Fax { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Email")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Email")]
         public string Email { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Note")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Note")]
         public string Note { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Referee")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Referee")]
         public string Referee { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Pec")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Pec")]
         public string Pec { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Province")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplierBase),"Province")]
         public string Province { get; set; }
     }
 }

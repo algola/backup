@@ -11,7 +11,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(RigidPrintableArticle_MetaData))]
-    public partial class RigidPrintableArticle : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class RigidPrintableArticle : Printable, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public RigidPrintableArticle()
         {

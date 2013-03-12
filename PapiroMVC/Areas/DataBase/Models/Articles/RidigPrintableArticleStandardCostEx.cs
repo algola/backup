@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(RigidPrintableArticleStandardCost_MetaData))]
-    public partial class RigidPrintableArticleStandardCost : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class RigidPrintableArticleStandardCost : RigidPrintableArticleCost , IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public RigidPrintableArticleStandardCost()
         {

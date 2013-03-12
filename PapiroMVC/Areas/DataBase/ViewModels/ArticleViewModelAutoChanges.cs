@@ -11,6 +11,23 @@ namespace PapiroMVC.Models
     public class ArticleAutoChangesViewModel
     { 
         private RollPrintableArticleAutoChanges rollPrintableArticleAutoChanges;
+        private SheetPrintableArticleAutoChanges sheetPrintableArticleAutoChanges;
+
+        public SheetPrintableArticleAutoChanges SheetPrintableArticleAutoChanges
+        {
+            get
+            {
+                if (sheetPrintableArticleAutoChanges == null)
+                    sheetPrintableArticleAutoChanges = new SheetPrintableArticleAutoChanges();
+                return sheetPrintableArticleAutoChanges;
+            }
+            set
+            {
+                sheetPrintableArticleAutoChanges = value;
+            }
+        }
+
+
         public RollPrintableArticleAutoChanges RollPrintableArticleAutoChanges
         {
             get 
@@ -48,4 +65,19 @@ namespace PapiroMVC.Models
         public string CostPerMl { get; set; }
         public string CostPerMq { get; set; }
     }
+
+    [MetadataType(typeof(SheetPrintableArticleAutoChanges_Metadata))]
+    public class SheetPrintableArticleAutoChanges : PrintableAutoChanges
+    {
+        //flag to indicate what 
+        public bool IsCuttedCost { get; set; }
+        public bool IsPakedCost { get; set; }
+        public bool IsPalletCost { get; set; }
+        public bool IsAllCost { get; set; }
+
+        //Cost
+        public string CostPerKg { get; set; }
+        public string CostPerMq { get; set; }
+    }
+
 }

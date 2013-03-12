@@ -48,7 +48,7 @@ namespace PapiroMVC.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to kick-start your ASP.NET MVC application.";
-            return View(new PapiroMVC.Models.DatoProva());
+            return View();
         }
 
         public ActionResult About()

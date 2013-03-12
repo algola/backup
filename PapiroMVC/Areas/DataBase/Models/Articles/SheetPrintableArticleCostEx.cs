@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(SheetPrintableArticleCost_MetaData))]
-    public abstract partial class SheetPrintableArticleCost : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class SheetPrintableArticleCost : ArticleCost, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         #region Added Properties

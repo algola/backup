@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ObjectPrintableArticleCost_MetaData))]
-    public abstract partial class ObjectPrintableArticleCost : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class ObjectPrintableArticleCost : ArticleCost, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         #region Added Properties

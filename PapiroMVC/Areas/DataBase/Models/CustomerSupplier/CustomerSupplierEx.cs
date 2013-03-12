@@ -8,7 +8,7 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Models
 {
 
-    [MetadataType(typeof(CustomerSupplierEx_MetaData))]
+    [MetadataType(typeof(CustomerSupplier_MetaData))]
     public abstract partial class CustomerSupplier : IDataErrorInfo, ICloneable, IDeleteRelated
     {
 

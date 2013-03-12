@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class SheetPrintableArticlePalletCost_MetaData
+    public partial class SheetPrintableArticlePalletCost_MetaData : SheetPrintableArticleCost_MetaData
     {
     }
 }

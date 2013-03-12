@@ -5,17 +5,18 @@ using System.Linq;
 using System.Web;
 using PapiroMVC.Validation;
 using System.ComponentModel.DataAnnotations;
+using PapiroMVC.Models.Resources.ViewModels;
 
 namespace PapiroMVC.Models
 {
     public class ArticleViewModel_Metadata
     {
-        [Required(ErrorMessageResourceType = typeof(Strings), ErrorMessageResourceName = "RequiredField"),
-            DisplayNameLocalized(typeof(Strings), "SupplierMaker")]
+        [Required(ErrorMessageResourceType = typeof(ResArticleViewModelAutoChanges), ErrorMessageResourceName = "RequiredField"),
+            DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "SupplierMaker")]
         public string SupplierMaker { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Strings), ErrorMessageResourceName = "RequiredField"),
-            DisplayNameLocalized(typeof(Strings), "SupplyerBuy")]
+        [Required(ErrorMessageResourceType = typeof(ResArticleViewModelAutoChanges), ErrorMessageResourceName = "RequiredField"),
+            DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "SupplyerBuy")]
         public string SupplyerBuy { get; set; }
     }
 }

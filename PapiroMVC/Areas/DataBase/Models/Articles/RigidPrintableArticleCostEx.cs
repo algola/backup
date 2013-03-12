@@ -10,7 +10,7 @@ namespace PapiroMVC.Models
 {
 
     [MetadataType(typeof(RigidPrintableArticleCost_MetaData))]
-    public abstract partial class RigidPrintableArticleCost : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class RigidPrintableArticleCost : ArticleCost, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         #region Added Properties
 

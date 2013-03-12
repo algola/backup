@@ -4,24 +4,27 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using PapiroMVC.Validation;
+using PapiroMVC.Models.Resources.Articles;
 
 namespace PapiroMVC.Models
 {
     public partial class Printable_MetaData : Article_MetaData
     {
-        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField"), DisplayNameLocalized(typeof(Strings),"TypeOfMaterial")]
+        [Required(ErrorMessageResourceType = typeof(ResPrintable), ErrorMessageResourceName = "RequiredField"),
+        DisplayNameLocalized(typeof(ResPrintable), "TypeOfMaterial")]
         public string TypeOfMaterial { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Weight")]
+        [DisplayNameLocalized(typeof(ResPrintable), "Weight")]
         public Nullable<long> Weight { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Color")]
+        [DisplayNameLocalized(typeof(ResPrintable), "Color")]
         public string Color { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Thikness")]
+        [DisplayNameLocalized(typeof(ResPrintable), "Thikness")]
         public Nullable<double> Thikness { get; set; }
-        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField"), DisplayNameLocalized(typeof(Strings),"NameOfMaterial")]
+        [Required(ErrorMessageResourceType = typeof(ResPrintable), ErrorMessageResourceName = "RequiredField"),
+        DisplayNameLocalized(typeof(ResPrintable), "NameOfMaterial")]
         public string NameOfMaterial { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"NoBv")]
+        [DisplayNameLocalized(typeof(ResPrintable), "NoBv")]
         public Nullable<bool> NoBv { get; set; }
-        [DisplayNameLocalized(typeof(Strings),"Hand")]
+        [DisplayNameLocalized(typeof(ResPrintable), "Hand")]
         public Nullable<double> Hand { get; set; }
 
     }

@@ -7,8 +7,8 @@ using System.ComponentModel;
 
 
 namespace PapiroMVC.Models
-{
-    public abstract partial class RollPrintableArticleCost : IDataErrorInfo, ICloneable, IDeleteRelated
+{   
+    public abstract partial class RollPrintableArticleCost : ArticleCost, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         #region Added Properties

@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public class RigidPrintableArticleStandardCost_MetaData
+    public class RigidPrintableArticleStandardCost_MetaData : RigidPrintableArticleCost_MetaData
     {
     }
 }

@@ -57,6 +57,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
             catch (Exception e)
             {
+                Console.Write(e.Message);
                 HttpContext.Response.StatusCode = 500;
                 HttpContext.Response.Clear();
                 return PartialView("_RollPrintableArticleAutoChanges", x);
@@ -121,7 +122,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         /// <returns></returns>
         public ActionResult SheetPerPalletComplete(string term)
         {
-            SheetPrintableArticle[] sheetPerPallet = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
+            var sheetPerPallet = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
 
             var filteredItems = sheetPerPallet.Where(
             item => item.SheetPerPallet.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
@@ -130,23 +131,50 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             var projection = from art in filteredItems
                              select new
                              {
-                                 id = art.Format,
-                                 label = art.Format,
-                                 value = art.Format
+                                 id = art.SheetPerPallet,
+                                 label = art.SheetPerPallet,
+                                 value = art.SheetPerPallet
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-                /// <summary>
+        
+
+        /// <summary>
+        /// AutoComplete
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult MqForafaitAutoComplete(string term)
+        {
+            RollPrintableArticle[] sheetPerPallet = articleRepository.GetAll().OfType<RollPrintableArticle>().ToArray();
+
+            var filteredItems = sheetPerPallet.Where(
+            item => item.MqForafait.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.MqForafait,
+                                 label = art.MqForafait,
+                                 value = art.MqForafait
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
         /// AutoComplete
         /// </summary>
         /// <param name="term"></param>
         /// <returns></returns>
         public ActionResult ColorAutoComplete(string term)
         {
-            SheetPrintableArticle[] colors = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
+            Printable[] colors = articleRepository.GetAll().OfType<Printable>().ToArray();
 
-            var filteredItems = colors.Where(
+            var notNull = colors.Except(colors.Where(item => string.IsNullOrEmpty(item.Color)));
+
+            var filteredItems = notNull.Where(
             item => item.Color.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 
@@ -162,7 +190,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult WeightAutoComplete(string term)
         {
-            SheetPrintableArticle[] weight = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
+            Printable[] weight = articleRepository.GetAll().OfType<Printable>().ToArray();
 
             var filteredItems = weight.Where(
             item => item.Weight.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
@@ -177,6 +205,25 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult WidthAutoComplete(string term)
+        {
+            RollPrintableArticle[] width = articleRepository.GetAll().OfType<RollPrintableArticle>().ToArray();
+
+            var filteredItems = width.Where(
+            item => item.Width.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.Width,
+                                 label = art.Width,
+                                 value = art.Width
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult HandAutoComplete(string term)
         {

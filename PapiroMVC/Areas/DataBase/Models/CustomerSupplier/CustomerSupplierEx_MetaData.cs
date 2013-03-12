@@ -7,32 +7,31 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Models
 {
-    public partial class CustomerSupplierEx_MetaData
+    public partial class CustomerSupplier_MetaData
     {
         public System.DateTime TimeStampTable { get; set; }
 
         //soluzione per gestire il multilingua!!!!
-//        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField")]
-        
-        [DisplayNameLocalized(typeof(Strings),"CodCustomerSupplier")]
-        [Tooltip(typeof(Strings), "CodCustomerSupplierToolTip")]        
+
+        [DisplayNameLocalized(typeof(ResCustomerSupplier), "CodCustomerSupplier")]
+        [Tooltip(typeof(ResCustomerSupplier), "CodCustomerSupplierToolTip")]        
         public string CodCustomerSupplier { get; set; }
         
-        [Required(ErrorMessageResourceType=typeof(Strings),ErrorMessageResourceName="RequiredField")]
-        [DisplayNameLocalized(typeof(Strings),"BusinessName")]
-        [Tooltip(typeof(Strings),"BusinessNameToolTip")]
+        [Required(ErrorMessageResourceType=typeof(ResCustomerSupplier),ErrorMessageResourceName="RequiredField")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplier),"BusinessName")]
+        [Tooltip(typeof(ResCustomerSupplier),"BusinessNameToolTip")]
         public string BusinessName { get; set; }
 
-        [DisplayNameLocalized(typeof(Strings),"VatNumber")]
-        [Tooltip(typeof(Strings), "VatNumberToolTip")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplier),"VatNumber")]
+        [Tooltip(typeof(ResCustomerSupplier), "VatNumberToolTip")]
         public string VatNumber { get; set; }
 
-        [DisplayNameLocalized(typeof(Strings),"TaxCode")]
-        [Tooltip(typeof(Strings), "TaxCodeToolTip")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplier),"TaxCode")]
+        [Tooltip(typeof(ResCustomerSupplier), "TaxCodeToolTip")]
         public string TaxCode { get; set; }
         
-        [DisplayNameLocalized(typeof(Strings),"Outdated")]
-        [Tooltip(typeof(Strings), "OutdatedToolTip")]
+        [DisplayNameLocalized(typeof(ResCustomerSupplier),"Outdated")]
+        [Tooltip(typeof(ResCustomerSupplier), "OutdatedToolTip")]
         public Nullable<bool> Outdated { get; set; }
     }
 

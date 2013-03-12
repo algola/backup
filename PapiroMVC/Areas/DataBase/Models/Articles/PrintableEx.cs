@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Printable_MetaData))]
-    abstract public partial class Printable : IDataErrorInfo, ICloneable, IDeleteRelated
+    abstract public partial class Printable : Article, IDataErrorInfo, ICloneable, IDeleteRelated
     {
        
         #region Added Properties

@@ -1,17 +1,10 @@
-﻿@model RollPrintableArticleAutoChanges
+﻿@model PapiroMVC.Models.SheetPrintableArticleAutoChanges
 @using Mvc.HtmlHelpers
 @using MvcContrib.UI.Grid 
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
-
-    string[] typeOfArticle = new string[4];
-    typeOfArticle[0] = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType");
-    typeOfArticle[1] = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType");
-    typeOfArticle[2] = (string)HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType");
-    typeOfArticle[3] = (string)HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType");    
-
     }
 
 <h2>@ViewBag.Title</h2>
@@ -61,13 +54,14 @@
         .setWidth(50)
         .setSortable(true)
         .setSearch(true))
-
             
     .addColumn(new Column("SupplierName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
         .setSearch(true)
         .setWidth(200))
 
+        
+                        
     .setUrl(Url.Action("SheetPrintableArticleList", "Article"))
 
     .setHeight(300)
@@ -88,9 +82,6 @@
 )
 
 @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle")
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateRollPrintableArticle"), "CreateRollPrintableArticle")
-
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardRollPrintableArticle"), "WizardRollPrintableArticle")
 @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardSheetPrintableArticle"), "WizardSheetPrintableArticle")
 
 <a href="#" id="a1">Get data from selected row</a>
@@ -103,32 +94,6 @@
         return link.replace("-1", cellvalue);
     }
 
-    function typeOfArticle(cellvalue, options, rowobject) {
-
-        var link = "type"; 
-        var sheet = '@HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType")';
-        var roll = '@HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType")';
-        var object = '@HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType")';
-        var rigid = '@HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType")';
-
-        if (cellvalue == "SheetPrintableArticle")
-            return link.replace("type", sheet);
-
-        if (cellvalue == "ObjectPrintableArticle")
-            return link.replace("type", object);
-
-        if (cellvalue == "RollPrintableArticle")
-            return link.replace("type", roll);
-
-        if (cellvalue == "RigidPrintableArticle")
-            return link.replace("type", rigid);
-
-        return link;
-    }
-
-    jQuery("#s1").click( function() {
-        jQuery("#ArticleGrid").jqGrid('setGridParam',{url:"@Url.Action("ArticleList", "Article")"}).trigger("reloadGrid");
-    });
     /*
 
     javascript molto utile per associare un'azione alla riga selezionata
