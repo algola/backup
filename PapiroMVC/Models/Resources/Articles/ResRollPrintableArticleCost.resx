@@ -126,9 +126,6 @@
   <data name="CurrencyValidation" xml:space="preserve">
     <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
   </data>
-  <data name="CurrencyValidation1" xml:space="preserve">
-    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
-  </data>
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
@@ -136,6 +133,6 @@
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="RollPrintableArticleCostFieldValidationError" xml:space="preserve">
-    <value>Compilare solo uno ed uno solo dei campi Costo al metro lineare e Costo al mq</value>
+    <value>Compilare uno e uno solamente tra i campi Costo al metro lineare e Costo al mq</value>
   </data>
 </root>

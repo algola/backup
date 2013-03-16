@@ -38,6 +38,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return PartialView("_RollPrintableArticleAutoChanges");
             }
 
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
             HttpContext.Response.StatusCode = 500;
             HttpContext.Response.Clear();
             return PartialView("_RollPrintableArticleAutoChanges",x);
@@ -68,273 +76,63 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 message = "ok"
             });
         }
-    
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult TypeOfMaterialAutoComplete(string term)
-        {
-            Printable[] typesOfMaterial = articleRepository.GetAll().OfType<Printable>().ToArray();
-
-            var filteredItems = typesOfMaterial.Where(
-            item => item.TypeOfMaterial.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.TypeOfMaterial,
-                                 label = art.TypeOfMaterial,
-                                 value = art.TypeOfMaterial
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult FormatAutoComplete(string term)
-        {
-            SheetPrintableArticle[] formats = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
-
-            var filteredItems = formats.Where(
-            item => item.Format.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.Format,
-                                 label = art.Format,
-                                 value = art.Format
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult SheetPerPalletComplete(string term)
-        {
-            var sheetPerPallet = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
-
-            var filteredItems = sheetPerPallet.Where(
-            item => item.SheetPerPallet.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.SheetPerPallet,
-                                 label = art.SheetPerPallet,
-                                 value = art.SheetPerPallet
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        
-
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult MqForafaitAutoComplete(string term)
-        {
-            RollPrintableArticle[] sheetPerPallet = articleRepository.GetAll().OfType<RollPrintableArticle>().ToArray();
-
-            var filteredItems = sheetPerPallet.Where(
-            item => item.MqForafait.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.MqForafait,
-                                 label = art.MqForafait,
-                                 value = art.MqForafait
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult ColorAutoComplete(string term)
-        {
-            Printable[] colors = articleRepository.GetAll().OfType<Printable>().ToArray();
-
-            var notNull = colors.Except(colors.Where(item => string.IsNullOrEmpty(item.Color)));
-
-            var filteredItems = notNull.Where(
-            item => item.Color.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems                             
-                             select new
-                             {
-                                 id = art.Color,
-                                 label = art.Color,
-                                 value = art.Color
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult WeightAutoComplete(string term)
-        {
-            Printable[] weight = articleRepository.GetAll().OfType<Printable>().ToArray();
-
-            var filteredItems = weight.Where(
-            item => item.Weight.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.Weight,
-                                 label = art.Weight,
-                                 value = art.Weight
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult WidthAutoComplete(string term)
-        {
-            RollPrintableArticle[] width = articleRepository.GetAll().OfType<RollPrintableArticle>().ToArray();
-
-            var filteredItems = width.Where(
-            item => item.Width.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.Width,
-                                 label = art.Width,
-                                 value = art.Width
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-
-        public ActionResult HandAutoComplete(string term)
-        {
-            SheetPrintableArticle[] hand = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
-
-            var filteredItems = hand.Where(
-            item => item.Hand.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.Hand,
-                                 label = art.Hand,
-                                 value = art.Hand
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-                /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult SheetPerPackedComplete(string term)
-        {
-            SheetPrintableArticle[] sheetPerPacked = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
-
-            var filteredItems = sheetPerPacked.Where(
-            item => item.SheetPerPacked.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.Format,
-                                 label = art.Format,
-                                 value = art.Format
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
 
 
         /// <summary>
-        /// AutoComplete
+        /// SheetAutomaticallyChangesValidation is used to validate parameter and its responses are used in a ajax beginform
+        /// results depend on HttpContext.Response.StatusCode = 500
+        /// 500 shows back that there is an error so ajax beginform runs OnFaliure code (reload form with validation message)
+        /// else ajax beginform runs OnSuccess code (run javacript that collects data and pass to SheetAutomaticallyChanges)       
         /// </summary>
-        /// <param name="term"></param>
+        /// <param name="x"></param>
         /// <returns></returns>
-        public ActionResult NameOfMaterialAutoComplete(string term)
+
+        [HttpPost]
+        public ActionResult SheetAutomaticallyChangesValidation(SheetPrintableArticleAutoChanges x)
         {
-            Printable[] namesOfMaterial = articleRepository.GetAll().OfType<Printable>().ToArray();
+            if (ModelState.IsValid)
+            {
+                return PartialView("_SheetPrintableArticleAutoChanges");
+            }
 
-            var filteredItems = namesOfMaterial.Where(
-            item => item.NameOfMaterial.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
 
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.NameOfMaterial,
-                                 label = art.NameOfMaterial,
-                                 value = art.NameOfMaterial
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+            HttpContext.Response.StatusCode = 500;
+            HttpContext.Response.Clear();
+            return PartialView("_SheetPrintableArticleAutoChanges", x);
         }
 
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult UnitOfMeasureAutoComplete(string term)
+        //this method works on data from ajax post in _ListSheetPrintableArticle 
+        //data contains ids and values of parameters
+        [HttpPost]
+        public ActionResult SheetAutomaticallyChanges(SheetPrintableArticleAutoChanges x)
         {
-            Article[] unitOfMeasures = articleRepository.GetAll().OfType<Article>().ToArray();
+            //Console.WriteLine(HttpContext.Request.UrlReferrer.OriginalString);
+            ////model contsins data that will be processed
+            try
+            {
+                if (x.SupplierMaker == "error")
+                    throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                HttpContext.Response.StatusCode = 500;
+                HttpContext.Response.Clear();
+                return PartialView("_SheetPrintableArticleAutoChanges", x);
+            }
 
-            var filteredItems = unitOfMeasures.Where(
-            item => item.UnitOfMeasure.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.UnitOfMeasure,
-                                 label = art.UnitOfMeasure,
-                                 value = art.UnitOfMeasure
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+            return Json(new
+            {
+                message = "ok"
+            });
         }
-
-        /*
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult CustomerSupplierCityAutoComplete(string term)
-        {
-            string[] allCities = customerSupplierBaseRepository.GetAll().Select(x => x.City).ToArray();
-
-            var cities = from d in allCities.Distinct()
-                         where (d.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0)
-                         select new
-                         {
-                             label = d,
-                             value = d
-                         };
-
-            return Json(cities.ToList(), JsonRequestBehavior.AllowGet);
-        }
-
-         */
 
         public ActionResult ArticleListOld(GridSettings gridSettings)
         {
@@ -454,27 +252,104 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult SheetPrintableArticleList(GridSettings gridSettings)
-        {
-            //common serarch and order
-            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>();
 
-            string formatArticleFilter = string.Empty;
+        private IQueryable<Printable> PrintableList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string articleNameFilter = string.Empty;
+            string typeOfMaterialFilter = string.Empty;
+            string nameOfMaterialFilter = string.Empty;
+            string colorFilter = string.Empty;
+
+            string supplierNameFilter = string.Empty;
+            string typeOfArticleFilter = string.Empty;
+
             string weightArticleFilter = string.Empty;
-            string colorArticleFilter = string.Empty;
+
+            //read from validation's language file
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string rollType = resman.GetString("RollPrintableArticleType");
+            string sheetType = resman.GetString("SheetPrintableArticleType");
+            string objectType = resman.GetString("ObjectPrintableArticleType");
+            string rigidType = resman.GetString("RigidPrintableArticleType");
 
             if (gridSettings.isSearch)
             {
-                formatArticleFilter = gridSettings.where.rules.Any(r => r.field == "Format") ?
-                        gridSettings.where.rules.FirstOrDefault(r => r.field == "Format").data : string.Empty;
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
+
+                typeOfArticleFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfArticle").data : string.Empty;
+
+                typeOfMaterialFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfMaterial") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfMaterial").data : string.Empty;
+
+                nameOfMaterialFilter = gridSettings.where.rules.Any(r => r.field == "NameOfMaterial") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "NameOfMaterial").data : string.Empty;
+
+                colorFilter = gridSettings.where.rules.Any(r => r.field == "Color") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Color").data : string.Empty;
 
                 weightArticleFilter = gridSettings.where.rules.Any(r => r.field == "Weight") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Weight").data : string.Empty;
+
             }
 
-            if (!string.IsNullOrEmpty(formatArticleFilter))
+            var q = articleRepository.GetAll().OfType<Printable>();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
             {
-                q = q.Where(c => c.Format.ToLower().Contains(formatArticleFilter.ToLower()));
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(articleNameFilter))
+            {
+                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(nameOfMaterialFilter))
+            {
+                q = q.Where(c => c.NameOfMaterial.ToLower().Contains(nameOfMaterialFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(typeOfMaterialFilter))
+            {
+                q = q.Where(c => c.TypeOfMaterial.ToLower().Contains(typeOfMaterialFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(colorFilter))
+            {
+                q = q.Where(c => c.Color.ToLower().Contains(colorFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(typeOfArticleFilter))
+            {
+                Boolean isRoll = false, isSheet = false, isObject = false, isRigid = false;
+
+                //to match with language we have to compare filter with resource
+                isRoll = (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isSheet = (sheetType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isObject = (objectType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+                isRigid = (rigidType.ToLower().Contains(typeOfArticleFilter.ToLower()));
+
+                var a = isRoll ? (IQueryable<Article>)q.OfType<RollPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+                var b = isSheet ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+                var c = isObject ? (IQueryable<Article>)q.OfType<ObjectPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+                var d = isRigid ? (IQueryable<Article>)q.OfType<RigidPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
+
+                var res = (a.Union(b).Union(c).Union(d));
+                q = (IQueryable<Printable>)res;
             }
 
             if (!string.IsNullOrEmpty(weightArticleFilter))
@@ -483,6 +358,78 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     var weightDouble = Convert.ToDouble(weightArticleFilter);
                     q = q.Where(c => c.Weight == weightDouble);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
+                    break;
+                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+                case "Weight":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Weight) : q.OrderBy(c => c.Weight);
+                    break;
+            }
+
+            return q;
+        }
+
+        public ActionResult SheetPrintableArticleList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>();
+
+            string formatArticleFilter = string.Empty;
+            string sheetPerPackedFilter = string.Empty;
+            string sheetPerPalletFilter = string.Empty;
+            string colorArticleFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                formatArticleFilter = gridSettings.where.rules.Any(r => r.field == "Format") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "Format").data : string.Empty;
+
+                sheetPerPackedFilter = gridSettings.where.rules.Any(r => r.field == "SheetPerPacked") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SheetPerPacked").data : string.Empty;
+
+                sheetPerPalletFilter = gridSettings.where.rules.Any(r => r.field == "SheetPerPallet") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SheetPerPallet").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(formatArticleFilter))
+            {
+                q = q.Where(c => c.Format.ToLower().Contains(formatArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(sheetPerPackedFilter))
+            {
+                try
+                {
+                    var sheetPerPackedDouble = Convert.ToDouble(sheetPerPackedFilter);
+                    q = q.Where(c => c.SheetPerPacked == sheetPerPackedDouble);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sheetPerPalletFilter))
+            {
+                try
+                {
+                    var sheetPerPalletDouble = Convert.ToDouble(sheetPerPalletFilter);
+                    q = q.Where(c => c.SheetPerPallet == sheetPerPalletDouble);
                 }
                 catch (Exception e)
                 {
@@ -524,14 +471,20 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.Color,
                             a.Weight.ToString(),
                             a.Format,
-                            a.CustomerSupplierMaker.BusinessName
+                            a.SheetPerPacked.ToString(),
+                            a.SheetPerPallet.ToString(),
+                            a.CustomerSupplierMaker.BusinessName,
+                            ((SheetPrintableArticlePakedCost)a.ArticleCosts.First(x => 
+                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost)).CostPerKg,
+                            ((SheetPrintableArticlePakedCost)a.ArticleCosts.First(x => 
+                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost)).CostPerSheet,            
                         }
                     }
                 ).ToArray()
             };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
-            
+
         }
 
         public ActionResult RollPrintableArticleList(GridSettings gridSettings)
@@ -540,15 +493,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             var q = PrintableList(gridSettings).OfType<RollPrintableArticle>();
 
             string widthArticleFilter = string.Empty;
-            string weightArticleFilter = string.Empty;
 
             if (gridSettings.isSearch)
             {
                 widthArticleFilter = gridSettings.where.rules.Any(r => r.field == "Width") ?
                         gridSettings.where.rules.FirstOrDefault(r => r.field == "Width").data : string.Empty;
 
-                weightArticleFilter = gridSettings.where.rules.Any(r => r.field == "Weight") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Weight").data : string.Empty;
             }
 
             if (!string.IsNullOrEmpty(widthArticleFilter))
@@ -562,22 +512,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-
             }
-
-            if (!string.IsNullOrEmpty(weightArticleFilter))
-            {
-                try
-                {
-                    var weightDouble = Convert.ToDouble(weightArticleFilter);
-                    q = q.Where(c => c.Weight == weightDouble);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
-
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -625,118 +560,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
-        }
-
-
-        private IQueryable<Printable> PrintableList(GridSettings gridSettings)
-        {
-            string codArticleFilter = string.Empty;
-            string articleNameFilter = string.Empty;
-            string typeOfMaterialFilter = string.Empty;
-            string nameOfMaterialFilter = string.Empty;
-            string colorFilter = string.Empty;
-
-            string supplierNameFilter = string.Empty;
-            string typeOfArticleFilter = string.Empty;
-
-
-            //read from validation's language file
-            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
-            string rollType = resman.GetString("RollPrintableArticleType");
-            string sheetType = resman.GetString("SheetPrintableArticleType");
-            string objectType = resman.GetString("ObjectPrintableArticleType");
-            string rigidType = resman.GetString("RigidPrintableArticleType");
-
-            if (gridSettings.isSearch)
-            {
-                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
-
-                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
-
-                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
-
-                typeOfArticleFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfArticle") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfArticle").data : string.Empty;
-
-                typeOfMaterialFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfMaterial") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfMaterial").data : string.Empty;
-
-                nameOfMaterialFilter = gridSettings.where.rules.Any(r => r.field == "NameOfMaterial") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "NameOfMaterial").data : string.Empty;
-
-                colorFilter = gridSettings.where.rules.Any(r => r.field == "Color") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Color").data : string.Empty;
-
-            }
-
-            var q = articleRepository.GetAll().OfType<Printable>();
-
-            if (!string.IsNullOrEmpty(codArticleFilter))
-            {
-                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(articleNameFilter))
-            {
-                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(supplierNameFilter))
-            {
-                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(nameOfMaterialFilter))
-            {
-                q = q.Where(c => c.NameOfMaterial.ToLower().Contains(nameOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(typeOfMaterialFilter))
-            {
-                q = q.Where(c => c.TypeOfMaterial.ToLower().Contains(typeOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(colorFilter))
-            {
-                q = q.Where(c => c.Color.ToLower().Contains(supplierNameFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(typeOfArticleFilter))
-            {
-                Boolean isRoll = false, isSheet = false, isObject = false, isRigid = false;
-
-                //to match with language we have to compare filter with resource
-                isRoll = (rollType.ToLower().Contains(typeOfArticleFilter.ToLower()));
-                isSheet = (sheetType.ToLower().Contains(typeOfArticleFilter.ToLower()));
-                isObject = (objectType.ToLower().Contains(typeOfArticleFilter.ToLower()));
-                isRigid = (rigidType.ToLower().Contains(typeOfArticleFilter.ToLower()));
-
-                var a = isRoll ? (IQueryable<Article>)q.OfType<RollPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
-                var b = isSheet ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
-                var c = isObject ? (IQueryable<Article>)q.OfType<ObjectPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
-                var d = isRigid ? (IQueryable<Article>)q.OfType<RigidPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
-
-                var res = (a.Union(b).Union(c).Union(d));
-                q = (IQueryable<Printable>)res;
-            }
-
-            switch (gridSettings.sortColumn)
-            {
-                case "CodArticle":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
-                    break;
-                case "ArticleName":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
-                    break;
-                case "SupplierName":
-                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
-                    break;
-            }
-
-            return q;
         }
 
     }

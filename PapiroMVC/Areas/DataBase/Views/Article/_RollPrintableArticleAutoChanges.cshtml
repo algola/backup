@@ -4,7 +4,6 @@
 <!-- autocomplete works properly only if script is reloaded in partial view -->
 <script src="/Scripts/autocomplete.js" type="text/javascript"></script>
  
-
 @using (Ajax.BeginForm("RollAutomaticallyChangesValidation", new { controller = "Article", area = "DataBase" }, new AjaxOptions
 {
     HttpMethod = "POST",
@@ -14,8 +13,7 @@
     OnFailure = "ReloadForm(xhr)"
 
 }))
-{
-           
+{          
         @Html.ValidationSummary(true)
     
     <fieldset>

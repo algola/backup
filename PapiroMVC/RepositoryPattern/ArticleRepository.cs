@@ -2,6 +2,7 @@
 using System.Linq;
 using PapiroMVC.Models;
 using PapiroMVC.DbCodeManagement;
+using System.Threading;
 
 namespace Services
 {
@@ -29,17 +30,74 @@ namespace Services
             a.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
 
             var codes = (from COD in this.GetAll() select COD.CodArticle).ToArray().OrderBy(x => x, new SemiNumericComparer());
+            var csCode = codes.Count() != 0 ? codes.Last() : "0";
 
-            var csCode = codes.Last();
-
-            if (csCode == null)
-                csCode = "0";
             return AlphaCode.GetNextCode(csCode);
+        }
+
+        private void ArticleCostCodeRigen(Article c)
+        {
+            switch (c.TypeOfArticle)
+            {
+                case Article.ArticleType.SheetPrintableArticle:
+
+                    /*CUTTED
+                    ((SheetPrintableArticleCuttedCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost)).CodArticle = c.CodArticle;
+                    ((SheetPrintableArticleCuttedCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost)).CodArticleCost = c.CodArticle + "_CTC";
+                    */
+                    #region Paked
+                    var pakedCost = ((SheetPrintableArticlePakedCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost));
+
+                    pakedCost.CostPerKg = pakedCost.CostPerKg == null?
+                        null:Convert.ToDouble(pakedCost.CostPerKg,
+                        Thread.CurrentThread.CurrentUICulture).ToString("#,0.000",Thread.CurrentThread.CurrentUICulture);
+                    
+                        pakedCost.CostPerSheet = pakedCost.CostPerSheet == null ? 
+                        null : 
+                        Convert.ToDouble(pakedCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                    pakedCost.CodArticle = c.CodArticle;
+                    pakedCost.CodArticleCost = c.CodArticle + "_PKC";
+
+                    #endregion
+
+                    #region Pallet
+                    var palletCost = ((SheetPrintableArticlePalletCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePalletCost));
+
+                    palletCost.CostPerKg = palletCost.CostPerKg == null?
+                        null:Convert.ToDouble(palletCost.CostPerKg,
+                        Thread.CurrentThread.CurrentUICulture).ToString("#,0.000",Thread.CurrentThread.CurrentUICulture);
+                    
+                        palletCost.CostPerSheet = palletCost.CostPerSheet == null ? 
+                        null : 
+                        Convert.ToDouble(palletCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+
+                    palletCost.CodArticle = c.CodArticle;
+                    palletCost.CodArticleCost = c.CodArticle + "_PLC";
+
+                    #endregion
+
+                    break;
+                case Article.ArticleType.RollPrintableArticle:
+                    break;
+                case Article.ArticleType.RigidPrintableArticle:
+                    break;
+                case Article.ArticleType.ObjectPrintableArticle:
+                    break;
+                default:
+                    break;
+            }
 
         }
 
         public override void Add(Article entity)
         {
+            ArticleCostCodeRigen(entity);
+
             //cehck if name is just inserted
             var article = (from ART in this.GetAll() where ART.ArticleName == entity.ArticleName select ART);
             if (article.Count() > 0)
@@ -58,6 +116,8 @@ namespace Services
 
         public override void Edit(Article entity)
         {
+            ArticleCostCodeRigen(entity);
+
             foreach (var item in entity.ArticleCosts)
             {
                 Context.Entry(item).State = System.Data.EntityState.Modified;

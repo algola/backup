@@ -1,0 +1,68 @@
+﻿@using PapiroMVC.Models
+@{
+    List<MenuMvc> menuList = ViewBag.Menu;
+}
+        <ul class="menuJq">  
+    
+@foreach (var mp in menuList.Where(p => p.ParentId == 0)){
+    
+<li>
+        @if (mp.ActionName != "#")
+        {
+            @Html.ActionLink(mp.TextName, mp.ActionName, mp.ControllerName, mp.HtmlAttributes, null) 
+        }
+        else 
+        { 
+            <a href="#">@mp.TextName</a> 
+        }                        
+
+        @if( menuList.Count(p=>p.ParentId == mp.Id ) > 0) 
+        { 
+            @:<ul> 
+        }  
+        
+        @RenderMenuItem(menuList,mp)
+       
+        @if( menuList.Count(p=>p.ParentId == mp.Id ) > 0)
+        {
+            @:</ul>
+        }
+       
+ </li>
+}
+</ul>
+
+
+@helper RenderMenuItem(List<MenuMvc> menuList,MenuMvc mi)
+{
+    foreach (var cp in menuList.Where(p => p.ParentId == mi.Id))
+    {
+        
+        @:<li>    
+        
+        if (cp.ActionName != "#")
+        {
+                @Html.ActionLink(cp.TextName, cp.ActionName, cp.ControllerName, cp.HtmlAttributes, null)        
+        }
+        else
+        {
+            <a href="#">@cp.TextName</a>
+        }                        
+    
+      if(menuList.Count(p=>p.ParentId == cp.Id) > 0)
+        {
+           @:<ul>  
+        }
+        
+        @RenderMenuItem(menuList,cp)
+      if(menuList.Count(p=>p.ParentId == cp.Id) > 0)
+      {
+          @:</ul>
+      }
+      else
+      {
+          
+      }
+      @:</li>
+    }
+}

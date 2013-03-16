@@ -79,29 +79,11 @@ namespace PapiroMVC.Models.Resources.Articles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
-        /// </summary>
-        public static string CurrencyValidation1 {
-            get {
-                return ResourceManager.GetString("CurrencyValidation1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
         /// </summary>
         public static string CurrencyValidationError {
             get {
                 return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
-        /// </summary>
-        public static string CurrencyValidationError1 {
-            get {
-                return ResourceManager.GetString("CurrencyValidationError1", resourceCulture);
             }
         }
         

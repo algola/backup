@@ -24,12 +24,15 @@
         <br />
         @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.KgPallet)
 
+        <!--
         <div class="editor-label">
-            @Html.CheckBox("UseTheSameCostOfSheetAfterSheet", @Model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)            
-            @Html.LabelFor(model => model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)
+            Html.CheckBox("UseTheSameCostOfSheetAfterSheet", @Model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)            
+            Html.LabelFor(model => model.SheetPrintableArticleCuttedCost.UseTheSameCostOfSheetAfterSheet)
         </div>
         <br />
-        @Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.KgSheet)
+        Html.AlgolaEditorFor(model => model.SheetPrintableArticleCuttedCost.KgSheet)
+
+            -->
 
         @Html.HiddenFor(model => model.SheetPrintableArticleCuttedCost.TimeStampTable)
         @Html.HiddenFor(model => model.SheetPrintableArticleCuttedCost.CodArticleCost)

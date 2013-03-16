@@ -13,6 +13,7 @@
         <legend>SheetPrintableArticlePakedCost</legend>
 
         <br />
+        @Html.ValidationMessageFor(model => model.SheetPrintableArticlePakedCost)
         @Html.AlgolaEditorFor(model => model.SheetPrintableArticlePakedCost.CostPerKg)
         @Html.AlgolaEditorFor(model => model.SheetPrintableArticlePakedCost.CostPerSheet)
 

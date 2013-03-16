@@ -22,8 +22,7 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
-                   "CostPerMq",
-                   "CostPerSheet"
+                    ""               
                };
 
         public override string this[string proprieta]
@@ -32,32 +31,6 @@ namespace PapiroMVC.Models
             {
                 string result = base[proprieta];
                 
-                //validazione della proprietà Address
-                if (proprieta == "CostPerKg")
-                {
-                    if (this.CostPerKg != null)
-                    {
-                        Regex exp = new Regex(@"^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{2})?$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.CostPerKg))
-                        {
-                            result = "Valuta non valida";
-                        }
-                    }
-                }
-                
-                if (proprieta == "CostPerSheet")
-                {
-                    if (this.CostPerSheet != null)
-                    {
-                        Regex exp = new Regex(@"^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{2})?$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.CostPerKg))
-                        {
-                            result = "Valuta non valida";
-                        }
-                    }
-                }
-
-
                 return result;
             }
         }

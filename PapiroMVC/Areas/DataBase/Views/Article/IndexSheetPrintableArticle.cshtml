@@ -1,0 +1,14 @@
+﻿@model PapiroMVC.Models.SheetPrintableArticleAutoChanges
+
+<div id='sheetprintablearticle'>
+    @Html.Partial("_ListSheetPrintableArticle", Model)
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

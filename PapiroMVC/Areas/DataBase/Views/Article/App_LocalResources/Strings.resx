@@ -120,6 +120,9 @@
   <data name="ArticleCaption" xml:space="preserve">
     <value>Articolo</value>
   </data>
+  <data name="AutoCahngesCaption" xml:space="preserve">
+    <value>Variazione automatica dati</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
@@ -129,11 +132,17 @@
   <data name="ColorCaption" xml:space="preserve">
     <value>Colore</value>
   </data>
+  <data name="CostPerKgCaption" xml:space="preserve">
+    <value>Costo al Kg</value>
+  </data>
   <data name="CostPerMlCaption" xml:space="preserve">
     <value>Costo/ml</value>
   </data>
   <data name="CostPerMqCaption" xml:space="preserve">
     <value>Costo/mq</value>
+  </data>
+  <data name="CostPerSheetCaption" xml:space="preserve">
+    <value>Costo al Foglio</value>
   </data>
   <data name="CreateRollPrintableArticle" xml:space="preserve">
     <value>Nuovo Materiale in Rotolo</value>
@@ -159,6 +168,24 @@
   <data name="OperationsCaption" xml:space="preserve">
     <value>Operazioni</value>
   </data>
+  <data name="OptAllCost" xml:space="preserve">
+    <value>Applica a tutti i costi</value>
+  </data>
+  <data name="OptNoBvNo" xml:space="preserve">
+    <value>E' possibile la messa in macchina b/v</value>
+  </data>
+  <data name="OptNoBvNoModify" xml:space="preserve">
+    <value>Non modificare proprietà b/v</value>
+  </data>
+  <data name="OptNoBvYes" xml:space="preserve">
+    <value>Non è possibile la messa in macchina b/v</value>
+  </data>
+  <data name="OptPaked" xml:space="preserve">
+    <value>Applica ai costi della carta impaccata</value>
+  </data>
+  <data name="OptPallet" xml:space="preserve">
+    <value>Applica ai costi della carta bandierata</value>
+  </data>
   <data name="RigidPrintableArticleType" xml:space="preserve">
     <value>Rigido/Banner/Mq</value>
   </data>
@@ -166,7 +193,7 @@
     <value>Costi di acquisto a formato speciale</value>
   </data>
   <data name="RollPrintableArticleGridCaption" xml:space="preserve">
-    <value>Articoli in rotolo</value>
+    <value>Articoli e materiali stampabili in rotolo</value>
   </data>
   <data name="RollPrintableArticleStandardCostTitle" xml:space="preserve">
     <value>Costi di acquisto standard</value>
@@ -183,8 +210,17 @@
   <data name="SaveNewBasedOn" xml:space="preserve">
     <value>Salva Nuovo</value>
   </data>
+  <data name="SheetPerPackedCaption" xml:space="preserve">
+    <value>Fogli/Pallet</value>
+  </data>
+  <data name="SheetPerPalletCaption" xml:space="preserve">
+    <value>Fogli/Pallet</value>
+  </data>
   <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
     <value>Costi di acquisto a formato speciale</value>
+  </data>
+  <data name="SheetPrintableArticleGridCaption" xml:space="preserve">
+    <value>Articoli e materiali stampabili a foglio</value>
   </data>
   <data name="SheetPrintableArticlePakedCostTitle" xml:space="preserve">
     <value>Costi di acquisto a pacco</value>
@@ -200,6 +236,9 @@
   </data>
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Fornitore</value>
+  </data>
+  <data name="TypeOfCostToModify" xml:space="preserve">
+    <value>Applica modifiche ai costi</value>
   </data>
   <data name="TypeOfCustomerSupplierCaption" xml:space="preserve">
     <value>Cliente/Fornitore</value>

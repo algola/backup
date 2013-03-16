@@ -8,6 +8,7 @@ using PapiroMVC.Models.Resources.Articles;
 
 namespace PapiroMVC.Models
 {
+    [XorFieldRequired(new string[] { "CostPerKg", "CostPerSheet" }, typeof(ResSheetPrintableArticleCost), "SheetPrintableArticleCostFieldValidationError")]
     public class SheetPrintableArticleCost_MetaData : ArticleCost_MetaData
     {
         [DisplayNameLocalized(typeof(ResSheetPrintableArticleCost), "CostPerKg")]

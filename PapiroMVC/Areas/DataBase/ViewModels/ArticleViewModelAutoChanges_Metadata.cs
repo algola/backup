@@ -19,7 +19,7 @@ namespace PapiroMVC.Models
     public class PrintableAutoChanges_Metadata : ArticleAutoChanges_Metadata
     {
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "NoBv")]
-        public bool NoBv { get; set; }
+        public PrintableAutoChanges.ProcessNoBvType TypeOfNoBvToModify { get; set; }
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "Hand")]
         public double Hand { get; set; }
     }
@@ -41,10 +41,9 @@ namespace PapiroMVC.Models
     }
 
     //one ore other
-    [XorFieldRequired(new string[] { "CostPerKg", "CostPerMl" }, typeof(ResArticleViewModelAutoChanges), "SheetPrintableArticheAutoChangesFieldValidationError")]
+    //[XorFieldRequired(new string[] { "CostPerKg", "CostPerMl" }, typeof(ResArticleViewModelAutoChanges), "SheetPrintableArticheAutoChangesFieldValidationError")]
     public class SheetPrintableArticleAutoChanges_Metadata : PrintableAutoChanges_Metadata
     {
-
         [RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerKg")]
         public string CostPerKg { get; set; }
@@ -54,14 +53,8 @@ namespace PapiroMVC.Models
         public string CostPerMq { get; set; }
 
         //flag to indicate what 
-        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "IsCuttedCost")]
-        public bool IsCuttedCost { get; set; }
-        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "IsPakedCost")]
-        public bool IsPakedCost { get; set; }
-        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "IsPalletCost")]
-        public bool IsPalletCost { get; set; }
-        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "IsAllCost")]
-        public bool IsAllCost { get; set; }
+        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "TypeOfCostToModify")]
+        public SheetPrintableArticleAutoChanges.ProcessCostType TypeOfCostToModify { get; set; }
 
     }
 

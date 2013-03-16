@@ -60,7 +60,9 @@ namespace PapiroMVC.Controllers
                 ViewData["CurrentUser"] = null;
 
 //MULTILANGUE
-        
+
+            ViewBag.Menu = BuildMenu();
+
         }
 
         protected override void ExecuteCore()
@@ -130,6 +132,86 @@ namespace PapiroMVC.Controllers
             }
 
             return errors;
+        }
+
+        private IList<MenuMvc> BuildMenu()
+        {
+            IList<MenuMvc> mmList = new List<MenuMvc>(){
+
+                // Parent
+                new MenuMvc(){ 
+                    Id = 3, 
+                    TextName = "Database", 
+                    ControllerName="", 
+                    ActionName="#", 
+                    ParentId = 0, 
+                    SortOrder = 1,
+                    HtmlAttributes = null
+                } ,
+                new MenuMvc(){ 
+                    Id = 2, 
+                    TextName = "About", 
+                    ControllerName="Home",
+                    ActionName="About", 
+                    ParentId = 0, 
+                    SortOrder = 2,
+                    HtmlAttributes = null
+                } ,
+                new MenuMvc() { 
+                    Id = 1, 
+                    TextName = "Home",
+                    ActionName = "Index", 
+                    ControllerName="Home", 
+                    ParentId = 0, 
+                    SortOrder = 3,
+                    HtmlAttributes = null
+                } ,
+
+                // Children
+               new MenuMvc(){ 
+                    Id = 31, 
+                    TextName = "Clienti/Fornitori", 
+                    ControllerName="CustomerSupplier", 
+                    ActionName="Index", 
+                    ParentId = 3, 
+                    SortOrder = 1,
+                    HtmlAttributes = new { area = "DataBase" }
+                } ,
+
+                new MenuMvc(){ 
+                    Id = 32, 
+                    TextName = "Articoli", 
+                    ControllerName="", 
+                    ActionName="#", 
+                    ParentId = 3, 
+                    SortOrder = 2,
+                    HtmlAttributes = null
+                } ,
+
+                // Children 2nd level
+               new MenuMvc(){ 
+                    Id = 31, 
+                    TextName = "Stampabili a foglio", 
+                    ControllerName="Article", 
+                    ActionName="IndexSheetPrintableArticle", 
+                    ParentId = 32, 
+                    SortOrder = 1,
+                    HtmlAttributes = new { area = "DataBase" }
+                } ,
+                
+                new MenuMvc(){ 
+                    Id = 31, 
+                    TextName = "Stampabili a rotolo", 
+                    ControllerName="Article", 
+                    ActionName="IndexRollPrintableArticle", 
+                    ParentId = 32, 
+                    SortOrder = 1,
+                    HtmlAttributes = new { area = "DataBase" }
+                } ,
+
+            };
+
+            return mmList;
         }
 
     }

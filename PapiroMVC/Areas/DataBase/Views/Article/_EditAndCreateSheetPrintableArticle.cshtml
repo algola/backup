@@ -1,12 +1,10 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.SheetPrintableArticleViewModel
 
-
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle");
 }
-
 
 @using (Html.BeginForm("Action","Article")) {
     @Html.ValidationSummary(true)
@@ -38,7 +36,7 @@
         @Html.AlgolaAutocompleteFor(model =>  model.Article.UnitOfMeasure,"UnitOfMeasuerAutoComplete","Article")
                
     </fieldset>
-    
+       
     <div id='_SheetPrintableArticlePakedCost'>
         @Html.Partial("_SheetPrintableArticlePakedCost", Model)
     </div>
@@ -47,10 +45,11 @@
         @Html.Partial("_SheetPrintableArticlePalletCost", Model)
     </div>
 
-        <div id='_SheetPrintableArticleCuttedCost'>
-        @Html.Partial("_SheetPrintableArticleCuttedCost", Model)
+    <!--
+    <div id='_SheetPrintableArticleCuttedCost'>
+        Html.Partial("_SheetPrintableArticleCuttedCost", Model)
     </div>
-               
+        -->       
     <p>
         <!-- ViewBag.ActionMethod is used to understand where we are coming and so where we have to go -->
         <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />

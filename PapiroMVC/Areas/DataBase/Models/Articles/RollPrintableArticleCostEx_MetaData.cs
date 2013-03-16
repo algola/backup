@@ -7,7 +7,6 @@ using PapiroMVC.Models.Resources.Articles;
 
 namespace PapiroMVC.Models
 {
-    [XorFieldRequired(new string[] { "CostPerMl", "CostPerMq" }, typeof(ResRollPrintableArticleCost), "RollPrintableArticleCostFieldValidationError")]
     public class RollPrintableArticleCost_MetaData : ArticleCost_MetaData
     {
         [DisplayNameLocalized(typeof(ResRollPrintableArticleCost), "CostPerMl")]

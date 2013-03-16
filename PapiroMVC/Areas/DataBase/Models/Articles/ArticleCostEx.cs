@@ -52,7 +52,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-
+        
         public virtual string this[string proprieta]
         {
             get

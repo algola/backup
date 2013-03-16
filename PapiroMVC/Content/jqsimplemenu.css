@@ -1,0 +1,116 @@
+.menuJq, .menuJq ul
+{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    position: relative;
+    line-height: 2em;
+}
+.menuJq a
+{
+    text-decoration: none;
+}
+.menuJq > li
+{
+    margin-left: 15px;
+}
+.menuJq > li:first
+{
+    margin-left:0px!important;
+    }
+.menuJq > li > a
+{
+    padding: 0px 10px;
+    margin: 0;
+    width: 100%;
+    text-decoration: none;
+    color: #838383;
+    font-weight: bold;
+}
+div.box
+{
+    position: absolute;
+    z-index: -1;
+    background-color: #75CDD2;
+    left: 0;
+    top: 0;
+    border-radius: 4px 4px 0px 0px;
+    -moz-border-radius: 4px 4px 0px 0px;
+    -webkit-border-radius: 4px 4px 0px 0px;
+}
+li.pull-down
+{
+    padding-right:6px;
+    }
+li.pull-down > a
+{
+    background-image: url('../Images/darrow.png');
+    background-position: 96% 75%;
+    background-repeat: no-repeat;
+    padding-right: 20px;
+}
+li.right-menuJq > a
+{
+    background-image: url('../Images/rarrow.png');
+    background-position: 97% 45%;
+    background-repeat: no-repeat;
+}
+.menuJq a.selected
+{
+    background-color: #75CDD2;
+    border-radius: 0px 4px 4px 4px;
+    -moz-border-radius: 0px 4px 4px 4px;
+    -webkit-border-radius: 0px 4px 4px 4px;
+}
+.menuJq li
+{
+    float: left;
+    position: relative;
+}
+
+.menuJq ul
+{
+    position: absolute;
+    display: none;
+    width: 200px;
+    top: 2em; /*padding-right: 10px;*/
+    background-color: #75CDD2; /*-moz-opacity: .50;     filter: alpha(opacity=50);     opacity: .50;*/
+    border-radius: 0px 4px 4px 4px;
+    -moz-border-radius: 0px 4px 4px 4px;
+    -webkit-border-radius: 0px 4px 4px 4px;
+}
+
+.menuJq li ul a
+{
+    width: 180px;
+    height: auto;
+    float: left;
+    color: #FFFEFD;
+    padding: 0 10px;
+}
+.menuJq li ul li
+{
+    padding: 0;
+    margin: 0;
+}
+.menuJq ul ul
+{
+    top: auto;
+}
+
+.menuJq li ul ul
+{
+    left: 198px; /*margin: 0px 0 0 10px;*/
+}
+.menuJq-item-selected > a
+{
+    background-color: #FFFEFD;
+    -moz-opacity: .50;
+    filter: alpha(opacity=50);
+    opacity: .50;
+}
+.menuJq-item-selected > a:hover
+{
+    color: #257E84 !important;
+}
+

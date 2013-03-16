@@ -27,7 +27,6 @@ namespace PapiroMVC.Models
             }
         }
 
-
         public RollPrintableArticleAutoChanges RollPrintableArticleAutoChanges
         {
             get 
@@ -54,7 +53,18 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(PrintableAutoChanges_Metadata))]
     abstract public class PrintableAutoChanges : ArticleAutoChanges
     {
-        public bool NoBv { get; set; }
+        public enum ProcessNoBvType : int
+        {
+            NoBvNoModify = 0,
+            NoBvNo = 1,
+            NoBvYes = 2
+        }
+
+        public ProcessNoBvType TypeOfNoBvToModify
+        {
+            get;
+            set;
+        }
         public double Hand { get; set; }
     }
 
@@ -69,11 +79,19 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(SheetPrintableArticleAutoChanges_Metadata))]
     public class SheetPrintableArticleAutoChanges : PrintableAutoChanges
     {
-        //flag to indicate what 
-        public bool IsCuttedCost { get; set; }
-        public bool IsPakedCost { get; set; }
-        public bool IsPalletCost { get; set; }
-        public bool IsAllCost { get; set; }
+        public enum ProcessCostType : int
+        {
+            AllCost = 0,
+            PalletCost = 1,
+            PackedCost = 2,
+            CuttedCost = 3
+        }
+
+        public ProcessCostType TypeOfCostToModify
+        {
+            get;
+            set;
+        }
 
         //Cost
         public string CostPerKg { get; set; }

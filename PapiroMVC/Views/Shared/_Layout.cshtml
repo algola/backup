@@ -21,7 +21,11 @@
         <link href="@Url.Content("~/Content/themes/smoothness/jquery-ui-1.8.custom.css")" rel="stylesheet" type="text/css" />
                
         <script src="@Url.Content("~/Scripts/autocomplete.js")" type="text/javascript"></script>
- 
+
+        <link href="@Url.Content("~/Content/jqsimplemenu.css")" rel="stylesheet" type="text/css" />
+        <script src="@Url.Content("~/Scripts/jqsimplemenu.js")" type="text/javascript"></script>
+
+
     </head>
     <body>
         <header>
@@ -34,19 +38,11 @@
                     <section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                            <li>@Html.ActionLink("About", "About", "Home")</li>
-                            <li>@Html.ActionLink("AggiornaDatabse", "UpdateDatabase", "Home")</li>
-
-                            <li>@Html.ActionLink("Clienti/Fornitori", "Index", "CustomerSupplier",
-                            new { area = "DataBase" },null)</li>
-                            <li>@Html.ActionLink("Article", "Index", "Article",
-                            new { area = "DataBase" },null)
-                            </li>
-                        </ul>
+                   @Html.Partial("_Menu")
+                    <!-- <nav>
+                        
                     </nav>
+                       -->
                 </div>
             </div>
         </header>
@@ -63,6 +59,12 @@
         
         @Scripts.Render("~/bundles/jquery")
         @RenderSection("scripts", required: false)
+       
+            <script type="text/javascript">
+               $(document).ready(function () {
+                   $('.menuJq').jqsimplemenu();
+               });
+</script>
 
     </body>
 </html>

@@ -36,10 +36,19 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //
         // GET: /Article/
-
         public ActionResult Index()
         {
             return View (new ArticleAutoChangesViewModel());
+        }
+
+        public ActionResult IndexSheetPrintableArticle()
+        { 
+            return View (new SheetPrintableArticleAutoChanges());
+        }
+
+        public ActionResult IndexRollPrintableArticle()
+        {
+            return View (new RollPrintableArticleAutoChanges());
         }
 
         //
@@ -74,16 +83,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
 
-                        c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
+                        //CUTTED c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
                         c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
                         c.SheetPrintableArticlePalletCost.TimeStampTable = DateTime.Now;
-
-                        c.SheetPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
-                        c.SheetPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
-                        c.SheetPrintableArticlePakedCost.CodArticle = c.Article.CodArticle;
-                        c.SheetPrintableArticlePakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
-                        c.SheetPrintableArticlePalletCost.CodArticle = c.Article.CodArticle;
-                        c.SheetPrintableArticlePalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
 
                     }
 
@@ -264,13 +266,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
                                     c.SheetPrintableArticlePalletCost.TimeStampTable = DateTime.Now;
 
-                                    c.SheetPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
-                                    c.SheetPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
-                                    c.SheetPrintableArticlePakedCost.CodArticle = c.Article.CodArticle;
-                                    c.SheetPrintableArticlePakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
-                                    c.SheetPrintableArticlePalletCost.CodArticle = c.Article.CodArticle;
-                                    c.SheetPrintableArticlePalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
-
                                     c.Article.ArticleName = c.Article.ToString();
 
                                     c.Article.TimeStampTable = DateTime.Now;
@@ -426,7 +421,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-
                     CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems = customerSuppliers.Where(
@@ -456,8 +450,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
-            //If we come here, something went wrong. Return it back. 
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
 
+            //If we come here, something went wrong. Return it back. 
             //multi submit
             ViewBag.ActionMethod = "EditRollPrintableArticle";
             return View("EditRollPrintableArticle", c);

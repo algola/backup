@@ -88,15 +88,6 @@ namespace PapiroMVC.Models.Resources.Articles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
-        /// </summary>
-        public static string CurrencyValidation1 {
-            get {
-                return ResourceManager.GetString("CurrencyValidation1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
         /// </summary>
         public static string CurrencyValidationError {
@@ -115,7 +106,7 @@ namespace PapiroMVC.Models.Resources.Articles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Compilare solo uno ed uno solo dei campi Costo al metro lineare e Costo al mq.
+        ///   Looks up a localized string similar to Compilare uno e uno solamente tra i campi Costo al metro lineare e Costo al mq.
         /// </summary>
         public static string RollPrintableArticleCostFieldValidationError {
             get {

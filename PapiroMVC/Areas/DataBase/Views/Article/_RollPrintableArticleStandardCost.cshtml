@@ -11,6 +11,7 @@
     <fieldset>
         <legend>RollPrintableArticleStandardCost</legend>
         <br />
+        @Html.ValidationMessageFor(model => model.RollPrintableArticleStandardCost)
 
         @Html.AlgolaEditorFor(model => model.RollPrintableArticleStandardCost.CostPerMq)
         @Html.AlgolaEditorFor(model => model.RollPrintableArticleStandardCost.CostPerMl)

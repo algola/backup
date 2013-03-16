@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex.cs" />
+    <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex_AutoComplete.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
+    <Compile Include="Models\MenuMvc.cs" />
     <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
       <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -785,6 +787,7 @@
     <Content Include="Content\images\icons-18-white.png" />
     <Content Include="Content\images\icons-36-black.png" />
     <Content Include="Content\images\icons-36-white.png" />
+    <Content Include="Content\jqsimplemenu.css" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\jquery.mobile-1.2.0.css" />
@@ -873,6 +876,8 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model11.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\darrow.png" />
+    <Content Include="Images\rarrow.png" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -908,6 +913,9 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexRollPrintableArticle.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -954,6 +962,7 @@
     <Content Include="Scripts\i18n\grid.locale-tr.js" />
     <Content Include="Scripts\i18n\grid.locale-tw.js" />
     <Content Include="Scripts\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\i18n\jqsimplemenu.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.0.js" />
@@ -1313,6 +1322,7 @@
     <Content Include="Areas\Account\Views\Account\Confirmation.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

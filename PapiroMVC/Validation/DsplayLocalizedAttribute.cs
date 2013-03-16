@@ -202,7 +202,14 @@ namespace PapiroMVC.Validation
         static MergedType<T1, T2> Merge<T1, T2>(T1 t1, T2 t2)
          {
             return new MergedType<T1, T2>(t1, t2);
-         } 
+         }
+
+
+        public static string AlgolaNameFor<TModel, TValue>(this HtmlHelper<TModel> html, Expression<Func<TModel, TValue>> expression)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression(expression, html.ViewData);
+            return metadata.DisplayName;
+        }
 
     }
 
@@ -232,6 +239,8 @@ namespace PapiroMVC.Validation
         string name = binder.Name.ToLower();
         return members.TryGetValue(name, out result);
      }
+  
   }
+
 }
 
