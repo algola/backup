@@ -16,7 +16,7 @@ using System.IO;
 namespace PapiroMVC.Controllers
 {
 
-    public class ControllerBase : Controller
+    public class ControllerAlgolaBase : Controller
     {
         //user connected to website
         public MembershipUser CurrentUser
@@ -146,7 +146,16 @@ namespace PapiroMVC.Controllers
                     ActionName="#", 
                     ParentId = 0, 
                     SortOrder = 1,
-                    HtmlAttributes = null
+                    RouteValues = null
+                } ,
+                new MenuMvc(){ 
+                    Id = 4, 
+                    TextName = "Lingua", 
+                    ControllerName="",
+                    ActionName="#", 
+                    ParentId = 0, 
+                    SortOrder = 2,
+                    RouteValues = null
                 } ,
                 new MenuMvc(){ 
                     Id = 2, 
@@ -154,8 +163,8 @@ namespace PapiroMVC.Controllers
                     ControllerName="Home",
                     ActionName="About", 
                     ParentId = 0, 
-                    SortOrder = 2,
-                    HtmlAttributes = null
+                    SortOrder = 3,
+                    RouteValues = null
                 } ,
                 new MenuMvc() { 
                     Id = 1, 
@@ -164,7 +173,7 @@ namespace PapiroMVC.Controllers
                     ControllerName="Home", 
                     ParentId = 0, 
                     SortOrder = 3,
-                    HtmlAttributes = null
+                    RouteValues = null
                 } ,
 
                 // Children
@@ -175,7 +184,7 @@ namespace PapiroMVC.Controllers
                     ActionName="Index", 
                     ParentId = 3, 
                     SortOrder = 1,
-                    HtmlAttributes = new { area = "DataBase" }
+                    RouteValues = new { area = "DataBase" }
                 } ,
 
                 new MenuMvc(){ 
@@ -185,29 +194,49 @@ namespace PapiroMVC.Controllers
                     ActionName="#", 
                     ParentId = 3, 
                     SortOrder = 2,
-                    HtmlAttributes = null
+                    RouteValues = null
                 } ,
 
                 // Children 2nd level
                new MenuMvc(){ 
-                    Id = 31, 
+                    Id = 321, 
                     TextName = "Stampabili a foglio", 
                     ControllerName="Article", 
                     ActionName="IndexSheetPrintableArticle", 
                     ParentId = 32, 
                     SortOrder = 1,
-                    HtmlAttributes = new { area = "DataBase" }
+                    RouteValues = new { area = "DataBase" }
                 } ,
                 
                 new MenuMvc(){ 
-                    Id = 31, 
+                    Id = 322, 
                     TextName = "Stampabili a rotolo", 
                     ControllerName="Article", 
                     ActionName="IndexRollPrintableArticle", 
                     ParentId = 32, 
-                    SortOrder = 1,
-                    HtmlAttributes = new { area = "DataBase" }
+                    SortOrder = 2,
+                    RouteValues = new { area = "DataBase" }
                 } ,
+
+
+                new MenuMvc(){ 
+                    Id = 41, 
+                    TextName = "[English]", 
+                    ControllerName="Home", 
+                    ActionName="ChangeCulture", 
+                    ParentId = 4, 
+                    SortOrder = 1,
+                    RouteValues =  new { area = "", id = "en-US" }
+                } ,
+                new MenuMvc(){ 
+                    Id = 41, 
+                    TextName = "[Italiano]", 
+                    ControllerName="Home", 
+                    ActionName="ChangeCulture", 
+                    ParentId = 4, 
+                    SortOrder = 2,
+                    RouteValues = new { area = "", id = "it-IT" },
+                } 
 
             };
 

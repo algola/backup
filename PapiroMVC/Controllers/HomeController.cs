@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Controllers
 {
-    public class HomeController : ControllerBase
+    public class HomeController : ControllerAlgolaBase
     {
         public ActionResult Autocomplete(string term)
         {

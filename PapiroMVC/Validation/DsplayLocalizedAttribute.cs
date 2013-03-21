@@ -188,6 +188,13 @@ namespace PapiroMVC.Validation
             return new MvcHtmlString(algolaEditFor + Environment.NewLine);
         }
 
+
+        public static string T(string resPath, string key)
+        {
+            return (string)HttpContext.GetLocalResourceObject(resPath, key);
+        }
+
+
         public static MvcHtmlString AutocompleteFor<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> expression, string actionName, string controllerName)
         {
             string autocompleteUrl = UrlHelper.GenerateUrl(null, actionName, controllerName,
@@ -240,6 +247,24 @@ namespace PapiroMVC.Validation
         return members.TryGetValue(name, out result);
      }
   
+  }
+
+  public static class THelper
+  {
+      public static string T(this HtmlHelper helper, string path, string key)
+      {
+          string ret = String.Empty;
+          try
+          {
+              ret = (string)HttpContext.GetLocalResourceObject(path, key);
+          }
+          catch (Exception e)
+          {
+              ret = "Stringa non definita nel file della lingua";
+              Console.WriteLine(e.Message);
+          }
+          return ret;
+      }
   }
 
 }

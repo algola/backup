@@ -25,31 +25,32 @@
         <link href="@Url.Content("~/Content/jqsimplemenu.css")" rel="stylesheet" type="text/css" />
         <script src="@Url.Content("~/Scripts/jqsimplemenu.js")" type="text/javascript"></script>
 
-
     </head>
     <body>
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title1">@Html.ActionLink("POPCORN-PRINT", "Index", "Home")
-                    </p>
+                    <img src= "@Url.Content("~/Images/logo.png")" alt="papiro software specifico per industrie grafiche" title="printeraction" />
+                    <p class="site-title1">@Html.ActionLink("printeraction", "Index", "Home") </p>
                 </div>
-                <div class="float-right">
-                    <section id="login">
-                        @Html.Partial("_LoginPartial")
-                    </section>
-                   @Html.Partial("_Menu")
-                    <!-- <nav>
-                        
-                    </nav>
-                       -->
+                 
+                <div class="float-center">
+                   @Html.Partial("_LoginPartial")                   
                 </div>
             </div>
         </header>
-        <div id="body">
+
+        <div id="body">  
+            <nav>
+            <div class="float-center">
+                @Html.Partial("_Menu")    
+            </div>
+                 </nav>       
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
+                <div class="float-left">            
 
+                </div>
                 @RenderBody()
 
             </section>

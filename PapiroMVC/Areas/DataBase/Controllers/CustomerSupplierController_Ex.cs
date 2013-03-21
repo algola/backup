@@ -7,7 +7,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {   
-    public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerBase
+    public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         /// <summary>
         /// AutoComplete

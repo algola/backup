@@ -780,6 +780,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Readme\modernizr.full\readme.txt" />
+    <Content Include="Content\Copy of Site.css" />
     <Content Include="Content\DivShowHide.css" />
     <Content Include="Content\FooterColumn.css" />
     <Content Include="Content\images\ajax-loader.gif" />
@@ -1323,6 +1324,7 @@
     <Content Include="Areas\DataBase\Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Home\Copy of Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

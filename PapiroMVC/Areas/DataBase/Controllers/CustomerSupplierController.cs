@@ -11,7 +11,7 @@ using PapiroMVC.Areas.DataBase.ViewModels;
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
 
-    public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerBase
+    public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         //
         // GET: /CustomerSupplier/

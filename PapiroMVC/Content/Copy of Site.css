@@ -5,14 +5,13 @@
 }
 
 body {
-
+    background-color: #fff;
     border-top: solid 10px #000;
-    background-color: #787878; /* #F87217; */
-    font-size: .75em;
-    font-family: Verdana, Helvetica, Sans-Serif;
+    color: #333;
+    font-size: .85em;
+    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
     margin: 0;
     padding: 0;
-    color: #696969;
 }
 
 a {
@@ -41,12 +40,6 @@ mark {
     background-color: #a6dbed ;
     padding-left: 5px;
     padding-right: 5px;
-}
-
-.float-center {
-  max-width: 960px;     
-  margin-left: auto ;
-  margin-right: auto ;
 }
 
 .float-left {
@@ -102,17 +95,15 @@ h5, h6 {
 
 #body {
     
-    background-color: #FFFFFF;  
+    background-color: #efeeef;  
     clear: both;
     padding-bottom: 35px;
-    
 }
 
     .main-content {
         background: url("../Images/accent.png") no-repeat;
         padding-left: 10px;
         padding-top: 30px;
-        min-height:95%;
     }
 
     .featured + .main-content {
@@ -120,31 +111,27 @@ h5, h6 {
     }
 
 footer {
-    background-image: url(../Images/bottom_bg.png);
     clear: both;
-/*    background-color: #e2e2e2;*/
+    background-color: #e2e2e2;
     font-size: .8em;
-/*    height: 100px; */
-width: 100%;
-margin: 0 auto;
-height: 280px;
+    height: 100px;
 }
 
 
 /* site title
 ----------------------------------------------------------*/
 .site-title1 {
-    color:#e2e2e2;
-    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color:#ab1506;
+    font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 3em;
     font-weight:800;
-    margin: 10px 0;
-    float:none;
+    margin: 20px 0;
+    float:left;
 }
 
 .site-title1 a, .site-title1 a:hover, .site-title1 a:active {
     background: none;
-    color:#e2e2e2;
+    color: #ab1506;
     outline: none;
     text-decoration: none;
 }
@@ -198,11 +185,10 @@ height: 280px;
 
 
 /* menu
-in layout i'm using menujq and css is located in jqsimplemenu.css
 ----------------------------------------------------------*/
 ul#menu {
     font-size: 1em;
-    font-weight: 200;
+    font-weight: 500;
     margin: 0;
     text-align: right;
 }
@@ -668,7 +654,6 @@ tr.pager td {
     header .site-title {
         margin: 10px;
         text-align: center;
-
     }
 
     /* login */

@@ -9,12 +9,13 @@ using System.Web.Mvc;
 using System.Web.Security;
 using PapiroMVC.Models;
 using Services;
+using PapiroMVC.Controllers;
 
 namespace PapiroMVC.Areas.Account.Controllers
 {
 
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : ControllerAlgolaBase
     {
 
         IArticleRepository articleDataRep;

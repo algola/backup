@@ -1,10 +1,11 @@
 ﻿@model PapiroMVC.Models.SheetPrintableArticleAutoChanges
 @using Mvc.HtmlHelpers
+@using PapiroMVC.Validation
 @using MvcContrib.UI.Grid 
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+    ViewBag.Title = Html.T(strings, "TitleIndex");
     }
 
 <h2>@ViewBag.Title</h2>
@@ -12,79 +13,79 @@
 
 @(Html.jqGrid("ArticleGrid")
 
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleGridCaption"))
+    .setCaption(Html.T(strings, "SheetPrintableArticleGridCaption"))
     .setMultiSelect(true)
     
     // columns
     .addColumn(new Column("Id")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setLabel(Html.T(strings, "OperationsCaption"))
         .setWidth(55)
         .setCustomFormatter("editArticle")
         .setSortable(false))
     .addColumn(new Column("CodArticle")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodArticleCaption"))
+        .setLabel(Html.T(strings, "CodArticleCaption"))
         .setWidth(80)
         .setSortable(true))
 
     .addColumn(new Column("TypeOfMaterial")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption"))
+        .setLabel(Html.T(strings, "TypeOfMaterialCaption"))
         .setWidth(100)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("NameOfMaterial")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption"))
+        .setLabel(Html.T(strings, "NameOfMaterialCaption"))
         .setWidth(100)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("Color")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorCaption"))
+        .setLabel(Html.T(strings, "ColorCaption"))
         .setWidth(100)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("Weight")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WeightCaption"))
+        .setLabel(Html.T(strings, "WeightCaption"))
         .setWidth(50)
         .setAlign(Align.right)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("Format")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "FormatCaption"))
+        .setLabel(Html.T(strings, "FormatCaption"))
         .setWidth(50)
         .setAlign(Align.center)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("SheetPerPacked")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SheetPerPackedCaption"))
+        .setLabel(Html.T(strings, "SheetPerPackedCaption"))
         .setWidth(50)
         .setAlign(Align.right)
         .setSortable(true)
         .setSearch(true))
 
     .addColumn(new Column("SheetPerPallet")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SheetPerPalletCaption"))
+        .setLabel(Html.T(strings, "SheetPerPalletCaption"))
         .setWidth(50)
         .setAlign(Align.right)
         .setSortable(true)
         .setSearch(true))
                         
     .addColumn(new Column("SupplierName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
+        .setLabel(Html.T(strings, "SupplierNameCaption"))
         .setSearch(true)
         .setWidth(150))
 
     .addColumn(new Column("CostPerKg")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerKgCaption"))
+        .setLabel(Html.T(strings, "CostPerKgCaption"))
         .setSearch(true)
         .setWidth(45)
         .setAlign(Align.right))
         
     .addColumn(new Column("CostPerSheet")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerSheetCaption"))
+        .setLabel(Html.T(strings, "CostPerSheetCaption"))
         .setTitle(false)
         .setSearch(true)
         .setWidth(45)
@@ -103,14 +104,14 @@
     .setViewRecords(true)
    
     // error handler
-    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+    .onLoadError(Html.T(strings, "ErrorLoading"))
 
     // render the html
     .Render()
 )
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle")
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "WizardSheetPrintableArticle"), "WizardSheetPrintableArticle")
+@Html.ActionLink(Html.T(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle")
+@Html.ActionLink(Html.T(strings, "WizardSheetPrintableArticle"), "WizardSheetPrintableArticle")
 
 
 <a href="javascript:void(0);" id="showHidesheetPrintableArticleAutoChanges">@HttpContext.GetLocalResourceObject(strings, "AutoCahngesCaption")</a>

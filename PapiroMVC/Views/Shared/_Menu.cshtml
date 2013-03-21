@@ -2,14 +2,29 @@
 @{
     List<MenuMvc> menuList = ViewBag.Menu;
 }
-        <ul class="menuJq">  
+
+<ul class="menuJq">  
+
+@if (Request.IsAuthenticated) {
+   
+        <li>    
+                Hello, @Html.ActionLink(User.Identity.Name, "ChangePassword", "Account", routeValues: new { area = "Account" }, htmlAttributes: new { @class = "username", title = "Change password" })!
+                @Html.ActionLink("Log off", "LogOff", "Account")
+        </li>
+    
+} else {
+    
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "loginLink" })</li> 
+}
+
     
 @foreach (var mp in menuList.Where(p => p.ParentId == 0)){
     
 <li>
         @if (mp.ActionName != "#")
         {
-            @Html.ActionLink(mp.TextName, mp.ActionName, mp.ControllerName, mp.HtmlAttributes, null) 
+            @Html.ActionLink(mp.TextName, mp.ActionName, mp.ControllerName, mp.RouteValues, mp.HtmlAttributes) 
         }
         else 
         { 
@@ -39,30 +54,28 @@
     {
         
         @:<li>    
-        
-        if (cp.ActionName != "#")
-        {
-                @Html.ActionLink(cp.TextName, cp.ActionName, cp.ControllerName, cp.HtmlAttributes, null)        
-        }
-        else
-        {
-            <a href="#">@cp.TextName</a>
-        }                        
+            if (cp.ActionName != "#")
+            {
+                @Html.ActionLink(cp.TextName, cp.ActionName, cp.ControllerName, cp.RouteValues, cp.HtmlAttributes)        
+            }
+            else
+            {
+                <a href="#">@cp.TextName</a>
+            }
     
-      if(menuList.Count(p=>p.ParentId == cp.Id) > 0)
-        {
-           @:<ul>  
-        }
+            if (menuList.Count(p => p.ParentId == cp.Id) > 0)
+            {
+                @:<ul>  
+            }
         
-        @RenderMenuItem(menuList,cp)
-      if(menuList.Count(p=>p.ParentId == cp.Id) > 0)
-      {
-          @:</ul>
-      }
-      else
-      {
-          
-      }
-      @:</li>
+            @RenderMenuItem(menuList, cp)
+            if (menuList.Count(p => p.ParentId == cp.Id) > 0)
+            {
+                @:</ul>
+            }
+            else
+            {
+                @:</li>
+            }      
     }
 }

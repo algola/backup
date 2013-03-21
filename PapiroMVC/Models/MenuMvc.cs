@@ -11,7 +11,8 @@ namespace PapiroMVC.Models
         public string TextName { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
-        public object HtmlAttributes { get; set; }
+        public object RouteValues { get; set; }
+        public object HtmlAttributes { get; set; } 
         public int ParentId { get; set; }
         public int SortOrder { get; set; }
 

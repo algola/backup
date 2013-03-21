@@ -13,7 +13,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
-    public partial class ArticleController : PapiroMVC.Controllers.ControllerBase
+    public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         //sperimentale
         public ActionResult DataProcessedCorrectly()

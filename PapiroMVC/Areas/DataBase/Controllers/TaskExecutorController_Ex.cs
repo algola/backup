@@ -13,7 +13,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
-    public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerBase
+    public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
 
         //example of autocpmplete
