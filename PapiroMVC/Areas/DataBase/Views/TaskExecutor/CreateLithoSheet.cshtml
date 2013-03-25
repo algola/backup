@@ -1,0 +1,10 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.LithoSheet
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateLithoSheetTitle");
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreateLithoSheet", Model)

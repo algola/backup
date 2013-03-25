@@ -1,4 +1,4 @@
-// ==ClosureCompiler==
+f// ==ClosureCompiler==
 // @compilation_level SIMPLE_OPTIMIZATIONS
 
 /**
@@ -954,7 +954,7 @@ $.fn.jqGrid = function( pin ) {
 
 		$(gv).insertBefore(this);
 		$(this).appendTo(gv).removeClass("scroll");
-		var eg = $("<div class='ui-jqgrid ui-widget ui-widget-content ui-corner-all'></div>");
+		var eg = $("<div class='ui-jqgrid ui-widget ui-widget-content ui-corner-none'></div>");
 		$(eg).insertBefore(gv).attr({"id" : "gbox_"+this.id,"dir":dir});
 		$(gv).appendTo(eg).attr("id","gview_"+this.id);
 		if (isMSIE && $.browser.version <= 6) {
@@ -1921,11 +1921,11 @@ $.fn.jqGrid = function( pin ) {
 			if(ts.p.pginput===true) { pginp= "<td dir='"+dir+"'>"+$.jgrid.format(ts.p.pgtext || "","<input class='ui-pg-input' type='text' size='2' maxlength='7' value='0' role='textbox'/>","<span id='sp_1_"+$.jgrid.jqID(pgid)+"'></span>")+"</td>";}
 			if(ts.p.pgbuttons===true) {
 				var po=["first"+tp,"prev"+tp, "next"+tp,"last"+tp]; if(dir=="rtl") { po.reverse(); }
-				pgl += "<td id='"+po[0]+"' class='ui-pg-button ui-corner-all'><span class='ui-icon ui-icon-seek-first'></span></td>";
-				pgl += "<td id='"+po[1]+"' class='ui-pg-button ui-corner-all'><span class='ui-icon ui-icon-seek-prev'></span></td>";
+				pgl += "<td id='"+po[0]+"' class='ui-pg-button ui-corner-none'><span class='ui-icon ui-icon-seek-first'></span></td>";
+				pgl += "<td id='"+po[1]+"' class='ui-pg-button ui-corner-none'><span class='ui-icon ui-icon-seek-prev'></span></td>";
 				pgl += pginp !== "" ? sep+pginp+sep:"";
-				pgl += "<td id='"+po[2]+"' class='ui-pg-button ui-corner-all'><span class='ui-icon ui-icon-seek-next'></span></td>";
-				pgl += "<td id='"+po[3]+"' class='ui-pg-button ui-corner-all'><span class='ui-icon ui-icon-seek-end'></span></td>";
+				pgl += "<td id='"+po[2]+"' class='ui-pg-button ui-corner-none'><span class='ui-icon ui-icon-seek-next'></span></td>";
+				pgl += "<td id='"+po[3]+"' class='ui-pg-button ui-corner-none'><span class='ui-icon ui-icon-seek-end'></span></td>";
 			} else if (pginp !== "") { pgl += pginp; }
 			if(dir=="ltr") { pgl += str; }
 			pgl += "</tr></tbody></table>";
@@ -2385,7 +2385,7 @@ $.fn.jqGrid = function( pin ) {
 			// TBD -- escape ts.p.pager here?
 			if(typeof ts.p.pager == "string") {if(ts.p.pager.substr(0,1) !="#") { ts.p.pager = "#"+ts.p.pager;} }
 			else { ts.p.pager = "#"+ $(ts.p.pager).attr("id");}
-			$(ts.p.pager).css({width: grid.width+"px"}).appendTo(eg).addClass('ui-state-default ui-jqgrid-pager ui-corner-bottom');
+			$(ts.p.pager).css({width: grid.width+"px"}).appendTo(eg).addClass('ui-state-default ui-jqgrid-pager ui-corner-none');
 			if(hg) {$(ts.p.pager).hide();}
 			setPager(ts.p.pager,'');
 		}
@@ -2528,7 +2528,7 @@ $.fn.jqGrid = function( pin ) {
 			function() {arf.removeClass('ui-state-hover');})
 		.append("<span class='ui-icon ui-icon-circle-triangle-n'></span>").css((dir=="rtl"?"left":"right"),"0px") : "";
 		$(grid.cDiv).append(arf).append("<span class='ui-jqgrid-title"+(dir=="rtl" ? "-rtl" :"" )+"'>"+ts.p.caption+"</span>")
-		.addClass("ui-jqgrid-titlebar ui-widget-header ui-corner-top ui-helper-clearfix");
+		.addClass("ui-jqgrid-titlebar ui-widget-header ui-corner-none ui-helper-clearfix");
 		$(grid.cDiv).insertBefore(grid.hDiv);
 		if( ts.p.toolbar[0] ) {
 			grid.uDiv = document.createElement("div");
@@ -5505,13 +5505,13 @@ $.extend($.jgrid,{
 		var mw  = document.createElement('div'), rtlsup, self = this;
 		css = $.extend({}, css || {});
 		rtlsup = $(p.gbox).attr("dir") == "rtl" ? true : false;
-		mw.className= "ui-widget ui-widget-content ui-corner-all ui-jqdialog";
+		mw.className= "ui-widget ui-widget-content ui-corner-none ui-jqdialog";
 		mw.id = aIDs.themodal;
 		var mh = document.createElement('div');
-		mh.className = "ui-jqdialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix";
+		mh.className = "ui-jqdialog-titlebar ui-widget-header ui-corner-none ui-helper-clearfix";
 		mh.id = aIDs.modalhead;
 		$(mh).append("<span class='ui-jqdialog-title'>"+p.caption+"</span>");
-		var ahr= $("<a href='javascript:void(0)' class='ui-jqdialog-titlebar-close ui-corner-all'></a>")
+		var ahr= $("<a href='javascript:void(0)' class='ui-jqdialog-titlebar-close ui-corner-none'></a>")
 		.hover(function(){ahr.addClass('ui-state-hover');},
 			   function(){ahr.removeClass('ui-state-hover');})
 		.append("<span class='ui-icon ui-icon-closethick'></span>");
@@ -5664,14 +5664,14 @@ $.extend($.jgrid,{
 		if(mopt.buttons.length > 0) {
 			for(var i=0;i<mopt.buttons.length;i++) {
 				if(typeof mopt.buttons[i].id == "undefined") { mopt.buttons[i].id = "info_button_"+i; }
-				buttstr += "<a href='javascript:void(0)' id='"+mopt.buttons[i].id+"' class='fm-button ui-state-default ui-corner-all'>"+mopt.buttons[i].text+"</a>";
+				buttstr += "<a href='javascript:void(0)' id='"+mopt.buttons[i].id+"' class='fm-button ui-state-default ui-corner-none'>"+mopt.buttons[i].text+"</a>";
 			}
 		}
 		var dh = isNaN(mopt.dataheight) ? mopt.dataheight : mopt.dataheight+"px",
 		cn = "text-align:"+mopt.align+";";
 		var cnt = "<div id='info_id'>";
 		cnt += "<div id='infocnt' style='margin:0px;padding-bottom:1em;width:100%;overflow:auto;position:relative;height:"+dh+";"+cn+"'>"+content+"</div>";
-		cnt += c_b ? "<div class='ui-widget-content ui-helper-clearfix' style='text-align:"+mopt.buttonalign+";padding-bottom:0.8em;padding-top:0.5em;background-image: none;border-width: 1px 0 0 0;'><a href='javascript:void(0)' id='closedialog' class='fm-button ui-state-default ui-corner-all'>"+c_b+"</a>"+buttstr+"</div>" :
+		cnt += c_b ? "<div class='ui-widget-content ui-helper-clearfix' style='text-align:"+mopt.buttonalign+";padding-bottom:0.8em;padding-top:0.5em;background-image: none;border-width: 1px 0 0 0;'><a href='javascript:void(0)' id='closedialog' class='fm-button ui-state-default ui-corner-none'>"+c_b+"</a>"+buttstr+"</div>" :
 			buttstr !== ""  ? "<div class='ui-widget-content ui-helper-clearfix' style='text-align:"+mopt.buttonalign+";padding-bottom:0.8em;padding-top:0.5em;background-image: none;border-width: 1px 0 0 0;'>"+buttstr+"</div>" : "";
 		cnt += "</div>";
 
@@ -6957,11 +6957,11 @@ $.jgrid.extend({
 					fil.attr("dir","rtl");
 				}
 				var columns = $.extend([],$t.p.colModel),
-				bS  ="<a href='javascript:void(0)' id='"+fid+"_search' class='fm-button ui-state-default ui-corner-all fm-button-icon-right ui-reset'><span class='ui-icon ui-icon-search'></span>"+p.Find+"</a>",
-				bC  ="<a href='javascript:void(0)' id='"+fid+"_reset' class='fm-button ui-state-default ui-corner-all fm-button-icon-left ui-search'><span class='ui-icon ui-icon-arrowreturnthick-1-w'></span>"+p.Reset+"</a>",
+				bS  ="<a href='javascript:void(0)' id='"+fid+"_search' class='fm-button ui-state-default ui-corner-none fm-button-icon-right ui-reset'><span class='ui-icon ui-icon-search'></span>"+p.Find+"</a>",
+				bC  ="<a href='javascript:void(0)' id='"+fid+"_reset' class='fm-button ui-state-default ui-corner-none fm-button-icon-left ui-search'><span class='ui-icon ui-icon-arrowreturnthick-1-w'></span>"+p.Reset+"</a>",
 				bQ = "", tmpl="", colnm, found = false, bt, cmi=-1;
 				if(p.showQuery) {
-					bQ ="<a href='javascript:void(0)' id='"+fid+"_query' class='fm-button ui-state-default ui-corner-all fm-button-icon-left'><span class='ui-icon ui-icon-comment'></span>Query</a>";
+					bQ ="<a href='javascript:void(0)' id='"+fid+"_query' class='fm-button ui-state-default ui-corner-none fm-button-icon-left'><span class='ui-icon ui-icon-comment'></span>Query</a>";
 				}
 				if(!p.columns.length) {
 					$.each(columns, function(i,n){
@@ -7335,7 +7335,7 @@ $.jgrid.extend({
 						if(rp_ge[$t.p.id].checkOnSubmit || rp_ge[$t.p.id].checkOnUpdate) {rp_ge[$t.p.id]._savedData[nm] = tmp;}
 						$(elc).addClass("FormElement");
 						if(this.edittype == 'text' || this.edittype == 'textarea') {
-							$(elc).addClass("ui-widget-content ui-corner-all");
+							$(elc).addClass("ui-widget-content ui-corner-none");
 						}
 						trdata = $(tb).find("tr[rowpos="+rp+"]");
 						if(frmopt.rowabove) {
@@ -7849,8 +7849,8 @@ $.jgrid.extend({
 				// buttons at footer
 				var bP = "<a href='javascript:void(0)' id='"+bp+"' class='fm-button ui-state-default ui-corner-left'><span class='ui-icon ui-icon-triangle-1-w'></span></a>",
 				bN = "<a href='javascript:void(0)' id='"+bn+"' class='fm-button ui-state-default ui-corner-right'><span class='ui-icon ui-icon-triangle-1-e'></span></a>",
-				bS  ="<a href='javascript:void(0)' id='sData' class='fm-button ui-state-default ui-corner-all'>"+p.bSubmit+"</a>",
-				bC  ="<a href='javascript:void(0)' id='cData' class='fm-button ui-state-default ui-corner-all'>"+p.bCancel+"</a>";
+				bS  ="<a href='javascript:void(0)' id='sData' class='fm-button ui-state-default ui-corner-none'>"+p.bSubmit+"</a>",
+				bC  ="<a href='javascript:void(0)' id='cData' class='fm-button ui-state-default ui-corner-none'>"+p.bCancel+"</a>";
 				var bt = "<table border='0' cellspacing='0' cellpadding='0' class='EditTable' id='"+frmtborg+"_2'><tbody><tr><td colspan='2'><hr class='ui-widget-content' style='margin:1px'/></td></tr><tr id='Act_Buttons'><td class='navButton'>"+(rtlb ? bN+bP : bP+bN)+"</td><td class='EditButton'>"+bS+bC+"</td></tr>";
 				bt += "<tr style='display:none' class='binfo'><td class='bottominfo' colspan='2'>"+rp_ge[$t.p.id].bottominfo+"</td></tr>";
 				bt += "</tbody></table>";
@@ -7930,9 +7930,9 @@ $.jgrid.extend({
 					.append("<span class='ui-icon "+p.closeicon[2]+"'></span>");
 				}
 				if(rp_ge[$t.p.id].checkOnSubmit || rp_ge[$t.p.id].checkOnUpdate) {
-					bS  ="<a href='javascript:void(0)' id='sNew' class='fm-button ui-state-default ui-corner-all' style='z-index:1002'>"+p.bYes+"</a>";
-					bN  ="<a href='javascript:void(0)' id='nNew' class='fm-button ui-state-default ui-corner-all' style='z-index:1002'>"+p.bNo+"</a>";
-					bC  ="<a href='javascript:void(0)' id='cNew' class='fm-button ui-state-default ui-corner-all' style='z-index:1002'>"+p.bExit+"</a>";
+					bS  ="<a href='javascript:void(0)' id='sNew' class='fm-button ui-state-default ui-corner-none' style='z-index:1002'>"+p.bYes+"</a>";
+					bN  ="<a href='javascript:void(0)' id='nNew' class='fm-button ui-state-default ui-corner-none' style='z-index:1002'>"+p.bNo+"</a>";
+					bC  ="<a href='javascript:void(0)' id='cNew' class='fm-button ui-state-default ui-corner-none' style='z-index:1002'>"+p.bExit+"</a>";
 					var ii, zI = p.zIndex  || 999;zI ++;
 					if ($.browser.msie && $.browser.version ==6) {
 						ii = '<iframe style="display:block;position:absolute;z-index:-1;filter:Alpha(Opacity=\'0\');" src="javascript:false;"></iframe>';
@@ -8250,7 +8250,7 @@ $.jgrid.extend({
 				// buttons at footer
 				bP = "<a href='javascript:void(0)' id='"+bp+"' class='fm-button ui-state-default ui-corner-left'><span class='ui-icon ui-icon-triangle-1-w'></span></a>",
 				bN = "<a href='javascript:void(0)' id='"+bn+"' class='fm-button ui-state-default ui-corner-right'><span class='ui-icon ui-icon-triangle-1-e'></span></a>",
-				bC  ="<a href='javascript:void(0)' id='cData' class='fm-button ui-state-default ui-corner-all'>"+p.bClose+"</a>";
+				bC  ="<a href='javascript:void(0)' id='cData' class='fm-button ui-state-default ui-corner-none'>"+p.bClose+"</a>";
 				if(maxRows >  0) {
 					var sd=[];
 					$.each($(tbl)[0].rows,function(i,r){
@@ -8418,8 +8418,8 @@ $.jgrid.extend({
 				tbl += "<tr><td class=\"delmsg\" style=\"white-space:pre;\">"+rp_ge[$t.p.id].msg+"</td></tr><tr><td >&#160;</td></tr>";
 				// buttons at footer
 				tbl += "</tbody></table></div>";
-				var bS  = "<a href='javascript:void(0)' id='dData' class='fm-button ui-state-default ui-corner-all'>"+p.bSubmit+"</a>",
-				bC  = "<a href='javascript:void(0)' id='eData' class='fm-button ui-state-default ui-corner-all'>"+p.bCancel+"</a>";
+				var bS  = "<a href='javascript:void(0)' id='dData' class='fm-button ui-state-default ui-corner-none'>"+p.bSubmit+"</a>",
+				bC  = "<a href='javascript:void(0)' id='eData' class='fm-button ui-state-default ui-corner-none'>"+p.bCancel+"</a>";
 				tbl += "<table cellspacing='0' cellpadding='0' border='0' class='EditTable' id='"+dtbl+"_2'><tbody><tr><td><hr class='ui-widget-content' style='margin:1px'/></td></tr><tr><td class='DelButton EditButton'>"+bS+"&#160;"+bC+"</td></tr></tbody></table>";
 				p.gbox = "#gbox_"+$.jgrid.jqID(gID);
 				$.jgrid.createModal(IDs,tbl,p,"#gview_"+$.jgrid.jqID($t.p.id),$("#gview_"+$.jgrid.jqID($t.p.id))[0]);
@@ -8626,7 +8626,7 @@ $.jgrid.extend({
 				if($t.p.direction == "rtl") {$(navtbl).attr("dir","rtl").css("float","right");}
 				if (o.add) {
 					pAdd = pAdd || {};
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.addicon+"'></span>"+o.addtext+"</div>");
 					$("tr",navtbl).append(tbd);
 					$(tbd,navtbl)
@@ -8651,7 +8651,7 @@ $.jgrid.extend({
 					tbd = null;
 				}
 				if (o.edit) {
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					pEdit = pEdit || {};
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.editicon+"'></span>"+o.edittext+"</div>");
 					$("tr",navtbl).append(tbd);
@@ -8683,7 +8683,7 @@ $.jgrid.extend({
 					tbd = null;
 				}
 				if (o.view) {
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					pView = pView || {};
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.viewicon+"'></span>"+o.viewtext+"</div>");
 					$("tr",navtbl).append(tbd);
@@ -8715,7 +8715,7 @@ $.jgrid.extend({
 					tbd = null;
 				}
 				if (o.del) {
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					pDel = pDel || {};
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.delicon+"'></span>"+o.deltext+"</div>");
 					$("tr",navtbl).append(tbd);
@@ -8753,7 +8753,7 @@ $.jgrid.extend({
 				}
 				if(o.add || o.edit || o.del || o.view) {$("tr",navtbl).append(sep);}
 				if (o.search) {
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					pSearch = pSearch || {};
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.searchicon+"'></span>"+o.searchtext+"</div>");
 					$("tr",navtbl).append(tbd);
@@ -8782,7 +8782,7 @@ $.jgrid.extend({
 					tbd = null;
 				}
 				if (o.refresh) {
-					tbd = $("<td class='ui-pg-button ui-corner-all'></td>");
+					tbd = $("<td class='ui-pg-button ui-corner-none'></td>");
 					$(tbd).append("<div class='ui-pg-div'><span class='ui-icon "+o.refreshicon+"'></span>"+o.refreshtext+"</div>");
 					$("tr",navtbl).append(tbd);
 					$(tbd,navtbl)
@@ -8852,9 +8852,9 @@ $.jgrid.extend({
 				if( p.id && $("#"+$.jgrid.jqID(p.id), findnav)[0] !== undefined )  {return;}
 				var tbd = $("<td></td>");
 				if(p.buttonicon.toString().toUpperCase() == "NONE") {
-                    $(tbd).addClass('ui-pg-button ui-corner-all').append("<div class='ui-pg-div'>"+p.caption+"</div>");
+                    $(tbd).addClass('ui-pg-button ui-corner-none').append("<div class='ui-pg-div'>"+p.caption+"</div>");
 				} else	{
-					$(tbd).addClass('ui-pg-button ui-corner-all').append("<div class='ui-pg-div'><span class='ui-icon "+p.buttonicon+"'></span>"+p.caption+"</div>");
+					$(tbd).addClass('ui-pg-button ui-corner-none').append("<div class='ui-pg-div'><span class='ui-icon "+p.buttonicon+"'></span>"+p.caption+"</div>");
 				}
 				if(p.id) {$(tbd).attr("id",p.id);}
 				if(p.position=='first'){

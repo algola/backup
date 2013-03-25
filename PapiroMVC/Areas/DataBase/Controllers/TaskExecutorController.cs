@@ -14,7 +14,7 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
-    {
+    {    
         
         private readonly ITaskExecutorRepository taskExecutorRepository;
 
@@ -31,9 +31,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             taskExecutorRepository = _tskExDataRep;
         }
 
-        public ActionResult Index()
+        public ActionResult IndexLithoSheet()
         {
             return View ();
+        }
+
+        public ActionResult IndexDigitalSheet()
+        {
+            return View();
         }
 
         [HttpGet]

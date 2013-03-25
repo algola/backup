@@ -58,6 +58,7 @@ namespace PapiroMVC.App_Start
             kernel.Bind<ICustomerSupplierRepository>().To<CustomerSupplierRepository>();
             kernel.Bind<ICustomerSupplierBaseRepository>().To<CustomerSupplierBaseRepository>();
             kernel.Bind<ITypeOfBaseRepository>().To<TypeOfBaseRepository>();
+            kernel.Bind<ITaskExecutorRepository>().To<TaskExecutorRepository>();
         }        
     }
 }

@@ -117,4 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anulla</value>
+  </data>
+  <data name="CreateDigitalSheet" xml:space="preserve">
+    <value>Nuova Digitale a foglio</value>
+  </data>
+  <data name="CreateLithoSheet" xml:space="preserve">
+    <value>Nuova Offset a foglio</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>modifica</value>
+  </data>
+  <data name="EditingLithoSheetTitle" xml:space="preserve">
+    <value>Modifica della macchina</value>
+  </data>
 </root>

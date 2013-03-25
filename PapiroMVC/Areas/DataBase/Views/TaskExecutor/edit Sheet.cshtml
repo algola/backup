@@ -1,0 +1,235 @@
+﻿@model PapiroMVC.Models.LithoSheet
+
+@{
+    ViewBag.Title = "View1";
+}
+
+<h2>View1</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>LithoSheet</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProofSheetFirstStart)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProofSheetFirstStart)
+            @Html.ValidationMessageFor(model => model.ProofSheetFirstStart)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProofSheetSecondsStart)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProofSheetSecondsStart)
+            @Html.ValidationMessageFor(model => model.ProofSheetSecondsStart)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ProductionWaste)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ProductionWaste)
+            @Html.ValidationMessageFor(model => model.ProductionWaste)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PrintingUnit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PrintingUnit)
+            @Html.ValidationMessageFor(model => model.PrintingUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SheetwiseAfterPrintingUnit)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SheetwiseAfterPrintingUnit)
+            @Html.ValidationMessageFor(model => model.SheetwiseAfterPrintingUnit)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Sheetwise)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Sheetwise)
+            @Html.ValidationMessageFor(model => model.Sheetwise)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WashUpTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WashUpTime)
+            @Html.ValidationMessageFor(model => model.WashUpTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ChangePlateTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ChangePlateTime)
+            @Html.ValidationMessageFor(model => model.ChangePlateTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InkUsage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InkUsage)
+            @Html.ValidationMessageFor(model => model.InkUsage)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.InkUsageForfait)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.InkUsageForfait)
+            @Html.ValidationMessageFor(model => model.InkUsageForfait)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeStampTable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeStampTable)
+            @Html.ValidationMessageFor(model => model.TimeStampTable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CodTaskExecutor)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CodTaskExecutor)
+            @Html.ValidationMessageFor(model => model.CodTaskExecutor)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TaskExecutorName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TaskExecutorName)
+            @Html.ValidationMessageFor(model => model.TaskExecutorName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Version)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Version)
+            @Html.ValidationMessageFor(model => model.Version)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Dismissed)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Dismissed)
+            @Html.ValidationMessageFor(model => model.Dismissed)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FormatMin)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FormatMin)
+            @Html.ValidationMessageFor(model => model.FormatMin)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FormatMax)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FormatMax)
+            @Html.ValidationMessageFor(model => model.FormatMax)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WeightMin)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WeightMin)
+            @Html.ValidationMessageFor(model => model.WeightMin)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.WeightMax)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.WeightMax)
+            @Html.ValidationMessageFor(model => model.WeightMax)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Pinza)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Pinza)
+            @Html.ValidationMessageFor(model => model.Pinza)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ControPinza)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ControPinza)
+            @Html.ValidationMessageFor(model => model.ControPinza)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Laterale)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Laterale)
+            @Html.ValidationMessageFor(model => model.Laterale)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsEstimatedOnTime)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsEstimatedOnTime)
+            @Html.ValidationMessageFor(model => model.IsEstimatedOnTime)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsEstimatedOnRun)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsEstimatedOnRun)
+            @Html.ValidationMessageFor(model => model.IsEstimatedOnRun)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsEstimatedOnMq)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsEstimatedOnMq)
+            @Html.ValidationMessageFor(model => model.IsEstimatedOnMq)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsSelected)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsSelected)
+            @Html.ValidationMessageFor(model => model.IsSelected)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

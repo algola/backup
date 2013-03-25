@@ -197,6 +197,38 @@ namespace PapiroMVC.Controllers
                     RouteValues = null
                 } ,
 
+                new MenuMvc(){ 
+                    Id = 33, 
+                    TextName = "Macchine e Lavorazioni", 
+                    ControllerName="", 
+                    ActionName="#", 
+                    ParentId = 3, 
+                    SortOrder = 2,
+                    RouteValues = null
+                } ,
+
+                // Children 2nd level
+               new MenuMvc(){ 
+                    Id = 331, 
+                    TextName = "Offset a foglio", 
+                    ControllerName="TaskExecutor", 
+                    ActionName="IndexLithoSheet", 
+                    ParentId = 33, 
+                    SortOrder = 1,
+                    RouteValues = new { area = "DataBase" }
+                } ,
+
+                                // Children 2nd level
+               new MenuMvc(){ 
+                    Id = 332, 
+                    TextName = "Digitale a foglio", 
+                    ControllerName="TaskExecutor", 
+                    ActionName="IndexDigitalSheet", 
+                    ParentId = 33, 
+                    SortOrder = 2,
+                    RouteValues = new { area = "DataBase" }
+                } ,
+
                 // Children 2nd level
                new MenuMvc(){ 
                     Id = 321, 
@@ -221,7 +253,7 @@ namespace PapiroMVC.Controllers
 
                 new MenuMvc(){ 
                     Id = 41, 
-                    TextName = "[English]", 
+                    TextName = "English", 
                     ControllerName="Home", 
                     ActionName="ChangeCulture", 
                     ParentId = 4, 
@@ -230,7 +262,7 @@ namespace PapiroMVC.Controllers
                 } ,
                 new MenuMvc(){ 
                     Id = 41, 
-                    TextName = "[Italiano]", 
+                    TextName = "Italiano", 
                     ControllerName="Home", 
                     ActionName="ChangeCulture", 
                     ParentId = 4, 

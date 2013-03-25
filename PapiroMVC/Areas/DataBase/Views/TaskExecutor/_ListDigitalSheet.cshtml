@@ -4,13 +4,13 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleLithoSheetIndex");
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleDigitalSheetIndex");
 }
 
 <h2>@ViewBag.Title</h2>
 <br />
 
-@(Html.jqGrid("LithoSheeteGrid")
+@(Html.jqGrid("DigitalSheeteGrid")
     
     .setCaption((string)HttpContext.GetLocalResourceObject(strings, "LithoSheetGridCaption"))
     .setMultiSelect(true)
@@ -37,18 +37,29 @@
         .setSortable(true)
         .setSearch(true))
 
-    .addColumn(new Column("PrintingUnit")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "PrintingUnitCaption"))
+    .addColumn(new Column("BWSide1")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide1"))
         .setWidth(45)
         .setSortable(true)
         .setSearch(true))
 
-    .addColumn(new Column("SheetwiseAfterPrintingUnit")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SheetwiseAfterPrintingUnitCaption"))
+    .addColumn(new Column("BWSide2")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide2"))
         .setWidth(45)
         .setSortable(true)
         .setSearch(true))
 
+    .addColumn(new Column("ColorSide1")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide1"))
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+
+    .addColumn(new Column("ColorSide2")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide2"))
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
         /*
 
     .addColumn(new Column("Weight")
@@ -83,7 +94,7 @@
         .setAlign(Align.right))
   */
 
-    .setUrl(Url.Action("LithoSheetList", "TaskExecutor"))
+    .setUrl(Url.Action("DigitalSheetList", "TaskExecutor"))
 
     .setHeight(300)
     .setRowNum(20)
@@ -102,4 +113,4 @@
     .Render()
 )
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateLithoSheet"), "CreateLithoSheet")
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet"), "CreateDigitalSheet")

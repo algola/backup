@@ -5,19 +5,6 @@
 
 <ul class="menuJq">  
 
-@if (Request.IsAuthenticated) {
-   
-        <li>    
-                Hello, @Html.ActionLink(User.Identity.Name, "ChangePassword", "Account", routeValues: new { area = "Account" }, htmlAttributes: new { @class = "username", title = "Change password" })!
-                @Html.ActionLink("Log off", "LogOff", "Account")
-        </li>
-    
-} else {
-    
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: new { area = "Account"}, htmlAttributes: new { id = "loginLink" })</li> 
-}
-
     
 @foreach (var mp in menuList.Where(p => p.ParentId == 0)){
     

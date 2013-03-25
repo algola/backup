@@ -913,10 +913,16 @@
     <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\IndexSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\IndexRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\edit Sheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoSheet.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />

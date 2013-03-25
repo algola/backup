@@ -1,0 +1,84 @@
+﻿@model PapiroMVC.Models.LithoSheet
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+}
+
+@using (Html.BeginForm("Action", "TaskExecutor"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>LithoSheet</legend>
+
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart,"ProofSheetFirstStart","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart,"ProofSheetSecondsStart","TaskExecutor")
+
+            @Html.AlgolaAutocompleteFor(model => model.ProductionWaste,"ProductionWaste","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.PrintingUnit,"PrintingUnit","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.SheetwiseAfterPrintingUnit,"SheetwiseAfterPrintingUnit","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.Sheetwise,"Sheetwise","TaskExecutor")
+
+            @Html.AlgolaEditorFor(model => model.InkUsage)
+            @Html.AlgolaEditorFor(model => model.InkUsageForfait)
+            @Html.AlgolaEditorFor(model => model.ProofSheetSecondsStart)
+            @Html.AlgolaEditorFor(model => model.ProofSheetSecondsStart)
+            @Html.AlgolaEditorFor(model => model.ProofSheetSecondsStart)
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodTaskExecutor)
+        
+            @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+            @Html.AlgolaEditorFor(model => model.Version)
+
+        @{
+            Model.Dismissed = (Model.Dismissed == null)?false:Model.Dismissed;            
+            }
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Dismissed)
+            </div>
+            <div class="editor-field">
+                @Html.CheckBoxFor(model => model.Dismissed.Value)
+                @Html.ValidationMessageFor(model => model.Dismissed)
+            </div>
+
+            @Html.AlgolaAutocompleteFor(model => model.FormatMin,"FormatMin","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.FormatMax,"FormatMax","TaskExecutor")
+            @Html.AlgolaEditorFor(model => model.WeightMin)
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+        
+            @Html.AlgolaEditorFor(model => model.Pinza)
+            @Html.AlgolaEditorFor(model => model.ControPinza)
+            @Html.AlgolaEditorFor(model => model.Laterale)
+
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+
+            @Html.HiddenFor(model => model.IsEstimatedOnTime)
+            @Html.HiddenFor(model => model.IsEstimatedOnRun)
+            @Html.HiddenFor(model => model.IsEstimatedOnMq)
+
+    </fieldset>
+
+    <p>
+        <!-- ViewBag.ActionMethod is used to understand where we are coming and so where we have to go -->
+        <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        
+        @if (ViewBag.ActionMethod != "CreateLithoSheet")               
+        {
+            <input type="submit" name="CreateRollPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+        }
+    </p>
+    
+}
+<div>
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
