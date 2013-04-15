@@ -118,27 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AvarageRunPerHour12" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>12mi/h</value>
   </data>
   <data name="AvarageRunPerHour16" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>16mi/h</value>
   </data>
   <data name="AvarageRunPerHour24" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>24mi/h</value>
   </data>
   <data name="AvarageRunPerHour32" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>32mi/h</value>
   </data>
   <data name="AvarageRunPerHour4" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>4ni/h</value>
   </data>
   <data name="AvarageRunPerHour6" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>6ni/h</value>
   </data>
   <data name="AvarageRunPerHour8" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>8vi/h</value>
   </data>
   <data name="AvarageRunPerHourBinding" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>copie/h</value>
+  </data>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
+  </data>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
   </data>
 </root>

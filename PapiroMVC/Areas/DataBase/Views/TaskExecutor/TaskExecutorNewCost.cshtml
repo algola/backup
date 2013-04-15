@@ -1,0 +1,76 @@
+﻿@model PapiroMVC.Models.TaskExecutorNewCostViewModel
+
+@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";        
+}
+
+<h3>Nessun costo inserito</h3>
+<p></p>
+
+@using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>TaskExecutor</legend>
+
+        @Html.HiddenFor(model => model.CodTaskExecutor)
+
+        @if (((string)ViewBag.TypeCost).Contains("Time"))
+        {
+         <div>
+            <div class="editor-field", style="float:left" >
+                @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnTime)
+            </div>
+            <div class="editor-label">
+                @Html.T(strings, "OnTimeNewCostCaption")
+            </div>
+        </div>
+    <br />
+        }
+
+        @if (((string)ViewBag.TypeCost).Contains("Mq"))
+        {
+         <div>
+            <div class="editor-field", style="float:left" >
+                @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnMq)
+            </div>
+            <div class="editor-label">
+                @Html.T(strings, "OnMqNewCostCaption")
+            </div>
+        </div>
+
+    <br />
+        }
+
+        @if (((string)ViewBag.TypeCost).Contains("Run"))
+        {
+
+         <div>
+            <div class="editor-field", style="float:left" >
+                @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnRun)
+            </div>
+            <div class="editor-label">
+                @Html.T(strings, "OnRunNewCostCaption")
+            </div>
+        </div>
+    <br />
+        }
+         
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

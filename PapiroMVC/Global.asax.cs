@@ -28,7 +28,15 @@ namespace PapiroMVC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("it-IT");
+            //Decimal Model Binder
+            /*
+            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(double), new DecimalModelBinder());
+            ModelBinders.Binders.Add(typeof(double?), new DecimalModelBinder());
+            */
+            //end Decimal Model Binder
+            
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

@@ -1,0 +1,17 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RollPrintableArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleCuttedCostTitle");
+}
+
+<h3>@ViewBag.Title</h3>
+
+    <fieldset>
+        <legend>RollPrintableArticleCuttedCost</legend>
+
+        <br />
+
+
+    </fieldset>

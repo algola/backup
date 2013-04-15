@@ -80,7 +80,7 @@ namespace PapiroMVC.Models
             //All properties of object
             //and pointer of sons
 
-            to.CodPrinterEstimatedOn = this.CodPrinterEstimatedOn;
+            to.CodTaskEstimatedOn = this.CodTaskEstimatedOn;
             to.taskexecutorestimatedon = this.taskexecutorestimatedon;
             to.TimeStampTable = this.TimeStampTable;
             to.ToUnit = this.ToUnit;

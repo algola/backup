@@ -129,6 +129,12 @@
   <data name="ControPinzaToolTip" xml:space="preserve">
     <value>Indica la contropinza in cm</value>
   </data>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
+  </data>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
   <data name="Dismissed" xml:space="preserve">
     <value>Dismessa</value>
   </data>
@@ -147,6 +153,12 @@
   <data name="FormatMinToolTip" xml:space="preserve">
     <value>Formato minimo della macchina</value>
   </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FormatValidationError" xml:space="preserve">
+    <value>formato non valido (es. valido: 70x100)</value>
+  </data>
   <data name="IsEstimatedOnMq" xml:space="preserve">
     <value>Costo in base ai Mq</value>
   </data>
@@ -154,13 +166,13 @@
     <value>Indica che il costo viene calcolato in base ai metri quadri del materiale lavorato</value>
   </data>
   <data name="IsEstimatedOnRun" xml:space="preserve">
-    <value>Costo in base alle Copie</value>
+    <value>Costo a Copie</value>
   </data>
   <data name="IsEstimatedOnRunToolTip" xml:space="preserve">
     <value>Indica che il costo viene calcolato in base alle copie</value>
   </data>
   <data name="IsEstimatedOnTime" xml:space="preserve">
-    <value>Costo in base al Tempo</value>
+    <value>Costo a Tempo</value>
   </data>
   <data name="IsEstimatedOnTimeToolTip" xml:space="preserve">
     <value>Indica che il costo viene calcolato in base al tempo</value>
@@ -177,6 +189,9 @@
   <data name="PinzaToolTip" xml:space="preserve">
     <value>Indica la pinza in cm</value>
   </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
+  </data>
   <data name="SetTaskExecutorEstimatedOn" xml:space="preserve">
     <value>xxxxxx</value>
   </data>
@@ -184,16 +199,22 @@
     <value>xxxxxx</value>
   </data>
   <data name="TaskExecutorName" xml:space="preserve">
-    <value>Versione</value>
+    <value>Nome macchina</value>
   </data>
   <data name="TaskExecutorNameToolTip" xml:space="preserve">
-    <value>Indica la versione della macchina</value>
+    <value>Nome della macchina o chi esegue una lavorazione</value>
   </data>
   <data name="TimeStampTable" xml:space="preserve">
     <value>xxxxxx</value>
   </data>
   <data name="TimeStampTableToolTip" xml:space="preserve">
     <value>xxxxxx</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Versione</value>
+  </data>
+  <data name="VersionToolTip" xml:space="preserve">
+    <value>Indica la versione della macchina</value>
   </data>
   <data name="WeightMax" xml:space="preserve">
     <value>Gr/mq massima</value>

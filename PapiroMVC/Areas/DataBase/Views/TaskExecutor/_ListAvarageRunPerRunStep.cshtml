@@ -1,0 +1,84 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskEstimatedOn
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    string url = Url.Action("AvarageRunPerRunStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn});
+    string editUrl = Url.Action("EditAvarageRunPerRunStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
+}
+
+<table id="gridAvarageRunPerRunStep"><tr><td/></tr></table> 
+<div id="pagerAvarageRunPerRunStep"></div> 
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var lastSel = -1;
+
+            var myGrid = $("#gridAvarageRunPerRunStep").jqGrid({
+                url: '@url',
+                editUrl: '@editUrl',
+                datatype: 'json',
+                colModel: [
+                    { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
+                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepAvarageRunPerRunStep },
+                    { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
+                    { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromRunCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                    { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToRunCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                    { name: 'AvarageRunPerHour', label: '@HttpContext.GetLocalResourceObject(strings, "AvarageRunPerHourCaption")', width: 100, align: 'right', editable: true }],
+
+                pager: '#pagerAvarageRunPerRunStep',
+                
+                rowNum: 15,
+                rowList: [15, 20, 50],
+                viewrecords: true,
+                autowidth: false,
+
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        myGrid.jqGrid('restoreRow', lastSel);
+                        lastSel = id;
+                    }
+                },
+
+                ondblClickRow: function (id, ri, ci) {
+                    myGrid.jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function(){
+                            $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
+                        },
+                        url: '@editUrl'
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                    return;
+                }
+
+            });
+
+            myGrid.jqGrid('navGrid', '#pagerAvarageRunPerRunStep', { edit: false, add: false, del: false, search: false });
+
+        });
+
+        function insFmatter(cellvalue, options, rowobject) {
+            if (cellvalue == 9999999999)
+                return '';
+            else
+                return cellvalue;
+        }
+
+        function delStepAvarageRunPerRunStep(cellvalue, options, rowobject) {
+            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadAvarageRunPerRunStep" })';
+            return link.replace("-1", cellvalue) 
+        }
+
+        function reloadAvarageRunPerRunStep() {
+            $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
+        }
+
+    </script>

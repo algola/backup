@@ -10,6 +10,8 @@ namespace Services
     {
         string GetNewCode(TaskExecutor c);
         TaskExecutor GetSingle(string cod);
+        TaskEstimatedOn GetSingleEstimatedOn(string cod);
+        Step GetSingleStep(int cod);
     }
 
 }

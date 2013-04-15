@@ -2,6 +2,7 @@
 using PapiroMVC.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +20,7 @@ namespace PapiroMVC.Models
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "TaskExecutorName")]
         [Tooltip(typeof(ResTaskExecutor), "TaskExecutorNameToolTip")]
+        [Required(ErrorMessageResourceType = typeof(ResTaskExecutor), ErrorMessageResourceName = "RequiredField")]
         public string TaskExecutorName { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "Version")]
@@ -31,10 +33,12 @@ namespace PapiroMVC.Models
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "FormatMin")]
         [Tooltip(typeof(ResTaskExecutor), "FormatMinToolTip")]
+        [RegularExpressionLocalizedAttribute(typeof(ResTaskExecutor),"FormatValidation","FormatValidationError")]     
         public string FormatMin { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "FormatMax")]
         [Tooltip(typeof(ResTaskExecutor), "FormatMaxToolTip")]
+        [RegularExpressionLocalizedAttribute(typeof(ResTaskExecutor), "FormatValidation", "FormatValidationError")]
         public string FormatMax { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "WeightMin")]

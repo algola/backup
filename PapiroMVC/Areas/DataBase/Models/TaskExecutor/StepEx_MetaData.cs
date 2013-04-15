@@ -12,9 +12,9 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResStep), "TimeStampTable")]
         [Tooltip(typeof(ResStep), "TimeStampTableToolTip")]
         public System.DateTime TimeStampTable { get; set; }
-        [DisplayNameLocalized(typeof(ResStep), "CodPrinterEstimatedOn")]
-        [Tooltip(typeof(ResStep), "CodPrinterEstimatedOnToolTip")]
-        public string CodPrinterEstimatedOn { get; set; }
+        [DisplayNameLocalized(typeof(ResStep), "CodTaskEstimatedOn")]
+        [Tooltip(typeof(ResStep), "CodTaskEstimatedOnToolTip")]
+        public string CodTaskEstimatedOn { get; set; }
         [DisplayNameLocalized(typeof(ResStep), "IdStep")]
         [Tooltip(typeof(ResStep), "IdStepToolTip")]
         public long IdStep { get; set; }

@@ -14,22 +14,22 @@ namespace PapiroMVC.Models
     
     public partial class BindingEstimatedOnRun : TaskEstimatedOn
     {
-        public Nullable<double> CostPerUnit4 { get; set; }
-        public Nullable<double> StartingCost4 { get; set; }
-        public Nullable<double> CostPerUnit6 { get; set; }
-        public Nullable<double> StartingCost6 { get; set; }
-        public Nullable<double> CostPerUnit8 { get; set; }
-        public Nullable<double> StartingCost8 { get; set; }
-        public Nullable<double> CostPerUnit12 { get; set; }
-        public Nullable<double> StartingCost12 { get; set; }
-        public Nullable<double> CostPerUnit16 { get; set; }
-        public Nullable<double> StartingCost16 { get; set; }
-        public Nullable<double> CostPerUnit24 { get; set; }
-        public Nullable<double> StartingCost24 { get; set; }
-        public Nullable<double> CostPerUnit32 { get; set; }
-        public Nullable<double> StartingCost32 { get; set; }
-        public Nullable<double> BindingCost { get; set; }
+        public string CostPerUnit4 { get; set; }
+        public string StartingCost4 { get; set; }
+        public string CostPerUnit6 { get; set; }
+        public string StartingCost6 { get; set; }
+        public string CostPerUnit8 { get; set; }
+        public string StartingCost8 { get; set; }
+        public string CostPerUnit12 { get; set; }
+        public string StartingCost12 { get; set; }
+        public string CostPerUnit16 { get; set; }
+        public string StartingCost16 { get; set; }
+        public string CostPerUnit24 { get; set; }
+        public string StartingCost24 { get; set; }
+        public string CostPerUnit32 { get; set; }
+        public string StartingCost32 { get; set; }
+        public string BindingCost { get; set; }
         public Nullable<bool> UseDifferentCostPerUnit { get; set; }
-        public Nullable<double> BindingStartingCost { get; set; }
+        public string BindingStartingCost { get; set; }
     }
 }

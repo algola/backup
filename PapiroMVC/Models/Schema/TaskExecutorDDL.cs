@@ -82,7 +82,7 @@ namespace PapiroMVC.Model
 
             dbS.AddTable("taskexecutorestimatedon");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskExecutor", SchemaDb.String, "50");
-            dbS.AddColumnToTable("taskexecutorestimatedon", "CodPrinterEstimatedOn", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskEstimatedOn", SchemaDb.StringPK, "50");
             dbS.AddForeignKey("taskexecutorestimatedon", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
             
             
@@ -149,7 +149,7 @@ namespace PapiroMVC.Model
 
 
             dbS.AddTable("Steps");
-            dbS.AddColumnToTable("Steps", "CodPrinterEstimatedOn", SchemaDb.String, "50");
+            dbS.AddColumnToTable("Steps", "CodTaskEstimatedOn", SchemaDb.String, "50");
             dbS.AddColumnToTable("Steps", "IdStep", SchemaDb.IntPK, "0");
             dbS.AddColumnToTable("Steps", "FromUnit", SchemaDb.Double, "0");
             dbS.AddColumnToTable("Steps", "ToUnit", SchemaDb.Double, "0");
@@ -199,7 +199,7 @@ namespace PapiroMVC.Model
 
 
             //FK
-            dbS.AddForeignKey("Steps", "CodPrinterEstimatedOn", "taskexecutorestimatedon", "CodPrinterEstimatedOn");
+            dbS.AddForeignKey("Steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");
 
         }
     }

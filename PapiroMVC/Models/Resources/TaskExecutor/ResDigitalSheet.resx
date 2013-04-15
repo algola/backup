@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
+  </data>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
   <data name="ProductionWaste" xml:space="preserve">
     <value>Scarto Produzione (%)</value>
   </data>
@@ -129,10 +135,13 @@
   <data name="ProofSheetFirstStartToolTip" xml:space="preserve">
     <value>Scarto del primo avviamento in fogli</value>
   </data>
-  <data name="ProofSheetSecondStart" xml:space="preserve">
+  <data name="ProofSheetSecondsStart" xml:space="preserve">
     <value>Scarto Avv. Successivi (Fg.)</value>
   </data>
-  <data name="ProofSheetSecondStartToolTip" xml:space="preserve">
+  <data name="ProofSheetSecondsStartToolTip" xml:space="preserve">
     <value>Scarto degli avviamenti successivi in fogli</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
   </data>
 </root>

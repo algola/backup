@@ -13,6 +13,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
     public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
+        
         //
         // GET: /CustomerSupplier/
         private readonly ICustomerSupplierRepository dataRepCS;
@@ -298,6 +299,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             //Load each type of base
             ViewBag.TypeOfBaseList = typeOfBaseRepository.GetAll();
+
             
             if (ModelState.IsValid)
             {
@@ -332,7 +334,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult EditBase(String id)
         {
             //Load each type of base
-            ViewBag.TypeOfBaseList = typeOfBaseRepository.GetAll();
+            ViewBag.TypeOfBaseList = typeOfBaseRepository.GetAll();            
             CustomerSupplierBase cs = customerSupplierBaseRepository.GetSingle(id);
             return View(cs);
         }

@@ -1,0 +1,78 @@
+﻿@model PapiroMVC.Models.DigitalSheet
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+}
+
+@using (Html.BeginForm("Action", "TaskExecutor"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>DigitalSheet</legend>
+
+            @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+            @Html.AlgolaEditorFor(model => model.Version)
+            
+            @Html.EditorFor(model => model.Dismissed)
+
+            @Html.AlgolaAutocompleteFor(model => model.FormatMin,"FormatMin","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.FormatMax,"FormatMax","TaskExecutor")
+            @Html.AlgolaEditorFor(model => model.WeightMin)
+            @Html.AlgolaEditorFor(model => model.WeightMax)
+ 
+            @Html.AlgolaEditorFor(model => model.Pinza)
+            @Html.AlgolaEditorFor(model => model.ControPinza)
+            @Html.AlgolaEditorFor(model => model.Laterale)
+
+            <h3>Stampa</h3>
+
+        <br />
+                
+            @Html.EditorFor(model => model.ColorSide1)
+            @Html.EditorFor(model => model.ColorSide2)
+            @Html.EditorFor(model => model.BWSide1)
+            @Html.EditorFor(model => model.BWSide2)
+
+        
+            @Html.AlgolaEditorFor(model => model.InkUsage)
+            @Html.AlgolaEditorFor(model => model.InkUsageForfait)
+
+            <h3>Scarti</h3> 
+        <br />
+
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart,"ProofSheetFirstStart","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart,"ProofSheetSecondsStart","TaskExecutor")
+
+            @Html.AlgolaAutocompleteFor(model => model.ProductionWaste,"ProductionWaste","TaskExecutor")
+
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodTaskExecutor)
+        
+            @Html.HiddenFor(model => model.IsEstimatedOnTime)
+            @Html.HiddenFor(model => model.IsEstimatedOnRun)
+            @Html.HiddenFor(model => model.IsEstimatedOnMq)
+        
+
+    </fieldset>
+
+    <p>
+        <!-- ViewBag.ActionMethod is used to understand where we are coming and so where we have to go -->
+        <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        
+        @if (ViewBag.ActionMethod != "CreateDigitalSheet")               
+        {
+            <input type="submit" name="CreateDigitalSheet"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+        }
+    </p>
+    
+}
+<div>
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

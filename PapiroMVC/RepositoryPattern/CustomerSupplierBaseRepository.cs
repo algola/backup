@@ -6,8 +6,7 @@ namespace Services
     public class CustomerSupplierBaseRepository : GenericRepository<dbEntities, CustomerSupplierBase>, ICustomerSupplierBaseRepository
     {
 
-
-        public IQueryable<CustomerSupplierBase> GetAll(string codCustomerSupplier)
+       public IQueryable<CustomerSupplierBase> GetAll(string codCustomerSupplier)
         {
             return Context.customersupplierbases.Include("typeofbase").Where(o => o.CodCustomerSupplier == codCustomerSupplier);
         }

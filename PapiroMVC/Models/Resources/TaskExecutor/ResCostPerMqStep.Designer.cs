@@ -61,7 +61,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to costo a Mq.
         /// </summary>
         public static string CostPerUnit {
             get {

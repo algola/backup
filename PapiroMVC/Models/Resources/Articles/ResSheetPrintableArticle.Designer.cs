@@ -70,7 +70,7 @@ namespace PapiroMVC.Models.Resources.Articles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        ///   Looks up a localized string similar to formato valuta non valido (es. valido: 0,8756).
         /// </summary>
         public static string CurrencyValidationError {
             get {
@@ -84,6 +84,24 @@ namespace PapiroMVC.Models.Resources.Articles {
         public static string Format {
             get {
                 return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$.
+        /// </summary>
+        public static string FormatValidation {
+            get {
+                return ResourceManager.GetString("FormatValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to formato carta non valido (es. valido: 70x100).
+        /// </summary>
+        public static string FormatValidationError {
+            get {
+                return ResourceManager.GetString("FormatValidationError", resourceCulture);
             }
         }
         

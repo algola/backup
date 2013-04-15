@@ -8,6 +8,29 @@ namespace Services
 {
     public class TypeOfBaseRepository : GenericRepository<dbEntities, TypeOfBase>, ITypeOfBaseRepository
     {
+        public IQueryable<TypeOfBase> GetAll()
+        {
+            var c = Context.typeofbase;
+
+            var tbCode = new String[3]; 
+            tbCode[0] = "0001";
+            tbCode[1] = "0002";
+            tbCode[2] = "0003";
+
+            foreach (var item in tbCode)
+	        {
+                var trv = c.FirstOrDefault(x => x.CodTypeOfBase == item);
+
+                if (trv==null)
+                {
+                    Context.typeofbase.Add(new TypeOfBase { CodTypeOfBase = item, TimeStampTable = DateTime.Now });
+                }
+
+                Context.SaveChanges();
+	        }
+            
+            return Context.typeofbase;
+        }
 
         public IQueryable<TypeOfBase> GetAll(string codTypeOfBase)
         {

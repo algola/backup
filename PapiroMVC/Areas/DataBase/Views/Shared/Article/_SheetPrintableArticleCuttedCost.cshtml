@@ -1,0 +1,15 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.SheetPrintableArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleCuttedCostTitle");
+}
+
+<h3>@ViewBag.Title</h3>
+
+    <fieldset>
+        <legend>SheetPrintableArticleCuttedCost</legend>
+
+
+    </fieldset>

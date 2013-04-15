@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BindingCost" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>costo allestimento</value>
   </data>
   <data name="CostPerUnit12" xml:space="preserve">
     <value>xxxxxx</value>
@@ -140,6 +140,15 @@
   </data>
   <data name="CostPerUnit8" xml:space="preserve">
     <value>xxxxxx</value>
+  </data>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
+  </data>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
   </data>
   <data name="StartingCost12" xml:space="preserve">
     <value>xxxxxx</value>

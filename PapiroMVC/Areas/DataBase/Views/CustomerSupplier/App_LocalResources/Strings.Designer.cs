@@ -79,6 +79,33 @@ namespace PapiroMVC.Areas.DataBase.Views.CustomerSupplier.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sede Principale.
+        /// </summary>
+        public static string BaseName0001 {
+            get {
+                return ResourceManager.GetString("BaseName0001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Destinazione.
+        /// </summary>
+        public static string BaseName0002 {
+            get {
+                return ResourceManager.GetString("BaseName0002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Magazzeno.
+        /// </summary>
+        public static string BaseName0003 {
+            get {
+                return ResourceManager.GetString("BaseName0003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sedi.
         /// </summary>
         public static string Bases {

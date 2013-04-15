@@ -61,6 +61,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Consumo inchiostro gr/mq.
         /// </summary>
         public static string InkUsage {
@@ -93,6 +111,15 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         public static string InkUsageToolTip {
             get {
                 return ResourceManager.GetString("InkUsageToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }

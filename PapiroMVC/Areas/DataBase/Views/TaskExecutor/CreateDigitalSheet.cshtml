@@ -1,0 +1,10 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.DigitalSheet
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheetTitle");
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreateDigitalSheet", Model)

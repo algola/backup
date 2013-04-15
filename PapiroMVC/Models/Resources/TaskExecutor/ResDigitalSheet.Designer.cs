@@ -61,6 +61,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scarto Produzione (%).
         /// </summary>
         public static string ProductionWaste {
@@ -99,18 +117,27 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         /// <summary>
         ///   Looks up a localized string similar to Scarto Avv. Successivi (Fg.).
         /// </summary>
-        public static string ProofSheetSecondStart {
+        public static string ProofSheetSecondsStart {
             get {
-                return ResourceManager.GetString("ProofSheetSecondStart", resourceCulture);
+                return ResourceManager.GetString("ProofSheetSecondsStart", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Scarto degli avviamenti successivi in fogli.
         /// </summary>
-        public static string ProofSheetSecondStartToolTip {
+        public static string ProofSheetSecondsStartToolTip {
             get {
-                return ResourceManager.GetString("ProofSheetSecondStartToolTip", resourceCulture);
+                return ResourceManager.GetString("ProofSheetSecondsStartToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }

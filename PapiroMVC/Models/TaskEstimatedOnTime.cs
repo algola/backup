@@ -19,8 +19,8 @@ namespace PapiroMVC.Models
         public Nullable<System.TimeSpan> StartingTime1 { get; set; }
         public Nullable<System.TimeSpan> StartingTime2 { get; set; }
         public Nullable<System.TimeSpan> TimeForfait { get; set; }
-        public Nullable<double> CostPerHourRunning { get; set; }
-        public Nullable<double> CostPerHourStarting { get; set; }
+        public string CostPerHourRunning { get; set; }
+        public string CostPerHourStarting { get; set; }
         public Nullable<bool> UseDifferentDeficitForWeightStep { get; set; }
     }
 }

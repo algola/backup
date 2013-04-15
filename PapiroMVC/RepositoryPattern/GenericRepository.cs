@@ -115,7 +115,16 @@ namespace Services
 
         public virtual void Save()
         {
-            this.Context.SaveChanges();
+            try
+            {
+                this.Context.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                var valErr=this.Context.GetValidationErrors();
+                Console.WriteLine(e.Message);
+                Console.WriteLine(valErr);
+            }
         }
     }
 }

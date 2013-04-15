@@ -34,6 +34,10 @@
             <End Role="typeofbase" EntitySet="typeofbase" />
             <End Role="customersupplierbases" EntitySet="customersupplierbases" />
           </AssociationSet>
+          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.Store.FK_Steps_CodPrinterEstimatedOn">
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+            <End Role="steps" EntitySet="steps" />
+          </AssociationSet>
           <AssociationSet Name="FK_taskexecutorestimatedon_CodTaskExecutor" Association="dbModel.Store.FK_taskexecutorestimatedon_CodTaskExecutor">
             <End Role="taskexecutors" EntitySet="taskexecutors" />
             <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
@@ -131,7 +135,7 @@
             <PropertyRef Name="IdStep" />
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
-          <Property Name="CodPrinterEstimatedOn" Type="char" MaxLength="50" />
+          <Property Name="CodTaskEstimatedOn" Type="char" MaxLength="50" />
           <Property Name="IdStep" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="FromUnit" Type="double" />
           <Property Name="ToUnit" Type="double" />
@@ -173,11 +177,11 @@
         </EntityType>
         <EntityType Name="taskexecutorestimatedon">
           <Key>
-            <PropertyRef Name="CodPrinterEstimatedOn" />
+            <PropertyRef Name="CodTaskEstimatedOn" />
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Nullable="false" Precision="0" />
           <Property Name="CodTaskExecutor" Type="char" MaxLength="50" />
-          <Property Name="CodPrinterEstimatedOn" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="CodTaskEstimatedOn" Type="char" Nullable="false" MaxLength="50" />
           <Property Name="SelectorUnitTime" Type="int" />
           <Property Name="SelectorMqRun" Type="int" />
           <Property Name="AvarageRunPerHour" Type="uint" />
@@ -186,8 +190,8 @@
           <Property Name="StartingTime1" Type="time" />
           <Property Name="StartingTime2" Type="time" />
           <Property Name="TimeForfait" Type="time" />
-          <Property Name="CostPerHourRunning" Type="double" />
-          <Property Name="CostPerHourStarting" Type="double" />
+          <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
+          <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
           <Property Name="AvarageRunPerHour4" Type="uint" />
           <Property Name="StartingTime4" Type="time" />
           <Property Name="AvarageRunPerHour6" Type="uint" />
@@ -204,29 +208,29 @@
           <Property Name="StartingTime32" Type="time" />
           <Property Name="AvarageRunPerHourBinding" Type="uint" />
           <Property Name="StartingTimeBinding" Type="time" />
-          <Property Name="CostPerUnit" Type="double" />
+          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
           <Property Name="UseDifferentCostPerUnit" Type="bit" />
           <Property Name="UseDifferentDeficitOnCostForWeightStep" Type="bit" />
-          <Property Name="StartingCost1" Type="double" />
-          <Property Name="StartingCost2" Type="double" />
-          <Property Name="CostForfait" Type="double" />
-          <Property Name="CostForfaitForSheet" Type="double" />
-          <Property Name="CostPerUnit4" Type="double" />
-          <Property Name="StartingCost4" Type="double" />
-          <Property Name="CostPerUnit6" Type="double" />
-          <Property Name="StartingCost6" Type="double" />
-          <Property Name="CostPerUnit8" Type="double" />
-          <Property Name="StartingCost8" Type="double" />
-          <Property Name="CostPerUnit12" Type="double" />
-          <Property Name="StartingCost12" Type="double" />
-          <Property Name="CostPerUnit16" Type="double" />
-          <Property Name="StartingCost16" Type="double" />
-          <Property Name="CostPerUnit24" Type="double" />
-          <Property Name="StartingCost24" Type="double" />
-          <Property Name="CostPerUnit32" Type="double" />
-          <Property Name="StartingCost32" Type="double" />
-          <Property Name="BindingCost" Type="double" />
-          <Property Name="BindingStartingCost" Type="double" />
+          <Property Name="StartingCost1" Type="char" MaxLength="20" />
+          <Property Name="StartingCost2" Type="char" MaxLength="20" />
+          <Property Name="CostForfait" Type="char" MaxLength="20" />
+          <Property Name="CostForfaitForSheet" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit4" Type="char" MaxLength="20" />
+          <Property Name="StartingCost4" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit6" Type="char" MaxLength="20" />
+          <Property Name="StartingCost6" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit8" Type="char" MaxLength="20" />
+          <Property Name="StartingCost8" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit12" Type="char" MaxLength="20" />
+          <Property Name="StartingCost12" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit16" Type="char" MaxLength="20" />
+          <Property Name="StartingCost16" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit24" Type="char" MaxLength="20" />
+          <Property Name="StartingCost24" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit32" Type="char" MaxLength="20" />
+          <Property Name="StartingCost32" Type="char" MaxLength="20" />
+          <Property Name="BindingCost" Type="char" MaxLength="20" />
+          <Property Name="BindingStartingCost" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
@@ -343,6 +347,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Steps_CodPrinterEstimatedOn">
+          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="steps" Type="dbModel.Store.steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutorestimatedon">
+              <PropertyRef Name="CodTaskEstimatedOn" />
+            </Principal>
+            <Dependent Role="steps">
+              <PropertyRef Name="CodTaskEstimatedOn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_taskexecutorestimatedon_CodTaskExecutor">
           <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -370,13 +388,13 @@
         <EntityContainer Name="dbEntities" annotation:LazyLoadingEnabled="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
           <EntitySet Name="taskexecutors" EntityType="dbModel.TaskExecutor" />
           <EntitySet Name="taskexecutorestimatedon" EntityType="dbModel.TaskEstimatedOn" />
-          <AssociationSet Name="FK_PrinterEstimatedOn_CodTaskExecutor" Association="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor">
+          <AssociationSet Name="FK_TaskEstimatedOn_CodTaskExecutor" Association="dbModel.FK_TaskEstimatedOn_CodTaskExecutor">
             <End Role="TaskExecutor" EntitySet="taskexecutors" />
             <End Role="TaskEstimatedOn" EntitySet="taskexecutorestimatedon" />
           </AssociationSet>
           <EntitySet Name="steps" EntityType="dbModel.Step" />
-          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.FK_Steps_CodPrinterEstimatedOn">
-            <End Role="PrinterEstimatedOn" EntitySet="taskexecutorestimatedon" />
+          <AssociationSet Name="FK_Steps_CodTaskEstimatedOn" Association="dbModel.FK_Steps_CodTaskEstimatedOn">
+            <End Role="TaskEstimatedOn" EntitySet="taskexecutorestimatedon" />
             <End Role="steps" EntitySet="steps" />
           </AssociationSet>
           <EntitySet Name="articlecost" EntityType="dbModel.ArticleCost" />
@@ -421,7 +439,7 @@
           <Property Name="Pinza" Type="Double" />
           <Property Name="ControPinza" Type="Double" />
           <Property Name="Laterale" Type="Double" />
-          <NavigationProperty Name="SetTaskExecutorEstimatedOn" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
+          <NavigationProperty Name="SetTaskExecutorEstimatedOn" Relationship="dbModel.FK_TaskEstimatedOn_CodTaskExecutor" FromRole="TaskExecutor" ToRole="TaskEstimatedOn" />
           <Property Type="Boolean" Name="IsEstimatedOnTime" />
           <Property Type="Boolean" Name="IsEstimatedOnRun" />
           <Property Type="Boolean" Name="IsEstimatedOnMq" />
@@ -465,12 +483,12 @@
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
           <Property Type="String" Name="CodTaskExecutor" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="CodTaskExecutorOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
-          <Property Type="Double" Name="CostForfait" />
-          <Property Type="Double" Name="CostForfaitForSheet" />
-          <NavigationProperty Name="taskexecutors" Relationship="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
-          <NavigationProperty Name="steps" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="PrinterEstimatedOn" ToRole="steps" />
+          <Property Type="String" Name="CostForfait" />
+          <Property Type="String" Name="CostForfaitForSheet" />
+          <NavigationProperty Name="taskexecutors" Relationship="dbModel.FK_TaskEstimatedOn_CodTaskExecutor" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
+          <NavigationProperty Name="steps" Relationship="dbModel.FK_Steps_CodTaskEstimatedOn" FromRole="TaskEstimatedOn" ToRole="steps" />
         </EntityType>
-        <Association Name="FK_PrinterEstimatedOn_CodTaskExecutor">
+        <Association Name="FK_TaskEstimatedOn_CodTaskExecutor">
           <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1" />
           <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="*" />
           <ReferentialConstraint>
@@ -488,15 +506,15 @@
           <Property Type="Time" Name="StartingTime1" Precision="0" />
           <Property Type="Time" Name="StartingTime2" Precision="0" />
           <Property Type="Time" Name="TimeForfait" Precision="0" />
-          <Property Type="Double" Name="CostPerHourRunning" />
-          <Property Type="Double" Name="CostPerHourStarting" />
+          <Property Type="String" Name="CostPerHourRunning" />
+          <Property Type="String" Name="CostPerHourStarting" />
           <Property Type="Boolean" Name="UseDifferentDeficitForWeightStep" />
         </EntityType>
         <EntityType Name="TaskEstimatedOnUnit" BaseType="dbModel.TaskEstimatedOn" Abstract="true">
-          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="String" Name="CostPerUnit" />
           <Property Type="Boolean" Name="UseDifferentCostPerUnit" />
-          <Property Type="Double" Name="StartingCost1" />
-          <Property Type="Double" Name="StartingCost2" />
+          <Property Type="String" Name="StartingCost1" />
+          <Property Type="String" Name="StartingCost2" />
           <Property Type="Boolean" Name="UseDifferentDeficitOnCostForWeightStep" />
         </EntityType>
         <EntityType Name="TaskEstimatedOnRun" BaseType="dbModel.TaskEstimatedOnUnit">
@@ -508,21 +526,21 @@
             <PropertyRef Name="IdStep" />
           </Key>
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
-          <Property Type="String" Name="CodPrinterEstimatedOn" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodTaskEstimatedOn" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="Int64" Name="IdStep" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
-          <NavigationProperty Name="taskexecutorestimatedon" Relationship="dbModel.FK_Steps_CodPrinterEstimatedOn" FromRole="steps" ToRole="PrinterEstimatedOn" />
+          <NavigationProperty Name="taskexecutorestimatedon" Relationship="dbModel.FK_Steps_CodTaskEstimatedOn" FromRole="steps" ToRole="TaskEstimatedOn" />
           <Property Type="Double" Name="FromUnit" />
           <Property Type="Double" Name="ToUnit" />
         </EntityType>
-        <Association Name="FK_Steps_CodPrinterEstimatedOn">
-          <End Type="dbModel.TaskEstimatedOn" Role="PrinterEstimatedOn" Multiplicity="0..1" />
+        <Association Name="FK_Steps_CodTaskEstimatedOn">
+          <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="0..1" />
           <End Type="dbModel.Step" Role="steps" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="PrinterEstimatedOn">
+            <Principal Role="TaskEstimatedOn">
               <PropertyRef Name="CodTaskExecutorOn" />
             </Principal>
             <Dependent Role="steps">
-              <PropertyRef Name="CodPrinterEstimatedOn" />
+              <PropertyRef Name="CodTaskEstimatedOn" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -735,27 +753,27 @@
           <Property Type="Time" Name="StartingTime32" Precision="0" />
           <Property Type="Int64" Name="AvarageRunPerHourBinding" />
           <Property Type="Time" Name="StartingTimeBinding" Precision="0" />
-          <Property Type="Double" Name="CostPerHourRunning" />
-          <Property Type="Double" Name="CostPerHourStarting" />
+          <Property Type="String" Name="CostPerHourRunning" />
+          <Property Type="String" Name="CostPerHourStarting" />
         </EntityType>
         <EntityType Name="BindingEstimatedOnRun" BaseType="dbModel.TaskEstimatedOn">
-          <Property Type="Double" Name="CostPerUnit4" />
-          <Property Type="Double" Name="StartingCost4" />
-          <Property Type="Double" Name="CostPerUnit6" />
-          <Property Type="Double" Name="StartingCost6" />
-          <Property Type="Double" Name="CostPerUnit8" />
-          <Property Type="Double" Name="StartingCost8" />
-          <Property Type="Double" Name="CostPerUnit12" />
-          <Property Type="Double" Name="StartingCost12" />
-          <Property Type="Double" Name="CostPerUnit16" />
-          <Property Type="Double" Name="StartingCost16" />
-          <Property Type="Double" Name="CostPerUnit24" />
-          <Property Type="Double" Name="StartingCost24" />
-          <Property Type="Double" Name="CostPerUnit32" />
-          <Property Type="Double" Name="StartingCost32" />
-          <Property Type="Double" Name="BindingCost" />
+          <Property Type="String" Name="CostPerUnit4" />
+          <Property Type="String" Name="StartingCost4" />
+          <Property Type="String" Name="CostPerUnit6" />
+          <Property Type="String" Name="StartingCost6" />
+          <Property Type="String" Name="CostPerUnit8" />
+          <Property Type="String" Name="StartingCost8" />
+          <Property Type="String" Name="CostPerUnit12" />
+          <Property Type="String" Name="StartingCost12" />
+          <Property Type="String" Name="CostPerUnit16" />
+          <Property Type="String" Name="StartingCost16" />
+          <Property Type="String" Name="CostPerUnit24" />
+          <Property Type="String" Name="StartingCost24" />
+          <Property Type="String" Name="CostPerUnit32" />
+          <Property Type="String" Name="StartingCost32" />
+          <Property Type="String" Name="BindingCost" />
           <Property Type="Boolean" Name="UseDifferentCostPerUnit" />
-          <Property Type="Double" Name="BindingStartingCost" />
+          <Property Type="String" Name="BindingStartingCost" />
         </EntityType>
         <EntityType Name="BindingAvarageRunPerRunStep" BaseType="dbModel.Step">
           <Property Type="Int64" Name="AvarageRunPerHour4" />
@@ -927,7 +945,7 @@
           <EntitySetMapping Name="taskexecutorestimatedon">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="CostForfaitForSheet" ColumnName="CostForfaitForSheet" />
                 <ScalarProperty Name="CostForfait" ColumnName="CostForfait" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
@@ -937,7 +955,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
                 <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
                 <ScalarProperty Name="TimeForfait" ColumnName="TimeForfait" />
@@ -951,7 +969,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnUnit)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStep" ColumnName="UseDifferentDeficitOnCostForWeightStep" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="StartingCost2" ColumnName="StartingCost2" />
                 <ScalarProperty Name="StartingCost1" ColumnName="StartingCost1" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
@@ -961,19 +979,19 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnRun)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
                 <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
                 <ScalarProperty Name="StartingTime32" ColumnName="StartingTime32" />
@@ -999,7 +1017,7 @@
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="BindingStartingCost" ColumnName="BindingStartingCost" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="BindingCost" ColumnName="BindingCost" />
                 <ScalarProperty Name="StartingCost32" ColumnName="StartingCost32" />
                 <ScalarProperty Name="CostPerUnit32" ColumnName="CostPerUnit32" />
@@ -1025,7 +1043,7 @@
                 <ScalarProperty Name="ToUnit" ColumnName="ToUnit" />
                 <ScalarProperty Name="FromUnit" ColumnName="FromUnit" />
                 <ScalarProperty Name="IdStep" ColumnName="IdStep" />
-                <ScalarProperty Name="CodPrinterEstimatedOn" ColumnName="CodPrinterEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1391,7 +1409,7 @@
           <ConnectorPoint PointX="1.875" PointY="8" />
         </InheritanceConnector>
         <EntityTypeShape EntityType="dbModel.TaskEstimatedOn" Width="2.5" PointX="10.25" PointY="1.625" Height="2.3648893229166661" />
-        <AssociationConnector Association="dbModel.FK_PrinterEstimatedOn_CodTaskExecutor">
+        <AssociationConnector Association="dbModel.FK_TaskEstimatedOn_CodTaskExecutor">
           <ConnectorPoint PointX="4.75" PointY="2.8074446614583328" />
           <ConnectorPoint PointX="10.25" PointY="2.8074446614583328" />
         </AssociationConnector>
@@ -1645,7 +1663,7 @@
         <InheritanceConnector EntityType="dbModel.DeficitOnCostForWeightStep" />
         <InheritanceConnector EntityType="dbModel.BindingAvarageRunPerRunStep" />
         <InheritanceConnector EntityType="dbModel.BindingCostPerRunStep" />
-        <AssociationConnector Association="dbModel.FK_Steps_CodPrinterEstimatedOn" />
+        <AssociationConnector Association="dbModel.FK_Steps_CodTaskEstimatedOn" />
         </Diagram>
     </Diagrams>
   </Designer>

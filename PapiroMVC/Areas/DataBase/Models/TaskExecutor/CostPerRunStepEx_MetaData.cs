@@ -9,6 +9,8 @@ namespace PapiroMVC.Models
 {
     public partial class CostPerRunStep_MetaData : Step_MetaData
     {
+
+        [RegularExpressionLocalized(typeof(ResTaskEstimatedOn), "CurrencyValidation", "CurrencyValidationError")]
         [DisplayNameLocalized(typeof(ResCostPerRunStep), "CostPerUnit")]
         public Nullable<double> CostPerUnit { get; set; }
     }

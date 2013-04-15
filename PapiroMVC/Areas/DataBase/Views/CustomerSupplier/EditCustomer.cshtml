@@ -7,30 +7,7 @@
 }
 
 <h2>@ViewBag.Title</h2>
+<br />
 
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
+@Html.Partial("_EditAndCreateCustomer", Model)
 
-    <fieldset>
-        <legend>Customer</legend>
-
-            @Html.HiddenFor(model => model.TimeStampTable)
-            @Html.HiddenFor(model => model.CodCustomerSupplier)
-            @Html.AlgolaEditorFor(model => model.BusinessName)
-            @Html.AlgolaEditorFor(model => model.VatNumber)
-            @Html.AlgolaEditorFor(model => model.TaxCode)
-            @Html.AlgolaEditorFor(model => model.Outdated)
-
-        <p>
-            <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
-        </p>
-    </fieldset>
-}
-
-<div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

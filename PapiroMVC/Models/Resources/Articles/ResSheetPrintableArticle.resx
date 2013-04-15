@@ -121,10 +121,16 @@
     <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
   </data>
   <data name="CurrencyValidationError" xml:space="preserve">
-    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+    <value>formato valuta non valido (es. valido: 0,8756)</value>
   </data>
   <data name="Format" xml:space="preserve">
     <value>Fomato (cm x cm)</value>
+  </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FormatValidationError" xml:space="preserve">
+    <value>formato carta non valido (es. valido: 70x100)</value>
   </data>
   <data name="NoPinza" xml:space="preserve">
     <value>No pinza</value>

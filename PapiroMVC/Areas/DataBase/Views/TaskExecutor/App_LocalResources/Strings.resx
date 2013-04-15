@@ -117,19 +117,136 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AvarageRunPerHourCaption" xml:space="preserve">
+    <value>media oraria</value>
+  </data>
+  <data name="AvarageRunPerRunLabel" xml:space="preserve">
+    <value>Medie Orarie</value>
+  </data>
+  <data name="AvarageRunPerRunStepGridCaption" xml:space="preserve">
+    <value>Scaglioni medie orarie</value>
+  </data>
+  <data name="BWSide1" xml:space="preserve">
+    <value>BN Fronte</value>
+  </data>
+  <data name="BWSide2" xml:space="preserve">
+    <value>BN Retro</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Anulla</value>
   </data>
+  <data name="CodExecutorCaption" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="ColorSide1" xml:space="preserve">
+    <value>Col. Fronte</value>
+  </data>
+  <data name="ColorSide2" xml:space="preserve">
+    <value>Col. Retro</value>
+  </data>
+  <data name="CostPerUnitCaption" xml:space="preserve">
+    <value>Costo copia</value>
+  </data>
+  <data name="CostPerUnitLabel" xml:space="preserve">
+    <value>Costi a copia</value>
+  </data>
+  <data name="Costs" xml:space="preserve">
+    <value>Costi</value>
+  </data>
+  <data name="CostsLabel" xml:space="preserve">
+    <value>Costi</value>
+  </data>
   <data name="CreateDigitalSheet" xml:space="preserve">
+    <value>Nuova Digitale a foglio</value>
+  </data>
+  <data name="CreateDigitalSheetTitle" xml:space="preserve">
     <value>Nuova Digitale a foglio</value>
   </data>
   <data name="CreateLithoSheet" xml:space="preserve">
     <value>Nuova Offset a foglio</value>
   </data>
+  <data name="CreateLithoSheetTitle" xml:space="preserve">
+    <value>Nuova Offset a foglio</value>
+  </data>
+  <data name="DeficitRateCaption" xml:space="preserve">
+    <value>% deficit</value>
+  </data>
+  <data name="DelCaption" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeletingStep" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DigitalSheetGridCaption" xml:space="preserve">
+    <value>Macchine digitali a foglio</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>modifica</value>
   </data>
+  <data name="EditingDigitalSheetTitle" xml:space="preserve">
+    <value>Modifica della macchina digitale</value>
+  </data>
   <data name="EditingLithoSheetTitle" xml:space="preserve">
     <value>Modifica della macchina</value>
+  </data>
+  <data name="FormatMaxCaption" xml:space="preserve">
+    <value>Formato Massimo</value>
+  </data>
+  <data name="FromRunCaption" xml:space="preserve">
+    <value>da copie</value>
+  </data>
+  <data name="FromWeightCaption" xml:space="preserve">
+    <value>da Gr/mq</value>
+  </data>
+  <data name="IdStepCaption" xml:space="preserve">
+    <value>Id Step</value>
+  </data>
+  <data name="LithoSheetGridCaption" xml:space="preserve">
+    <value>Macchine offset a foglio</value>
+  </data>
+  <data name="OnMqNewCostCaption" xml:space="preserve">
+    <value>Costo al Mq</value>
+  </data>
+  <data name="OnRunNewCostCaption" xml:space="preserve">
+    <value>Costo a copie</value>
+  </data>
+  <data name="OnTimeNewCostCaption" xml:space="preserve">
+    <value>Costo a tempo</value>
+  </data>
+  <data name="OperationsCaption" xml:space="preserve">
+    <value>Operazioni</value>
+  </data>
+  <data name="PrintingUnitCaption" xml:space="preserve">
+    <value>Castelli</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="SaveNewBasedOn" xml:space="preserve">
+    <value>Salva come nuova</value>
+  </data>
+  <data name="SheetwiseAfterPrintingUnitCaption" xml:space="preserve">
+    <value>Castelli Reversibili</value>
+  </data>
+  <data name="StartingLabel" xml:space="preserve">
+    <value>Avviamenti</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="TaskEstimatedOnTime" xml:space="preserve">
+    <value>Costo bastato sui tempi di produzione</value>
+  </data>
+  <data name="TaskExecutorNameCaption" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="TitleDigitalSheetIndex" xml:space="preserve">
+    <value>Elenco macchine digitali a foglio</value>
+  </data>
+  <data name="ToRunCaption" xml:space="preserve">
+    <value>a copie</value>
+  </data>
+  <data name="ToWeightCaption" xml:space="preserve">
+    <value>a Gr/mq</value>
   </data>
 </root>

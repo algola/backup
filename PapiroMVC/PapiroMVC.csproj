@@ -225,6 +225,7 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
     <Compile Include="Models\MenuMvc.cs" />
     <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
       <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
@@ -310,31 +311,31 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplier.Designer.cs">
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomerSupplier.Designer.cs">
       <DependentUpon>ResCustomerSupplier.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplierBase.Designer.cs">
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomerSupplierBase.Designer.cs">
       <DependentUpon>ResCustomerSupplierBase.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomer.Designer.cs">
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomer.Designer.cs">
       <DependentUpon>ResCustomer.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResSupplier.Designer.cs">
+    <Compile Include="Models\Resources\CustomerSupplier\ResSupplier.Designer.cs">
       <DependentUpon>ResSupplier.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\Resources\CustomerSupplierVuoto.Designer.cs">
+    <Compile Include="Models\Resources\CustomerSupplier\CustomerSupplierVuoto.Designer.cs">
       <DependentUpon>CustomerSupplierVuoto.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -489,6 +490,7 @@
     <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
     <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
+    <Compile Include="Validation\DecimalModelBinder.cs" />
     <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
     <Compile Include="Validation\Registration.en-us.Designer.cs">
       <DependentUpon>Registration.en-us.resx</DependentUpon>
@@ -893,36 +895,51 @@
     <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Account\Views\Shared\_footer.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\Index.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\Copy of Index.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_ListBase.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_ListSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleCuttedCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePakedCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePalletCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\CreateRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleCuttedCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\WizardRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\WizardSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_ListRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_ListCommonScript.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleAutoChanges.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_DataProcessedCorrectly.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_ListSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_SheetPrintableArticleCuttedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_SheetPrintableArticlePakedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_SheetPrintableArticlePalletCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\CreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_RollPrintableArticleCuttedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_RollPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_EditAndCreateSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_EditAndCreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\WizardRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\WizardSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_ListRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_ListCommonScript.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_RollPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_DataProcessedCorrectly.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\IndexLithoSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\IndexSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\IndexRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\_SheetPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\IndexSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\IndexRollPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\IndexDigitalSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\edit Sheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateDigitalSheet.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskExecutorNewCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnTime.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListAvarageRunPerRunStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitForWeightStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnRun.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitOnCostForWeightStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerMqStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnMq.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateCustomer.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditBase.cshtml" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\FTP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -1026,25 +1043,24 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\EditRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\EditSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\CreateSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\EditRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\EditSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\Index.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateBase.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateBase.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\IndexBase.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateCustomer.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateSupplier.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\EditCustomer.cshtml" />
-    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditSupplier.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_List.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_Customer.cshtml" />
     <Content Include="Views\Order\Order.cshtml" />
     <Content Include="Views\Order\SelectCustomerOrder.cshtml" />
     <Content Include="Views\Order\_DisplayCustomer.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx" />
-    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.en-us.resx" />
-    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\App_LocalResources\Strings.en-us.resx" />
+    <Content Include="Areas\DataBase\Views\Shared\Article\App_LocalResources\Strings.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.en-us.resx" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx" />
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
@@ -1269,35 +1285,40 @@
       <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplier.resx">
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomerSupplier.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResCustomerSupplier.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomerSupplierBase.resx">
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomerSupplierBase.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResCustomerSupplierBase.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResCustomer.resx">
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomer.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResCustomer.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\ResSupplier.resx">
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResSupplier.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResSupplier.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Areas\DataBase\Models\CustomerSupplier\Resources\CustomerSupplierVuoto.resx">
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\CustomerSupplierVuoto.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerSupplierVuoto.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1334,9 +1355,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
-    <Folder Include="Areas\DataBase\Models\TaskExecutor\Resources\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
-    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

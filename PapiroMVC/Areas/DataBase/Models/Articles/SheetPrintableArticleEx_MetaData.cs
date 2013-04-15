@@ -10,7 +10,9 @@ namespace PapiroMVC.Models
 {
     public class SheetPrintableArticle_MetaData : Printable_MetaData
     {
-        [Required(ErrorMessageResourceType = typeof(ResSheetPrintableArticle), ErrorMessageResourceName = "RequiredField"), DisplayNameLocalized(typeof(ResSheetPrintableArticle), "Format")]
+        [Required(ErrorMessageResourceType = typeof(ResSheetPrintableArticle), ErrorMessageResourceName = "RequiredField"), 
+        DisplayNameLocalized(typeof(ResSheetPrintableArticle), "Format"),
+        RegularExpressionLocalizedAttribute(typeof(ResSheetPrintableArticle),"FormatValidation","FormatValidationError")]        
         public string Format { get; set; }
         [DisplayNameLocalized(typeof(ResSheetPrintableArticle), "NoPinza")]
         public Nullable<bool> NoPinza { get; set; }

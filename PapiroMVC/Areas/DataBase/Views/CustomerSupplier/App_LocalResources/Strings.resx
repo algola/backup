@@ -123,6 +123,15 @@
   <data name="BackToCustomerSupplierList" xml:space="preserve">
     <value>Torna alla lista Clienti/Fornitori</value>
   </data>
+  <data name="BaseName0001" xml:space="preserve">
+    <value>Sede Principale</value>
+  </data>
+  <data name="BaseName0002" xml:space="preserve">
+    <value>Destinazione</value>
+  </data>
+  <data name="BaseName0003" xml:space="preserve">
+    <value>Magazzeno</value>
+  </data>
   <data name="Bases" xml:space="preserve">
     <value>Sedi</value>
   </data>

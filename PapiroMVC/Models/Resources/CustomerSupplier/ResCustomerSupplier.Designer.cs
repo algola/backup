@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PapiroMVC.Validation {
+namespace PapiroMVC.Models.Resources.CustomerSupplier {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace PapiroMVC.Validation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CustomerSupplierVuoto {
+    public class ResCustomerSupplier {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CustomerSupplierVuoto() {
+        internal ResCustomerSupplier() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace PapiroMVC.Validation {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Areas.DataBase.Models.CustomerSupplier.Resources.CustomerSupplierVuoto", typeof(CustomerSupplierVuoto).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Models.Resources.CustomerSupplier.ResCustomerSupplier", typeof(ResCustomerSupplier).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,42 @@ namespace PapiroMVC.Validation {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ragione Sociale.
+        /// </summary>
+        public static string BusinessName {
+            get {
+                return ResourceManager.GetString("BusinessName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ragione Sociale del cliente/fornitore.
+        /// </summary>
+        public static string BusinessNameToolTip {
+            get {
+                return ResourceManager.GetString("BusinessNameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codice Cliente (se lasciato vuoto sarà assegnato dal sistema).
+        /// </summary>
+        public static string CodCustomerSupplier {
+            get {
+                return ResourceManager.GetString("CodCustomerSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to se lasciato vuoto sarà assegnato dal sistema.
+        /// </summary>
+        public static string CodCustomerSupplierToolTip {
+            get {
+                return ResourceManager.GetString("CodCustomerSupplierToolTip", resourceCulture);
             }
         }
         
@@ -79,11 +115,65 @@ namespace PapiroMVC.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In Disuso.
+        /// </summary>
+        public static string Outdated {
+            get {
+                return ResourceManager.GetString("Outdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Le anagrafiche contrassegnate come &quot;In Disuso&quot; non possono essere usate per nuovi documenti.
+        /// </summary>
+        public static string OutdatedToolTip {
+            get {
+                return ResourceManager.GetString("OutdatedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
         /// </summary>
         public static string RequiredField {
             get {
                 return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codice Fiscale.
+        /// </summary>
+        public static string TaxCode {
+            get {
+                return ResourceManager.GetString("TaxCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Codice Fiscale.
+        /// </summary>
+        public static string TaxCodeToolTip {
+            get {
+                return ResourceManager.GetString("TaxCodeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partita Iva.
+        /// </summary>
+        public static string VatNumber {
+            get {
+                return ResourceManager.GetString("VatNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Partita Iv.
+        /// </summary>
+        public static string VatNumberToolTip {
+            get {
+                return ResourceManager.GetString("VatNumberToolTip", resourceCulture);
             }
         }
     }

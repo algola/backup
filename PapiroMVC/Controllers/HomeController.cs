@@ -29,10 +29,12 @@ namespace PapiroMVC.Controllers
         {
             HttpCookie cultureCookie = Request.Cookies["_culture"];
             var langCookie = new HttpCookie("_culture", id)
-            {
-                HttpOnly = true
+            {                               
+//                HttpOnly = true
             };
-            Response.AppendCookie(langCookie);
+            this.ControllerContext.HttpContext.Response.Cookies.Add(langCookie);
+
+//            Response.AppendCookie(langCookie);
 //            return Redirect(Request.UrlReferrer.AbsolutePath);
             if (Url.IsLocalUrl(returnUrl))
             {

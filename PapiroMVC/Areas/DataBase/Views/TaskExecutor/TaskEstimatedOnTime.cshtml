@@ -1,0 +1,70 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskEstimatedOnTime
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnTime");
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+
+@using (Html.BeginForm("TaskEstimatedOnTime", "TaskExecutor"))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>TaskEstimatedOnTime</legend>
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodTaskExecutor)
+            @Html.HiddenFor(model => model.CodTaskExecutorOn)
+
+        <h3>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</h3>
+        <br />
+                
+        <div class="editor-field">
+            @Html.AlgolaEditorFor(model => model.StartingTime1)
+            @Html.AlgolaEditorFor(model => model.StartingTime2)
+            @Html.AlgolaEditorFor(model => model.TimeForfait)
+        </div>
+
+        <h3>@HttpContext.GetLocalResourceObject(strings, "AvarageRunPerRunLabel")</h3>
+        <br />
+
+            @Html.AlgolaEditorFor(model => model.AvarageRunPerHour)
+
+            @Html.EditorFor(model => model.UseDifferentRunPerHour)
+
+        <div id="_listAvarageRunPerRunStep">
+            @Html.Partial("_ListAvarageRunPerRunStep", Model)
+        </div>
+        <br />
+             @Html.EditorFor(model => model.UseDifferentDeficitForWeightStep)
+
+        <div id="_listDeficitForWeightStep">
+            @Html.Partial("_ListDeficitForWeightStep", Model)
+        </div>
+
+        <h3>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</h3>
+        <br />
+
+            @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
+            @Html.AlgolaEditorFor(model => model.CostPerHourStarting)
+            @Html.AlgolaEditorFor(model => model.CostForfait)
+            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+
+        <p>
+            <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -18,9 +18,13 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResTaskEstimatedOn), "CodTaskExecutorOn")]
         [Tooltip(typeof(ResTaskEstimatedOn), "CodTaskExecutorOnToolTip")]
         public string CodTaskExecutorOn { get; set; }
+                
+        [RegularExpressionLocalized(typeof(ResTaskEstimatedOn), "CurrencyValidation", "CurrencyValidationError")]
         [DisplayNameLocalized(typeof(ResTaskEstimatedOn), "CostForfait")]
         [Tooltip(typeof(ResTaskEstimatedOn), "CostForfaitToolTip")]
         public Nullable<double> CostForfait { get; set; }
+
+        [RegularExpressionLocalized(typeof(ResTaskEstimatedOn), "CurrencyValidation", "CurrencyValidationError")]
         [DisplayNameLocalized(typeof(ResTaskEstimatedOn), "CostForfaitForSheet")]
         [Tooltip(typeof(ResTaskEstimatedOn), "CostForfaitForSheetToolTip")]
         public Nullable<double> CostForfaitForSheet { get; set; }

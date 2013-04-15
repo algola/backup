@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PapiroMVC.Validation {
+namespace PapiroMVC.Models.Resources.CustomerSupplier {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace PapiroMVC.Validation {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ResCustomer {
+    public class ResSupplier {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResCustomer() {
+        internal ResSupplier() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace PapiroMVC.Validation {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Areas.DataBase.Models.CustomerSupplier.Resources.ResCustomer", typeof(ResCustomer).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Models.Resources.CustomerSupplier.ResSupplier", typeof(ResSupplier).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

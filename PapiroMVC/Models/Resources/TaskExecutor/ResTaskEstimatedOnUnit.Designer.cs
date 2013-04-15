@@ -61,7 +61,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Costo a copia.
         /// </summary>
         public static string CostPerUnit {
             get {
@@ -70,7 +70,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il costo a passaggio.
         /// </summary>
         public static string CostPerUnitToolTip {
             get {
@@ -79,7 +79,34 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Costo primo Avviamento.
         /// </summary>
         public static string StartingCost1 {
             get {
@@ -88,7 +115,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il costo del primo avviamento.
         /// </summary>
         public static string StartingCost1ToolTip {
             get {
@@ -97,7 +124,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Costo Avviamenti successivi.
         /// </summary>
         public static string StartingCost2 {
             get {
@@ -106,7 +133,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il costo degli avviamenti successivi al primo.
         /// </summary>
         public static string StartingCost2ToolTip {
             get {
@@ -115,7 +142,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Usa costi copia scaglionati.
         /// </summary>
         public static string UseDifferentCostPerUnit {
             get {
@@ -124,7 +151,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica che è possibile usare costi copia per scaglioni di tiratura.
         /// </summary>
         public static string UseDifferentCostPerUnitToolTip {
             get {
@@ -133,7 +160,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Usa penalizzazioni per grammatura.
         /// </summary>
         public static string UseDifferentDeficitOnCostForWeightStep {
             get {
@@ -142,7 +169,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica che è possibile usare penalizzazioni per grammature differenti.
         /// </summary>
         public static string UseDifferentDeficitOnCostForWeightStepToolTip {
             get {

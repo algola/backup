@@ -22,8 +22,8 @@ namespace PapiroMVC.Models
         public System.DateTime TimeStampTable { get; set; }
         public string CodTaskExecutor { get; set; }
         public string CodTaskExecutorOn { get; set; }
-        public Nullable<double> CostForfait { get; set; }
-        public Nullable<double> CostForfaitForSheet { get; set; }
+        public string CostForfait { get; set; }
+        public string CostForfaitForSheet { get; set; }
     
         public virtual TaskExecutor taskexecutors { get; set; }
         public virtual ICollection<Step> steps { get; set; }

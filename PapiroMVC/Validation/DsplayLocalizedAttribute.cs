@@ -151,7 +151,8 @@ namespace PapiroMVC.Validation
 
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("editor-field");
-            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
+//            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
             algolaEditFor.InnerHtml += labelFor;
@@ -202,7 +203,7 @@ namespace PapiroMVC.Validation
                                                            html.RouteCollection,
                                                            html.ViewContext.RequestContext,
                                                            includeImplicitMvcValues: true);
-            return System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
+            return System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
         }
 
      

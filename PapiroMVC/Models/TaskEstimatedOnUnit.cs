@@ -14,10 +14,10 @@ namespace PapiroMVC.Models
     
     public abstract partial class TaskEstimatedOnUnit : TaskEstimatedOn
     {
-        public Nullable<double> CostPerUnit { get; set; }
+        public string CostPerUnit { get; set; }
         public Nullable<bool> UseDifferentCostPerUnit { get; set; }
-        public Nullable<double> StartingCost1 { get; set; }
-        public Nullable<double> StartingCost2 { get; set; }
+        public string StartingCost1 { get; set; }
+        public string StartingCost2 { get; set; }
         public Nullable<bool> UseDifferentDeficitOnCostForWeightStep { get; set; }
     }
 }

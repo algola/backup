@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public abstract partial class Step
     {
         public System.DateTime TimeStampTable { get; set; }
-        public string CodPrinterEstimatedOn { get; set; }
+        public string CodTaskEstimatedOn { get; set; }
         public long IdStep { get; set; }
         public Nullable<double> FromUnit { get; set; }
         public Nullable<double> ToUnit { get; set; }

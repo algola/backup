@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PapiroMVC.Validation {
+namespace PapiroMVC.Models.Resources.CustomerSupplier {
     using System;
     
     
@@ -39,8 +39,7 @@ namespace PapiroMVC.Validation {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Areas.DataBase.Models.CustomerSupplier.Resources.ResCustomerSupplierBas" +
-                            "e", typeof(ResCustomerSupplierBase).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Models.Resources.CustomerSupplier.ResCustomerSupplierBase", typeof(ResCustomerSupplierBase).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

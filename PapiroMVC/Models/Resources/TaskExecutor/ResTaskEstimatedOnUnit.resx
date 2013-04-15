@@ -118,33 +118,42 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CostPerUnit" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Costo a copia</value>
   </data>
   <data name="CostPerUnitToolTip" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Indica il costo a passaggio</value>
+  </data>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
+  </data>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
   </data>
   <data name="StartingCost1" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Costo primo Avviamento</value>
   </data>
   <data name="StartingCost1ToolTip" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Indica il costo del primo avviamento</value>
   </data>
   <data name="StartingCost2" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Costo Avviamenti successivi</value>
   </data>
   <data name="StartingCost2ToolTip" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Indica il costo degli avviamenti successivi al primo</value>
   </data>
   <data name="UseDifferentCostPerUnit" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Usa costi copia scaglionati</value>
   </data>
   <data name="UseDifferentCostPerUnitToolTip" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Indica che è possibile usare costi copia per scaglioni di tiratura</value>
   </data>
   <data name="UseDifferentDeficitOnCostForWeightStep" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Usa penalizzazioni per grammatura</value>
   </data>
   <data name="UseDifferentDeficitOnCostForWeightStepToolTip" xml:space="preserve">
-    <value>xxxxxx</value>
+    <value>Indica che è possibile usare penalizzazioni per grammature differenti</value>
   </data>
 </root>

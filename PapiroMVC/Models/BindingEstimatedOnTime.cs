@@ -30,7 +30,7 @@ namespace PapiroMVC.Models
         public Nullable<System.TimeSpan> StartingTime32 { get; set; }
         public Nullable<long> AvarageRunPerHourBinding { get; set; }
         public Nullable<System.TimeSpan> StartingTimeBinding { get; set; }
-        public Nullable<double> CostPerHourRunning { get; set; }
-        public Nullable<double> CostPerHourStarting { get; set; }
+        public string CostPerHourRunning { get; set; }
+        public string CostPerHourStarting { get; set; }
     }
 }

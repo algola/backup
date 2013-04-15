@@ -61,7 +61,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Media oraria.
         /// </summary>
         public static string AvarageRunPerHour {
             get {
@@ -70,7 +70,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica la tiratura media oraria.
         /// </summary>
         public static string AvarageRunPerHourToolTip {
             get {
@@ -79,7 +79,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Costo all&apos;ora (tiratura).
         /// </summary>
         public static string CostPerHourRunning {
             get {
@@ -88,7 +88,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il costo orario della lavorazione/macchina.
         /// </summary>
         public static string CostPerHourRunningToolTip {
             get {
@@ -97,7 +97,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Costo all&apos;ora (avviamento).
         /// </summary>
         public static string CostPerHourStarting {
             get {
@@ -106,7 +106,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il costo orario in avviamento.
         /// </summary>
         public static string CostPerHourStartingToolTip {
             get {
@@ -115,7 +115,34 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tempo Avviamento.
         /// </summary>
         public static string StartingTime1 {
             get {
@@ -124,7 +151,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il tempo in mm:ss di avviamento.
         /// </summary>
         public static string StartingTime1ToolTip {
             get {
@@ -133,7 +160,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Tempo Avviamenti Successivi.
         /// </summary>
         public static string StartingTime2 {
             get {
@@ -142,7 +169,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il tempo in mm:ss degli avviamenti successivi.
         /// </summary>
         public static string StartingTime2ToolTip {
             get {
@@ -151,7 +178,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Tempo minimale.
         /// </summary>
         public static string TimeForfait {
             get {
@@ -160,7 +187,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica il tempo minimo di lavorazione.
         /// </summary>
         public static string TimeForfaitToolTip {
             get {
@@ -169,7 +196,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Usa penalizzazioni per grammatura.
         /// </summary>
         public static string UseDifferentDeficitForWeightStep {
             get {
@@ -178,7 +205,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica che è possibile differenziare le medie per grammatura di carta.
         /// </summary>
         public static string UseDifferentDeficitForWeightStepToolTip {
             get {
@@ -187,7 +214,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Usa tirature orarie differenti per scaglioni di copie.
         /// </summary>
         public static string UseDifferentRunPerHour {
             get {
@@ -196,7 +223,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to Indica che è possibile usare differenti medie orarie per scaglioni di copie.
         /// </summary>
         public static string UseDifferentRunPerHourToolTip {
             get {

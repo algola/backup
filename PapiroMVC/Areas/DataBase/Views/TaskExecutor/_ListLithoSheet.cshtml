@@ -22,7 +22,7 @@
         .setSortable(false))
     .addColumn(new Column("CodExecutor")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
-        .setWidth(80)
+        .setWidth(20)
         .setSortable(true))
 
     .addColumn(new Column("TaskExecutorName")
@@ -49,39 +49,6 @@
         .setSortable(true)
         .setSearch(true))
 
-        /*
-
-    .addColumn(new Column("Weight")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WeightCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-
-    .addColumn(new Column("Width")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "WidthCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-
-    .addColumn(new Column("SupplierName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption"))
-        .setSearch(true)
-        .setWidth(150))
-        
-    .addColumn(new Column("CostPerMq")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerMqCaption"))
-        .setTitle(false)
-        .setEditable(true)
-        .setSearch(true)
-        .setWidth(45)
-        .setAlign(Align.right))
-
-    .addColumn(new Column("CostPerMl")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption"))
-        .setSearch(true)
-        .setWidth(45)
-        .setAlign(Align.right))
-  */
 
     .setUrl(Url.Action("LithoSheetList", "TaskExecutor"))
 

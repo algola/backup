@@ -61,7 +61,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 12mi/h.
         /// </summary>
         public static string AvarageRunPerHour12 {
             get {
@@ -70,7 +70,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 16mi/h.
         /// </summary>
         public static string AvarageRunPerHour16 {
             get {
@@ -79,7 +79,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 24mi/h.
         /// </summary>
         public static string AvarageRunPerHour24 {
             get {
@@ -88,7 +88,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 32mi/h.
         /// </summary>
         public static string AvarageRunPerHour32 {
             get {
@@ -97,7 +97,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 4ni/h.
         /// </summary>
         public static string AvarageRunPerHour4 {
             get {
@@ -106,7 +106,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 6ni/h.
         /// </summary>
         public static string AvarageRunPerHour6 {
             get {
@@ -115,7 +115,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to 8vi/h.
         /// </summary>
         public static string AvarageRunPerHour8 {
             get {
@@ -124,11 +124,38 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to xxxxxx.
+        ///   Looks up a localized string similar to copie/h.
         /// </summary>
         public static string AvarageRunPerHourBinding {
             get {
                 return ResourceManager.GetString("AvarageRunPerHourBinding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+        /// </summary>
+        public static string CurrencyValidation {
+            get {
+                return ResourceManager.GetString("CurrencyValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+        /// </summary>
+        public static string CurrencyValidationError {
+            get {
+                return ResourceManager.GetString("CurrencyValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
+        /// </summary>
+        public static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
     }
