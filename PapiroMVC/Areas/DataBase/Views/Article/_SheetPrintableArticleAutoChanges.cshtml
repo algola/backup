@@ -1,0 +1,155 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.SheetPrintableArticleAutoChanges
+
+@{
+    
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    
+    ViewBag.ProcessCostType = new List<SelectListItem>
+                {
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptAllCost"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessCostType.AllCost.ToString()},
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptPaked"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessCostType.PackedCost.ToString()},
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptPallet"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessCostType.PalletCost.ToString()}
+                };
+
+    ViewBag.ProcessNoBvType = new List<SelectListItem>
+                {
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptNoBvNoModify"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessNoBvType.NoBvNoModify.ToString()},
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptNoBvYes"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessNoBvType.NoBvYes.ToString()},
+                    new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptNoBvNo"), 
+                        Value = SheetPrintableArticleAutoChanges.ProcessNoBvType.NoBvNo.ToString()}
+                };
+                
+}
+
+
+<!-- autocomplete works properly only if script is reloaded in partial view -->
+<script src="/Scripts/autocomplete.js" type="text/javascript"></script>
+ 
+@using (Ajax.BeginForm("SheetAutomaticallyChangesValidation", new { controller = "Article", area = "DataBase" }, new AjaxOptions
+{
+    HttpMethod = "POST",
+//    UpdateTargetId = "sheetPrintableArticleAutoChanges",
+//    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+    OnSuccess = "sendSheetAutomaticallyChanges",
+    OnFailure = "ReloadForm(xhr)",
+    OnBegin = "ShowProcessingMsg", 
+    OnComplete = "HideProcessingMsg"
+}))
+{          
+        @Html.ValidationSummary(true)
+    
+    <fieldset>
+        <legend>SheetPrintableArticleViewModelAutoChanges</legend>
+
+            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
+            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
+
+            @Html.AlgolaAutocompleteFor(model => model.Hand, "HandAutoComplete", "Article", new { id = "Hand" })
+<br />            
+            @Html.AlgolaEditorFor(model => model.CostPerKg, new { id = "CostPerKg" })
+<br />
+            @Html.DropDownListFor(model=>model.TypeOfCostToModify, 
+            ViewBag.ProcessCostType as IEnumerable<SelectListItem>,
+            new { @style = "width: 255px;", 
+                id = "optTypeOfCostToModify" 
+            })
+<br />  
+<br />  
+            @Html.LabelFor(model=>model.TypeOfNoBvToModify)
+            @Html.DropDownListFor(model=>model.TypeOfNoBvToModify, 
+            ViewBag.ProcessNoBvType as IEnumerable<SelectListItem>,
+            new { @style = "width: 255px;", 
+                id = "optTypeOfNoBvToModify" 
+            })
+<br />  
+<br />  
+
+    </fieldset>
+    
+    <input class="tbutton save icon"  type="submit" value="Elabora")' />
+}
+
+<script type="text/javascript">
+
+    function ReloadForm(xhr) {
+        $('#sheetPrintableArticleAutoChanges').html(xhr.responseText);
+    }
+
+    function ClearValidationErrors() {
+        $('.validation-summary-errors').html('');
+        $('.input-validation-error').removeClass('input-validation-error');
+        $('.field-validation-error').remove();
+    }
+
+    //this function send data to actionmethod of specify control
+    //data are read from jqgrid by using grid.jqGrid('getGridParam', 'selarrrow');
+    //jQuery("#sendSheetAutomaticallyChanges").click(function () {
+
+    function sendSheetAutomaticallyChanges() {
+
+        ClearValidationErrors();
+
+        var grid = jQuery("#SheetPrintableArticleGrid");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+
+        //data are collected into
+        var allData = {
+            Id: ids,
+            //read from specify item
+            SupplierMaker: document.getElementById("SupplierMaker").value,
+            SupplyerBuy: document.getElementById("SupplyerBuy").value,
+            Hand: document.getElementById("Hand").value,
+            CostPerKg: document.getElementById("CostPerKg").value,
+            TypeOfCostToModify: document.getElementById("optTypeOfCostToModify").options[document.getElementById("optTypeOfCostToModify").selectedIndex].value,
+            TypeOfNoBvToModify: document.getElementById("optTypeOfNoBvToModify").options[document.getElementById("optTypeOfNoBvToModify").selectedIndex].value,
+        };
+
+        //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).
+        var dataToPass = JSON.stringify(allData);
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("SheetAutomaticallyChanges", "Article")",
+            dataType: "json",
+            data: dataToPass,
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+
+                $.blockUI({
+                    message: 'elaborazione completata correttamente',
+                    css: {
+                        border: 'none',
+                        padding: '15px',
+                        backgroundColor: '#000',
+                        '-webkit-border-radius': '10px',
+                        '-moz-border-radius': '10px',
+                        opacity: .5,
+                        color: '#fff'
+                    }
+                });
+                $('.blockOverlay').attr('title', 'Click to unblock').click($.unblockUI);
+            
+                unloadPopupBox();
+                return false;
+
+                // There is no problem with process
+                if (data.Valid) {
+                    return;
+                }
+            },
+
+            error: function (xhr) {
+                alert("errore... mettere block con messaggio e click");
+                unloadPopupBox();
+                //                ReloadForm(xhr);
+            }
+        });
+    }
+
+</script>

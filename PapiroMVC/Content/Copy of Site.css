@@ -221,7 +221,7 @@ ul.menuFooter {
 
     ul.menuFooter li {
         list-style: none;
-/*        padding-left: 15px; */
+        padding-top: 15px; 
     }
 
         ul.menuFooter li a {

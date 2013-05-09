@@ -10,12 +10,17 @@
 //    ViewBag.PrintingUnit.PrintingUnitName = new List<string>(printingUnitName);
 }
 
-@using (Html.BeginForm("Action", "TaskExecutor"))
+<div id="status"> 
+        
+    @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" }))
 {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>LithoSheet</legend>
+
+            @Html.HiddenFor(model => model.TimeStampTable)
 
             @Html.AlgolaEditorFor(model => model.TaskExecutorName)
             @Html.AlgolaEditorFor(model => model.Version)
@@ -84,19 +89,18 @@
     </fieldset>
 
     <p>
-        <!-- ViewBag.ActionMethod is used to understand where we are coming and so where we have to go -->
-        <input type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
-        
+        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "IndexLithoSheet", null, new {@class="tbutton cancel icon"} )
+        <input class="tbutton save icon" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
         @if (ViewBag.ActionMethod != "CreateLithoSheet")               
         {
-            <input type="submit" name="CreateLithoSheet"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+            <input class="tbutton save icon" type="submit" name="CreateLithoSheet"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
         }
     </p>
-    
+
 }
-<div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index")
+    
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

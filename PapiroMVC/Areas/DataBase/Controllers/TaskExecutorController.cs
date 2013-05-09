@@ -33,19 +33,23 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult IndexLithoSheet()
         {
+            //deprecated
             TempData["TaskExecutorIndex"] = "IndexLithoSheet";
             return View();
         }
 
         public ActionResult IndexDigitalSheet()
         {
+            //deprecated
             TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
             return View();
         }
 
         [HttpPost]
-        public ActionResult TaskEstimatedOnTime(TaskEstimatedOnTime c)
-        {                          
+        public ActionResult TaskEstimatedOnTime(TaskEstimatedOnTime c, string returnUrl)
+        {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 try
@@ -55,7 +59,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
 
-                    return RedirectToAction((string)TempData["TaskExecutorIndex"]);
+//                    deprecated  
+//                    return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"]) });
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+               
                 }
                 catch (Exception ex)
                 {
@@ -65,12 +72,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "TaskEstimatedOnTime";
-            return View("TaskEstimatedOnTime", c);
+            return PartialView("TaskEstimatedOnTime", c);
         }
 
         [HttpPost]
-        public ActionResult TaskEstimatedOnRun(TaskEstimatedOnRun c)
+        public ActionResult TaskEstimatedOnRun(TaskEstimatedOnRun c, string returnUrl)
         {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 try
@@ -80,7 +89,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
 
-                    return RedirectToAction((string)TempData["TaskExecutorIndex"]);
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+
+                    //deprecated
+                    //return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"])});
                 }
                 catch (Exception ex)
                 {
@@ -90,12 +102,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "TaskEstimatedOnRun";
-            return View("TaskEstimatedOnRun", c);
+            return PartialView("TaskEstimatedOnRun", c);
         }
 
         [HttpPost]
-        public ActionResult TaskEstimatedOnMq(TaskEstimatedOnMq c)
+        public ActionResult TaskEstimatedOnMq(TaskEstimatedOnMq c, string returnUrl)
         {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
             if (ModelState.IsValid)
             {
                 try
@@ -105,7 +119,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
 
-                    return RedirectToAction((string)TempData["TaskExecutorIndex"]);
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+
+                    //deprecated
+                    //return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"])});
                 }
                 catch (Exception ex)
                 {
@@ -115,7 +132,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "TaskEstimatedOnMq";
-            return View("TaskEstimatedOnMq", c);
+            return PartialView("TaskEstimatedOnMq", c);
         }
 
 
@@ -126,6 +143,36 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //load from database taskexecutor
 
             var taskExecutor = taskExecutorRepository.GetSingle(id);
+
+
+            switch (taskExecutor.TypeOfExecutor)
+            {
+                case TaskExecutor.ExecutorType.LithoSheet:
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheet";
+                    break;
+                case TaskExecutor.ExecutorType.LithoWeb:
+                    TempData["TaskExecutorIndex"] = "IndexLithoWeb";
+                    break;
+                case TaskExecutor.ExecutorType.DigitalSheet:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+                    break;
+                case TaskExecutor.ExecutorType.DigitalWeb:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalWeb";
+                    break;
+                case TaskExecutor.ExecutorType.Plotter:
+                    TempData["TaskExecutorIndex"] = "IndexPlotter";
+                    break;
+                case TaskExecutor.ExecutorType.PrePostPress:
+                    TempData["TaskExecutorIndex"] = "IndexPrePostPress";
+                    break;
+                case TaskExecutor.ExecutorType.Binding:
+                    TempData["TaskExecutorIndex"] = "IndexBinding";
+                    break;
+                default:
+                    break;
+            }
+
+
             c.CodTaskExecutor = taskExecutor.CodTaskExecutor;
 
             ViewBag.TypeCost = "";
@@ -195,11 +242,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostViewModel c)
+        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostViewModel c, string FieldToPreventTowSubmission)
         {
+
             var taskExecutor = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
             TaskEstimatedOn tskEst = null;
             String retView = String.Empty;
+
+            //if cost is just selected (to prevent two submissions)
+            if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
+                return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
 
             switch (c.TypeTaskExecutorEstimatedOn)
             {
@@ -231,6 +283,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             ViewBag.ActionMethod = retView;
             return View(retView, tskEst);
+
         }
 
         [HttpGet]
@@ -273,7 +326,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
-                    return RedirectToAction("IndexLithoSheet");
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet")});
                 }
                 catch (Exception ex)
                 {
@@ -283,7 +336,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateLithoSheet";
-            return View("CreateLithoSheet", c);
+            return PartialView("_EditAndCreateLithoSheet", c);
         }
 
 
@@ -308,21 +361,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     //                    if (c.Article.CodArticle == null)
                     {
                         c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
-
-                        /***********************************
-                          c.DigitalSheetCuttedCost.CodArticle = c.Article.CodArticle;
-                          c.DigitalSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
-                          c.DigitalSheetPakedCost.CodArticle = c.Article.CodArticle;
-                          c.DigitalSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
-                          c.DigitalSheetPalletCost.CodArticle = c.Article.CodArticle;
-                          c.DigitalSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
-                        /************************************/
                     }
 
                     c.TimeStampTable = DateTime.Now;
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
-                    return RedirectToAction("IndexDigitalSheet");
+                    //hooray it passed - go back to index
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet") });
                 
                 }
                 catch (Exception ex)
@@ -333,9 +378,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateDigitalSheet";
-            return View("CreateDigitalSheet", c);
+            return PartialView("_EditAndCreateDigitalSheet", c);
         }
-
 
         #region Edit
 
@@ -431,7 +475,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return RedirectToAction("IndexLithoSheet");
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet")});
                 }
                 catch (Exception ex)
                 {
@@ -442,7 +486,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //If we come here, something went wrong. Return it back.      
 
             ViewBag.ActionMethod = "EditLithoSheet";
-            return View("EditLithoSheet", c);
+            return PartialView("_EditAndCreateLithoSheet", c);
         }
 
         [HttpParamAction]
@@ -467,7 +511,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return RedirectToAction("IndexDigitalSheet");
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet")});
                 }
                 catch (Exception ex)
                 {
@@ -479,7 +523,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //multi submit
             ViewBag.ActionMethod = "EditDigitalSheet";
-            return View("EditDigitalSheet", c);
+            return PartialView("_EditAndCreateDigitalSheet", c);
         }
 
 

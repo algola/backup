@@ -101,9 +101,9 @@ namespace PapiroMVC.DbCodeManagement
             {
                 //NOTE: UseCaseSensitive Level selected and the value 
                 //to convert is larger that the previus example.
-                long IntValue = ToInt64(code, ExpandLevel.Decimal);
+                long IntValue = ToInt64(code, ExpandLevel.UseCaseSensitive);
 
-                string HexValue = ToHex(IntValue + 1, ExpandLevel.Decimal);
+                string HexValue = ToHex(IntValue + 1, ExpandLevel.UseCaseSensitive);
                 return HexValue;                
             }
         }

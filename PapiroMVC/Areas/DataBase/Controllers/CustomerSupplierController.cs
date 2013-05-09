@@ -16,14 +16,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         
         //
         // GET: /CustomerSupplier/
-        private readonly ICustomerSupplierRepository dataRepCS;
         private readonly ITypeOfBaseRepository typeOfBaseRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
         private readonly ICustomerSupplierBaseRepository customerSupplierBaseRepository;
 
-        public CustomerSupplierController(ICustomerSupplierRepository _dataRepCS, ICustomerSupplierBaseRepository _clisupBaseDataRep, ICustomerSupplierRepository _clisupDataRep, ITypeOfBaseRepository _typeOfBaseDataRep)
+        public CustomerSupplierController(ICustomerSupplierRepository _customerSupplierRepository, ICustomerSupplierBaseRepository _clisupBaseDataRep, ICustomerSupplierRepository _clisupDataRep, ITypeOfBaseRepository _typeOfBaseDataRep)
         {
-            this.dataRepCS = _dataRepCS;
+            this.customerSupplierRepository = _customerSupplierRepository;
             typeOfBaseRepository = _typeOfBaseDataRep;
             customerSupplierRepository = _clisupDataRep;
             customerSupplierBaseRepository = _clisupBaseDataRep;
@@ -32,7 +31,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            dataRepCS.SetDbName(CurrentDatabase);
+            customerSupplierRepository.SetDbName(CurrentDatabase);
 
             typeOfBaseRepository.SetDbName(CurrentDatabase);
             customerSupplierRepository.SetDbName(CurrentDatabase);
@@ -44,7 +43,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult Index()
         {
             CustomerSupplierIndexViewModel ret = new CustomerSupplierIndexViewModel();
-            ret.List = dataRepCS.GetAll().ToList();
+            ret.List = customerSupplierRepository.GetAll().ToList();
             return View(ret);
         }
 
@@ -53,7 +52,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult Searching(CustomerSupplierSearchOption sOption)
         {
 
-            var containBusinessName = dataRepCS.FindBy(x => x.BusinessName.Contains(sOption.BusinessName ?? "")
+            var containBusinessName = customerSupplierRepository.FindBy(x => x.BusinessName.Contains(sOption.BusinessName ?? "")
                 &&x.CustomerSupplierBases.Select(y=>y.City.Contains(sOption.City ?? "")).Count()>0).ToList();
 
             return PartialView("_List", containBusinessName.ToList());
@@ -66,12 +65,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
-        //
-        // GET: /CustomerSupplier/CreateCustomer
-        public ActionResult CreateCustomer()
-        {            
-            return View(new Customer());
-        }
 
         /// <summary>
         /// use this method to upload file and elaborate it
@@ -92,9 +85,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 file.SaveAs(path);        
             }        
             // redirect back to the index action to show the form once again        
-            return RedirectToAction("Index");            
+            return Json(new { redirectUrl = Url.Action("Index")});            
         }
 
+        //
+        // GET: /CustomerSupplier/CreateCustomer
+        public ActionResult CreateCustomer()
+        {
+            return View(new Customer());
+        }
 
         private ActionResult CreateCustomerSupplier(CustomerSupplier c)
         {
@@ -108,16 +107,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         c.CodCustomerSupplier = customerSupplierRepository.GetNewCode(c);
                     }
                     c.TimeStampTable = DateTime.Now;
-                    dataRepCS.Add(c);
-                    dataRepCS.Save();
-                    return RedirectToAction("IndexBase", new { id = c.CodCustomerSupplier });
+                    customerSupplierRepository.Add(c);
+                    customerSupplierRepository.Save();
+
+                    TempData["CreateCustomerSupplier"] = true;
+                    return Json(new { redirectUrl = Url.Action("IndexBase", new { id = c.CodCustomerSupplier })});
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return View(c);        
+            if (c.TypeOfCustomerSupplier == CustomerSupplier.CustomerSupplierType.Customer)
+                return PartialView("_EditAndCreateCustomer", c);
+            else
+                return PartialView("_EditAndCreateSupplier", c);
         }
 
         //
@@ -136,6 +140,63 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         //
+        // GET: /CustomerSupplier/CreateCustomer
+        public ActionResult CreateCustomerAndBase()
+        {
+            return View(new CustomerViewModel());
+        }
+
+        //
+        // GET: /CustomerSupplier/CreateCustomer
+        public ActionResult CreateSupplierAndBase()
+        {
+            var x = new SupplierViewModel();
+            return View(x);
+        }
+
+        //
+        // POST: /CustomerSupplier/CreateCustomer
+        [HttpPost]
+        public ActionResult CreateSupplierAndBase(SupplierViewModel c)
+        {
+//            var v1 =TryValidateModel(c.CustomerSupplier);
+//            var v2 = TryValidateModel(c.CustomerSupplierBase);
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    if (c.CustomerSupplier.CodCustomerSupplier == null)
+                    {
+                        c.CustomerSupplier.CodCustomerSupplier = customerSupplierRepository.GetNewCode(c.CustomerSupplier);
+                    }
+                    c.CustomerSupplier.TimeStampTable = DateTime.Now;
+                    customerSupplierRepository.Add(c.CustomerSupplier);
+
+                    c.CustomerSupplierBase.TimeStampTable = DateTime.Now;
+                    c.CustomerSupplierBase.CodTypeOfBase = "0001";
+                    c.CustomerSupplier.CustomerSupplierBases.Add(c.CustomerSupplierBase);
+
+                    //clisupDataRep.Edit(c);                    
+                    customerSupplierRepository.Save();
+                    ViewBag.Message = "Inserimento avvenuto con successo. Continuare oppure tornare alla lista";
+
+                    return Json(new { redirectUrl = Url.Action("CreateSupplierAndBase")});
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Message = "";
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+            return View(c);        
+
+        }
+
+
+
+        //
         // POST: /CustomerSupplier/CreateSupplier
 
         [HttpPost]
@@ -144,16 +205,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return CreateCustomerSupplier(c);
         }
 
-
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            var ret = dataRepCS.GetSingle(id);
+            var ret = customerSupplierRepository.GetSingle(id);
 
             if (ret.TypeOfCustomerSupplier == PapiroMVC.Models.CustomerSupplier.CustomerSupplierType.Customer)
                 return RedirectToAction("EditCustomer", "CustomerSupplier", new { id = id });
             else
-                return RedirectToAction("EditSupplier", "CustomerSupplier", new { id = id });            
+                return RedirectToAction("EditSupplier", "CustomerSupplier", new { id = id });
         }
 
         //
@@ -161,7 +221,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult EditCustomer(string id)
         {
-            return View(dataRepCS.GetSingle(id));
+            return View(customerSupplierRepository.GetSingle(id));
         }
 
         //
@@ -173,9 +233,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    dataRepCS.Edit(c);
-                    dataRepCS.Save();
-                    return RedirectToAction("Index");
+                    customerSupplierRepository.Edit(c);
+                    customerSupplierRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("Index")});
                 }
                 catch (Exception ex)
                 {
@@ -183,7 +243,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
             //If we come here, something went wrong. Return it back.        
-            return View(c);                           
+            return PartialView("_EditAndCreateSupplier", c);                                   
         }
 
 
@@ -191,7 +251,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // GET: /CustomerSupplier/EditSupplier/5
         public ActionResult EditSupplier(string id)
         {
-            return View(dataRepCS.GetSingle(id));
+            return View(customerSupplierRepository.GetSingle(id));
         }
         //
         // POST: /CustomerSupplier/Edit/5
@@ -202,9 +262,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    dataRepCS.Edit(s);
-                    dataRepCS.Save();
-                    return RedirectToAction("Index");
+                    customerSupplierRepository.Edit(s);
+                    customerSupplierRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("Index")});
                 }
                 catch (Exception ex)
                 {
@@ -212,7 +272,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
             //If we come here, something went wrong. Return it back.        
-            return View(s);
+            return PartialView("_EditAndCreateSupplier", s);
         }
 
         //
@@ -233,7 +293,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return Json(new { redirectUrl = Url.Action("Index")});
             }
             catch
             {
@@ -299,7 +359,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             //Load each type of base
             ViewBag.TypeOfBaseList = typeOfBaseRepository.GetAll();
-
             
             if (ModelState.IsValid)
             {
@@ -312,7 +371,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     
                     //clisupDataRep.Edit(c);                    
                     customerSupplierRepository.Save();
-                    return RedirectToAction("IndexBase", new {id=cs.CodCustomerSupplier});
+                    return Json(new { redirectUrl = Url.Action("IndexBase", new {id=cs.CodCustomerSupplier})});
                 }
                 catch (Exception ex)
                 {
@@ -320,7 +379,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
         }
             //If we come here, something went wrong. Return it back.        
-            return View(cs);            
+            return PartialView("_EditAndCreateBase",cs);            
         }
         
         //
@@ -354,7 +413,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     customerSupplierBaseRepository.Edit(csB);
                     customerSupplierBaseRepository.Save();
-                    return RedirectToAction("IndexBase", new { id = csB.CodCustomerSupplier });
+                    return Json(new { redirectUrl = Url.Action("IndexBase", new { id = csB.CodCustomerSupplier })});
                 }
                 catch (Exception ex)
                 {
@@ -362,7 +421,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
             //If we come here, something went wrong. Return it back.        
-            return View(csB);           
+            return PartialView("_EditAndCreateBase",csB);           
         }
 
         //
@@ -382,7 +441,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             try
             {
                 // TODO: Add delete logic here
-                return RedirectToAction("Index");
+                return Json(new { redirectUrl = Url.Action("Index")});
             }
             catch
             {
@@ -404,7 +463,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                                 System.IO.Path.GetFileName(uploadFile.FileName));
                 uploadFile.SaveAs(filePath);
             }
-            return RedirectToAction("Index");
+            return Json(new { redirectUrl = Url.Action("Index") });
         }
     }
 }

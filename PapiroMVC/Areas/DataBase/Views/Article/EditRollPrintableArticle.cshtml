@@ -1,0 +1,15 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RollPrintableArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingArticleTitle") + @Model.Article.ArticleName;
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreateRollPrintableArticle", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

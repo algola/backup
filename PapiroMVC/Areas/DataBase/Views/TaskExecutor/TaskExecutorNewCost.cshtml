@@ -8,7 +8,6 @@
 }
 
 <h3>Nessun costo inserito</h3>
-<p></p>
 
 @using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
 {
@@ -59,18 +58,33 @@
         </div>
     <br />
         }
-         
+
     <p>
-        <input type="submit" value="Create" />
+        <a href="javascript:void(0);" id="xcancel" class="tbutton cancel icon">@Html.T(strings, "Cancel")</a>
+        <input class="tbutton save icon" type="submit" name='@HttpContext.GetLocalResourceObject(strings, "Save")' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
     </p>
 
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('#xcancel').click(function (e) {
+
+            history.go(-1);
+        });
+
+    });
+
+</script>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@section footer {
+    @Html.Partial("_footer")
 }

@@ -5,16 +5,59 @@
 <script type="text/javascript">
     function editRow(cellvalue, options, rowobject) {
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"})';
 
         var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          null)';
+                                          new {@class="a tbutton smallcost"})';
+       
+        if (rowobject[0] === 'CostError') {
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
+                                          "TaskExecutorCost",
+                                          "TaskExecutor",
+                                          (object) new { id = -1 },
+                                          new {@class="a tbutton smallcost error"})';
+        }
+
+        if (rowobject[0] === 'CostMq') {
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnMq"),
+                                          "TaskExecutorCost",
+                                          "TaskExecutor",
+                                          (object) new { id = -1 },
+                                          new {@class="a tbutton smallcostOnMq"})';
+                }
+
+        if (rowobject[0] === 'CostRun') {
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnRun"),
+                                          "TaskExecutorCost",
+                                          "TaskExecutor",
+                                          (object) new { id = -1 },
+                                          new {@class="a tbutton smallcostOnRun"})';
+                }
+
+        if (rowobject[0] === 'CostTime') {
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnTime"),
+                                          "TaskExecutorCost",
+                                          "TaskExecutor",
+                                          (object) new { id = -1 },
+                                          new {@class="a tbutton smallcostOnTime"})';
+                }
+
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
+
+        var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
+                 "Edit", 
+                 new {id= "-1"}, 
+                 new AjaxOptions { HttpMethod = "GET", 
+                 InsertionMode = InsertionMode.InsertBefore, 
+                 UpdateTargetId = "",
+                 OnBegin="ShowProcessingMsg();",
+                 OnComplete = "HideProcessingMsg();"
+                 },
+                 new {@class="tbutton smalledit"})'
 
         return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
-
 
     }
 </script>

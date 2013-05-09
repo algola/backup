@@ -4,22 +4,37 @@
 
 @{    
     string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndexBase");    
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndexBase");
+
+    try
+    {
+        if ((bool)TempData["CreateCustomerSupplier"] == true)
+        {
+            ViewBag.Message = (string)HttpContext.GetLocalResourceObject(strings, "CustomerSupplierCreatedMessage");
+        }
+        else
+        {
+            ViewBag.Message = "";
+        }
+    }
+    catch (Exception e)
+    {
+        ViewBag.Message = "";
+        Console.WriteLine(e.Message);
+    }        
 }
 
-<h2>@ViewBag.Title @Html.DisplayFor(o => o.BusinessName) </h2>   
-<br />
-
-@Html.HiddenFor(o=>o.TimeStampTable)
+@Html.HiddenFor(o => o.TimeStampTable)
 @(Html.jqGrid("CustomGrid")
 
     // columns
-    .addColumn(new Column("Id")        
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndexBase") + " " + @Html.DisplayFor(o => o.BusinessName))
+    .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
         .setCustomFormatter("editCustomerSupplier")
         .setSortable(false))
 
-    
+
         .addColumn(new Column("AddressCaption")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "AddressCaption"))
         .setWidth(80)
@@ -75,7 +90,7 @@
         .setWidth(50)
         .setSortable(true)
         .setSearch(true))
-        
+
     .setUrl(Url.Action("CustomerSupplierBaseList", "CustomerSupplier", new { id = Model.CodCustomerSupplier }))
 
     .setHeight(300)
@@ -95,16 +110,36 @@
 )
 
 <div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateBase"), "CreateBase", new { id = Model.CodCustomerSupplier })    
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index")
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index",null,new {@class="tbutton cancel icon"})
+    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateBase"), "CreateBase", new { id = Model.CodCustomerSupplier }, new {id = "CreateBase" , @class="tbutton smalladd icon"})
 </div>
 
 
 <script type="text/javascript">
     function editCustomerSupplier(cellvalue, options, rowobject) {
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit" + "Base", new {id= "-1"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit" + "Base", new { id = "-1" },new {@class="tbutton smalledit"})';
         return link.replace("-1", cellvalue);
     }
 
+
+    jQuery(document).ready(function($) {
+
+        if ('@(ViewBag.Message)' != "") {
+            $.blockUI({
+                message: '@(ViewBag.Message)',
+                css: {
+                    border: 'none',
+                    padding: '15px',
+                    backgroundColor: '#000',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .5,
+                    color: '#fff'
+                }
+            });
+            $('.blockOverlay').attr('title', 'Click to unblock').click($.unblockUI);
+        }
+    });
+    /* ]]> */
 </script>

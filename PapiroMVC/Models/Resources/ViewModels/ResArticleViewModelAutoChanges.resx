@@ -124,7 +124,7 @@
     <value>Inserire un'espressione valita (tipo: +5% oppure -0,50 etc..)</value>
   </data>
   <data name="CostPerKg" xml:space="preserve">
-    <value>Costo al mq</value>
+    <value>Costo al Kg</value>
   </data>
   <data name="CostPerMl" xml:space="preserve">
     <value>Costo al metro lineare</value>

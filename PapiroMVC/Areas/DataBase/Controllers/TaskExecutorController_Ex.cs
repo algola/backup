@@ -311,7 +311,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         id = a.CodTaskExecutor,
                         cell = new string[] 
-                        {                                               
+                        {                                
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TaskExecutorName,
@@ -369,7 +373,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         id = a.CodTaskExecutor,
                         cell = new string[] 
-                        {       
+                        {     
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TaskExecutorName,
@@ -377,18 +385,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.BWSide1.ToString(),
                             a.BWSide2.ToString(),
                             a.ColorSide1.ToString(),
-                            a.ColorSide2.ToString()
-/*                            a.TypeOfMaterial,
-                            a.NameOfMaterial,
-                            a.Color,
-                            a.Weight.ToString(),
-                            a.Width.ToString(),
-                            a.CustomerSupplierMaker.BusinessName,
-                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
-                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMq,
-                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
-                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMl,            
-*/                        }
+                            a.ColorSide2.ToString(),
+                        }
                     }
                 ).ToArray()
             };

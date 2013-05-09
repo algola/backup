@@ -37,52 +37,117 @@ namespace Services
 
         private void ArticleCostCodeRigen(Article c)
         {
+            c.TimeStampTable = DateTime.Now;
+
+            foreach (var item in c.ArticleCosts)
+            {
+                item.TimeStampTable = DateTime.Now;
+            }
+
             switch (c.TypeOfArticle)
             {
+                   
                 case Article.ArticleType.SheetPrintableArticle:
 
-                    /*CUTTED
-                    ((SheetPrintableArticleCuttedCost)c.ArticleCosts.First(x =>
-                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost)).CodArticle = c.CodArticle;
-                    ((SheetPrintableArticleCuttedCost)c.ArticleCosts.First(x =>
-                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost)).CodArticleCost = c.CodArticle + "_CTC";
-                    */
-                    #region Paked
-                    var pakedCost = ((SheetPrintableArticlePakedCost)c.ArticleCosts.First(x =>
-                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost));
+                    /*
+                    #region Cutted
+                    try
+                    {
+                        var cuttedCost = ((SheetPrintableArticleCuttedCost)c.ArticleCosts.First(x =>
+                            x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost));
 
-                    pakedCost.CostPerKg = pakedCost.CostPerKg == null?
-                        null:Convert.ToDouble(pakedCost.CostPerKg,
-                        Thread.CurrentThread.CurrentUICulture).ToString("#,0.000",Thread.CurrentThread.CurrentUICulture);
-                    
-                        pakedCost.CostPerSheet = pakedCost.CostPerSheet == null ? 
-                        null : 
+                        cuttedCost.CostPerKg = cuttedCost.CostPerKg == null ?
+                            null : Convert.ToDouble(cuttedCost.CostPerKg,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        cuttedCost.CostPerSheet = cuttedCost.CostPerSheet == null ?
+                        null :
+                        Convert.ToDouble(cuttedCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        cuttedCost.CodArticle = c.CodArticle;
+                        cuttedCost.CodArticleCost = c.CodArticle + "_CTD";
+
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
+                    */
+
+                    #region Paked
+                    try
+                    {
+                        var pakedCost = ((SheetPrintableArticlePakedCost)c.ArticleCosts.First(x =>
+                            x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost));
+
+                        pakedCost.CostPerKg = pakedCost.CostPerKg == null ?
+                            null : Convert.ToDouble(pakedCost.CostPerKg,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        pakedCost.CostPerSheet = pakedCost.CostPerSheet == null ?
+                        null :
                         Convert.ToDouble(pakedCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
 
-                    pakedCost.CodArticle = c.CodArticle;
-                    pakedCost.CodArticleCost = c.CodArticle + "_PKC";
-
+                        pakedCost.CodArticle = c.CodArticle;
+                        pakedCost.CodArticleCost = c.CodArticle + "_PKC";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                     #endregion
 
                     #region Pallet
-                    var palletCost = ((SheetPrintableArticlePalletCost)c.ArticleCosts.First(x =>
+                    try
+                    {
+                        var palletCost = ((SheetPrintableArticlePalletCost)c.ArticleCosts.First(x =>
                         x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePalletCost));
 
-                    palletCost.CostPerKg = palletCost.CostPerKg == null?
-                        null:Convert.ToDouble(palletCost.CostPerKg,
-                        Thread.CurrentThread.CurrentUICulture).ToString("#,0.000",Thread.CurrentThread.CurrentUICulture);
-                    
-                        palletCost.CostPerSheet = palletCost.CostPerSheet == null ? 
-                        null : 
+                        palletCost.CostPerKg = palletCost.CostPerKg == null ?
+                            null : Convert.ToDouble(palletCost.CostPerKg,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        palletCost.CostPerSheet = palletCost.CostPerSheet == null ?
+                        null :
                         Convert.ToDouble(palletCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
 
-                    palletCost.CodArticle = c.CodArticle;
-                    palletCost.CodArticleCost = c.CodArticle + "_PLC";
+                        palletCost.CodArticle = c.CodArticle;
+                        palletCost.CodArticleCost = c.CodArticle + "_PLC";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
 
                     #endregion
 
                     break;
                 case Article.ArticleType.RollPrintableArticle:
+                    #region Standard
+                    try
+                    {
+                        var standardCost = ((RollPrintableArticleStandardCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost));
+
+                        standardCost.CostPerMq = standardCost.CostPerMq == null ?
+                            null : Convert.ToDouble(standardCost.CostPerMq,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        standardCost.CostPerMl = standardCost.CostPerMl == null ?
+                        null :
+                        Convert.ToDouble(standardCost.CostPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+
+                        standardCost.CodArticle = c.CodArticle;
+                        standardCost.CodArticleCost = c.CodArticle + "_STC";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
                     break;
                 case Article.ArticleType.RigidPrintableArticle:
                     break;
@@ -99,6 +164,9 @@ namespace Services
 
             //cehck if name is just inserted
             var article = (from ART in this.GetAll() where ART.ArticleName == entity.ArticleName select ART);
+
+            Console.Write(article.Count());
+            
             if (article.Count() > 0)
             {
                 //this.Edit(entity);
@@ -132,7 +200,7 @@ namespace Services
 
         public override void SetDbName(string name)
         {
- 	         base.SetDbName(name);
+            base.SetDbName(name);
         }
     }
 }

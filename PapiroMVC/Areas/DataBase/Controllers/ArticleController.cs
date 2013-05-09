@@ -14,8 +14,7 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
-    {
-        
+    {        
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
 
@@ -78,24 +77,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    //if code is empty then sistem has to assign one
-//                    if (c.Article.CodArticle == null)
-                    {
-                        c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
 
-                        //CUTTED c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
-                        c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
-                        c.SheetPrintableArticlePalletCost.TimeStampTable = DateTime.Now;
-
-                    }
-
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
+                    articleRepository.Add(c.Article);
                     //rigeneration name of article
                     c.Article.ArticleName = c.Article.ToString();                                                                                        
-
-                    c.Article.TimeStampTable = DateTime.Now;
-                    articleRepository.Add(c.Article);
                     articleRepository.Save();
-                    return RedirectToAction("Index");
+                    return Json(new { redirectUrl = Url.Action("Index")});
                 }
                 catch (Exception ex)
                 {
@@ -105,7 +93,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateSheetPrintableArticle";
-            return View("CreateSheetPrintableArticle", c);
+            return PartialView("_EditAndCreateSheetPrintableArticle", c);
         }
 
 
@@ -121,33 +109,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateRollPrintableArticle(RollPrintableArticleViewModel c)
         {
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //if code is empty then sistem has to assign one
-//                    if (c.Article.CodArticle == null)
-                    {
-                        c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository,c.SupplierMaker,c.SupplyerBuy);                    
-                    }
-
-                    //                        c.RollPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
-                    c.RollPrintableArticleStandardCost.TimeStampTable = DateTime.Now;
-
-                    //                       c.RollPrintableArticleCuttedCost.CodArticle = a.CodArticle;
-                    //                       c.RollPrintableArticleCuttedCost.CodArticleCost = a.CodArticle + "_CTC";
-                    c.RollPrintableArticleStandardCost.CodArticle = c.Article.CodArticle;
-                    c.RollPrintableArticleStandardCost.CodArticleCost = c.Article.CodArticle + "_STD";
-
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository,c.SupplierMaker,c.SupplyerBuy);                    
+                    articleRepository.Add(c.Article);
                     //rigeneration name of article
                     c.Article.ArticleName = c.Article.ToString();
-
-                    c.Article.TimeStampTable = DateTime.Now;
-
-                    articleRepository.Add(c.Article);
                     articleRepository.Save();
-                    return RedirectToAction("Index");
+                    return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle")});
                 }
                 catch (Exception ex)
                 {
@@ -157,10 +128,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateRollPrintableArticle";
-            return View("CreateRollPrintableArticle", c);
+            return PartialView("_EditAndCreateRollPrintableArticle", c);
 
         }
-
 
 
         [HttpGet]
@@ -172,7 +142,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult WizardRollPrintableArticle(RollPrintableArticleViewModelWizard c)
         {
             RollPrintableArticle a;
-            RollPrintableArticleStandardCost cost;
 
             if (ModelState.IsValid)
             {
@@ -220,15 +189,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         }
 	                }
 
-                   
-                    return RedirectToAction("Index");
+
+                    return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle") });
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return View(c);
+            return PartialView("_WizardRollPrintableArticle",c);
         }
 
         [HttpGet]
@@ -279,14 +248,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     }
 
 
-                    return RedirectToAction("Index");
+                    return Json(new { redirectUrl = Url.Action("IndexSheetPrintableArticle") });
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return View(c);
+            return PartialView("_WizardSheetPrintableArticle",c);
         }
 
         #region Edit
@@ -346,7 +315,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return HttpNotFound();
 
             ViewBag.ActionMethod = "EditSheetPrintableArticle";
-            return View(viewModel);
+            return View("EditSheetPrintableArticle", viewModel);
         }
 
 
@@ -362,7 +331,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditRollPrintableArticle";
-            return View(viewModel);
+            return View("EditRollPrintableArticle", viewModel);
         }
 
         #endregion
@@ -399,7 +368,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
-                    return RedirectToAction("Index");
+                    return Json(new { redirectUrl = Url.Action("Index")});
                 }
                 catch (Exception ex)
                 {
@@ -410,7 +379,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //If we come here, something went wrong. Return it back.      
 
             ViewBag.ActionMethod = "EditSheetPrintableArticle";
-            return View("EditSheetPrintableArticle", c);       
+            return PartialView("_EditAndCreateSheetPrintableArticle", c);       
         }
 
         [HttpParamAction]
@@ -430,7 +399,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
 
-                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+//                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
                         item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
@@ -442,7 +411,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
-                    return RedirectToAction("Index");
+                    return Json(new { redirectUrl = Url.Action("Index")});
                 }
                 catch (Exception ex)
                 {
@@ -461,7 +430,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //If we come here, something went wrong. Return it back. 
             //multi submit
             ViewBag.ActionMethod = "EditRollPrintableArticle";
-            return View("EditRollPrintableArticle", c);
+            return PartialView("_EditAndCreateRollPrintableArticle", c);
         }
 
 
@@ -472,7 +441,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 // TODO: Add update logic here
 
-                return RedirectToAction("Index");
+                return Json(new { redirectUrl = Url.Action("Index")});
             }
             catch
             {
@@ -498,7 +467,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 // TODO: Add delete logic here
 
-                return RedirectToAction("Index");
+                return Json(new { redirectUrl = Url.Action("Index")});
             }
             catch
             {

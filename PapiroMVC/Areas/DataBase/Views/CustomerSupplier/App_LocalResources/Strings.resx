@@ -156,8 +156,17 @@
   <data name="CreateCustomer" xml:space="preserve">
     <value>Nuovo Cliente</value>
   </data>
+  <data name="CreateCustomerAndBase" xml:space="preserve">
+    <value>Nuovi Clienti</value>
+  </data>
   <data name="CreateSupplier" xml:space="preserve">
     <value>Nuovo Fornitore</value>
+  </data>
+  <data name="CreateSupplierAndBase" xml:space="preserve">
+    <value>Nuovi Fornitori</value>
+  </data>
+  <data name="CustomerSupplierCreatedMessage" xml:space="preserve">
+    <value>Anagrafica creata correttamente. Cliccare sullo sfondo per procedere all'inserimento delle Sedi.</value>
   </data>
   <data name="CustomerType" xml:space="preserve">
     <value>Cliente</value>
@@ -212,6 +221,9 @@
   </data>
   <data name="TitleCreateCustomerBase" xml:space="preserve">
     <value>Inserimento di una nuova Sede</value>
+  </data>
+  <data name="TitleCreateSupplier" xml:space="preserve">
+    <value>Inserimento di un nuovo fornitore in Anagrafica</value>
   </data>
   <data name="TitleEditCustomer" xml:space="preserve">
     <value>Modifica dell'Anagrafica di un Cliente</value>

@@ -1,9 +1,0 @@
-﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.SheetPrintableArticleViewModel
-
-@{
-    string strings = "~/Areas/DataBase/Views/Article/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle");
-}
-
-@Html.Partial("_EditAndCreateSheetPrintableArticle", Model)

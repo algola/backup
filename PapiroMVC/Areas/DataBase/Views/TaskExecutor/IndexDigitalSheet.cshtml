@@ -1,5 +1,12 @@
-﻿<div id='digitalSheet'>
-    <!-- pass RollPrintableArticleAutoChenges is used to can help html filed with facilities -->
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+}
+
+<div id='digitalSheet'>
     @Html.Partial("_ListDigitalSheet")
 </div>
 

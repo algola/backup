@@ -1,0 +1,72 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.SheetPrintableArticleViewModelWizard
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+}
+
+<div id="status"> 
+    
+    @Scripts.Render("~/bundles/jqueryval")
+
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>SheetPrintableArticleViewModel</legend>
+
+        <!--hidden file-->
+        @Html.HiddenFor(model => model.Article.ArticleName)
+        @Html.HiddenFor(model => model.Article.Format)
+        @Html.HiddenFor(model => model.Article.SheetPerPacked)
+        @Html.HiddenFor(model => model.Article.SheetPerPallet)
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorAutoComplete","Article")
+
+
+        @Html.LabelFor(model => model.Weights)
+        @Html.AutocompleteFor(model => model.Weights[0],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[1],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[2],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[3],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[4],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[5],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[6],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[7],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[8],"WeightAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Weights[9],"WeightAutoComplete","Article")
+
+        @Html.LabelFor(model => model.Formats)
+        @Html.AutocompleteFor(model => model.Formats[0],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[1],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[2],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[3],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[4],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[5],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[6],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[7],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[8],"FormatAutoComplete","Article")
+        @Html.AutocompleteFor(model => model.Formats[9],"FormatAutoComplete","Article")
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Hand,"HandAutoComplete","Article")
+        
+        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+
+
+    </fieldset>
+
+    <p>
+        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "IndexSheetPrintableArticle", null, new {@class="tbutton cancel icon"} )
+        <input class="tbutton save icon" type="submit" name='WizardSheetPrintableArticle' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+    </p>
+
+}</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

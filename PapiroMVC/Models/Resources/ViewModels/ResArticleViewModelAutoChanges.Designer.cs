@@ -79,7 +79,7 @@ namespace PapiroMVC.Models.Resources.ViewModels {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Costo al mq.
+        ///   Looks up a localized string similar to Costo al Kg.
         /// </summary>
         public static string CostPerKg {
             get {

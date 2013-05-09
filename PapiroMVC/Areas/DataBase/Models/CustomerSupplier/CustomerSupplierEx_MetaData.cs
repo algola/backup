@@ -13,7 +13,6 @@ namespace PapiroMVC.Models
         public System.DateTime TimeStampTable { get; set; }
 
         //soluzione per gestire il multilingua!!!!
-
         [DisplayNameLocalized(typeof(ResCustomerSupplier), "CodCustomerSupplier")]
         [Tooltip(typeof(ResCustomerSupplier), "CodCustomerSupplierToolTip")]        
         public string CodCustomerSupplier { get; set; }

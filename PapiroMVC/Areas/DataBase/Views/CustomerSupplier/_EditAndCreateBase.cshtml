@@ -10,16 +10,18 @@
     }    
 }
 
-@using (Html.BeginForm()) {
+<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>CustomerSupplierBase</legend>
+                @Html.HiddenFor(model => model.TimeStampTable) 
 
-            @Html.HiddenFor(model => model.TimeStampTable)
             @Html.HiddenFor(model => model.CodCustomerSupplier)
             @Html.HiddenFor(model => model.CodCustomerSupplierBase)       
 
+        <br />
         <div>
             <div class="editor-label" style="float:left">
                 @Html.LabelFor(model => model.CodTypeOfBase)
@@ -44,20 +46,24 @@
             @Html.AlgolaEditorFor(model => model.Pec)
             @Html.AlgolaEditorFor(model => model.Province)
 
-        <p>
-            <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
-        </p>
+    <p>
+        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"),
+                            "IndexBase",
+                            "CustomerSupplier",(object) new { id = Model.CodCustomerSupplier },
+                            new {@class="tbutton cancel icon"} )
+
+        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index", null, new {@class="tbutton cancel icon"} )
+        <input class="tbutton save icon" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+    </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"),
-                     "IndexBase",
-                     "CustomerSupplier",(object) new { id = Model.CodCustomerSupplier },
-                     null)
 
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index")
 </div>
+
+    </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

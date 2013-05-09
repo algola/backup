@@ -1,0 +1,16 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.SheetPrintableArticleViewModelWizard
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleViewModelWizard");
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_WizardSheetPrintableArticle",Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

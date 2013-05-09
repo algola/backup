@@ -22,11 +22,13 @@ namespace Services
 
         private void TaskExecutorCostCodeRigen(TaskExecutor c)
         {
+            c.TimeStampTable = DateTime.Now;
             foreach (var item in c.SetTaskExecutorEstimatedOn)
             {
                 item.CodTaskExecutorOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString();
                 foreach (var step in item.steps)
                 {
+                    item.TimeStampTable = DateTime.Now;
                     step.CodTaskEstimatedOn = item.CodTaskExecutorOn;
                 }
             }

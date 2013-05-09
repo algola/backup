@@ -1,13 +1,16 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.Supplier
 
-
 @{    
-    string strings = "~/Areas/DataBase/Views/SupplierSupplier/Strings";
+    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleCreateSupplier");
     }
 
 <h2>@ViewBag.Title</h2>
-<br />
 
 @Html.Partial("_EditAndCreateSupplier", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

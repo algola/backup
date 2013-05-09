@@ -48,14 +48,15 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerKg")]
         public string CostPerKg { get; set; }
 
+        /*
         [RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerMq")]
         public string CostPerMq { get; set; }
+        */
 
         //flag to indicate what 
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "TypeOfCostToModify")]
         public SheetPrintableArticleAutoChanges.ProcessCostType TypeOfCostToModify { get; set; }
 
     }
-
 }

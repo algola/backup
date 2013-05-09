@@ -28,10 +28,6 @@ namespace PapiroMVC.Models
 
         private static readonly string[] proprietaDaValidare =
                {
-                   "CodCustomerSupplier",
-                   "BusinessName",
-                   "VatNumber",
-                   "TaxCode"
                };
 
         public string Error
@@ -47,74 +43,6 @@ namespace PapiroMVC.Models
             get
             {
                 string result = null;
-                //validazione della proprietà Ragione Sociale
-                if (proprieta == "CodCustomerSupplier")
-                {
-                    if (this.CodCustomerSupplier != null)
-                    {
-                        Regex exp = new Regex(@"^[A-Za-z0-9]{3,20}$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.CodCustomerSupplier))
-                        {
-                            result = "Formato del codice non corretto";
-                        }
-                    }
-                    else
-                    {
-                        result = "";
-                    }
-                }
-
-                //validazione della proprietà Ragione Sociale
-                if (proprieta == "BusinessName")
-                {
-                    if (this.BusinessName != null)
-                    {
-                        Regex exp = new Regex(@"^[\w\s\x00-\xFF]{1,255}$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.BusinessName))
-                        {
-                            result = "Superata la lunghezza della ragione sociale consentita";
-                        }
-                    }
-                    else
-                    {
-                        result = "Nessuna ragione sociale inserita";
-                    }
-                }
-
-                //validazione della proprietà Partita Iva
-                if (proprieta == "VatNumber")
-                {
-                    if (this.VatNumber != null)
-                    {
-                        Regex exp = new Regex(@"^[0-9]{11}$", RegexOptions.IgnoreCase);
-                        if (!exp.IsMatch(this.VatNumber))
-                        {
-                            result = "Partita Iva non inserita correttamente";
-                        }
-                    }
-                    else
-                    {
-                        result = "Nessuna partita iva inserita";
-                    }
-                }
-
-                ////validazione della proprietà Codice Fiscale
-                //if (proprieta == "TaxCode")
-                //{
-                //    if (this.TaxCode != null)
-                //    {
-                //        Regex exp = new Regex(@"^[A-Za-z]{6}[0-9]{2}[A-Za-z][0-9]{2}[A-Za-z][0-9]{3}[A-Za-z]$", RegexOptions.IgnoreCase);
-                //        if (!exp.IsMatch(this.TaxCode))
-                //        {
-                //            result = "Codice fiscale non inserito correttamente";
-                //        }
-                //    }
-                //    else
-                //    {
-                //        result = "Nessun codice fiscale inserito";
-                //    }
-                //}
-
                 return result;
             }
         }

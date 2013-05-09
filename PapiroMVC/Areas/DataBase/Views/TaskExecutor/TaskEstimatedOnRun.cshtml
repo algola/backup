@@ -6,31 +6,34 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnRun");
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
+<div id="status"> 
 
-@using (Html.BeginForm("TaskEstimatedOnRun", "TaskExecutor"))
+<h2>@ViewBag.Title</h2>
+
+    @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm("TaskEstimatedOnRun", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess = "OnSuccess" }))
 {
     @Html.ValidationSummary(true)
 
     <fieldset>
+        
         <legend>TaskEstimatedOnRun</legend>
+
+            @Html.Hidden("returnUrl",TempData["TaskExecutorIndex"])
 
             @Html.HiddenFor(model => model.TimeStampTable)
             @Html.HiddenFor(model => model.CodTaskExecutor)
             @Html.HiddenFor(model => model.CodTaskExecutorOn)
 
         <h3>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</h3>
-        <br />
 
             @Html.AlgolaEditorFor(model => model.StartingCost1)
             @Html.AlgolaEditorFor(model => model.StartingCost2)
 
             @Html.AlgolaEditorFor(model => model.CostForfait)
-            @Html.EditorFor(model => model.CostForfaitForSheet)
+            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
 
         <h3>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</h3>
-        <br />
                 
             @Html.AlgolaEditorFor(model => model.CostPerUnit)
 
@@ -38,7 +41,6 @@
         <div id="_listAvarageRunPerRunStep">
             @Html.Partial("_ListCostPerRunStep", Model)
         </div>
-        <br />
 
             @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
 
@@ -46,20 +48,16 @@
             @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
         </div>
 
-        <h3>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</h3>
-        <br />
-
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
+            <p>
+                @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), (string)TempData["TaskExecutorIndex"] , null, new {@class="tbutton cancel icon"} )
+                <input class="tbutton save icon" type="submit" name='@HttpContext.GetLocalResourceObject(strings, "Save")' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+            </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+@section footer {
+    @Html.Partial("_footer")
 }

@@ -7,6 +7,11 @@
 }
 
 <h2>@ViewBag.Title</h2>
-<br />
+
 
 @Html.Partial("_EditAndCreateSupplier", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

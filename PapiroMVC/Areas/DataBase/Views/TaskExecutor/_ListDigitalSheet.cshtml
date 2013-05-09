@@ -4,79 +4,88 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleDigitalSheetIndex");
+    string url = Url.Action("DigitalSheetList", new { controller ="TaskExecutor", area = "DataBase" });
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
+<table id="gridDigitalSheet"><tr><td/></tr></table>
+<div id="pagerDigitalSheet"></div> 
 
-@(Html.jqGrid("DigitalSheeteGrid")
-    .setData("")
-    .setDataType(DataType.json)
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "DigitalSheetGridCaption"))
-    .setMultiSelect(true)
-        // columns
-    .addColumn(new Column("Id")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
-        .setWidth(60)
-        .setCustomFormatter("editRow")
-        .setSortable(false))
-    .addColumn(new Column("CodExecutor")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
-        .setWidth(60)
-        .setSortable(true))
-    .addColumn(new Column("TaskExecutorName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaskExecutorNameCaption"))        
-        .setWidth(100)
-        .setSortable(true)
-        .setSearch(true))
-    .addColumn(new Column("FormatMax")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "FormatMaxCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-    .addColumn(new Column("BWSide1")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide1"))
-        .setFormatter(Formatters.checkbox)
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-    .addColumn(new Column("BWSide2")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide2"))
-        .setFormatter(Formatters.checkbox)
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-    .addColumn(new Column("ColorSide1")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide1"))
-        .setFormatter(Formatters.checkbox)
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
-    .addColumn(new Column("ColorSide2")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide2"))
-        .setFormatter(Formatters.checkbox)
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
+@Html.ActionLink((string)Html.T(strings, "CreateDigitalSheet"), "CreateDigitalSheet", null, new {@class="tbutton smalladd icon"})
 
-    .setUrl(Url.Action("DigitalSheetList", "TaskExecutor"))
+    <script type="text/javascript">
 
-    .setHeight(300)
-    .setRowNum(20)
-    .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("CustomGridAccountPager")
-    .setPrint(true)
-    .setLoadText("")
-    .setAutoWidth(true)
-    .setSearchToolbar(true)
-    .setViewRecords(true)
+        $(function () {
 
-    // error handler
-    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+            var lastSel = -1;
 
-    // render the html
-    .Render()
-)
+            var myGrid = $("#gridDigitalSheet").jqGrid({
+                caption: '@Html.T(strings, "DigitalSheetGridCaption")',
+                url: '@url',
+                editUrl: '',
+                datatype: 'json',
+                multiselect: true,
+                colModel: [
+                    { name: 'Error', label: '', width: 45, align: 'center', hidden:true, editable: false },
+                    { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
+                    { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false  },                    
+                    { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
+                    { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },
+                    { name: 'BWSide1', label: '@Html.T(strings, "BWSide1")', width: 45, align: 'center', editable: false, formatter: 'checkbox' },
+                    { name: 'BWSide2', label: '@Html.T(strings, "BWSide2")', width: 45, align: 'center', editable: false, formatter: 'checkbox' },
+                    { name: 'ColorSide1', label: '@Html.T(strings, "ColorSide1")', width: 45, align: 'center', editable: false, formatter: 'checkbox' },
+                    { name: 'ColorSide2', label: '@Html.T(strings, "ColorSide2")', width: 45, align: 'center', editable: false, formatter: 'checkbox' }
+            ],
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet"), "CreateDigitalSheet")
+                pager: '#pagerDigitalSheet',
+                height: 300,
+
+                rowNum: 15,
+                rowList: [15, 20, 50],
+                viewrecords: true,
+                autowidth: true,
+
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        myGrid.jqGrid('restoreRow', lastSel);
+                        lastSel = id;
+                    }
+                },
+
+                ondblClickRow: function (id, ri, ci) {
+                    myGrid.jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function(){
+                            $("#gridDigitalSheet").trigger("reloadGrid");
+                        },
+                        url: ''
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                    return;
+                }
+            });
+
+            myGrid.jqGrid('navGrid', '#pagerDigitalSheet', { edit: false, add: false, del: false, search: false });
+
+        });
+
+        function insFmatter(cellvalue, options, rowobject) {
+            if (cellvalue == 9999999999)
+                return '';
+            else
+                return cellvalue;
+        }
+
+        function delStepCostPerMqStep(cellvalue, options, rowobject) {
+            var link = '@Ajax.ActionLink((string)Html.T(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerMqStep" })';
+            return link.replace("-1", cellvalue) 
+        }
+
+        function reloadCostPerMqStep() {
+            $("#gridDigitalSheet").trigger("reloadGrid");
+        }
+
+    </script>
+

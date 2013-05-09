@@ -73,7 +73,7 @@
         }
 
         function delStepCostPerMqStep(cellvalue, options, rowobject) {
-            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerMqStep" })';
+            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerMqStep"},new {@class="tbutton smalldelete"})';
             return link.replace("-1", cellvalue) 
         }
 

@@ -15,9 +15,9 @@ namespace Services
         public string GetNewCode(CustomerSupplier c)
         {
 
-            var codes = (from COD in this.GetAll() select COD.CodCustomerSupplier).ToArray().OrderBy(x => x, new SemiNumericComparer());
+            var codes = (from COD in Context.customersuppliers select COD.CodCustomerSupplier).ToArray().OrderBy(x => x, new SemiNumericComparer());
 
-            var csCode = codes.Last();
+            var csCode = codes.Count() != 0 ? codes.Last() : "0";
 
             if (csCode == null)
                 csCode = "0";

@@ -8,30 +8,37 @@ namespace PapiroMVC
         public static void RegisterBundles(BundleCollection bundles)
         {
 
-
             /*
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-*"));
+             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                         "~/Scripts/jquery-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
-                        "~/Scripts/jquery-ui-*"));
+             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                         "~/Scripts/jquery-ui-*"));
+           */
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.unobtrusive*",
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate.min.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js",
+                        "~/Scripts/autocomplete.js"));
 
+            #region jqgrid
             bundles.Add(new ScriptBundle("~/bundles/jqgrid").Include(
-                        "~/Scripts/jqueryjquery.jqGrid.min.js",
+                        "~/Scripts/jquery.jqGrid.min.js",
                         "~/Scripts/i18n/grid.locale-en.js"));
-            */
+
+            bundles.Add(new StyleBundle("~/Content/jqGridcss").Include(
+                "~/Content/jquery.jqGrid/ui.jqgrid.css",
+                "~/Content/themes/smoothness/jquery-ui-1.8.custom.css"));
+            #endregion
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr*"));
-            
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css",
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/Site.css",        
+                "~/MetroUI/css/modern.css",
                         "~/Content/DivShowHide.css",
                         "~/Content/FooterColumn.css"));
 

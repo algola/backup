@@ -42,7 +42,7 @@ namespace PapiroMVC.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home", new { area = "" });
+                return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" }) });
             }
         }
 

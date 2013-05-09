@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
+using System.IO;
+using System.Reflection;
+using System.Resources;
 
 namespace SchemaManagemet
 {
@@ -25,6 +28,32 @@ namespace SchemaManagemet
         {
             get;
             set;
+        }
+
+        public void InitStoredMySql(string sqlfile)
+        {
+            String sql = "";
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(sqlfile))
+                {
+                    sql = sr.ReadToEnd();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read:");
+                Console.WriteLine(e.Message);
+            }
+            try
+            {
+                Ctx.Database.ExecuteSqlCommand(sql);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }        
         }
 
         /// <summary>
@@ -93,9 +122,10 @@ namespace SchemaManagemet
         /// <param name="ColumnName"></param>
         public void AddIndex(string tableName, string ColumnName)
         {
-            var sql = "CALL AddIndex('param1','param2');";
+            var sql = "CALL AddIndex('param1','param2','param3');";
             sql = sql.Replace("param1", tableName);
-            sql = sql.Replace("param2", ColumnName);
+            sql = sql.Replace("param3", ColumnName);
+            sql = sql.Replace("param2", ColumnName.Replace(",", "_"));
             try
             {
                 Ctx.Database.ExecuteSqlCommand(sql);

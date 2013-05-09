@@ -22,7 +22,13 @@ namespace PapiroMVC.Model
 
             //supplier
             dbS.AddColumnToTable("articles", "CodSupplierBuy", SchemaDb.String, "50");
+            dbS.AddColumnToTable("articles", "CodSupplierMaker", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "SupplierMaker", SchemaDb.String, "50");
+
+            //foreign key
+            dbS.AddForeignKey("articles", "CodSupplierBuy", "CustomerSuppliers", "CodCustomerSupplier");
+            dbS.AddForeignKey("articles", "CodSupplierMaker", "CustomerSuppliers", "CodCustomerSupplier");
+
 
             dbS.AddColumnToTable("articles", "UnitOfMeasure", SchemaDb.String, "50");
 
@@ -56,6 +62,7 @@ namespace PapiroMVC.Model
             //Object
             dbS.AddColumnToTable("articles", "Size", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "PrintableFormat", SchemaDb.String, "9");
+            dbS.AddColumnToTable("articles", "MqForafait", SchemaDb.Double, "0");
 
             //Index
             dbS.AddIndex("articles", "ArticleName");
@@ -108,7 +115,6 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("articlecost", "Kg", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articlecost", "Ml", SchemaDb.Long, "0");
-
 
             dbS.AddColumnToTable("articlecost", "SelectorArticleRigidPrintableCost", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articlecost", "SelectorArticleObjectPrintableCost", SchemaDb.Int, "0");

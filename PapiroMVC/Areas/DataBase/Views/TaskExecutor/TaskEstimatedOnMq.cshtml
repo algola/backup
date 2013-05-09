@@ -6,22 +6,25 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnMq");
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
+<div id="status"> 
 
-@using (Html.BeginForm("TaskEstimatedOnMq", "TaskExecutor"))
+<h2>@ViewBag.Title</h2>
+
+    @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm("TaskEstimatedOnMq", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" }))
 {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>TaskEstimatedOnMq</legend>
 
+            @Html.Hidden("returnUrl",TempData["TaskExecutorIndex"])
+
             @Html.HiddenFor(model => model.TimeStampTable)
             @Html.HiddenFor(model => model.CodTaskExecutor)
             @Html.HiddenFor(model => model.CodTaskExecutorOn)
 
         <h3>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</h3>
-        <br />
 
             @Html.AlgolaEditorFor(model => model.StartingCost1)
             @Html.AlgolaEditorFor(model => model.StartingCost2)
@@ -30,7 +33,6 @@
             @Html.EditorFor(model => model.CostForfaitForSheet)
 
         <h3>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</h3>
-        <br />
                 
             @Html.AlgolaEditorFor(model => model.CostPerUnit)
 
@@ -47,19 +49,19 @@
         </div>
 
         <h3>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</h3>
-        <br />
 
+            <p>
+                @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), (string)TempData["TaskExecutorIndex"] , null, new {@class="tbutton cancel icon"} )
+                <input class="tbutton save icon" type="submit" name='@HttpContext.GetLocalResourceObject(strings, "Save")' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+            </p>
 
-        <p>
-            <input type="submit" value="Create" />
-        </p>
     </fieldset>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+@section footer {
+    @Html.Partial("_footer")
 }

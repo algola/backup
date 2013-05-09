@@ -74,7 +74,7 @@ namespace PapiroMVC.Controllers
             //in action method Order GET
             TempData["Order"] = order;
             
-            return RedirectToAction("Order");
+            return Json(new { redirectUrl = Url.Action("Order")});
         }
 
         [HttpPost]
@@ -83,7 +83,7 @@ namespace PapiroMVC.Controllers
             try
             {
                //TODO: save changes into database... and redirect to anywhere
-                return RedirectToAction("OrderDetail", o);
+                return Json(new { redirectUrl = Url.Action("OrderDetail", o) });
             }
             catch
             {

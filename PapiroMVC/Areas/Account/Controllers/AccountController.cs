@@ -77,7 +77,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home", new { area = "" });
+                        return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" })});
                     }
                 }
                 else
@@ -96,7 +96,7 @@ namespace PapiroMVC.Areas.Account.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return Json(new { redirectUrl = Url.Action("Index", "Home")});
         }
 
         //
@@ -131,7 +131,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     this.SendConfirmationEmail(model.UserName);
-                    return RedirectToAction("Confirmation", "Account");
+                    return Json(new { redirectUrl = Url.Action("Confirmation", "Account") });
                 
                 }
                 else
@@ -181,7 +181,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                 if (changePasswordSucceeded)
                 {
-                    return RedirectToAction("ChangePasswordSuccess");
+                    return Json(new { redirectUrl = Url.Action("ChangePasswordSuccess")});
                 }
                 else
                 {
@@ -230,13 +230,13 @@ namespace PapiroMVC.Areas.Account.Controllers
                     user.IsApproved = true;
                     Membership.UpdateUser(user);
                     FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
-                    return RedirectToAction("welcome");
+                    return Json(new { redirectUrl = Url.Action("welcome")});
                 }
                 else
                 {
                     FormsAuthentication.SignOut();
                     TempData["tempMessage"] = "You have already confirmed your email address... please log in.";
-                    return RedirectToAction("LogOn");
+                    return Json(new { redirectUrl = Url.Action("LogOn")});
                 }
             }
         }

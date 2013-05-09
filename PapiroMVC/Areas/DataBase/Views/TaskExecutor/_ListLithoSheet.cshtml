@@ -4,69 +4,88 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleLithoSheetIndex");
+    string url = Url.Action("LithoSheetList", new { controller = "TaskExecutor", area = "DataBase" });
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
+<table id="gridLithoSheet"><tr><td/></tr></table>
+<div id="pagerLithoSheet"></div> 
 
-@(Html.jqGrid("LithoSheeteGrid")
-    
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "LithoSheetGridCaption"))
-    .setMultiSelect(true)
-        // columns
-    .addColumn(new Column("Id")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
-        .setWidth(40)
-        .setCustomFormatter("editRow")
-        .setSortable(false))
-    .addColumn(new Column("CodExecutor")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
-        .setWidth(20)
-        .setSortable(true))
+@Html.ActionLink((string)Html.T(strings, "CreateLithoSheet"), "CreateLithoSheet", null, new {@class="tbutton smalladd icon"})
 
-    .addColumn(new Column("TaskExecutorName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaskExecutorNameCaption"))        
-        .setWidth(100)
-        .setSortable(true)
-        .setSearch(true))
+    <script type="text/javascript">
 
-    .addColumn(new Column("FormatMax")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "FormatMaxCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
+        $(function () {
 
-    .addColumn(new Column("PrintingUnit")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "PrintingUnitCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
+            var lastSel = -1;
 
-    .addColumn(new Column("SheetwiseAfterPrintingUnit")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "SheetwiseAfterPrintingUnitCaption"))
-        .setWidth(45)
-        .setSortable(true)
-        .setSearch(true))
+            var myGrid = $("#gridLithoSheet").jqGrid({
+                caption: '@Html.T(strings, "LithoSheetGridCaption")',
+                url: '@url',
+                editUrl: '',
+                datatype: 'json',
+                multiselect: true,
+                colModel: [
+                    { name: 'Error', label: '', width: 45, align: 'center', hidden:true, editable: false },
+                    { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
+                    { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false  },                    
+                    { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
+                    { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },
+                    { name: 'PrintingUnit', label: '@Html.T(strings, "PrintingUnitCaption")', width: 45, align: 'center', editable: false},
+                    { name: 'SheetwiseAfterPrintingUnit', label: '@Html.T(strings, "SheetwiseAfterPrintingUnitCaption")', width: 45, align: 'center', editable: false},
+            ],
+
+                pager: '#pagerLithoSheet',
+                height: 300,
+
+                rowNum: 15,
+                rowList: [15, 20, 50],
+                viewrecords: true,
+                autowidth: true,
+
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        myGrid.jqGrid('restoreRow', lastSel);
+                        lastSel = id;
+                    }
+                },
+
+                ondblClickRow: function (id, ri, ci) {
+                    myGrid.jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function(){
+                            $("#gridLithoSheet").trigger("reloadGrid");
+                        },
+                        url: ''
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                    return;
+                }
+            });
+
+            myGrid.jqGrid('navGrid', '#pagerLithoSheet', { edit: false, add: false, del: false, search: false });
+
+        });
+
+        function insFmatter(cellvalue, options, rowobject) {
+            if (cellvalue == 9999999999)
+                return '';
+            else
+                return cellvalue;
+        }
+
+        function delStepCostPerMqStep(cellvalue, options, rowobject) {
+            var link = '@Ajax.ActionLink((string)Html.T(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerMqStep" })';
+            return link.replace("-1", cellvalue) 
+        }
+
+        function reloadCostPerMqStep() {
+            $("#gridLithoSheet").trigger("reloadGrid");
+        }
+
+    </script>
 
 
-    .setUrl(Url.Action("LithoSheetList", "TaskExecutor"))
 
-    .setHeight(300)
-    .setRowNum(20)
-    .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("CustomGridAccountPager")
-    .setPrint(true)
-    .setLoadText("")
-    .setAutoWidth(true)
-    .setSearchToolbar(true)
-    .setViewRecords(true)
-
-    // error handler
-    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
-
-    // render the html
-    .Render()
-)
-
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateLithoSheet"), "CreateLithoSheet")

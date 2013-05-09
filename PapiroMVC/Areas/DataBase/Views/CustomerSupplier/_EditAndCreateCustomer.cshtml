@@ -5,29 +5,32 @@
     string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
     }
 
-@using (Html.BeginForm()) {
+<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
     @Html.ValidationSummary(true)
 
     <fieldset>
         <legend>Customer</legend>
-            @Html.HiddenFor(model => model.TimeStampTable)
 
-            @Html.AlgolaEditorFor(model => model.CodCustomerSupplier)        
-            @Html.AlgolaEditorFor(model => model.BusinessName)
-            @Html.AlgolaEditorFor(model => model.VatNumber)
-            @Html.AlgolaEditorFor(model => model.TaxCode)
+        @Html.HiddenFor(model => model.TimeStampTable) 
+        @Html.HiddenFor(model => model.CodCustomerSupplier)        
+        @Html.AlgolaEditorFor(model => model.BusinessName)
+        @Html.AlgolaEditorFor(model => model.VatNumber)
+        @Html.AlgolaEditorFor(model => model.TaxCode)
 
-            @Html.HiddenFor(model => model.Outdated)
-
+        @Html.HiddenFor(model => model.Outdated)    
         <p>
-            <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+            @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index", null, new {@class="tbutton cancel icon"} )
+            <input class="tbutton save icon" type="submit" value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
         </p>
     </fieldset>
+    
+    
 }
 
-<div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "Index")
+
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

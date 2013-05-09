@@ -3,12 +3,11 @@
     List<MenuMvc> menuList = ViewBag.Menu;
 }
 
-<ul class="menuJq">  
-
-    
+<ul class="menu">  
+ 
 @foreach (var mp in menuList.Where(p => p.ParentId == 0)){
     
-<li>
+<li data-role="dropdown">
         @if (mp.ActionName != "#")
         {
             @Html.ActionLink(mp.TextName, mp.ActionName, mp.ControllerName, mp.RouteValues, mp.HtmlAttributes) 
@@ -20,7 +19,7 @@
 
         @if( menuList.Count(p=>p.ParentId == mp.Id ) > 0) 
         { 
-            @:<ul> 
+            @:<ul class="dropdown-menu"> 
         }  
         
         @RenderMenuItem(menuList,mp)

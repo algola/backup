@@ -6,6 +6,10 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingLithoSheetTitle") + @Model.TaskExecutorName;
 }
 <h2>@ViewBag.Title</h2>
-<br />
 
 @Html.Partial("_EditAndCreateLithoSheet", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

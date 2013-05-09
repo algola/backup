@@ -57,7 +57,19 @@
                     });
                     //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
                     return;
+                },
+
+                beforeSelectRow: function (rowid, e) {
+                    var iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]);
+
+
+                    //alert(this.p.colModel[iCol].name);
+                    if (this.p.colModel[iCol].name === 'cfgName') {
+                        alert("GO!!!");
+                        return false;
+                    }
                 }
+                
 
             });
 
@@ -73,7 +85,7 @@
         }
 
         function delStepAvarageRunPerRunStep(cellvalue, options, rowobject) {
-            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadAvarageRunPerRunStep" })';
+            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadAvarageRunPerRunStep" }, new {@class="tbutton smalldelete"})';
             return link.replace("-1", cellvalue) 
         }
 

@@ -1,0 +1,63 @@
+﻿@model PapiroMVC.Models.RollPrintableArticleViewModel
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+}
+
+<div id="status"> 
+    
+    @Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm("Action", "Article", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" }))
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>RollPrintableArticleViewModel</legend>
+
+        @Html.HiddenFor(model => model.Article.TimeStampTable)
+        
+        @Html.HiddenFor(model => model.Article.CodArticle)
+        @Html.HiddenFor(model => model.Article.ArticleName)
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Weight,"WeightAutoComplete","Article")
+        
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Width,"WidthAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.MqForafait,"MqForafaitAutoComplete","Article")
+
+        @Html.AlgolaAutocompleteFor(model =>  model.Article.Hand,"HandAutoComplete","Article")
+
+        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+
+        @Html.HiddenFor(model =>  model.Article.UnitOfMeasure)
+
+    </fieldset>
+
+    <div id='_RollPrintableArticleStandardCost'>
+        @Html.Partial("_RollPrintableArticleStandardCost", Model)
+    </div>
+
+    <p>
+        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "IndexRollPrintableArticle", null, new {@class="tbutton cancel icon"} )
+        <input class="tbutton save icon" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")               
+        {
+            <input class="tbutton save icon" type="submit" name="CreateRollPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+        }
+    </p>
+    
+}
+
+ </div>
+
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    

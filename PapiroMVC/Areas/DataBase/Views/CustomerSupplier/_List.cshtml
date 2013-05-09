@@ -4,14 +4,11 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");               
     }
 
-<h2>@ViewBag.Title</h2>
-<br />
-
 @(Html.jqGrid("CustomGrid")
-    
+
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))    
     // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
@@ -55,20 +52,18 @@
     .Render()
 )
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateCustomer"), "CreateCustomer")
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSupplier"), "CreateSupplier")
-
-<a href="#" id="a1">Get data from selected row</a>
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateCustomer"), "CreateCustomer",null,new {@class="tbutton smalladd icon"})
+@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSupplier"), "CreateSupplier",null,new {@class="tbutton smalladd icon"})
 
 <script type="text/javascript">
     function editCustomerSupplier(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
 
         var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
                                           "IndexBase",
                                           "CustomerSupplier",
                                           (object) new { id = -1 },
-                                          null)';
+                                          new {@class="tbutton smallbase"})';
 
         return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
     }

@@ -6,6 +6,10 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingDigitalSheetTitle") + @Model.TaskExecutorName;
 }
 <h2>@ViewBag.Title</h2>
-<br />
 
 @Html.Partial("_EditAndCreateDigitalSheet", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

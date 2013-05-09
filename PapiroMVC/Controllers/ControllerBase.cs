@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using PapiroMVC.Models;
 using PapiroMVC.Model;
 using System.IO;
+using SchemaManagemet;
 
 namespace PapiroMVC.Controllers
 {
@@ -87,6 +88,12 @@ namespace PapiroMVC.Controllers
             tables.Add(new ArticlesDDL());
             tables.Add(new CustomerSupplierDLL());
 
+
+
+            var dbS = new SchemaDb();
+            dbS.Ctx = ctx;
+            dbS.InitStoredMySql(System.Web.HttpContext.Current.Server.MapPath("~/mysql_stored.sql"));
+            
             foreach (var item in tables)
             {
                 item.UpdateSchema(ctx);
@@ -176,6 +183,17 @@ namespace PapiroMVC.Controllers
                     RouteValues = null
                 } ,
 
+                //UpdateDb
+               new MenuMvc(){ 
+                    Id = 33, 
+                    TextName = "Aggiorna Db", 
+                    ControllerName="Home", 
+                    ActionName="UpdateDb", 
+                    ParentId = 3, 
+                    SortOrder = 1,
+                    RouteValues = new { area = "" }
+                },
+
                 // Children
                new MenuMvc(){ 
                     Id = 31, 
@@ -185,11 +203,11 @@ namespace PapiroMVC.Controllers
                     ParentId = 3, 
                     SortOrder = 1,
                     RouteValues = new { area = "DataBase" }
-                } ,
+                },
 
                 new MenuMvc(){ 
                     Id = 32, 
-                    TextName = "Articoli", 
+                    TextName = "Materiali", 
                     ControllerName="", 
                     ActionName="#", 
                     ParentId = 3, 

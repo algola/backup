@@ -151,10 +151,19 @@
     <value>Costi a copia</value>
   </data>
   <data name="Costs" xml:space="preserve">
-    <value>Costi</value>
+    <value>nuovo</value>
   </data>
   <data name="CostsLabel" xml:space="preserve">
     <value>Costi</value>
+  </data>
+  <data name="CostsOnMq" xml:space="preserve">
+    <value>a mq</value>
+  </data>
+  <data name="CostsOnRun" xml:space="preserve">
+    <value>a copia</value>
+  </data>
+  <data name="CostsOnTime" xml:space="preserve">
+    <value>a tempo</value>
   </data>
   <data name="CreateDigitalSheet" xml:space="preserve">
     <value>Nuova Digitale a foglio</value>
@@ -216,6 +225,9 @@
   <data name="OperationsCaption" xml:space="preserve">
     <value>Operazioni</value>
   </data>
+  <data name="OperationsCaptionWidth_" xml:space="preserve">
+    <value>60</value>
+  </data>
   <data name="PrintingUnitCaption" xml:space="preserve">
     <value>Castelli</value>
   </data>
@@ -233,6 +245,9 @@
   </data>
   <data name="String1" xml:space="preserve">
     <value>Annulla</value>
+  </data>
+  <data name="TaskEstimatedOnRun" xml:space="preserve">
+    <value>Costo basato sulle copie lavorate</value>
   </data>
   <data name="TaskEstimatedOnTime" xml:space="preserve">
     <value>Costo bastato sui tempi di produzione</value>

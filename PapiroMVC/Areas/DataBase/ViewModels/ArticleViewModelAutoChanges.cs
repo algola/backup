@@ -95,7 +95,6 @@ namespace PapiroMVC.Models
 
         //Cost
         public string CostPerKg { get; set; }
-        public string CostPerMq { get; set; }
     }
 
 }

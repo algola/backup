@@ -1,0 +1,33 @@
+﻿<footer>
+    <div class="content-wrapper">
+        <div class="footerleft1">
+            <ul class="menuFooter">
+                <li><h2>Clienti Fornitori</h2></li>
+                <li>@Html.ActionLink("Elenco Clienti/Fornitori","Index",new {controller = "CustomerSupplier", area = "DataBase"},null)</li>
+                <li>@Html.ActionLink("Nuovo Cliente","CreateCustomer",new {controller = "CustomerSupplier",area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Nuovo Fornitore","CreateSupplier",new {controller = "CustomerSupplier",area = "DataBase"}, new {Title = "Inserimento di un nuovo fornitore in anagrafica"})</li>
+                    
+            </ul>    
+        </div>
+        <div class="footerleft2">
+            <ul class="menuFooter">
+                <li><h2>Materiali</h2></li> 
+                <li>@Html.ActionLink("Materiali a Foglio","IndexSheetPrintableArticle",new {controller = "Article", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Nuovo Materiale a Foglio","CreateSheetPrintableArticle",new {controller = "Article", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Materiali a Rotolo","IndexRollPrintableArticle",new {controller = "Article", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Nuovo Materiale a Rotolo","CreateRollPrintableArticle",new {controller = "Article", area = "DataBase"}, new {Title = ""})</li>
+            </ul>    
+        </div>
+        <div class="footerright">
+            <ul class="menuFooter">
+                <li><h2>Macchine ed Esecutori</h2></li> 
+                <li>@Html.ActionLink("Elenco Offset a Foglio","IndexLithoSheet",new {controller = "TaskExecutor", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Nuova Offset a Foglio","CreateLithoSheet",new {controller = "TaskExecutor", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Elenco Offset a Foglio","IndexDigitalSheet",new {controller = "TaskExecutor", area = "DataBase"}, new {Title = ""})</li>
+                <li>@Html.ActionLink("Nuova Digitale a Foglio","CreateDigitalSheet",new {controller = "TaskExecutor", area = "DataBase"}, new {Title = ""})</li>
+                    
+            </ul>    
+        </div> 
+    </div>
+           
+</footer>

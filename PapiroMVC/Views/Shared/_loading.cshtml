@@ -1,0 +1,58 @@
+﻿
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //eventually stop spinner
+            HideProcessingMsg();
+
+        });
+
+        $("a").click(function (event) {
+
+            var addressValue = $(this).attr("href");
+            if (addressValue.indexOf("#") == -1)
+                ShowProcessingMsg();
+        });
+
+        function ShowProcessingMsg() {
+            $('#loadingIndicator').show();
+        }
+
+        function HideProcessingMsg() {
+            $('#loadingIndicator').hide();
+        }
+
+        function OnSuccess(result) {
+            if (result.redirectUrl) {
+                HideProcessingMsg();
+                // if the server returned a JSON object containing an url 
+                // property we redirect the browser to that url
+                window.location.href = result.redirectUrl;
+            }
+        }
+
+        function unblockPage() {
+            // Check if the timer has run yet, and if it hasn't, cancel it
+            if ($("#divBlockPage").length > 0) {
+                document.body.style.cursor = "default";
+                $.unblockUI();
+                HideProcessingMsg();
+
+            }
+            else {
+                clearTimeout(blockTimer);
+            }
+        }
+
+        // Blocks page UI.
+        function blockPage() {
+            alert("aoaoao");
+            HideProcessingMsg();
+//            document.body.style.cursor = "wait";
+            var loadingMessage = '<div id="divBlockPage" style="padding-top:30px;min-height:75px;font-weight:bold;font-size:12pt;"><img align="absmiddle" src="../Images/ajax-loader.gif" /> Please wait...</div>';
+            $.blockUI({ centerX: true, centerY: true, css: { backgroundColor: '#ebebeb', color: '#000' }, message: loadingMessage });
+        }
+
+</script>
+
