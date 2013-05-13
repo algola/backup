@@ -61,6 +61,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cambia Password.
+        /// </summary>
+        public static string ChangePasswordMenu {
+            get {
+                return ResourceManager.GetString("ChangePasswordMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lingua.
         /// </summary>
         public static string CultureMenu {
@@ -120,6 +129,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         public static string LithoSheetMenu {
             get {
                 return ResourceManager.GetString("LithoSheetMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LoginMenu {
+            get {
+                return ResourceManager.GetString("LoginMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Esci.
+        /// </summary>
+        public static string LogOffMenu {
+            get {
+                return ResourceManager.GetString("LogOffMenu", resourceCulture);
             }
         }
         

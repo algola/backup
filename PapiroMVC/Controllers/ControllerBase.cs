@@ -54,15 +54,11 @@ namespace PapiroMVC.Controllers
                 string userName = requestContext.HttpContext.User.Identity.Name;
                 CurrentUser = Membership.GetUser(userName);
                 ViewData["CurrentUser"] = CurrentUser;
-                CurrentDatabase = "MYSQL5_898486_user1";
-                CurrentUserDatabase = "papiro1";
+                CurrentDatabase = userName;
+                CurrentUserDatabase = "root";
             }
             else
                 ViewData["CurrentUser"] = null;
-
-//MULTILANGUE
-
-            ViewBag.Menu = BuildMenu();
 
         }
 
@@ -72,27 +68,22 @@ namespace PapiroMVC.Controllers
             base.ExecuteCore();
         }
 
-        public void UpdateDatabase()
+        public void UpdateDatabase(string dbName)
         {
-
             dbEntities ctx = new dbEntities();
 
             if (CurrentDatabase != null)
-            {
-                ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
+            {                
+                //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
                 ctx.Database.Connection.Open();
             }
+
             var tables = new List<IDDL>();
 
-            tables.Add(new TaskExecutorsDDL());
-            tables.Add(new ArticlesDDL());
-            tables.Add(new CustomerSupplierDLL());
-
-
-
-            var dbS = new SchemaDb();
-            dbS.Ctx = ctx;
-            dbS.InitStoredMySql(System.Web.HttpContext.Current.Server.MapPath("~/mysql_stored.sql"));
+            tables.Add(new DataBaseDDL(dbName));
+            tables.Add(new CustomerSupplierDLL(dbName));
+            tables.Add(new TaskExecutorsDDL(dbName));
+            tables.Add(new ArticlesDDL(dbName));
             
             foreach (var item in tables)
             {

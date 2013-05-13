@@ -24,36 +24,19 @@ namespace SchemaManagemet
         public static string StringPK = "stringPK";
         public static string Time = "time";
 
+        public string DatabaseName { get; set; }
+
         public DbContext Ctx
         {
             get;
             set;
         }
 
-        public void InitStoredMySql(string sqlfile)
+        public void CreateDatabase()
         {
-            String sql = "";
-
-            try
-            {
-                using (StreamReader sr = new StreamReader(sqlfile))
-                {
-                    sql = sr.ReadToEnd();
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The file could not be read:");
-                Console.WriteLine(e.Message);
-            }
-            try
-            {
-                Ctx.Database.ExecuteSqlCommand(sql);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }        
+            var sql = "CALL AddDatabase('param1');";
+            sql = sql.Replace("param1", DatabaseName);
+            Ctx.Database.ExecuteSqlCommand(sql);
         }
 
         /// <summary>
@@ -62,8 +45,9 @@ namespace SchemaManagemet
         /// <param name="name"></param>
         public void AddTable(string name)
         {
-            var sql = "CALL AddTable('param1');";
-            sql = sql.Replace("param1", name);
+            var sql = "CALL AddTable('param1','param2');";
+            sql = sql.Replace("param2", name);
+            sql = sql.Replace("param1", DatabaseName);
             Ctx.Database.ExecuteSqlCommand(sql);
         }
 
@@ -76,7 +60,8 @@ namespace SchemaManagemet
         /// <param name="ColumnLenght"></param>
         public void AddColumnToTable(string tableName, string ColumnName, string ColumnType, string ColumnLenght)
         {
-            var sql = "CALL AddColumnToTable('param1','param2','param3',param4);";
+            var sql = "CALL AddColumnToTable('param0','param1','param2','param3',param4);";
+            sql = sql.Replace("param0", DatabaseName);
             sql = sql.Replace("param1", tableName);
             sql = sql.Replace("param2", ColumnName);
             sql = sql.Replace("param3", ColumnType);
@@ -100,7 +85,8 @@ namespace SchemaManagemet
         /// <param name="ColumnName2"></param>
         public void AddForeignKey(string tableName, string ColumnName, string tableName2, string ColumnName2)
         {
-            var sql = "CALL AddForeignKey('param1','param2','param3','param4');";
+            var sql = "CALL AddForeignKey('param0','param1','param2','param3','param4');";
+            sql = sql.Replace("param0", DatabaseName);            
             sql = sql.Replace("param1", tableName);
             sql = sql.Replace("param2", ColumnName);
             sql = sql.Replace("param3", tableName2);
@@ -122,7 +108,8 @@ namespace SchemaManagemet
         /// <param name="ColumnName"></param>
         public void AddIndex(string tableName, string ColumnName)
         {
-            var sql = "CALL AddIndex('param1','param2','param3');";
+            var sql = "CALL AddIndex('param0','param1','param2','param3');";
+            sql = sql.Replace("param0", DatabaseName);
             sql = sql.Replace("param1", tableName);
             sql = sql.Replace("param3", ColumnName);
             sql = sql.Replace("param2", ColumnName.Replace(",", "_"));
@@ -144,7 +131,8 @@ namespace SchemaManagemet
         /// <param name="columnLenght"></param>
         public void ChangeStringColumnLegth(string tableName, string columnName, string columnLenght)
         {
-            var sql = "CALL ChangeStringColumnLegth('param1','param2', param3);";
+            var sql = "CALL ChangeStringColumnLegth('param0','param1','param2', param3);";
+            sql = sql.Replace("param0", DatabaseName);
             sql = sql.Replace("param1", tableName);
             sql = sql.Replace("param2", columnName);
             sql = sql.Replace("param3", columnLenght);

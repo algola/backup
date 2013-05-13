@@ -32,7 +32,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             string verifyUrl = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
                              "/account/verify?ID=" + confirmationGuid;
 
-            var message = new MailMessage("alessandro.degola@gmail.com", user.Email)
+            var message = new MailMessage("papirosoftware@gmail.com", user.Email)
             {
                 Subject = "Please confirm your email",
                 Body = verifyUrl
@@ -41,7 +41,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             var client = new SmtpClient();
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("alessandro.degola@gmail.com", "Ele875147@"); 
+            client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@"); 
             client.Port = 587;
             client.Send(message);
         }
@@ -72,6 +72,8 @@ namespace PapiroMVC.Areas.Account.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
+                    base.UpdateDatabase(model.UserName);
+
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -79,7 +81,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     }
                     else
                     {
-                        return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" })});
+                        return RedirectToAction("Index", "Home", new { area = "" });
                     }
                 }
                 else
@@ -98,7 +100,7 @@ namespace PapiroMVC.Areas.Account.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return Json(new { redirectUrl = Url.Action("Index", "Home")});
+            return RedirectToAction("Index", "Home",new {Area=""});
         }
 
         //
@@ -232,13 +234,13 @@ namespace PapiroMVC.Areas.Account.Controllers
                     user.IsApproved = true;
                     Membership.UpdateUser(user);
                     FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
-                    return Json(new { redirectUrl = Url.Action("welcome")});
+                    return Json(new { redirectUrl = Url.Action("welcome") }, JsonRequestBehavior.AllowGet);
                 }
                 else
                 {
                     FormsAuthentication.SignOut();
                     TempData["tempMessage"] = "You have already confirmed your email address... please log in.";
-                    return Json(new { redirectUrl = Url.Action("LogOn")});
+                    return RedirectToAction("Login");
                 }
             }
         }

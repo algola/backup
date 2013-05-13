@@ -2,14 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SchemaManagemet;
 using System.Data.Objects;
 using System.Data.Entity;
 
 namespace PapiroMVC.Model
-{
-    interface IDDL
+{    
+    class DataBaseDDL : IDDL
     {
-        void UpdateSchema(DbContext ctx);
-    }
 
+        SchemaDb dbS;
+        
+        public DataBaseDDL(string dbName)
+        {
+            dbS = new SchemaDb();
+            dbS.DatabaseName = dbName;
+        }
+
+        public void UpdateSchema(DbContext ctx)
+        {
+            dbS.Ctx = ctx;
+            dbS.CreateDatabase();
+        }
+    }
 }

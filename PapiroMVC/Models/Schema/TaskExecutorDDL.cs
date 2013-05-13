@@ -8,11 +8,18 @@ using System.Data.Entity;
 
 namespace PapiroMVC.Model
 {    
-    class TaskExecutorsDDL :IDDL
+    class TaskExecutorsDDL : IDDL
     {
-        public void UpdateSchema(DbContext ctx)
+        SchemaDb dbS;
+
+        public TaskExecutorsDDL(string dbName)
         {
-            var dbS = new SchemaDb();
+            dbS = new SchemaDb();
+            dbS.DatabaseName = dbName;
+        }
+
+        public void UpdateSchema(DbContext ctx)
+        {           
             dbS.Ctx = ctx;
 
             //First Table
@@ -33,7 +40,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "InkUsageForfait", SchemaDb.Double, "0");
 
             //litho
-            dbS.AddColumnToTable("taskexecutors", "PrintingUnit", SchemaDb.ByteUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "PrintingUnit", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "SheetwiseAfterPrintingUnit", SchemaDb.ByteUS, "0");
             dbS.AddColumnToTable("taskexecutors", "Sheetwise", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "WashUpTime", SchemaDb.Time, "0");
@@ -194,9 +201,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("Steps", "CostPerUnit32", SchemaDb.String, "20");
             dbS.AddColumnToTable("Steps", "StartingCost32", SchemaDb.String, "20");
             dbS.AddColumnToTable("Steps", "BindingCost", SchemaDb.String, "20");
-
-
-
 
             //FK
             dbS.AddForeignKey("Steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");

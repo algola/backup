@@ -483,8 +483,9 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\ObjectContext.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
-    <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
+    <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
+    <Compile Include="Models\Schema\IDDL.cs" />
     <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

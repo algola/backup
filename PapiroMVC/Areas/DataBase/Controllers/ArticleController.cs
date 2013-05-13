@@ -77,7 +77,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-
                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
                     articleRepository.Add(c.Article);
                     //rigeneration name of article

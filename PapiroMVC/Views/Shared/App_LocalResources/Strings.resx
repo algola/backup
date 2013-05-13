@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangePasswordMenu" xml:space="preserve">
+    <value>Cambia Password</value>
+  </data>
   <data name="CultureMenu" xml:space="preserve">
     <value>Lingua</value>
   </data>
@@ -137,6 +140,12 @@
   </data>
   <data name="LithoSheetMenu" xml:space="preserve">
     <value>Stampa Litho Foglio</value>
+  </data>
+  <data name="LoginMenu" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LogOffMenu" xml:space="preserve">
+    <value>Esci</value>
   </data>
   <data name="PrintableArticleMenu" xml:space="preserve">
     <value>Materiali Stampabili</value>

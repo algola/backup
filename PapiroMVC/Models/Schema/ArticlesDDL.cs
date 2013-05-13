@@ -10,9 +10,17 @@ namespace PapiroMVC.Model
 {    
     class ArticlesDDL :IDDL
     {
+        SchemaDb dbS;
+
+        public ArticlesDDL(string dbName)
+        {
+            dbS = new SchemaDb();
+            dbS.DatabaseName = dbName;
+        }
+
         public void UpdateSchema(DbContext ctx)
         {
-            var dbS = new SchemaDb();
+            
             dbS.Ctx = ctx;
 
             //First Table
