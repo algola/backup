@@ -1766,7 +1766,6 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\EditDigitalSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateDigitalSheet.cshtml" />
-    <Content Include="mysql_stored.txt" />
     <Content Include="Scripts\autocomplete.js" />
     <Content Include="Scripts\bootstrap-validaton.js" />
     <Content Include="Scripts\bootstrap-validaton.min.js" />

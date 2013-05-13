@@ -41,6 +41,8 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             var client = new SmtpClient();
             client.EnableSsl = true;
+            client.Credentials = new System.Net.NetworkCredential("alessandro.degola@gmail.com", "Ele875147@"); 
+            client.Port = 587;
             client.Send(message);
         }
 

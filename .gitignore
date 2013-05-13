@@ -28,3 +28,4 @@ _ReSharper*/
 *.vssscc
 $tf*/
 PapiroMVC/Web*.config
+PapiroMVC/web.config_old
