@@ -43,11 +43,15 @@
     </div>
 
     <p>
-        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"), "IndexRollPrintableArticle", null, new {@class="tbutton cancel icon"} )
-        <input class="tbutton save icon" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new {Area="Database"})');">            
+            @HttpContext.GetLocalResourceObject(strings, "Cancel")
+        </button>
+
+        <input class="button" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+                        
         @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")               
         {
-            <input class="tbutton save icon" type="submit" name="CreateRollPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+            <input class="button" type="submit" name="CreateRollPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
         }
     </p>
     

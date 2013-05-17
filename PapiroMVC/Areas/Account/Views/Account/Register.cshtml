@@ -1,4 +1,5 @@
-﻿@model PapiroMVC.Models.RegisterModel
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RegisterModel
 
 @{
     string strings = "~/Areas/Account/Views/Account/Strings";
@@ -15,26 +16,14 @@
 
     <fieldset>
         <legend> @HttpContext.GetLocalResourceObject(strings, "RegistrationLegend")</legend>
-            <div class="editor-label">
-                @Html.LabelFor(m => m.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(m => m.UserName)
-                @Html.ValidationMessageFor(m => m.UserName)        
-            </div>
+                
+        @Html.AlgolaEditorFor(m => m.UserName)        
 
             <p class="message-info">
                 @HttpContext.GetLocalResourceObject(strings, "EmailWarning")
             </p>
-
-            <div class="editor-label">
-                @Html.LabelFor(m => m.Email)
-            </div>
-
-            <div class="editor-field">
-                @Html.EditorFor(m => m.Email)            
-                @Html.ValidationMessageFor(m => m.Email)
-            </div>
+    
+        @Html.AlgolaEditorFor(m => m.Email)
 
             <p class="message-info">
                 @HttpContext.GetLocalResourceObject(strings, "PasswordWarning1") @Membership.MinRequiredPasswordLength @HttpContext.GetLocalResourceObject(strings, "PasswordWarning2").
@@ -57,30 +46,11 @@
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(m => m.OrganizationName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(m => m.OrganizationName)
-                @Html.ValidationMessageFor(m => m.OrganizationName)
-            </div>
+                @Html.AlgolaEditorFor(m => m.OrganizationName)
+                @Html.AlgolaEditorFor(m => m.VatNumber)
+                @Html.AlgolaEditorFor(m => m.TaxCode)
 
-            <div class="editor-label">
-                @Html.LabelFor(m => m.VatNumber)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(m => m.VatNumber)
-                @Html.ValidationMessageFor(m => m.VatNumber)
-            </div>
-
-            <div class="editor-label">
-                @Html.LabelFor(m => m.TaxCode)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(m => m.TaxCode)
-                @Html.ValidationMessageFor(m => m.TaxCode)
-            </div>
-        <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "RegisterSubmit")' />
+            <input type="submit" value='@HttpContext.GetLocalResourceObject(strings, "RegisterSubmit")' />
     </fieldset>
 }
 

@@ -2,7 +2,62 @@
 
 @{
     ViewBag.Title = "Home Page";
+    try
+    {
+        ViewBag.Welcome = "";
+        if ((bool)TempData["welcomeMessage"] == true)
+        {
+            ViewBag.Welcome = "Benvenuto";
+        }
+    }
+    catch(NullReferenceException e)        
+    {
+        ViewBag.Welcome = "";        
+    }
 }
+
+<h1>@ViewBag.Welcome</h1>
+
+
+<div class="hero-unit">
+<div class="carousel span8" data-role="carousel">
+        <div class="slides">
+
+            <div class="slide" id="slide1" style="left: -580px;">
+                <h2>Create site in Windows 8 style now!</h2>
+
+                <p class="bg-color-blueDark padding20 fg-color-white">Metro UI CSS allows to create a Web site in the style of
+                    Windows 8 quickly and without distractions
+                    on routine tasks.</p>
+                <h3>To start: include <strong>modern.css</strong> in head of page</h3>
+                <p class="tertiary-info-text">
+                    &lt;link href="modern.css" rel="stylesheet"&gt; and add to metro container <strong>metrouicss</strong> class. Example: &lt;body class="metrouicss"&gt;...&lt;/body&gt;
+                </p>
+            </div>
+
+            <div class="slide mixed" id="slide2">
+                <div class="description">
+                    Description text here...
+                </div>
+            </div>
+        </div>
+
+<span class="control right"><i class="icon-arrow-right-3"></i></span>
+<span class="control left"><i class="icon-arrow-left-3"></i></span>     
+ 
+    <div class="markers">
+        <ul>
+            <li class="active">
+                <a href="javascript:void(0)" data-num="0"></a>
+            </li>
+            <li>
+                <a href="javascript:void(0)" data-num="1"></a>
+            </li>
+        </ul>
+    </div>
+
+    </div>
+</div>
 
 <ol class="round">
     <li class="one">
@@ -12,7 +67,19 @@
         for enjoyable, agile development. ASP.NET MVC includes many features that enable
         fast, TDD-friendly development for creating sophisticated applications that use
         the latest web standards. <a href="http://go.microsoft.com/fwlink/?LinkId=245151">Learn
-            more</a></li>
+            more</a>
+
+        <button class="shortcut">
+            <span class="icon">
+                <i class="icon-locked"></i>
+            </span>
+            <span class="label">
+                Caption
+            </span>
+            <span class="badge">100</span>
+        </button>
+
+    </li>
     <li class="two">
         <h5>Add NuGet packages and jump start your coding</h5>
         NuGet makes it easy to install and update free libraries and tools. <a href="http://go.microsoft.com/fwlink/?LinkId=245153">

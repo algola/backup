@@ -81,6 +81,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     }
                     else
                     {
+                        TempData["welcomeMessage"] = true;
                         return RedirectToAction("Index", "Home", new { area = "" });
                     }
                 }
@@ -207,11 +208,6 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         [AllowAnonymous]
         public ActionResult Confirmation()
-        {
-            return View();
-        }
-
-        public ActionResult Welcome()
         {
             return View();
         }
