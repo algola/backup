@@ -10,7 +10,11 @@
 <table id="gridLithoSheet"><tr><td/></tr></table>
 <div id="pagerLithoSheet"></div> 
 
-@Html.ActionLink((string)Html.T(strings, "CreateLithoSheet"), "CreateLithoSheet", null, new {@class="tbutton smalladd icon"})
+<br />
+<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new {Area="Database"})');">            
+     <i class="icon-plus-2"></i>         
+     @HttpContext.GetLocalResourceObject(strings, "CreateLithoSheet")
+                </button>
 
     <script type="text/javascript">
 

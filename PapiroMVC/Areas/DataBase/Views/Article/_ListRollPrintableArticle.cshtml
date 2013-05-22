@@ -100,9 +100,25 @@
     .Render()
 )
 
-@Html.ActionLink((string)@Html.T(strings, "CreateRollPrintableArticle"), "CreateRollPrintableArticle",null,new {@class="tbutton smalladd"})
-@Html.ActionLink((string)@Html.T(strings, "WizardRollPrintableArticle"), "WizardRollPrintableArticle",null,new {@class="tbutton smalladd"})
-<a href="javascript:void(0);" id="linkToChangeDiv" class="tbutton smalltool">@Html.T(strings, "AutoCahngesCaption")</a>
+    <br />
+
+
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new {Area="Database"})');">            
+            <i class="icon-plus-2"></i>
+            @Html.T(strings, "CreateRollPrintableArticle")
+        </button>
+
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new {Area="Database"})');">            
+           <i class="icon-plus-2"></i>
+             @Html.T(strings, "WizardRollPrintableArticle")
+        </button>
+
+        <button type="button" onclick="javascript:void(0);" id="linkToChangeDiv">            
+            <i class="icon-cog"></i>
+            @Html.T(strings, "AutoCahngesCaption")
+        </button>
+
+
 
     </div>
 

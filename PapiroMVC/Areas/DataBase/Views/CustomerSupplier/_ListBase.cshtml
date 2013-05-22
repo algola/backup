@@ -108,10 +108,20 @@
     // render the html
     .Render()
 )
-
+<br />
 <div>
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index",null,new {@class="tbutton cancel icon"})
-    @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateBase"), "CreateBase", new { id = Model.CodCustomerSupplier }, new {id = "CreateBase" , @class="tbutton smalladd icon"})
+
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new {Area="Database"})');">            
+            <i class="icon-arrow-left"></i>
+            @HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList")
+        </button>
+
+
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateBase", "CustomerSupplier", new {Area="Database"})');">            
+            <i class="icon-plus-2"></i>               
+            @HttpContext.GetLocalResourceObject(strings, "CreateBase")
+        </button>
+   
 </div>
 
 

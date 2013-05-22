@@ -51,9 +51,19 @@
     // render the html
     .Render()
 )
+<br />
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateCustomer"), "CreateCustomer",null,new {@class="tbutton smalladd icon"})
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateSupplier"), "CreateSupplier",null,new {@class="tbutton smalladd icon"})
+<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new {Area="Database"})');">            
+    <i class="icon-plus-2"></i>            
+        @HttpContext.GetLocalResourceObject(strings, "CreateCustomer")
+                </button>
+
+
+<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSupplier", "CustomerSupplier", new {Area="Database"})');">            
+                  <i class="icon-plus-2"></i>
+     @HttpContext.GetLocalResourceObject(strings, "CreateSupplier")
+                </button>
+
 
 <script type="text/javascript">
     function editCustomerSupplier(cellvalue, options, rowobject) {

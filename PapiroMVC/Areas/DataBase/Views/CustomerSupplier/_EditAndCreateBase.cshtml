@@ -45,16 +45,20 @@
             @Html.AlgolaEditorFor(model => model.Referee)
             @Html.AlgolaEditorFor(model => model.Pec)
             @Html.AlgolaEditorFor(model => model.Province)
-
+        <br />
     <p>
-        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Cancel"),
-                            "IndexBase",
-                            "CustomerSupplier",(object) new { id = Model.CodCustomerSupplier },
-                            new {@class="tbutton cancel icon"} )
 
-        @Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList"), "Index", null, new {@class="tbutton cancel icon"} )
-        <input class="tbutton save icon" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexBase", "CustomerSupplier", new {Area="Database"})');">            
+            <i class="icon-arrow-left"></i>        
+            @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                </button>
+
+         <button class="default" type="submit">
+                 <i class="icon-save"></i>    
+                 @HttpContext.GetLocalResourceObject(strings, "Save")
+             </button>    
     </p>
+
     </fieldset>
 }
 

@@ -58,14 +58,20 @@
     <div id='_SheetPrintableArticleCuttedCost'>
         Html.Partial("_SheetPrintableArticleCuttedCost", Model)
     </div>
-        -->       
+        --> 
+    <br />      
     <p>
         
         <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new {Area="Database"})');">            
+            <i class ="icon-arrow-left"></i>
             @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
 
-        <input class="button" type="submit" name='@ViewBag.ActionMethod' value='@HttpContext.GetLocalResourceObject(strings, "Save")' />
+        <button class="default" type="submit" name="@ViewBag.ActionMethod">
+                 <i class="icon-save"></i>    
+                 @HttpContext.GetLocalResourceObject(strings, "Save")
+             </button>        
+        
         @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")               
         {
             <input class="button" type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />

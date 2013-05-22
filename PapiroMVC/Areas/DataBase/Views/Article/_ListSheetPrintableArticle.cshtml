@@ -109,12 +109,24 @@
     // render the html
     .Render()
 )
+    <br />
 
-@Html.ActionLink(Html.T(strings, "CreateSheetPrintableArticle"), "CreateSheetPrintableArticle",null,new {@class="tbutton smalladd"})
-@Html.ActionLink(Html.T(strings, "WizardSheetPrintableArticle"), "WizardSheetPrintableArticle",null,new {@class="tbutton smalladd"})
 
-<a href="javascript:void(0);" id="linkToChangeDiv" class="tbutton smalltool">@HttpContext.GetLocalResourceObject(strings, "AutoCahngesCaption")</a>
+ <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSheetPrintableArticle", "Article", new {Area="Database"})');">            
+      <i class="icon-plus-2"></i>     
+      @Html.T(strings, "CreateSheetPrintableArticle")
+        </button>
 
+ <button type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardSheetPrintableArticle", "Article", new {Area="Database"})');">            
+     <i class="icon-plus-2"></i>       
+     @Html.T(strings, "WizardSheetPrintableArticle")
+        </button>
+
+
+    <button type="button" onclick="javascript:void(0);" id="linkToChangeDiv">            
+         <i class="icon-cog"></i>   
+         @Html.T(strings, "AutoCahngesCaption")
+        </button>
     </div>
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>

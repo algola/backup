@@ -79,4 +79,8 @@
     .Render()
 )
 
-@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet"), "CreateDigitalSheet")
+<br />
+<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new {Area="Database"})');">            
+     <i class="icon-plus-2"></i>            
+     @HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet")
+                </button>
