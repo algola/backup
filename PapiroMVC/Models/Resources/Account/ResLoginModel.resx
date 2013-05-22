@@ -117,49 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Cancel" xml:space="preserve">
-    <value>Annulla</value>
+  <data name="CurrencyValidation" xml:space="preserve">
+    <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
   </data>
-  <data name="ConfirmationMessage" xml:space="preserve">
-    <value>Per completare la registrazione cliccare sul link inviato dal sistema all'indirizzo specificato in registrazione</value>
+  <data name="CurrencyValidationError" xml:space="preserve">
+    <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
-  <data name="EmailWarning" xml:space="preserve">
-    <value>Per la registrazione di un nuovo utente è necessario fornire una e-mail valida e raggiungibile. A questo indirizzo verrà spedita una mail per completare la registrazione. </value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="LoginButton" xml:space="preserve">
-    <value>Login</value>
+  <data name="PasswordRequiredField" xml:space="preserve">
+    <value>specificare una password</value>
   </data>
-  <data name="LoginMessage" xml:space="preserve">
-    <value>Introdurre nome utente e password validi per accedere al sistema</value>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Salvare le credenziali?</value>
   </data>
-  <data name="LoginMessageError" xml:space="preserve">
-    <value>Nome utente o password non validi. Login non effettuato</value>
+  <data name="RequiredField" xml:space="preserve">
+    <value>richiesto per completare l'operazione</value>
   </data>
-  <data name="LoginTitle" xml:space="preserve">
-    <value>Pagina di login</value>
+  <data name="UserName" xml:space="preserve">
+    <value>Nome utente</value>
   </data>
-  <data name="PasswordWarning1" xml:space="preserve">
-    <value>La lunghezza della password non deve essere inferiore a</value>
-  </data>
-  <data name="PasswordWarning2" xml:space="preserve">
-    <value> caratteri alfanumerici.</value>
-  </data>
-  <data name="RegisterLink" xml:space="preserve">
-    <value>Registrati</value>
-  </data>
-  <data name="RegisterMessageAfterLink" xml:space="preserve">
-    <value>se non hai ancora un account.</value>
-  </data>
-  <data name="RegisterSubmit" xml:space="preserve">
-    <value>Invia richiesta</value>
-  </data>
-  <data name="RegistrationLegend" xml:space="preserve">
-    <value>Registrazione gratuita la portale popcorn-print</value>
-  </data>
-  <data name="TitleConfirmation" xml:space="preserve">
-    <value>Registrazione di un nuovo utente</value>
-  </data>
-  <data name="TitleRegister" xml:space="preserve">
-    <value>Registrazione di un nuovo utente</value>
+  <data name="UserNameRequiredField" xml:space="preserve">
+    <value>specificare un nome utente</value>
   </data>
 </root>

@@ -68,10 +68,12 @@ namespace PapiroMVC.Areas.Account.Controllers
         [HttpPost]   
         public ActionResult Login(LoginModel model, string returnUrl)
         {
+            TempData["errorMessage"] = false;
             if (ModelState.IsValid)
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
+                    //when usere has logged in system, database will be updated. 
                     base.UpdateDatabase(model.UserName);
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -87,7 +89,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ModelState.AddModelError("PersError", "LoginMessageError");
                 }
             }
 

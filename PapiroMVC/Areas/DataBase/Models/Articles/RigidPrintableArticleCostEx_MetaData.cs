@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using PapiroMVC.Validation;
 using PapiroMVC.Models.Resources.Articles;
-using PapiroMVC.Models.Resources.Articles;
 
 
 namespace PapiroMVC.Models

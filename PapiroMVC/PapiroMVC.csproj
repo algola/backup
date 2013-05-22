@@ -229,6 +229,18 @@
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
     <Compile Include="Models\MenuMvc.cs" />
+    <Compile Include="Models\Resources\Account\AccountVuoto.Designer.cs">
+      <DependentUpon>AccountVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Account\ResLoginModel.Designer.cs">
+      <DependentUpon>ResLoginModel.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
       <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -2052,6 +2064,18 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Models\Resources\Account\AccountVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountVuoto.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\ResLoginModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLoginModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Account</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>

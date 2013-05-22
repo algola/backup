@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Web.Security;
 using PapiroMVC.Validation;
+using PapiroMVC.Models.Resources.Account;
 
 namespace PapiroMVC.Models
 {
@@ -29,16 +30,16 @@ namespace PapiroMVC.Models
 
     public class LoginModel
     {
-        [Required]
-        [Display(Name = "User name")]
+        [Required(ErrorMessageResourceType = typeof(ResLoginModel), ErrorMessageResourceName = "UserNameRequiredField")]
+        [DisplayNameLocalized(typeof(ResLoginModel), "UserName")]
         public string UserName { get; set; }
 
-        [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Required(ErrorMessageResourceType = typeof(ResLoginModel), ErrorMessageResourceName = "PasswordRequiredField")]
+        [DisplayNameLocalized(typeof(ResLoginModel), "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [DisplayNameLocalized(typeof(ResLoginModel), "RememberMe")]
         public bool RememberMe { get; set; }
     }
 
