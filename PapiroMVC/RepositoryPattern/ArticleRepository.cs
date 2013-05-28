@@ -175,7 +175,7 @@ namespace Services
                 base.Add(entity);
         }
 
-        public override IQueryable<Article> GetAll()
+        public IQueryable<Article> GetAll()
         {
             Console.WriteLine(Context.Database.Connection.ConnectionString);
             return Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy");

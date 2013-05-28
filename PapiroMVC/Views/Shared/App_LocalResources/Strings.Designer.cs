@@ -106,6 +106,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profilo.
+        /// </summary>
+        public static string EditProfileMenu {
+            get {
+                return ResourceManager.GetString("EditProfileMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string EnglishMenu {

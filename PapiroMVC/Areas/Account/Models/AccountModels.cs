@@ -9,34 +9,43 @@ using PapiroMVC.Models.Resources.Account;
 namespace PapiroMVC.Models
 {
 
+    public class RecoveryPasswordModel
+    {
+        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldEmail")]
+        [DisplayNameLocalized(typeof(Registration), "Email")]
+        [DataType(DataType.EmailAddress, ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "ValidationEmail")]
+        public string Email { get; set; }
+    }
+
     public class ChangePasswordModel
     {
-        [Required]
+        [Required(ErrorMessageResourceType = typeof(ResChangePasswordModel), ErrorMessageResourceName = "Required")]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [DisplayNameLocalized(typeof(ResChangePasswordModel), "OldPassword")]
         public string OldPassword { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [Required(ErrorMessageResourceType = typeof(ResChangePasswordModel), ErrorMessageResourceName = "Required")]
+        [StringLength(100, ErrorMessageResourceType = typeof(ResChangePasswordModel), ErrorMessageResourceName = "ValidationPassword", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [DisplayNameLocalized(typeof(ResChangePasswordModel), "NewPassword")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [DisplayNameLocalized(typeof(ResChangePasswordModel), "ConfirmPassword")]
+        [Compare("NewPassword", ErrorMessageResourceType = typeof(ResChangePasswordModel), ErrorMessageResourceName = "ValidationConfirmPassword")]
         public string ConfirmPassword { get; set; }
     }
 
     public class LoginModel
     {
         [Required(ErrorMessageResourceType = typeof(ResLoginModel), ErrorMessageResourceName = "UserNameRequiredField")]
-        [DisplayNameLocalized(typeof(ResLoginModel), "UserName")]
+        [DisplayNameLocalized(typeof(ResLoginModel),  "UserName")]
         public string UserName { get; set; }
 
         [DataType(DataType.Password)]
         [Required(ErrorMessageResourceType = typeof(ResLoginModel), ErrorMessageResourceName = "PasswordRequiredField")]
         [DisplayNameLocalized(typeof(ResLoginModel), "Password")]
+
         public string Password { get; set; }
 
         [DisplayNameLocalized(typeof(ResLoginModel), "RememberMe")]
@@ -73,9 +82,25 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(Registration), "VatNumber")]
         public string VatNumber { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldTaxCode")]
+//        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldTaxCode")]
         [DisplayNameLocalized(typeof(Registration), "TaxCode")]
         public string TaxCode { get; set; }
-        
+
+//        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldBase")]
+        [DisplayNameLocalized(typeof(Registration), "Base")]
+        public string Base { get; set; }
+
+        //        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldRefeere")]
+        [DisplayNameLocalized(typeof(Registration), "Refeere")]
+        public string Refeere { get; set; }
+
+        //        [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldPhone")]
+        [DisplayNameLocalized(typeof(Registration), "Phone")]
+        public string Phone { get; set; }
+
+        [DisplayNameLocalized(typeof(Registration), "Culture")]
+        public string Culture { get; set; }
+
+
     }
 }

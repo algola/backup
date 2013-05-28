@@ -120,11 +120,53 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>La lunghezza dela password deve essere non inferiore a </value>
+  </data>
+  <data name="ChangePassword1" xml:space="preserve">
+    <value>caratteri alfanumerici</value>
+  </data>
+  <data name="ChangePasswordTitle" xml:space="preserve">
+    <value>Cambia Password</value>
+  </data>
   <data name="ConfirmationMessage" xml:space="preserve">
     <value>Per completare la registrazione cliccare sul link inviato dal sistema all'indirizzo specificato in registrazione</value>
   </data>
+  <data name="ConfirmChangePassword" xml:space="preserve">
+    <value>Password cambiata con successo</value>
+  </data>
+  <data name="ConfirmChangePasswordTitle" xml:space="preserve">
+    <value>Cambio password</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Questa e-mail resulta già registrata. Inserire un altra e-mail per una nuva registrazione.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>User name già esistente. Inserirne un altro.</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>Riceverà un e-mail con la password all'indirizzo usato durante la registrazione.</value>
+  </data>
   <data name="EmailWarning" xml:space="preserve">
     <value>Per la registrazione di un nuovo utente è necessario fornire una e-mail valida e raggiungibile. A questo indirizzo verrà spedita una mail per completare la registrazione. </value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="InvalidAnswer" xml:space="preserve">
+    <value>La password inserita non è valida.Inserire un'altra password di caratteri alfanumerici non inferiori a 5.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>L'e-mail inserita non è valida. Inserire un'altra e-mail.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>La password inserita non è valida.Inserire un'altra password di caratteri alfanumerici non inferiori a 5.</value>
+  </data>
+  <data name="InvalidQuestion" xml:space="preserve">
+    <value>Le due password non combaciano.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>Nome utente non valido. Inseriscine uno nuovo e riprova.</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Login</value>
@@ -138,11 +180,29 @@
   <data name="LoginTitle" xml:space="preserve">
     <value>Pagina di login</value>
   </data>
+  <data name="NewAccount" xml:space="preserve">
+    <value>Creazione di un  nuovo account.</value>
+  </data>
+  <data name="OldPasswordError" xml:space="preserve">
+    <value>La vecchia password non è corretta</value>
+  </data>
   <data name="PasswordWarning1" xml:space="preserve">
     <value>La lunghezza della password non deve essere inferiore a</value>
   </data>
   <data name="PasswordWarning2" xml:space="preserve">
     <value> caratteri alfanumerici.</value>
+  </data>
+  <data name="ProviderError" xml:space="preserve">
+    <value>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+  </data>
+  <data name="RecoveryPasswordAfterLink" xml:space="preserve">
+    <value>se non la ricordi.</value>
+  </data>
+  <data name="RecoveryPasswordLink" xml:space="preserve">
+    <value>Recupera la password </value>
+  </data>
+  <data name="RecoveryPasswordTitle" xml:space="preserve">
+    <value>Recupero Password</value>
   </data>
   <data name="RegisterLink" xml:space="preserve">
     <value>Registrati</value>
@@ -156,10 +216,40 @@
   <data name="RegistrationLegend" xml:space="preserve">
     <value>Registrazione gratuita la portale popcorn-print</value>
   </data>
+  <data name="TitleCEmailSent" xml:space="preserve">
+    <value>E-mail di conferma inviata</value>
+  </data>
   <data name="TitleConfirmation" xml:space="preserve">
     <value>Registrazione di un nuovo utente</value>
   </data>
   <data name="TitleRegister" xml:space="preserve">
     <value>Registrazione di un nuovo utente</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Errore sconoscuto.Verificare i dati inseriti e riprovare con la registrazione.Se il problema persiste contattare l'aministratore del sistema.</value>
+  </data>
+  <data name="UserRejected" xml:space="preserve">
+    <value>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+  </data>
+  <data name="VerifyActivated" xml:space="preserve">
+    <value>Account attivato correttamente. Da ora  possibile operare con il software.</value>
+  </data>
+  <data name="VerifyError" xml:space="preserve">
+    <value>Si è verificato un errore durante la procedura di attivazione.</value>
+  </data>
+  <data name="VerifyJustActivated" xml:space="preserve">
+    <value>Account già attivato. Si prega di immettere nome utente e password per proseguire.</value>
+  </data>
+  <data name="VerifyTitle" xml:space="preserve">
+    <value>Verifica account</value>
+  </data>
+  <data name="ConfirmEditProfile" xml:space="preserve">
+    <value>Profilo salvato con successo</value>
+  </data>
+  <data name="ConfirmEditProfileTitle" xml:space="preserve">
+    <value>Profilo</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
   </data>
 </root>

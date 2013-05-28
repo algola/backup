@@ -165,4 +165,7 @@
   <data name="UpdateDbMenu" xml:space="preserve">
     <value>Aggiorna Database</value>
   </data>
+  <data name="EditProfileMenu" xml:space="preserve">
+    <value>Profilo</value>
+  </data>
 </root>

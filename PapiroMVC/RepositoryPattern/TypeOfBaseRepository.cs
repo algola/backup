@@ -8,7 +8,7 @@ namespace Services
 {
     public class TypeOfBaseRepository : GenericRepository<dbEntities, TypeOfBase>, ITypeOfBaseRepository
     {
-        public IQueryable<TypeOfBase> GetAll()
+        public override IQueryable<TypeOfBase> GetAll()
         {
             var c = Context.typeofbase;
 

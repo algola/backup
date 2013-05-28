@@ -65,13 +65,16 @@
     <Reference Include="MvcJqGrid">
       <HintPath>..\packages\MvcJqGrid.1.0.9\lib\net40\MvcJqGrid.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data.Entity, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\MySql.Data.Entity.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Web, Version=6.6.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Web, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
@@ -193,6 +196,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Models\Account\ProfileEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\Proflile_MetaData.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex_AutoComplete.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
@@ -228,9 +233,32 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
-    <Compile Include="Models\MenuMvc.cs" />
+    <Compile Include="Models\Model2.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Profile.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Resources\Account\AccountVuoto.Designer.cs">
       <DependentUpon>AccountVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Account\ResChangePasswordModel.Designer.cs">
+      <DependentUpon>ResChangePasswordModel.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
@@ -495,6 +523,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\ObjectContext.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
+    <Compile Include="Models\Schema\ProfilesDDL.cs" />
     <Compile Include="Models\Schema\DatabaseDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
     <Compile Include="Models\Schema\IDDL.cs" />
@@ -505,15 +534,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="RepositoryPattern\ProfileRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProfileRepository.cs" />
     <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
     <Compile Include="Scripts\Default1Controller.cs" />
     <Compile Include="Validation\DecimalModelBinder.cs" />
     <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
-    <Compile Include="Validation\Registration.en-us.Designer.cs">
+    <Compile Include="Models\Resources\Account\Registration.en-us.Designer.cs">
       <DependentUpon>Registration.en-us.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Validation\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>
@@ -775,10 +807,11 @@
     <Compile Include="Validation\RegularExpressionLocalizedAttribute.cs" />
     <Compile Include="Validation\MoneyAttribute.cs" />
     <Compile Include="Validation\MustBeAttribute.cs" />
-    <Compile Include="Validation\Registration.Designer.cs">
+    <Compile Include="Models\Resources\Account\Registration.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Registration.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Validation\RequiredIf.cs" />
     <Compile Include="Validation\Strings.en-us.Designer.cs">
@@ -1593,11 +1626,21 @@
     <Content Include="Images\rarrow.png" />
     <Content Include="Images\readme.txt" />
     <Content Include="MetroUI\.gitignore" />
-    <Content Include="MetroUI\css\modern-responsive.css" />
-    <Content Include="MetroUI\css\modern.css" />
-    <Content Include="MetroUI\css\theme-dark.css" />
-    <Content Include="MetroUI\fonts\iconFont.svg" />
-    <Content Include="MetroUI\fonts\license.txt" />
+    <Content Include="MetroUI\css\modern-responsive.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\css\modern.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\css\theme-dark.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\fonts\iconFont.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\fonts\license.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MetroUI\images\preloader-w8-cycle-black.gif" />
     <Content Include="MetroUI\images\preloader-w8-cycle-white.gif" />
     <Content Include="MetroUI\images\preloader-w8-line-black.gif" />
@@ -1833,44 +1876,120 @@
     <Content Include="Scripts\indicator.gif" />
     <Content Include="Scripts\jqsimplemenu.js" />
     <Content Include="MetroUI\CHANGELOG.md" />
-    <Content Include="MetroUI\fonts\iconFont.eot" />
-    <Content Include="MetroUI\fonts\iconFont.ttf" />
-    <Content Include="MetroUI\fonts\iconFont.woff" />
-    <Content Include="MetroUI\less\accordion.less" />
-    <Content Include="MetroUI\less\bricks.less" />
-    <Content Include="MetroUI\less\buttons.less" />
-    <Content Include="MetroUI\less\calendar.less" />
-    <Content Include="MetroUI\less\cards.less" />
-    <Content Include="MetroUI\less\carousel.less" />
-    <Content Include="MetroUI\less\code.less" />
-    <Content Include="MetroUI\less\colors.less" />
-    <Content Include="MetroUI\less\dialog.less" />
-    <Content Include="MetroUI\less\forms.less" />
-    <Content Include="MetroUI\less\grid.less" />
-    <Content Include="MetroUI\less\hero.less" />
-    <Content Include="MetroUI\less\icons.less" />
-    <Content Include="MetroUI\less\images.less" />
-    <Content Include="MetroUI\less\layout.less" />
-    <Content Include="MetroUI\less\listview.less" />
-    <Content Include="MetroUI\less\menus.less" />
-    <Content Include="MetroUI\less\modern-responsive-max480.less" />
-    <Content Include="MetroUI\less\modern-responsive-max767.less" />
-    <Content Include="MetroUI\less\modern-responsive-max979.less" />
-    <Content Include="MetroUI\less\modern-responsive-min1200.less" />
-    <Content Include="MetroUI\less\modern-responsive.less" />
-    <Content Include="MetroUI\less\modern.less" />
-    <Content Include="MetroUI\less\notices.less" />
-    <Content Include="MetroUI\less\pagecontrol.less" />
-    <Content Include="MetroUI\less\progress.less" />
-    <Content Include="MetroUI\less\rating.less" />
-    <Content Include="MetroUI\less\reset.less" />
-    <Content Include="MetroUI\less\routines.less" />
-    <Content Include="MetroUI\less\sidebar.less" />
-    <Content Include="MetroUI\less\slider.less" />
-    <Content Include="MetroUI\less\tables.less" />
-    <Content Include="MetroUI\less\theme-dark.less" />
-    <Content Include="MetroUI\less\tiles.less" />
-    <Content Include="MetroUI\less\typography.less" />
+    <Content Include="MetroUI\fonts\iconFont.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\fonts\iconFont.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\fonts\iconFont.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\accordion.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\bricks.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\buttons.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\calendar.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\cards.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\carousel.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\code.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\colors.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\dialog.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\forms.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\grid.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\hero.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\icons.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\images.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\layout.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\listview.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\menus.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern-responsive-max480.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern-responsive-max767.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern-responsive-max979.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern-responsive-min1200.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern-responsive.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\modern.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\notices.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\pagecontrol.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\progress.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\rating.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\reset.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\routines.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\sidebar.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\slider.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\tables.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\theme-dark.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\tiles.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MetroUI\less\typography.less">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MetroUI\LICENSE" />
     <Content Include="MetroUI\public\.htaccess" />
     <Content Include="MetroUI\public\accordion.php" />
@@ -1916,6 +2035,33 @@
     <Content Include="MetroUI\public\windows8start.php" />
     <Content Include="MetroUI\README.md" />
     <Content Include="Areas\DataBase\Views\Shared\Copy of _footer.cshtml" />
+    <EntityDeploy Include="Models\Model2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model2.edmx.diagram">
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\Model2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model2.edmx</DependentUpon>
+      <LastGenOutput>Model2.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\DataBase\Views\Article\Copy of _ListSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\Copy of _SheetPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_ChangePassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EmailSent.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_RecoveryPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\RecoveryPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfile.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_EditProfile.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfileSuccess.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Login.cshtml" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -2068,6 +2214,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountVuoto.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Models.Resources.Articles</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\ResChangePasswordModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResChangePasswordModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Account</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Account\ResLoginModel.resx">
@@ -2345,18 +2497,23 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Validation\Registration.en-us.resx">
+    <EmbeddedResource Include="Models\Resources\Account\Registration.en-us.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Registration.en-us.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Account</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Validation\Strings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="Validation\Registration.resx">
+    <EmbeddedResource Include="Models\Resources\Account\Registration.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Registration.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Account</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Areas\Account\Views\Account\App_LocalResources\Strings.resx">
       <SubType>Designer</SubType>

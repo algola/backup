@@ -10,15 +10,15 @@ using System.Web.Security;
 using PapiroMVC.Models;
 using Services;
 using PapiroMVC.Controllers;
+using System.Threading.Tasks;
 
 namespace PapiroMVC.Areas.Account.Controllers
 {
-
     [Authorize]
     public class AccountController : ControllerAlgolaBase
     {
 
-        IArticleRepository articleDataRep;
+        private readonly IProfileRepository profDataRep;
 
         /***
          * send email to just registered user
@@ -46,14 +46,17 @@ namespace PapiroMVC.Areas.Account.Controllers
             client.Send(message);
         }
 
-        public AccountController(IArticleRepository _articleDataRep)
+        public AccountController(IProfileRepository _profDataRep)
         {
-            articleDataRep = _articleDataRep;
+            profDataRep = _profDataRep;
         }
+
+        
 
         //
         // GET: /Account/Login
 
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -63,7 +66,77 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         //
         // POST: /Account/Login
+        [AllowAnonymous]
+        [HttpPost]
+        public void LoginAsync(LoginModel model, string returnUrl)
+        {
+            TempData["errorMessage"] = false;
+            if (ModelState.IsValid)
+            {
+                if (Membership.ValidateUser(model.UserName, model.Password))
+                {
+                 //   base.UpdateDatabase(model.UserName);
 
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
+                    if (Url.IsLocalUrl(returnUrl))
+                    {
+                        AsyncManager.Parameters.Add("returnUrl", returnUrl);
+                    }
+                    else
+                    {
+                        AsyncManager.Parameters.Add("returnUrl", "");
+                    }
+
+                    AsyncManager.Parameters.Add("redirect", true);
+                    AsyncManager.Parameters.Add("model", model);
+
+
+//                    AsyncManager.OutstandingOperations.Increment(1);
+                    System.Threading.Tasks.Task.Factory.StartNew(() => longJob(model));                
+                }
+                else
+                {
+                    AsyncManager.Parameters.Add("redirect", false);
+                    AsyncManager.Parameters.Add("model", model);
+                    AsyncManager.Parameters.Add("returnUrl", returnUrl);
+                    ModelState.AddModelError("PersError", "LoginMessageError");
+                }
+            }
+
+        }
+
+        private void longJob(LoginModel model)
+        {
+            base.UpdateDatabase(model.UserName);
+            //you can also set the parameter here
+            //AsyncManager.Parameters.Add("redirect", false);
+
+            
+            //if we want to wait the end
+            //            AsyncManager.OutstandingOperations.Decrement();
+        }
+
+
+        public ActionResult LoginCompleted(LoginModel model, string returnUrl, bool redirect)
+        {
+            if (redirect)
+            {
+                if (returnUrl == String.Empty)
+                {
+                    TempData["welcomeMessage"] = true;
+                    // return RedirectToAction("Index", "Home", new { area = "" });
+                    return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" }) });
+                }
+                else
+                {
+                    return Redirect(returnUrl);
+                }
+            }
+            return PartialView("_Login",model);
+        }
+
+        /*
+        
         [AllowAnonymous]
         [HttpPost]   
         public ActionResult Login(LoginModel model, string returnUrl)
@@ -73,7 +146,6 @@ namespace PapiroMVC.Areas.Account.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                    //when usere has logged in system, database will be updated. 
                     base.UpdateDatabase(model.UserName);
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
@@ -84,7 +156,8 @@ namespace PapiroMVC.Areas.Account.Controllers
                     else
                     {
                         TempData["welcomeMessage"] = true;
-                        return RedirectToAction("Index", "Home", new { area = "" });
+                       // return RedirectToAction("Index", "Home", new { area = "" });
+                        return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" }) });
                     }
                 }
                 else
@@ -94,12 +167,12 @@ namespace PapiroMVC.Areas.Account.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return PartialView("_Login", model);
         }
+        
+         */
 
-        //
         // GET: /Account/LogOff
-
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -137,23 +210,71 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
+                    //TO DO: create a new user in main database
+                    //
+                    
+                    var nProf = new Profile();
+                    nProf.Name = model.UserName;
+                    nProf.CompanyName = model.OrganizationName;
+                    nProf.Base = model.Base;
+                    nProf.Culture = model.Culture;
+                    nProf.Phone = model.Phone;
+                    nProf.TaxCode = model.TaxCode;
+                    nProf.Refeere = model.Refeere;
+                    nProf.VatNumber = model.VatNumber;
+                    
+
+                    profDataRep.Add(nProf);
+                    profDataRep.Save();
+
                     this.SendConfirmationEmail(model.UserName);
-                    return Json(new { redirectUrl = Url.Action("Confirmation", "Account") });
-                
+                    return RedirectToAction("Confirmation", "Account");                
                 }
                 else
                 {
-                    string msgError = "Questa email risulta già presente nel sistema";
-                   
-                    if (createStatus == MembershipCreateStatus.DuplicateEmail)
-                        msgError = "Questa email risulta già presente nel sistema";
-
-                    ModelState.AddModelError(String.Empty, msgError);
+                    ModelState.AddModelError("PersError", createStatus.ToString());
                 }
             }
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+        //
+        // GET: /Account/EditProfile
+
+        public ActionResult EditProfile()
+        {
+            var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
+            return View(profile);
+        }
+
+        //
+        // POST: /Account/EditProfile
+
+        [HttpPost]
+        public ActionResult EditProfile(Profile model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                try 
+                {
+                    profDataRep.Edit(model);
+                    profDataRep.Save();
+                    return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
+                }
+                
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("PersError", "GenericError");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+
+            return PartialView("_EditProfile",model);
         }
 
         //
@@ -192,12 +313,57 @@ namespace PapiroMVC.Areas.Account.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    ModelState.AddModelError("PersError", "OldPasswordError");
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return PartialView("_ChangePassword",model);
+        }
+
+        //
+        // GET: /Account/RecoveryPassword
+                [AllowAnonymous]
+
+        public ActionResult RecoveryPassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/RecoveryPassword
+                [AllowAnonymous]
+
+        [HttpPost]
+        public ActionResult RecoveryPassword(RecoveryPasswordModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                string currentUser = String.Empty;
+                try
+                {
+                     currentUser = Membership.GetUserNameByEmail(model.Email); 
+                }
+                catch (Exception)
+                {
+
+                }
+
+                if (currentUser != String.Empty)
+                {
+
+                    
+                }
+                return Json(new { redirectUrl = Url.Action("EmailSent") });
+                //return RedirectToAction("EmailSent", "Account");  
+
+
+
+            }
+
+            // If we got this far, something failed, redisplay form
+            return PartialView("_RecoveryPassword",model);
         }
 
         //
@@ -208,42 +374,56 @@ namespace PapiroMVC.Areas.Account.Controllers
             return View();
         }
 
+
+        public ActionResult EditProfileSuccess()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public ActionResult Confirmation()
         {
             return View();
         }
 
-        
+        [AllowAnonymous]
+        public ActionResult EmailSent()
+        {
+            return View();
+        }
+
         [AllowAnonymous]
         public ActionResult Verify(string ID)
         {
-            if (string.IsNullOrEmpty(ID))
+            try
             {
-                TempData["tempMessage"] =
-                        "The user account is not valid. Please try clicking the link in your email again.";
-                return View();
-            }
-            else
-            {
-                MembershipUser user = Membership.GetUser(providerUserKey:ID); 
+                MembershipUser user = Membership.GetUser(providerUserKey: ID);
                 if (!user.IsApproved)
                 {
                     user.IsApproved = true;
                     Membership.UpdateUser(user);
+
+                    //when usere has logged in system, database will be updated. 
+                    base.UpdateDatabase(user.UserName);
+
                     FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
-                    return Json(new { redirectUrl = Url.Action("welcome") }, JsonRequestBehavior.AllowGet);
+                    TempData["message"] = "Activated";
                 }
                 else
                 {
                     FormsAuthentication.SignOut();
-                    TempData["tempMessage"] = "You have already confirmed your email address... please log in.";
-                    return RedirectToAction("Login");
+                    TempData["message"] = "JustActivated";
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                TempData["message"] = "Error";                
+            }
+            return View();
         }
 
-        private IEnumerable<string> GetErrorsFromModelState()
+        private new IEnumerable<string> GetErrorsFromModelState()
         {
             return ModelState.SelectMany(x => x.Value.Errors.Select(error => error.ErrorMessage));
         }

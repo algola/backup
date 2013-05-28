@@ -1,6 +1,36 @@
-﻿@{
-    ViewBag.Title = "Verify";
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.LoginModel
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "VerifyTitle");
+
+    if (TempData["message"] == "Activated")
+    {
+        ViewBag.Message = @Html.T(strings,"VerifyActivated");            
+    }
+
+    if (TempData["message"] == "JustActivated")
+    {
+        ViewBag.Message = @Html.T(strings,"VerifyJustActivated");            
+    }
+
+    if (TempData["message"] == "Error")
+    {
+        ViewBag.Message = @Html.T(strings, "VerifyError");
+    }          
 }
 
-<h2>Verify</h2>
-<a>Account verificato... è possibile lavorare</a>
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+    <h2>@ViewBag.Message</h2>
+</hgroup>
+
+    <br />
+    <p>
+        <button type="button" class="default" onclick="Javascript:window.location.replace('@Url.Action("Index", "Home", new {Area=""})');">            
+           <i class="icon-home"></i>
+             @HttpContext.GetLocalResourceObject(strings, "Home")
+        </button>
+     </p>
+ 

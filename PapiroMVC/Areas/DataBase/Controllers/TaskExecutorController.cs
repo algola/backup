@@ -249,6 +249,35 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             TaskEstimatedOn tskEst = null;
             String retView = String.Empty;
 
+            switch (taskExecutor.TypeOfExecutor)
+            {
+                case TaskExecutor.ExecutorType.LithoSheet:
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheet";
+                    break;
+                case TaskExecutor.ExecutorType.LithoWeb:
+                    TempData["TaskExecutorIndex"] = "IndexLithoWeb";
+                    break;
+                case TaskExecutor.ExecutorType.DigitalSheet:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+                    break;
+                case TaskExecutor.ExecutorType.DigitalWeb:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalWeb";
+                    break;
+                case TaskExecutor.ExecutorType.Plotter:
+                    TempData["TaskExecutorIndex"] = "IndexPlotter";
+                    break;
+                case TaskExecutor.ExecutorType.PrePostPress:
+                    TempData["TaskExecutorIndex"] = "IndexPrePostPress";
+                    break;
+                case TaskExecutor.ExecutorType.Binding:
+                    TempData["TaskExecutorIndex"] = "IndexBinding";
+                    break;
+                default:
+                    break;
+            }
+
+
+
             //if cost is just selected (to prevent two submissions)
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });

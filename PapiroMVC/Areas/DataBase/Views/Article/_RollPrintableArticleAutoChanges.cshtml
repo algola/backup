@@ -99,21 +99,17 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
 
-                $.blockUI({
-                    message: 'elaborazione completata correttamente',
-                    css: {
-                        border: 'none',
-                        padding: '15px',
-                        backgroundColor: '#000',
-                        '-webkit-border-radius': '10px',
-                        '-moz-border-radius': '10px',
-                        opacity: .5,
-                        color: '#fff'
+                $.Dialog({
+                    'title': '@Html.T(strings,"MsgBoxAutomaticChangesTitle")',
+                    'content': '@Html.T(strings,"MsgBoxAutomaticChangesContent")',
+                    'buttons': {
+                        'Ok': {
+                            'action': function () { }
+                        }
                     }
                 });
-                $('.blockOverlay').attr('title', 'Click to unblock').click($.unblockUI);
 
-                unloadPopupBox();
+
                 return false;
 
                 // There is no problem with process

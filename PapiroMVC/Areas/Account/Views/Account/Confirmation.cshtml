@@ -1,10 +1,11 @@
-﻿@{
-    string strings = "~/Views/Account/Strings";
+﻿@using PapiroMVC.Validation
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleConfirmation");               
 }
 
-<h2>Confirmation</h2>
+<h2>@ViewBag.Title</h2>
 <br />
 <p class="message-info">
-    @HttpContext.GetLocalResourceObject(strings, "ConfirmationMessage").
+    @Html.T(strings, "ConfirmationMessage").
 </p>

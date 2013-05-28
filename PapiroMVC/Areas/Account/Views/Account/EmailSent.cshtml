@@ -1,0 +1,11 @@
+﻿@using PapiroMVC.Validation
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    ViewBag.Title = Html.T(strings, "RecoveryPasswordTitle");
+}
+<h1>@ViewBag.Title</h1>
+<h2>@Html.T(strings, "TitleCEmailSent")</h2>
+<br />
+<p class="message-info">
+    @Html.T(strings, "EmailSent").
+</p>

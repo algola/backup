@@ -13,11 +13,12 @@ using PapiroMVC.Models;
 using PapiroMVC.Model;
 using System.IO;
 using SchemaManagemet;
+using System.Threading.Tasks;
 
 namespace PapiroMVC.Controllers
 {
 
-    public class ControllerAlgolaBase : Controller
+    public class ControllerAlgolaBase : AsyncController
     {
         //user connected to website
         public MembershipUser CurrentUser
@@ -68,10 +69,22 @@ namespace PapiroMVC.Controllers
             base.ExecuteCore();
         }
 
+        public async Task UpdateDatabaseAsync(string dbName)
+        {
+            UpdateDatabase(dbName);
+        }
+
         public void UpdateDatabase(string dbName)
         {
+          //  profilesEntities ctxProfiles = new profilesEntities();
+            ProfilesDDL tblProfile = new ProfilesDDL("profiles");
+
             dbEntities ctx = new dbEntities();
 
+
+            tblProfile.UpdateSchema(ctx);
+            
+            
             if (CurrentDatabase != null)
             {                
                 //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
@@ -130,158 +143,6 @@ namespace PapiroMVC.Controllers
             }
 
             return errors;
-        }
-
-        private IList<MenuMvc> BuildMenu()
-        {
-            IList<MenuMvc> mmList = new List<MenuMvc>(){
-
-                // Parent
-                new MenuMvc(){ 
-                    Id = 3, 
-                    TextName = "Database", 
-                    ControllerName="", 
-                    ActionName="#", 
-                    ParentId = 0, 
-                    SortOrder = 1,
-                    RouteValues = null
-                } ,
-                new MenuMvc(){ 
-                    Id = 4, 
-                    TextName = "Lingua", 
-                    ControllerName="",
-                    ActionName="#", 
-                    ParentId = 0, 
-                    SortOrder = 2,
-                    RouteValues = null
-                } ,
-                new MenuMvc(){ 
-                    Id = 2, 
-                    TextName = "About", 
-                    ControllerName="Home",
-                    ActionName="About", 
-                    ParentId = 0, 
-                    SortOrder = 3,
-                    RouteValues = null
-                } ,
-                new MenuMvc() { 
-                    Id = 1, 
-                    TextName = "Home",
-                    ActionName = "Index", 
-                    ControllerName="Home", 
-                    ParentId = 0, 
-                    SortOrder = 3,
-                    RouteValues = null
-                } ,
-
-                //UpdateDb
-               new MenuMvc(){ 
-                    Id = 33, 
-                    TextName = "Aggiorna Db", 
-                    ControllerName="Home", 
-                    ActionName="UpdateDb", 
-                    ParentId = 3, 
-                    SortOrder = 1,
-                    RouteValues = new { area = "" }
-                },
-
-                // Children
-               new MenuMvc(){ 
-                    Id = 31, 
-                    TextName = "Clienti/Fornitori", 
-                    ControllerName="CustomerSupplier", 
-                    ActionName="Index", 
-                    ParentId = 3, 
-                    SortOrder = 1,
-                    RouteValues = new { area = "DataBase" }
-                },
-
-                new MenuMvc(){ 
-                    Id = 32, 
-                    TextName = "Materiali", 
-                    ControllerName="", 
-                    ActionName="#", 
-                    ParentId = 3, 
-                    SortOrder = 2,
-                    RouteValues = null
-                } ,
-
-                new MenuMvc(){ 
-                    Id = 33, 
-                    TextName = "Macchine e Lavorazioni", 
-                    ControllerName="", 
-                    ActionName="#", 
-                    ParentId = 3, 
-                    SortOrder = 2,
-                    RouteValues = null
-                } ,
-
-                // Children 2nd level
-               new MenuMvc(){ 
-                    Id = 331, 
-                    TextName = "Offset a foglio", 
-                    ControllerName="TaskExecutor", 
-                    ActionName="IndexLithoSheet", 
-                    ParentId = 33, 
-                    SortOrder = 1,
-                    RouteValues = new { area = "DataBase" }
-                } ,
-
-                                // Children 2nd level
-               new MenuMvc(){ 
-                    Id = 332, 
-                    TextName = "Digitale a foglio", 
-                    ControllerName="TaskExecutor", 
-                    ActionName="IndexDigitalSheet", 
-                    ParentId = 33, 
-                    SortOrder = 2,
-                    RouteValues = new { area = "DataBase" }
-                } ,
-
-                // Children 2nd level
-               new MenuMvc(){ 
-                    Id = 321, 
-                    TextName = "Stampabili a foglio", 
-                    ControllerName="Article", 
-                    ActionName="IndexSheetPrintableArticle", 
-                    ParentId = 32, 
-                    SortOrder = 1,
-                    RouteValues = new { area = "DataBase" }
-                } ,
-                
-                new MenuMvc(){ 
-                    Id = 322, 
-                    TextName = "Stampabili a rotolo", 
-                    ControllerName="Article", 
-                    ActionName="IndexRollPrintableArticle", 
-                    ParentId = 32, 
-                    SortOrder = 2,
-                    RouteValues = new { area = "DataBase" }
-                } ,
-
-
-                new MenuMvc(){ 
-                    Id = 41, 
-                    TextName = "English", 
-                    ControllerName="Home", 
-                    ActionName="ChangeCulture", 
-                    ParentId = 4, 
-                    SortOrder = 1,
-                    RouteValues =  new { area = "", id = "en-US" }
-                } ,
-                new MenuMvc(){ 
-                    Id = 41, 
-                    TextName = "Italiano", 
-                    ControllerName="Home", 
-                    ActionName="ChangeCulture", 
-                    ParentId = 4, 
-                    SortOrder = 2,
-                    RouteValues = new { area = "", id = "it-IT" },
-                } 
-
-            };
-
-            return mmList;
         }
 
     }

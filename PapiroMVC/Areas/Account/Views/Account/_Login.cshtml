@@ -1,0 +1,64 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.LoginModel
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+
+
+    var err = ViewData.ModelState.FirstOrDefault(x=>x.Key=="PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));        
+    }
+    
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "LoginTitle");
+    
+}
+
+
+
+<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+        <h2></h2>
+    </hgroup>
+
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", HttpMethod="POST", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Log in Form</legend>
+            @Html.AlgolaEditorFor(m => m.UserName)
+            @Html.AlgolaEditorFor(m => m.Password)
+            @Html.CheckBoxFor(m => m.RememberMe)
+            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+    
+        <br />
+        <br />
+
+        <p>
+            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Home", new { Area = "" })');">
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default" type="submit">
+                @HttpContext.GetLocalResourceObject(strings, "LoginButton")
+            </button>
+        </p>        
+    </fieldset>
+
+    <p>
+        @Html.ActionLink(Html.T(strings, "RegisterLink"), "Register") @Html.T(strings, "RegisterMessageAfterLink")
+    </p>
+        
+    <p>
+        @Html.ActionLink(Html.T(strings, "RecoveryPasswordLink"), "RecoveryPassword",null,null) @Html.T(strings, "RecoveryPasswordAfterLink")
+    </p>
+    }
+
+
+</div>        
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

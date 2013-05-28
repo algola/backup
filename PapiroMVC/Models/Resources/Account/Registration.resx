@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Base" xml:space="preserve">
+    <value>Indirizzo</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Ridigitare la password</value>
+  </data>
+  <data name="Culture" xml:space="preserve">
+    <value>Lingua predefinita</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
@@ -129,11 +135,26 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Phone" xml:space="preserve">
+    <value>Numero di telefono</value>
+  </data>
+  <data name="Refeere" xml:space="preserve">
+    <value>Nominativo referente</value>
+  </data>
+  <data name="RequiredFieldBase" xml:space="preserve">
+    <value>Inserire indirizzo aziendale</value>
+  </data>
   <data name="RequiredFieldEmail" xml:space="preserve">
     <value>Inserire una email valida</value>
   </data>
   <data name="RequiredFieldOrganizationName" xml:space="preserve">
     <value>Inserire la Ragione Sociale</value>
+  </data>
+  <data name="RequiredFieldPhone" xml:space="preserve">
+    <value>Inserire numero aziendale</value>
+  </data>
+  <data name="RequiredFieldRefeere" xml:space="preserve">
+    <value>Inserire nominativo di un referente</value>
   </data>
   <data name="RequiredFieldTaxCode" xml:space="preserve">
     <value>Inderire il codice fiscale</value>
@@ -154,7 +175,7 @@
     <value>Nome Utente</value>
   </data>
   <data name="ValidationConfirmPassword" xml:space="preserve">
-    <value>La password non combacia</value>
+    <value>Le due password non combaciano</value>
   </data>
   <data name="ValidationEmail" xml:space="preserve">
     <value>Inserire una email valida</value>

@@ -1,0 +1,37 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Profile
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+
+
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }   
+}
+<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Change Password Form</legend>        
+                
+            @Html.HiddenFor(m=>m.Name)
+
+            @Html.AlgolaEditorFor(m => m.CompanyName)
+            @Html.AlgolaEditorFor(m => m.Base)
+            @Html.AlgolaEditorFor(m => m.Culture)
+            @Html.AlgolaEditorFor(m => m.Refeere)
+            @Html.AlgolaEditorFor(m => m.Phone)
+            @Html.AlgolaEditorFor(m => m.VatNumber)
+            @Html.AlgolaEditorFor(m => m.TaxCode)
+        <br />              
+        <input type="submit" value ="@Html.T(strings,"Save")" />
+    </fieldset>
+}</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

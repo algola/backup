@@ -37,8 +37,8 @@ namespace PapiroMVC
                         "~/Scripts/modernizr*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/Site.css",        
-                "~/MetroUI/css/modern.css",
+                //           "~/Content/Site.css",        
+                //         "~/MetroUI/css/modern.css",
                         "~/Content/DivShowHide.css",
                         "~/Content/FooterColumn.css"));
 
