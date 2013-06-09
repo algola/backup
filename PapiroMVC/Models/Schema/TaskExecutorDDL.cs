@@ -155,55 +155,55 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "BindingStartingCost", SchemaDb.String, "20");
 
 
-            dbS.AddTable("Steps");
-            dbS.AddColumnToTable("Steps", "CodTaskEstimatedOn", SchemaDb.String, "50");
-            dbS.AddColumnToTable("Steps", "IdStep", SchemaDb.IntPK, "0");
-            dbS.AddColumnToTable("Steps", "FromUnit", SchemaDb.Double, "0");
-            dbS.AddColumnToTable("Steps", "ToUnit", SchemaDb.Double, "0");
+            dbS.AddTable("steps");
+            dbS.AddColumnToTable("steps", "CodTaskEstimatedOn", SchemaDb.String, "50");
+            dbS.AddColumnToTable("steps", "IdStep", SchemaDb.IntPK, "0");
+            dbS.AddColumnToTable("steps", "FromUnit", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("steps", "ToUnit", SchemaDb.Double, "0");
 
             //0 step per run //1 cost per run //2 percentage for Weight // 3 binding time // 4 binding cost
-            dbS.AddColumnToTable("Steps", "Selector", SchemaDb.Int, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "CostPerUnit", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "DeficitRate", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "Selector", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "CostPerUnit", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "DeficitRate", SchemaDb.String, "20");
 
             //Binding On Time
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour4", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime4", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour6", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime6", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour8", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime8", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour12", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime12", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour16", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime16", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour24", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime24", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHour32", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTime32", SchemaDb.Time, "0");
-            dbS.AddColumnToTable("Steps", "AvarageRunPerHourBinding", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("Steps", "StartingTimeBinding", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour4", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime4", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour6", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime6", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour8", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime8", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour12", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime12", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour16", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime16", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour24", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime24", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHour32", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTime32", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("steps", "AvarageRunPerHourBinding", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("steps", "StartingTimeBinding", SchemaDb.Time, "0");
            
             //BindingEstimatedOnUnit
-            dbS.AddColumnToTable("Steps", "CostPerUnit4", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost4", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit6", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost6", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit8", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost8", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit12", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost12", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit16", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost16", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit24", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost24", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "CostPerUnit32", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "StartingCost32", SchemaDb.String, "20");
-            dbS.AddColumnToTable("Steps", "BindingCost", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit4", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost4", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit6", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost6", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit8", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost8", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit12", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost12", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit16", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost16", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit24", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost24", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "CostPerUnit32", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "StartingCost32", SchemaDb.String, "20");
+            dbS.AddColumnToTable("steps", "BindingCost", SchemaDb.String, "20");
 
             //FK
-            dbS.AddForeignKey("Steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");
+            dbS.AddForeignKey("steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");
 
         }
     }

@@ -70,7 +70,7 @@ namespace PapiroMVC.Controllers
         public ActionResult UpdateDb()
         {
             //call update schema!!!
-            base.UpdateDatabase("algola");
+            base.UpdateDatabase("db");
 
             return View();
         }

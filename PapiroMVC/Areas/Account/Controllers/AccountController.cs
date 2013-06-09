@@ -258,7 +258,6 @@ namespace PapiroMVC.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 try 
                 {
                     profDataRep.Edit(model);
@@ -266,7 +265,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
                 
-                catch (Exception e)
+                catch (Exception)
                 {
                     ModelState.AddModelError("PersError", "GenericError");
                 }

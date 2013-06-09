@@ -69,10 +69,6 @@ namespace PapiroMVC.Controllers
             base.ExecuteCore();
         }
 
-        public async Task UpdateDatabaseAsync(string dbName)
-        {
-            UpdateDatabase(dbName);
-        }
 
         public void UpdateDatabase(string dbName)
         {
@@ -81,10 +77,8 @@ namespace PapiroMVC.Controllers
 
             dbEntities ctx = new dbEntities();
 
-
             tblProfile.UpdateSchema(ctx);
-            
-            
+                        
             if (CurrentDatabase != null)
             {                
                 //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
@@ -97,6 +91,7 @@ namespace PapiroMVC.Controllers
             tables.Add(new CustomerSupplierDLL(dbName));
             tables.Add(new TaskExecutorsDDL(dbName));
             tables.Add(new ArticlesDDL(dbName));
+            tables.Add(new ProductsDDL(dbName));
             
             foreach (var item in tables)
             {

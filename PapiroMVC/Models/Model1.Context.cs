@@ -34,5 +34,10 @@ namespace PapiroMVC.Models
         public DbSet<CustomerSupplierBase> customersupplierbases { get; set; }
         public DbSet<CustomerSupplier> customersuppliers { get; set; }
         public DbSet<TypeOfBase> typeofbase { get; set; }
+        public DbSet<ProductPart> ProductParts { get; set; }
+        public DbSet<ProductPartsPrintableArticle> ProductPartsPrintableArticles { get; set; }
+        public DbSet<ProductPartTask> ProductPartTasks { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductTask> ProductTasks { get; set; }
     }
 }

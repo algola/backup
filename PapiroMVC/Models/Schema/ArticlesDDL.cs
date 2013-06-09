@@ -33,8 +33,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "CodSupplierMaker", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "SupplierMaker", SchemaDb.String, "50");
 
-            //foreign key
-            dbS.AddForeignKey("articles", "CodSupplierBuy", "CustomerSuppliers", "CodCustomerSupplier");
             dbS.AddForeignKey("articles", "CodSupplierMaker", "CustomerSuppliers", "CodCustomerSupplier");
 
 
@@ -62,7 +60,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "SheetPerPallet", SchemaDb.IntUS, "0");
             
             //Roll
-            dbS.AddColumnToTable("articles", "Width", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
 
             //Rigid
             dbS.AddColumnToTable("articles", "Thikness", SchemaDb.Double, "0");
@@ -110,8 +108,8 @@ namespace PapiroMVC.Model
 
             //Roll
             //Cost
-            dbS.AddColumnToTable("articlecost", "CostPerMq", SchemaDb.Double, "0");
-            dbS.AddColumnToTable("articlecost", "CostPerMl", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articlecost", "CostPerMq", SchemaDb.String, "20");
+            dbS.AddColumnToTable("articlecost", "CostPerMl", SchemaDb.String, "20");
 
             // 0 = Standard // 1 = Cutted 
             //selector typeof cost sheet
