@@ -99,7 +99,7 @@ namespace PapiroMVC.Models
         {
             //All properties of object
             //and pointer of sons
-
+            to.CodOptionTypeOfTask = this.CodOptionTypeOfTask;
             to.TimeStampTable = this.TimeStampTable;
             to.CostForfait = this.CostForfait;
             to.CodTaskExecutor = this.CodTaskExecutor;

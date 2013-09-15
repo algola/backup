@@ -68,7 +68,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         /// <returns></returns>
         public ActionResult SheetPerPalletComplete(string term)
         {
-            var sheetPerPallet = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
+            SheetPrintableArticle[] sheetPerPallet = articleRepository.GetAll().OfType<SheetPrintableArticle>().ToArray();
 
             var filteredItems = sheetPerPallet.Where(
             item => item.SheetPerPallet.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
@@ -204,9 +204,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             var projection = from art in filteredItems
                              select new
                              {
-                                 id = art.Format,
-                                 label = art.Format,
-                                 value = art.Format
+                                 id = art.SheetPerPacked,
+                                 label = art.SheetPerPacked,
+                                 value = art.SheetPerPacked
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }

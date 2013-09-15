@@ -1,0 +1,43 @@
+﻿@model PapiroMVC.Models.OptionTypeOfTask
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeStampTable)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeStampTable)
+            @Html.ValidationMessageFor(model => model.TimeStampTable)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CodOptionTypeOfTask)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CodOptionTypeOfTask)
+            @Html.ValidationMessageFor(model => model.CodOptionTypeOfTask)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CodTypeOfTask)
+        </div>
+       
+         <div class="editor-field">
+            @Html.EditorFor(model => model.CodTypeOfTask)
+            @Html.ValidationMessageFor(model => model.CodTypeOfTask)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OptionName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OptionName)
+            @Html.ValidationMessageFor(model => model.OptionName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IdexOf)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IdexOf)
+            @Html.ValidationMessageFor(model => model.IdexOf)
+        </div>

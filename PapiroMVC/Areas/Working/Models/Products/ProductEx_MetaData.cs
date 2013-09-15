@@ -4,16 +4,24 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using PapiroMVC.Validation;
-using PapiroMVC.Models.Resources.Articles;
+using PapiroMVC.Models.Resources.Products;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-    public partial class Product_MetaData
+    public abstract partial class Product_MetaData
     {
         public System.DateTime TimeStampTable { get; set; }
-        [DisplayNameLocalized(typeof(ResArticleCost), "CodArticleCost")]
-        public string CodArticleCost { get; set; }
-        [DisplayNameLocalized(typeof(ResArticleCost), "CodArticle")]
-        public string CodArticle { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProduct), "CodProduct")]
+        [Tooltip(typeof(ResProduct), "CodProductToolTip")]
+        public string CodProduct { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProduct), "ProductName")]
+        [Tooltip(typeof(ResProduct), "ProductNameToolTip")]
+        public string ProductName { get; set; }
+
+
+        public string CodMenuProduct { get; set; }
     }
 }

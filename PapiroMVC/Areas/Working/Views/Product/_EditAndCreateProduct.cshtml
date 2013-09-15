@@ -1,0 +1,6 @@
+﻿@model PapiroMVC.Models.Product
+@{
+    ViewBag.FormatsName = Model.FormatsName.ToList();
+}
+
+@Html.EditorFor(x=>x)

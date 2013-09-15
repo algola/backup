@@ -1,0 +1,14 @@
+﻿@model bool?
+   
+    <div>
+        <div class="editor-field", style="float:left" >
+            @Html.CheckBox("", Model.GetValueOrDefault())
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model)
+            @Html.ValidationMessageFor(model => model)
+        </div>
+    </div>
+           
+<br /> 
+

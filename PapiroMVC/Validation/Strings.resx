@@ -324,4 +324,13 @@
   <data name="RollPrintableArticheAutoChangesFieldValidationError" xml:space="preserve">
     <value>Solo un campo tra  Costo al mq e Costo al Metro Lineare deve essere compilato</value>
   </data>
+  <data name="ProductBlockSheetType" xml:space="preserve">
+    <value>Blocco</value>
+  </data>
+  <data name="ProductBookSingleSheetType" xml:space="preserve">
+    <value>Libro</value>
+  </data>
+  <data name="ProductSingleSheetType" xml:space="preserve">
+    <value>Singolo</value>
+  </data>
 </root>

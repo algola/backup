@@ -1,0 +1,37 @@
+﻿@model PapiroMVC.Models.Document
+@using PapiroMVC.Validation
+
+@{
+
+    string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
+    string url = Url.Action("CustomerSupplierList", new { controller = "CustomerSupplier", area = "DataBase" });
+    
+    }
+
+
+
+<a href="javascript:void(0)" id="staticDialogCustomer">@Html.T(stringsGrid, "DialogTitle")</a>
+
+<br />
+<br />
+    
+<script type="text/javascript">
+    $(document).ready(
+
+        function () {
+
+            $('#staticDialogCustomer').click(function (e) {
+                //eventually stop spinner
+                HideProcessingMsg();
+        });
+
+
+        });
+
+        function reloadCustomerSupplier() {
+            $("#gridCustomerSupplier").trigger("reloadGrid");
+        }
+
+</script>
+
+

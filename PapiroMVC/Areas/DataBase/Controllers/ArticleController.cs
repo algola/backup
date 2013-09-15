@@ -50,6 +50,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View (new RollPrintableArticleAutoChanges());
         }
 
+        public ActionResult IndexRigidPrintableArticle()
+        {
+            return View(new RigidPrintableArticleAutoChanges());
+        }
+
         //
         // GET: /Article/Details/5
 
@@ -96,6 +101,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        [HttpParamAction]
         [HttpGet]
         public ActionResult CreateRollPrintableArticle()
         {
@@ -128,6 +134,42 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateRollPrintableArticle";
             return PartialView("_EditAndCreateRollPrintableArticle", c);
+
+        }
+
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateRigidPrintableArticle()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateRigidPrintableArticle";
+            return View(new RigidPrintableArticleViewModel());
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateRigidPrintableArticle(RigidPrintableArticleViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+                    articleRepository.Add(c.Article);
+                    //rigeneration name of article
+                    c.Article.ArticleName = c.Article.ToString();
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexRigidPrintableArticle") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateRigidPrintableArticle";
+            return PartialView("_EditAndCreateRigidPrintableArticle", c);
 
         }
 
@@ -333,6 +375,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View("EditRollPrintableArticle", viewModel);
         }
 
+        public ActionResult EditRigidPrintableArticle(string id)
+        {
+            RigidPrintableArticleViewModel viewModel = new RigidPrintableArticleViewModel();
+            viewModel.Article = (RigidPrintableArticle)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditRigidPrintableArticle";
+            return View("EditRigidPrintableArticle", viewModel);
+        }
+
+
         #endregion
 
         //
@@ -353,7 +411,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
-                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
                     customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
@@ -363,7 +421,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     if (filteredItems2.Count() == 0) throw new Exception();
 
                     //if #suppliers < 1 then no supplier has selected correctly and then thow error
-                    c.Article.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
+                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
@@ -383,6 +441,58 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditRigidPrintableArticle(RigidPrintableArticleViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+
+                    //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems2 = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems2.Count() == 0) throw new Exception();
+
+                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("Index") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditRigidPrintableArticle";
+            return PartialView("_EditAndCreateRigidPrintableArticle", c);
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditRollPrintableArticle(RollPrintableArticleViewModel c)
         {
             if (ModelState.IsValid)
@@ -396,7 +506,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
-                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
 //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
@@ -406,7 +516,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     if (filteredItems2.Count() == 0) throw new Exception();
 
                     //if #suppliers < 1 then no supplier has selected correctly and then thow error
-                    c.Article.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
+                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();

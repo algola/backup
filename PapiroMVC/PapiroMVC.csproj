@@ -66,16 +66,16 @@
       <HintPath>..\packages\MvcJqGrid.1.0.9\lib\net40\MvcJqGrid.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MySql.Data.dll</HintPath>
+      <Private>True</Private>
+      <HintPath>..\packages\MySql.Data.6.6.5\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data.Entity, Version=6.5.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MySql.Data.Entity.dll</HintPath>
+      <HintPath>..\packages\MySQL.Data.Entities.6.5.4.0\lib\net40\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Web, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\MySql.Web.dll</HintPath>
+      <Private>True</Private>
+      <HintPath>..\packages\MySql.Web.6.6.5\lib\net40\MySql.Web.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
@@ -198,8 +198,11 @@
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
     <Compile Include="Areas\Account\Models\Account\ProfileEx.cs" />
     <Compile Include="Areas\Account\Models\Account\Proflile_MetaData.cs" />
+    <Compile Include="Areas\Account\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex_AutoComplete.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex_Auto_Complete.cs" />
+    <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController_Ex_AutoComplete.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController.cs" />
@@ -207,12 +210,18 @@
     <Compile Include="Areas\Account\Controllers\AccountController.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx_MetaData.cs" />
@@ -230,13 +239,133 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierViewModel.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\PrePostPressViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController2.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController_Ex.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController.cs" />
+    <Compile Include="Areas\Working\Controllers\ProductController2.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
+    <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\CostEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentProductEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductRigidEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\FormatNameEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductTaskEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBlockSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBlockSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\ViewModels\DocumentProductViewModel.cs" />
+    <Compile Include="Areas\Working\ViewModels\ProductViewModel.cs" />
     <Compile Include="Areas\Working\WorkingAreaRegistration.cs" />
+    <Compile Include="Models\Article.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AvarageRunPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingAvarageRunPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingCostPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingEstimatedOnRun.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingEstimatedOnTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingTsk.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerMqStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerSupplier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerSupplierBase.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeficitForWeightStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeficitOnCostForWeightStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Digital.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalWeb.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Document.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Litho.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LithoSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LithoWeb.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MenuProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model2.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -252,16 +381,79 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model2.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NoPrintable.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticleStandardCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OptionTypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Plotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrePostPress.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Printable.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrinterMachine.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductBlockSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductBookSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPart.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartBlockSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartBookSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartCoverSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRigid.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRigidArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSheetArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartsPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\productpartstoproducttask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductRigid.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductSingleSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductTask.cs">
@@ -408,6 +600,132 @@
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges.cs" />
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierIndex.cs" />
+    <Compile Include="Models\Resources\Document\ResCost.Designer.cs">
+      <DependentUpon>ResCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocumentProduct.Designer.cs">
+      <DependentUpon>ResDocumentProduct.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocuments.Designer.cs">
+      <DependentUpon>ResDocuments.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocumentsVuoto.Designer.cs">
+      <DependentUpon>ResDocumentsVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\MenuProduct\ResMenuProduct.Designer.cs">
+      <DependentUpon>ResMenuProduct.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\Task.Designer.cs">
+      <DependentUpon>Task.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.Designer.cs">
+      <DependentUpon>ResOptionTypeOfTask.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartBlockSheet.Designer.cs">
+      <DependentUpon>ResProductPartBlockSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartBookSheet.Designer.cs">
+      <DependentUpon>ResProductPartBookSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPart.Designer.cs">
+      <DependentUpon>ResProductPart.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductTask.Designer.cs">
+      <DependentUpon>ResProductTask.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductSingleSheet.Designer.cs">
+      <DependentUpon>ResProductSingleSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartTask.Designer.cs">
+      <DependentUpon>ResProductPartTask.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartsPrintableArticle.Designer.cs">
+      <DependentUpon>ResProductPartsPrintableArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartSingleSheet.Designer.cs">
+      <DependentUpon>ResProductPartSingleSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartSheetArticle.Designer.cs">
+      <DependentUpon>ResProductPartSheetArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductBookSheet.Designer.cs">
+      <DependentUpon>ResProductBookSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartCoverSheet.Designer.cs">
+      <DependentUpon>ResProductPartCoverSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductBlockSheet.Designer.cs">
+      <DependentUpon>ResProductBlockSheet.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProduct.Designer.cs">
+      <DependentUpon>ResProduct.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductVuoto.Designer.cs">
+      <DependentUpon>ResProductVuoto.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -524,6 +842,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResTaskExecutor.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Single.cs" />
+    <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
+      <DependentUpon>TypeOfTaskAndCodTypeOfTask.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.Designer.cs">
       <DependentUpon>ResArticleViewModelAutoChanges.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -541,190 +865,6 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\ObjectContext.cs" />
-    <Compile Include="Models\Schema\ArticlesDDL.cs" />
-    <Compile Include="Models\Schema\ProductsDDL.cs" />
-    <Compile Include="Models\Schema\ProfilesDDL.cs" />
-    <Compile Include="Models\Schema\DatabaseDDL.cs" />
-    <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
-    <Compile Include="Models\Schema\IDDL.cs" />
-    <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="RepositoryPattern\ProductRepository.cs" />
-    <Compile Include="RepositoryPattern\GenericAndInterface\IDocumentRepository.cs" />
-    <Compile Include="RepositoryPattern\ProfileRepository.cs" />
-    <Compile Include="RepositoryPattern\GenericAndInterface\IProfileRepository.cs" />
-    <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
-    <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
-    <Compile Include="Scripts\Default1Controller.cs" />
-    <Compile Include="Validation\DecimalModelBinder.cs" />
-    <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
-    <Compile Include="Models\Resources\Account\Registration.en-us.Designer.cs">
-      <DependentUpon>Registration.en-us.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Validation\Strings.Designer.cs">
-      <DependentUpon>Strings.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Validation\HttpParamActionAttribute.cs" />
-    <Compile Include="Validation\DsplayLocalizedAttribute.cs" />
-    <Compile Include="Areas\Account\Models\AccountModels.cs" />
-    <Compile Include="Models\Article.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ArticleCost.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD.cs" />
-    <Compile Include="Models\AvarageRunPerRunStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BindingAvarageRunPerRunStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BindingCostPerRunStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BindingEstimatedOnRun.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BindingEstimatedOnTime.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BindingTsk.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CostPerMqStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CostPerRunStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Customer.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomerSupplier.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomerSupplierBase.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx.cs" />
-    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx_MetaData.cs" />
-    <Compile Include="Models\DeficitForWeightStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DeficitOnCostForWeightStep.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Digital.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DigitalSheet.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\DigitalWeb.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\IDeleteRelated.cs" />
-    <Compile Include="Models\Litho.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LithoSheet.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\LithoWeb.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model11.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\NoPrintable.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObjectPrintableArticle.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObjectPrintableArticleCost.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ObjectPrintableArticleStandardCost.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Plotter.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PrePostPress.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Printable.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PrinterMachine.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\RigidPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -746,6 +886,15 @@
     <Compile Include="Models\RollPrintableArticleStandardCost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema\ArticlesDDL.cs" />
+    <Compile Include="Models\Schema\DocumentsDDL.cs" />
+    <Compile Include="Models\Schema\MenuProductDDL.cs" />
+    <Compile Include="Models\Schema\ProductsDDL.cs" />
+    <Compile Include="Models\Schema\ProfilesDDL.cs" />
+    <Compile Include="Models\Schema\DatabaseDDL.cs" />
+    <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
+    <Compile Include="Models\Schema\IDDL.cs" />
+    <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
     <Compile Include="Models\SheetPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -785,6 +934,131 @@
     <Compile Include="Models\TaskExecutor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TaskExecutorTypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfBase.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="RepositoryPattern\DocumentRepository.cs" />
+    <Compile Include="RepositoryPattern\FormatsNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProductRepository.cs" />
+    <Compile Include="RepositoryPattern\ProductTaskNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IFormatsNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProductTaskNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IMenuProductRepository.cs" />
+    <Compile Include="RepositoryPattern\MenuProductRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITypeOfTaskRepository.cs" />
+    <Compile Include="RepositoryPattern\TASK\ACCOPPIATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\FORO.cs" />
+    <Compile Include="RepositoryPattern\TASK\FUSTELLATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\INTERCALATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\PIEGA.cs" />
+    <Compile Include="RepositoryPattern\TASK\PLASTIFICATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_BROSSURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_PM.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_SPIRALE.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILIEVO_A_SECCO.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA.cs" />
+    <Compile Include="RepositoryPattern\TASK\TAGLIO.cs" />
+    <Compile Include="RepositoryPattern\TASK\VERNICIATURA.cs" />
+    <Compile Include="RepositoryPattern\TypeOfTaskRepository.cs" />
+    <Compile Include="RepositoryPattern\ProductRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IDocumentRepository.cs" />
+    <Compile Include="RepositoryPattern\ProfileRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProfileRepository.cs" />
+    <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
+    <Compile Include="Validation\ProductModelBinder.cs" />
+    <Compile Include="Validation\ProductPartTaskModelBinder.cs" />
+    <Compile Include="Validation\ProductPartsPrintableArticleModelBinder.cs" />
+    <Compile Include="Validation\DecimalModelBinder.cs" />
+    <Compile Include="Validation\ProductPartModelBinder.cs" />
+    <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
+    <Compile Include="Models\Resources\Account\Registration.en-us.Designer.cs">
+      <DependentUpon>Registration.en-us.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Validation\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Validation\HttpParamActionAttribute.cs" />
+    <Compile Include="Validation\DsplayLocalizedAttribute.cs" />
+    <Compile Include="Areas\Account\Models\AccountModels.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx_MetaData.cs" />
+    <Compile Include="Models\IDeleteRelated.cs" />
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model11.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx.cs" />
@@ -809,9 +1083,6 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx.cs" />
-    <Compile Include="Models\TypeOfBase.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryPattern\ArticleRepository.cs" />
     <Compile Include="RepositoryPattern\CustomerSupplierBaseRepository.cs" />
@@ -2056,7 +2327,6 @@
     <Content Include="MetroUI\public\version.phtml" />
     <Content Include="MetroUI\public\windows8start.php" />
     <Content Include="MetroUI\README.md" />
-    <Content Include="Areas\DataBase\Views\Shared\Copy of _footer.cshtml" />
     <EntityDeploy Include="Models\Model2.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model2.Designer.cs</LastGenOutput>
@@ -2074,8 +2344,6 @@
       <DependentUpon>Model2.edmx</DependentUpon>
       <LastGenOutput>Model2.cs</LastGenOutput>
     </Content>
-    <Content Include="Areas\DataBase\Views\Article\Copy of _ListSheetPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\Copy of _SheetPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\Account\Views\Account\_ChangePassword.cshtml" />
     <Content Include="Areas\Account\Views\Account\EmailSent.cshtml" />
     <Content Include="Areas\Account\Views\Account\_RecoveryPassword.cshtml" />
@@ -2085,6 +2353,954 @@
     <Content Include="Areas\Account\Views\Account\EditProfileSuccess.cshtml" />
     <Content Include="Areas\Account\Views\Account\_Login.cshtml" />
     <Content Include="Areas\Working\Views\Web.config" />
+    <Content Include="Areas\Working\Views\Product\_ListCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_footer.cshtml" />
+    <Content Include="Areas\Working\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Working\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListPlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotter.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\OptionTypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Single.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\TypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartTask.cshtml" />
+    <Content Include="Models\PapiroMVC\.git\COMMITMESSAGE" />
+    <Content Include="Models\PapiroMVC\.git\COMMIT_EDITMSG" />
+    <Content Include="Models\PapiroMVC\.git\config" />
+    <Content Include="Models\PapiroMVC\.git\description" />
+    <Content Include="Models\PapiroMVC\.git\FETCH_HEAD" />
+    <Content Include="Models\PapiroMVC\.git\HEAD" />
+    <Content Include="Models\PapiroMVC\.git\hooks\applypatch-msg.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\commit-msg.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\post-commit.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\post-receive.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\post-update.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\pre-applypatch.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\pre-commit.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\pre-rebase.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\prepare-commit-msg.sample" />
+    <Content Include="Models\PapiroMVC\.git\hooks\update.sample" />
+    <Content Include="Models\PapiroMVC\.git\index" />
+    <Content Include="Models\PapiroMVC\.git\info\exclude" />
+    <Content Include="Models\PapiroMVC\.git\logs\HEAD" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\heads\alessandro" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\heads\fabrizio" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\heads\master" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\remotes\papiro\alessandro" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\remotes\papiro\fabrizio" />
+    <Content Include="Models\PapiroMVC\.git\logs\refs\remotes\papiro\master" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\37597f886e4c47687f2c3330dba5d88496a0a8" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\410e2b323e62f9ba1587ba4ecba6c408f6c6f1" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\66b0ad7c68455d62ce31f5be0d8a6e54f90f16" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\6e4aba901ece5743d8459ffc99918d75311e68" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\a01320800ff7a4614685eb38b973ee9f7d468f" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\cdba540d18066c08a6dddeaf99910634fc1913" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\e2c10ac1538998cf173e601fa151aedaaac9fa" />
+    <Content Include="Models\PapiroMVC\.git\objects\00\eea0ccee81608ffdecfcae2187d9634fb68586" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\1a2d08afaef06be17fc03a7a87eed5003ba59f" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\23fe9b5a85ae43198e9e49c44bec3c82b594d7" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\7332a04f44429ab2d508f1bd717c8d55fa076b" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\85f231d0f38bf2acbde6f22b440568b93bf166" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\88a73bc0705d72968bbd47f21975a61b38af40" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\89d5d0bf7293e9996126c3b17166dcbf4e4d1a" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\cf118efc5f8e88ad5fc652a4ce3ff0aeda36a6" />
+    <Content Include="Models\PapiroMVC\.git\objects\01\da9bf0dc0493d44781b575a16a28a36f5a7b39" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\2a888bff340e3d291281964228b3eb2d097812" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\80d32651e9d4f4014194b77cc556f9645ab986" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\83ab1d01bdc78e6bc231f38aa142512457aec5" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\8c35a56e992c3ae5c070a659220ea000a13adb" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\92fcbb6df63e0ac8a53e22fad9b7c15953334c" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\a2a1c5fbf07712b7cab73918a9820d78e09ad5" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\a30e8d16e9a6e07d44ab1d4c2dea958782995d" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\a8be995accffe2decb8bea21faadbd4c6065b1" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\d60b03a8d0bc5b6eafa738247cb8096740f768" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\d89c86ad7010c14f2760f18ed58be0a66de6a5" />
+    <Content Include="Models\PapiroMVC\.git\objects\02\d9648e030ba27b11a854645842a4f0dd81db1a" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\1f9e6b821d7220141a8cd62d80908cec81eae5" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\38694f04600e19bfc02a950a87a7002e404d7a" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\3d7a5e9e2266753180f4e3a9299f575046701e" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\6c2144dccd1c0963b4da5c34d00afa181f1c39" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\8ca358d60ac4a97c6b3e654e16d925bd86746e" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\9dc5342327724a7e7149699de00bf411a86efa" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\aac1b0eacfc0f6a3ed885a1f94b33825985023" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\b44b3782ea3cc15045e09930f48c0587e1cf29" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\d5fd86d8dbb3e1ee2a0f29aafb8245667184f1" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\e57dddd531fc9c1872f36279b51901f5b22d25" />
+    <Content Include="Models\PapiroMVC\.git\objects\03\e5e790d2e6c0db9e599789dc0a6d57bfd4d851" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\1860501017957022e07183bcec2a4106a05702" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\19077776db358d741f0c9c814aee9fbbc2bbe6" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\1b4f580d6c18c2b97dcb230532668c589d1c06" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\1e1f59067977554f29146ed51c13bcf509f0af" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\2eb999ee5d07cd51c4739b32d83d69b3e9efc7" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\4e6ad58b53a0516944978f1f0f866c0ff5f955" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\59920a46fa656138d44840607fb38115ca5b8c" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\69a4513b56d329ecc5657dbba248caf04676d3" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\ae775da5b3b35cf5770ebea9984a95a891961b" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\e12fee3010e287da685080c567772c83159bc4" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\e5a6ffd66446be6bb0740b37b9dd4ce17be591" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\f10a9dafd50beda231546386baa288a9fd386b" />
+    <Content Include="Models\PapiroMVC\.git\objects\04\fbb6114249b5ba55ce5b7a2e3ea7c7d83fc848" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\25ffdcb815a3f226435384fbb73ce6a9164ac7" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\323db01de37ecbb418c463a6244a42e4246a6a" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\3c40f3db6cbac39aba7d0f9e6591e33d973f3c" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\78ca0ba07f0c25a40ecfae64c0a5f0f2209668" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\88c6d99f1f8e77b2724d25ad70e42ed0477af9" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\8b0004ecff5aff636faae45aa9e6b808f76431" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\9630671d06ca2d84bac2f40320bd71a57fdd6c" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\a9fe018126035ffda8a76ab37e38359ac5f40b" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\d4c75906535789eae418a0fe5617c47c63b538" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\d73480f78bcb1c6554f2e063dccbb3a6ed9a70" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\e7d2e19aec8fd405dd32150292b745ad0f228a" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\e9bd9bbe8bcf3f4ce50f5271df4c0c25a5ff6e" />
+    <Content Include="Models\PapiroMVC\.git\objects\05\fb8f08ccf175c796d44c477fd72dcc3f5fc8ac" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\066980c4983bcc8fed22773b01b2e7d145c71a" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\10fcbc140074ff227cbcfe81dcb205b1722642" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\1b058bae7778122d8ce6a06b96c786130d07bf" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\40344d99be5d6a31d7b713c0675d612b79e613" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\62a834429c3d5054d9fb7ea93a7b7b878334e6" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\647cf57da655319a41e0b30d4bad2565303f5d" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\cd2d00650dabdf6069d0fd43f65c7d19f307b4" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\d2d9d632d8b601d9871469229730c2d0de2363" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\dcf35eb622c179dac4d6e335e875af52d2def0" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\f3fb854de73a4e62069c0866458bf2a26e7410" />
+    <Content Include="Models\PapiroMVC\.git\objects\06\f40cf7d920a3436c9b0c3f16adc7183477a980" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\14981a81788e51f0aa19fe1dc3aa200b5a0cd3" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\4fb889edc78d1a61223b02f610a48678ce9133" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\506b03cd401f7e670dd07049e3b5c93f4b2a78" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\5302a06f8d79ab08e58132843836dbf5843643" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\5b8b0acba91403d271b5c72184c9a42a19dd37" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\7a7f77ad6d19b4ba301a76fe58fe7baca56796" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\9063cf8a7315a2bd2f9f0a4d32f872aa0e3f0b" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\920ab34a825816c6b72ec5dc844cd573efd449" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\921c20d29ea997aaeaa964665d88c60cf572c4" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\992dafdd7f7d03a1ce12aa2000ace2916cd242" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\a7ccff1c65545122311f79d702c89f53a367a9" />
+    <Content Include="Models\PapiroMVC\.git\objects\07\dff9acc7784d2ddd8a753248edb7057f1087d6" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\01c6d1da22bf6bb224fc5bc8876e327b79af58" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\0a8f542d909eda88a3f5de8d15b82c731b50c7" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\437ec61af89e8655a1edb7431a28aa213f6043" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\47080ede89000b3a21bdb807e886940edf1cac" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\4a958114c66fb3944d0e5d37e4b86e2f58809b" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\60b6fe5bc5b7f3cfd69d463b9c0da44c5e8c50" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\8ef1c0b702714d9a78210c8b85a6c9c471a006" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\95ec682572d6a2fa82c71502810ff1d3b604af" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\d0e71911531dd28888f3b5bd351af644c24184" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\d9f0d0ae91c278aa09be1304551d88c334c94a" />
+    <Content Include="Models\PapiroMVC\.git\objects\08\f866cdcfb0fa370e816fa024adbaee8ee2b408" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\0efb630248a712639d1ec3d8c51fb8991392c0" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\10e4d608bc15870111d31d15ced267e3211370" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\16164442cd7d82a6929e5ee90cc21dfe158382" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\19b66c6b7bc4b27c4ae6f68c0989b316e3a853" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\1c1299a840837a517ad638265b6c13fb0de1af" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\2864e5ab77ac863f23e7f1da67f100b333a5ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\30449337d3fc327658e6d94a206bc3b70a280e" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\517550d9ec10c9e106561a6ce415c932a18c74" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\64876eaa7f18eb4bbdc9671adc84c07c74097f" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\8d9b96373709dca6312e7b836bd01051633f9b" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\aad4f1f7bd57ba755582524ce743c1c1898587" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\afffc6d9278048f92ffa7d0ff542bafb61ecb9" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\c99fd16a54ba26f21cb4b05e228ac50dc1c7bf" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\caf6d53b32c459553b584340bee523672bdfa9" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\d1cdc856c292c4ab6dd818c7543ac0828bd616" />
+    <Content Include="Models\PapiroMVC\.git\objects\09\f4f794832025cdcc14a8b72858ea998a91e462" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\123471bcfb86a08dd45aea45e378acff7bf6b9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\2d3ed2fa644db50c7a851f368d97acef4078d6" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\3cea1e9bd287cacc4c0d7a7b9c7502b05ece9b" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\5c60d3a92becd6c31ff33397c97336447e1990" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\650822a23ef2f6e8244be13e30f0b76bc74add" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\7acf790aaba7f3b0314108467016351a7b586c" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\7e68c6069f4ade34e10d07ff33baa4f89a2135" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\82c1b45665d6e4b749c7c95f99e52650133acd" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\860000f7ba6f1f0580599db48e6010b16366ee" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\d6d1555b9a83c3c246d131ab5097852c000e2e" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\d9b9c04bb237ebc78709c33e0749d2acacdf48" />
+    <Content Include="Models\PapiroMVC\.git\objects\0a\e27e1689d9a2f96def42c43584caf177874a29" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\24209efcc6224c14f3424f96959836c2f98b4d" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\407260d15bd876aed41c4f92292bb2f3bfbda0" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\5ca1e0bd04d9cb11a3000bc539815724bc6793" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\65cf6128e0f6653ddd03039875ffce38d6dbb6" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\665eeb39611da950e252f1adb4186111142e08" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\9b3b6c0857461aeb88140259fed9afe55ff8a9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\e9e1d6cf4591fbe978fec3e5756c89b99e915d" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\ec66b573bda4b10aff9c80dcef57b7ca8596f0" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\eed20341e2844765563952b75fd3fc208fd7bc" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\f286293c49979e1f2aebfdee8e253c82852c25" />
+    <Content Include="Models\PapiroMVC\.git\objects\0b\ffbcf613be9a56db3e7a8e30d0090e33c6f837" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\0ebc8685db104301fd138c4794eb1c7c0fc485" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\339f77be24dd8c40f47c213b3ff83bedb777c0" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\3e51b46bcdd5d25594ac02e6a468cff860a666" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\4c97d77556ac7e23760b0796e740dc674a344c" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\5a3be1f52860086f724b95c2e73fad392133a9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\95cb3a6ee735ae85d2ca9bb71bca8265812814" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\a002e0939f71fe3f30287011788d91dac2b3f9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\b178e89925dde14c2ea46ede7ed0152d6fde00" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\b20c8711f6614700a01ee3f7effbaabb392908" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\b3aae1ee1504b0e49f8bf649b64f9dc64a6ecd" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\c8da27193024e09e8291ba4d86edfab9be01d8" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\d09658c8e3d8953a3698139f7f919990a52fd9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\d2df32b48828dc9b1f2b93ff8c1db02a689513" />
+    <Content Include="Models\PapiroMVC\.git\objects\0c\e3112f464ef55c9b815e270c6e35cc1a022b80" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\1b115176e3c8614d2c56c94aebc48856a85969" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\1c3776a66e5c74af0348e078e9e8ec4cd73ddd" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\26cd743db81780df2ea4c9bc8138b03bbba58d" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\4a29d8a9590c50532e8254984579dd02de55d7" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\77453fab8fe33c26dfdb2e7e8f2978f3013e4a" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\84c8168ac43105333980186962302eb4ab36a8" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\886e81ac71afc60d9067a0a3aedfd8d11b3356" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\8ae16a9257609dac52b0662e26093c4b346ad0" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\91d5f7add7de6de47744df4608eb372f487490" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\9299f1215a75365841796f438b61b1f702b0ed" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\a858884c7c37ccd0040759d7ee8474eef0fc56" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\ab361a7162230a99fe006dd55dc5799ad3fd39" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\b18908be068d0e22b3f55450fe402eb3d97d98" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\bb7e4442118ce255d2e65905b18906cd126b32" />
+    <Content Include="Models\PapiroMVC\.git\objects\0d\edeea2a4b52113a60767d9f11d05f7a87896ad" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\10057bfb6ceb6afca27d4a262826426679df15" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\1d1d27bdf9f5ea7193988ac772e683c1348e31" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\33fb164243165b20cccaff9345a284fa2929ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\3ae53d3e489bec8174496acedc52c86cf64f5b" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\64a3812e51ad14eb03cfe6a5d80518682f8dc9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\71cd60badaa7e20818f866990a81141d33fcac" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\90c599152ceb2bafbad284eac6845863dfd208" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\a72af792010da5e1adca537020711a7010c165" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\aef744c1afebda550bf9c28f9c0cc541ec3680" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\b609fed95758a0ca3988bb65de8c381244a8a4" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\bd1dccaf05c937bc16026fa7966cd6dd267db9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\cf5cf21c74670af23197501b989b53a948983a" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\ee617320850ea61f0e811c4d2eb9679d24c408" />
+    <Content Include="Models\PapiroMVC\.git\objects\0e\fc23173308c8ba4f04ad45d56d1faea0f6b545" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\17995c2f1f628bce4e4347347d597b118b0cd9" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\315ede82bb06f05de29d39d2b561c170e84306" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\84dfe5efcfac63c2dafec941470d742e3bc7fa" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\8a662a7f5c624ded161c36d5648e264ea42821" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\8e3c8ed85a1408db68f114e0af535de4cfd746" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\90e5da9b4aee3c7c2af0bb052bd198ff1df5eb" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\b05ea18d0bcde518936cdcefe513a98b726882" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\c01b1f5c7226fe02fc0d2d106db4a3a83201ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\c9522d99832db3c8fd6fedcf3948a79ea8b4cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\0f\e50d1e528854e5de1554325b4a04f5ee73cbab" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\09447eb943c684ca29424da70c429b24369228" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\272df996d9c415a69004968d51bfade4afbdb6" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\3e6c097387532a4722a4cdb0de16163cca23c8" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\41b6f4aeed65e20cc5dba3a63ee102230e8de5" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\465c30796a061e4b73cffa0a5284912c0ca6a5" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\5a896c699c6fc9ad5ce768d0316e14e90c550d" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\5b9794e27a76296d561842912fd19923e18167" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\7da65e593c10d635070a54d210e43f57a811e2" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\8cc12ed580579aad4b898bcdb8926bdbdd4244" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\92db378d335ff063d48d43bc31c1fde494804e" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\98f2ee14c0624f83e420283c7b4f119d394ce8" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\a30afcd8c0d31bf9e53ed7a220dd4932ee5e76" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\ae8b7e757acd897f43b0e4fbb592612c37e2ea" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\b62a00c69f6913d06e4ac9e7b641848e8aa9d5" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\bc639855fe91bb81c76735cbf479e730ef5500" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\cc435a26e44430afa84603d72c3f2baafcf89a" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\d8bb047e31e190791bb1368fec87f4b7071364" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\e29870feae8ff6098056fc8ce872f32dc9fdf2" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\e2fd8591eb1e646503ba502e10ec449402060a" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\e8de55530e10ebf72b327a4100582ffa1f71cb" />
+    <Content Include="Models\PapiroMVC\.git\objects\10\ef1a0fbefacac788a02b697029e62b41e0ece7" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\068eb664f018195a6751be8ceb7e63d92182e4" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\3a2193c3dbd02ede206aef49321e1c1d26707b" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\411968025a974ff160c17097a50550d21c15c5" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\4870b2882ca2fa137ba2979a2a85cfa6029d70" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\5449789269aaf33a7758874e96e071eb1d7ee1" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\592c23700a95032c315f199f35bbe1ae625ead" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\7f7e84674892121956c393876222e6dad475d3" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\84b3173eebccc56fdc9a305c7bde1e1fa9eddc" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\b2e538c195929c6b7f8b24a38feabc58ae6554" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\ca1775d0a99b9fccc4ab19852f5f675fabc389" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\ca37b1a119144ddbdc71c6f0e80558c8390a71" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\ec43e07d71d417b059f64d5ea24fb07309e076" />
+    <Content Include="Models\PapiroMVC\.git\objects\11\ef7723b762e00dccba853d0ac9b1aaae7fcb11" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\107d6444471c89c4c0105fbf391b690d6ab312" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\160a8f474792ee0c45a61a3881ffa71a6dcb25" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\1b8c131d3368ffb262772b46504c6010bbad92" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\2184e89a9c79d34258dd9c0bb3a0f4552bf183" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\22461188eec4e64c870f65c580fde9c7382ea2" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\28534cf90a29caf9f264e1735739773c88ff74" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\40746166c14a4a03c8a6b8adc00cc35f5bb466" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\410f7527a443b0dcf89ee4d73a66330890dd78" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\545c0b3a10e66481f62c2450e4b6391c52a6b6" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\6cf953509728088ff3f3feac3361fbeeebc0af" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\71796e74b542e4152c384e4a3027542552376b" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\7596d105dd7862f48fe7aacf507fb7619b585e" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\880acce0d313f946409acc3bb41efa9f6cf6ad" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\8b5b6cfc2f5855f2961b24104b5eabe0ab2d7a" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\bac581add4e2132d272d32e5e118de16105bde" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\bbcf51ec75ada58a3b0c9b8cd71d28f0ec2173" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\c2e92f0e045887e0069aa1abfb5fa23ead72b1" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\c7797fdc6a98f9e3bd37d8416fe33a057deaae" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\d798234d2327f56dad99e3ae813b65db2d9014" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\dccec30affa2c59f0fed827ae82d3c7a20fefb" />
+    <Content Include="Models\PapiroMVC\.git\objects\12\e3e3cbbd9c47bdb5f4aaf73795fa97b14c69c2" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\2f1682579f485882d4609dcb9810df7a869083" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\3f6b63a1787c28aeec1e1176089b06c6609992" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\513657be97df65967c351098b79a953513461e" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\5c3e068c3b4174e09c8516ecd4d84a9f2af386" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\89b6c1b575c41c5e5d454262c71125d5c1b5cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\926240661f2d8a9e85b614ca648ccca56f098e" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\c5c16449879681ff9c192888320b9f632e3d43" />
+    <Content Include="Models\PapiroMVC\.git\objects\13\d462824cd9ba27596670ec573d620594e1c76b" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\06120d5e0e912fc2f72b7fe481f1c899a231ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\18f24b11ad5f3e2c34d9e1a1a6153f1900c539" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\24a565687dbe0d01580f97b1457a5f62fd50df" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\28752281b369b1fbe14bb5510a34448ed88f69" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\49c96f1e3b34ef618933660ef8c0dc9e5b47a1" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\4c09f2e5721196a9b0e32259aea3a396c6c78b" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\574f9fefc140e40c06c920fbdeab1ee9e7d15a" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\9fd2d9386d1cd07270db61f9b0008d6d77c157" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\a5807e50b8679c5e8fac4382c63ddbda9377dd" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\ab844647c3622d14a1f548195af6c3453d7048" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\b17058537930e864e58bbad263635841bfe3c2" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\b284cc50d61d0fd97ebe8a4dbcee32e2a93468" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\ce33fb9e9255255ceee871e298b6cab4d207c1" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\dd4c642b02d4e0b8e3caa62fdacdca3fa7764e" />
+    <Content Include="Models\PapiroMVC\.git\objects\14\ea59b29d7af0a29cbfac05d02346dfa0835d93" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\033d79cae61211af3d911a15a2a24c74576bd5" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\1e5b8b1472e41deb0a30bc120d5a8d6f671864" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\8b570f95d54748d51a6565c14797b1ef9d06c6" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\b366b22347527491e31227d9fe26f209e91b92" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\c205fb24ec77b37b0d452e98efdc8949a5aef7" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\c6a3682e05d77eac69f08ec2b36119a90c05be" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\cfad24f3ff9d71d8197f4722de71cb78118859" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\d2a1fdc1bd8d3b0c169ea001cd48a78e19c79e" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\da3190b5d47d73e8bfc8c525b7de17bba6b30a" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\e0b5cf61cff0d074f075857a23fb76236a44fb" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\e29f01b0d51b19752ccea2967c34f40d3c340a" />
+    <Content Include="Models\PapiroMVC\.git\objects\15\e5b2d92109ad9070326bcb798e3274411a40e4" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\03b871d6c980e4bcd0bd65af867a46abe3ecec" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\0882b90d7c13bde31e2bb5d878d83b33f0296e" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\0f58e20fd5e1dfebb010a1e8552835a79f20df" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\35ce6033a4d45c9fb5d0fe4bb02f48ef12c6ab" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\3809cabec761e1dada4810ac59657d66919ea9" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\4303a68b52812e2c8dc15cac02a18fe2fe30be" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\59c129ac1e1a7d51ecf03223b71d26d0fe67ba" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\75bb43a7ea8c5f23789489cfb5764520431bf8" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\8d60251e97aeba56ca9a599fc79586df893916" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\94a53d8e4cc2b58e375cc3b6e77916b1dde472" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\c1aac1ce190742f4f87bbbf9b98684615516cb" />
+    <Content Include="Models\PapiroMVC\.git\objects\16\d363beb90c864e8c749326ab3e9761db35f58c" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\0fff9a3811a64e943de27ab685524df7e5912a" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\1ab426a18bed3f78c5e4da8327454cde46fb58" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\25980ff33bc7604cc09c85188b4b3200abe490" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\2cd40f197c2390040aa5dd88cbcf9a4b68ad1c" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\381b7648bf4b319181a915a191c188cd139a69" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\43fcf20a8fa75f0b4644b1f866900ca110dae8" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\567e089a7670f75e5e42e7e267a4fb81a10dfe" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\575fc2f001cb15e5e5e08933b409b56261f8d8" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\6c449f379f54f7fafd483cb1bcd8699f4e031c" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\6d2389d06b0dcffafbc84aab4ad6a365610159" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\78429305fc4119b959bcdf0cc6bfafb95c8992" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\7bb973d3c73d6ae1141d8907ac89e6a1be323d" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\883894736e3ed9af33cd6348a000b2624866c5" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\b255330a19629430bbd9de3ec6cbe37bf072b5" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\d5ecfb6fff1ad1e06d72dea15c44b16aeea317" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\e3dac070582163e224a7a35958f9f2cef9c299" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\eac8c5516245069a182dd7f565cda3d0ec2b1e" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\f6fb7a7711389f9d690baa40807afb766d68f8" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\f85c7337eb4b7cdefbf9c31f3791de659873cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\17\fcdc89bf5b4c23038c2018ddb5f7a8737a15e8" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\018975e9bd0c273de1f674116e79372cf91a85" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\05e6a937c883d11b4baf4c57f8f3c45a6ba540" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\087dfe4c9b6c3f1b2b25d65f06da98df6fc76f" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\0bf00345e7fbce591f43b02a687c4d0c3fc624" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\10251595bb03ca115c327a322bc19afaa82fca" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\32332f37f37e60cee1b7ba3fd40b67b2dd9eb8" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\42004648c605a8acddde88ce78ce5700b5b44d" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\4bc0ca051473767d14f60c14a8eb62e1d61d14" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\9df9cb640ab3a00dcba5557f5fbf239fb327f8" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\d5a483b5796af1d7ad4e8ea15871428c92938b" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\e6e87e0ae91e79b8bd4cae82b3f3e7e1b72c81" />
+    <Content Include="Models\PapiroMVC\.git\objects\18\f4404fce0539676df18340b19f9ac56291410b" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\4dddcb4ac28177a568851b70b98f5155629a70" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\7daff471ba42cc7e0b4450986296afe5a8eedb" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\826700233c478b4a3a36c1089f158f6e928ddf" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\b700ac750533681f30fcb4afca4283ee6610a2" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\cfd5c35413b944b1e8cce84b8cb67004560a32" />
+    <Content Include="Models\PapiroMVC\.git\objects\19\fdfdfb3b10bf01a2d13bc5466d5e1a74fe845b" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\1ea3c640cc063e8e37cdad6e4d0321091cbeb5" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\39f65b9b4a45034eeaaa722e9edccac35ce7ec" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\416d538d329f536bc338eff372d12f6fa623ae" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\4be61fcfa31f62b77aba8cc0dff8c2205a718e" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\53402da7ca0fd309d41cb1ae1fb9603caade65" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\551347f9d4b149a34f00abcfaba1f2ed905eb8" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\59d7c375d6611262a9ac86db23eb94570d7319" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\82b1b39130e7ce8a6be2c0b282dfd0ed94c790" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\90fe7882a1f234ff066fad593131360530b253" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\a80031414a41b190765e42c1d1b4dd249962f5" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\a97e8bc276bdc1da55fe4f506ad5adf388b283" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\b01272379b93e554f8dbd0246ceb2012774899" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\b3c2bf8e80300c82ebe4ced15686b59cccd7f6" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\e2f863023f9f5af846691492ec478810a42410" />
+    <Content Include="Models\PapiroMVC\.git\objects\1a\f7de150c99c12dd67a509fe57c10d63e4eeb04" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\108e53cada6f3498360f8e3bfa9c7fe39d3d4f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\147f7d2e13bba638fcc34a30a1e4805fae3466" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\1591e7f8f3bab8147e3cbe2f42e53809ddcf7a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\163217f800cafc21acfa32a14a8fbc3050b194" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\17bc71fde41bea080bec19e6229c3dd972ec8f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\1a29cfb3ba2c3d014d3126ed7f944fca32ff71" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\1b0bd6bd0225078fe6b8daafa32e203540a9a8" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\2582a93b6daf32f0b25e0c7f726944651e816c" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\3f9626e0a672d1599cdf65116b5ebbe0b4a51f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\42c7650ed69a80d0a85c2a18c5e7a6586a0c53" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\51263addf94764cf7dd0c6eb2e38ce97f600de" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\669eacc152adf3bfb68d8f5ca0cc3fb5e556f5" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\8284ae8ffe11a3eaea73903575e3e62d07c943" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\8bc40f4749d48a7d7619a54500406b56478e5c" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\9a8ae85f5f85ed042ab337e7556b4b039ad9a0" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\ae8f7e16cb3a67e3f9edd89412489d2470acaf" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\bcc95506142985ab9821ecd19fff4a9377ae9f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\bd2603a95e1a54cd33f9eedd5b622539d2b7e0" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\cc7f8fe50ec272a25f12614eca8269cf4bd1a0" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\d762e67da134ce81b37579cb9e3385f665b2af" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\df221aaff20af2075822daeaff1d36ebeaae4d" />
+    <Content Include="Models\PapiroMVC\.git\objects\1b\ecadf54b0ccfe6f49d3f20e2fb131b0ff5c747" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\1dded5c88a0e2a84d9197965f5be06234dd22a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\438f2bd49c614ec447bb11c67e188168c00014" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\53a2cc13640137885c18a4ace1f8134ff6495d" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\62cec0825bed5f20b923ac29b5e9cc8410f41f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\6591f8628fa4840bcdfa586998ca9a0a53714a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\673793c48400f6fd4a96e9678662b885f0e8b1" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\9f2da8eb318a3dc1426ce57127ae2b7c5942a6" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\b69def715f800a0cf4d1d927132029a5cf4243" />
+    <Content Include="Models\PapiroMVC\.git\objects\1c\b912bfdcb34c16f977263a9582c838be392873" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\082df9ec92681232c6aa869bdb835a16fbbbc7" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\1f579e5df343771b4ad7127fb657af207e5f9c" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\4485d45c0ccaff5197b9158710b8fc131222b2" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\4cbf6e11bdab5f57633bcac8bdff3dd4c1ca66" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\5c2eecba96de126862d30e12bc17d74ca5933a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\639abcf961619a03bc8f23a8e5d014d254c08d" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\7309a16f3b348cf871cc83bab1fdb70eb26d3a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\7a8bea9ec6e7afee43986f21b9770ed1ec2843" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\c04be48e59539e9a4908c557d57f11fa971060" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\ce0b79cec41715897810cc1f4124918ba54ea0" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\e375820efecc936398bcf34277b232334cc343" />
+    <Content Include="Models\PapiroMVC\.git\objects\1d\f65737a05511aba3df4fd4e0afd0cb2f889e67" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\0a26bbca88c42c7fd08cdad41b3fe4e7eb8ec3" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\2d10489138bf07d393c9f927480029c7312d7e" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\3dcb60176bf1e028e141449dcc93770ac4594e" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\3e70c37ae05a893a82abdf1eb5363e1845345a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\54300e07cf858bbb2124053eeb969f23eeb8ff" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\5b37d0649112683992e7b7d5a03c481ebcbc3f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\81d60ffb09f476436ee80e55e813580c10735e" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\9cf511c320acba00a6bdeff780bc62c6639f9f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\abcd936205e3cbb63d23781bee33543ed65810" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\adbea977fb9eed65d95c0173c6432973e95c6a" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\b3c35373b0e8eb862f482bfc132d3b9e618d5d" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\bb268f3bd47c3a76a5c9a30db23d0723d123d3" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\f10b297da406a64a50932bd8f14066f94468ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\1e\fc2e183d045671d92ecf5dba52aa8a5aa6aa57" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\0e20208375ee943aa924a66b30e695ce42c592" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\314b06d078ed74ba87d758326805832c397603" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\33f550a853a81c858a5112d2e942c5ad9224e3" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\3847f0352b357d456f4267cddf1daacc084b4b" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\39118c7a8ebd3a7e031d80f3599284cefae8a6" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\5128436d8d6ceb90516a715b2756b3c4eac02e" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\6281a178fec2f2382484917db0d9775802608f" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\6ea09f80efed65e9fd3fa27179f6e2089014cb" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\8617e3f7c885a6b869dedb27c06e5d37cb28b6" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\bf3845bd7ec5bdd828ab403be0c6c05f97839c" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\d84a6f7e0b5bc2b2417f6871a4ff453dd65956" />
+    <Content Include="Models\PapiroMVC\.git\objects\1f\e305170cacf54658317eb04738d4985c95d020" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\017ea7bf1669d3b9f70f65fe539a4f4c44bc57" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\18ace93f8396447c3bc9eefde35108926a77fa" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\229b7d8a8230f37dc114f980150ead460ad6dd" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\2eb549ed70d138df34621ae2d76a5b324c6d5a" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\4a5c8f1dc309102a472449a526a27fee1903ea" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\50394247e36fbc78cebcf67f04f7d4eead12dc" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\5f0b37d7da66862eb8e3bf02751842c209911d" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\7bf71be862f784a1cdbce8ad2b838961b15f6f" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\89995cb5db850df094708004144ee9a0fdbd0f" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\940c8ab3ca0a5d37878819125eb64818db52b6" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\98adfc66c370fddda320d923bfabdefc28c1eb" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\b2c180c05a23ba6dedebaf588c4ba2293fa189" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\c584112e16eac9d4c70c4e5f6b3bf1496083b2" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\c5bfad186f738e2c49d5b209f8131994e4cc64" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\d26cebbbc947348f35278cf9689b6f3caaa739" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\d287d5ba0c8829921c76f9db62fe0a87abb3e4" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\d3ec648172db7c776b69333805b571fda2dcdf" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\d6c0735b0ebd503e2596ea12d1a9ada581092d" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\dbe892074111272d5241db359f9822e2c0fe30" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\e2f3bd0bd8169c1a4cfbeea1ee918f075945a7" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\e34494f748e240efca89921041e84af5734636" />
+    <Content Include="Models\PapiroMVC\.git\objects\20\f21fbdeb20678235e44d0f508c339eae566a0a" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\035fdea97774f3eca99c24a54756531dfa0210" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\2836cb3335523b3460c494be6716211eeea9e1" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\38186fd66cfc1cf9a01373084a2f0e68b1f701" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\69a26ed3dbb82c57229e33d0d8c63193f76fcf" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\9b18fa4b065fdced83b10d3b948072b500b72c" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\c80da6a8d95c71a38173fdbba6d24419b17c14" />
+    <Content Include="Models\PapiroMVC\.git\objects\21\f442a4147e044ab3b457fddc8516025e588ac6" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\1519266e96ddc0d0ff4bcbe2322436726fb089" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\3189e563fa470f973fd2acaffc0314edb5de1d" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\9ac074485abe177e6923028a019ff3d5d8dc47" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\a3f6bf63b044e48c430f957e4f368f74ba26aa" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\b460ed057e48add5629d905c5d87b91c1bbb9c" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\c4199378826f2e2fd536ffb406c74fa909c83f" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\c5c9c2d2ae73c22016426fc9db9fcacb9a93f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\cfaddf11f913de55a5024cd3b3a1812dd8c9ea" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\e5de14ff03d7a6d11505987322ac32723515b6" />
+    <Content Include="Models\PapiroMVC\.git\objects\22\fb0895cab35e0a2bb4b39a3b4cfcd6980fd2f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\090c30b15630ff03d3d8b2554bdee2b76bdae9" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\0a5d4f0a008ed31110daa14aae73561336be5e" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\10311e8197320410ab228d3cb0b9c4270c8c29" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\2817e229fc88fbf834355088f23c004f6f0037" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\295b0cf35a102e6a0cbc00c8642f38313d1b1d" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\39f26a1e63660f7edc0d61546b856c1eac140e" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\474bdf7a703bc65af7b216e115ece7f36c0f5a" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\53fbb658bfe634538deabe844b29ddbdf500ac" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\5c50199cb03124026afda318e87b90717f3d56" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\6b6d41eb5985ac25a00ca5d870dfc37e85477e" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\e1c121aee7ab630427f4043593e3cb18dff820" />
+    <Content Include="Models\PapiroMVC\.git\objects\23\fbfd31d7ac4bf44f0d3c10a8a24967f6d662d4" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\00418fcc2240bf8c7eaa25c8401544a56215d8" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\50a19768df6565bf185eab346b7b634838cff7" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\5ab0adc72bb66708a44670fb8c71d85a0f3433" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\b45644102188faaa349b0e26e47190c3618b4e" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\c9e2b38361b06453a66d282013dab95743a4b4" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\db5e355a7d3dffe4a664f36735b94452d7706f" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\e4324721ec0ac820d7baa19b698a035c20a3e2" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\e4f7001a691089ccc7aa94b8c4e08281d60590" />
+    <Content Include="Models\PapiroMVC\.git\objects\24\e65ab3f60aca812bfe3190ab3c1d87ea7b9718" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\3ba26126ec9f3df10998cb35e53fb14ac9f015" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\430a2b4b86ff2c0a2e73ace4240c41e989a4f0" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\63b5e04ec37f9f81c977256bdaa43cac7314de" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\788027efa6f39625247086c4c419f58e57f4e9" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\a383828a2ead98d29b659366bfbab28d69c470" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\b03255e5fdfa5785db61fb9d1e3c38fa570c3a" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\ba2088b51ad491024653de6b169fda3e9cd85e" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\edf2504dc834ddceb9666e32fbb5c6b01f100f" />
+    <Content Include="Models\PapiroMVC\.git\objects\25\ff1908bb5e0d2d93ce190bc81f6d3647b26ca0" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\02da027e7deb42a39b36df0fa07182224d8e05" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\08905c971f01106687fc53988569fc9267d36d" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\08e61a219364f98e69f81651e128f7f3971ada" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\15539ce99932e35b6be9d6e5c49912e3d98f9c" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\1848547beb33cd74b07f77b1d9917bbe99c561" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\25345426847534137bef55b396188da4ecdb2b" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\3c20c5411a74c9ed65d81cbedae58cf7806b73" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\42710a4f01106defcfb56609178181d9f5d06c" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\79336311d5cf962bed53f33f5d4c3abf91ff81" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\7af09e2c4e1f2da105381e29cbb850c7b199d7" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\8d5795b158f54c08183ced4d75cb1457272bff" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\91d819e3f2aac42d52300c9900ca0a5a958961" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\9c1bc28636addaa78453007c05e2ed4c52f71f" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\a4cb8c676909d92a872bf1ab3934193a572585" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\ad5a3a8980cc4113aa4b30dced85fc9584a00f" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\b83f445431406541e44a11280c0d2cc4e60b18" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\bfa7ad2909715d258fc2955138235121c32688" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\d18a5d21865772d184a2080ba936c8dd8093c3" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\da2922b2f9c2564262f650735cca7deb1c3c0e" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\de4f360577e23d053574bc0a988fe04582b32c" />
+    <Content Include="Models\PapiroMVC\.git\objects\26\f0f671a279bac9f86c97b5170229387296b99b" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\037a72cca12880fa0bafc9dd647d06c0ccf4f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\163b7a644900261007c2ba08394901bcd075cc" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\31592f67649a62c8c3f3be5ea1fc3ba2e57fba" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\3ba3eaf15b0714dfc0062668168c9d1bc3908b" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\5180c459cc2688efbb5e781403932a9474855a" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\96736fd86b2e7f3b0d0b8c2e4aa9e18b16d12a" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\9b8df787a8cf2ecd50c3c93c555c97df7f5f37" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\a8a9e9482f05f956bebac22512a2a5d165c1f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\d8deaaddceebd5c74da2ced8ea572b534cad36" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\df8a7d59889edbb7e775f372436467305bc4e6" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\e22717f18cd23f910aebd3675e6026ffbd6e31" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\e887d8307e59510ea17f340ccbd0ba8812e7d3" />
+    <Content Include="Models\PapiroMVC\.git\objects\27\ef5a83806063ba485028352c7c679511dd8c62" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\0e831a754906501b08dd29f45b22d7f01d2c9e" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\4a41fe54926cc1b2f08ff6b14fe9c0a7d4979a" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\51b5d3841bfb6e31e2aff24c1a4c9e093ffa29" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\6615afb750c9d4b34097d0e78aa742bac56163" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\8790aec19639b3ebea3645010c38107b66ad21" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\a1f5d1a646096496764a2c5446580d8e96ea89" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\cf50c375bdd26a1f3a43c0dcb1230a11e1b044" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\d18d80a09b3ff14a846d1d44aa21b7566bb70e" />
+    <Content Include="Models\PapiroMVC\.git\objects\28\f889a8b2666ae4635e932fea98a608494940a2" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\0a82dc8196ed73cc797fa139ce9b1b9afe77f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\176f7a77f837b02332ff95f4efac3220bca9fd" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\1dea85a322cb581092fb20f32879120a450238" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\254994ebefdf3a3c770e82e1e3a1dd8ea6b791" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\425e87074305e5a70747d96a28b59602ebb0ed" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\42994855167518194bbf570ce7e783daafc1ac" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\435ff651a31c1650209a9bd267ef3f5a8562f7" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\7b88f343ed82696e464cd19d5fb92232b0ab4f" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\7f91198bb1436edca2886b12aa6e0b9d1373ec" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\933f2fea062213e5a2c4f990945158baf25467" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\94a4f91979b0e88dafb04f0a1dd2cb78510189" />
+    <Content Include="Models\PapiroMVC\.git\objects\29\c2fbd32195ed0c87ee8400bee00879edbb6614" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\3084bfb0f1bcff01763e0c4bfd293742f9a3ae" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\39610c3740c91956a3f910d6159101fb45f624" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\49980271ff5863214a9ea0272f7a6c749b20cd" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\4bb4775713d1bb8a138e04d2e786d17c2b30bc" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\735521badb88622a7b9276144a1f2fcc599eaa" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\9b824a6e69c6f8c5d4aee5168a5b28da02dfaf" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\9f0996c6cea5b30a51eb42ef99164dd8dd0378" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\aa72f3c0e48180ea2c9ffc3c8ccfd3c615cdcb" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\ad76482fd57fc9e1dc71a4f9035aab8b7861ec" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\af2a668605d4983c147029615b05d669741bb1" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\af2b57b17fbee1b9d0349ce395cbf3a9426f82" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\b019b73ec11a485fa09378f3a0e155194f6a5d" />
+    <Content Include="Models\PapiroMVC\.git\objects\2a\b9623a6dde04acd9eadfda33740cfa74007948" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\0685748ed5e8bf8bc2d68618bfb980f2468655" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\07e2b63b1b918436d6efea5f8fc1c983aa98cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\120ac54e0ddee6701419adf7df16c671968f0f" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\12855eae36bac4af6b47114aa72f54c0b1ed80" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\1e2f1008d2ef7c101ddfae23ef3eccfc9f73a8" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\1e660480f378729928215493f3c5156bf9d015" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\31631ca2bfec3a8afb1bfdd4f8ed4c5bcc3a18" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\3d2fdcd2d6b95ab4e7bb1c8588c0caa01724d8" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\3e8d6f12db609a51eea9e2472d6a22156e8b15" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\5560a8ca58300bb1765291cdcee25521013cd3" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\6ce3b50b68ff9e9f57adcf7b10a63e3f244028" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\7560c68f3f9876fe87af2291c24bf38a313eb6" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\78f8223113c54ce091430065e2eafc65c806e2" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\7ddadb65f994776f2767195db86f2b21c90b96" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\86fbacb8a7309e9025f134e1ca4ce6a6cd947e" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\8a8907219c57119c295a97fe7b9c93c9b62092" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\abd94b5cc1ec30ec0521bfaf9d0ebe62cffae1" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\b724e6c12efa38683a195773666ce3b9bd9836" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\c94e264dc3e9272e9e7b61c69d950b793f86d9" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\ce95f1fff038ac8cc324a1c144667c4686d27f" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\cea92646fb46737a46096214054fc34e3016fc" />
+    <Content Include="Models\PapiroMVC\.git\objects\2b\ee2a7db496bf13898e45fafbc730924c2a719a" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\21d1d5a84801037abcf8d128e07308ee65c82f" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\26a155716dc8e114407e973b241998ac119aef" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\32ef78ffe959fc9884624ed09e750582473167" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\449b7b142463625ba07391aea5a8770a6a1ec9" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\4d454eb71714d396767d6bd110de2273b4fcb0" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\58f78c904c042267ac928c165c1871e20823ca" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\700c71d584dc3063783573762bab189577cc5b" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\838e994a40ed8eb5c920c96cc71716bd611592" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\8e69cd05b422bc390ac5911978c363c8a94e87" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\cf1db810839d3ce76f91ea78b2f7ecc8cd8c5c" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\e02eaf47eb571663d0b1fb05f61c7af4ec3919" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\f3fe39688402f200046d50a0be91ba260e2e7d" />
+    <Content Include="Models\PapiroMVC\.git\objects\2c\fde293a5dfbe7558fe2f1df50554f96808db3b" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\0102ee9dee29de2951924d4e70edc0f8d449d6" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\1ab14954f998d92a666f116644947c998a2ce6" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\1db37b9723cda7004d6020d0e5bd8f33e76998" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\6e80b1b9a56b67f08254791d0a57eaa56d5fd5" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\71514f0a57c97351ea0dfb0ba917c3dc55ffe9" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\737a1cae8039e1a06f61330a7aa5b960aa6630" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\852ee9705b32dedbf0e7f4e322705daa596645" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\c578d42b2f3a0099ebbdabf189810751d805ff" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\d72fad0865d1a3db71242851ce7b486fe6307f" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\e81fb54ac2caf4dda4707810cce46de54dbd63" />
+    <Content Include="Models\PapiroMVC\.git\objects\2d\f026a4bb9640237a0d0e93e2d0d28afa12daf4" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\36f5df6ac0078232e7bba40204f0fd8bb56779" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\6dd58a422197cb895734c584f3fd30b95a7805" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\9df8a63905c21607238fb0a9da8d0352862dd8" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\a33ff536778344b72b7a42169f41ca931c4a3b" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\daaf35c99aca845eba0e2cad953583702295b7" />
+    <Content Include="Models\PapiroMVC\.git\objects\2e\fda5f46ec573aeafe78f2ce142268d1a422a83" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\330d75a2aad3f53a3ca31d233311d24a6813d6" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\51769454e6d9e7ecd717953d29cf98e0485b74" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\72b742156571e0c7f99dc5e2b9bc57414b6262" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\781cc36df6f328d79a9674ae663fb489453085" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\7a6eeafc2967a7e1c8cced2bb15c066a8ebddd" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\bedb1cb8afc786c51888d387589791ad7aea68" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\dd2ac7876240588eaccbd1285e8a75b293a357" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\dfca06fb6387a1f7519442e7db04b1d0786a22" />
+    <Content Include="Models\PapiroMVC\.git\objects\2f\f91f56bc9bf9fdea7e8e5012b4be989b8a9b22" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\3b3d9fd7926bc5f4d98b746639f232a73a561d" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\588a3aee633611a506e2fc1d101b15c7dfc632" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\705e99b02d74de821899750f31e3424e6864d0" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\ba30960ad19edbcb7321806f76d1ab2a51ac2d" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\bd54de8aaf562d5e72d049cbef074b0069534d" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\c693ac3932161fe68a05bd9ce5107c6011191b" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\e03953f1913c927bd82fdb6a1d122d30d52318" />
+    <Content Include="Models\PapiroMVC\.git\objects\30\f03a1a1e7fba649ee6040965ebd8e8f608464b" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\13272da5a0b70bceacfcfa51959239dbc61c74" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\1e484bdac75e4d0672b40d17f13e25d323d551" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\32e73bb815d6cf9dddd6a2fd514478b90127e7" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\3695cfc66767671630a89dcee916a78c72d0f3" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\36f00e0b07fcecc9a3c199d240ebe730c87f53" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\538c8a0ea670301497c6fc5a258977abcdf20d" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\5da86d2b38d1410ea4556c52e713f34e51b640" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\9610affb43a2f502b18b970b34a198b0729bbc" />
+    <Content Include="Models\PapiroMVC\.git\objects\31\d86ea974bbab9f58d7bc482cf0859ab3dd4a62" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\01badc3873f0f9687c8b9ca2e028a94bcc59c7" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\1ec3284388fa421fc0491f153309eb77d3b43a" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\1eed2eff61a481bb2f4a3d25f3e5a08ecc5c69" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\1fad346be9269ff9c94bdf4f5fc725f0340396" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\4039c96f2fd88ed7d1f47fde6dfa6df019bf46" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\54258a42f0cad83ebf3f1bb98fc1446ac67214" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\6405cb3de3f48406846424a6b7238e6a40d12a" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\682fe4915a86cabf09f6a356707ad5f018782d" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\81d2457438bcc5a9f3ec1d76ba6c7be080bffd" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\b61a9c70c1515c59651909a3697e2f82d72378" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\c7b3b41a126ec45533fec6bf5d218d94a8934e" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\ca76e3b67193505b6191e72f1fb2d956667dbd" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\cc4d623e504d9fe49da1fb7ec4d5b286681b4a" />
+    <Content Include="Models\PapiroMVC\.git\objects\32\dfeb38871f0da2c5f5c6679aa54c8828515357" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\1bc88fcab166245f160dc9bbf1ac7dddff67f5" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\5ced7a07eddda7e1253fb0d41e502cced764e6" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\5f5ccc8dbf98c97347687bd5c95bb90e56a71a" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\664951b0ccb3c3029fd4cd485c7f89cf6ae948" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\9691c01a5079b190a87f0442f2b04ae0e0646f" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\ac1fecbac246388ece13c28da5dac44df23362" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\bcd50a9fbf8a7e0fa83f95d4c10c05b1c2133c" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\c2dca92606d0fb486a2918ab110716868ce78b" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\e6fb34c1cbec469a5cde1faa25487e6a42511b" />
+    <Content Include="Models\PapiroMVC\.git\objects\33\ff47b7f500ee04c387d8b904f3a36e62ad7eae" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\047206203533bd49be1c244d2d41442878e33e" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\0c6649e71ac7832ec7ae28180381af24e3976f" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\0dab89942c1236d1184230b2004c16401d3d39" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\0f775791bb5765a0de2a0ac2baddb7858b22cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\24529ad38443fadc24f28af04be2afe994118c" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\58c23baec4046683bfa234eb3604e9a0fa206b" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\8f5da7fee43618a2e9f06742bd1ea2c7f8c383" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\a58989946e306de7e5efa86957d598c24fbbcc" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\b51bcee6cbf3a022f250ec8b5487f596f1628f" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\b6c0ee1c222f151a61ef91794df6dc392f1d5d" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\c3852fb5887c51a5d108bb350a91b517d0e120" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\e0e8edab37e64741304d69d012121a2bd22035" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\ec895a160b81a5f80d482e880d26a9f4066497" />
+    <Content Include="Models\PapiroMVC\.git\objects\34\f7ca3ebcbf773fd00349fb2ca04acce7e42737" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\08e399ffd05219964ea6ee4d307be644203d24" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\341da462c55b496e4b142986d162ac26f768b9" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\42991c1571636300771a6af8f1328a2b83d2fa" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\4e4e052f82388bb40e3229bfb86550db960dc2" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\51f0a2208de1373fcefd19fbd9cee12aaaf9ff" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\7aee04def9fee81b0c6380c67912bb85e085c0" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\84e3ecdc994e43482b1c8fc97247f7d73c8def" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\876bf62dd42b9b32e43746766ff8c6fd44d52c" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\a88b807b2add41c127bce3829efc1975a6fd51" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\aaf80a2a13aea6aa7e4b1f701ad83ebd587e67" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\b850f58b96020039f964c6928e363b99eefa21" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\df00cce20b46326deb9233fbc612fe4be9eaa1" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\df394c354301ed98d0853521346c5cdb872306" />
+    <Content Include="Models\PapiroMVC\.git\objects\35\e7a906467e28c93fea00fce858b7037f059ec4" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\00d86b3447f391ff88a7e1d2448b77b3eab2e2" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\1181339e72ec207f5245fdd60c023bce84fe8d" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\17e0fbf86a04e4b676b5165f3104829c1f5f31" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\50d0bd8b4ccad3c3f48ce6c0c767285eb71900" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\7b6956904f4922a676524caa719f2e32b3b52e" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\8c82447527afe5cbe56a9804f09952b919502d" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\b6806c9e067418336f58b5520069898aa34ad2" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\b86a2544e3b989914efb53386fbb609f88e787" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\d1660fced5b2782f1d11eec041178ccdf128a8" />
+    <Content Include="Models\PapiroMVC\.git\objects\36\fb7295025a75535665f714261a5171d60a4209" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\114d3068e0a787dd44a39430a8fc44d1963dcf" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\1b839b9240fb261d570d5c3b42eeeb6af36038" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\36fe5b11eaa878d5ab79fd473900a65743194b" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\4a50bb3ce2dde5f98214712d76430a69cf6069" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\600447dc002bbc0dd16e1391b711360aae2e34" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\60bc3d95196b1c6e8d9b9a383c5ad3ffa46d76" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\81d69c5f38cd8d95f9b18022d40d0d1646972a" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\ac6589c97a1b5de393c5f8a72c8c4582e67473" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\bb05288655f43939dced14e3c3fb5a23223614" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\d27169ef2a97fb2203e01b9217025a236406c1" />
+    <Content Include="Models\PapiroMVC\.git\objects\37\ed2f645d017ffd4742cc6e2779dd44efb0016d" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\302576cddddcc84b053ef4bd11c7e9321d4fe5" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\4ee429f8bc1f2210bc127d2c32ea36962381f7" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\52ce548ff946665f9d77bc40221e8b88f57edf" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\5f875fecdae5c984f4f293a0d6a78eb8f8bb24" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\603f80e64f6b747feb1ff7ccc948ca8086b46e" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\78efaba044d11eb3579a58a470db58189a2e0b" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\9e5bd74b123bf5424b5a426721c894f40f1751" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\a74ac89d236251677dcc5ba07a054841c2c49d" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\a8984d98e660486880032e150d32657e1ba69e" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\af87501cd14e99330bf06e5b26cbcb6e7abe4d" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\b23074ee696f197f67a27c40ba192c4e955753" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\b60951b201bedf3e1005ed49cbd1c0834d5815" />
+    <Content Include="Models\PapiroMVC\.git\objects\38\e74cb5094ef371d4e5e8f9b62e101044e571c5" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\1d8e81c225d100a8c1c7d92756faeaaecc301b" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\22b8a2f50f85d5a267638dd5a8768c9183aba4" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\442a47f24955bbdb141c803aec9600620ec16c" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\443ecf83c0c0be503d712646f26581a4db2732" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\44de43d45f68c6dd76c4d27f323a6466f10cc0" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\49dc5b241f5f95749d8b038c1518af509d51cf" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\6e3ad0e15783cf7dfe7610180208dc17521fe2" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\73a23f919efdfd271a873f9af60f56d916c746" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\8153148c95954df4116136722650a94a688bb2" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\a90c3afea092a5bd650a5d70100b8db47de783" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\c6da658be82b37e1f0aa597f292d31d07f16e0" />
+    <Content Include="Models\PapiroMVC\.git\objects\39\cfdcf5768d99933867f86bcb2fdef2293d041e" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\3a9a3d16ab46a49d70deae7408ea1c0fc569c7" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\4e85e52c3dfda4a3e212e8b6984bf9f4b48fdc" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\4fa24fa878e26ae6c27e6e2a4f5d4f605dcca7" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\52bf0e66a85072b40c23c18b964af9b6f32ee9" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\60aec80eb4ffaca720b07fe37fec8dc744e1de" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\7067b131eab6f13ea4995b23271a4b1b7e79e0" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\7d22c9b1d01f8465e896ff6e3fc023479b3f37" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\80b97ad058b12b334ddd68f7ad8ac893083e22" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\8a720f76a34b992d89d4c0f624238f3921e06b" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\9f4b03eb02c056909df87e37729b2754816a6e" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\d02b7ddb954020ecd47a4e2dc893e64487510d" />
+    <Content Include="Models\PapiroMVC\.git\objects\3a\f76fa3f9d2044ce371626f88a3810e02d160e3" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\1e39eb2d3c2ec2b7eab36daf5c85c84e0175b6" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\34144a48a7eef21c0e7e1e1803be49ed331c02" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\46548a02aeb5d6e6ef6f78f24fdfddb9f3ea7d" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\9a65768be53e380c6c08986362c7f8ebfb667e" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\9aa05a9cb5991971434ab050c07794260a6e32" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\9b1951330dd9611e51302f0a88cdf7273623d5" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\a4f133e3dddcedfa4e601612b717836b388b94" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\afaea3c8590858f08919b96d5cce9d67d9e21b" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\bb3a157f1568d59d6db02b55a3b3fe9a1ff7a7" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\c6401d6cc8903b76059fe1d67c78db04fe9b65" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\cfcf231d0ba66a193254f7107b69a659995197" />
+    <Content Include="Models\PapiroMVC\.git\objects\3b\f6484a29d8da269f9bc874b25493a45fae3bae" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\0fb75044e6e0828f1d442475490553f12397ba" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\1196d640879564850ff2dafd79cf10fa2ac90e" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\17c28fc29024e9b70660203f2313501f2b912f" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\2a033b7c4c126199f6fc36b8cfa2adddb7b04a" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\2aa9379eaf56ca643f740fc55765ef709049c9" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\2ad33e171ed673209e4e7fa3ea55f14debf17f" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\4af4a26aa16320bf292d5af48ee0945f08e629" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\71a3b0a3db25da6dd8d5378e0011416a91e431" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\a572ba45fc1d69bc9dddb4536a093716049112" />
+    <Content Include="Models\PapiroMVC\.git\objects\3c\da162eb4962b7fa05312ffa7c30f9675ebb39f" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\0b9766c8594d0b3e818f8b8ef804d9ce3fb63c" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\226fa4422b29c04b2bd2a8a16c37260a44c8f3" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\43c2496a22305701050fd52416f9b6700aee9f" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\62e4210cf83476d3ac7a16ac797e6fc197bb03" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\7e646a8e3235354084fbca3055194023ced045" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\86d7172c6493cd88b1b88a3a481278722a3a0d" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\a018b00f0c70f257fc7e35e82acdb4c6b9c335" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\ccdbbc6fbd2ba4b370e6b54464c9bd4d37c285" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\cda8d544c286b27aec8852de92682b381d1036" />
+    <Content Include="Models\PapiroMVC\.git\objects\3d\fa4b383bbbffba204473fa95ef44e6bf0a1dbe" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\137531a929fd1ab74a34e119c38f638c9991bf" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\1cde0eda9f55555442d3db0e37bd92e4b74d6a" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\1d7f9c45c42d596623cf1e3703a0c113946f59" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\2a97c957c137c7150eb62b4bb8a4c1e67fc7c3" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\2e37b6d6845263f95a09b8b5399ef37288864c" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\6264893a117e1165186445eb0242f2c5143801" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\7701412a478a3f986921931f982626a9d7c8df" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\e4a6aed14ff2407834dde17c00fcd5216f4f82" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\e943af62912874c7f91a5d89256ee73ef05b42" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\f2296947269478e3d72543904cd4c3e240b82c" />
+    <Content Include="Models\PapiroMVC\.git\objects\3e\f94978af324b2b7a9c6207f56d668a4893e4fc" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\03cda7465b8921c23d0c5ab9b5fa632242cf60" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\084fcaf00ca4713e7a34723fd4b870a575265b" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\3a348764ee6806cef663e2bc3052092c693d7b" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\3e1fed4e516a33f86e75f7e299d8fb5718b9e1" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\58a4b54549f3fa2a5e620796d57a5bc74d9670" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\800af5d1ae9ea590f4322f701f0953994ebca1" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\89e73254daba82908b70ae3c350a074ce53a90" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\bbe7d3e2dd0631422c67d99c900616d82adea1" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\c20c20f0f619170414382501b9529e6e819753" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\f61e5f5b8f647b56a9d7b9810159d623352ba0" />
+    <Content Include="Models\PapiroMVC\.git\objects\3f\ff139884900115fde6f7fcc39c80e93dcb602b" />
+    <Content Include="Models\PapiroMVC\.git\objects\40\13937026b149392ffd98f5b7878d18a2129669" />
+    <Content Include="Models\PapiroMVC\.git\objects\40\16165b5b69026835b48a42c09aecdcc84cf5f1" />
+    <Content Include="Models\PapiroMVC\.git\objects\40\4700b352dcd4ac9e76b9edc344c56117735055" />
+    <Content Include="Models\PapiroMVC\.git\objects\40\57d68a4670603bae02dc111c4a74d2b9cafb72" />
+    <Content Include="Models\PapiroMVC\.git\objects\40\6ae3355618fd58377b458ace2ae12a41ec4e57" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\2068695a317db131470b754e36870cd8cf8a9f" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\2c5899a96a004fb22261884a94ae69175c63ed" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\394a9130867d75bc002e4ea75a6e7c5d84ce63" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\45c6712df909c603023d27c6c700f41efb9571" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\58df8efad3295a5b15348a7d115da16518dc9c" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\a9a7f75547c780ad327b9d54da145807448ae3" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\aa1edbbc895af07863ee4b0578cd9fdaa925ce" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\b45ce3c07c5ae8705935f455706525ed058c88" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\e83dfb966a9f4944cf926db293d1ffb96ab941" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\f25f25ca391b94d3cae3dcd4e59d05ba1b6529" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\f60185a20a4c62033e93717665720a2e18227a" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\f8e8738654e4370d203b1739cb7f9c280430d3" />
+    <Content Include="Models\PapiroMVC\.git\objects\41\fb6f44a7a46c86e1df2c5e06149cae8ad839e9" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\0690887712b3d9485e4e831d22bcb1ccbfe112" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\1e5f8e23235fd45a2e9cbd7092d8d7db4e54f7" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\1f34532afa6c16a2648853412632459ea35703" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\2068446a3fb3b71c602328580f164e23d06734" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\2703102d4ab32e501e23e5e4ca9d5090a5d629" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\29a6aae103f384084d6f034f8a3a33a1e7f689" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\2d3c4cfa64250a4789ebb7d608f0eee2af94bc" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\3018f93425c6c940e002aa22d9b74ee38883f2" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\45479f78d9e4163524ee958f86ac35bb04607c" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\507082a792d4042f1bd3230175e49b70a5b5f4" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\755bed700626beeb3e16d9b53b06b6f134f13b" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\9c94c0cd0dad1b5fdb6985ec6d137b57507c14" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\b430cac0103f4253c6ee45870d9264fefd7cab" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\bb3d33a752b980b60d7b5cf6c86893d39d6644" />
+    <Content Include="Models\PapiroMVC\.git\objects\42\ccba269b6e91bef12ad0fa18be651b5ef0ee68" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\085306071e1e779fd1fae38c2f3b5da6d434cc" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\2d7477d4686499dc725a9c7c653e1f8d2175cd" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\51f24fe5e9597ff4383ae28af718d1d21b551d" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\55ac8b16f07e6a9787469f70be8eacc268aca2" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\5f87a1e59dbb417aece60dcde4465bab2869a1" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\6803e59995b1d8f448a5797f5d19d9775a1ef3" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\949a65d330020d2e571a1a9cd1b485e64fc335" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\dc62672ab3545c1040e20d8951616e8cfec9ad" />
+    <Content Include="Models\PapiroMVC\.git\objects\43\e190514fe795532bdd5fb48ad1543805359780" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\119c303c16d17b4b5c25063e6192cbfc39fa87" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\43fdc1a156babad4336f004eaf5ca5dfa0f9ab" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\5759a47c3c4bb9bf474ea36d011279c35d56e8" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\57b52221d6392025408b8dccdbaac668b7497a" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\893fcafc8560b29791e5d787f041d39b4461c2" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\9f97ff5636be1b0998fce69dabffbdf4feb469" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\b57b20876c1a21c3ac2a74f802872d2d60575a" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\bc678778460ab55a116efe5c32c98a4576d525" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\c9a4987123f69df78a7614a21a1a2b4f8328f1" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\e33b3f8da7d14fc2a284774a50a9bdb4901683" />
+    <Content Include="Models\PapiroMVC\.git\objects\44\e3a6bf637df1d7176b8e2fdb4f42f40a14698f" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\1ccad1d5718f64c7a8a4127d5b5ed610a64ca8" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\1eb5a292094c621e2bd34e9d32eb11798a1089" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\2d9f54ed90b3e2dc82e258cb08ebf2427d75df" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\37a2f5af819dd4513327791c698c884f9f0a1a" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\706563e27a44aa4fd171b9304a3c6aa7948ce9" />
+    <Content Include="Models\PapiroMVC\.git\objects\45\805f3b1dd367e84077f3bde892ca0abf3b2791" />
+    <Content Include="Areas\Working\Views\Product\CreateProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Product\EditProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartCoverSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_EditAndCreateProduct.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RigidPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RigidPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOn.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\EditorTemplates\TaskEstimatedOnRun.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitForWeightStepNEW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitOnCostForWeightStepNEW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStepNEW.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigidArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_EditAndCreateDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\CreateDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\Index.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListDocumentProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Document.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentProductViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\OptionTypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartCoverSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartRigidArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\TypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Product\DisplayProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditDocumentProducts.cshtml" />
     <None Include="Scripts\jquery-1.8.2-vsdoc.js" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
@@ -2232,6 +3448,27 @@
     </Content>
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.en-us.resx" />
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\ArticleStrings.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\ArticleStrings.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.en-us.resx" />
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.resx">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\CustomerSupplierStrings.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Models\Resources\Account\AccountVuoto.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2249,6 +3486,159 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLoginModel.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Models.Resources.Account</CustomToolNamespace>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TypeOfTaskAndCodTypeOfTask.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Models\Resources\Document\ResCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCost.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Document</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocumentProduct.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocumentProduct.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Document</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocuments.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocuments.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Document</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocumentsVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocumentsVuoto.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Documents</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\MenuProduct\ResMenuProduct.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResMenuProduct.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.MenuProduct</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\Task.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResOptionTypeOfTask.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartBlockSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartBlockSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartBookSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartBookSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPart.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPart.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductTask.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductSingleSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductSingleSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartTask.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartsPrintableArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartsPrintableArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartSingleSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartSingleSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartSheetArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartSheetArticle.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductBookSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductBookSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartCoverSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartCoverSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductBlockSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductBlockSheet.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProduct.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProduct.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductVuoto.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
+      <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
@@ -2545,12 +3935,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Account\Views\Account\Verify.cshtml" />
     <Content Include="Areas\Account\Views\Account\Confirmation.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Home\Copy of Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -2558,7 +3948,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
-    <Folder Include="Areas\Working\Views\Shared\" />
+    <Folder Include="Models\Resources\TypeOfTaskAndCodTypeOfTask\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>

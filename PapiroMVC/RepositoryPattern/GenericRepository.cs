@@ -115,20 +115,24 @@ namespace Services
 
         public virtual void Save()
         {
-//            try
+           try
             {
-                Context.Configuration.ValidateOnSaveEnabled = false;
+                Context.Configuration.ValidateOnSaveEnabled = false;            
                 this.Context.SaveChanges();
             }
- /*           catch(Exception e)
+            catch(Exception e)
             {
                 var valErr=this.Context.GetValidationErrors();
                 Console.WriteLine(e.Message);
                 Console.WriteLine(valErr);
                 throw e;
             }
-  */
-        }
   
+        }
+
+        public virtual T GetSingle(string Cod)
+        {
+            return null;
+        }
     }
 }

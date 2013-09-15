@@ -1,4 +1,5 @@
-﻿@model PapiroMVC.Models.LithoSheet
+﻿
+@model PapiroMVC.Models.LithoSheet
 @using PapiroMVC.Validation
 
 @{
@@ -8,6 +9,19 @@
 //    string[] printingUnitName = {"1","2","3","4","5","6","7","8","9","10","11","12"};
     int[] printingUnitName = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 //    ViewBag.PrintingUnit.PrintingUnitName = new List<string>(printingUnitName);
+    //we want ot use different resource only to share it between areas and parts
+
+
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+    
+    foreach (PapiroMVC.Models.TypeOfTask item in ViewBag.TypeOfTaskList)
+    {
+        item.TaskName = Html.T(stringsCod,"Cod" + item.CodTypeOfTask);
+    }
+
+
+    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPA" : Model.CodTypeOfTask;
+  
 }
 
 <div id="status"> 
@@ -18,6 +32,13 @@
     @Html.ValidationSummary(true)
 
     <fieldset>
+
+                <div class="editor-field">
+
+                @Html.DropDownListFor(y => y.CodTypeOfTask,
+                new SelectList(ViewBag.TypeOfTaskList,"CodTypeOfTask","TaskName"))
+        </div>
+
         <legend>LithoSheet</legend>
 
             @Html.HiddenFor(model => model.TimeStampTable)
@@ -27,8 +48,8 @@
 
             @Html.EditorFor(model => model.Dismissed)
 
-            @Html.AlgolaAutocompleteFor(model => model.FormatMin,"FormatMin","TaskExecutor")
-            @Html.AlgolaAutocompleteFor(model => model.FormatMax,"FormatMax","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.FormatMin,"FormatMinAutoComplete","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.FormatMax,"FormatMaxAutoComplete","TaskExecutor")
             @Html.AlgolaEditorFor(model => model.WeightMin)
             @Html.AlgolaEditorFor(model => model.WeightMax)
  
@@ -81,10 +102,10 @@
 
             <h3>Scarti</h3> 
         <br />
-            @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart,"ProofSheetFirstStart","TaskExecutor")
-            @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart,"ProofSheetSecondsStart","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart,"ProofSheetFirstStartAutoComplete","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart,"ProofSheetSecondsStartAutoComplete","TaskExecutor")
 
-            @Html.AlgolaAutocompleteFor(model => model.ProductionWaste,"ProductionWaste","TaskExecutor")
+            @Html.AlgolaAutocompleteFor(model => model.ProductionWaste,"ProductionWasteAutoComplete","TaskExecutor")
 
     </fieldset>
     <br />
@@ -96,10 +117,10 @@
         </button>
         
         <button class="default" type="submit" name="@ViewBag.ActionMethod">
-            <i class="icon-save"></i>
-            @HttpContext.GetLocalResourceObject(strings, "Save")
-        </button>        
-        
+                 <i class="icon-save"></i>    
+                 @HttpContext.GetLocalResourceObject(strings, "Save")
+        </button>    
+                
         @if (ViewBag.ActionMethod != "CreateLithoSheet")
         {
             <button class="default" type="submit" name="CreateLithoSheet">

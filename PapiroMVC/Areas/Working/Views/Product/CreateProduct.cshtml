@@ -1,0 +1,27 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductViewModel
+
+@{
+    string stringsTitle = "~/Views/Shared/Strings";
+    //string strings = "~/Areas/Working/Views/Product/Strings";
+
+    //Prendo il titolo dal menù
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
+
+    //add all task in page
+    Session.Add("TsksInPage", Model.Product.TsksInPage);
+
+    }
+
+<h2>@ViewBag.Title</h2>
+
+@for (int i = 0; i < Model.Quantities.Count; i++)
+{
+    @Html.AlgolaEditorFor(model => model.Quantities[i]) 
+}
+
+@Html.Partial("_EditAndCreateProduct",Model.Product)
+
+@section footer {
+    @Html.Partial("_footer")
+}

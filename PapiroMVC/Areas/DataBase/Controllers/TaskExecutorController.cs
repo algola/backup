@@ -17,6 +17,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
     {
 
         private readonly ITaskExecutorRepository taskExecutorRepository;
+        private readonly ITypeOfTaskRepository typeOfTaskRepository;
 
         protected dbEntities db;
 
@@ -26,9 +27,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             taskExecutorRepository.SetDbName(CurrentDatabase);
         }
 
-        public TaskExecutorController(ITaskExecutorRepository _tskExDataRep)
+        public TaskExecutorController(ITaskExecutorRepository _tskExDataRep,ITypeOfTaskRepository _typeOfTask)
         {
             taskExecutorRepository = _tskExDataRep;
+            typeOfTaskRepository = _typeOfTask;
         }
 
         public ActionResult IndexLithoSheet()
@@ -38,10 +40,24 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
+        public ActionResult IndexPlotter()
+        {
+            //deprecated
+            TempData["TaskExecutorIndex"] = "IndexPlotter";
+            return View();
+        }
+
         public ActionResult IndexDigitalSheet()
         {
             //deprecated
             TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+            return View();
+        }
+
+        public ActionResult IndexPrePostPress()
+        {
+            //deprecated
+            TempData["TaskExecutorIndex"] = "IndexPrePostPress";
             return View();
         }
 
@@ -212,21 +228,19 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
 
             GenEmptyStep(taskExecutor);
-            var tskEst = taskExecutor.SetTaskExecutorEstimatedOn.First();
 
+            var tskEst = taskExecutor.SetTaskExecutorEstimatedOn.First();            
             switch (tskEst.TypeOfEstimatedOn)
             {
                 case TaskEstimatedOn.EstimatedOnType.OnRun:
                     ViewBag.ActionMethod = "TaskEstimatedOnRun";
-                    return View("TaskEstimatedOnRun", tskEst);
-
+                    break;
                 case TaskEstimatedOn.EstimatedOnType.OnTime:
                     ViewBag.ActionMethod = "TaskEstimatedOnTime";
-                    return View("TaskEstimatedOnTime", tskEst);
-
+                    break;
                 case TaskEstimatedOn.EstimatedOnType.OnMq:
                     ViewBag.ActionMethod = "TaskEstimatedOnMq";
-                    return View("TaskEstimatedOnMq", tskEst);
+                    break;
 
                 case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
                     break;
@@ -238,7 +252,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     break;
             }
 
-            return View();
+            //if there are more than one cost return different model and different view
+            if (taskExecutor.SetTaskExecutorEstimatedOn.Count > 1)
+            {
+                ViewBag.ActionMethod = (string) ViewBag.ActionMethod + "s";
+                return View("TaskEstimatedOn", taskExecutor.SetTaskExecutorEstimatedOn.ToList());
+            }
+            else
+            {
+                return View(ViewBag.ActionMethod, tskEst);
+            }
         }
 
         [HttpPost]
@@ -282,36 +305,88 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
 
-            switch (c.TypeTaskExecutorEstimatedOn)
+            if (taskExecutor.CodTypeOfTask != "STAMPA")
             {
-                case TaskEstimatedOn.EstimatedOnType.OnRun:
-                    tskEst = new TaskEstimatedOnRun();
-                    retView = "TaskEstimatedOnRun";
-                    break;
-                case TaskEstimatedOn.EstimatedOnType.OnTime:
-                    tskEst = new TaskEstimatedOnTime();
-                    retView = "TaskEstimatedOnTime";
-                    break;
-                case TaskEstimatedOn.EstimatedOnType.OnMq:
-                    tskEst = new TaskEstimatedOnMq();
-                    retView = "TaskEstimatedOnMq";
-                    break;
-                case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
-                    break;
-                case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
-                    break;
-                default:
-                    break;
+                var optionTypeOfTaskList = typeOfTaskRepository.GetSingle(taskExecutor.CodTypeOfTask).OptionTypeOfTasks;
+
+                foreach (var item in optionTypeOfTaskList.Except(optionTypeOfTaskList.Where(x => x.CodOptionTypeOfTask == taskExecutor.CodTypeOfTask + "_NO")))
+                {
+                    switch (c.TypeTaskExecutorEstimatedOn)
+                    {
+                        case TaskEstimatedOn.EstimatedOnType.OnRun:
+                            tskEst = new TaskEstimatedOnRun();
+                            retView = "TaskEstimatedOnRun";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnTime:
+                            tskEst = new TaskEstimatedOnTime();
+                            retView = "TaskEstimatedOnTime";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnMq:
+                            tskEst = new TaskEstimatedOnMq();
+                            retView = "TaskEstimatedOnMq";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
+                            break;
+                        default:
+                            break;
+                    }
+
+                tskEst.CodOptionTypeOfTask = item.CodOptionTypeOfTask;
+                taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
+
+                }
+            }
+                else
+                {
+                     switch (c.TypeTaskExecutorEstimatedOn)
+                    {
+                        case TaskEstimatedOn.EstimatedOnType.OnRun:
+                            tskEst = new TaskEstimatedOnRun();
+                            retView = "TaskEstimatedOnRun";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnTime:
+                            tskEst = new TaskEstimatedOnTime();
+                            retView = "TaskEstimatedOnTime";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnMq:
+                            tskEst = new TaskEstimatedOnMq();
+                            retView = "TaskEstimatedOnMq";
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
+                            break;
+                        default:
+                            break;
+                    }
+
+                //Attenzione nella stampa manca l'optiontypeoftask
+                taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
+
             }
 
-            taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
+
+            //se diverso da stampa allora devo creare un numero di costi pari alle opzioni di TypeOfTask
+            
             taskExecutorRepository.Edit(taskExecutor);
             taskExecutorRepository.Save();
 
             GenEmptyStep(taskExecutor);
 
             ViewBag.ActionMethod = retView;
-            return View(retView, tskEst);
+
+            //if there are more than one cost return different model and different view
+            if (taskExecutor.SetTaskExecutorEstimatedOn.Count > 1)
+            {
+                ViewBag.ActionMethod = ViewBag.ActionMethod + "s";
+                return View("TaskEstimatedOn", taskExecutor.SetTaskExecutorEstimatedOn.ToList());
+            }
+            else
+            {
+                return View(ViewBag.ActionMethod, tskEst);
+            }
 
         }
 
@@ -324,10 +399,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult CreateLithoSheet()
         {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
             //this feature is needed when in the view there are more than one input (submit button) form
             //Action Method speci
             ViewBag.ActionMethod = "CreateLithoSheet";
-            return View(new LithoSheet());
+
+            var x = new LithoSheet();
+            x.CodTypeOfTask = "STAMPA";
+            return View(x);
         }
 
         [HttpParamAction]
@@ -363,20 +445,81 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateLithoSheet";
             return PartialView("_EditAndCreateLithoSheet", c);
+        }
+
+        [HttpGet]
+        public ActionResult CreatePlotter()
+        {
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreatePlotter";
+            var x = new Plotter();
+            x.CodTypeOfTask = "STAMPA";
+            return View(x);
         }
 
 
         [HttpGet]
         public ActionResult CreateDigitalSheet()
         {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+            var x = new DigitalSheet();
+            x.CodTypeOfTask = "STAMPA";
+
             //this feature is needed when in the view there are more than one input (submit button) form
             //Action Method speci
             ViewBag.ActionMethod = "CreateDigitalSheet";
-            return View(new DigitalSheet());
+            return View(x);
         }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreatePlotter(Plotter c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+                    }
+
+                    c.TimeStampTable = DateTime.Now;
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    //hooray it passed - go back to index
+                    return Json(new { redirectUrl = Url.Action("IndexPlotter") });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreatePlotter";
+            return PartialView("_EditAndCreatePlotter", c);
+        }
+
+
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -405,10 +548,66 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
+
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateDigitalSheet";
             return PartialView("_EditAndCreateDigitalSheet", c);
         }
+
+
+        [HttpGet]
+        public ActionResult CreatePrePostPress()
+        {
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "PREPOST");
+
+
+            ViewBag.ActionMethod = "CreatePrePostPress";
+            return View(new PrePostPress());
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreatePrePostPress(PrePostPress c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+                    }
+
+                    c.TimeStampTable = DateTime.Now;
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    //hooray it passed - go back to index
+                    return Json(new { redirectUrl = Url.Action("IndexPrePostPress") });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "PREPOST");
+
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreatePrePostPress";
+            return PartialView("_EditAndCreatePrePostPress", c);
+        }
+
 
         #region Edit
 
@@ -439,6 +638,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         break;
                     }
 
+                case TaskExecutor.ExecutorType.PrePostPress:
+                    {
+                        ret = RedirectToAction("EditPrePostPress", "TaskExecutor", new { id = id });
+                        break;
+                    }
+                case TaskExecutor.ExecutorType.Plotter:
+                    {
+                        ret = RedirectToAction("EditPlotter", "TaskExecutor", new { id = id });
+                        break;
+                    }
+
                 /* continuing....................*/
 
             }
@@ -462,6 +672,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        public ActionResult EditPlotter(string id)
+        {
+            Plotter tskEx = new Plotter();
+            tskEx = (Plotter)taskExecutorRepository.GetSingle(id);
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditPlotter";
+            return View(tskEx);
+        }
+
+
+
+
         public ActionResult EditDigitalSheet(string id)
         {
             DigitalSheet tskEx = new DigitalSheet();
@@ -475,6 +701,23 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
+
+        public ActionResult EditPrePostPress(string id)
+        {
+            PrePostPress tskEx = new PrePostPress();
+            tskEx = (PrePostPress)taskExecutorRepository.GetSingle(id);
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
+
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditPrePostPress";
+            return View(tskEx);
+        }
         #endregion
 
         //
@@ -520,6 +763,46 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditPlotter(Plotter c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    /* controllare le lastre
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                    */
+
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPlotter") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditPlotter";
+            return PartialView("_EditAndCreatePlotter", c);
+        }
+
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditDigitalSheet(DigitalSheet c)
         {
             if (ModelState.IsValid)
@@ -553,6 +836,49 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //multi submit
             ViewBag.ActionMethod = "EditDigitalSheet";
             return PartialView("_EditAndCreateDigitalSheet", c);
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditPrePostPress(PrePostPress c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    /* controllare le lastre
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                    */
+
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPrePostPress") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
+
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditPrePostPress";
+            return PartialView("_EditAndCreatePrePostPress", c);
         }
 
 

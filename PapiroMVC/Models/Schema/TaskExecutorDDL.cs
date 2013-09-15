@@ -78,7 +78,7 @@ namespace PapiroMVC.Model
 
             //PrePostPress IsUnitComputationManual
             dbS.AddColumnToTable("taskexecutors", "IsUnitComputationManual", SchemaDb.Bool, "0");
-
+            
             //Index
             dbS.AddIndex("taskexecutors", "TaskExecutorName");
 
@@ -86,12 +86,14 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnTime", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnRun", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnMq", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnTimeBinding", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnRunBinding", SchemaDb.Bool, "0");
 
             dbS.AddTable("taskexecutorestimatedon");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskExecutor", SchemaDb.String, "50");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskEstimatedOn", SchemaDb.StringPK, "50");
             dbS.AddForeignKey("taskexecutorestimatedon", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
-            
+           
             
             
             // 0 = Time // 1 = Unit // 2 = BindingTime // 3 = BindingUnit
@@ -101,12 +103,13 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHour", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentRunPerHour", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentDeficitForWeightStep", SchemaDb.Bool, "0");
-  
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CodOptionTypeOfTask", SchemaDb.String, "50");  
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime1", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime2", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "TimeForfait", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunning", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStarting", SchemaDb.String, "20");
+            dbS.AddForeignKey("taskexecutorestimatedon", "CodOptionTypeOfTask", "optiontypeoftask", "CodOptionTypeOfTask");
 
             //BindingEstimatedOnTime
 
@@ -204,6 +207,41 @@ namespace PapiroMVC.Model
 
             //FK
             dbS.AddForeignKey("steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");
+
+            
+            //typeoftask
+            dbS.AddTable("typeoftask");
+            dbS.AddColumnToTable("typeoftask", "CodTypeOfTask", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("typeoftask", "TaskName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("typeoftask", "CodCategoryOfTask", SchemaDb.String, "100");
+
+            //optiontypeoftask
+            dbS.AddTable("optiontypeoftask");
+            dbS.AddColumnToTable("optiontypeoftask", "CodOptionTypeOfTask", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("optiontypeoftask", "CodTypeOfTask", SchemaDb.String, "50");
+            dbS.AddColumnToTable("optiontypeoftask", "OptionName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("optiontypeoftask", "IdexOf ", SchemaDb.Int, "0");
+
+            //FK
+            dbS.AddForeignKey("optiontypeoftask", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
+
+            //typeoftask
+            dbS.AddTable("taskexecutortypeoftask");
+            dbS.AddColumnToTable("taskexecutortypeoftask", "CodTaskExecutorTypeOfTask", SchemaDb.StringPK, "50");            
+            dbS.AddColumnToTable("taskexecutortypeoftask", "CodTypeOfTask", SchemaDb.String, "50");
+            dbS.AddColumnToTable("taskexecutortypeoftask", "CodTaskExecutor", SchemaDb.String, "50");
+
+            //FK
+            dbS.AddForeignKey("taskexecutortypeoftask", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
+            dbS.AddForeignKey("taskexecutortypeoftask", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
+
+
+
+            //FK IN TASKEXECUTORS
+            dbS.AddColumnToTable("taskexecutors", "CodTypeOfTask", SchemaDb.String, "50");
+            dbS.AddForeignKey("taskexecutors", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
+
+
 
         }
     }

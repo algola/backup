@@ -34,10 +34,16 @@
             <a>@Html.T(strings,"TaskExecutorMenu")</a>
             <ul class="dropdown-menu" style="display: none;">
                 <li>
+                    @Html.ActionLink(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheet", "TaskExecutor", new { area = "DataBase" }, null)
+                </li>
+                <li>
                     @Html.ActionLink(@Html.T(strings,"DigitalSheetMenu"),"IndexDigitalSheet","TaskExecutor", new { area = "DataBase" },null)
                 </li>
                 <li>
-                    @Html.ActionLink(@Html.T(strings,"LithoSheetMenu"),"IndexLithoSheet","TaskExecutor", new { area = "DataBase" },null)
+                    @Html.ActionLink(@Html.T(strings,"PlotterMenu"),"IndexPlotter","TaskExecutor", new { area = "DataBase" },null)
+                </li>
+                <li>
+                    @Html.ActionLink(@Html.T(strings,"PrePostPressMenu"),"IndexPrePostPress","TaskExecutor", new { area = "DataBase" },null)
                 </li>
                 <li class="divider"></li>
                 <li><a href="#">SubItem 4</a></li>

@@ -1,0 +1,16 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RigidPrintableArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateRigidPrintableArticle");
+}
+
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreateRigidPrintableArticle", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

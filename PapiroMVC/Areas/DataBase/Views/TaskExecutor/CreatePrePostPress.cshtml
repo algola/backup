@@ -1,0 +1,15 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.PrePostPress
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreatePrePostPressTitle");
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreatePrePostPress", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

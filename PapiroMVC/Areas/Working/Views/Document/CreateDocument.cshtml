@@ -1,0 +1,22 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Document
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+
+    //Prendo il titolo dal menù
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateDocument");
+
+
+    }
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@Html.Partial("_EditAndCreateDocument")
+
+@*@Html.EditorFor(x => x)*@
+
+
+@section footer {
+}

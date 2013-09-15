@@ -14,12 +14,14 @@ using PapiroMVC.Model;
 using System.IO;
 using SchemaManagemet;
 using System.Threading.Tasks;
+using Services;
 
 namespace PapiroMVC.Controllers
 {
 
     public class ControllerAlgolaBase : AsyncController
     {
+        
         //user connected to website
         public MembershipUser CurrentUser
         { 
@@ -61,6 +63,7 @@ namespace PapiroMVC.Controllers
             else
                 ViewData["CurrentUser"] = null;
 
+        
         }
 
         protected override void ExecuteCore()
@@ -92,6 +95,8 @@ namespace PapiroMVC.Controllers
             tables.Add(new TaskExecutorsDDL(dbName));
             tables.Add(new ArticlesDDL(dbName));
             tables.Add(new ProductsDDL(dbName));
+            tables.Add(new DocumentsDDL(dbName));
+            tables.Add(new MenuProductDDL(dbName));
             
             foreach (var item in tables)
             {

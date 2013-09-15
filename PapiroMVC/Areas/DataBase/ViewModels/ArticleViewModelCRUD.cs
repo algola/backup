@@ -153,6 +153,11 @@ namespace PapiroMVC.Models
 
     public class RigidPrintableArticleViewModel : ArticleViewModel
     {
+
+        public RigidPrintableArticleViewModel()
+        {
+            Console.Write("");
+        }
         RigidPrintableArticle article;
         public RigidPrintableArticle Article
         {

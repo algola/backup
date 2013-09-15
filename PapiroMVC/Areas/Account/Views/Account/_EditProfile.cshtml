@@ -1,8 +1,8 @@
 ﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.Profile
+@model PapiroMVC.Models.ProfileViewModel
 @{
     string strings = "~/Areas/Account/Views/Account/Strings";
-
+    string strings2 = "~/Views/Shared/Strings";
 
     var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
     if (err.Key != null)
@@ -18,16 +18,27 @@
     <fieldset>
         <legend>Change Password Form</legend>        
                 
-            @Html.HiddenFor(m=>m.Name)
+            @Html.HiddenFor(m=>m.Profile.Name)
 
-            @Html.AlgolaEditorFor(m => m.CompanyName)
-            @Html.AlgolaEditorFor(m => m.Base)
-            @Html.AlgolaEditorFor(m => m.Culture)
-            @Html.AlgolaEditorFor(m => m.Refeere)
-            @Html.AlgolaEditorFor(m => m.Phone)
-            @Html.AlgolaEditorFor(m => m.VatNumber)
-            @Html.AlgolaEditorFor(m => m.TaxCode)
+            @Html.AlgolaEditorFor(m => m.Profile.CompanyName)
+            @Html.AlgolaEditorFor(m => m.Profile.Base)
+            @Html.AlgolaEditorFor(m => m.Profile.Culture)
+            @Html.AlgolaEditorFor(m => m.Profile.Refeere)
+            @Html.AlgolaEditorFor(m => m.Profile.Phone)
+            @Html.AlgolaEditorFor(m => m.Profile.VatNumber)
+            @Html.AlgolaEditorFor(m => m.Profile.TaxCode)
         <br />              
+        @{
+            
+    for (int i = 0; i < Model.MenuProducts.Count; i++)
+    {
+        @Html.T(strings2,"CodMenuProduct" + Model.MenuProducts[i].CodMenuProduct)
+        @Html.AlgolaEditorFor(m => m.MenuProducts[i].Hidden)
+
+    }
+        }
+
+
         <input type="submit" value ="@Html.T(strings,"Save")" />
     </fieldset>
 }</div>

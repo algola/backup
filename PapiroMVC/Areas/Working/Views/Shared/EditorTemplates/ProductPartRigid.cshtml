@@ -1,0 +1,93 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartRigid
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+     
+
+    //Controllo del formato se è presente nell'elenco dei formati
+    //Se non è presente lo aggiungo
+
+    //da controllare solo se l'elenco non è vuoto
+    
+    if(((List<PapiroMVC.Models.ProductFormatName>)ViewBag.FormatsName).Count > 0 )
+    {
+       var ele = ((List<PapiroMVC.Models.ProductFormatName>)ViewBag.FormatsName).Find(x => x.CodFormat == Model.Format);
+       if(ele == null && Model.Format != null)
+       {
+
+          ((List<PapiroMVC.Models.ProductFormatName>)ViewBag.FormatsName).Add(new
+          PapiroMVC.Models.ProductFormatName { CodFormat = Model.Format, FormatName = Model.Format });
+       }
+    }
+    
+    foreach (PapiroMVC.Models.ProductFormatName Item in ViewBag.FormatsName)
+    {
+        var value = (string)HttpContext.GetLocalResourceObject(strings, "Cod" + Item.CodFormat);
+        Item.FormatName = value == null ? Item.FormatName : value;
+    }
+
+    }
+
+
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv">
+        @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
+        {
+           @Html.AlgolaEditorFor(model => model.Format)
+        }
+        else
+        {          
+             @Html.LabelFor(model => model.Format) 
+             <br /> 
+             @Html.DropDownListFor((model => model.Format),
+            new SelectList(ViewBag.FormatsName,"CodFormat","FormatName"))
+            <br />
+        }
+</div>
+
+<div id ="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
+
+    @Html.AlgolaEditorFor(model => model.FormatPersonalized)
+
+</div>
+
+        <!-- artilce -->
+        @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
+        {
+            ViewBag.IndexPartArticle = i;
+
+            @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])           
+        }
+
+        @Html.HiddenFor(model => model.IsSelected)
+        @Html.HiddenFor(model => model.SubjectNumber)
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodProductPart)
+        @Html.HiddenFor(model => model.CodProduct)
+        @Html.HiddenFor(model => model.ProductPartName)
+        @Html.HiddenFor(model => model.PrintingType)
+
+        @Html.HiddenFor(model => model.ServicesNumber)
+        @Html.HiddenFor(mode => Model.TypeOfProductPart)
+
+        <!-- task -->
+        @for (int i = 0; i < Model.ProductPartTasksPerView.Count; i++)
+        {
+            @Html.EditorFor(model => model.ProductPartTasksPerView[i])           
+        }
+
+
+<script type="text/javascript">
+
+    //0x0 is the key to switch from downbox to textbox
+    $('#ProductPartsPerView_@(ViewBag.IndexPart)__Format').bind('change', function () {
+        var singleValues = $("#ProductPartsPerView_@(ViewBag.IndexPart)__Format").val();
+
+        if (singleValues == '0x0') {
+            $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv').hide();
+            $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv').show();
+        }
+
+    });
+
+</script>

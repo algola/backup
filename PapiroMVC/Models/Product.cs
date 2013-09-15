@@ -12,22 +12,22 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public abstract partial class Product
     {
         public Product()
         {
             this.ProductParts = new HashSet<ProductPart>();
             this.ProductTasks = new HashSet<ProductTask>();
+            this.documentproducts = new HashSet<DocumentProduct>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
         public string CodProduct { get; set; }
-        public string CodCustomer { get; set; }
-        public string Customer { get; set; }
-        public Nullable<int> SelectorProduct { get; set; }
+        public string ProductName { get; set; }
+        public string CodMenuProduct { get; set; }
     
-        public virtual CustomerSupplier CustomerSupplier { get; set; }
         public virtual ICollection<ProductPart> ProductParts { get; set; }
         public virtual ICollection<ProductTask> ProductTasks { get; set; }
+        public virtual ICollection<DocumentProduct> documentproducts { get; set; }
     }
 }

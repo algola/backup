@@ -1,0 +1,40 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductTask
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+    
+    var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
+
+    List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).ToList();
+    foreach (PapiroMVC.Models.OptionTypeOfTask optItem in c)
+    {
+        optItem.OptionName = Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask);
+    }
+   
+    
+
+    }
+
+
+    @if ((Model.Hidden ==null) || (Model.Hidden!=true)) 
+    {
+
+        @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName)
+        <div class="editor-field">
+
+            @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
+            new SelectList(c, "CodOptionTypeOfTask", "OptionName"))
+        </div>
+    }
+    else
+    {                    
+        @Html.HiddenFor(model => model.CodOptionTypeOfTask)
+    }
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodProductTask)
+            @Html.HiddenFor(model => model.CodProduct)
+            @Html.HiddenFor(model => model.ProductTaskName)
+            @Html.HiddenFor(model => model.SelectorProductTask)
+            @Html.HiddenFor(model => model.Hidden)

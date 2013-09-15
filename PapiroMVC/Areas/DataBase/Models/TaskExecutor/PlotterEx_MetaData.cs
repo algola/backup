@@ -9,8 +9,8 @@ namespace PapiroMVC.Models
 {
     public partial class Plotter_MetaData : Digital_MetaData
     {
-        [DisplayNameLocalized(typeof(ResLithoWeb), "Width")]
-        [Tooltip(typeof(ResLithoWeb), "WidthToolTip")]
+        [DisplayNameLocalized(typeof(ResPlotter), "Width")]
+        [Tooltip(typeof(ResPlotter), "WidthToolTip")]
         public Nullable<long> Width { get; set; }
     }
 }

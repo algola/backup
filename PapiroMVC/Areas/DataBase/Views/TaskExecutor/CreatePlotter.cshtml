@@ -1,0 +1,15 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Plotter
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreatePlotterTitle");
+}
+<h2>@ViewBag.Title</h2>
+
+@Html.Partial("_EditAndCreatePlotter", Model)
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

@@ -1,62 +1,65 @@
-﻿using PapiroMVC.Models;
-using Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PapiroMVC.Models;
+using Services;
+using Ninject.Planning.Bindings;
+using System.Web.Security;
+using PapiroMVC.DbCodeManagement;
+using PapiroMVC.Validation;
+
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
-    public class ProductController : PapiroMVC.Controllers.ControllerAlgolaBase
+    public partial class ProductController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-
-        private readonly IArticleRepository articleRepository;
-        private readonly ICustomerSupplierRepository customerSupplierRepository;
+        protected IProductTaskNameRepository prodTskNameRepository;
+        protected IFormatsNameRepository formatsRepository;
+        protected IMenuProductRepository menu;
+        private readonly IProductRepository productRepository;
+        private readonly IDocumentRepository documentRepository;
+        private readonly ITypeOfTaskRepository typeOfTaskRepository;
 
         protected dbEntities db;
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
-            articleRepository.SetDbName(CurrentDatabase);
-            customerSupplierRepository.SetDbName(CurrentDatabase);
+            productRepository.SetDbName(CurrentDatabase);
+            ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
         }
 
-        public ProductController(IArticleRepository _articleDataRep, ICustomerSupplierRepository _dataRepCS)
+
+        public ProductController(IProductRepository _productRepository,
+            ITypeOfTaskRepository _typeOfTaskRepository,
+            IMenuProductRepository _menuProduct,
+            IProductTaskNameRepository _productTaskName,
+            IFormatsNameRepository _formatsName,
+            IDocumentRepository _documentRepository
+            )
         {
-            articleRepository = _articleDataRep;
-            customerSupplierRepository = _dataRepCS;   
+            formatsRepository = _formatsName;
+            prodTskNameRepository = _productTaskName;
+            menu = _menuProduct;
+            typeOfTaskRepository = _typeOfTaskRepository;
+            productRepository = _productRepository;
+            documentRepository = _documentRepository;
         }
 
 
         //
         // GET: /Working/Product/
-
         public ActionResult Index()
         {
             return View();
         }
 
-        //
-        // GET: /Working/Product/Details/5
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
-        // GET: /Working/Product/Create
-
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         //
         // POST: /Working/Product/Create
-
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
@@ -72,56 +75,28 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
         }
 
-        //
-        // GET: /Working/Product/Edit/5
 
-        public ActionResult Edit(int id)
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateProduct(string id)
         {
-            return View();
+            var c = InitProduct(id);
+
+            var d = new ProductViewModel();
+            d.Product = c;
+
+            d.Quantities.Add(0);
+            d.Quantities.Add(0);
+            d.Quantities.Add(0);
+            d.Quantities.Add(0);
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateProduct";
+            return View("CreateProduct", d);
         }
 
-        //
-        // POST: /Working/Product/Edit/5
 
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        //
-        // GET: /Working/Product/Delete/5
-
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /Working/Product/Delete/5
-
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

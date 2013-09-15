@@ -1,0 +1,29 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartBookSheet
+
+    @Html.AlgolaEditorFor(model => model.Pages)
+    <br />
+    <!-- artilce -->
+    @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
+    {
+        ViewBag.IndexPartArticle = i;
+
+        @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])           
+    }
+
+    @Html.HiddenFor(model => model.FormatOpened)
+    
+    @Html.HiddenFor(model => model.CodProductPart)
+    @Html.ValidationMessageFor(model => model.CodProduct)
+    @Html.HiddenFor(model => model.ProductPartName)
+
+    @Html.HiddenFor(model => model.Format)
+
+    @Html.HiddenFor(mode => Model.TypeOfProductPart)
+
+
+    <!-- task -->
+    @for (int i = 0; i < Model.ProductPartTasksPerView.Count; i++)
+    {
+        @Html.EditorFor(model => model.ProductPartTasksPerView[i])           
+    }

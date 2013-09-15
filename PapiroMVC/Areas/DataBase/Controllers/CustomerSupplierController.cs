@@ -20,8 +20,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         private readonly ICustomerSupplierRepository customerSupplierRepository;
         private readonly ICustomerSupplierBaseRepository customerSupplierBaseRepository;
 
-        public CustomerSupplierController(ICustomerSupplierRepository _customerSupplierRepository, ICustomerSupplierBaseRepository _clisupBaseDataRep, ICustomerSupplierRepository _clisupDataRep, ITypeOfBaseRepository _typeOfBaseDataRep)
-        {
+        public CustomerSupplierController(ICustomerSupplierRepository _customerSupplierRepository, ICustomerSupplierBaseRepository _clisupBaseDataRep, ICustomerSupplierRepository _clisupDataRep, ITypeOfBaseRepository _typeOfBaseDataRep)       
+        { 
             this.customerSupplierRepository = _customerSupplierRepository;
             typeOfBaseRepository = _typeOfBaseDataRep;
             customerSupplierRepository = _clisupDataRep;

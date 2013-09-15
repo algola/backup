@@ -118,8 +118,8 @@ namespace PapiroMVC.Models
         {
             //All properties of object
             //and pointer of sons
-
             to.CodTaskExecutor = this.CodTaskExecutor;
+            to.CodTypeOfTask = this.CodTypeOfTask;
             to.TaskExecutorName = this.TaskExecutorName;
             to.TimeStampTable = this.TimeStampTable;
             to.Version = this.Version;

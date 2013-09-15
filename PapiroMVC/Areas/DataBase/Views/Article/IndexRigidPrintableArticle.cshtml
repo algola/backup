@@ -1,0 +1,14 @@
+﻿@model PapiroMVC.Models.RigidPrintableArticleAutoChanges
+
+<div id='rollprintablearticle'>
+    @Html.Partial("_ListRigidPrintableArticle", Model)
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
+
+@section footer {
+    @Html.Partial("_footer")
+}

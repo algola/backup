@@ -6,9 +6,12 @@ using PapiroMVC.Models;
 
 namespace Services
 {
-    public interface IProductRepository : IGenericRepository<Product>
+    public interface IDocumentRepository : IGenericRepository<Document>
     {
-        string GetNewCode(Product a, ICustomerSupplierRepository customerSupplierRepository);
-        Product GetSingle(string codProduct);
+        string GetNewCode(Document a);
+        IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct);
+        Document GetFromSession();
+        void SaveOnSession(Document a);
+
     }
 }

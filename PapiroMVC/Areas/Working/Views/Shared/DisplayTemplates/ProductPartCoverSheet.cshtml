@@ -1,0 +1,20 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartCoverSheet
+
+
+        @Html.AlgolaDisplayFor(model => model.WidthWings)
+        @Html.AlgolaDisplayFor(model => model.Back)
+        <br />
+
+        <!-- artilce -->
+        @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
+        {
+            ViewBag.IndexPartArticle = i;
+            @Html.DisplayFor(model => model.ProductPartsPrintableArticlePerView[i])           
+        }
+
+        <!-- task -->
+        @for (int i = 0; i < Model.ProductPartTasksPerView.Count; i++)
+        {
+            @Html.DisplayFor(model => model.ProductPartTasksPerView[i])           
+        }

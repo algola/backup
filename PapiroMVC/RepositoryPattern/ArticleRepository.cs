@@ -17,7 +17,7 @@ namespace Services
 
             if (filteredItems.Count() == 0) throw new Exception();
 
-            a.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+            a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
             customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
@@ -27,7 +27,7 @@ namespace Services
             if (filteredItems2.Count() == 0) throw new Exception();
 
             //if #suppliers < 1 then no supplier has selected correctly and then thow error
-            a.CodSupplierBuy = filteredItems2.Single().CodCustomerSupplier;
+            a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
 
             var codes = (from COD in this.GetAll() select COD.CodArticle).ToArray().OrderBy(x => x, new SemiNumericComparer());
             var csCode = codes.Count() != 0 ? codes.Last() : "0";
@@ -150,6 +150,25 @@ namespace Services
                     #endregion
                     break;
                 case Article.ArticleType.RigidPrintableArticle:
+                    #region Standard
+                    try
+                    {
+                        var standardCost = ((RigidPrintableArticleStandardCost)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.RigidPrintableArticleStandardCost));
+
+                        standardCost.CostPerMq = standardCost.CostPerMq == null ?
+                            null : Convert.ToDouble(standardCost.CostPerMq,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        standardCost.CodArticle = c.CodArticle;
+                        standardCost.CodArticleCost = c.CodArticle + "_STC";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
                     break;
                 case Article.ArticleType.ObjectPrintableArticle:
                     break;

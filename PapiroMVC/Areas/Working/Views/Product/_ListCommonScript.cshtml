@@ -1,0 +1,38 @@
+﻿@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+
+}
+
+<script type="text/javascript">
+    function editProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditProduct", new {id= "-1"},new {@class="tbutton smalledit"})';
+
+        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "DisplayProduct", new {id= "-1"},new {@class="tbutton smalledit"})';
+
+        return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
+
+    }
+
+    function typeOfProduct(cellvalue, options, rowobject) {
+
+        var link = "type"; 
+        var bookSheetType = '@HttpContext.GetLocalResourceObject(strings, "ProductBookSingleSheetType")';
+        var singleSheetType = '@HttpContext.GetLocalResourceObject(strings, "ProductSingleSheetType")';
+        var blockSheetType = '@HttpContext.GetLocalResourceObject(strings, "ProductBlockSheetType")';
+
+        if (cellvalue == "ProductBookSingleSheetType")
+            return link.replace("type", bookSheetType);
+
+        if (cellvalue == "ProductBlockSheetType")
+            return link.replace("type", blockSheetType);
+
+        if (cellvalue == "ProductSingleSheetType")
+            return link.replace("type", singleSheetType);
+
+
+        return link;
+    }
+
+</script>
+

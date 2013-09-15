@@ -1,0 +1,65 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductRigid
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+        
+    }
+
+<div id="status">
+
+@Scripts.Render("~/bundles/jqueryval")
+@using (Ajax.BeginForm("Action", "Product", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess = "OnSuccess" }))
+{
+      @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ProductSingleSheet</legend>
+
+        @Html.HiddenFor(model => model.ProductName)
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodProduct)
+        @Html.HiddenFor(model => model.ProductName)
+        @Html.HiddenFor(model => model.CodMenuProduct)
+        @Html.HiddenFor(model => model.TypeOfProduct)
+
+        <br />
+
+        <!-- parts -->
+        @for (int i = 0; i < Model.ProductPartsPerView.Count; i++)
+        {
+            ViewBag.IndexPart = i;
+            @Html.EditorFor(model => model.ProductPartsPerView[i])           
+        }
+            
+        <!-- ProductTasks -->
+        @for (int i = 0; i < Model.ProductTasks.Count; i++)
+        {
+            @Html.EditorFor(model => model.ProductTasksPerView[i])           
+        }
+
+        <br />                       
+<br />
+
+    </fieldset>
+       
+    <p>        
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new {Area="Working"})');">            
+            <i class ="icon-arrow-left"></i>
+            @HttpContext.GetLocalResourceObject(strings, "Cancel")
+        </button>
+
+        <button class="default" type="submit" name="@ViewBag.ActionMethod">
+            <i class="icon-save"></i>    
+            @HttpContext.GetLocalResourceObject(strings, "Save")
+        </button>        
+        
+        @if (ViewBag.ActionMethod != "CreateProductSingleSheet")               
+        {
+            <input class="button" type="submit" name="CreateProductSingleSheet"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+        }
+    </p>
+}
+
+</div>
+

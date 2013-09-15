@@ -127,7 +127,7 @@
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="Width" xml:space="preserve">
-    <value>Largezza (cm)</value>
+    <value>Luce (cm)</value>
   </data>
   <data name="WidthToolTip" xml:space="preserve">
     <value>Indica la larghezza del plotter</value>

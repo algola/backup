@@ -39,5 +39,13 @@ namespace PapiroMVC.Models
         public DbSet<ProductPartTask> ProductPartTasks { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTask> ProductTasks { get; set; }
+        public DbSet<TaskExecutorTypeOfTask> TaskExecutorTypeOfTasks { get; set; }
+        public DbSet<TypeOfTask> TypeOfTasks { get; set; }
+        public DbSet<OptionTypeOfTask> OptionTypeOfTasks { get; set; }
+        public DbSet<MenuProduct> MenuProducts { get; set; }
+        public DbSet<Cost> Costs { get; set; }
+        public DbSet<DocumentProduct> DocumentProducts { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<productpartstoproducttask> ProductPartsToProductTasks { get; set; }
     }
 }

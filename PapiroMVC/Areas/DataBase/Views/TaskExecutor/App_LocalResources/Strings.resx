@@ -135,9 +135,6 @@
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>
-  <data name="CodExecutorCaption" xml:space="preserve">
-    <value>Codice</value>
-  </data>
   <data name="ColorSide1" xml:space="preserve">
     <value>Col. Fronte</value>
   </data>
@@ -177,6 +174,18 @@
   <data name="CreateLithoSheetTitle" xml:space="preserve">
     <value>Nuova Offset a foglio</value>
   </data>
+  <data name="CreatePlotter" xml:space="preserve">
+    <value>Nuovo Plotter</value>
+  </data>
+  <data name="CreatePlotterTitle" xml:space="preserve">
+    <value>Nuovo Plotter</value>
+  </data>
+  <data name="CreatePrePostPress" xml:space="preserve">
+    <value>Nuova Pre e Post Stampa</value>
+  </data>
+  <data name="CreatePrePostPressTitle" xml:space="preserve">
+    <value>Nuova Pre e Post Stampa</value>
+  </data>
   <data name="DeficitRateCaption" xml:space="preserve">
     <value>% deficit</value>
   </data>
@@ -196,7 +205,13 @@
     <value>Modifica della macchina digitale</value>
   </data>
   <data name="EditingLithoSheetTitle" xml:space="preserve">
-    <value>Modifica della macchina</value>
+    <value>Modifica della macchina </value>
+  </data>
+  <data name="EditingPlotterTitle" xml:space="preserve">
+    <value>Modifica della macchina </value>
+  </data>
+  <data name="EditingPrePostPressTitle" xml:space="preserve">
+    <value>Modifica della macchina </value>
   </data>
   <data name="FormatMaxCaption" xml:space="preserve">
     <value>Formato Massimo</value>
@@ -228,6 +243,9 @@
   <data name="OperationsCaptionWidth_" xml:space="preserve">
     <value>60</value>
   </data>
+  <data name="PrePostPressGridCaption" xml:space="preserve">
+    <value>Pre e/o Post Stampa</value>
+  </data>
   <data name="PrintingUnitCaption" xml:space="preserve">
     <value>Castelli</value>
   </data>
@@ -256,7 +274,7 @@
     <value>Nome</value>
   </data>
   <data name="TitleDigitalSheetIndex" xml:space="preserve">
-    <value>Elenco macchine digitali a foglio</value>
+    <value>Macchine digitali a foglio</value>
   </data>
   <data name="ToRunCaption" xml:space="preserve">
     <value>a copie</value>

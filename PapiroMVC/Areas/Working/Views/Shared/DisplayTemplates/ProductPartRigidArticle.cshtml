@@ -1,0 +1,12 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartRigidArticle
+
+@{
+    
+    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
+
+    }
+            @Html.AlgolaDisplayFor(model => model.TypeOfMaterial)
+            @Html.AlgolaDisplayFor(model => model.NameOfMaterial)
+            @Html.AlgolaDisplayFor(model => model.Color)
+            @Html.AlgolaDisplayFor(model => model.Weight)

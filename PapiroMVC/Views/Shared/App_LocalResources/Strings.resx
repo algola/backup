@@ -151,10 +151,10 @@
     <value>Materiali Stampabili</value>
   </data>
   <data name="RollPrintableArticleMenu" xml:space="preserve">
-    <value>ElencoMateriali Stampabili a Rotolo</value>
+    <value>Materiali Stampabili a Rotolo</value>
   </data>
   <data name="SheetPrintableArticleMenu" xml:space="preserve">
-    <value>Elenco Materiali Stampabili a Foglio</value>
+    <value>Materiali Stampabili a Foglio</value>
   </data>
   <data name="TaskExecutorMenu" xml:space="preserve">
     <value>Macchine e Lavorazioni</value>
@@ -167,5 +167,95 @@
   </data>
   <data name="EditProfileMenu" xml:space="preserve">
     <value>Profilo</value>
+  </data>
+  <data name="PrePostPressMenu" xml:space="preserve">
+    <value>Pre e Post Stampa</value>
+  </data>
+  <data name="PlotterMenu" xml:space="preserve">
+    <value>Stampa Plotter</value>
+  </data>
+  <data name="PrePostMenu" xml:space="preserve">
+    <value>Pre e Post Stampa</value>
+  </data>
+  <data name="CodCatFogliSingoli" xml:space="preserve">
+    <value>Fogli Singoli</value>
+  </data>
+  <data name="CodMenuProductAltriFormati" xml:space="preserve">
+    <value>Altri formati</value>
+  </data>
+  <data name="CodMenuProductBigliettiVisita" xml:space="preserve">
+    <value>Biglietti da visita</value>
+  </data>
+  <data name="CodMenuProductBuste" xml:space="preserve">
+    <value>Buste</value>
+  </data>
+  <data name="CodMenuProductCartaIntestata" xml:space="preserve">
+    <value>Carta intestata</value>
+  </data>
+  <data name="CodMenuProductCartolineInviti" xml:space="preserve">
+    <value>Cartoline e Inviti</value>
+  </data>
+  <data name="CodMenuProductCartolinePostali" xml:space="preserve">
+    <value>Cartoline postali</value>
+  </data>
+  <data name="CodMenuProductEtichetteCartellini" xml:space="preserve">
+    <value>Etichette e cartellini</value>
+  </data>
+  <data name="CodMenuProductFogliMacchina" xml:space="preserve">
+    <value>Fogli macchina</value>
+  </data>
+  <data name="CodMenuProductLocandine" xml:space="preserve">
+    <value>Locandine</value>
+  </data>
+  <data name="CodMenuProductPieghevoli" xml:space="preserve">
+    <value>Pieghevoli</value>
+  </data>
+  <data name="CodMenuProductVolantini" xml:space="preserve">
+    <value>Volantini e Flyer</value>
+  </data>
+  <data name="CodCatGrandeFormato" xml:space="preserve">
+    <value>Grande Formato</value>
+  </data>
+  <data name="CodMenuProductFotoquadri" xml:space="preserve">
+    <value>Fotoquadri</value>
+  </data>
+  <data name="CodMenuProductManifesti" xml:space="preserve">
+    <value>Manifesti per affissione</value>
+  </data>
+  <data name="CodMenuProductPoster" xml:space="preserve">
+    <value>Poster altissima qualità</value>
+  </data>
+  <data name="CodMenuProductPVC" xml:space="preserve">
+    <value>PVC adesivo</value>
+  </data>
+  <data name="CodMenuProductStriscioni" xml:space="preserve">
+    <value>Striscioni, Microforato</value>
+  </data>
+  <data name="CodMenuProductSuppRigidi" xml:space="preserve">
+    <value>Supporti rigidi</value>
+  </data>
+  <data name="CodCatBook" xml:space="preserve">
+    <value>Riviste , Cataloghi e libri</value>
+  </data>
+  <data name="CodMenuProductBrossuraCucitaFilo" xml:space="preserve">
+    <value>Brossura Cucita Filo Refe</value>
+  </data>
+  <data name="CodMenuProductBrossuraFresata" xml:space="preserve">
+    <value>Brossura Fresata</value>
+  </data>
+  <data name="CodMenuProductPuntoMetallico" xml:space="preserve">
+    <value>Punto Metallico</value>
+  </data>
+  <data name="CodMenuProductRivistePostalizzazione" xml:space="preserve">
+    <value>Riviste Per Postalizzazione</value>
+  </data>
+  <data name="CodMenuProductSchedeNonRilegate" xml:space="preserve">
+    <value>Schede Non Rilegate</value>
+  </data>
+  <data name="CodMenuProductSpiraleMetallica" xml:space="preserve">
+    <value>Spirale Metallica</value>
+  </data>
+  <data name="RigidPrintableArticleMenu" xml:space="preserve">
+    <value>Materiali Stampabili a Rigidi</value>
   </data>
 </root>

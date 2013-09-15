@@ -19,7 +19,7 @@ namespace PapiroMVC.Models
             this.CustomerSupplierBases = new HashSet<CustomerSupplierBase>();
             this.articles = new HashSet<Article>();
             this.articles1 = new HashSet<Article>();
-            this.products = new HashSet<Product>();
+            this.documents = new HashSet<Document>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -32,6 +32,6 @@ namespace PapiroMVC.Models
         public virtual ICollection<CustomerSupplierBase> CustomerSupplierBases { get; set; }
         public virtual ICollection<Article> articles { get; set; }
         public virtual ICollection<Article> articles1 { get; set; }
-        public virtual ICollection<Product> products { get; set; }
+        public virtual ICollection<Document> documents { get; set; }
     }
 }

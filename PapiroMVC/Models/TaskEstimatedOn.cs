@@ -24,8 +24,10 @@ namespace PapiroMVC.Models
         public string CodTaskExecutorOn { get; set; }
         public string CostForfait { get; set; }
         public string CostForfaitForSheet { get; set; }
+        public string CodOptionTypeOfTask { get; set; }
     
         public virtual TaskExecutor taskexecutors { get; set; }
         public virtual ICollection<Step> steps { get; set; }
+        public virtual OptionTypeOfTask OptionTypeOfTask { get; set; }
     }
 }

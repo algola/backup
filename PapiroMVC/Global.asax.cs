@@ -1,4 +1,5 @@
-﻿using PapiroMVC.Validation;
+﻿using PapiroMVC.Models;
+using PapiroMVC.Validation;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -28,14 +29,10 @@ namespace PapiroMVC
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //Decimal Model Binder
-            /*
-            ModelBinders.Binders.Add(typeof(decimal), new DecimalModelBinder());
-            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
-            ModelBinders.Binders.Add(typeof(double), new DecimalModelBinder());
-            ModelBinders.Binders.Add(typeof(double?), new DecimalModelBinder());
-            */
-            //end Decimal Model Binder
+            ModelBinders.Binders.Add(typeof(Product), new ProductModelBinder());
+            ModelBinders.Binders.Add(typeof(ProductPart), new ProductPartModelBinder());
+            ModelBinders.Binders.Add(typeof(ProductPartsPrintableArticle), new ProductPartsPrintableArticleModelBinder());
+            ModelBinders.Binders.Add(typeof(ProductPartTask), new ProductPartTaskModelBinder());
             
         }
 

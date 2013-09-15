@@ -76,6 +76,13 @@ namespace PapiroMVC.Models
         public string CostPerMq { get; set; }
     }
 
+
+    [MetadataType(typeof(RigidPrintableArticleAutoChanges_Metadata))]
+    public class RigidPrintableArticleAutoChanges : PrintableAutoChanges
+    {
+        public string CostPerMq { get; set; }
+    }
+
     [MetadataType(typeof(SheetPrintableArticleAutoChanges_Metadata))]
     public class SheetPrintableArticleAutoChanges : PrintableAutoChanges
     {

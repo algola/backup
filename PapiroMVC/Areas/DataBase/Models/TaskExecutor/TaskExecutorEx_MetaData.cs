@@ -10,6 +10,7 @@ namespace PapiroMVC.Models
 {
     public abstract partial class TaskExecutor_MetaData
     {
+
         [DisplayNameLocalized(typeof(ResTaskExecutor), "TimeStampTable")]
         [Tooltip(typeof(ResTaskExecutor), "TimeStampTableToolTip")]
         public System.DateTime TimeStampTable { get; set; }

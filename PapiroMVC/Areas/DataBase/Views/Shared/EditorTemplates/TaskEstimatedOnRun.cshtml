@@ -1,0 +1,37 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskEstimatedOnRun
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnRun");
+}
+
+            @Html.Hidden("returnUrl",TempData["TaskExecutorIndex"])
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodTaskExecutor)
+            @Html.HiddenFor(model => model.CodTaskExecutorOn)
+
+        <h3>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</h3>
+
+            @Html.AlgolaEditorFor(model => model.StartingCost1)
+            @Html.AlgolaEditorFor(model => model.StartingCost2)
+
+            @Html.AlgolaEditorFor(model => model.CostForfait)
+            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+
+        <h3>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</h3>
+                
+            @Html.AlgolaEditorFor(model => model.CostPerUnit)
+
+            @Html.EditorFor(model => model.UseDifferentCostPerUnit)
+
+        <div id="_listAvarageRunPerRunStep@(Model.CodTaskExecutorOn)">
+            @Html.Partial("_ListCostPerRunStepNEW", Model)
+        </div>
+
+            @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
+
+        <div id="_listDeficitForWeightStep@(Model.CodTaskExecutorOn)">
+            @Html.Partial("_ListDeficitOnCostForWeightStepNEW", Model)
+        </div>

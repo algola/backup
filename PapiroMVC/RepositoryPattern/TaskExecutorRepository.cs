@@ -23,9 +23,11 @@ namespace Services
         private void TaskExecutorCostCodeRigen(TaskExecutor c)
         {
             c.TimeStampTable = DateTime.Now;
-            foreach (var item in c.SetTaskExecutorEstimatedOn)
+            int i = 0;
+            foreach (var item in c.SetTaskExecutorEstimatedOn.OrderBy(x=>x.CodTaskExecutorOn))
             {
-                item.CodTaskExecutorOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString();
+
+                item.CodTaskExecutorOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString()+ (i++).ToString();
                 foreach (var step in item.steps)
                 {
                     item.TimeStampTable = DateTime.Now;

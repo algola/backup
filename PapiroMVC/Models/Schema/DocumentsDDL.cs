@@ -1,0 +1,94 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SchemaManagemet;
+using System.Data.Objects;
+using System.Data.Entity;
+
+namespace PapiroMVC.Model
+{    
+    class DocumentsDDL :IDDL
+    {
+        SchemaDb dbS;
+
+        public DocumentsDDL(string dbName)
+        {
+            dbS = new SchemaDb();
+            dbS.DatabaseName = dbName;
+        }
+
+        public void UpdateSchema(DbContext ctx)
+        {            
+            dbS.Ctx = ctx;
+
+            //First Table
+            dbS.AddTable("documents");
+            dbS.AddColumnToTable("documents", "CodDocument", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("documents", "DocumentName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("documents", "DateDocument", SchemaDb.Date, "100");
+            dbS.AddColumnToTable("documents", "Number", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("documents", "Notes", SchemaDb.String, "100");
+
+            dbS.AddColumnToTable("documents", "CodCustomer", SchemaDb.String, "50");
+            dbS.AddColumnToTable("documents", "Customer", SchemaDb.String, "50");
+            //foreign key
+            dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
+
+            // 0 = ... // 1 = ... // 2 = ...
+            dbS.AddColumnToTable("documents", "SelectorDocument", SchemaDb.Int, "0");
+
+            //Index
+            dbS.AddIndex("documents", "DocumentName");
+
+            //---------------------------------------------------------------------------------------------
+
+            //Second Table
+            //these are the document's rows
+            dbS.AddTable("documentproducts");
+            dbS.AddColumnToTable("documentproducts", "CodDocumentProduct", SchemaDb.StringPK, "50");
+
+            //foreign key
+            dbS.AddColumnToTable("documentproducts", "CodDocument", SchemaDb.String, "50");
+            dbS.AddForeignKey("documentproducts", "CodDocument", "documents", "CodDocument");
+
+            dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "100");
+
+            //foreign key
+            dbS.AddColumnToTable("documentproducts", "CodProduct", SchemaDb.String, "50");
+            dbS.AddForeignKey("documentproducts", "CodProduct", "products", "CodProduct");
+            //derive attribute //taken from product
+            dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "100");
+
+            dbS.AddColumnToTable("documentproducts", "Quantity", SchemaDb.Long, "0");
+            dbS.AddColumnToTable("documentproducts", "UnitPrice", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documentproducts", "TotalAmount", SchemaDb.String, "20");
+
+
+            //Costi
+
+            //---------------------------------------------------------------------------------------------
+
+            //This costs rappresent 
+            dbS.AddTable("costs");
+            dbS.AddColumnToTable("costs", "CodCost", SchemaDb.StringPK, "50");
+
+            //foreign key for keep all product cost of single product and single quantity
+            dbS.AddColumnToTable("costs", "CodDocumentProduct", SchemaDb.String, "50");
+            dbS.AddForeignKey("costs", "CodDocumentProduct", "documentproducts", "CodDocumentProduct");
+
+            //this cost would related to a producttask
+            dbS.AddColumnToTable("costs", "CodProductTask", SchemaDb.String, "50");
+            dbS.AddForeignKey("costs", "CodProductTask", "producttasks", "CodProductTask");
+
+            //this cost would related to a productparttask
+            dbS.AddColumnToTable("costs", "CodProductPartTask", SchemaDb.String, "50");
+            dbS.AddForeignKey("costs", "CodProductPartTask", "productparttasks", "CodProductPartTask");
+
+            //this cost would related to a printable article
+            dbS.AddColumnToTable("costs", "CodProductPartPrintableArticle", SchemaDb.String, "50");
+            dbS.AddForeignKey("costs", "CodProductPartPrintableArticle", "productpartsprintablearticle", "CodProductPartPrintableArticle");
+
+        }
+    }
+}

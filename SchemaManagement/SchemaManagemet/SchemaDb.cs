@@ -23,6 +23,7 @@ namespace SchemaManagemet
         public static string String = "string";
         public static string StringPK = "stringPK";
         public static string Time = "time";
+        public static string Date = "date";
 
         public string DatabaseName { get; set; }
 

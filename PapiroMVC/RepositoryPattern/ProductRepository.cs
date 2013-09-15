@@ -3,12 +3,14 @@ using System.Linq;
 using PapiroMVC.Models;
 using PapiroMVC.DbCodeManagement;
 using System.Threading;
+using System.Data;
+using System.Collections.Generic;
 
 namespace Services
 {
     public class ProductRepository : GenericRepository<dbEntities, Product>, IProductRepository
     {
-        public string GetNewCode(Product a, ICustomerSupplierRepository customerSupplierRepository)
+        public string GetNewCode(Product a)
         {
             var codes = (from COD in this.GetAll() select COD.CodProduct).ToArray().OrderBy(x => x, new SemiNumericComparer());
             var csCode = codes.Count() != 0 ? codes.Last() : "0";
@@ -20,124 +22,51 @@ namespace Services
         {
             c.TimeStampTable = DateTime.Now;
 
+            //parti del prodotto
+            var ppart = c.ProductParts.ToList();
             foreach (var item in c.ProductParts)
             {
+             
+                item.CodProductPart = c.CodProduct + "-" +  ppart.IndexOf(item).ToString();
+                item.CodProduct = c.CodProduct;
+                item.TimeStampTable = DateTime.Now;
+
+                //task della parte del prodotto
+                var pptask = item.ProductPartTasks.ToList();
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.CodProductPart = item.CodProductPart;
+                    item2.TimeStampTable = DateTime.Now;
+                    item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString();                    
+                }
+
+                //articoli della parte del prodotto
+                var pppart = item.ProductPartPrintableArticles.ToList();
+                foreach (var item2 in item.ProductPartPrintableArticles)
+                {
+                    item2.CodProductPart = item.CodProductPart;
+                    item2.TimeStampTable = DateTime.Now;
+                    item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString();
+                }
+
+            }
+
+            //task del prodotto
+            var pt = c.ProductTasks.ToList();
+            foreach (var item in c.ProductTasks)
+            {
+                item.CodProductTask = c.CodProduct + "-" + pt.IndexOf(item).ToString();
+                item.CodProduct = c.CodProduct;
                 item.TimeStampTable = DateTime.Now;
             }
 
-            //switch (c.TypeOfProduct)
-            //{
-                   
-            //    case Product.ProductType.SheetPrintableProduct:
 
-            //        /*
-            //        #region Cutted
-            //        try
-            //        {
-            //            var cuttedPart = ((SheetPrintableProductCuttedPart)c.ProductParts.First(x =>
-            //                x.TypeOfProductPart == ProductPart.ProductPartType.SheetPrintableProductCuttedPart));
+            if (c.ProductName == "" || c.ProductName == null)
+            {
+                c.ProductName = c.ToString();
+            }
 
-            //            cuttedPart.PartPerKg = cuttedPart.PartPerKg == null ?
-            //                null : Convert.ToDouble(cuttedPart.PartPerKg,
-            //                Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            cuttedPart.PartPerSheet = cuttedPart.PartPerSheet == null ?
-            //            null :
-            //            Convert.ToDouble(cuttedPart.PartPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            cuttedPart.CodProduct = c.CodProduct;
-            //            cuttedPart.CodProductPart = c.CodProduct + "_CTD";
-
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Console.WriteLine(e.Message);
-            //        }
-
-            //        #endregion
-            //        */
-
-            //        #region Paked
-            //        try
-            //        {
-            //            var pakedPart = ((SheetPrintableProductPakedPart)c.ProductParts.First(x =>
-            //                x.TypeOfProductPart == ProductPart.ProductPartType.SheetPrintableProductPakedPart));
-
-            //            pakedPart.PartPerKg = pakedPart.PartPerKg == null ?
-            //                null : Convert.ToDouble(pakedPart.PartPerKg,
-            //                Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            pakedPart.PartPerSheet = pakedPart.PartPerSheet == null ?
-            //            null :
-            //            Convert.ToDouble(pakedPart.PartPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            pakedPart.CodProduct = c.CodProduct;
-            //            pakedPart.CodProductPart = c.CodProduct + "_PKC";
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Console.WriteLine(e.Message);
-            //        }
-            //        #endregion
-
-            //        #region Pallet
-            //        try
-            //        {
-            //            var palletPart = ((SheetPrintableProductPalletPart)c.ProductParts.First(x =>
-            //            x.TypeOfProductPart == ProductPart.ProductPartType.SheetPrintableProductPalletPart));
-
-            //            palletPart.PartPerKg = palletPart.PartPerKg == null ?
-            //                null : Convert.ToDouble(palletPart.PartPerKg,
-            //                Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            palletPart.PartPerSheet = palletPart.PartPerSheet == null ?
-            //            null :
-            //            Convert.ToDouble(palletPart.PartPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
-
-            //            palletPart.CodProduct = c.CodProduct;
-            //            palletPart.CodProductPart = c.CodProduct + "_PLC";
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Console.WriteLine(e.Message);
-            //        }
-
-            //        #endregion
-
-            //        break;
-            //    case Product.ProductType.RollPrintableProduct:
-            //        #region Standard
-            //        try
-            //        {
-            //            var standardPart = ((RollPrintableProductStandardPart)c.ProductParts.First(x =>
-            //            x.TypeOfProductPart == ProductPart.ProductPartType.RollPrintableProductStandardPart));
-
-            //            standardPart.PartPerMq = standardPart.PartPerMq == null ?
-            //                null : Convert.ToDouble(standardPart.PartPerMq,
-            //                Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
-
-            //            standardPart.PartPerMl = standardPart.PartPerMl == null ?
-            //            null :
-            //            Convert.ToDouble(standardPart.PartPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
-
-            //            standardPart.CodProduct = c.CodProduct;
-            //            standardPart.CodProductPart = c.CodProduct + "_STC";
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Console.WriteLine(e.Message);
-            //        }
-
-            //        #endregion
-            //        break;
-            //    case Product.ProductType.RigidPrintableProduct:
-            //        break;
-            //    case Product.ProductType.ObjectPrintableProduct:
-            //        break;
-            //    default:
-            //        break;
-            //}
-        }
+       }
 
         public override void Add(Product entity)
         {
@@ -151,24 +80,63 @@ namespace Services
             return Context.Products.Include("ProductParts").Include("ProductTasks");
         }
 
+
+        public override void Save()
+        {
+            try
+            {
+                base.Save();
+            }
+            catch (OptimisticConcurrencyException)
+            {                
+                Context.SaveChanges();
+            }           
+        }
+
+
         public override void Edit(Product entity)
         {
+            
             ProductPartCodeRigen(entity);
 
             foreach (var item in entity.ProductParts)
             {
                 Context.Entry(item).State = System.Data.EntityState.Modified;
+
+                foreach (var item2 in item.ProductPartPrintableArticles)
+                {
+                    Context.Entry(item2).State = System.Data.EntityState.Modified;
+                }
+
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    Context.Entry(item2).State = System.Data.EntityState.Modified;
+                }
             }
+
             foreach (var item in entity.ProductTasks)
             {
                 Context.Entry(item).State = System.Data.EntityState.Modified;
             }
+
             base.Edit(entity);
         }
 
         public Product GetSingle(string codProduct)
         {
-            var query = Context.Products.Include("ProductParts").Include("ProductTasks").FirstOrDefault(x => x.CodProduct == codProduct);
+
+//            var query = Context.Products.Include("ProductParts").Include("ProductParts.ProductPartTasks").Include("ProductTasks.OptionTypeOfTask").Include("ProductParts.ProductPartPrintableArticles").Include("ProductTasks.OptionTypeOfTask.TypeOfTask").Include("ProductTasks").FirstOrDefault(x => x.CodProduct == codProduct);
+            
+            var query = Context.Products.Include("ProductParts").Include("ProductTasks.OptionTypeOfTask").Include("ProductParts.ProductPartPrintableArticles").Include("ProductTasks.OptionTypeOfTask.TypeOfTask").Include("ProductTasks").FirstOrDefault(x => x.CodProduct == codProduct);
+            
+            //Including ProductPartTask creates a problem with autogenerated SQL statement... 
+            //so it's necessary inject single ProductPartTask list e to each ProductPart manually
+            foreach (var item in query.ProductParts)
+	        {
+                List<ProductPartTask> q = Context.ProductPartTasks.Include("OptionTypeOfTask").Where(x => x.CodProductPart == item.CodProductPart).ToList();
+                item.ProductPartTasks = q.ToList();
+            }
+
             return query;
         }
 

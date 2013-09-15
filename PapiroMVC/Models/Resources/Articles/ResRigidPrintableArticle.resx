@@ -129,6 +129,9 @@
   <data name="CurrencyValidationError1" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="Format" xml:space="preserve">
+    <value>Formato (cm x cm)</value>
+  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
   </data>

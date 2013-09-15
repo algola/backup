@@ -1,0 +1,45 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+@{
+    
+    string strings = "~/Views/Shared/Strings";
+    List<MenuProduct> menuProd = ViewBag.MenuProd;
+    var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
+
+    List<MenuProduct> selectedMenuProd;
+    
+}
+        <div class="page-sidebar">
+            <ul>
+                @foreach (var item in categories)
+                {
+                <li class="sticker sticker-color-green" data-role="dropdown">
+                    <a>@Html.T(strings,"CodCat" + item.CodCategory)</a>
+                    <ul class="sub-menu sidebar-dropdown-menu light">
+                        
+                        @{                                                        
+                            selectedMenuProd = menuProd.FindAll(x => x.CodCategory == item.CodCategory && !x.Hidden.Value).ToList();
+                              }
+
+                        @foreach (var menuItem in selectedMenuProd)
+                        {
+
+                            <li>
+                                @try
+                                {                                    
+                                    @Html.ActionLink(@Html.T(strings, "CodMenuProduct" + menuItem.CodMenuProduct),"CreateProduct","Product", (object) new {id =  menuItem.CodMenuProduct.ToString()},null)                                
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine(menuItem.CodMenuProduct);
+                                    throw;
+                                }
+                            </li>                            
+                        }
+                    </ul> 
+                </li>                   
+                }                
+            </ul>
+    
+        </div>

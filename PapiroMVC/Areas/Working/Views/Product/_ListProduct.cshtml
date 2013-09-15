@@ -1,0 +1,52 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid 
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+    }
+
+@(Html.jqGrid("ProductGrid")
+
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))    
+    // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setCustomFormatter("editProduct")
+        .setSortable(false))
+    .addColumn(new Column("CodProduct")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodProductCaption"))
+        .setWidth(80)
+        .setSortable(true))
+            .addColumn(new Column("TypeOfProduct")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TypeOfProductCaption"))
+        .setWidth(100)
+        .setCustomFormatter("typeOfProduct")
+        .setSearch(true)
+        .setSortable(false))
+    .addColumn(new Column("ProductName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ProductNameCaption"))
+        .setWidth(200)
+        .setSortable(true))
+    .setUrl(Url.Action("ProductList", "Product"))
+
+    .setHeight(300)
+    .setRowNum(10)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("ProductGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true) 
+    .setSearchToolbar(true)
+  
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+                            
+    // render the html
+    .Render()
+)
+<br />
+
+<script type="text/javascript">
+
+
+</script>

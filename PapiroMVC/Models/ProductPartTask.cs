@@ -14,12 +14,20 @@ namespace PapiroMVC.Models
     
     public partial class ProductPartTask
     {
+        public ProductPartTask()
+        {
+            this.costs = new HashSet<Cost>();
+        }
+    
         public System.DateTime TimeStampTable { get; set; }
         public string CodProductPartTask { get; set; }
         public string CodProductPart { get; set; }
-        public string CodProductTask { get; set; }
+        public string CodOptionTypeOfTask { get; set; }
+        public Nullable<bool> Hidden { get; set; }
+        public Nullable<int> IndexOf { get; set; }
     
         public virtual ProductPart ProductPart { get; set; }
-        public virtual ProductTask ProductTask { get; set; }
+        public virtual OptionTypeOfTask OptionTypeOfTask { get; set; }
+        public virtual ICollection<Cost> costs { get; set; }
     }
 }

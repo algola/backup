@@ -1,0 +1,35 @@
+﻿@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+
+}
+
+<script type="text/javascript">
+    function editDocument(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocument", new {id= "-1"},new {@class="tbutton smalledit"})';
+
+        return link.replace("-1", cellvalue);
+    }
+
+    function typeOfDocument(cellvalue, options, rowobject) {
+
+        var link = "type"; 
+        var bookSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentBookSingleSheetType")';
+        var singleSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentSingleSheetType")';
+        var blockSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentBlockSheetType")';
+
+        if (cellvalue == "DocumentBookSingleSheetType")
+            return link.replace("type", bookSheetType);
+
+        if (cellvalue == "DocumentBlockSheetType")
+            return link.replace("type", blockSheetType);
+
+        if (cellvalue == "DocumentSingleSheetType")
+            return link.replace("type", singleSheetType);
+
+
+        return link;
+    }
+
+</script>
+

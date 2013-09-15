@@ -16,27 +16,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
        
-        //example of autocpmplete
-        public ActionResult FormatMaxAutoComplete(string term)
-        {
-            TaskExecutor[] formats = taskExecutorRepository.GetAll().OfType<Litho>().ToArray();
-
-            var notNull = formats.Except(formats.Where(item => string.IsNullOrEmpty(item.FormatMax)));
-
-            var filteredItems = notNull.Where(
-            item => item.FormatMax.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.FormatMax,
-                                 label = art.FormatMax,
-                                 value = art.FormatMax
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
-
         private IQueryable<TaskExecutor> TaskExecutorList(GridSettings gridSettings)
         {
             //use it in filter
@@ -395,6 +374,123 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+        public ActionResult PlotterList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            var q = this.DigitalList(gridSettings).OfType<Plotter>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutor,
+                        cell = new string[] 
+                        {     
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
+                            a.CodTaskExecutor,
+                            a.CodTaskExecutor,
+                            a.TaskExecutorName,
+                            a.FormatMax,
+                            a.BWSide1.ToString(),
+                            a.BWSide2.ToString(),
+                            a.ColorSide1.ToString(),
+                            a.ColorSide2.ToString(),
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+        public ActionResult PrePostPressList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            var q = this.TaskExecutorList(gridSettings).OfType<PrePostPress>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutor,
+                        cell = new string[] 
+                        {     
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
+                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnTime?"CostTime":
+                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnRun?"CostRun":"",                                           
+                            a.CodTaskExecutor,
+                            a.CodTaskExecutor,
+//CODTASKTODO   a.CodTask,
+                            a.TaskExecutorName,
+                            a.FormatMax,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+
+
+
+
         private IQueryable<Step> StepsList(string codTaskExecutorOn, GridSettings gridSettings)
         {
             //read all
@@ -586,121 +682,124 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         private void GenEmptyStep(TaskExecutor taskExecutor)
         {
             taskExecutor = taskExecutorRepository.GetSingle(taskExecutor.CodTaskExecutor);
-            var tskEst = taskExecutor.SetTaskExecutorEstimatedOn.First();
 
-            Step newStep;
 
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<AvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
-
-            if (newStep == null)
+            foreach (var tskEst in taskExecutor.SetTaskExecutorEstimatedOn)
             {
-                newStep = new AvarageRunPerRunStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
 
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<DeficitForWeightStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+                Step newStep;
 
-            if (newStep == null)
-            {
-                newStep = new DeficitForWeightStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<AvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
 
+                if (newStep == null)
+                {
+                    newStep = new AvarageRunPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
 
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<DeficitOnCostForWeightStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<DeficitForWeightStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
 
-            if (newStep == null)
-            {
-                newStep = new DeficitOnCostForWeightStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
-
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<BindingAvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
-
-            if (newStep == null)
-            {
-                newStep = new BindingAvarageRunPerRunStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
-
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<BindingCostPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
-
-            if (newStep == null)
-            {
-                newStep = new BindingCostPerRunStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
-
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<CostPerMqStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
-
-            if (newStep == null)
-            {
-                newStep = new CostPerMqStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
+                if (newStep == null)
+                {
+                    newStep = new DeficitForWeightStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
 
 
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<CostPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<DeficitOnCostForWeightStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
 
-            if (newStep == null)
-            {
-                newStep = new CostPerRunStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
-            }
+                if (newStep == null)
+                {
+                    newStep = new DeficitOnCostForWeightStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<BindingAvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new BindingAvarageRunPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<BindingCostPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new BindingCostPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<CostPerMqStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new CostPerMqStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
 
 
-            //look for to=0 from=0
-            newStep = tskEst.steps.OfType<BindingAvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<CostPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
 
-            if (newStep == null)
-            {
-                newStep = new BindingAvarageRunPerRunStep();
-                newStep.FromUnit = 9999999999;
-                newStep.ToUnit = 9999999999;
-                newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
-                newStep.TimeStampTable = DateTime.Now;
-                tskEst.steps.Add(newStep);
+                if (newStep == null)
+                {
+                    newStep = new CostPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<BindingAvarageRunPerRunStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new BindingAvarageRunPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
             }
 
             taskExecutorRepository.Edit(taskExecutor);
             taskExecutorRepository.Save();
-
-
             
         }
 

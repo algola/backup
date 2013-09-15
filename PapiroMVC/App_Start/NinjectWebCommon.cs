@@ -60,6 +60,13 @@ namespace PapiroMVC.App_Start
             kernel.Bind<ITypeOfBaseRepository>().To<TypeOfBaseRepository>();
             kernel.Bind<ITaskExecutorRepository>().To<TaskExecutorRepository>();
             kernel.Bind<IProfileRepository>().To<ProfileRepository>();
+            kernel.Bind<IProductRepository>().To<ProductRepository>();
+            kernel.Bind<IDocumentRepository>().To<DocumentRepository>();
+            kernel.Bind<ITypeOfTaskRepository>().To<TypeOfTaskRepository>();
+            kernel.Bind<IMenuProductRepository>().To<MenuProductRepository>();
+            kernel.Bind<IProductTaskNameRepository>().To<ProductTaskNameRepository>();
+            kernel.Bind<IFormatsNameRepository>().To<FormatsNameRepository>();
+
         }        
     }
 }

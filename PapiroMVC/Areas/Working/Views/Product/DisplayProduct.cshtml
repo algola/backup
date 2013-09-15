@@ -1,0 +1,19 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Product
+
+@{
+    string stringsTitle = "~/Views/Shared/Strings";
+    //string strings = "~/Areas/Working/Views/Product/Strings";
+    
+    //Prendo il titolo dal menù
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.CodMenuProduct);
+
+    //add all task in page
+    Session.Add("TsksInPage", Model.TsksInPage);
+    ViewBag.FormatsName = Model.FormatsName.ToList();
+
+    }
+
+<h2>@ViewBag.Title</h2>
+
+@Html.DisplayFor(x=>x)

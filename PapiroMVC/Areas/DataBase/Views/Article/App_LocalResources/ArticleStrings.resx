@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ArticleCaption" xml:space="preserve">
+    <value>Articolo</value>
+  </data>
+  <data name="AutoCahngesCaption" xml:space="preserve">
+    <value>Variazione automatica dati</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="CancelSmall" xml:space="preserve">
+    <value>Annulla e torna alla lista</value>
+  </data>
+  <data name="CodArticleCaption" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="ColorCaption" xml:space="preserve">
+    <value>Colore</value>
+  </data>
+  <data name="CostPerKgCaption" xml:space="preserve">
+    <value>Costo al Kg</value>
+  </data>
+  <data name="CostPerMlCaption" xml:space="preserve">
+    <value>Costo/ml</value>
+  </data>
+  <data name="CostPerMqCaption" xml:space="preserve">
+    <value>Costo/mq</value>
+  </data>
+  <data name="CostPerSheetCaption" xml:space="preserve">
+    <value>Costo al Foglio</value>
+  </data>
+  <data name="CreateRollPrintableArticle" xml:space="preserve">
+    <value>Nuovo Materiale in Rotolo</value>
+  </data>
+  <data name="CreateSheetPrintableArticle" xml:space="preserve">
+    <value>Nuovo materiale a Foglio</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="EditingArticleTitle" xml:space="preserve">
+    <value>Modifica dell'articolo: </value>
+  </data>
+  <data name="FormatCaption" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="MsgBoxAutomaticChangesContent" xml:space="preserve">
+    <value>Elaborazione avvenuta con successo. premere ok per continuare.</value>
+  </data>
+  <data name="MsgBoxAutomaticChangesTitle" xml:space="preserve">
+    <value>Elaborazione</value>
+  </data>
+  <data name="NameOfMaterialCaption" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="ObjectPrintableArticleType" xml:space="preserve">
+    <value>Generico</value>
+  </data>
+  <data name="OperationsCaption" xml:space="preserve">
+    <value>Operazioni</value>
+  </data>
+  <data name="OperationsCaptionWidth" xml:space="preserve">
+    <value>60</value>
+  </data>
+  <data name="OptAllCost" xml:space="preserve">
+    <value>Applica a tutti i costi</value>
+  </data>
+  <data name="OptNoBvNo" xml:space="preserve">
+    <value>E' possibile la messa in macchina b/v</value>
+  </data>
+  <data name="OptNoBvNoModify" xml:space="preserve">
+    <value>Non modificare proprietà b/v</value>
+  </data>
+  <data name="OptNoBvYes" xml:space="preserve">
+    <value>Non è possibile la messa in macchina b/v</value>
+  </data>
+  <data name="OptPaked" xml:space="preserve">
+    <value>Applica ai costi della carta impaccata</value>
+  </data>
+  <data name="OptPallet" xml:space="preserve">
+    <value>Applica ai costi della carta bandierata</value>
+  </data>
+  <data name="RigidPrintableArticleType" xml:space="preserve">
+    <value>Rigido/Banner/Mq</value>
+  </data>
+  <data name="RollPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a formato speciale</value>
+  </data>
+  <data name="RollPrintableArticleGridCaption" xml:space="preserve">
+    <value>Materiali stampabili in rotolo</value>
+  </data>
+  <data name="RollPrintableArticleStandardCostTitle" xml:space="preserve">
+    <value>Costi di acquisto standard</value>
+  </data>
+  <data name="RollPrintableArticleType" xml:space="preserve">
+    <value>Rotolo</value>
+  </data>
+  <data name="RollPrintableArticleViewModelWizard" xml:space="preserve">
+    <value>Creazione Automatica dei Materiali Stampabili in rotolo</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="SaveNewBasedOn" xml:space="preserve">
+    <value>Salva Nuovo</value>
+  </data>
+  <data name="SheetPerPackedCaption" xml:space="preserve">
+    <value>Fogli/Pallet</value>
+  </data>
+  <data name="SheetPerPalletCaption" xml:space="preserve">
+    <value>Fogli/Pallet</value>
+  </data>
+  <data name="SheetPrintableArticleCuttedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a formato speciale</value>
+  </data>
+  <data name="SheetPrintableArticleGridCaption" xml:space="preserve">
+    <value>Materiali stampabili a foglio</value>
+  </data>
+  <data name="SheetPrintableArticlePakedCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a pacco</value>
+  </data>
+  <data name="SheetPrintableArticlePalletCostTitle" xml:space="preserve">
+    <value>Costi di acquisto a pallet</value>
+  </data>
+  <data name="SheetPrintableArticleType" xml:space="preserve">
+    <value>Foglio</value>
+  </data>
+  <data name="SheetPrintableArticleViewModelWizard" xml:space="preserve">
+    <value>Creazione Automatica dei Materiali a Foglio</value>
+  </data>
+  <data name="SupplierNameCaption" xml:space="preserve">
+    <value>Fornitore</value>
+  </data>
+  <data name="TypeOfCostToModify" xml:space="preserve">
+    <value>Applica modifiche ai costi</value>
+  </data>
+  <data name="TypeOfCustomerSupplierCaption" xml:space="preserve">
+    <value>Cliente/Fornitore</value>
+  </data>
+  <data name="TypeOfMaterialCaption" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="WeightCaption" xml:space="preserve">
+    <value>gr/mq</value>
+  </data>
+  <data name="WizardRollPrintableArticle" xml:space="preserve">
+    <value>Creazione multipla articoli a rotolo</value>
+  </data>
+  <data name="WizardSheetPrintableArticle" xml:space="preserve">
+    <value>Creazione multipla articoli a foglio</value>
+  </data>
+</root>

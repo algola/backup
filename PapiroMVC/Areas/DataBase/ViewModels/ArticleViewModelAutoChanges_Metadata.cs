@@ -41,6 +41,14 @@ namespace PapiroMVC.Models
     }
 
     //one ore other
+    public class RigidPrintableArticleAutoChanges_Metadata : PrintableAutoChanges_Metadata
+    {
+        [RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
+        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerMq")]
+        public string CostPerMq { get; set; }
+    }
+
+    //one ore other
     //[XorFieldRequired(new string[] { "CostPerKg", "CostPerMl" }, typeof(ResArticleViewModelAutoChanges), "SheetPrintableArticheAutoChangesFieldValidationError")]
     public class SheetPrintableArticleAutoChanges_Metadata : PrintableAutoChanges_Metadata
     {

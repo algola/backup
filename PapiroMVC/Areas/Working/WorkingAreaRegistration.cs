@@ -11,7 +11,6 @@ namespace PapiroMVC.Areas.Working
                 return "Working";
             }
         }
-
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(

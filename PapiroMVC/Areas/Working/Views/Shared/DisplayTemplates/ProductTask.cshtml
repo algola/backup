@@ -1,0 +1,15 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductTask
+
+@{
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";     
+    }
+
+
+    @if ((Model.Hidden ==null) || (Model.Hidden!=true)) 
+    {
+        @Html.Display(Model.OptionTypeOfTask.TypeOfTask.TaskName)
+        <div class="editor-field">
+            @Html.Display( Html.T(stringsCod, "Cod" + Model.CodOptionTypeOfTask))
+        </div>
+    }

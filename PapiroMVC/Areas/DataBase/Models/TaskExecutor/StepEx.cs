@@ -85,7 +85,6 @@ namespace PapiroMVC.Models
             to.TimeStampTable = this.TimeStampTable;
             to.ToUnit = this.ToUnit;
             to.FromUnit = this.FromUnit;
-            to.TypeOfStep = this.TypeOfStep;
         }
 
         public object Clone()

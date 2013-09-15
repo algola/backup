@@ -16,7 +16,8 @@ namespace PapiroMVC.Models
     {
         public ProductTask()
         {
-            this.ProductPartTasks = new HashSet<ProductPartTask>();
+            this.costs = new HashSet<Cost>();
+            this.productpartstoproducttasks = new HashSet<productpartstoproducttask>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -24,8 +25,13 @@ namespace PapiroMVC.Models
         public string CodProduct { get; set; }
         public string ProductTaskName { get; set; }
         public Nullable<int> SelectorProductTask { get; set; }
+        public string CodOptionTypeOfTask { get; set; }
+        public Nullable<bool> Hidden { get; set; }
+        public Nullable<int> IndexOf { get; set; }
     
-        public virtual ICollection<ProductPartTask> ProductPartTasks { get; set; }
         public virtual Product Product { get; set; }
+        public virtual OptionTypeOfTask OptionTypeOfTask { get; set; }
+        public virtual ICollection<Cost> costs { get; set; }
+        public virtual ICollection<productpartstoproducttask> productpartstoproducttasks { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace PapiroMVC.Areas.Account.Controllers
     {
 
         private readonly IProfileRepository profDataRep;
+        protected IMenuProductRepository profMenuRep;
 
         /***
          * send email to just registered user
@@ -46,13 +47,16 @@ namespace PapiroMVC.Areas.Account.Controllers
             client.Send(message);
         }
 
-        public AccountController(IProfileRepository _profDataRep)
+        //constructor
+        public AccountController(IProfileRepository _profDataRep,IMenuProductRepository _profMenuRep)
         {
+            //TODOCHRIS
+            //passare al costruttore anche un riferimento di tipo IMenuProductRepository
+            //e fare le stesse cose che si fanno ora per il IProfileRepository
+            profMenuRep = _profMenuRep;
             profDataRep = _profDataRep;
         }
-
         
-
         //
         // GET: /Account/Login
 
@@ -246,22 +250,62 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         public ActionResult EditProfile()
         {
+            
+            //TODOCHRIS
+            //non dovrai passare alla View(profile) un oggetto di tipo profile... ma dovrai creare un oggetto nuovo (new) di tipo
+            //ViewModel 
+            //assegnare alla proprietà Profile il profDataRep etc...
+            //e alla prorpietà MenuProducts il getAll() dal repository del MenuProduct
+
+            //ricolrdati che devi fare il ToList() del getall perchè vogliamo una lista nel ViewModel
+            
+            var menuP = profMenuRep.GetAll().ToList();
             var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
-            return View(profile);
+           // return View(profile);
+
+            var temp = new ProfileViewModel();
+            temp.Profile=profile;
+            temp.MenuProducts=menuP;
+
+            return View(temp);
+
         }
 
         //
         // POST: /Account/EditProfile
 
         [HttpPost]
-        public ActionResult EditProfile(Profile model)
+        public ActionResult EditProfile(ProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try 
                 {
-                    profDataRep.Edit(model);
+                    //TODOCHRIS: SALVA model.Profile
+                    profDataRep.Edit(model.Profile);
                     profDataRep.Save();
+                    
+
+                    
+                    //TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
+                    //la scorri e per ciascun menu-prodotto in lista: 
+                    //lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
+
+
+                    foreach (var item in model.MenuProducts)
+                    {
+                        var temp=profMenuRep.GetSingle(item.CodMenuProduct);
+                        temp.Hidden = item.Hidden;
+                        profMenuRep.Edit(temp);
+
+                    }
+
+                    profMenuRep.Save();
+                    //aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
+                    //applichi il metodo Edit del repository dei menu-prodotti al temp
+
+                    //al termine del ciclo applichi il metodo Save del repository (più o meno come sopra per il profilo!!!!)
+
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
                 
@@ -357,8 +401,6 @@ namespace PapiroMVC.Areas.Account.Controllers
                 return Json(new { redirectUrl = Url.Action("EmailSent") });
                 //return RedirectToAction("EmailSent", "Account");  
 
-
-
             }
 
             // If we got this far, something failed, redisplay form
@@ -372,7 +414,6 @@ namespace PapiroMVC.Areas.Account.Controllers
         {
             return View();
         }
-
 
         public ActionResult EditProfileSuccess()
         {

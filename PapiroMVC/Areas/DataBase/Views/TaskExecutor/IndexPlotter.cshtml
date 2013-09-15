@@ -1,0 +1,19 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+}
+
+<div id='digitalSheet'>
+    @Html.Partial("_ListPlotter")
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
+@section footer {
+    @Html.Partial("_footer")
+}
