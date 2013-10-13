@@ -7,7 +7,7 @@
 
 <div id="status"> 
     
-    @Scripts.Render("~/bundles/jqueryval")
+ @*   @Scripts.Render("~/bundles/jqueryval") *@
 @using (Ajax.BeginForm("Action", "Article", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" }))
 {
     @Html.ValidationSummary(true)

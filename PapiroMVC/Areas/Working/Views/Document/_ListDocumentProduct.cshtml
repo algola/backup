@@ -1,25 +1,29 @@
 ﻿@model PapiroMVC.Models.Document
 @using Mvc.HtmlHelpers
-@using MvcContrib.UI.Grid 
+@using MvcContrib.UI.Grid
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
     string url = Url.Action("DocumentProductsList", new { controller = "Document", area = "Working", CodDocument = Model.CodDocument });
     string subUrl = Url.Action("DocumentProductQuantitiesList", new { controller = "Document", area = "Working", CodDocument = Model.CodDocument });
+}
 
-    }
+@*jqgrid*@
+<table id="documentProduct">
+    <tr>
+        <td />
+    </tr>
+</table>
+<div id="pagerDocumentProduct"></div>
 
-<table id="documentProduct"><tr><td/></tr></table>
-<div id="pagerDocumentProduct"></div> 
+<script type="text/javascript">
 
-    <script type="text/javascript">
+    $(function () {
 
-        $(function () {
+        var lastSelPD = -1;
 
-            var lastSelPD = -1;
-
-            var gidProductDocument = $("#documentProduct").jqGrid({
-                url: '@url',
+        var gidProductDocument = $("#documentProduct").jqGrid({
+            url: '@url',
                 datatype: 'json',
                 colModel: [
                     { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct },
@@ -27,7 +31,7 @@
                 ],
 
                 pager: '#pagerDocumentProduct',
-                
+
                 rowNum: 15,
                 rowList: [15, 20, 50],
                 viewrecords: true,
@@ -56,7 +60,7 @@
                         datatype: 'json',
                         colModel: [
                         { name: 'CodDocumentProduct', label: 'CodDocumentProduct', key: true, width: 10, editable: false, hidden: true },
-                        { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProduct")', width: 80, align: 'left', editable: false, hidden:true },
+                        { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProduct")', width: 80, align: 'left', editable: false, hidden: true },
                         { name: "Quantity", label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', index: "Quantity", width: 90, align: "right" },
                         { name: "UnitPrice", label: '@HttpContext.GetLocalResourceObject(strings, "UnitPrice")', index: "UnitPrice", width: 80, align: "right" },
                         { name: "TotalAmount", label: '@HttpContext.GetLocalResourceObject(strings, "TotalAmount")', index: "TotalAmount", width: 80, align: "right" }],
@@ -74,15 +78,15 @@
         });
 
         function editProduct(cellvalue, options, rowobject) {
-            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new {id= "-1"},new {@class="tbutton smalledit"})';
+            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
 
-                return link.replace("-1", cellvalue);
-            }
+            return link.replace("-1", cellvalue);
+        }
 
         function reloadCostPerMqStep() {
             $("#documentProduct").trigger("reloadGrid");
         }
 
-    </script>
+</script>
 
 

@@ -19,6 +19,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IDocumentRepository documentRepository;
         private readonly ITypeOfTaskRepository typeOfTaskRepository;
         private readonly IProductRepository productRepository;
+        protected IMenuProductRepository menu;
+
 
         protected dbEntities db;
 
@@ -26,18 +28,21 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             base.Initialize(requestContext);
             documentRepository.SetDbName(CurrentDatabase);
+            ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+
         }
 
 
         public DocumentController(IDocumentRepository _documentRepository,
             ITypeOfTaskRepository _typeOfTaskRepository,
             IFormatsNameRepository _formatsName,
-            IProductRepository _productRepository
-            )
+            IProductRepository _productRepository,
+                        IMenuProductRepository _menuProduct)
         {
             typeOfTaskRepository = _typeOfTaskRepository;
             documentRepository = _documentRepository;
-            productRepository = _productRepository; 
+            productRepository = _productRepository;
+            menu = _menuProduct;
         }
 
 
@@ -74,8 +79,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             c.CodDocument = documentRepository.GetNewCode(c);
             documentRepository.Add(c);
             documentRepository.Save();
-            Session["CodDocument"] = c.CodDocument; 
-            
+            Session["CodDocument"] = c.CodDocument;
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditDocument";
             return View("EditDocument", c);

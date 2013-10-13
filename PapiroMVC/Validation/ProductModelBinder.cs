@@ -14,7 +14,7 @@ namespace PapiroMVC.Validation
 
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
-            var typeValue = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + "TypeOfProduct");
+            var typeValue = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".TypeOfProduct");
 
             var strType = "PapiroMVC.Models." + (string)typeValue.ConvertTo(typeof(string));
             

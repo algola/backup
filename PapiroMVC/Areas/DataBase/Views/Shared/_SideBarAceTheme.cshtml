@@ -1,0 +1,79 @@
+﻿@*Generic side bar in ace theme*@
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Views/Shared/Strings";
+}
+
+<div class="sidebar" id="sidebar">
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="nav nav-list">
+        <li id="homeSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+        </li>
+
+        <li id="customerSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "icon-male", "menu-text")
+        </li>
+
+        <li id="databaseSlidebar">
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-file-text-alt"></i>
+                <span class="menu-text">@Html.T(strings, "PrintableArticleMenu") </span>
+
+                <b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+                <li id="sheetSlidebar">
+                    @Html.ActionLinkImage(Html.T(strings, "SheetPrintableArticleMenu"), "IndexSheetPrintableArticle", "Article", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+
+                <li id="rollSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "RollPrintableArticleMenu"), "IndexRollPrintableArticle", "Article", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+            </ul>
+        </li>
+
+
+        <li id="taskexecutorSlidebar">
+            <a href="#" class="dropdown-toggle">
+                <i class=" icon-cogs"></i>
+                <span class="menu-text">@Html.T(strings, "TaskExecutorMenu") </span>
+
+                <b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+
+                <li id="lithoSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheet", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+                <li id="digitalSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "DigitalSheetMenu"), "IndexDigitalSheet", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+                <li id="plotterSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "PlotterMenu"), "IndexPlotter", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+                <li id="prepostSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+
+            </ul>
+        </li>
+
+    </ul>
+    <!-- /.nav-list -->
+
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+    </div>
+
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+    </script>
+</div>
+

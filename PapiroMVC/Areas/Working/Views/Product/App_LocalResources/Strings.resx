@@ -180,4 +180,19 @@
   <data name="FrameProductPartSingleSheet" xml:space="preserve">
     <value>xxx</value>
   </data>
+  <data name="Products" xml:space="preserve">
+    <value>Prodotti</value>
+  </data>
+  <data name="ProductsDesc" xml:space="preserve">
+    <value>elenco dei prodotti nel sistema</value>
+  </data>
+  <data name="CreateProductDesc" xml:space="preserve">
+    <value>specifica di un nuovo prodotto</value>
+  </data>
+  <data name="DisplayProductDesc" xml:space="preserve">
+    <value>infromazioni del prodotto</value>
+  </data>
+  <data name="Product" xml:space="preserve">
+    <value>Prodotto</value>
+  </data>
 </root>

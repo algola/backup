@@ -1971,7 +1971,7 @@ License:	CC BY-SA 3.0 -- http://creativecommons.org/licenses/by-sa/3.0/
 .metrouicss .icon-minus-2:before {
   content: "\e08b";
 }
-.metrouicss .icon-plus-2:before {
+.metrouicss .icon-plus:before {
   content: "\e08c";
 }
 .metrouicss .icon-enter:before {

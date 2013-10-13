@@ -17,7 +17,9 @@ namespace PapiroMVC
            */
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate.min.js",
+                "~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js",
+            	"~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js",
+                "~/Scripts/jquery.validate.min.js",
                         "~/Scripts/jquery.unobtrusive-ajax.min.js",
                         "~/Scripts/autocomplete.js"));
 

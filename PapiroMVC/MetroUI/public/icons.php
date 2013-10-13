@@ -185,7 +185,7 @@
                         <li><i class="icon-cancel-2"></i> icon-cancel-2</li>
                         <li><i class="icon-checkmark"></i> icon-checkmark</li>
                         <li><i class="icon-minus-2"></i> icon-minus-2</li>
-                        <li><i class="icon-plus-2"></i> icon-plus-2</li>
+                        <li><i class="icon-plus"></i> icon-plus</li>
                         <li><i class="icon-enter"></i> icon-enter</li>
                         <li><i class="icon-exit"></i> icon-exit</li>
                         <li><i class="icon-loop"></i> icon-loop</li>

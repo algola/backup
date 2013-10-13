@@ -1,14 +1,14 @@
 ﻿@using Mvc.HtmlHelpers
-@using MvcContrib.UI.Grid 
+@using MvcContrib.UI.Grid
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
-    }
+}
 
 @(Html.jqGrid("DocumentGrid")
 
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))    
-    // columns
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
+        // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
         .setCustomFormatter("editDocument")
@@ -23,7 +23,7 @@
         .setSearch(true)
         .setSortable(false))
 
-    
+
         .setUrl(Url.Action("DocumentList", "Document"))
 
     .setHeight(300)
@@ -32,12 +32,12 @@
     .setPager("DocumentGridAccountPager")
     .setPrint(true)
     .setLoadText("")
-    .setAutoWidth(true) 
+    .setAutoWidth(true)
     .setSearchToolbar(true)
-  
+
     // error handler
     .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
-                            
+
     // render the html
     .Render()
 )
@@ -45,11 +45,13 @@
 
 <div>
 
-    <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDocument", "Document", new { Area = "Working" })');">
-        <i class="icon-plus-2"></i>
+    <button class="btn radius-4" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDocument", "Document", new { Area = "Working" })');">
+        <i class="icon-plus bigger-125"></i>
         @HttpContext.GetLocalResourceObject(strings, "CreateDocument")
+		<span class="badge badge-transparent">
+            <i class="light-red icon-asterisk"></i>
+        </span>
     </button>
-
 
 </div>
 

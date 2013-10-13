@@ -2,31 +2,34 @@
 @model List<PapiroMVC.Models.DocumentProduct>
 
 @{
+    string strings = "~/Areas/Working/Views/Document/Strings";
     ViewBag.Title = "EditDocumentProducts";
 }
 
-@{
-    string strings = "~/Areas/Working/Views/Document/Strings";
-  
-    }
+@section title{
+    @Html.T(strings, "Document")
+}
 
-<h2>Nodificare il titolo con...</h2>
+@section description{
+    @Html.T(strings, "EditDocumentProductsDesc")
+}
 
+<div class="tabbable tabs-left">
+    <ul class="nav nav-tabs" id="myTabo">
 
-<div class="page-control" data-role="page-control">
-
-    <span class="menu-pull"></span> 
-    <div class="menu-pull-bar"></div>
-    <!-- Tabs -->
-    <ul>
-
-         <li class="active"><a href="#frame0">@Html.T(strings, "ProductDescription")</a></li>
+        <li class="active">
+            <a data-toggle="tab" href="#frame0">
+                @Html.T(strings, "ProductDescription")
+                <i class="pink icon-dashboard bigger-110"></i>
+            </a>
+        </li>
 
         @for (int i = 0; i < Model.Count; i++)
         { 
-            <li><a href="#frame@((i+1).ToString())">
-                
-                @if(Model[i].Quantity != null)
+            <li><a data-toggle="tab" href="#frame@((i + 1).ToString())">
+                <i class="blue icon-stackexchange bigger-110"></i>
+
+                @if (Model[i].Quantity != null)
                 {
                     @Model[i].Quantity.ToString()
                 }
@@ -34,32 +37,38 @@
                 {
                     @Html.Label("Quantità non impostata");
                 }
-                </a>
+            </a>
             </li>
         }
 
+        <li>
+            <a data-toggle="tab" href="#dropdown13">
+                <i class="icon-rocket"></i>
+                More
+            </a>
+        </li>
+
     </ul>
 
-    <!-- Tabs content -->
-    <div class="frames">
-
-        <div class="frame active" id="frame@((0).ToString())">
+    <div class="tab-content">
+        <div class="tab-pane in active" id="frame@((0).ToString())">
             @Html.Label(Model.First().Product.ProductName)
         </div>
-                    
+
         <!-- parts -->
         @for (int i = 0; i < Model.Count; i++)
         {
             ViewBag.IndexPart = i;
-
-            <div class="frame" id="frame@((i+1).ToString())">
+            
+            <div class="tab-pane" id="frame@((i + 1).ToString())">
                 @Html.EditorFor(model => model[i]);
             </div>
         }
 
-        
+        <div id="home3" class="tab-pane">
+            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+        </div>
+
     </div>
-            
 </div>
-
-

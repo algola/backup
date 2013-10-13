@@ -105,8 +105,10 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         [HttpParamAction]     
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateProduct(Product c)
+        public ActionResult CreateProduct(ProductViewModel b)
         {
+            var qts = b.Quantities;
+            var c = b.Product;
             foreach (var item in c.ProductParts)
             {
                 if (item.Format == "0x0" && item.FormatPersonalized != String.Empty)

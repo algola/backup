@@ -124,13 +124,37 @@
     <value>Codice prodotto</value>
   </data>
   <data name="CreateDocument" xml:space="preserve">
-    <value>Nuovo documento</value>
+    <value>Documento</value>
+  </data>
+  <data name="CreateDocumentDesc" xml:space="preserve">
+    <value>creazione di un nuovo documento</value>
+  </data>
+  <data name="CreateDocumentDescription" xml:space="preserve">
+    <value>nuovo documento</value>
   </data>
   <data name="DeletingStep" xml:space="preserve">
     <value>elimina</value>
   </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documenti</value>
+  </data>
+  <data name="DocumentsDesc" xml:space="preserve">
+    <value>elenco dei documenti</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
+  </data>
+  <data name="EditDocumentDesc" xml:space="preserve">
+    <value>modifica del documento</value>
+  </data>
+  <data name="EditDocumentProducts" xml:space="preserve">
+    <value>Modifica del prodotto in un documento</value>
+  </data>
+  <data name="EditDocumentProductsDesc" xml:space="preserve">
+    <value>modifica del prodotto in documento</value>
   </data>
   <data name="EditDocumet" xml:space="preserve">
     <value>Modifica Documento</value>

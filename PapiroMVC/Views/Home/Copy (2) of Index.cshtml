@@ -1,0 +1,233 @@
+﻿@using PapiroMVC.Validation
+
+<h1>@ViewBag.Welcome</h1>
+
+<canvas id="c" width="500" height="375"></canvas>
+
+<script type="text/javascript">
+
+
+    function disegnaFoglio(context, foglioMacchinaH, foglioMacchinaV, offsety, offsetx, zoom, bv) {
+
+
+        foglioMacchinaH *= zoom;
+        foglioMacchinaV *= zoom;
+
+        var passo = 10 * zoom;
+
+        switch (bv) {
+
+            case 16:
+                //giro/squadro16
+                context.rect(offsetx + foglioMacchinaH / 2,
+                    offsety + 0,
+                    foglioMacchinaH / 2,
+                    foglioMacchinaV);
+
+                context.fillStyle = "rgb(222,222,222)";
+                context.fill();
+
+                context.stroke();                
+                break;
+            case 12:
+                //pinza/squadro12
+                context.rect(offsetx + 0,
+                    offsety + foglioMacchinaV / 2,
+                    foglioMacchinaH,
+                    foglioMacchinaV / 2);
+                context.fillStyle = "rgb(222,222,222)";
+                context.fill();
+
+                context.stroke();
+                break;        
+            default:
+
+        }
+
+        context.beginPath();
+
+        for (var x = 0; x <= foglioMacchinaH; x += passo) {
+            context.moveTo(offsetx + x, offsety + 0);
+            context.lineTo(offsetx + x, offsety + foglioMacchinaV);
+        }
+
+        for (var y = 0; y <= foglioMacchinaV; y += passo) {
+            context.moveTo(offsetx + 0, offsety + y);
+            context.lineTo(offsetx + foglioMacchinaH, offsety + y);
+        }
+
+        context.strokeStyle = "#eee";
+        context.stroke();
+
+        context.beginPath();
+        context.rect(offsetx + 0, offsety + 0, foglioMacchinaH, foglioMacchinaV);
+        context.strokeStyle = "rgb(10, 10, 10)";
+        context.stroke();
+
+    }
+
+    function disegnaLavoro(context, lavoroH, lavoroV, lavoroApertoH, lavoroApertoV, resaH, resaV, rifiloH, rifiloV, zoom, offsetx, offsety) {
+
+        lavoroH *= zoom;
+        lavoroV *= zoom;
+
+        lavoroApertoH *= zoom;
+        lavoroApertoV *= zoom;
+        
+        rifiloH *= zoom;
+        rifiloV *= zoom;
+
+        context.beginPath();
+
+        var piegaSuH = lavoroApertoH - lavoroH;
+        var piegaSuV = lavoroApertoV - lavoroV;
+
+
+        if (piegaSuH != 0 ) {
+            lavoroH = lavoroApertoH + rifiloH;
+            resaH = resaH / 2;
+        }
+
+        if (piegaSuV != 0) {
+            lavoroV = lavoroApertoV + rifiloV;
+            resaV = resaV / 2;
+        }
+
+        for (var y = 0; y < resaV; y++) {
+            for (var x = 0; x < resaH; x++) {                
+                context.rect(offsetx + (x * (lavoroH +((x != 0 ? rifiloH : 0)))),
+                offsety + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))),
+                lavoroH,
+                lavoroV);
+            }
+        }
+
+        context.fillStyle = 'white';
+        context.fill();
+        context.strokeStyle = "#000";
+        context.stroke();
+
+        context.beginPath();
+        context.setLineDash([5]);
+
+        //se la piega è su H allora stampo la piega
+        if (piegaSuH) {
+
+            for (var y = 0; y < resaV; y++) {
+                for (var x = 0; x < resaH; x++) {
+
+                    context.moveTo(offsetx + (lavoroH + rifiloH) / 2 + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
+                        offsety + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
+
+                    context.lineTo(offsetx + (lavoroH + rifiloH) / 2 + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
+                        offsety + lavoroV + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
+
+                    context.strokeStyle = "#000";
+                    context.stroke();
+                }
+            }
+
+        }
+
+        //se la piega è su V allora stampo la piega
+        if (piegaSuV) {
+
+            for (var y = 0; y < resaV; y++) {
+                for (var x = 0; x < resaH; x++) {
+
+                    context.moveTo(offsetx + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
+                        offsety +(lavoroV + rifiloV) / 2 + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
+
+                    context.lineTo(offsetx + lavoroH + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
+                        offsety + (lavoroV + rifiloV) / 2 + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
+
+                    context.strokeStyle = "#000";
+                    context.stroke();
+                }
+            }
+
+        }
+
+
+    }
+
+/*
+    function disegnaLavoro(context, lavoroH, lavoroV, resaH, resaV, rifiloH, rifiloV, zoom, offsetx, offsety) {
+
+        lavoroH *= zoom;
+        lavoroV *= zoom;
+
+        rifiloH *= zoom;
+        rifiloV *= zoom;
+
+        //se è una segnatura la resa indica quante pagine fto chiuso sono contenute
+        //es: resaH = 4 x resaV = 4 = 16 = 32mo
+
+        context.beginPath();
+
+        for (var y = 0; y < resaV; y++) {
+            for (var x = 0; x < resaH; x++) {
+                context.rect(offsetx + (x * (lavoroH + (x != 0 ? rifiloH : 0))),
+                    offsety + (y * (lavoroV + (y != 0 ? rifiloV : 0))),
+                    lavoroH,
+                    lavoroV);
+            }
+        }
+
+        context.fillStyle = 'white';
+        context.fill();
+        context.strokeStyle = "#000";
+        context.stroke();
+
+    }
+    */
+
+    $(document).ready(function() {
+
+        var foglioMacchinaH = 100;
+        var foglioMacchinaV = 70;
+
+        var lavoroH = 29.7;
+        var lavoroV = 21;
+
+        var lavoroApertoH = 29.7;
+        var lavoroApertoV = 42;
+
+        var resaH = 4;
+        var resaV = 2;
+
+        var rifiloH = 0.5;
+        var rifiloV = 0.5;
+
+        var c_canvas = document.getElementById("c");
+        var context = c_canvas.getContext("2d");
+
+        var zoom = 2.5;
+        var offsetX = 0;
+        var offsetY = 0;
+
+        var verso = false;
+
+        if (!verso) {
+            var temp = lavoroH;
+            lavoroH = lavoroV;
+            lavoroV = temp;
+
+            temp = lavoroApertoH;
+            lavoroApertoH = lavoroApertoV;
+            lavoroApertoV = temp;
+        }
+
+        disegnaFoglio(context, foglioMacchinaH, foglioMacchinaV, offsetX, offsetY, zoom, 0);
+
+        disegnaLavoro(context, lavoroH, lavoroV,
+            lavoroApertoH, lavoroApertoV,
+            resaH, resaV,
+            rifiloH,
+            rifiloV,
+            zoom, 
+            offsetX + (foglioMacchinaH - (lavoroH * resaH) - ((resaH-1)*rifiloH)) / 2*zoom,
+            offsetY + (foglioMacchinaV - (lavoroV * resaV) - ((resaV-1)*rifiloV)) / 2*zoom);
+    });
+
+</script>

@@ -3,20 +3,34 @@
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
-
     //Prendo il titolo dal menù
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateDocument");
+    ViewBag.Title = Html.T(strings, "CreateDocument");
+}
 
+@section title{
+    @Html.T(strings, "Document")
+}
 
-    }
-
-<h2>@ViewBag.Title</h2>
-<br />
+@section description{
+    @Html.T(strings, "CreateDocumentDesc")
+}
 
 @Html.Partial("_EditAndCreateDocument")
 
 @*@Html.EditorFor(x => x)*@
 
 
-@section footer {
+@section breadcrumb {
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 }

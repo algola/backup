@@ -1,0 +1,97 @@
+﻿@*Generic side bar in ace theme*@
+@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+@{
+    string strings = "~/Views/Shared/Strings";
+    List<MenuProduct> menuProd = ViewBag.MenuProd;
+    var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
+
+    List<MenuProduct> selectedMenuProd;
+    
+}
+
+<div class="sidebar" id="sidebar">
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="nav nav-list">
+        <li id="homeSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+        </li>
+
+        <li id="documentsSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+        </li>
+
+        <li id="productsSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "ProductMenu"), "Index", "Product", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+        </li>
+
+        @foreach (var item in categories)
+        {
+            <li id="CodCat" + @item.CodCategory>
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-file-text-alt"></i>
+                    <span class="menu-text">
+                        @Html.T(strings, "CodCat" + item.CodCategory)
+                    </span>
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+
+                <ul class="submenu">
+
+                    @{                                                        
+            selectedMenuProd = menuProd.FindAll(x => x.CodCategory == item.CodCategory && !x.Hidden.Value).ToList();
+                    }
+
+                    @foreach (var menuItem in selectedMenuProd)
+                    {
+
+                        <li id= @menuItem.CodMenuProduct"SideBar">
+                            @try
+                            {                                    
+                                @Html.ActionLinkImage(@Html.T(strings, "CodMenuProduct" + menuItem.CodMenuProduct), "CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }, "icon-double-angle-right")                                
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine(menuItem.CodMenuProduct);
+                                throw;
+                            }
+                        </li>                            
+
+                    }
+                </ul>
+            </li>                   
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </ul>
+    <!-- /.nav-list -->
+
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+    </div>
+
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+    </script>
+</div>

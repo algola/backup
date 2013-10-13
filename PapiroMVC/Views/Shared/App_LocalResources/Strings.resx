@@ -258,4 +258,25 @@
   <data name="RigidPrintableArticleMenu" xml:space="preserve">
     <value>Materiali Stampabili a Rigidi</value>
   </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Papirosky</value>
+  </data>
+  <data name="AccessAccount" xml:space="preserve">
+    <value>Log-in</value>
+  </data>
+  <data name="RegistrationAccount" xml:space="preserve">
+    <value>Registrati gratuitamente</value>
+  </data>
+  <data name="DataBase" xml:space="preserve">
+    <value>Anagrafica</value>
+  </data>
+  <data name="OrderMenu" xml:space="preserve">
+    <value>Ordini</value>
+  </data>
+  <data name="DocumentMenu" xml:space="preserve">
+    <value>Documenti</value>
+  </data>
+  <data name="ProductMenu" xml:space="preserve">
+    <value>Prodotti</value>
+  </data>
 </root>

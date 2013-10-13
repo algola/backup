@@ -3,8 +3,8 @@
 
 @{
     string stringsTitle = "~/Views/Shared/Strings";
-    //string strings = "~/Areas/Working/Views/Product/Strings";
-    
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
     //Prendo il titolo dal menù
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.CodMenuProduct);
 
@@ -12,8 +12,15 @@
     Session.Add("TsksInPage", Model.TsksInPage);
     ViewBag.FormatsName = Model.FormatsName.ToList();
 
-    }
+}
 
-<h2>@ViewBag.Title</h2>
 
-@Html.DisplayFor(x=>x)
+@section title{
+    @Html.T(strings, "Product")
+}
+
+@section description{
+    @Html.T(strings, "EditProductDesc")
+}
+
+@Html.DisplayFor(x => x)

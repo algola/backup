@@ -1,323 +1,38 @@
 ﻿@using PapiroMVC.Validation
-@*model PapiroMVC.Models.SingleDrw
-*@
 
-@{
-    ViewBag.Title = "Home Page";
-    try
-    {
-        ViewBag.Welcome = "";
-        if ((bool)TempData["welcomeMessage"] == true)
-        {
-            ViewBag.Welcome = "Benvenuto";
-        }
-    }
-    catch(NullReferenceException e)        
-    {
-        ViewBag.Welcome = "";        
-    }
+@section title{
+    home page
 }
 
-<h1>@ViewBag.Welcome</h1>
+@section description{
+    così appare nella home page la descrizione
+}
 
-<canvas id="c" width="500" height="375"></canvas>
 
-<script type="text/javascript">
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Text Field </label>
 
-
-    function disegnaFoglio(context, foglioMacchinaH, foglioMacchinaV, offsety, offsetx, zoom, bv) {
-
-
-        foglioMacchinaH *= zoom;
-        foglioMacchinaV *= zoom;
-
-        var passo = 10 * zoom;
-
-        switch (bv) {
-
-            case 16:
-                //giro/squadro16
-                context.rect(offsetx + foglioMacchinaH / 2,
-                    offsety + 0,
-                    foglioMacchinaH / 2,
-                    foglioMacchinaV);
-
-                context.fillStyle = "rgb(222,222,222)";
-                context.fill();
-
-                context.stroke();                
-                break;
-            case 12:
-                //pinza/squadro12
-                context.rect(offsetx + 0,
-                    offsety + foglioMacchinaV / 2,
-                    foglioMacchinaH,
-                    foglioMacchinaV / 2);
-                context.fillStyle = "rgb(222,222,222)";
-                context.fill();
-
-                context.stroke();
-                break;        
-            default:
-
-        }
-
-        context.beginPath();
-
-        for (var x = 0; x <= foglioMacchinaH; x += passo) {
-            context.moveTo(offsetx + x, offsety + 0);
-            context.lineTo(offsetx + x, offsety + foglioMacchinaV);
-        }
-
-        for (var y = 0; y <= foglioMacchinaV; y += passo) {
-            context.moveTo(offsetx + 0, offsety + y);
-            context.lineTo(offsetx + foglioMacchinaH, offsety + y);
-        }
-
-        context.strokeStyle = "#eee";
-        context.stroke();
-
-        context.beginPath();
-        context.rect(offsetx + 0, offsety + 0, foglioMacchinaH, foglioMacchinaV);
-        context.strokeStyle = "rgb(10, 10, 10)";
-        context.stroke();
-
-    }
-
-    function disegnaLavoro(context, lavoroH, lavoroV, lavoroApertoH, lavoroApertoV, resaH, resaV, rifiloH, rifiloV, zoom, offsetx, offsety) {
-
-        lavoroH *= zoom;
-        lavoroV *= zoom;
-
-        lavoroApertoH *= zoom;
-        lavoroApertoV *= zoom;
-        
-        rifiloH *= zoom;
-        rifiloV *= zoom;
-
-        context.beginPath();
-
-        var piegaSuH = lavoroApertoH - lavoroH;
-        var piegaSuV = lavoroApertoV - lavoroV;
-
-
-        if (piegaSuH != 0 ) {
-            lavoroH = lavoroApertoH + rifiloH;
-            resaH = resaH / 2;
-        }
-
-        if (piegaSuV != 0) {
-            lavoroV = lavoroApertoV + rifiloV;
-            resaV = resaV / 2;
-        }
-
-        for (var y = 0; y < resaV; y++) {
-            for (var x = 0; x < resaH; x++) {                
-                context.rect(offsetx + (x * (lavoroH +((x != 0 ? rifiloH : 0)))),
-                offsety + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))),
-                lavoroH,
-                lavoroV);
-            }
-        }
-
-        context.fillStyle = 'white';
-        context.fill();
-        context.strokeStyle = "#000";
-        context.stroke();
-
-        context.beginPath();
-        context.setLineDash([5]);
-
-        //se la piega è su H allora stampo la piega
-        if (piegaSuH) {
-
-            for (var y = 0; y < resaV; y++) {
-                for (var x = 0; x < resaH; x++) {
-
-                    context.moveTo(offsetx + (lavoroH + rifiloH) / 2 + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
-                        offsety + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
-
-                    context.lineTo(offsetx + (lavoroH + rifiloH) / 2 + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
-                        offsety + lavoroV + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
-
-                    context.strokeStyle = "#000";
-                    context.stroke();
-                }
-            }
-
-        }
-
-        //se la piega è su V allora stampo la piega
-        if (piegaSuV) {
-
-            for (var y = 0; y < resaV; y++) {
-                for (var x = 0; x < resaH; x++) {
-
-                    context.moveTo(offsetx + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
-                        offsety +(lavoroV + rifiloV) / 2 + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
-
-                    context.lineTo(offsetx + lavoroH + (x * (lavoroH + ((x != 0 ? rifiloH : 0)))),
-                        offsety + (lavoroV + rifiloV) / 2 + (y * (lavoroV + ((y != 0 ? rifiloV : 0)))));
-
-                    context.strokeStyle = "#000";
-                    context.stroke();
-                }
-            }
-
-        }
-
-
-    }
-
-/*
-    function disegnaLavoro(context, lavoroH, lavoroV, resaH, resaV, rifiloH, rifiloV, zoom, offsetx, offsety) {
-
-        lavoroH *= zoom;
-        lavoroV *= zoom;
-
-        rifiloH *= zoom;
-        rifiloV *= zoom;
-
-        //se è una segnatura la resa indica quante pagine fto chiuso sono contenute
-        //es: resaH = 4 x resaV = 4 = 16 = 32mo
-
-        context.beginPath();
-
-        for (var y = 0; y < resaV; y++) {
-            for (var x = 0; x < resaH; x++) {
-                context.rect(offsetx + (x * (lavoroH + (x != 0 ? rifiloH : 0))),
-                    offsety + (y * (lavoroV + (y != 0 ? rifiloV : 0))),
-                    lavoroH,
-                    lavoroV);
-            }
-        }
-
-        context.fillStyle = 'white';
-        context.fill();
-        context.strokeStyle = "#000";
-        context.stroke();
-
-    }
-    */
-
-    $(document).ready(function() {
-
-        var foglioMacchinaH = 100;
-        var foglioMacchinaV = 70;
-
-        var lavoroH = 29.7;
-        var lavoroV = 21;
-
-        var lavoroApertoH = 29.7;
-        var lavoroApertoV = 42;
-
-        var resaH = 4;
-        var resaV = 2;
-
-        var rifiloH = 0.5;
-        var rifiloV = 0.5;
-
-        var c_canvas = document.getElementById("c");
-        var context = c_canvas.getContext("2d");
-
-        var zoom = 2.5;
-        var offsetX = 0;
-        var offsetY = 0;
-
-        var verso = false;
-
-        if (!verso) {
-            var temp = lavoroH;
-            lavoroH = lavoroV;
-            lavoroV = temp;
-
-            temp = lavoroApertoH;
-            lavoroApertoH = lavoroApertoV;
-            lavoroApertoV = temp;
-        }
-
-        disegnaFoglio(context, foglioMacchinaH, foglioMacchinaV, offsetX, offsetY, zoom, 0);
-
-        disegnaLavoro(context, lavoroH, lavoroV,
-            lavoroApertoH, lavoroApertoV,
-            resaH, resaV,
-            rifiloH,
-            rifiloV,
-            zoom, 
-            offsetX + (foglioMacchinaH - (lavoroH * resaH) - ((resaH-1)*rifiloH)) / 2*zoom,
-            offsetY + (foglioMacchinaV - (lavoroV * resaV) - ((resaV-1)*rifiloV)) / 2*zoom);
-    });
-
-</script>
-
-<div class="hero-unit">
-<div class="carousel span8" data-role="carousel">
-        <div class="slides">
-
-            <div class="slide" id="slide1" style="left: -580px;">
-                <h2>Create site in Windows 8 style now!</h2>
-
-                <p class="bg-color-blueDark padding20 fg-color-white">Metro UI CSS allows to create a Web site in the style of
-                    Windows 8 quickly and without distractions
-                    on routine tasks.</p>
-                <h3>To start: include <strong>modern.css</strong> in head of page</h3>
-                <p class="tertiary-info-text">
-                    &lt;link href="modern.css" rel="stylesheet"&gt; and add to metro container <strong>metrouicss</strong> class. Example: &lt;body class="metrouicss"&gt;...&lt;/body&gt;
-                </p>
-            </div>
-
-            <div class="slide mixed" id="slide2">
-                <div class="description">
-                    Description text here...
-                </div>
-            </div>
+        <div class="col-sm-9">
+            <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
         </div>
-
-<span class="control right"><i class="icon-arrow-right-3"></i></span>
-<span class="control left"><i class="icon-arrow-left-3"></i></span>     
- 
-    <div class="markers">
-        <ul>
-            <li class="active">
-                <a href="javascript:void(0)" data-num="0"></a>
-            </li>
-            <li>
-                <a href="javascript:void(0)" data-num="1"></a>
-            </li>
-        </ul>
     </div>
 
-    </div>
-</div>
+    <div class="space-4"></div>
+</form>
 
-<ol class="round">
-    <li class="one">
-        <h5>Getting Started</h5>
-        ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-        enables a clean separation of concerns and that gives you full control over markup
-        for enjoyable, agile development. ASP.NET MVC includes many features that enable
-        fast, TDD-friendly development for creating sophisticated applications that use
-        the latest web standards. <a href="http://go.microsoft.com/fwlink/?LinkId=245151">Learn
-            more</a>
 
-        <button class="shortcut">
-            <span class="icon">
-                <i class="icon-locked"></i>
-            </span>
-            <span class="label">
-                Caption
-            </span>
-            <span class="badge">100</span>
-        </button>
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.custom.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/chosen.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap-timepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/daterangepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/colorpicker.css" />
+}
 
-    </li>
-    <li class="two">
-        <h5>Add NuGet packages and jump start your coding</h5>
-        NuGet makes it easy to install and update free libraries and tools. <a href="http://go.microsoft.com/fwlink/?LinkId=245153">
-            Learn more</a></li>
-    <li class="three">
-        <h5>Find Web Hosting</h5>
-        You can easily find a web hosting company that offers the right mix of features
-        and price for your applications. <a href="http://go.microsoft.com/fwlink/?LinkId=245157">Learn
-            more</a></li>
-</ol>
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
