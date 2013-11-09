@@ -8,11 +8,13 @@
 <div id="status"> @Scripts.Render("~/bundles/jqueryval")
 
     
-@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess="OnSuccess" })) {
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>RollPrintableArticleViewModel</legend>
+            <legend>
+                   @ViewBag.Title
+                            </legend>
 
         @Html.HiddenFor(model => model.Article.ArticleName)
 

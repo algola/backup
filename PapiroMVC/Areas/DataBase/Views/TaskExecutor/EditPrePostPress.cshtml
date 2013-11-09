@@ -3,13 +3,35 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingPrePostPressTitle") + @Model.TaskExecutorName;
-}
-<h2>@ViewBag.Title</h2>
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingPrePostPressTitle") + @Model.TaskExecutorName;
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+
+    }
 
 @Html.Partial("_EditAndCreatePrePostPress", Model)
 
 
 @section breadcrumb {
 
+}
+
+@section title{
+    @ViewBag.Title
+}
+
+@section description{
+    @ViewBag.Desc
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
 }

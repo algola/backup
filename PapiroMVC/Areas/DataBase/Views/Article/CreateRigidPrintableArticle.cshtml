@@ -6,7 +6,14 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateRigidPrintableArticle");
 }
 
-<h2>@ViewBag.Title</h2>
+@section title{
+    @Html.T(strings, "Articles")
+}
+
+@section description{
+    ViewBag.Title
+}
+
 
 @Html.Partial("_EditAndCreateRigidPrintableArticle", Model)
 

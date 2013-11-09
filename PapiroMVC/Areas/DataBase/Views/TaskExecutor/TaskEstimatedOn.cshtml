@@ -15,7 +15,7 @@
 <h2>@ViewBag.Title</h2>
 
 @Scripts.Render("~/bundles/jqueryval")
-@using (Ajax.BeginForm("TaskEstimatedOnRun", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess = "OnSuccess" }))
+@using (Ajax.BeginForm("TaskEstimatedOnRun", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
 
@@ -88,4 +88,8 @@
 
 @section breadcrumb {
 
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
 }

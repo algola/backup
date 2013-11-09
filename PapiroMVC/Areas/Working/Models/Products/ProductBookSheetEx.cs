@@ -10,6 +10,8 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductBookSheet_MetaData))]
     public partial class ProductBookSheet : Product, IDataErrorInfo, ICloneable, IDeleteRelated
     {
+
+
         public ProductBookSheet()
         {
             this.TypeOfProduct = ProductType.ProductBookSheet;
@@ -59,7 +61,7 @@ namespace PapiroMVC.Models
             cover.ProductPartPrintableArticles.Add(material);
             ProductParts.Add(cover);
 
-//-------------------------------------------------------------------------------------------
+            //-------------------------------------------------------------------------------------------
 
             var intern = new ProductPartBookSheet();
             intern.ProductPartTasks = this.GetInitalizedPartTask();
@@ -95,7 +97,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -167,5 +169,18 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+
+        public override void ProductPartCodeRigen()
+        {
+            //parti del prodotto
+            var ppart = this.ProductParts.ToList();
+            foreach (var item in this.ProductParts)
+            {
+                item.Format = this.Format;
+            }
+            base.ProductPartCodeRigen();
+        }
+
     }
 }

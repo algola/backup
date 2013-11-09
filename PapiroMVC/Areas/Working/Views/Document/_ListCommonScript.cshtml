@@ -7,7 +7,6 @@
 <script type="text/javascript">
     function editDocument(cellvalue, options, rowobject) {
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocument", new {id= "-1"},new {@class="tbutton smalledit"})';
-
         return link.replace("-1", cellvalue);
     }
 

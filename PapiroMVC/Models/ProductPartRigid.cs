@@ -14,6 +14,5 @@ namespace PapiroMVC.Models
     
     public partial class ProductPartRigid : ProductPart
     {
-        public Nullable<int> SubjectNumber { get; set; }
     }
 }

@@ -24,7 +24,7 @@
         <h2></h2>
     </hgroup>
 
-@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", HttpMethod="POST", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" })) {
+@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", HttpMethod="POST", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess="OnSuccess" })) {
     @Html.ValidationSummary(true)
 
     <fieldset>

@@ -14,7 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class ProductPartBookSheet : ProductPart
     {
-        public string FormatOpened { get; set; }
         public Nullable<int> Pages { get; set; }
     }
 }

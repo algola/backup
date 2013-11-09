@@ -75,9 +75,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Create new product and put it into current document in session or create new document and put it into
+        /// </summary>
+        /// <param name="id">rapresents the id of type of product</param>
+        /// <returns></returns>
         [HttpParamAction]
         [HttpGet]
+        
         public ActionResult CreateProduct(string id)
         {
 
@@ -95,8 +100,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             ViewBag.ActionMethod = "CreateProduct";
             return View("CreateProduct", d);
         }
-
-
 
 
     }

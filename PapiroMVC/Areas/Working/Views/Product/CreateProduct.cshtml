@@ -9,11 +9,7 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
 
     //add all task in page
-    Session.Add("TsksInPage", Model.Product.TsksInPage);
-
-    ViewBag.FormatsName = Model.Product.FormatsName.ToList();
-
-    
+    Session.Add("TsksInPage", Model.Product.TsksInPage);    
 }
 
 @section title{
@@ -24,45 +20,27 @@
     @Html.T(strings, "CreateProductDesc")
 }
 
-
-<div id="status">
-
-    @Scripts.Render("~/bundles/jqueryval")
-    @using (Ajax.BeginForm("Action", "Product", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess = "OnSuccess" }))
-    {
-        @Html.ValidationSummary(true)
-
-
-        for (int i = 0; i < Model.Quantities.Count; i++)
-        {
-            @Html.EditorFor(model => model.Quantities[i]) 
-        }
-
-        @Html.EditorFor(m=>Model.Product)
-        //@Html.Partial("_EditAndCreateProduct", Model.Product)
-
-        <p>
-            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
-
-            <button class="default" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-
-            @if (ViewBag.ActionMethod != "CreateProductSingleSheet")
-            {
-                <input class="button" type="submit" name="CreateProductSingleSheet"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
-            }
-        </p>
-    }
-
-</div>
-
+@Html.Partial("_EditAndCreateProduct", Model)
 
 
 @section breadcrumb {
 
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
 }

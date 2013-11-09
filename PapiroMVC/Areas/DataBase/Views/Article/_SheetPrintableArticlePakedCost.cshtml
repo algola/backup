@@ -7,11 +7,10 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticlePakedCostTitle");
 }
 
-<br />
-<h3>@ViewBag.Title</h3>
-
     <fieldset>
-        <legend>SheetPrintableArticlePakedCost</legend>
+            <legend>
+                   @ViewBag.Title
+                            </legend>
 
         @Html.ValidationMessageFor(model => model.SheetPrintableArticlePakedCost)
         @Html.AlgolaEditorFor(model => model.SheetPrintableArticlePakedCost.CostPerKg)

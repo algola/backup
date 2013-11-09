@@ -5,70 +5,65 @@
     string strings = "~/Areas/DataBase/Views/Article/Strings";
 }
 
-<div id="status"> 
-    
- @*   @Scripts.Render("~/bundles/jqueryval") *@
-@using (Ajax.BeginForm("Action", "Article", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess="OnSuccess" }))
-{
-    @Html.ValidationSummary(true)
+<div id="status">
 
-    <fieldset>
-        <legend>RollPrintableArticleViewModel</legend>
+    @*   @Scripts.Render("~/bundles/jqueryval") *@
+    @using (Ajax.BeginForm("Action", "Article", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.Article.TimeStampTable)
-        
-        @Html.HiddenFor(model => model.Article.CodArticle)
-        @Html.HiddenFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
+            @Html.HiddenFor(model => model.Article.TimeStampTable)
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Weight,"WeightAutoComplete","Article")
-        
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Width,"WidthAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.MqForafait,"MqForafaitAutoComplete","Article")
+            @Html.HiddenFor(model => model.Article.CodArticle)
+            @Html.HiddenFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Hand,"HandAutoComplete","Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
-        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+            @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorAutoComplete", "Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
 
-        @Html.HiddenFor(model =>  model.Article.UnitOfMeasure)
+            @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
 
-    </fieldset>
+            @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
 
-    <div id='_RollPrintableArticleStandardCost'>
-        @Html.Partial("_RollPrintableArticleStandardCost", Model)
-    </div>
-    <br />
-    <p>
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new {Area="Database"})');">            
-           <i class="icon-arrow-left"></i>
-             @HttpContext.GetLocalResourceObject(strings, "Cancel")
-        </button>
+            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
-        <button class="default" type="submit" name="@ViewBag.ActionMethod">
-                 <i class="icon-save"></i>    
-                 @HttpContext.GetLocalResourceObject(strings, "Save")
-        </button>                        
-        
-        @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")               
-        {
-            <button class="button" type="submit" name="CreateRollPrintableArticle">
-                 <i class="icon-save"></i>    
-                 @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+            @Html.HiddenFor(model => model.Article.UnitOfMeasure)
+
+        <div id='_RollPrintableArticleStandardCost'>
+            @Html.Partial("_RollPrintableArticleStandardCost", Model)
+        </div>
+        <br />
+        <p>
+            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new { Area = "Database" })');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
-        }
-    </p>
+
+            <button class="default" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+            @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")
+            {
+                <button class="button" type="submit" name="CreateRollPrintableArticle">
+                    <i class="icon-save"></i>
+                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                </button>
+            }
+        </p>
     
-}
-
- </div>
-
-
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
     }
-    
+
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

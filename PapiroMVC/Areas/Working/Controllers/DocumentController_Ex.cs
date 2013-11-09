@@ -9,13 +9,56 @@ namespace PapiroMVC.Areas.Working.Controllers
 {
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
+        public ActionResult Costs(GridSettings gridSettings, String codDocumentProduct)
+        {
+            var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct);
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodCost,
+                        cell = new string[] 
+                        {                       
+                            a.CodCost,
+                            a.CodDocumentProduct,
+                            a.Description,
+                            a.UnitCost,
+                            a.Quantity.ToString(),
+                            a.TotalCost
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult DocumentList(GridSettings gridSettings)
         {
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
 
-            //read from validation's language file
             if (gridSettings.isSearch)
             {
                 codDocumentFilter = gridSettings.where.rules.Any(r => r.field == "CodDocument") ?
@@ -131,13 +174,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
             else
             {
-                return Json(null, JsonRequestBehavior.AllowGet);            
+                return Json(null, JsonRequestBehavior.AllowGet);
             }
         }
 
         public ActionResult DocumentProductQuantitiesList(string CodDocument, string CodProduct, GridSettings gridSettings)
         {
-            var q = documentRepository.GetSingle(CodDocument).DocumentProducts.Where(x=>x.CodProduct==CodProduct);
+            var q = documentRepository.GetSingle(CodDocument).DocumentProducts.Where(x => x.CodProduct == CodProduct);
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();

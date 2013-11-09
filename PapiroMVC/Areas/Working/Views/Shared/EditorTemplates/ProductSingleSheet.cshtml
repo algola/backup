@@ -1,42 +1,28 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.ProductSingleSheet
 
-
-
-//ATTENZIONE QUI E' STATO SPOSTATO IL POST NEL VIEWMODEL DEL PRODOTTO CREATEPRODUCT!!!
-
 @{
-    string strings = "~/Areas/Working/Views/Product/Strings";
-        
+    string strings = "~/Areas/Working/Views/Product/Strings";        
+}
+
+    @Html.HiddenFor(model => model.ProductName)
+    @Html.HiddenFor(model => model.TimeStampTable)
+    @Html.HiddenFor(model => model.CodProduct)
+    @Html.HiddenFor(model => model.ProductName)
+    @Html.HiddenFor(model => model.CodMenuProduct)
+    @Html.HiddenFor(model => model.TypeOfProduct)
+
+    <br />
+
+    <!-- parts -->
+    @for (int i = 0; i < Model.ProductPartsPerView.Count; i++)
+    {
+        ViewBag.IndexPart = i;
+        @Html.EditorFor(model => model.ProductPartsPerView[i])           
     }
 
-    <fieldset>
-        <legend>ProductSingleSheet</legend>
-
-        @Html.HiddenFor(model => model.ProductName)
-        @Html.HiddenFor(model => model.TimeStampTable)
-        @Html.HiddenFor(model => model.CodProduct)
-        @Html.HiddenFor(model => model.ProductName)
-        @Html.HiddenFor(model => model.CodMenuProduct)
-        @Html.HiddenFor(model => model.TypeOfProduct)
-
-        <br />
-
-        <!-- parts -->
-        @for (int i = 0; i < Model.ProductPartsPerView.Count; i++)
-        {
-            ViewBag.IndexPart = i;
-            @Html.EditorFor(model => model.ProductPartsPerView[i])           
-        }
-            
-        <!-- ProductTasks -->
-        @for (int i = 0; i < Model.ProductTasks.Count; i++)
-        {
-            @Html.EditorFor(model => model.ProductTasksPerView[i])           
-        }
-
-        <br />                       
-<br />
-
-    </fieldset>
-       
+    <!-- ProductTasks -->
+    @for (int i = 0; i < Model.ProductTasks.Count; i++)
+    {
+        @Html.EditorFor(model => model.ProductTasksPerView[i])           
+    }

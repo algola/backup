@@ -29,8 +29,8 @@
 //    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
     OnSuccess = "sendRollAutomaticallyChanges",
     OnFailure = "ReloadForm(xhr)",
-    OnBegin = "ShowProcessingMsg", 
-    OnComplete = "HideProcessingMsg"
+    OnBegin = "showProcessingMsg", 
+    OnComplete = "hideProcessingMsg"
 }))
 {          
         @Html.ValidationSummary(true)

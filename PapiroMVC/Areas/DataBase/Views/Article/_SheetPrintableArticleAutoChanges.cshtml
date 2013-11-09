@@ -28,7 +28,6 @@
                 
 }
 
-
 <!-- autocomplete works properly only if script is reloaded in partial view -->
 <script src="/Scripts/autocomplete.js" type="text/javascript"></script>
  
@@ -39,8 +38,8 @@
 //    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
     OnSuccess = "sendSheetAutomaticallyChanges",
     OnFailure = "ReloadForm(xhr)",
-    OnBegin = "ShowProcessingMsg", 
-    OnComplete = "HideProcessingMsg"
+    OnBegin = "showProcessingMsg", 
+    OnComplete = "hideProcessingMsg"
 }))
 {          
         @Html.ValidationSummary(true)

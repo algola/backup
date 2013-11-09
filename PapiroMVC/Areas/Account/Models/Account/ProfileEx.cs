@@ -10,7 +10,6 @@ namespace PapiroMVC.Models
     public partial class Profile : IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =

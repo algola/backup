@@ -5,8 +5,9 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace PapiroMVC.Models
-{    
+{
     [MetadataType(typeof(Product_MetaData))]
     public abstract partial class Product : IDataErrorInfo, ICloneable, IDeleteRelated
     {
@@ -21,7 +22,7 @@ namespace PapiroMVC.Models
             get
             {
                 if (productParts == null)
-                { 
+                {
                     productParts = this.ProductParts.ToList();
                 }
 
@@ -29,7 +30,7 @@ namespace PapiroMVC.Models
 
             }
 
-            set 
+            set
             {
                 productParts = value;
                 ProductParts = productParts;
@@ -44,7 +45,7 @@ namespace PapiroMVC.Models
             {
                 if (productTasks == null)
                 {
-                    productTasks = this.ProductTasks.OrderBy(x=>x.IndexOf).ToList();
+                    productTasks = this.ProductTasks.OrderBy(x => x.IndexOf).ToList();
                 }
 
                 return productTasks;
@@ -137,7 +138,7 @@ namespace PapiroMVC.Models
             get;
             set;
         }
-        
+
         public enum ProductType : int
         {
             ProductSingleSheet = 0,
@@ -166,9 +167,9 @@ namespace PapiroMVC.Models
             var pTasks = String.Empty;
             foreach (var item in this.ProductTasks)
             {
-                pTasks += item.ToString()==String.Empty?"":item.ToString() + "\n";
+                pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
             }
-            
+
             return pParts + pTasks;
 
         }
@@ -197,7 +198,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -274,5 +275,62 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+        public virtual void ProductPartCodeRigen()
+        {
+            this.TimeStampTable = DateTime.Now;
+
+            //parti del prodotto
+            var ppart = this.ProductParts.ToList();
+            foreach (var item in this.ProductParts)
+            {
+                item.UpdateOpenedFormat();
+
+                item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString();
+                item.CodProduct = this.CodProduct;
+                item.TimeStampTable = DateTime.Now;
+
+                //task della parte del prodotto
+                var pptask = item.ProductPartTasks.ToList();
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.CodProductPart = item.CodProductPart;
+                    item2.TimeStampTable = DateTime.Now;
+                    item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString();
+                }
+
+                //articoli della parte del prodotto
+                var pppart = item.ProductPartPrintableArticles.ToList();
+                foreach (var item2 in item.ProductPartPrintableArticles)
+                {
+                    item2.CodProductPart = item.CodProductPart;
+                    item2.TimeStampTable = DateTime.Now;
+                    item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString();
+                }
+
+            }
+
+            //task del prodotto
+            var pt = this.ProductTasks.ToList();
+            foreach (var item in this.ProductTasks)
+            {
+                item.CodProductTask = this.CodProduct + "-" + pt.IndexOf(item).ToString();
+                item.CodProduct = this.CodProduct;
+                item.TimeStampTable = DateTime.Now;
+            }
+
+
+            if (this.ProductName == "" || this.ProductName == null)
+            {
+                this.ProductName = this.ToString();
+            }
+
+        }
+
+
+
+
     }
+
+
 }

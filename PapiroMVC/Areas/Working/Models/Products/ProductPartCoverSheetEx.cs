@@ -10,6 +10,10 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductPartCoverSheet_MetaData))]
     public partial class ProductPartCoverSheet : ProductPart, IDataErrorInfo, ICloneable, IDeleteRelated
     {
+        public override void UpdateOpenedFormat()
+        {
+            this.FormatOpened = (this.Format.GetSide1() * 2 + Convert.ToDecimal(this.WidthWings ?? 0)).ToString()+ "x"+ this.Format.GetSide2().ToString();
+        }
 
         public ProductPartCoverSheet()
         {

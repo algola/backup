@@ -1,0 +1,102 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.CostDetail
+@using System.Web.Script.Serialization;
+
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    //Prendo il titolo dal menù
+    ViewBag.Title = Html.T(strings, "EditCost");
+}
+
+@section title{
+    @Html.T(strings, "Document")
+}
+
+@section description{
+    @Html.T(strings, "EditCostDesc")
+}
+
+<div class="control-group">
+    <div class="controls col-sm-9">
+        @Html.DropDownListFor(y => y.CodTaskExecutorSelected,
+                new SelectList(Model.TaskExecutors, "CodTaskExecutor", "TaskExecutorName"), new { id = "tsk" })
+    </div>
+</div>
+
+<div id="partial">
+    @{switch (Model.TypeOfCostDetail)
+      {
+          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
+              Html.RenderPartial("_PrintingSheetCostDetail", Model);
+              break;
+@*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
+              break;
+          case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+              break;
+          case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
+              break;
+*@          default:
+              break;
+      }}
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#tsk").change(function () {
+            var codTaskExecutor = "";
+            $("#tsk option:selected").each(function () {
+                codTaskExecutor += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codTaskExecutor: codTaskExecutor,
+                codCost: '@(Model.TaskCost.CodCost)'
+            };
+
+            url = '@(Url.Action("GetPartialCost", "Document", new { area = "Working" }))';
+
+            $.ajax({
+                url: '@(Url.Action("GetPartialCost", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#partial').html(data);
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+
+
+        });
+    });
+
+
+</script>
+
+@*
+@Html.Partial("_EditAndCreateDocument", Model)
+*@
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}

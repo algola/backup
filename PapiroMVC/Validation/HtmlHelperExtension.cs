@@ -92,19 +92,19 @@ namespace PapiroMVC.Validation
 
             var algolaEditFor = new TagBuilder("div");
             algolaEditFor.Attributes.Add("Title", GetToolTip(html, expression));
-            algolaEditFor.AddCssClass("form-group");
+            algolaEditFor.AddCssClass("control-group");
 
-                                    //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
+            //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
 
-                                    //    <div class="col-sm-9">
-                                    //        <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
-                                    //    </div>
-                                    //</div>
+            //    <div class="col-sm-9">
+            //        <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
+            //    </div>
+            //</div>
 
             var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttribute);
             {
                 attrs.Add("class", "col-xs-10 col-sm-5");
-                attrs.Add("placeholder" , "Username");
+                attrs.Add("placeholder", "Username");
             }
             htmlAttribute = attrs;
 
@@ -119,12 +119,12 @@ namespace PapiroMVC.Validation
 
 
             var editFor = new TagBuilder("div");
-            editFor.AddCssClass("editor-field col-sm-9");
+            editFor.AddCssClass("controls col-sm-9");
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
             //            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
-//            algolaEditFor.InnerHtml += labelFor;
+            //            algolaEditFor.InnerHtml += labelFor;
             algolaEditFor.InnerHtml += editFor;
 
             return new HtmlString(algolaEditFor + Environment.NewLine);
@@ -150,17 +150,18 @@ namespace PapiroMVC.Validation
 
             var algolaEditFor = new TagBuilder("div");
             algolaEditFor.Attributes.Add("Title", GetToolTip(html, expression));
+            algolaEditFor.AddCssClass("control-group");
+            
+            var htmlatt = new RouteValueDictionary();
+            htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
 
-            var labelFor = new TagBuilder("div");
-            labelFor.AddCssClass("editor-label");
-            labelFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression);
+            algolaEditFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression, htmlatt);
 
             var editFor = new TagBuilder("div");
-            editFor.AddCssClass("editor-field");
+            editFor.AddCssClass("controls col-sm-9");
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
-            algolaEditFor.InnerHtml += labelFor;
             algolaEditFor.InnerHtml += editFor;
 
             return new MvcHtmlString(algolaEditFor + Environment.NewLine);

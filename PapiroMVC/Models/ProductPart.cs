@@ -29,6 +29,8 @@ namespace PapiroMVC.Models
         public string Format { get; set; }
         public Nullable<int> ServicesNumber { get; set; }
         public string CodProductPart_ { get; set; }
+        public string FormatOpened { get; set; }
+        public Nullable<int> SubjectNumber { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual ICollection<ProductPartsPrintableArticle> ProductPartPrintableArticles { get; set; }

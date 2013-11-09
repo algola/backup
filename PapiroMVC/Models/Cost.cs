@@ -20,6 +20,10 @@ namespace PapiroMVC.Models
         public string CodProductTask { get; set; }
         public string CodProductPartTask { get; set; }
         public string CodProductPartPrintableArticle { get; set; }
+        public string Description { get; set; }
+        public Nullable<double> Quantity { get; set; }
+        public string UnitCost { get; set; }
+        public string TotalCost { get; set; }
     
         public virtual DocumentProduct DocumentProduct { get; set; }
         public virtual ProductPartsPrintableArticle ProductPartsPrintableArticle { get; set; }

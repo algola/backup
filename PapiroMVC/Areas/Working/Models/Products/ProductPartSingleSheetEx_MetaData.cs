@@ -11,12 +11,8 @@ namespace PapiroMVC.Models
 {
     public abstract partial class ProductPartSingleSheet_MetaData : ProductPart_MetaData
     {
-        [DisplayNameLocalized(typeof(ResProduct), "SubjectNumber")]
-        [Tooltip(typeof(ProductPartSingleSheet), "SubjectNumberToolTip")]
-        public Nullable<int> SubjectNumber { get; set; }
-
-        [DisplayNameLocalized(typeof(ResProduct), "RawCut")]
-        [Tooltip(typeof(ProductPartSingleSheet), "RawCutToolTip")]
+        [DisplayNameLocalized(typeof(ResProductPartSingleSheet), "RawCut")]
+        [Tooltip(typeof(ResProductPartSingleSheet), "RawCutToolTip")]
         public Nullable<bool> RawCut { get; set; }
     }
 }

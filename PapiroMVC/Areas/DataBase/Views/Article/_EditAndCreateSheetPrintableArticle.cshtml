@@ -10,41 +10,41 @@
 
 @Scripts.Render("~/bundles/jqueryval")
 
-@using (Ajax.BeginForm("Action","Article", new AjaxOptions { 
-        UpdateTargetId = "status", 
-        OnBegin = "ShowProcessingMsg", 
-        OnComplete = "HideProcessingMsg", 
-        OnSuccess="OnSuccess" })) {
+@using (Ajax.BeginForm("Action", "Article", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+{
   
       @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend>SheetPrintableArticleViewModel</legend>
 
         @Html.HiddenFor(model => model.Article.TimeStampTable)
         
         @Html.HiddenFor(model => model.Article.CodArticle)
         @Html.HiddenFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Weight,"WeightAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
         
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Format,"FormatAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Format, "FormatAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Hand,"HandAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.SheetPerPacked,"SheetPerPackedAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.SheetPerPallet,"SheetPerPackedAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.SheetPerPacked, "SheetPerPackedAutoComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.SheetPerPallet, "SheetPerPackedAutoComplete", "Article")
 
 
-        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
-        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
+        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.UnitOfMeasure,"UnitOfMeasuerAutoComplete","Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.UnitOfMeasure, "UnitOfMeasuerAutoComplete", "Article")
                
-    </fieldset>
        
     <div id='_SheetPrintableArticlePakedCost'>
         @Html.Partial("_SheetPrintableArticlePakedCost", Model)
@@ -62,7 +62,7 @@
     <br />      
     <p>
         
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new {Area="Database"})');">            
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new { Area = "Database" })');">            
             <i class ="icon-arrow-left"></i>
             @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
@@ -72,7 +72,7 @@
                  @HttpContext.GetLocalResourceObject(strings, "Save")
              </button>        
         
-        @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")               
+        @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")
         {
             <input class="button" type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
         }

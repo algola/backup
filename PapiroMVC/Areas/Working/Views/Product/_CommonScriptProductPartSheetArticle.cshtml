@@ -1,0 +1,138 @@
+﻿@using PapiroMVC.Validation
+
+@{
+    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
+    string url = Url.Action("SheetPrintableArticleList", new { controller = "Article", area = "DataBase" });
+
+    var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
+}
+
+<script type="text/javascript">
+
+    var lastSel@(suffx) = -1;
+    var myGrid@(suffx) = null;
+
+
+    $(document).ready(
+        function () {
+            loadGrid@(suffx)();
+        });
+
+    function loadGrid@(suffx)() {
+
+        myGrid@(suffx) = $("#gridArticle@(suffx)").jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+                { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                    { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                    { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                    { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                    { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 80, align: 'left', editable: false, hidden: false }
+            ],
+
+            pager: '#pagerArticle@(suffx)',
+
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
+
+            onSelectRow: function (id) {
+                if (id && id !== lastSel@(suffx)) {
+                    myGrid@(suffx).jqGrid('restoreRow', lastSel@(suffx));
+                    lastSel@(suffx) = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid@(suffx).jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridArticle@(suffx)").trigger("reloadGrid");
+                    },
+                    url: 'editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            }
+
+        });
+
+        myGrid@(suffx).jqGrid('navGrid', '#pagerArticle@(suffx)', { edit: false, add: false, del: false, search: false });
+        myGrid@(suffx).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+    }
+
+    function reloadArticle@(suffx)() {
+        $("#gridArticle@(suffx)").trigger("reloadGrid");
+    }
+
+    $("#staticDialog@(suffx)").on('click', function (e) {
+        e.preventDefault();
+
+        reloadArticle@(suffx)();
+        reloadArticle@(suffx)();
+
+        var dialog = $("#dialog-message@(suffx)").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        if (lastSel@(suffx) != -1) {
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'TypeOfMaterial');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'NameOfMaterial');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueWeight = myGrid.jqGrid('getCell', lastSel@(suffx), 'Weight');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
+                        }
+
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+
+        /**
+        dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+        };
+        **/
+    });
+
+</script>

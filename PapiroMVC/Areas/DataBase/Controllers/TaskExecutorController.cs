@@ -151,15 +151,18 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("TaskEstimatedOnMq", c);
         }
 
-
-        [HttpGet]
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id">TaskExecutors id</param>
+        /// <returns></returns>
+        [HttpGet]        
         public ActionResult TaskExecutorCost(string id)
         {
-            var c = new TaskExecutorNewCostViewModel();
+            var c = new TaskExecutorNewCostDetail();
             //load from database taskexecutor
 
             var taskExecutor = taskExecutorRepository.GetSingle(id);
-
 
             switch (taskExecutor.TypeOfExecutor)
             {
@@ -187,7 +190,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 default:
                     break;
             }
-
 
             c.CodTaskExecutor = taskExecutor.CodTaskExecutor;
 
@@ -265,7 +267,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostViewModel c, string FieldToPreventTowSubmission)
+        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostDetail c, string FieldToPreventTowSubmission)
         {
 
             var taskExecutor = taskExecutorRepository.GetSingle(c.CodTaskExecutor);

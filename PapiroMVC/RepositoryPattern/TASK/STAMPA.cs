@@ -16,7 +16,6 @@ namespace Services
             CodTypeOfTask = "STAMPA";
             TaskName = "Stampa";
 
-
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPA";
             optTk.CodOptionTypeOfTask = "STAMPA_NO";

@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PapiroMVC.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    public class Quantita : List<int>
+    {
+    }
+
+    [MetadataType(typeof(ProductViewModel_MetaData))]
     public class ProductViewModel
     {
         public Product Product { get; set; }
-        public List<int> Quantities { get; set; }
+        public Quantita Quantities { get; set; }
 
         public ProductViewModel()
         {
-            Quantities = new List<int>();
+            Quantities = new Quantita();
         }
     }
 }

@@ -11,6 +11,11 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductPart_MetaData))]
     public partial class ProductPart : IDataErrorInfo, ICloneable, IDeleteRelated
     {
+        public virtual void UpdateOpenedFormat()
+        {
+            this.FormatOpened = this.Format;
+        }
+
         protected List<ProductPartsPrintableArticle> productPartPrintableArticles;
         public List<ProductPartsPrintableArticle> ProductPartsPrintableArticlePerView
         {
@@ -174,8 +179,7 @@ namespace PapiroMVC.Models
             to.ProductPartPrintableArticles = this.ProductPartPrintableArticles;
             to.ProductPartTasks = this.ProductPartTasks;
             to.ServicesNumber = this.ServicesNumber;
-            
-
+            to.SubjectNumber = this.SubjectNumber;
         }
 
         public object Clone()

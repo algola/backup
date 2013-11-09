@@ -12,6 +12,7 @@ namespace Services
         IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct);
         Document GetFromSession();
         void SaveOnSession(Document a);
-
+        IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);
+        Cost GetCost(string codCost);
     }
 }

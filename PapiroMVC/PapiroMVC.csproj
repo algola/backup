@@ -250,6 +250,17 @@
     <Compile Include="Areas\Working\Controllers\ProductController2.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\Makeready.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSingleSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainSingle.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartCoverSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartBookSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingSheetCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentEx.cs" />
@@ -289,7 +300,9 @@
     <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Cost\CostDetail.cs" />
     <Compile Include="Areas\Working\ViewModels\DocumentProductViewModel.cs" />
+    <Compile Include="Areas\Working\ViewModels\ProductViewModel_MetaData.cs" />
     <Compile Include="Areas\Working\ViewModels\ProductViewModel.cs" />
     <Compile Include="Areas\Working\WorkingAreaRegistration.cs" />
     <Compile Include="Models\Article.cs">
@@ -843,6 +856,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResTaskExecutor.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Resources\ViewModels\ResProductViewModel.Designer.cs">
+      <DependentUpon>ResProductViewModel.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
     <Compile Include="Models\Single.cs" />
     <Compile Include="Validation\ProductViewModelModelBinder.cs" />
     <Compile Include="Validation\HtmlHelperExtension.cs" />
@@ -962,19 +982,19 @@
     <Compile Include="RepositoryPattern\GenericAndInterface\IMenuProductRepository.cs" />
     <Compile Include="RepositoryPattern\MenuProductRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ITypeOfTaskRepository.cs" />
-    <Compile Include="RepositoryPattern\TASK\ACCOPPIATURA.cs" />
-    <Compile Include="RepositoryPattern\TASK\FORO.cs" />
-    <Compile Include="RepositoryPattern\TASK\FUSTELLATURA.cs" />
-    <Compile Include="RepositoryPattern\TASK\INTERCALATURA.cs" />
-    <Compile Include="RepositoryPattern\TASK\PIEGA.cs" />
-    <Compile Include="RepositoryPattern\TASK\PLASTIFICATURA.cs" />
-    <Compile Include="RepositoryPattern\TASK\RILEGATURA_BROSSURA.cs" />
-    <Compile Include="RepositoryPattern\TASK\RILEGATURA_PM.cs" />
-    <Compile Include="RepositoryPattern\TASK\RILEGATURA_SPIRALE.cs" />
-    <Compile Include="RepositoryPattern\TASK\RILIEVO_A_SECCO.cs" />
-    <Compile Include="RepositoryPattern\TASK\STAMPA.cs" />
-    <Compile Include="RepositoryPattern\TASK\TAGLIO.cs" />
-    <Compile Include="RepositoryPattern\TASK\VERNICIATURA.cs" />
+    <Compile Include="RepositoryPattern\Task\ACCOPPIATURA.cs" />
+    <Compile Include="RepositoryPattern\Task\FORO.cs" />
+    <Compile Include="RepositoryPattern\Task\FUSTELLATURA.cs" />
+    <Compile Include="RepositoryPattern\Task\INTERCALATURA.cs" />
+    <Compile Include="RepositoryPattern\Task\PIEGA.cs" />
+    <Compile Include="RepositoryPattern\Task\PLASTIFICATURA.cs" />
+    <Compile Include="RepositoryPattern\Task\RILEGATURA_BROSSURA.cs" />
+    <Compile Include="RepositoryPattern\Task\RILEGATURA_PM.cs" />
+    <Compile Include="RepositoryPattern\Task\RILEGATURA_SPIRALE.cs" />
+    <Compile Include="RepositoryPattern\Task\RILIEVO_A_SECCO.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPA.cs" />
+    <Compile Include="RepositoryPattern\Task\TAGLIO.cs" />
+    <Compile Include="RepositoryPattern\Task\VERNICIATURA.cs" />
     <Compile Include="RepositoryPattern\TypeOfTaskRepository.cs" />
     <Compile Include="RepositoryPattern\ProductRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\IDocumentRepository.cs" />
@@ -1887,6 +1907,10 @@
     <Content Include="Content\themes\smoothness\jquery-ui-1.8.custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Views\Shared\App_LocalResources\Cuts.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model11.Designer.cs</LastGenOutput>
@@ -3478,7 +3502,7 @@
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSingleSheet.cshtml" />
     <Content Include="Areas\Working\Views\Single.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\TypeOfTask.cshtml" />
-    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\_ non funziona_ProductPartSheetArticle.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartTask.cshtml" />
     <Content Include="Models\PapiroMVC\.git\COMMITMESSAGE" />
     <Content Include="Models\PapiroMVC\.git\COMMIT_EDITMSG" />
@@ -4379,7 +4403,6 @@
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigid.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigidArticle.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductRigid.cshtml" />
-    <Content Include="Areas\Working\Views\Document\tab non funzia _EditAndCreateDocument.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListCommonScript.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListDocument.cshtml" />
     <Content Include="Areas\Working\Views\Document\CreateDocument.cshtml" />
@@ -4838,6 +4861,19 @@
     <Content Include="Areas\Working\Views\Shared\_TopBarAceTheme.cshtml" />
     <Content Include="Areas\Working\Views\Shared\_LayoutAceTheme.cshtml" />
     <Content Include="Areas\Working\Views\Document\_EditAndCreateDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_Costs.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_CostsCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditCost.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_LithoSheetCostViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_DigitalSheetCostViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingSheetCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartSingleSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Copy of ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_CommonScriptProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartCoverSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_CommonScriptDraw.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartBookSheetPrinting.cshtml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -4845,6 +4881,7 @@
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery-ui.multiselect.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery.blockUI.min.js" />
     <Content Include="Scripts\jquery.bpopup.min.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.form.min.js" />
@@ -4887,6 +4924,8 @@
     <Content Include="Scripts\MVCControlToolkit.JsQueryable-2.4.0.min.js" />
     <Content Include="Scripts\MvcControlToolkit.Utils-2.4.0.js" />
     <Content Include="Scripts\MvcControlToolkit.Utils-2.4.0.min.js" />
+    <Content Include="Scripts\spin.js" />
+    <Content Include="Scripts\spin.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\TaskExecutorNewCost.cshtml" />
@@ -4998,11 +5037,18 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.en-us.resx" />
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.resx">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\CustomerSupplierStrings.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\HomeDb\App_LocalResources\Strings.resx">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -5433,6 +5479,13 @@
       <CustomToolNamespace>PapiroMVC.Models.Resources.CustomerSupplier</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\ViewModels\ResProductViewModel.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductViewModel.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.ViewModels</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -10,7 +10,9 @@
 <h3>@ViewBag.Title</h3>
 
     <fieldset>
-        <legend>RigidPrintableArticleStandardCost</legend>
+            <legend>
+                   @ViewBag.Title
+                            </legend>
         @Html.ValidationMessageFor(model => model.RigidPrintableArticleStandardCost)
 
         @Html.AlgolaEditorFor(model => model.RigidPrintableArticleStandardCost.CostPerMq)

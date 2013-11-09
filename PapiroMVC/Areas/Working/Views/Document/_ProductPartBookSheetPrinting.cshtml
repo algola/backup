@@ -1,0 +1,60 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ProductPartBookSheetPrinting
+
+@{
+    
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    string stringsCod = "~/Views/Shared/Cuts";
+
+    MakereadyPrintingBookSheet g = (MakereadyPrintingBookSheet)Model.GainPartOnPrinting.Makereadys.FirstOrDefault();
+    
+}
+
+<canvas id="printingBookSheet" width="500" height="170"></canvas>
+
+NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadys.Count
+
+<script type="text/javascript">
+
+    //this event is fired only the first time
+    $(document).ready(function () {
+        alert("second");
+        drawPrintingAndSheet(); //draw printing and work
+    });
+
+
+    function drawPrintingAndSheet() {
+
+
+        var side1 = '@Model.PrintingFormat.GetSide1()';
+        var side2 = '@Model.PrintingFormat.GetSide2()';
+
+        var c_canvas = document.getElementById("printingBookSheet");
+        var context = c_canvas.getContext("2d");
+
+        var zoom = 2.5;
+        var offsetX = 0;
+        var offsetY = 0;
+
+        var bv = '@g.TypeOfPerfecting';
+            var maxG = '@(g.PrintedPages/4)';
+
+        alert(maxG);
+        drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
+
+        var side1pr = '@Model.Part.FormatOpened.GetSide1()';
+            var side2pr = '@Model.Part.FormatOpened.GetSide2()';
+
+        var sideOnSide = '@g.SideOnSide';
+
+        var gain1 = parseInt('@g.ShapeOnSide1');
+        var gain2 = parseInt('@g.ShapeOnSide2');
+
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG);
+
+    }
+
+</script>
+
+@Html.Partial("_CommonScriptDraw")

@@ -10,6 +10,12 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductPartBookSheet_MetaData))]
     public partial class ProductPartBookSheet : ProductPart, IDataErrorInfo, ICloneable, IDeleteRelated
     {
+
+        public override void UpdateOpenedFormat()
+        {
+            FormatOpened = Format.GetSide1() * 2 + "x" + Format.GetSide2();
+        }
+
         public ProductPartBookSheet()
         {
             TypeOfProductPart = ProductPart.ProductPartType.ProductPartBookSheet;
@@ -18,13 +24,13 @@ namespace PapiroMVC.Models
         public override string ToString()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartBookSheet);
-            return (string)t.GetProperty("DescriptionToString").GetValue(null, null) + 
+            return (string)t.GetProperty("DescriptionToString").GetValue(null, null) +
                 " " + this.Pages + " " +
                 (string)t.GetProperty("PagesDescriptionToString").GetValue(null, null) +
                 base.ToString();
         }
-        
-        #region Proprietà aggiuntive       
+
+        #region Proprietà aggiuntive
         #endregion
 
 
@@ -43,7 +49,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get

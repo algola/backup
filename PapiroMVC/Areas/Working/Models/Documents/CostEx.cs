@@ -21,7 +21,6 @@ namespace PapiroMVC.Models
 
         #endregion
 
-
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
@@ -81,6 +80,10 @@ namespace PapiroMVC.Models
             to.ProductTask = this.ProductTask;
             to.TimeStampTable = this.TimeStampTable;
 
+            to.Description = this.Description;
+            to.Quantity = this.Quantity;
+            to.UnitCost = this.UnitCost;
+            to.TotalCost = this.TotalCost;
         }
 
         public object Clone()

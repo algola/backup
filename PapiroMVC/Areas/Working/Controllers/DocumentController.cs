@@ -20,6 +20,10 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly ITypeOfTaskRepository typeOfTaskRepository;
         private readonly IProductRepository productRepository;
         protected IMenuProductRepository menu;
+        private readonly ITaskExecutorRepository taskExecutorRepository;
+
+        private readonly IArticleRepository articleRepository;
+        private readonly ICustomerSupplierRepository customerSupplierRepository;
 
 
         protected dbEntities db;
@@ -37,11 +41,17 @@ namespace PapiroMVC.Areas.Working.Controllers
             ITypeOfTaskRepository _typeOfTaskRepository,
             IFormatsNameRepository _formatsName,
             IProductRepository _productRepository,
+            ITaskExecutorRepository _taskExecutorRepository,
+           IArticleRepository _articleRepository,
+         ICustomerSupplierRepository _customerSupplierRepository,
                         IMenuProductRepository _menuProduct)
         {
             typeOfTaskRepository = _typeOfTaskRepository;
             documentRepository = _documentRepository;
             productRepository = _productRepository;
+            taskExecutorRepository = _taskExecutorRepository;
+            articleRepository=_articleRepository;
+            customerSupplierRepository = _customerSupplierRepository;
             menu = _menuProduct;
         }
 

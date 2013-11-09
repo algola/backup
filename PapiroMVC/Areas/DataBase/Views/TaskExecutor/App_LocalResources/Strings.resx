@@ -243,8 +243,14 @@
   <data name="OperationsCaptionWidth_" xml:space="preserve">
     <value>60</value>
   </data>
+  <data name="PlotterGridCaption" xml:space="preserve">
+    <value>Elenco dei plotter</value>
+  </data>
   <data name="PrePostPressGridCaption" xml:space="preserve">
     <value>Pre e/o Post Stampa</value>
+  </data>
+  <data name="PrinterTitle" xml:space="preserve">
+    <value>Macchine da Stampa</value>
   </data>
   <data name="PrintingUnitCaption" xml:space="preserve">
     <value>Castelli</value>

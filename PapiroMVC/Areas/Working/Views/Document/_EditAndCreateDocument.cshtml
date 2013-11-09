@@ -7,8 +7,8 @@
 }
 
 <div id="status">
-    @Scripts.Render("~/bundles/jqueryval")
-    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "ShowProcessingMsg", OnComplete = "HideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
         
         @Html.ValidationSummary(true)
@@ -22,33 +22,21 @@
         @Html.HiddenFor(model => model.TimeStampTable)
 
         @Html.HiddenFor(model => model.CodCustomer)
-        <a href="javascript:void(0)" id="staticDialogCustomer">@Html.T(stringsGrid, "DialogTitle")</a>
 
-        <div id="accordion" class="accordion-style1 panel-group">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <i class="bigger-110 icon-angle-right" data-icon-hide="icon-angle-down" data-icon-show="icon-angle-right"></i>
-                            &nbsp;****Ricerca cliente
-                        </a>
-                    </h5>
-                </div>
+        <div class="controls col-sm-9">
+            <a href="javascript:void(0)" id="staticDialogCustomer">@Html.T(stringsGrid, "DialogTitle")</a>
+            <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+        </div>
+        
+        <div id="dialog-message" class="hide">
 
-                <div class="panel-collapse collapse" id="collapseOne" style="height: 0px;">
-                    <div class="panel-body">
-                        <table id="gridArticle">
-                            <tr>
-                                <td />
-                            </tr>
-                        </table>
+            <table id="gridArticle">
+                <tr>
+                    <td />
+                </tr>
+            </table>
+            <div id="pagerArticle"></div>
 
-                        <div id="pagerArticle">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
         </div>
         
         <br />
@@ -73,13 +61,113 @@
 </div>
 
 <script type="text/javascript">
+
+    var lastSel = -1;
+
     $(document).ready(
 
         function () {
 
             $('#DateDocument').datepicker({ dateFormat: "dd/mm/yy" });
-            var lastSel = -1;
+//            var lastSel = -1;
+
+
+            var myGrid = $("#gridArticle").jqGrid({
+                url: '@url',
+                 datatype: 'json',
+                 colModel: [
+                     { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                     { name: 'CodCustomer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodCustemerSupplierCaption")', width: 120, align: 'left', editable: false, hidden: false },
+                    { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CustomersCaption")', width: 120, align: 'left', editable: false, hidden: true },
+                    { name: 'BusinessName', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "BusinessNameCaption")', width: 120, align: 'left', editable: false, hidden: false },
+
+                ],
+
+
+                 pager: '#pagerArticle',
+
+                 rowNum: 15,
+                 rowList: [15, 20, 50],
+                 viewrecords: true,
+                 autowidth: false,
+
+                 onSelectRow: function (id) {
+                     if (id && id !== lastSel) {
+                         myGrid.jqGrid('restoreRow', lastSel);
+                         lastSel = id;
+                     }
+                 },
+
+                 ondblClickRow: function (id, ri, ci) {
+                     myGrid.jqGrid('editRow', id, {
+                         keys: true,
+                         oneditfunc: function () {
+                             //...
+                         },
+                         aftersavefunc: function () {
+                             $("#gridArticle").trigger("reloadGrid");
+                         },
+                         url: 'editUrl'
+                     });
+                     //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                     return;
+                 }
+
+             });
+
+            myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: true });
+            myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
         });
 
+    $("#staticDialog").on('click', function (e) {
+        e.preventDefault();
+
+        var dialog = $("#dialog-message").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        var myGrid = $('#gridArticle'),
+                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                            celValueCodCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'CodCustomer');
+
+                        $('#CodCustomer').val(celValueCodCustemerSupplier);
+
+                        var myGrid = $('#gridArticle'),
+                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                            celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
+
+                        $('#Customer').val(celValueCustemerSupplier);
+
+                    }
+
+                }
+            ]
+        });
+
+           /**
+           dialog.data( "uiDialog" )._title = function(title) {
+               title.html( this.options.title );
+           };
+           **/
+       });
+
+    function reloadArticle() {
+        $("#gridArticle").trigger("reloadGrid");
+    }
 
 </script>
+

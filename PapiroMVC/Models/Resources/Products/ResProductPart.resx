@@ -175,9 +175,15 @@
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="ServicesNumber" xml:space="preserve">
-    <value>Numero Servizio</value>
+    <value>Numero Servizi</value>
   </data>
   <data name="ServicesNumberToolTip" xml:space="preserve">
-    <value>Numero Servizio</value>
+    <value>Numero Servizi</value>
+  </data>
+  <data name="SubjectNumber" xml:space="preserve">
+    <value>Numero Soggetti</value>
+  </data>
+  <data name="SubjectNumberToolTip" xml:space="preserve">
+    <value>Numero Soggetti</value>
   </data>
 </root>

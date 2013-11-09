@@ -14,6 +14,18 @@
     @Html.T(strings, "EditDocumentProductsDesc")
 }
 
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+}
+
 <div class="tabbable tabs-left">
     <ul class="nav nav-tabs" id="myTabo">
 
@@ -35,40 +47,33 @@
                 }
                 else
                 {
-                    @Html.Label("Quantità non impostata");
+                    @Html.Label("****Quantità non impostata");
                 }
             </a>
             </li>
         }
 
-        <li>
-            <a data-toggle="tab" href="#dropdown13">
-                <i class="icon-rocket"></i>
-                More
-            </a>
-        </li>
-
     </ul>
+
+    @Html.Partial("_CostsCommonScript")
 
     <div class="tab-content">
         <div class="tab-pane in active" id="frame@((0).ToString())">
             @Html.Label(Model.First().Product.ProductName)
         </div>
 
-        <!-- parts -->
+        <!-- DocumentProducts -->
         @for (int i = 0; i < Model.Count; i++)
         {
             ViewBag.IndexPart = i;
             
-            <div class="tab-pane" id="frame@((i + 1).ToString())">
-                @Html.EditorFor(model => model[i]);
+            <div class="tab-pane" id="frame@((i + 1).ToString())">                
+                @*griglia dei costi di questa quantità*@               
+                @Html.Partial("_Costs",Model[i])
+                @Html.EditorFor(model => model[i])
             </div>
         }
 
-        <div id="home3" class="tab-pane">
-            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-            <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
-        </div>
-
     </div>
 </div>
+

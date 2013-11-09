@@ -4,7 +4,7 @@
 @{
     string strings = "~/Areas/Working/Views/Product/Strings";
     string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
-    
+
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
 
     List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).ToList();
@@ -15,26 +15,30 @@
    
     
 
-    }
+}
 
 
-    @if ((Model.Hidden ==null) || (Model.Hidden!=true)) 
-    {
+@if ((Model.Hidden == null) || (Model.Hidden != true))
+{
+    <div class="control-group">
 
-        @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName)
-        <div class="editor-field">
+        @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName, new { @class = "col-sm-3 control-label no-padding-right" })
 
-            @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
+        <div class="controls col-sm-9">
+            <div class="editor-field">
+                @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
             new SelectList(c, "CodOptionTypeOfTask", "OptionName"))
+            </div>
         </div>
-    }
-    else
-    {                    
-        @Html.HiddenFor(model => model.CodOptionTypeOfTask)
-    }
-            @Html.HiddenFor(model => model.TimeStampTable)
-            @Html.HiddenFor(model => model.CodProductTask)
-            @Html.HiddenFor(model => model.CodProduct)
-            @Html.HiddenFor(model => model.ProductTaskName)
-            @Html.HiddenFor(model => model.SelectorProductTask)
-            @Html.HiddenFor(model => model.Hidden)
+    </div>
+}
+else
+{                    
+    @Html.HiddenFor(model => model.CodOptionTypeOfTask)
+}
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodProductTask)
+@Html.HiddenFor(model => model.CodProduct)
+@Html.HiddenFor(model => model.ProductTaskName)
+@Html.HiddenFor(model => model.SelectorProductTask)
+@Html.HiddenFor(model => model.Hidden)

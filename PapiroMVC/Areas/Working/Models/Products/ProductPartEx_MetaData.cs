@@ -14,7 +14,11 @@ namespace PapiroMVC.Models
         public System.DateTime TimeStampTable { get; set; }
         public string CodProductPart { get; set; }       
         public string CodProduct { get; set; }
-        
+
+        [DisplayNameLocalized(typeof(ResProductPart), "SubjectNumber")]
+        [Tooltip(typeof(ResProductPart), "SubjectNumberToolTip")]
+        public Nullable<int> SubjectNumber { get; set; }
+
         [DisplayNameLocalized(typeof(ResProductPart), "ProductPartName")]
         [Tooltip(typeof(ResProductPart), "ProductPartNameToolTip")]
         public string ProductPartName { get; set; }

@@ -1,8 +1,16 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/HomeDb/Strings";
 }
 
-<h2>Anagrafica</h2>
+@section title{
+    @Html.T(strings, "DataBase")
+}
+
+@section description{
+    @Html.T(strings, "Home")
+}
 
 @section breadcrumb {
 

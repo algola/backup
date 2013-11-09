@@ -1,0 +1,90 @@
+﻿
+<script type="text/javascript">
+
+    function drawSheet(context, buyingFormatV, buyingFormatH, offsety, offsetx, zoom, bv) {
+
+        buyingFormatH *= zoom;
+        buyingFormatV *= zoom;
+
+        var passo = 10 * zoom;
+
+        context.beginPath();
+
+        context.strokeStyle = "#eee";
+        context.stroke();
+
+        context.beginPath();
+        context.rect(offsetx + 0, offsety + 0, buyingFormatH, buyingFormatV);
+        context.strokeStyle = "rgb(10, 10, 10)";
+        context.stroke();
+
+        if (bv != '') {
+            context.beginPath();
+            if (bv = '12') {
+                context.rect(offsetx + 0, offsety + 0, buyingFormatH, buyingFormatV / 2);
+            }
+            else {
+                context.rect(offsetx + 0, offsety + 0, buyingFormatH / 2, buyingFormatV);
+            }
+            context.fillStyle = 'yellow';
+            context.fill();
+        }
+
+    }
+
+    function drawPrinting(context, printingFormatV, printingFormatH, SheetV, SheetH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2, maxGain) {
+
+
+        alert(maxGain);
+        if (maxGain == 0) {
+            maxGain = gainOnSide1 * gainOnSide2;
+        }
+
+        printingFormatH *= zoom;
+        printingFormatV *= zoom;
+
+        SheetH *= zoom;
+        SheetV *= zoom;
+
+        var passo = 10 * zoom;
+
+        context.beginPath();
+
+        context.strokeStyle = "#eee";
+        context.stroke();
+
+        context.beginPath();
+
+        var countShape = 0;
+
+        if (sideOnside == 'True') {
+
+            offsetx = (SheetH - (printingFormatH * gainOnSide2)) / 2
+            offsety = (SheetV - (printingFormatV * gainOnSide1)) / 2
+
+
+            for (var j = 0, countShape = 0; j < gainOnSide1 && countShape < maxGain; j++) {
+                for (var i = 0; i < gainOnSide2 && countShape < maxGain; i++, countShape++) {
+                    context.rect(offsetx + printingFormatH * i, offsety + printingFormatV * j, printingFormatH, printingFormatV);
+                }
+            }
+        }
+        else {
+
+            offsetx = (SheetH - (printingFormatV * gainOnSide2)) / 2
+            offsety = (SheetV - (printingFormatH * gainOnSide1)) / 2
+
+            for (var j = 0, countShape = 0; j < gainOnSide2 && countShape < maxGain; j++) {
+                for (var i = 0; i < gainOnSide1 && countShape < maxGain; i++, countShape++) {
+                    context.rect(offsetx + printingFormatV * j, offsety + printingFormatH * i, printingFormatV, printingFormatH);
+                }
+            }
+
+        }
+
+        context.strokeStyle = "rgb(10, 10, 10)";
+        context.stroke();
+
+    }
+
+</script>

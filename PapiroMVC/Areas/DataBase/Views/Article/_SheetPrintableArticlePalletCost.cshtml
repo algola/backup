@@ -6,10 +6,10 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticlePalletCostTitle");
 }
 
-<h3>@ViewBag.Title</h3>
-<br />
     <fieldset>
-        <legend>SheetPrintableArticlePalletCost</legend>
+            <legend>
+                   @ViewBag.Title
+                            </legend>
 
       
             @Html.ValidationMessageFor(model => model.SheetPrintableArticlePalletCost)

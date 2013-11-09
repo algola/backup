@@ -205,6 +205,10 @@
           <Property Name="CodProductTask" Type="char" MaxLength="50" />
           <Property Name="CodProductPartTask" Type="char" MaxLength="50" />
           <Property Name="CodProductPartPrintableArticle" Type="char" MaxLength="50" />
+          <Property Name="Description" Type="char" />
+          <Property Name="Quantity" Type="double" />
+          <Property Name="UnitCost" Type="char" MaxLength="20" />
+          <Property Name="TotalCost" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -1507,6 +1511,8 @@
           <Property Type="Int32" Name="ServicesNumber" />
           <Property Type="String" Name="CodProductPart_" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductPartsToProductTasks" Relationship="dbModel.FK_productpartstoproducttask_CodProductPart" FromRole="ProductPart" ToRole="productpartstoproducttask" />
+          <Property Type="String" Name="FormatOpened" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SubjectNumber" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -1630,7 +1636,6 @@
           <Property Type="String" Name="Format" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductPartSingleSheet" BaseType="dbModel.ProductPart" >
-          <Property Type="Int32" Name="SubjectNumber" />
           <Property Type="Boolean" Name="RawCut" />
         </EntityType>
         <EntityType Name="ProductPartCoverSheet" BaseType="dbModel.ProductPart" >
@@ -1638,7 +1643,6 @@
           <Property Type="Double" Name="Back" />
         </EntityType>
         <EntityType Name="ProductPartBookSheet" BaseType="dbModel.ProductPart" >
-          <Property Type="String" Name="FormatOpened" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="Pages" />
         </EntityType>
         <EntityType Name="ProductPartBlockSheet" BaseType="dbModel.ProductPart" />
@@ -1794,7 +1798,6 @@
           <Property Type="String" Name="Format" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductPartRigid" BaseType="dbModel.ProductPart" >
-          <Property Type="Int32" Name="SubjectNumber" />
         </EntityType>
         <EntityType Name="ProductPartRigidArticle" BaseType="dbModel.ProductPartsPrintableArticle" />
         <EntityType Name="Cost">
@@ -1811,6 +1814,10 @@
           <NavigationProperty Name="ProductPartsPrintableArticle" Relationship="dbModel.FK_costs_CodProductPartPrintableArticle" FromRole="cost" ToRole="ProductPartsPrintableArticle" />
           <NavigationProperty Name="ProductPartTask" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="cost" ToRole="ProductPartTask" />
           <NavigationProperty Name="ProductTask" Relationship="dbModel.FK_costs_CodProductTask" FromRole="cost" ToRole="ProductTask" />
+          <Property Type="String" Name="Description" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="Double" Name="Quantity" />
+          <Property Type="String" Name="UnitCost" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TotalCost" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -2490,6 +2497,8 @@
           <EntitySetMapping Name="ProductParts">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPart)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="SubjectNumber" ColumnName="SubjectNumber" />
+                <ScalarProperty Name="FormatOpened" ColumnName="FormatOpened" />
                 <ScalarProperty Name="CodProductPart_" ColumnName="CodProductPart_" />
                 <ScalarProperty Name="ServicesNumber" ColumnName="ServicesNumber" />
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
@@ -2504,7 +2513,6 @@
               <MappingFragment StoreEntitySet="productparts">
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <ScalarProperty Name="RawCut" ColumnName="RawCut" />
-                <ScalarProperty Name="SubjectNumber" ColumnName="SubjectNumber" />
                 <Condition ColumnName="SelectorProductPart" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2520,7 +2528,6 @@
               <MappingFragment StoreEntitySet="productparts">
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <ScalarProperty Name="Pages" ColumnName="Pages" />
-                <ScalarProperty Name="FormatOpened" ColumnName="FormatOpened" />
                 <Condition ColumnName="SelectorProductPart" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2532,7 +2539,6 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartRigid)">
               <MappingFragment StoreEntitySet="productparts">
-                <ScalarProperty Name="SubjectNumber" ColumnName="SubjectNumber" />
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <Condition ColumnName="SelectorProductPart" Value="4" />
               </MappingFragment>
@@ -2674,6 +2680,10 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CodProductPartPrintableArticle" ColumnName="CodProductPartPrintableArticle" />
                 <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
                 <ScalarProperty Name="CodProductTask" ColumnName="CodProductTask" />
@@ -2743,7 +2753,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="80">
+      <Diagram Name="Model1" ZoomLevel="55">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />
@@ -3063,7 +3073,7 @@
         <InheritanceConnector EntityType="dbModel.ProductSingleSheet" />
         <EntityTypeShape EntityType="dbModel.ProductBookSheet" Width="1.5" PointX="8.25" PointY="42" />
         <InheritanceConnector EntityType="dbModel.ProductBookSheet" />
-        <EntityTypeShape EntityType="dbModel.ProductBlockSheet" Width="1.5" PointX="10.5" PointY="42" />
+        <EntityTypeShape EntityType="dbModel.ProductBlockSheet" Width="1.5" PointX="10.5" PointY="42" IsExpanded="false" />
         <InheritanceConnector EntityType="dbModel.ProductBlockSheet" />
         <EntityTypeShape EntityType="dbModel.ProductPartSingleSheet" Width="1.5" PointX="6" PointY="35.5" />
         <InheritanceConnector EntityType="dbModel.ProductPartSingleSheet" />
@@ -3075,7 +3085,7 @@
         <InheritanceConnector EntityType="dbModel.ProductPartBlockSheet" />
         <EntityTypeShape EntityType="dbModel.ProductPartSheetArticle" Width="2.5" PointX="0.5" PointY="34.75" />
         <InheritanceConnector EntityType="dbModel.ProductPartSheetArticle" />
-        <EntityTypeShape EntityType="dbModel.TaskExecutorTypeOfTask" Width="1.5" PointX="6.125" PointY="4.375" />
+        <EntityTypeShape EntityType="dbModel.TaskExecutorTypeOfTask" Width="1.5" PointX="5.375" PointY="4.375" />
         <EntityTypeShape EntityType="dbModel.TypeOfTask" Width="3.25" PointX="9.125" PointY="6.625" />
         <AssociationConnector Association="dbModel.FK_taskexecutortypeoftask_CodTaskExecutor" />
         <AssociationConnector Association="dbModel.FK_taskexecutortypeoftask_CodTypeOfTask" />

@@ -1,0 +1,156 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartSheetArticle
+
+@{
+    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
+    string url = Url.Action("SheetPrintableArticleList", new { controller = "Article", area = "DataBase" });
+}
+
+<div class="controls col-sm-9">
+    <a href="javascript:void(0)" id="staticDialogPart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)">@Html.T(stringsGrid, "DialogTitle")</a>
+</div>
+
+@Html.HiddenFor(model => model.IsSelected)
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodProductPartPrintableArticle)
+@Html.HiddenFor(model => model.CodProductPart)
+@Html.HiddenFor(model => model.ProductPartPrintableArticleName)
+@Html.AlgolaEditorFor(model => model.TypeOfMaterial)
+@Html.AlgolaEditorFor(model => model.NameOfMaterial)
+@Html.AlgolaEditorFor(model => model.Color)
+@Html.AlgolaEditorFor(model => model.Weight)
+
+@Html.HiddenFor(model => model.TypeOfProductPartsPrintableArticle)
+
+<div id="dialog-messagePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)" class="hide">
+
+    <table id="gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)">
+        <tr>
+            <td />
+        </tr>
+    </table>
+    <div id="pagerArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)"></div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    var lastSel = -1;
+
+    $(document).ready(
+
+        function () {
+            loadGrid("#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)","#pagerArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)");
+        });
+
+    function loadGrid(gridName,pagerName) {
+
+        var myGrid = $(gridName).jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+                { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 80, align: 'left', editable: false, hidden: false }
+            ],
+
+            pager: pagerName,
+
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
+
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    myGrid.jqGrid('restoreRow', lastSel);
+                    lastSel = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid.jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)").trigger("reloadGrid");
+                    },
+                    url: 'editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            }
+
+        });
+
+        myGrid.jqGrid('navGrid', '#pagerArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)', { edit: false, add: false, del: false, search: false });
+        myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+    }
+
+
+    $("#staticDialogPart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)").on('click', function (e) {
+        e.preventDefault();
+
+        var dialog = $("#dialog-messagePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        if (lastSel != -1) {
+                            var myGrid = $('#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel, 'TypeOfMaterial');
+
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
+
+                            var myGrid = $('#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel, 'NameOfMaterial');
+
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
+
+                            var myGrid = $('#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueColor = myGrid.jqGrid('getCell', lastSel, 'Color');
+
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+
+                            var myGrid = $('#gridArticlePart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueWeight = myGrid.jqGrid('getCell', lastSel, 'Weight');
+
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
+                        }
+
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+
+
+        });
+
+
+
+</script>

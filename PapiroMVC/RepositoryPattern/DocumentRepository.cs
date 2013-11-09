@@ -11,6 +11,21 @@ namespace Services
 {
     public class DocumentRepository : GenericRepository<dbEntities, Document>, IDocumentRepository
     {
+        public Cost GetCost(string codCost)
+        {
+            return Context.Costs.Include("ProductPartTask.OptionTypeOfTask")
+                .Include("ProductPartTask")
+                .Include("ProductTask.OptionTypeOfTask")
+                .Include("ProductPartTask.ProductPart")
+                .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles")
+                .Include("ProductTask").Where(x => x.CodCost == codCost).FirstOrDefault();
+        }
+
+        public IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct)
+        {
+            return Context.Costs.Where(x => x.CodDocumentProduct == codDocumentProduct);
+        }
+
         public string GetNewCode(Document a)
         {
             var codes = (from COD in this.GetAll() select COD.CodDocument).ToArray().OrderBy(x => x, new SemiNumericComparer());
@@ -26,33 +41,32 @@ namespace Services
             //prodotti in documento
             var ppart = c.DocumentProducts.ToList();
             foreach (var item in c.DocumentProducts)
-            {             
-                item.CodDocumentProduct = c.CodDocument + "-" +  ppart.IndexOf(item).ToString();
+            {
+                item.CodDocumentProduct = c.CodDocument + "-" + ppart.IndexOf(item).ToString();
                 item.CodDocument = c.CodDocument;
                 item.TimeStampTable = DateTime.Now;
 
-                //task della parte del prodotto
-                var pptask = item.Costs.ToList();
-                foreach (var item2 in item.Costs)
+                var costl = item.Costs.ToList();
+                foreach (var itemCost in item.Costs)
                 {
-                    item2.CodDocumentProduct = item.CodDocumentProduct;
-                    item2.TimeStampTable = DateTime.Now;
-                    item2.CodCost = item.CodDocumentProduct + "-" + pptask.IndexOf(item2).ToString();                    
+                    itemCost.TimeStampTable = DateTime.Now;
+                    itemCost.CodDocumentProduct = item.CodDocumentProduct;
+                    itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();
                 }
             }
 
-       }
+        }
 
         public void SaveOnSession(Document entity)
         {
             entity.CodDocument = "session";
             DocumentProductCodeRigen(entity);
-            System.Web.HttpContext.Current.Session["document"] = entity;  
+            System.Web.HttpContext.Current.Session["document"] = entity;
         }
 
         public Document GetFromSession()
         {
-            return (Document) System.Web.HttpContext.Current.Session["document"];  
+            return (Document)System.Web.HttpContext.Current.Session["document"];
         }
 
         public override void Add(Document entity)
@@ -74,14 +88,14 @@ namespace Services
                 base.Save();
             }
             catch (OptimisticConcurrencyException)
-            {                
+            {
                 Context.SaveChanges();
-            }           
+            }
         }
 
         public override void Edit(Document entity)
         {
-            
+
             DocumentProductCodeRigen(entity);
 
             foreach (var item in entity.DocumentProducts)
@@ -92,7 +106,10 @@ namespace Services
                 }
                 foreach (var item2 in item.Costs)
                 {
-                    Context.Entry(item2).State = System.Data.EntityState.Modified;
+                    if (Context.Entry(item2).State != System.Data.EntityState.Added)
+                    {
+                        Context.Entry(item2).State = System.Data.EntityState.Modified;
+                    }
                 }
 
             }
@@ -102,7 +119,7 @@ namespace Services
 
         public Document GetSingle(string codDocument)
         {
-            var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);           
+            var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
             return query;
         }
 

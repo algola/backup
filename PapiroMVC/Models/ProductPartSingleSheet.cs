@@ -14,7 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class ProductPartSingleSheet : ProductPart
     {
-        public Nullable<int> SubjectNumber { get; set; }
         public Nullable<bool> RawCut { get; set; }
     }
 }

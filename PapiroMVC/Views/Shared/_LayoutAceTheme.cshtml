@@ -12,11 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="~/Scripts/jquery-2.0.3.min.js"></script>
-
+    <script src="~/Scripts/spin.js"></script>
+    
     <!--basic styles-->
     <link href="~/Content/acetheme/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/acetheme/assets/css/bootstrap-responsive.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/font-awesome.min.css" />
+
 
     <!--[if IE 7]>
 		  <link rel="stylesheet" href="~/Content/acetheme/assets/css/font-awesome-ie7.min.css" />
@@ -73,7 +75,6 @@
         <script type="text/javascript">
             try { ace.settings.check('main-container', 'fixed') } catch (e) { }
         </script>
-
         <div class="main-container-inner">
             <a class="menu-toggler" id="menu-toggler" href="#">
                 <span class="menu-text"></span>
@@ -113,54 +114,53 @@
             </a>
 
         </div>
-        <!-- /.main-container -->
+    </div>
+    <!-- /.main-container -->
 
 
-        <!-- Le javascript
+    <!-- Le javascript
     ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placed at the end of the document so the pages load faster -->
 
-        <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
 
-        <!--basic scripts-->
+    <!--basic scripts-->
 
-        <!--[if !IE]>-->
+    <!--[if !IE]>-->
 
-        <script type="text/javascript">
-            window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
-        </script>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
 
-        <!--<![endif]-->
+    <!--<![endif]-->
 
-        <!--[if IE]>
+    <!--[if IE]>
 <script type="text/javascript">
- window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+ window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
 
-        <script type="text/javascript">
-            if ("ontouchend" in document) document.write("<script src='~/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-        </script>
-        <script src="~/Content/acetheme/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        if ("ontouchend" in document) document.write("<script src='/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="~/Content/acetheme/assets/js/bootstrap.min.js"></script>
 
-        <!--page specific plugin scripts-->
-        <!-- page specific plugin scripts -->
-        @RenderSection("specificPluginScript", required: false)
-
-        <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
-        <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-
-        @Html.Partial("_loading")
+    <!--page specific plugin scripts-->
+    <!-- page specific plugin scripts -->
+    @RenderSection("specificPluginScript", required: false)
 
 
-        <script src="~/Content/acetheme/assets//js/prettify.js"></script>
+    @Html.Partial("_loading")
 
-        <!--ace scripts-->
 
-        <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
-        <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+    <script src="~/Content/acetheme/assets//js/prettify.js"></script>
 
-        <!-- inline scripts related to this page -->
+    <!--ace scripts-->
+
+    <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
     @RenderSection("Scripts", required: false)
 
 </body>

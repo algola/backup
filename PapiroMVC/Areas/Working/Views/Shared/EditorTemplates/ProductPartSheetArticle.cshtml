@@ -2,136 +2,171 @@
 @model PapiroMVC.Models.ProductPartSheetArticle
 
 @{
-    
-    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";  
+    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
     string url = Url.Action("SheetPrintableArticleList", new { controller = "Article", area = "DataBase" });
 
-    }
+    var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
+}
 
-            @Html.HiddenFor(model => model.IsSelected)
-            @Html.HiddenFor(model => model.TimeStampTable)
-            @Html.HiddenFor(model => model.CodProductPartPrintableArticle)
-            @Html.HiddenFor(model => model.CodProductPart)
-            @Html.HiddenFor(model => model.ProductPartPrintableArticleName)
-            @Html.AlgolaEditorFor(model => model.TypeOfMaterial)
-            @Html.AlgolaEditorFor(model => model.NameOfMaterial)
-            @Html.AlgolaEditorFor(model => model.Color)
-            @Html.AlgolaEditorFor(model => model.Weight)
+<div class="controls col-sm-9">
+    <a href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+</div>
 
-            @Html.HiddenFor(model => model.TypeOfProductPartsPrintableArticle)      
+@Html.HiddenFor(model => model.IsSelected)
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodProductPartPrintableArticle)
+@Html.HiddenFor(model => model.CodProductPart)
+@Html.HiddenFor(model => model.ProductPartPrintableArticleName)
+@Html.AlgolaEditorFor(model => model.TypeOfMaterial)
+@Html.AlgolaEditorFor(model => model.NameOfMaterial)
+@Html.AlgolaEditorFor(model => model.Color)
+@Html.AlgolaEditorFor(model => model.Weight)
 
+@Html.HiddenFor(model => model.TypeOfProductPartsPrintableArticle)
 
-<a href="javascript:void(0)" id="staticDialogPart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)">@Html.T(stringsGrid, "DialogTitle")</a>
-<br />
-<br />      
+<div id="dialog-message@(suffx)" class="hide">
+
+    <table id="gridArticle@(suffx)">
+        <tr>
+            <td />
+        </tr>
+    </table>
+    <div id="pagerArticle@(suffx)"></div>
+
+</div>
+
 <script type="text/javascript">
+
+    var lastSel@(suffx) = -1;
+    var myGrid@(suffx) = null;
+
+
     $(document).ready(
-
         function () {
+            loadGrid@(suffx)();
+        });
 
-            $('#staticDialogPart@(ViewBag.IndexPart)PartArticle@(ViewBag.IndexPartArticle)').click(function (e) {
+    function loadGrid@(suffx)() {
 
-
-                //eventually stop spinner
-                HideProcessingMsg();
-
-            $.Dialog({
-                'title'      : '@Html.T(stringsGrid, "DialogSubTitle")' ,
-                'content': '<table id="gridArticle"><tr><td/></tr></table><div id="pagerArticle"></div>',
-                'buttons': {
-                    '@Html.T(stringsGrid, "Cancel")': {
-                        'action': function() {}
-                    },
-                    '@Html.T(stringsGrid, "Ok")': {
-                        'action': function () {
-                            if (lastSel != -1) {
-                                var myGrid = $('#gridArticle'),
-                                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                    celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel, 'TypeOfMaterial');
-
-                                $('#ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
-
-                                var myGrid = $('#gridArticle'),
-                                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                    celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel, 'NameOfMaterial');
-
-                                $('#ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
-
-                                var myGrid = $('#gridArticle'),
-                                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                    celValueColor = myGrid.jqGrid('getCell', lastSel, 'Color');
-
-                                $('#ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
-
-                                var myGrid = $('#gridArticle'),
-                                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                    celValueWeight = myGrid.jqGrid('getCell', lastSel, 'Weight');
-
-                                $('#ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
-                            }
-
-                        }
-                }
-                }
-            });
-
-            var lastSel = -1;
-
-            var myGrid = $("#gridArticle").jqGrid({
-                url: '@url',
-                datatype: 'json',
-                colModel: [
-                    { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
-                    { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
+        myGrid@(suffx) = $("#gridArticle@(suffx)").jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+                { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 80, align: 'left', editable: false, hidden: false }
             ],
 
-                
-                pager: '#pagerArticle',
+            pager: '#pagerArticle@(suffx)',
 
-                rowNum: 15,
-                rowList: [15, 20, 50],
-                viewrecords: true,
-                autowidth: false,
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
 
-                onSelectRow: function (id) {
-                    if (id && id !== lastSel) {
-                        myGrid.jqGrid('restoreRow', lastSel);
-                        lastSel = id;
+            onSelectRow: function (id) {
+                if (id && id !== lastSel@(suffx)) {
+                    myGrid@(suffx).jqGrid('restoreRow', lastSel@(suffx));
+                    lastSel@(suffx) = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid@(suffx).jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridArticle@(suffx)").trigger("reloadGrid");
+                    },
+                    url: 'editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            }
+
+        });
+
+        myGrid@(suffx).jqGrid('navGrid', '#pagerArticle@(suffx)', { edit: false, add: false, del: false, search: false });
+        myGrid@(suffx).jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+    }
+
+    function reloadArticle@(suffx)() {
+        $("#gridArticle@(suffx)").trigger("reloadGrid");
+    }
+
+    $("#staticDialog@(suffx)").on('click', function (e) {
+        e.preventDefault();
+
+        loadGrid@(suffx)();
+
+        var dialog = $("#dialog-message@(suffx)").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+
+                        reloadArticle@(suffx)();
+                        $(this).dialog("close");
                     }
                 },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
 
-                ondblClickRow: function (id, ri, ci) {
-                    myGrid.jqGrid('editRow', id, {
-                        keys: true,
-                        oneditfunc: function () {
-                            //...
-                        },
-                        aftersavefunc: function () {
-                            $("#gridArticle").trigger("reloadGrid");
-                        },
-                        url: 'editUrl'
-                    });
-                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
-                    return;
+                        if (lastSel@(suffx) != -1) {
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'TypeOfMaterial');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'NameOfMaterial');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueWeight = myGrid.jqGrid('getCell', lastSel@(suffx), 'Weight');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
+
+                        }
+                        reloadArticle@(suffx)();
+
+                        $(this).dialog("close");
+                    }
                 }
-
-            });
-
-            myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: false });
-            myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
-
+            ]
         });
 
-
-        });
-
-
-        function reloadArticle() {
-            $("#gridArticle").trigger("reloadGrid");
-        }
+        /**
+        dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+        };
+        **/
+    });
 
 </script>
+
+<script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>

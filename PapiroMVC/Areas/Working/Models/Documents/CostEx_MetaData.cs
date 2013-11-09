@@ -49,7 +49,21 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResCost), "ProductTaskToolTip")]
         public virtual ProductTask ProductTask { get; set; }
 
+        [DisplayNameLocalized(typeof(ResCost), "Description")]
+        [Tooltip(typeof(ResCost), "DescriptionToolTip")]
+        public string Description { get; set; }
 
+        [DisplayNameLocalized(typeof(ResCost), "TotalCost")]
+        [Tooltip(typeof(ResCost), "TotalCostToolTip")]
+        public string TotalCost { get; set; }
+
+        [DisplayNameLocalized(typeof(ResCost), "Quantity")]
+        [Tooltip(typeof(ResCost), "QuantityToolTip")]
+        public Double Quantity { get; set; }
+
+        [DisplayNameLocalized(typeof(ResCost), "UnitCost")]
+        [Tooltip(typeof(ResCost), "UnitCostToolTip")]
+        public string UnitCost { get; set; }
 
     }
 }

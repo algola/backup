@@ -1,0 +1,11 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.CostDetail
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+<h1>litho foglio</h1>
+
+@*solo per il calcolo della resa sul foglio*@
+@Html.Partial("_SheetCostDetail",Model)

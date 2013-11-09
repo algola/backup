@@ -120,6 +120,9 @@
   <data name="ArticleCaption" xml:space="preserve">
     <value>Articolo</value>
   </data>
+  <data name="Articles" xml:space="preserve">
+    <value>Materiali</value>
+  </data>
   <data name="AutoCahngesCaption" xml:space="preserve">
     <value>Variazione automatica dati</value>
   </data>

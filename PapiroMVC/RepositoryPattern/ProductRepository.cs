@@ -20,52 +20,8 @@ namespace Services
 
         private void ProductPartCodeRigen(Product c)
         {
-            c.TimeStampTable = DateTime.Now;
-
-            //parti del prodotto
-            var ppart = c.ProductParts.ToList();
-            foreach (var item in c.ProductParts)
-            {
-             
-                item.CodProductPart = c.CodProduct + "-" +  ppart.IndexOf(item).ToString();
-                item.CodProduct = c.CodProduct;
-                item.TimeStampTable = DateTime.Now;
-
-                //task della parte del prodotto
-                var pptask = item.ProductPartTasks.ToList();
-                foreach (var item2 in item.ProductPartTasks)
-                {
-                    item2.CodProductPart = item.CodProductPart;
-                    item2.TimeStampTable = DateTime.Now;
-                    item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString();                    
-                }
-
-                //articoli della parte del prodotto
-                var pppart = item.ProductPartPrintableArticles.ToList();
-                foreach (var item2 in item.ProductPartPrintableArticles)
-                {
-                    item2.CodProductPart = item.CodProductPart;
-                    item2.TimeStampTable = DateTime.Now;
-                    item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString();
-                }
-
-            }
-
-            //task del prodotto
-            var pt = c.ProductTasks.ToList();
-            foreach (var item in c.ProductTasks)
-            {
-                item.CodProductTask = c.CodProduct + "-" + pt.IndexOf(item).ToString();
-                item.CodProduct = c.CodProduct;
-                item.TimeStampTable = DateTime.Now;
-            }
-
-
-            if (c.ProductName == "" || c.ProductName == null)
-            {
-                c.ProductName = c.ToString();
-            }
-
+            //polimorfismo
+            c.ProductPartCodeRigen();
        }
 
         public override void Add(Product entity)
@@ -79,7 +35,6 @@ namespace Services
             Console.WriteLine(Context.Database.Connection.ConnectionString);
             return Context.Products.Include("ProductParts").Include("ProductTasks");
         }
-
 
         public override void Save()
         {

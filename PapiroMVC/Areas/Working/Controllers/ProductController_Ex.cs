@@ -9,7 +9,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 {
     public partial class ProductController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-
         public ActionResult ProductList(GridSettings gridSettings)
         {
             string codProductFilter = string.Empty;
