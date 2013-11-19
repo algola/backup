@@ -8,13 +8,17 @@
         <EntityContainer Name="dbModelStoreContainer">
           <EntitySet Name="articlecost" EntityType="dbModel.Store.articlecost" store:Type="Tables" Schema="db" />
           <EntitySet Name="articles" EntityType="dbModel.Store.articles" store:Type="Tables" Schema="db" />
+          <EntitySet Name="costdetails" EntityType="dbModel.Store.costdetails" store:Type="Tables" Schema="db" />
           <EntitySet Name="costs" EntityType="dbModel.Store.costs" store:Type="Tables" Schema="db" />
           <EntitySet Name="customersupplierbases" EntityType="dbModel.Store.customersupplierbases" store:Type="Tables" Schema="db" />
           <EntitySet Name="customersuppliers" EntityType="dbModel.Store.customersuppliers" store:Type="Tables" Schema="db" />
           <EntitySet Name="documentproducts" EntityType="dbModel.Store.documentproducts" store:Type="Tables" Schema="db" />
           <EntitySet Name="documents" EntityType="dbModel.Store.documents" store:Type="Tables" Schema="db" />
+          <EntitySet Name="makereadies" EntityType="dbModel.Store.makereadies" store:Type="Tables" Schema="db" />
           <EntitySet Name="menuproduct" EntityType="dbModel.Store.menuproduct" store:Type="Tables" Schema="db" />
           <EntitySet Name="optiontypeoftask" EntityType="dbModel.Store.optiontypeoftask" store:Type="Tables" Schema="db" />
+          <EntitySet Name="productpartprinting" EntityType="dbModel.Store.productpartprinting" store:Type="Tables" Schema="db" />
+          <EntitySet Name="productpartprintinggain" EntityType="dbModel.Store.productpartprintinggain" store:Type="Tables" Schema="db" />
           <EntitySet Name="productparts" EntityType="dbModel.Store.productparts" store:Type="Tables" Schema="db" />
           <EntitySet Name="productpartsprintablearticle" EntityType="dbModel.Store.productpartsprintablearticle" store:Type="Tables" Schema="db" />
           <EntitySet Name="productpartstoproducttask" EntityType="dbModel.Store.productpartstoproducttask" store:Type="Tables" Schema="db" />
@@ -38,6 +42,22 @@
           <AssociationSet Name="FK_articles_CodSupplierMaker" Association="dbModel.Store.FK_articles_CodSupplierMaker">
             <End Role="customersuppliers" EntitySet="customersuppliers" />
             <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodComputedBy" Association="dbModel.Store.FK_costdetails_CodComputedBy">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="costdetails1" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodCost" Association="dbModel.Store.FK_costdetails_CodCost">
+            <End Role="costs" EntitySet="costs" />
+            <End Role="costdetails" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodProductPart" Association="dbModel.Store.FK_costdetails_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="costdetails" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodTaskExecutorSelected" Association="dbModel.Store.FK_costdetails_CodTaskExecutorSelected">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="costdetails" EntitySet="costdetails" />
           </AssociationSet>
           <AssociationSet Name="FK_costs_CodDocumentProduct" Association="dbModel.Store.FK_costs_CodDocumentProduct">
             <End Role="documentproducts" EntitySet="documentproducts" />
@@ -75,9 +95,29 @@
             <End Role="customersuppliers" EntitySet="customersuppliers" />
             <End Role="documents" EntitySet="documents" />
           </AssociationSet>
+          <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="dbModel.Store.FK_makereadies_CodProductPartPrintingGain">
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+            <End Role="makereadies" EntitySet="makereadies" />
+          </AssociationSet>
           <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="dbModel.Store.FK_optiontypeoftask_CodTypeOfTask">
             <End Role="typeoftask" EntitySet="typeoftask" />
             <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="dbModel.Store.FK_productpartprinting_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprinting_CodProductPartPrinting" Association="dbModel.Store.FK_productpartprinting_CodProductPartPrinting">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrinting" Association="dbModel.Store.FK_productpartprintinggain_CodProductPartPrinting">
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying" Association="dbModel.Store.FK_productpartprintinggain_CodProductPartPrintingGainBuying">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
           </AssociationSet>
           <AssociationSet Name="FK_productparts_CodProduct" Association="dbModel.Store.FK_productparts_CodProduct">
             <End Role="products" EntitySet="products" />
@@ -194,6 +234,29 @@
           <Property Name="Size" Type="char" MaxLength="50" />
           <Property Name="PrintableFormat" Type="char" MaxLength="9" />
           <Property Name="MqForafait" Type="double" />
+          <Property Name="Selector" Type="int" />
+        </EntityType>
+        <EntityType Name="costdetails">
+          <Key>
+            <PropertyRef Name="CodCostDetail" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="CodCostDetail" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="CodTaskExecutorSelected" Type="char" MaxLength="50" />
+          <Property Name="CodCost" Type="char" MaxLength="50" />
+          <Property Name="CodProductPart" Type="char" MaxLength="50" />
+          <Property Name="PrintingFormat" Type="char" MaxLength="20" />
+          <Property Name="BuyingFormat" Type="char" MaxLength="20" />
+          <Property Name="SelectorPrinting" Type="int" />
+          <Property Name="SelectorPrintedArticle" Type="int" />
+          <Property Name="BuyingWidth" Type="double" />
+          <Property Name="CostPerKg" Type="char" MaxLength="20" />
+          <Property Name="CostPerSheet" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
+          <Property Name="CostPerMq" Type="char" MaxLength="20" />
+          <Property Name="CostPerMl" Type="char" MaxLength="20" />
+          <Property Name="CodComputedBy" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -269,6 +332,25 @@
           <Property Name="Notes" Type="char" MaxLength="100" />
           <Property Name="DateDocument" Type="date" />
         </EntityType>
+        <EntityType Name="makereadies">
+          <Key>
+            <PropertyRef Name="CodMakeready" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="CodMakeready" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="CodProductPartPrintingGain" Type="char" MaxLength="50" />
+          <Property Name="ShapeOnSide1" Type="int" />
+          <Property Name="ShapeOnSide2" Type="int" />
+          <Property Name="ShapeOnShape" Type="bit" />
+          <Property Name="TypeOfPerfecting" Type="char" MaxLength="20" />
+          <Property Name="CalculatedGain" Type="decimal" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="PrintedShapes" Type="int" />
+          <Property Name="PrintedSubjects" Type="int" />
+          <Property Name="PrintablePages" Type="int" />
+          <Property Name="PrintedPages" Type="int" />
+          <Property Name="CodMaxSegn" Type="int" />
+        </EntityType>
         <EntityType Name="menuproduct">
           <Key>
             <PropertyRef Name="CodMenuProduct" />
@@ -290,6 +372,33 @@
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="OptionName" Type="char" MaxLength="100" />
           <Property Name="IdexOf" Type="int" />
+        </EntityType>
+        <EntityType Name="productpartprinting">
+          <Key>
+            <PropertyRef Name="CodProductPartPrinting" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="CodProductPartPrinting" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="PrintingFormat" Type="char" MaxLength="20" />
+          <Property Name="Width" Type="double" />
+          <Property Name="SelectorSheet" Type="int" />
+          <Property Name="SelectorPlotter" Type="int" />
+          <Property Name="CodProductPart" Type="char" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="productpartprintinggain">
+          <Key>
+            <PropertyRef Name="CodProductPartPrintingGain" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="CodProductPartPrintingGain" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="CodProductPartPrinting" Type="char" MaxLength="50" />
+          <Property Name="CodProductPartPrintingGainBuying" Type="char" MaxLength="50" />
+          <Property Name="UsePerfecting" Type="bit" />
+          <Property Name="MaxShape" Type="int" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="SelectorSheet" Type="int" />
+          <Property Name="SelectorPlotter" Type="int" />
         </EntityType>
         <EntityType Name="productparts">
           <Key>
@@ -585,6 +694,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_costdetails_CodComputedBy">
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="costdetails1" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="costdetails">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="costdetails1">
+              <PropertyRef Name="CodComputedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_costdetails_CodCost">
+          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="costs">
+              <PropertyRef Name="CodCost" />
+            </Principal>
+            <Dependent Role="costdetails">
+              <PropertyRef Name="CodCost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_costdetails_CodProductPart">
+          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparts">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="costdetails">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_costdetails_CodTaskExecutorSelected">
+          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="costdetails">
+              <PropertyRef Name="CodTaskExecutorSelected" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_costs_CodDocumentProduct">
           <End Role="documentproducts" Type="dbModel.Store.documentproducts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -711,6 +876,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_makereadies_CodProductPartPrintingGain">
+          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="makereadies" Type="dbModel.Store.makereadies" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productpartprintinggain">
+              <PropertyRef Name="CodProductPartPrintingGain" />
+            </Principal>
+            <Dependent Role="makereadies">
+              <PropertyRef Name="CodProductPartPrintingGain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_optiontypeoftask_CodTypeOfTask">
           <End Role="typeoftask" Type="dbModel.Store.typeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -722,6 +901,62 @@
             </Principal>
             <Dependent Role="optiontypeoftask">
               <PropertyRef Name="CodTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprinting_CodProductPart">
+          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparts">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="productpartprinting">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprinting_CodProductPartPrinting">
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="costdetails">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="productpartprinting">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprintinggain_CodProductPartPrinting">
+          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productpartprinting">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Principal>
+            <Dependent Role="productpartprintinggain">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying">
+          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="costdetails">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="productpartprintinggain">
+              <PropertyRef Name="CodProductPartPrintingGainBuying" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1075,6 +1310,50 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="DocumentProduct" EntitySet="DocumentProducts" />
           </AssociationSet>
+          <EntitySet Name="CostDetail" EntityType="dbModel.CostDetail" />
+          <AssociationSet Name="FK_costdetails_CodCost" Association="dbModel.FK_costdetails_CodCost">
+            <End Role="Cost" EntitySet="Costs" />
+            <End Role="costdetail" EntitySet="CostDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodProductPart" Association="dbModel.FK_costdetails_CodProductPart">
+            <End Role="ProductPart" EntitySet="ProductParts" />
+            <End Role="costdetail" EntitySet="CostDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodTaskExecutorSelected" Association="dbModel.FK_costdetails_CodTaskExecutorSelected">
+            <End Role="TaskExecutor" EntitySet="taskexecutors" />
+            <End Role="costdetail" EntitySet="CostDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodComputedBy" Association="dbModel.FK_costdetails_CodComputedBy">
+            <End Role="CostDetail" EntitySet="CostDetail" />
+            <End Role="CostDetail1" EntitySet="CostDetail" />
+          </AssociationSet>
+          <EntitySet Name="ProductPartPrinting" EntityType="dbModel.ProductPartPrinting" />
+          <AssociationSet Name="FK_productpartprinting_CodProductPartPrinting" Association="dbModel.FK_productpartprinting_CodProductPartPrinting">
+            <End Role="CostDetail" EntitySet="CostDetail" />
+            <End Role="ProductPartPrinting" EntitySet="ProductPartPrinting" />
+          </AssociationSet>
+          <EntitySet Name="ProductPartPrintingGain" EntityType="dbModel.ProductPartPrintingGain" />
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGain" Association="dbModel.FK_productpartprintinggain_CodProductPartPrintingGain">
+            <End Role="ProductPartPrinting" EntitySet="ProductPartPrinting" />
+            <End Role="productpartprintinggain" EntitySet="ProductPartPrintingGain" />
+          </AssociationSet>
+          <EntitySet Name="Makereadies" EntityType="dbModel.Makeready" />
+          <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="dbModel.FK_makereadies_CodProductPartPrintingGain">
+            <End Role="ProductPartPrintingGain" EntitySet="ProductPartPrintingGain" />
+            <End Role="makeready" EntitySet="Makereadies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="dbModel.FK_productpartprinting_CodProductPart">
+            <End Role="ProductPart" EntitySet="ProductParts" />
+            <End Role="ProductPartPrinting" EntitySet="ProductPartPrinting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying" Association="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying">
+            <End Role="CostDetail" EntitySet="CostDetail" />
+            <End Role="ProductPartPrintingGain" EntitySet="ProductPartPrintingGain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrinting" Association="dbModel.FK_productpartprintinggain_CodProductPartPrinting">
+            <End Role="ProductPartPrinting" EntitySet="ProductPartPrinting" />
+            <End Role="ProductPartPrintingGain" EntitySet="ProductPartPrintingGain" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
@@ -1101,6 +1380,7 @@
           <NavigationProperty Name="taskexecutortypeoftasks" Relationship="dbModel.FK_taskexecutortypeoftask_CodTaskExecutor" FromRole="TaskExecutor" ToRole="taskexecutortypeoftask" />
           <Property Type="String" Name="CodTypeOfTask" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="typeoftask" Relationship="dbModel.FK_taskexecutors_CodTypeOfTask" FromRole="TaskExecutor" ToRole="TypeOfTask" />
+          <NavigationProperty Name="costdetails" Relationship="dbModel.FK_costdetails_CodTaskExecutorSelected" FromRole="TaskExecutor" ToRole="costdetail" />
         </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
@@ -1241,6 +1521,7 @@
           <Property Type="String" Name="CodSupplierMaker" MaxLength="50" Unicode="false" FixedLength="true" />
           <NavigationProperty Name="CustomerSupplierBuy" Relationship="dbModel.FK_articles_customersuppliers" FromRole="Article" ToRole="CustomerSupplier" />
           <NavigationProperty Name="CustomerSupplierMaker" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="Article" ToRole="CustomerSupplier" />
+          <Property Type="Int32" Name="Selector" />
           </EntityType>
         <Association Name="FK_ArticleCost_CodArticle">
           <End Type="dbModel.Article" Role="articles" Multiplicity="0..1" />
@@ -1513,6 +1794,8 @@
           <NavigationProperty Name="ProductPartsToProductTasks" Relationship="dbModel.FK_productpartstoproducttask_CodProductPart" FromRole="ProductPart" ToRole="productpartstoproducttask" />
           <Property Type="String" Name="FormatOpened" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Int32" Name="SubjectNumber" />
+          <NavigationProperty Name="CostDetails" Relationship="dbModel.FK_costdetails_CodProductPart" FromRole="ProductPart" ToRole="costdetail" />
+          <NavigationProperty Name="productpartprintings" Relationship="dbModel.FK_productpartprinting_CodProductPart" FromRole="ProductPart" ToRole="ProductPartPrinting" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -1527,7 +1810,7 @@
           <Property Type="String" Name="NameOfMaterial" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="Color" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="Int64" Name="Weight" />
-          <NavigationProperty Name="costs" Relationship="dbModel.FK_costs_CodProductPartPrintableArticle" FromRole="ProductPartsPrintableArticle" ToRole="cost" />
+          <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartPrintableArticle" FromRole="ProductPartsPrintableArticle" ToRole="cost" />
         </EntityType>
         <EntityType Name="ProductPartTask">
           <Key>
@@ -1541,7 +1824,7 @@
           <NavigationProperty Name="OptionTypeOfTask" Relationship="dbModel.FK_productparttasks_CodOptionTypeOfTask" FromRole="ProductPartTask" ToRole="optiontypeoftask" />
           <Property Type="Boolean" Name="Hidden" />
           <Property Type="Int32" Name="IndexOf" />
-          <NavigationProperty Name="costs" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="ProductPartTask" ToRole="cost" />
+          <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="ProductPartTask" ToRole="cost" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -1628,7 +1911,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ProductSingleSheet" BaseType="dbModel.Product" />
+        <EntityType Name="ProductSingleSheet" BaseType="dbModel.Product" >
+        </EntityType>
         <EntityType Name="ProductBookSheet" BaseType="dbModel.Product" >
           <Property Type="String" Name="Format" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -1818,6 +2102,7 @@
           <Property Type="Double" Name="Quantity" />
           <Property Type="String" Name="UnitCost" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TotalCost" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CostDetails" Relationship="dbModel.FK_costdetails_CodCost" FromRole="Cost" ToRole="costdetail" />
         </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -1985,6 +2270,259 @@
             </Principal>
             <Dependent Role="DocumentProduct">
               <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CostDetail">
+          <Key>
+            <PropertyRef Name="CodCostDetail" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" />
+          <Property Type="String" Name="CodCostDetail" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CodTaskExecutorSelected" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CodCost" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CodProductPart" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TaskCost" Relationship="dbModel.FK_costdetails_CodCost" FromRole="costdetail" ToRole="Cost" />
+          <NavigationProperty Name="ProductPart" Relationship="dbModel.FK_costdetails_CodProductPart" FromRole="costdetail" ToRole="ProductPart" />
+          <NavigationProperty Name="TaskexEcutorSelected" Relationship="dbModel.FK_costdetails_CodTaskExecutorSelected" FromRole="costdetail" ToRole="TaskExecutor" />
+          <Property Type="String" Name="CodComputedBy" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Computes" Relationship="dbModel.FK_costdetails_CodComputedBy" FromRole="CostDetail" ToRole="CostDetail1" />
+          <NavigationProperty Name="ComputedBy" Relationship="dbModel.FK_costdetails_CodComputedBy" FromRole="CostDetail1" ToRole="CostDetail" />
+          <NavigationProperty Name="ProductPartPrinting" Relationship="dbModel.FK_productpartprinting_CodProductPartPrinting" FromRole="CostDetail" ToRole="ProductPartPrinting" />
+          <NavigationProperty Name="GainPrintingOnBuyings" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying" FromRole="CostDetail" ToRole="ProductPartPrintingGain" />
+          </EntityType>
+        <Association Name="FK_costdetails_CodCost">
+          <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.CostDetail" Role="costdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cost">
+              <PropertyRef Name="CodCost" />
+            </Principal>
+            <Dependent Role="costdetail">
+              <PropertyRef Name="CodCost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_costdetails_CodProductPart">
+          <End Type="dbModel.ProductPart" Role="ProductPart" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.CostDetail" Role="costdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPart">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="costdetail">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_costdetails_CodTaskExecutorSelected">
+          <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.CostDetail" Role="costdetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskExecutor">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="costdetail">
+              <PropertyRef Name="CodTaskExecutorSelected" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="PrintingCostDetail" BaseType="dbModel.CostDetail" >
+          <Property Type="String" Name="PrintingFormat" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PrintingSheetCostDetail" BaseType="dbModel.PrintingCostDetail" >
+          <Property Type="String" Name="BuyingFormat" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PrintedArticleCostDetail" BaseType="dbModel.CostDetail" >
+          <Property Type="String" Name="CostPerUnit" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PrintingRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
+          <Property Type="Double" Name="BuyingWidth" />
+        </EntityType>
+        <EntityType Name="ProductPartSinglePlotter" BaseType="dbModel.ProductPart">
+          <Property Type="Boolean" Name="RawCut" />
+        </EntityType>
+        <EntityType Name="PrintingPlotterCostDetail" BaseType="dbModel.CostDetail" >
+          <Property Type="Double" Name="BuyingWidth" />
+        </EntityType>
+        <EntityType Name="PrintedSheetArticleCostDetail" BaseType="dbModel.PrintedArticleCostDetail" >
+          <Property Type="String" Name="CostPerKg" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostPerSheet" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PrintedRollArticleCostDetail" BaseType="dbModel.PrintedArticleCostDetail" >
+          <Property Type="String" Name="CostPerMq" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostPerMl" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_costdetails_CodComputedBy">
+          <End Type="dbModel.CostDetail" Role="CostDetail" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.CostDetail" Role="CostDetail1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CostDetail">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="CostDetail1">
+              <PropertyRef Name="CodComputedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductPartPrinting">
+          <Key>
+            <PropertyRef Name="CodProductPartPrinting" />
+          </Key>
+          <Property Name="TimeStampTable" Nullable="false" Type="DateTime" />
+          <Property Name="CodProductPartPrinting" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="PrintingFormat" MaxLength="20" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="CostDetail" Relationship="dbModel.FK_productpartprinting_CodProductPartPrinting" FromRole="ProductPartPrinting" ToRole="CostDetail" />
+          <NavigationProperty Name="GainPartOnPrinting___" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrintingGain" FromRole="ProductPartPrinting" ToRole="productpartprintinggain" />
+          <Property Type="String" Name="CodProductPart" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Part" Relationship="dbModel.FK_productpartprinting_CodProductPart" FromRole="ProductPartPrinting" ToRole="ProductPart" />
+          <NavigationProperty Name="GainPartOnPrintings" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrinting" FromRole="ProductPartPrinting" ToRole="ProductPartPrintingGain" />
+        </EntityType>
+        <EntityType Name="ProductPartSheetPrinting" BaseType="dbModel.ProductPartPrinting" />
+        <EntityType Name="ProductPartPlotterPrinting" BaseType="dbModel.ProductPartPrinting" >
+          <Property Type="Double" Name="Width" />
+        </EntityType>
+        <EntityType Name="ProductPartSingleSheetPrinting" BaseType="dbModel.ProductPartSheetPrinting" />
+        <EntityType Name="ProductPartCoverSheetPrinting" BaseType="dbModel.ProductPartSheetPrinting" />
+        <EntityType Name="ProductPartBookSheetPrinting" BaseType="dbModel.ProductPartSheetPrinting" />
+        <EntityType Name="ProductPartSinglePlotterPrinting" BaseType="dbModel.ProductPartPlotterPrinting" />
+        <Association Name="FK_productpartprinting_CodProductPartPrinting">
+          <End Type="dbModel.CostDetail" Role="CostDetail" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="CostDetail">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="ProductPartPrinting">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductPartPrintingGain" Abstract="true">
+          <Key>
+            <PropertyRef Name="CodProductPartPrintingGain" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" />
+          <Property Type="String" Name="CodProductPartPrintingGain" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="UsePerfecting" />
+          <Property Type="Int32" Name="MaxShape" />
+          <NavigationProperty Name="ProductPartPrinting___" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrintingGain" FromRole="productpartprintinggain" ToRole="ProductPartPrinting" />
+          <NavigationProperty Name="Makereadies" Relationship="dbModel.FK_makereadies_CodProductPartPrintingGain" FromRole="ProductPartPrintingGain" ToRole="makeready" />
+          <Property Type="String" Name="CodProductPartPrintingGainBuying" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CostDetail" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying" FromRole="ProductPartPrintingGain" ToRole="CostDetail" />
+          <Property Type="String" Name="CodProductPartPrinting" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductPartPrinting" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrinting" FromRole="ProductPartPrintingGain" ToRole="ProductPartPrinting" />
+          </EntityType>
+        <Association Name="FK_productpartprintinggain_CodProductPartPrintingGain">
+          <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartPrintingGain" Role="productpartprintinggain" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartPrinting">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Principal>
+            <Dependent Role="productpartprintinggain">
+              <PropertyRef Name="CodProductPartPrintingGain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductPartPrintingSheetGain" BaseType="dbModel.ProductPartPrintingGain" Abstract="true" />
+        <EntityType Name="ProductPartPrintingPlotterGain" BaseType="dbModel.ProductPartPrintingGain" Abstract="true" />
+        <EntityType Name="ProductPartPrintingSheetGainSingle" BaseType="dbModel.ProductPartPrintingSheetGain" />
+        <EntityType Name="ProductPartPrintingSheetGainBook" BaseType="dbModel.ProductPartPrintingSheetGain" />
+        <EntityType Name="ProductPartPrintingPlotterGainSingle" BaseType="dbModel.ProductPartPrintingPlotterGain" />
+        <EntityType Name="Makeready">
+          <Key>
+            <PropertyRef Name="CodMakeready" />
+          </Key>
+          <Property Type="DateTime" Name="TimeStampTable" Nullable="false" />
+          <Property Type="String" Name="CodMakeready" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CodProductPartPrintingGain" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="ShapeOnSide1" />
+          <Property Type="Boolean" Name="SideOnSide" />
+          <Property Type="Decimal" Name="CalculatedGain" />
+          <NavigationProperty Name="ProductPartPrintingGain" Relationship="dbModel.FK_makereadies_CodProductPartPrintingGain" FromRole="makeready" ToRole="ProductPartPrintingGain" />
+          <Property Type="Int32" Name="ShapeOnSide2" />
+        </EntityType>
+        <Association Name="FK_makereadies_CodProductPartPrintingGain">
+          <End Type="dbModel.ProductPartPrintingGain" Role="ProductPartPrintingGain" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Makeready" Role="makeready" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartPrintingGain">
+              <PropertyRef Name="CodProductPartPrintingGain" />
+            </Principal>
+            <Dependent Role="makeready">
+              <PropertyRef Name="CodProductPartPrintingGain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MakereadyPrintingSingleSheet" BaseType="dbModel.Makeready" >
+          <Property Type="String" Name="TypeOfPerfecting" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PrintedShapes" />
+          <Property Type="Int32" Name="PrintedSubjects" />
+        </EntityType>
+        <EntityType Name="MakereadyPrintingBookSheet" BaseType="dbModel.Makeready" >
+          <Property Type="String" Name="TypeOfPerfecting" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PrintablePages" />
+          <Property Type="Int32" Name="PrintedPages" />
+          <Property Type="Int32" Name="CodMaxSegn" />
+        </EntityType>
+        <EntityType Name="MakereadyPrintingSinglePlotter" BaseType="dbModel.Makeready" >
+          <Property Type="Int32" Name="PrintedShapes" />
+          <Property Type="Int32" Name="PrintedSubjects" />
+        </EntityType>
+        <Association Name="FK_productpartprinting_CodProductPart">
+          <End Type="dbModel.ProductPart" Role="ProductPart" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPart">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="ProductPartPrinting">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying">
+          <End Type="dbModel.CostDetail" Role="CostDetail" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartPrintingGain" Role="ProductPartPrintingGain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CostDetail">
+              <PropertyRef Name="CodCostDetail" />
+            </Principal>
+            <Dependent Role="ProductPartPrintingGain">
+              <PropertyRef Name="CodProductPartPrintingGainBuying" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartprintinggain_CodProductPartPrinting">
+          <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartPrintingGain" Role="ProductPartPrintingGain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartPrinting">
+              <PropertyRef Name="CodProductPartPrinting" />
+            </Principal>
+            <Dependent Role="ProductPartPrintingGain">
+              <PropertyRef Name="CodProductPartPrinting" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2431,6 +2969,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="Selector" ColumnName="Selector" />
                 <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
                 <ScalarProperty Name="CodSupplierMaker" ColumnName="CodSupplierMaker" />
                 <ScalarProperty Name="CodSupplierBuy" ColumnName="CodSupplierBuy" />
@@ -2541,6 +3080,13 @@
               <MappingFragment StoreEntitySet="productparts">
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <Condition ColumnName="SelectorProductPart" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSinglePlotter)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
+                <ScalarProperty Name="RawCut" ColumnName="RawCut" />
+                <Condition ColumnName="SelectorProductPart" Value="5" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2732,6 +3278,198 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="CostDetail">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodComputedBy" ColumnName="CodComputedBy" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
+                <ScalarProperty Name="CodCost" ColumnName="CodCost" />
+                <ScalarProperty Name="CodTaskExecutorSelected" ColumnName="CodTaskExecutorSelected" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingSheetCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <ScalarProperty Name="BuyingFormat" ColumnName="BuyingFormat" />
+                <Condition ColumnName="SelectorPrinting" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintedArticleCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingRollCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="BuyingWidth" ColumnName="BuyingWidth" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="SelectorPrinting" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingPlotterCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="BuyingWidth" ColumnName="BuyingWidth" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintedSheetArticleCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CostPerSheet" ColumnName="CostPerSheet" />
+                <ScalarProperty Name="CostPerKg" ColumnName="CostPerKg" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="SelectorPrintedArticle" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintedRollArticleCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CostPerMl" ColumnName="CostPerMl" />
+                <ScalarProperty Name="CostPerMq" ColumnName="CostPerMq" />
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="SelectorPrintedArticle" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPartPrinting">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSheetPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPlotterPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSingleSheetPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="SelectorSheet" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSinglePlotterPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="SelectorPlotter" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartCoverSheetPrinting)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="SelectorSheet" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartBookSheetPrinting)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="SelectorSheet" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductPartPrintingGain">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingGain)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <ScalarProperty Name="CodProductPartPrintingGainBuying" ColumnName="CodProductPartPrintingGainBuying" />
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <ScalarProperty Name="MaxShape" ColumnName="MaxShape" />
+                <ScalarProperty Name="UsePerfecting" ColumnName="UsePerfecting" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingPlotterGain)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingSheetGain)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingSheetGainBook)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <Condition ColumnName="SelectorSheet" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingSheetGainSingle)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <Condition ColumnName="SelectorSheet" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingPlotterGainSingle)">
+              <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <Condition ColumnName="SelectorPlotter" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Makereadies">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Makeready)">
+              <MappingFragment StoreEntitySet="makereadies">
+                <ScalarProperty Name="ShapeOnSide2" ColumnName="ShapeOnSide2" />
+                <ScalarProperty Name="CodMakeready" ColumnName="CodMakeready" />
+                <ScalarProperty Name="CalculatedGain" ColumnName="CalculatedGain" />
+                <ScalarProperty Name="SideOnSide" ColumnName="ShapeOnShape" />
+                <ScalarProperty Name="ShapeOnSide1" ColumnName="ShapeOnSide1" />
+                <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.MakereadyPrintingSingleSheet)">
+              <MappingFragment StoreEntitySet="makereadies">
+                <ScalarProperty Name="PrintedSubjects" ColumnName="PrintedSubjects" />
+                <ScalarProperty Name="PrintedShapes" ColumnName="PrintedShapes" />
+                <ScalarProperty Name="TypeOfPerfecting" ColumnName="TypeOfPerfecting" />
+                <ScalarProperty Name="CodMakeready" ColumnName="CodMakeready" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.MakereadyPrintingBookSheet)">
+              <MappingFragment StoreEntitySet="makereadies">
+                <ScalarProperty Name="CodMaxSegn" ColumnName="CodMaxSegn" />
+                <ScalarProperty Name="PrintedPages" ColumnName="PrintedPages" />
+                <ScalarProperty Name="PrintablePages" ColumnName="PrintablePages" />
+                <ScalarProperty Name="TypeOfPerfecting" ColumnName="TypeOfPerfecting" />
+                <ScalarProperty Name="CodMakeready" ColumnName="CodMakeready" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.MakereadyPrintingSinglePlotter)">
+              <MappingFragment StoreEntitySet="makereadies">
+                <ScalarProperty Name="PrintedSubjects" ColumnName="PrintedSubjects" />
+                <ScalarProperty Name="PrintedShapes" ColumnName="PrintedShapes" />
+                <ScalarProperty Name="CodMakeready" ColumnName="CodMakeready" />
+                <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2753,7 +3491,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="55">
+      <Diagram Name="Model1" ZoomLevel="75">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />
@@ -3115,6 +3853,70 @@
         <AssociationConnector Association="dbModel.FK_productpartstoproducttask_CodProductPart" />
         <AssociationConnector Association="dbModel.FK_productpartstoproducttask_CodProductTask" />
         <AssociationConnector Association="dbModel.FK_documentproducts_CodProduct" />
+        <EntityTypeShape EntityType="dbModel.CostDetail" Width="2.625" PointX="44" PointY="22.125" />
+        <AssociationConnector Association="dbModel.FK_costdetails_CodCost" />
+        <AssociationConnector Association="dbModel.FK_costdetails_CodProductPart" />
+        <AssociationConnector Association="dbModel.FK_costdetails_CodTaskExecutorSelected" />
+        <EntityTypeShape EntityType="dbModel.PrintingCostDetail" Width="1.5" PointX="48.375" PointY="26.5" />
+        <InheritanceConnector EntityType="dbModel.PrintingCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintingSheetCostDetail" Width="1.5" PointX="45" PointY="28.625" />
+        <InheritanceConnector EntityType="dbModel.PrintingSheetCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintedArticleCostDetail" Width="1.5" PointX="42.5" PointY="26.5" />
+        <InheritanceConnector EntityType="dbModel.PrintedArticleCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintingRollCostDetail" Width="1.5" PointX="47.125" PointY="28.625" />
+        <InheritanceConnector EntityType="dbModel.PrintingRollCostDetail" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSinglePlotter" Width="1.5" PointX="6.125" PointY="37.625" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSinglePlotter" />
+        <EntityTypeShape EntityType="dbModel.PrintingPlotterCostDetail" Width="1.5" PointX="49.5" PointY="28.625" />
+        <InheritanceConnector EntityType="dbModel.PrintingPlotterCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintedSheetArticleCostDetail" Width="1.5" PointX="40.25" PointY="28.625" />
+        <InheritanceConnector EntityType="dbModel.PrintedSheetArticleCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintedRollArticleCostDetail" Width="1.5" PointX="42.625" PointY="28.625" />
+        <InheritanceConnector EntityType="dbModel.PrintedRollArticleCostDetail" />
+        <AssociationConnector Association="dbModel.FK_costdetails_CodComputedBy" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrinting" PointX="56.25" PointY="18.625" Width="1.5" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSheetPrinting" Width="1.5" PointX="52" PointY="22.25" />
+        <InheritanceConnector ManuallyRouted="true" EntityType="dbModel.ProductPartSheetPrinting">
+          <ConnectorPoint PointX="57" PointY="21.182190755208335" />
+          <ConnectorPoint PointX="57" PointY="21.875" />
+          <ConnectorPoint PointX="52.75" PointY="21.875" />
+          <ConnectorPoint PointX="52.75" PointY="22.25" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ProductPartPlotterPrinting" Width="1.5" PointX="57.75" PointY="22.25" />
+        <InheritanceConnector ManuallyRouted="false" EntityType="dbModel.ProductPartPlotterPrinting">
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ProductPartSingleSheetPrinting" Width="1.5" PointX="50.375" PointY="24.25" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSingleSheetPrinting" />
+        <EntityTypeShape EntityType="dbModel.ProductPartCoverSheetPrinting" Width="1.5" PointX="52.75" PointY="24.25" />
+        <EntityTypeShape EntityType="dbModel.ProductPartBookSheetPrinting" Width="1.5" PointX="55" PointY="24.25" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSinglePlotterPrinting" Width="1.5" PointX="58.75" PointY="24.5" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSinglePlotterPrinting" />
+        <AssociationConnector Association="dbModel.FK_productpartprinting_CodProductPartPrinting" />
+        <InheritanceConnector EntityType="dbModel.ProductPartCoverSheetPrinting" />
+        <InheritanceConnector EntityType="dbModel.ProductPartBookSheetPrinting" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingGain" Width="2.625" PointX="63.125" PointY="21" />
+        <AssociationConnector Association="dbModel.FK_productpartprintinggain_CodProductPartPrintingGain" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingSheetGain" Width="1.5" PointX="61.75" PointY="25.375" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintingSheetGain" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingPlotterGain" Width="1.5" PointX="67.75" PointY="25.375" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintingPlotterGain" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingSheetGainSingle" Width="1.5" PointX="59.875" PointY="27.75" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintingSheetGainSingle" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingSheetGainBook" Width="1.5" PointX="63.25" PointY="27.75" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintingSheetGainBook" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintingPlotterGainSingle" Width="1.5" PointX="66.75" PointY="27.75" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintingPlotterGainSingle" />
+        <EntityTypeShape EntityType="dbModel.Makeready" Width="2.375" PointX="74" PointY="21.625" />
+        <AssociationConnector Association="dbModel.FK_makereadies_CodProductPartPrintingGain" />
+        <EntityTypeShape EntityType="dbModel.MakereadyPrintingSingleSheet" Width="2.25" PointX="72.125" PointY="25.625" />
+        <InheritanceConnector EntityType="dbModel.MakereadyPrintingSingleSheet" />
+        <EntityTypeShape EntityType="dbModel.MakereadyPrintingBookSheet" Width="1.5" PointX="75.125" PointY="25.625" />
+        <InheritanceConnector EntityType="dbModel.MakereadyPrintingBookSheet" />
+        <EntityTypeShape EntityType="dbModel.MakereadyPrintingSinglePlotter" Width="1.5" PointX="77.875" PointY="25.625" />
+        <InheritanceConnector EntityType="dbModel.MakereadyPrintingSinglePlotter" />
+        <AssociationConnector Association="dbModel.FK_productpartprinting_CodProductPart" />
+        <AssociationConnector Association="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying" />
+        <AssociationConnector Association="dbModel.FK_productpartprintinggain_CodProductPartPrinting" />
         </Diagram>
     </Diagrams>
   </Designer>

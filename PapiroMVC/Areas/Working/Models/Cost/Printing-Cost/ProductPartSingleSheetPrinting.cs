@@ -8,7 +8,7 @@ namespace PapiroMVC.Models
 
     //each type has a specific view with particular property
     //ie: single sheet has a max gain and so other
-    public class ProductPartSingleSheetPrinting : ProductPartPrintingSheet
+    public partial class ProductPartSingleSheetPrinting : ProductPartSheetPrinting
     {
         public ProductPartSingleSheetPrinting()
         {
@@ -26,7 +26,7 @@ namespace PapiroMVC.Models
 
             ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleSheet)Part).SubjectNumber ?? 1;
 
-            GainPartOnPrinting.UsePerfecting = false;
+            ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
             GainPartOnPrinting.CalculateGain();
         }
     }

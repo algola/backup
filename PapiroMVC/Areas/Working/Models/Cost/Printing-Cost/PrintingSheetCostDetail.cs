@@ -5,12 +5,8 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public class PrintingSheetCostDetail : CostDetail
+    public partial class PrintingSheetCostDetail : PrintingCostDetail
     {
-        /// <summary>
-        /// this property contains informations over printing partial
-        /// </summary>
-        public ProductPartPrintingSheet ProductPartPrinting { get; set; }
 
         public PrintingSheetCostDetail()
         {
@@ -21,19 +17,6 @@ namespace PapiroMVC.Models
         /// Elenco dei possibili formati di acquisto 
         /// </summary>
         public List<String> BuyingFormats { get; set; }
-
-        /// <summary>
-        /// Formato di acqusto selezionato su cui calcolare i formati macchina
-        /// </summary>
-        public String BuyingFormat { get; set; }
-
-        /// <summary>
-        /// Formato macchina
-        /// </summary>
-        public String PrintingFormat { get; set; }
-
-        //resa per il formato d'acquisto
-        public ProductPartPrintingSheetGainSingle GainPrintingOnBuying { get; set; }
 
         //every changes fire this update
         public override void Update()
@@ -65,10 +48,10 @@ namespace PapiroMVC.Models
                 GainPrintingOnBuying = new ProductPartPrintingSheetGainSingle();
             }
 
-            this.GainPrintingOnBuying.LargerFormat = this.BuyingFormat;
-            this.GainPrintingOnBuying.SmallerFormat = this.PrintingFormat;
-            this.GainPrintingOnBuying.SubjectNumber = 1;
-            this.GainPrintingOnBuying.CalculateGain();
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 1;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).CalculateGain();
 
             //devo anche rifare la messa in macchina della parte!!!
             if (this.ProductPartPrinting != null)
@@ -77,6 +60,61 @@ namespace PapiroMVC.Models
                 this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
                 this.ProductPartPrinting.Update();
             }
+        }
+
+        public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles, Cost taskCost)
+        {
+            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
+
+            base.InitCostDetail(tskExec, articles,taskCost);
+            productPartPrintabelArticles = taskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
+
+            #region Format
+            List<string> formats = new List<string>();
+            //
+            //voglio sapere quali sono i formati degli articoli
+            foreach (var item in productPartPrintabelArticles)
+            {
+                var formatList = articles.OfType<SheetPrintableArticle>()
+                            .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
+                                x.Color == item.Color &&
+                                x.NameOfMaterial == item.NameOfMaterial)
+                                    .Select(x => x.Format);
+
+                formats = formats.Union(formatList.ToList()).ToList();
+            }
+
+            BuyingFormats = formats;
+
+            #endregion
+        }
+
+
+        public override void InitCostDetail2(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
+        {
+            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
+
+            base.InitCostDetail2(tskExec, articles);
+            productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
+
+            #region Format
+            List<string> formats = new List<string>();
+            //
+            //voglio sapere quali sono i formati degli articoli
+            foreach (var item in productPartPrintabelArticles)
+            {
+                var formatList = articles.OfType<SheetPrintableArticle>()
+                            .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
+                                x.Color == item.Color &&
+                                x.NameOfMaterial == item.NameOfMaterial)
+                                    .Select(x => x.Format);
+
+                formats = formats.Union(formatList.ToList()).ToList();
+            }
+
+            BuyingFormats = formats;
+
+            #endregion
         }
     }
 }

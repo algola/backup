@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Article_MetaData))]
-    abstract partial class Article : IDataErrorInfo, ICloneable, IDeleteRelated
+    abstract partial class Article :  ICloneable, IDeleteRelated
     {
         #region Proprietà aggiuntive
         public enum ArticleType : int
@@ -33,48 +33,6 @@ namespace PapiroMVC.Models
             get;
             set;
         }
-
-        #region Error Handle
-
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""
-               };
-
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public virtual string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public virtual bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret;
-            }
-        }
-
-        #endregion
 
         #region Handle copy for modify
 

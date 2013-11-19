@@ -9,6 +9,6 @@ namespace Services
     public interface IProductRepository : IGenericRepository<Product>
     {
         string GetNewCode(Product a);
-        Product GetSingle(string codProduct);
+        new Product GetSingle(string codProduct);
     }
 }

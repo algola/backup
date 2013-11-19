@@ -18,6 +18,8 @@ namespace Services
                 .Include("ProductTask.OptionTypeOfTask")
                 .Include("ProductPartTask.ProductPart")
                 .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles")
+                .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles.Costs")
+                .Include("ProductPartsPrintableArticle")
                 .Include("ProductTask").Where(x => x.CodCost == codCost).FirstOrDefault();
         }
 
@@ -46,8 +48,8 @@ namespace Services
                 item.CodDocument = c.CodDocument;
                 item.TimeStampTable = DateTime.Now;
 
-                var costl = item.Costs.ToList();
-                foreach (var itemCost in item.Costs)
+                var costl = item.Costs.OrderBy(x=>x.CodCost).ToList();
+                foreach (var itemCost in item.Costs.OrderBy(x=>x.CodCost))
                 {
                     itemCost.TimeStampTable = DateTime.Now;
                     itemCost.CodDocumentProduct = item.CodDocumentProduct;

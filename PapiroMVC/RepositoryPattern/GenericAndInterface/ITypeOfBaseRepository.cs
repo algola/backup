@@ -8,7 +8,7 @@ namespace Services
 {
     public interface ITypeOfBaseRepository : IGenericRepository<TypeOfBase>
     {
-        TypeOfBase GetSingle(string codTypeOfBase);
+        new TypeOfBase GetSingle(string codTypeOfBase);
         IQueryable<TypeOfBase> GetAll(string codCustomerSupplier);
     }
 

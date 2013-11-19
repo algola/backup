@@ -19,6 +19,8 @@ namespace PapiroMVC.Models
             this.ProductPartPrintableArticles = new HashSet<ProductPartsPrintableArticle>();
             this.ProductPartTasks = new HashSet<ProductPartTask>();
             this.ProductPartsToProductTasks = new HashSet<productpartstoproducttask>();
+            this.CostDetails = new HashSet<CostDetail>();
+            this.productpartprintings = new HashSet<ProductPartPrinting>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -36,5 +38,7 @@ namespace PapiroMVC.Models
         public virtual ICollection<ProductPartsPrintableArticle> ProductPartPrintableArticles { get; set; }
         public virtual ICollection<ProductPartTask> ProductPartTasks { get; set; }
         public virtual ICollection<productpartstoproducttask> ProductPartsToProductTasks { get; set; }
+        public virtual ICollection<CostDetail> CostDetails { get; set; }
+        public virtual ICollection<ProductPartPrinting> productpartprintings { get; set; }
     }
 }

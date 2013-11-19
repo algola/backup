@@ -24,6 +24,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
+        private readonly ICostDetailRepository costDetailRepository;
 
 
         protected dbEntities db;
@@ -44,7 +45,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             ITaskExecutorRepository _taskExecutorRepository,
            IArticleRepository _articleRepository,
          ICustomerSupplierRepository _customerSupplierRepository,
-                        IMenuProductRepository _menuProduct)
+                        IMenuProductRepository _menuProduct,
+            ICostDetailRepository _costDetailRepository)
         {
             typeOfTaskRepository = _typeOfTaskRepository;
             documentRepository = _documentRepository;
@@ -53,8 +55,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             articleRepository=_articleRepository;
             customerSupplierRepository = _customerSupplierRepository;
             menu = _menuProduct;
+            costDetailRepository = _costDetailRepository;
         }
-
 
         //
         // GET: /Working/Document/

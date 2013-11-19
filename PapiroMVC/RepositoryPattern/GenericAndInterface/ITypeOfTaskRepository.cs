@@ -8,7 +8,7 @@ namespace Services
 {
     public interface ITypeOfTaskRepository : IGenericRepository<TypeOfTask>
     {
-        TypeOfTask GetSingle(string codTypeOfTask);
+        new TypeOfTask GetSingle(string codTypeOfTask);
         IQueryable<TypeOfTask> GetAll(string codCustomerSupplier);
         IQueryable<OptionTypeOfTask> GetAllOptionTypeOfTask();
         OptionTypeOfTask GetSingleOptionTypeOfTask(string id);

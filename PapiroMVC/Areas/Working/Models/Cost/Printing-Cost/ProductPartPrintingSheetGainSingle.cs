@@ -5,22 +5,21 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public class ProductPartPrintingSheetGainSingle : ProductPartPrintingSheetGain
+    public partial class ProductPartPrintingSheetGainSingle : ProductPartPrintingSheetGain
     {
         //SETUPS
         //------------------------------------------------------------------------------------------------------------------------
         public int SubjectNumber { get; set; }
         //this is the maxShape imposed by input
-        public int MaxShape { get; set; }
 
         public override void CalculateGain()
         {
-            if (Makereadys == null)
+            if (Makereadies == null)
             {
-                Makereadys = new List<Makeready>();
+                Makereadies = new List<Makeready>();
             }
 
-            this.Makereadys.Clear();
+            this.Makereadies.Clear();
             SubjectNumber = SubjectNumber == 0 ? 1 : SubjectNumber;
 
             try
@@ -28,8 +27,8 @@ namespace PapiroMVC.Models
                 while (SubjectNumber > 0)
                 {
                     var res = this.CalculateShapeOnBuyingFormat();
-                    this.Makereadys.Add(res);
-                    SubjectNumber -= ((MakereadyPrintingSingleSheet)res).PrintedSubjects;
+                    this.Makereadies.Add(res);
+                    SubjectNumber -= ((MakereadyPrintingSingleSheet)res).PrintedSubjects ?? SubjectNumber;
                 }
             }
             catch (Exception)
@@ -66,7 +65,7 @@ namespace PapiroMVC.Models
                 var gSideNotSide16 = gain1_2 * gain2_1Perf;
                 var gSideNotSide12 = gain1_2Perf * gain2_1;
 
-                if (!UsePerfecting)
+                if (!(UsePerfecting??false))
                 {
                     gr.TypeOfPerfecting = "";
 
@@ -134,7 +133,7 @@ namespace PapiroMVC.Models
                 }
 
 
-                var calculatedShape = MaxShape != 0 ? Math.Min(gr.ShapeOnSide1 * gr.ShapeOnSide2, MaxShape) : gr.ShapeOnSide1 * gr.ShapeOnSide2;
+                var calculatedShape = MaxShape != 0 ? Math.Min((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0), MaxShape ?? ((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0))) : (gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0);
 
                 if (SubjectNumber <= calculatedShape)
                 {

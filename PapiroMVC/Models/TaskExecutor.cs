@@ -18,6 +18,7 @@ namespace PapiroMVC.Models
         {
             this.SetTaskExecutorEstimatedOn = new HashSet<TaskEstimatedOn>();
             this.taskexecutortypeoftasks = new HashSet<TaskExecutorTypeOfTask>();
+            this.costdetails = new HashSet<CostDetail>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -42,5 +43,6 @@ namespace PapiroMVC.Models
         public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }
         public virtual ICollection<TaskExecutorTypeOfTask> taskexecutortypeoftasks { get; set; }
         public virtual TypeOfTask typeoftask { get; set; }
+        public virtual ICollection<CostDetail> costdetails { get; set; }
     }
 }

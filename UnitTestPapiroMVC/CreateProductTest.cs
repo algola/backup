@@ -5,7 +5,7 @@ using PapiroMVC.Areas.Working.Controllers;
 using Moq;
 using Services;
 
-/*
+
 namespace UnitTestPapiroMVC
 {
     [TestClass]
@@ -14,29 +14,21 @@ namespace UnitTestPapiroMVC
         [TestMethod]
         public void CreateProduct()
         {
+            String id = "4-0-1";
 
-            var totR = new TypeOfTaskRepository();
-            var doR = new DocumentRepository();
-            var fnR = new FormatsNameRepository();
-            var prR = new ProductRepository();
-            var teR = new TaskExecutorRepository();
+            CostDetailRepository cdRepository = new CostDetailRepository();
+            ArticleRepository artRepository = new ArticleRepository();
+            DocumentRepository docRepository = new DocumentRepository();
+            TaskExecutorRepository taskExecutorRepository = new TaskExecutorRepository();
 
-            var csR = new Mock<CustomerSupplierRepository>();
-            var arR = new Mock<ArticleRepository>();
-            var prod = new Mock<ProductBookSheet>();
-            var meR= new Mock<MenuProductRepository>();
+            Cost cost = docRepository.GetCost(id);
+            var costDetail = cdRepository.GetSingle(id);
+            costDetail.InitCostDetail(taskExecutorRepository.GetAll(), artRepository.GetAll(), cost);
 
-            var ptnR = new ProductTaskNameRepository();
+            cdRepository.Add(costDetail);
+            cdRepository.Save();
 
-  //          var c = new DocumentController(doR,totR,fnR,prR,teR,arR.Object,csR.Object,meR.Object);
-
-            var c = new ProductController(prR,totR,meR.Object,ptnR,fnR,doR);
-
-            var pvm= new Mock<ProductViewModel>();
 
         }
     }
 }
-
-
-*/

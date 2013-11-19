@@ -25,6 +25,7 @@ namespace PapiroMVC.Models
         public string CodSupplierBuy { get; set; }
         public string UnitOfMeasure { get; set; }
         public string CodSupplierMaker { get; set; }
+        public Nullable<int> Selector { get; set; }
     
         public virtual ICollection<ArticleCost> ArticleCosts { get; set; }
         public virtual CustomerSupplier CustomerSupplierBuy { get; set; }

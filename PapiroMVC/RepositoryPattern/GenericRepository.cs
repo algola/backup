@@ -8,7 +8,6 @@ using System.Web;
 namespace Services
 {
 
-
     public class SemiNumericComparer : IComparer<string>
     {
         public int Compare(string s1, string s2)
@@ -42,8 +41,6 @@ namespace Services
             }
         }
     }
-
-
 
     public abstract class GenericRepository<C, T> : IGenericRepository<T>
         where T : class

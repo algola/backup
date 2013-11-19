@@ -6,7 +6,7 @@ using System.Web;
 namespace PapiroMVC.Models
 {
 
-    public class ProductPartBookSheetPrinting : ProductPartPrintingSheet
+    public partial class ProductPartBookSheetPrinting : ProductPartSheetPrinting
     {
 
         enum EnumSignature : int
@@ -36,7 +36,7 @@ namespace PapiroMVC.Models
 
             ((ProductPartPrintingSheetGainBook)this.GainPartOnPrinting).PageToPrint = ((ProductPartBookSheet)Part).Pages ?? 4;
 
-            this.GainPartOnPrinting.UsePerfecting = false;
+            ((ProductPartPrintingSheetGainBook)this.GainPartOnPrinting).UsePerfecting = false;
             this.GainPartOnPrinting.CalculateGain();
 
         }

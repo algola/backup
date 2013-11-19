@@ -8,45 +8,22 @@ namespace PapiroMVC.Models
     /// <summary>
     /// Get PrintingFormat and calculating gain on this Format based on specifit type
     /// </summary>
-    public class ProductPartPrintingSheet
+    public partial class ProductPartSheetPrinting : ProductPartPrinting
     {
-        public enum ProductPartPrintingType : int
+
+        public override void Update()
         {
-            ProductPartSingleSheetPrinting = 0,
-            ProductPartCoverSheetPrinting = 1,
-            ProductPartBookSheetPrinting = 2,
-        }
 
-        public ProductPartPrintingType TypeOfProductPartPrinting
-        {
-            get;
-            set;
-        }
+            var gain = (ProductPartPrintingSheetGain)GainPartOnPrinting;
 
-        /// <summary>
-        /// this property accepts in input o provides in output the printing format
-        /// over compute 
-        /// </summary>
-        public String PrintingFormat { get; set; }
-
-        /// <summary>
-        /// this method c
-        /// </summary>
-        public virtual ProductPart Part { get; set; }
-
-        public ProductPartPrintingSheetGain GainPartOnPrinting { get; set; }
-        
-        public virtual void Update()
-        {
-            this.GainPartOnPrinting.LargerFormat = PrintingFormat;
-            this.GainPartOnPrinting.SmallerFormat = Part.FormatOpened;
-            if (this.GainPartOnPrinting.SmallerFormat == "" || this.GainPartOnPrinting.SmallerFormat == null)
+            gain.LargerFormat = PrintingFormat;
+            gain.SmallerFormat = Part.FormatOpened;
+            if (gain.SmallerFormat == "" || gain.SmallerFormat == null)
             {
-                this.GainPartOnPrinting.SmallerFormat = Part.Format;
+                gain.SmallerFormat = Part.Format;
             }
 
-            }
-
+            GainPartOnPrinting = gain;
+        }
     }
-
 }

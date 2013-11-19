@@ -7,7 +7,7 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
-    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadys.FirstOrDefault();
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     
 }
 
@@ -18,7 +18,6 @@
 
     //this event is fired only the first time
     $(document).ready(function () {
-        alert("second");
         drawPrintingAndSheet(); //draw printing and work
     });
 

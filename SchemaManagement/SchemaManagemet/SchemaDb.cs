@@ -24,6 +24,7 @@ namespace SchemaManagemet
         public static string StringPK = "stringPK";
         public static string Time = "time";
         public static string Date = "date";
+        public static string Decimal = "decimal";
 
         public string DatabaseName { get; set; }
 

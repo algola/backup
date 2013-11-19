@@ -8,16 +8,10 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPartRigidEx_MetaData))]
-    public partial class ProductPartRigid : ProductPart, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class ProductPartRigid : ProductPart, ICloneable, IDeleteRelated
     {
 
-        public bool IsSelected
-        {
-            get;
-            set;
-        }
-
-        #region Error Handle
+         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
                {
@@ -25,44 +19,14 @@ namespace PapiroMVC.Models
                        ""
                };
 
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
-        
-        public virtual string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public virtual bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret;
-            }
-        }
-
+   
         #endregion
 
         #region Handle copy for modify
 
-        public virtual void Copy(ProductPartRigid to)
+        public override void Copy(ProductPart to)
         {
+            base.Copy(to);
             //All properties of object
             //and pointer of sons
             to.SubjectNumber = this.SubjectNumber;

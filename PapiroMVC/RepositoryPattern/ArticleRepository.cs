@@ -8,6 +8,16 @@ namespace Services
 {
     public class ArticleRepository : GenericRepository<dbEntities, Article>, IArticleRepository
     {
+
+
+        public IQueryable<Article> GetPrintableArticleCost(ProductPartsPrintableArticle a)
+        {
+            return this.GetAll().OfType<Printable>().Where(x => x.NameOfMaterial == a.NameOfMaterial &&
+                x.TypeOfMaterial == a.TypeOfMaterial &&
+                x.Weight == x.Weight &&
+                x.Color == x.Color);
+        }
+
         public string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy)
         {
             CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
@@ -46,7 +56,7 @@ namespace Services
 
             switch (c.TypeOfArticle)
             {
-                   
+
                 case Article.ArticleType.SheetPrintableArticle:
 
                     /*
@@ -185,7 +195,7 @@ namespace Services
             var article = (from ART in this.GetAll() where ART.ArticleName == entity.ArticleName select ART);
 
             Console.Write(article.Count());
-            
+
             if (article.Count() > 0)
             {
                 //this.Edit(entity);

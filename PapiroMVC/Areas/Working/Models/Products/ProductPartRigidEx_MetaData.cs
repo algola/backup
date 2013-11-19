@@ -11,6 +11,6 @@ namespace PapiroMVC.Models
 {
     public partial class ProductPartRigidEx_MetaData : ProductPart_MetaData
     {
-        public Nullable<int> SubjectNumber { get; set; }
+//        public Nullable<int> SubjectNumber { get; set; }
     }
 }

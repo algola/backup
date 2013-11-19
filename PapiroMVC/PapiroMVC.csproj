@@ -16,7 +16,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -250,6 +250,16 @@
     <Compile Include="Areas\Working\Controllers\ProductController2.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
+    <Compile Include="Areas\Working\Models\Cost\ICostDetailCreator.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSinglePlotterPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingRoll.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSinglePlotter.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingPlotterGainSingle.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingPlotterGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingPlotterCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\Makeready.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSingleSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
@@ -332,6 +342,9 @@
     <Compile Include="Models\Cost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CostPerMqStep.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -377,6 +390,18 @@
     <Compile Include="Models\LithoWeb.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Makeready.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingBookSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingSinglePlotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MenuProduct.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -419,7 +444,28 @@
     <Compile Include="Models\Printable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrintedArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedRollArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedSheetArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PrinterMachine.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingPlotterCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingRollCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingSheetCostDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
@@ -440,7 +486,37 @@
     <Compile Include="Models\ProductPartBookSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartBookSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartCoverSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartCoverSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPlotterPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingPlotterGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingPlotterGainSingle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGainBook.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGainSingle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartRigid.cs">
@@ -452,7 +528,19 @@
     <Compile Include="Models\ProductPartSheetArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSinglePlotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSinglePlotterPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSingleSheetPrinting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartsPrintableArticle.cs">
@@ -863,7 +951,10 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
+    <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Single.cs" />
+    <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ICostDetailRepository.cs" />
     <Compile Include="Validation\ProductViewModelModelBinder.cs" />
     <Compile Include="Validation\HtmlHelperExtension.cs" />
     <Compile Include="Validation\DisplayLocalizedAttribute.cs" />
@@ -4863,7 +4954,7 @@
     <Content Include="Areas\Working\Views\Document\_EditAndCreateDocument.cshtml" />
     <Content Include="Areas\Working\Views\Document\_Costs.cshtml" />
     <Content Include="Areas\Working\Views\Document\_CostsCommonScript.cshtml" />
-    <Content Include="Areas\Working\Views\Document\EditCost.cshtml" />
+    <Content Include="Areas\Working\Views\Document\PrintingCostDetail.cshtml" />
     <Content Include="Areas\Working\Views\Document\_LithoSheetCostViewModel.cshtml" />
     <Content Include="Areas\Working\Views\Document\_DigitalSheetCostViewModel.cshtml" />
     <Content Include="Areas\Working\Views\Document\_PrintingSheetCostDetail.cshtml" />
@@ -4874,6 +4965,7 @@
     <Content Include="Areas\Working\Views\Document\_ProductPartCoverSheetPrinting.cshtml" />
     <Content Include="Areas\Working\Views\Document\_CommonScriptDraw.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartBookSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\PrintedCostDetail.cshtml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />

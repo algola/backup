@@ -16,126 +16,15 @@ namespace PapiroMVC.Areas.Working.Controllers
 {
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-        private CostDetail GetCostDetail(String codTaskExecutor, String codCost)
-        {
-            //ITA carico il costo
-            var cost = documentRepository.GetCost(codCost);
-            ProductPart productPart = null;
-            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
-
-            String codTypeOfTask = String.Empty;
-            if (cost.CodProductPartTask != null)
-            {
-                codTypeOfTask = cost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
-                productPart = cost.ProductPartTask.ProductPart;
-                productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
-            }
-
-            if (cost.CodProductTask != null)
-            {
-                codTypeOfTask = cost.ProductTask.OptionTypeOfTask.CodTypeOfTask;
-            }
-
-            var tskExec = taskExecutorRepository.GetAll().Where(x => x.CodTypeOfTask == codTypeOfTask);
-
-            CostDetail cv = null;
-
-            if (codTypeOfTask == "STAMPA")
-            {
-                String codParte = String.Empty;
-
-                /* se è una STAMPA 
-                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
-                 * etichette in rotolo, manifesti etc...
-                 * per ora carico.
-                 */
-
-                #region Format
-                List<string> formats = new List<string>();
-                //
-                //voglio sapere quali sono i formati degli articoli
-                foreach (var item in productPartPrintabelArticles)
-                {
-                    var formatList = articleRepository.GetAll().OfType<SheetPrintableArticle>()
-                                .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
-                                    x.Color == item.Color &&
-                                    x.NameOfMaterial == item.NameOfMaterial)
-                                        .Select(x => x.Format);
-
-                    formats = formats.Union(formatList.ToList()).ToList();
-                }
-
-                #endregion
-
-                if (tskExec.Count() > 0)
-                {
-                    //se non ho una tskExecutor selezionata alloa
-                    //assegno il primo executor al view
-
-                    TaskExecutor currentTskEx;
-                    if (codTaskExecutor == null || codTaskExecutor == String.Empty)
-                    {
-                        currentTskEx = tskExec.FirstOrDefault();
-                    }
-                    else
-                    {
-                        currentTskEx = tskExec.Where(x => x.CodTaskExecutor == codTaskExecutor).FirstOrDefault();
-                    }
-
-                    switch (currentTskEx.TypeOfExecutor)
-                    {
-                        case TaskExecutor.ExecutorType.LithoSheet:
-                            cv = new PrintingSheetCostDetail();
-
-                            ((PrintingSheetCostDetail)cv).BuyingFormats = formats;
-                            ((PrintingSheetCostDetail)cv).BuyingFormat = (formats != null) && (formats.Count > 0) ? formats.FirstOrDefault() : null;
-
-                            //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
-                            ((PrintingSheetCostDetail)cv).PrintingFormat = ((PrintingSheetCostDetail)cv).BuyingFormat;
-
-                            cv.TaskExecutors = tskExec.ToList();
-                            cv.TaskCost = cost;
-
-                            break;
-                        case TaskExecutor.ExecutorType.LithoWeb:
-                            break;
-                        case TaskExecutor.ExecutorType.DigitalSheet:
-                            cv = new PrintingSheetCostDetail();
-                            cv.TaskExecutors = tskExec.ToList();
-                            cv.TaskCost = cost;
-                            break;
-                        case TaskExecutor.ExecutorType.DigitalWeb:
-                            break;
-                        case TaskExecutor.ExecutorType.Plotter:
-                            break;
-                        case TaskExecutor.ExecutorType.PrePostPress:
-                            break;
-                        case TaskExecutor.ExecutorType.Binding:
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-
-            if (cv != null)
-            {
-                cv.ProductPart = productPart;
-                //TODO: nella macchine a foglio devo leggere il massimo formato di stampa e impostare il PrintingFormat = al massimo'??
-
-                cv.CodTaskExecutorSelected = codTaskExecutor;
-            }
-
-            Session["CostDetail"] = cv;
-            return (cv);
-        }
 
         [HttpPost]
         public ActionResult GetPartialCost(String codTaskExecutor, String codCost)
         {
-            var x = GetCostDetail(codTaskExecutor, codCost);
-            x.Update();
-            return PartialView("_" + x.TypeOfCostDetail.ToString(), x);
+            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
+            cv.CodTaskExecutorSelected = codTaskExecutor;
+            cv.Update();
+            Session["CostDetail"] = cv;
+            return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
         [HttpPost]
@@ -145,7 +34,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.BuyingFormat = BuyingFormat;
             cv.PrintingFormat = BuyingFormat;
             cv.Update();
-
+            Session["CostDetail"] = cv;
             return PartialView("_PrintingSheetCostDetail", cv);
         }
 
@@ -155,6 +44,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
             cv.PrintingFormat = PrintingFormat;
             cv.Update();
+            Session["CostDetail"] = cv;
             return PartialView("_PrintingSheetCostDetail", cv);
         }
 
@@ -162,30 +52,93 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditCost(string id)
         {
+            CostDetail cv = costDetailRepository.GetSingle(id);
+            Cost cost = documentRepository.GetCost(id);
+
+            if (cv == null)
+            {
+                cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                //update 
+                cv.Update();
+            }
+            else
+            {
+                Console.WriteLine("");
+                cv.InitCostDetail2(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+
+            }
+
             Session["CodCost"] = id;
-            var vm = GetCostDetail(null, id);
-            vm.Update();
-            return View(vm);
+            Session["CostDetail"] = cv;
+
+            var viewName = String.Empty;
+
+            switch (cv.TypeOfCostDetail)
+            {
+                case CostDetail.CostDetailType.PrintingSheetCostDetail:
+                    viewName = "PrintingCostDetail";
+                    break;
+                case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    viewName = "PrintingCostDetail";
+                    break;
+                case CostDetail.CostDetailType.PrintingPlotterCostDetail:
+                    viewName = "PrintingCostDetail";
+                    break;
+                case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+                    viewName = "PrintedCostDetail";
+                    break;
+                case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                    viewName = "PrintedCostDetail";
+                    break;
+                default:
+                    break;
+            }
+
+            return View(viewName, cv);
         }
 
         [HttpParamAction]
         [HttpGet]
-        public ActionResult SaveCostDetail(CostDetail c)
+        public ActionResult SaveCostDetail()
         {
-            try
+            CostDetail cv = (CostDetail)Session["CostDetail"];
+            //try
             {
-                //uso passare solo l'id (con la session) e non l'intero costo nella view.                
-                string id = c.TaskCost.CodCost;
-                Cost cost = documentRepository.GetCost(id);
+                var pPart = cv.ProductPart;
+                //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
 
+                switch (cv.TypeOfCostDetail)
+                {
+                    case CostDetail.CostDetailType.PrintingSheetCostDetail:
+
+                        costDetailRepository.Add(cv);
+                        costDetailRepository.Save();
+
+                        break;
+                    case CostDetail.CostDetailType.PrintingRollCostDetail:
+                        break;
+                    case CostDetail.CostDetailType.PrintingPlotterCostDetail:
+                        break;
+                    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+                        break;
+                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                        break;
+                    default:
+                        break;
+                }
             }
-            catch (Exception)
+
+            var idRet = (string)Session["idProduct"];
+
+            if (idRet != null)
             {
-
-                throw;
+                return Json(new { redirectUrl = Url.Action("EditDocumentProducts", new { id = idRet }) }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
             }
 
-            return View();
         }
 
         [HttpParamAction]
@@ -205,8 +158,11 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditDocumentProducts(string id)
         {
-            var docProd = documentRepository.GetDocumentProductByCodProduct(id);
 
+            //id is needed for return after edit
+            Session["idProduct"] = id;
+
+            var docProd = documentRepository.GetDocumentProductByCodProduct(id);
             var prod = productRepository.GetSingle(id);
 
             foreach (var item in docProd)
@@ -246,31 +202,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_EditAndCreateDocument", c);
         }
 
-        //[HttpParamAction]
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult CreateDocument(Document c)
-        //{
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            c.CodDocument = documentRepository.GetNewCode(c);
-        //            documentRepository.Add(c);
-        //            documentRepository.Save();
-        //            Session["CodDocument"] = c.CodDocument; 
-        //            return Json(new { redirectUrl = Url.Action("Index") });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
-        //        }
-        //    }
-
-        //    //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-        //    ViewBag.ActionMethod = "CreateDocument";
-        //    return PartialView("_EditAndCreateDocument", c);
-        //}
 
     }
 }

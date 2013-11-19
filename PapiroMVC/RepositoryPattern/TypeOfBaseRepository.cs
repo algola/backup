@@ -37,7 +37,7 @@ namespace Services
             return Context.typeofbase.Where(o => o.CodTypeOfBase == codTypeOfBase);
         }
 
-        public TypeOfBase GetSingle(string codTypeOfBase)
+        public new TypeOfBase GetSingle(string codTypeOfBase)
         {
             var query = Context.typeofbase.FirstOrDefault(x => x.CodTypeOfBase == codTypeOfBase);
             return query;

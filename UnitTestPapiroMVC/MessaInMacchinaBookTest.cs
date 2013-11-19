@@ -22,7 +22,7 @@ namespace UnitTestPapiroMVC
 
             prodPartPrint.Update();
 
-            var x = prodPartPrint.GainPartOnPrinting.Makereadys.Count;
+            var x = prodPartPrint.GainPartOnPrinting.Makereadies.Count;
 
         }
     }

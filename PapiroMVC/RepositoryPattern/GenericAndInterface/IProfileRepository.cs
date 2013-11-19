@@ -8,6 +8,6 @@ namespace Services
 {
     public interface IProfileRepository : IGenericRepository<Profile>
     {
-        Profile GetSingle(string name);
+        new Profile GetSingle(string name);
     }
 }

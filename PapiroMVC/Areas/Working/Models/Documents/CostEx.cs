@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
-{    
+{
     [MetadataType(typeof(Cost_MetaData))]
     public partial class Cost : IDataErrorInfo, ICloneable, IDeleteRelated
     {
@@ -36,7 +36,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -122,5 +122,98 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+        public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
+        {
+
+            CostDetail cv = null;
+
+            ProductPart productPart = null;
+            
+            #region Lavorazione
+            //E' una lavorazione!!!!
+            String codTypeOfTask = String.Empty;
+            if (this.CodProductPartTask != null)
+            {
+                codTypeOfTask = this.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
+                productPart = this.ProductPartTask.ProductPart;
+            }
+
+            if (codTypeOfTask == "STAMPA")
+            {
+                String codParte = String.Empty;
+
+                /* se è una STAMPA 
+                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
+                 * etichette in rotolo, manifesti etc...
+                 * per ora carico.
+                 */
+
+                if (tskExec.Count() > 0)
+                {
+                    switch (tskExec.FirstOrDefault().TypeOfExecutor)
+                    {
+                        case TaskExecutor.ExecutorType.LithoSheet:
+                            cv = new PrintingSheetCostDetail();
+
+                            cv.TaskCost = this;
+                            cv.InitCostDetail(tskExec, articles, this);
+
+                            ((PrintingSheetCostDetail)cv).BuyingFormat =
+                                 (((PrintingSheetCostDetail)cv).BuyingFormat == "" || ((PrintingSheetCostDetail)cv).BuyingFormat == null) ?
+                                 (((PrintingSheetCostDetail)cv).BuyingFormats != null) && (((PrintingSheetCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingSheetCostDetail)cv).BuyingFormats.FirstOrDefault() : null
+                                 : ((PrintingSheetCostDetail)cv).BuyingFormat;
+
+                            //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
+                            ((PrintingSheetCostDetail)cv).PrintingFormat =
+                                (((PrintingSheetCostDetail)cv).PrintingFormat == "" || ((PrintingSheetCostDetail)cv).PrintingFormat == null) ?
+                                ((PrintingSheetCostDetail)cv).BuyingFormat
+                                : ((PrintingSheetCostDetail)cv).PrintingFormat;
+
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
+                            break;
+                        case TaskExecutor.ExecutorType.LithoWeb:
+                            break;
+                        case TaskExecutor.ExecutorType.DigitalSheet:
+                            cv = new PrintingSheetCostDetail();
+                            cv.TaskExecutors = tskExec.ToList();
+                            cv.TaskCost = this;
+                            break;
+                        case TaskExecutor.ExecutorType.DigitalWeb:
+                            break;
+                        case TaskExecutor.ExecutorType.Plotter:
+                            break;
+                        case TaskExecutor.ExecutorType.PrePostPress:
+                            break;
+                        case TaskExecutor.ExecutorType.Binding:
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            #endregion
+
+            //if (this.CodProductPartPrintableArticle != null)
+            //{
+            //    var productPartPrintableArticle = this.ProductPartsPrintableArticle;
+            //    productPart = this.ProductPartsPrintableArticle.ProductPart;
+            //    productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
+            //}
+
+            cv.ProductPart = productPart;
+
+            cv.TaskCost = this;
+            cv.CodCost = this.CodCost;
+            cv.CodCostDetail = this.CodCost;
+
+            return cv;
+        }
+
     }
 }

@@ -14,6 +14,11 @@ namespace PapiroMVC.Models
     
     public partial class Cost
     {
+        public Cost()
+        {
+            this.CostDetails = new HashSet<CostDetail>();
+        }
+    
         public System.DateTime TimeStampTable { get; set; }
         public string CodCost { get; set; }
         public string CodDocumentProduct { get; set; }
@@ -29,5 +34,6 @@ namespace PapiroMVC.Models
         public virtual ProductPartsPrintableArticle ProductPartsPrintableArticle { get; set; }
         public virtual ProductPartTask ProductPartTask { get; set; }
         public virtual ProductTask ProductTask { get; set; }
+        public virtual ICollection<CostDetail> CostDetails { get; set; }
     }
 }

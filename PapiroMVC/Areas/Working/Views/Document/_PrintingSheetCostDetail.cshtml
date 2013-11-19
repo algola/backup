@@ -30,7 +30,7 @@
         }
     }
 
-    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadys.FirstOrDefault();
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
 
 }
 
@@ -54,23 +54,23 @@
     <canvas id="buyingSheet" width="500" height="170"></canvas>
 
     <div id="partialPrinting">
-    @if (Model.ProductPartPrinting != null)
-    {
-        switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
+        @if (Model.ProductPartPrinting != null)
         {
-            case ProductPartPrintingSheet.ProductPartPrintingType.ProductPartSingleSheetPrinting:
-                Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartPrintingSheet.ProductPartPrintingType.ProductPartCoverSheetPrinting:
-                Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartPrintingSheet.ProductPartPrintingType.ProductPartBookSheetPrinting:
-                Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
-                break;
-            default:
-                break;
-        }        
-    }
+            switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
+            {
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
+                    Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
+                    Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
+                    Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                default:
+                    break;
+            }
+        }
     </div>
 
 

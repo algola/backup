@@ -11,12 +11,6 @@ namespace PapiroMVC.Models
     public partial class ProductPartRigidArticle : ProductPartsPrintableArticle, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public bool IsSelected
-        {
-            get;
-            set;
-        }
-
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
@@ -25,15 +19,8 @@ namespace PapiroMVC.Models
                        ""
                };
 
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
-        
-        public virtual string this[string proprieta]
+       
+        public override string this[string proprieta]
         {
             get
             {
@@ -43,7 +30,7 @@ namespace PapiroMVC.Models
         }
 
         //Check validation of entity
-        public virtual bool IsValid
+        public override bool IsValid
         {
             get
             {
@@ -53,7 +40,7 @@ namespace PapiroMVC.Models
                     if (this[prop] != null)
                         ret = false;
                 }
-                return ret;
+                return ret && base.IsValid;
             }
         }
 

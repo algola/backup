@@ -7,7 +7,7 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
-    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadys.FirstOrDefault();
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     
 }
 
@@ -37,7 +37,6 @@
             var bv = '@g.TypeOfPerfecting';
         var maxG = '@g.PrintedSubjects';
 
-            alert(bv);
             drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
 
             var side1pr = '@Model.Part.FormatOpened.GetSide1()';

@@ -7,12 +7,6 @@ namespace PapiroMVC.Models
 {
     public partial class MakereadyPrintingBookSheet : Makeready
     {
-        /// <summary>
-        /// is the number of the shapes that page has to draw
-        /// </summary>
-        public int PrintablePages { get; set; }
-        public int PrintedPages { get; set; }
-
         public MakereadyPrintingBookSheet()
         {
             Signatures = new Signature[6];
@@ -26,11 +20,9 @@ namespace PapiroMVC.Models
 
         public Signature[] Signatures { get; set; } //each element has the name
 
-        public int CodMaxSegn { get; set; }
-
         public void UpdateSignatures()
         {
-            if (CodMaxSegn == 0)
+            if ((CodMaxSegn??0) == 0)
             {
                 CodMaxSegn = 32;
             }
@@ -48,7 +40,7 @@ namespace PapiroMVC.Models
                     var currSegn = Signatures[i].CodSegn;
                     if (printedPages >= currSegn)
                     {
-                        var segns = (int)decimal.Truncate(printedPages / currSegn);
+                        var segns = (int)decimal.Truncate((decimal)(printedPages / currSegn));
                         Signatures[i].Count = segns;
                         printedPages = printedPages % currSegn;
                     }

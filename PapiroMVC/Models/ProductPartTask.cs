@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     {
         public ProductPartTask()
         {
-            this.costs = new HashSet<Cost>();
+            this.Costs = new HashSet<Cost>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -28,6 +28,6 @@ namespace PapiroMVC.Models
     
         public virtual ProductPart ProductPart { get; set; }
         public virtual OptionTypeOfTask OptionTypeOfTask { get; set; }
-        public virtual ICollection<Cost> costs { get; set; }
+        public virtual ICollection<Cost> Costs { get; set; }
     }
 }

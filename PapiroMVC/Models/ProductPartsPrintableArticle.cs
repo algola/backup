@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     {
         public ProductPartsPrintableArticle()
         {
-            this.costs = new HashSet<Cost>();
+            this.Costs = new HashSet<Cost>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -29,6 +29,6 @@ namespace PapiroMVC.Models
         public Nullable<long> Weight { get; set; }
     
         public virtual ProductPart ProductPart { get; set; }
-        public virtual ICollection<Cost> costs { get; set; }
+        public virtual ICollection<Cost> Costs { get; set; }
     }
 }

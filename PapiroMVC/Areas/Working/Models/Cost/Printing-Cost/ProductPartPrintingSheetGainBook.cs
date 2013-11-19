@@ -24,25 +24,24 @@ namespace PapiroMVC.Models
         public int Count { get; set; }
     }
 
-    public class ProductPartPrintingSheetGainBook : ProductPartPrintingSheetGain
+    public partial class ProductPartPrintingSheetGainBook : ProductPartPrintingSheetGain
     {
         //SETUPS
         //------------------------------------------------------------------------------------------------------------------------
         public int PageToPrint { get; set; }
         //this is the maxShape imposed by input
-        public int MaxShape { get; set; }
 
         public byte MaxSignature { get; set; }
         public bool Signature { get; set; }
 
         public override void CalculateGain()        
         {
-            if (Makereadys == null)
+            if (Makereadies == null)
             {
-                Makereadys = new List<Makeready>();
+                Makereadies = new List<Makeready>();
             }
 
-            this.Makereadys.Clear();
+            this.Makereadies.Clear();
             PageToPrint = (int)decimal.Truncate((PageToPrint == 0 ? 4 : PageToPrint) / 4) * 4;
 
             try
@@ -50,8 +49,8 @@ namespace PapiroMVC.Models
                 while (PageToPrint > 0)
                 {
                     var res = this.CalculateShapeOnBuyingFormat();
-                    this.Makereadys.Add(res);
-                    PageToPrint -= ((MakereadyPrintingBookSheet)res).PrintedPages;
+                    this.Makereadies.Add(res);
+                    PageToPrint -= ((MakereadyPrintingBookSheet)res).PrintedPages ?? PageToPrint;
                 }
             }
             catch (Exception)
@@ -87,7 +86,7 @@ namespace PapiroMVC.Models
                 var gSideNotSide16 = gain1_2 * gain2_1Perf;
                 var gSideNotSide12 = gain1_2Perf * gain2_1;
 
-                if (!UsePerfecting)
+                if (!(UsePerfecting??false))
                 {
                     ret.TypeOfPerfecting = "";
 
@@ -152,8 +151,9 @@ namespace PapiroMVC.Models
                         }
                     }
                 }
+               
+                var calculatedShape = MaxShape != 0 ? Math.Min((ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0), MaxShape ?? ((ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0))) : (ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0);
 
-                var calculatedShape = MaxShape != 0 ? Math.Min(ret.ShapeOnSide1 * ret.ShapeOnSide2, MaxShape) : ret.ShapeOnSide1 * ret.ShapeOnSide2;
                 //4 pages per shape
 
                 //se le pagine da stampare sono meno delle pagine che possono starci su un foglio

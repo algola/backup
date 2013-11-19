@@ -9,7 +9,7 @@ namespace Services
     public interface ICustomerSupplierRepository : IGenericRepository<CustomerSupplier>
     {
         string GetNewCode(CustomerSupplier c);
-        CustomerSupplier GetSingle(string codCustomerSupplier);
+        new CustomerSupplier GetSingle(string codCustomerSupplier);
     }
 
 }

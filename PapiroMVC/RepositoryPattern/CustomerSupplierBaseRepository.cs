@@ -11,7 +11,7 @@ namespace Services
             return Context.customersupplierbases.Include("typeofbase").Where(o => o.CodCustomerSupplier == codCustomerSupplier);
         }
 
-        public CustomerSupplierBase GetSingle(string codCustomerSupplierBase)
+        public new CustomerSupplierBase GetSingle(string codCustomerSupplierBase)
         {
             var query = Context.customersupplierbases.Include("typeofbase").FirstOrDefault(x => x.CodCustomerSupplierBase == codCustomerSupplierBase);
             return query;

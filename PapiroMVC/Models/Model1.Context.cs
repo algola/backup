@@ -47,5 +47,9 @@ namespace PapiroMVC.Models
         public DbSet<DocumentProduct> DocumentProducts { get; set; }
         public DbSet<Document> Documents { get; set; }
         public DbSet<productpartstoproducttask> ProductPartsToProductTasks { get; set; }
+        public DbSet<CostDetail> CostDetail { get; set; }
+        public DbSet<ProductPartPrinting> ProductPartPrinting { get; set; }
+        public DbSet<ProductPartPrintingGain> ProductPartPrintingGain { get; set; }
+        public DbSet<Makeready> Makereadies { get; set; }
     }
 }

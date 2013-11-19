@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPartBlockSheet_MetaData))]
-    public partial class ProductPartBlockSheet : ProductPart, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class ProductPartBlockSheet : ProductPart,  ICloneable, IDeleteRelated
     {
 
         public ProductPartBlockSheet()
@@ -21,47 +21,47 @@ namespace PapiroMVC.Models
         #endregion
 
 
-        #region Error Handle
+        //#region Error Handle
 
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""
-               };
+        //private static readonly string[] proprietaDaValidare =
+        //       {
+        //           //Specify validation property
+        //               ""
+        //       };
 
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
+        //public string Error
+        //{
+        //    get
+        //    {
+        //        return null;
+        //    }
+        //}
         
-        public virtual string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                return result;
-            }
-        }
+        //public virtual string this[string proprieta]
+        //{
+        //    get
+        //    {
+        //        string result = null;
+        //        return result;
+        //    }
+        //}
 
-        //Check validation of entity
-        public virtual bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret;
-            }
-        }
+        ////Check validation of entity
+        //public virtual bool IsValid
+        //{
+        //    get
+        //    {
+        //        bool ret = true;
+        //        foreach (string prop in proprietaDaValidare)
+        //        {
+        //            if (this[prop] != null)
+        //                ret = false;
+        //        }
+        //        return ret;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
         #region Handle copy for modify
 

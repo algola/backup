@@ -7,19 +7,18 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
-    MakereadyPrintingBookSheet g = (MakereadyPrintingBookSheet)Model.GainPartOnPrinting.Makereadys.FirstOrDefault();
+    MakereadyPrintingBookSheet g = (MakereadyPrintingBookSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     
 }
 
 <canvas id="printingBookSheet" width="500" height="170"></canvas>
 
-NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadys.Count
+NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadies.Count
 
 <script type="text/javascript">
 
     //this event is fired only the first time
     $(document).ready(function () {
-        alert("second");
         drawPrintingAndSheet(); //draw printing and work
     });
 
@@ -40,7 +39,6 @@ NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadys.Count
         var bv = '@g.TypeOfPerfecting';
             var maxG = '@(g.PrintedPages/4)';
 
-        alert(maxG);
         drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
 
         var side1pr = '@Model.Part.FormatOpened.GetSide1()';

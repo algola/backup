@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(SheetPrintableArticlePalletCost_MetaData))]
-    public partial class SheetPrintableArticlePalletCost : SheetPrintableArticleCost, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class SheetPrintableArticlePalletCost : SheetPrintableArticleCost, ICloneable, IDeleteRelated
     {
         public SheetPrintableArticlePalletCost()
         {
@@ -17,40 +17,6 @@ namespace PapiroMVC.Models
         }
 
         #region Added Properties
-
-        #endregion
-
-        #region Error Handle
-
-        private static readonly string[] proprietaDaValidare =
-               {                  
-                   //Specify validation property                       
-                   //    "FormatMax",
-               };
-
-        public override string this[string proprieta]
-        {
-            get
-            {
-                string result = base[proprieta];
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public override bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret && base.IsValid;
-            }
-        }
 
         #endregion
 

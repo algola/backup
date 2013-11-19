@@ -24,7 +24,7 @@ namespace Services
             base.Edit(entity);
         }
 
-        public Profile GetSingle(string codProfile)
+        public new Profile GetSingle(string codProfile)
         {
             var query = Context.Profiles.FirstOrDefault(x => x.Name == codProfile);
             return query;
