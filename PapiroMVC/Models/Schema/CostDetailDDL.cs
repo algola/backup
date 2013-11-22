@@ -45,8 +45,12 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
 
+
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
+
+            #region Printable Article
             dbS.AddColumnToTable("costdetails", "SelectorPrintedArticle", SchemaDb.Int, "0");
+
 
             dbS.AddColumnToTable("costdetails", "CostPerKg", SchemaDb.String, "20");
             dbS.AddColumnToTable("costdetails", "CostPerSheet", SchemaDb.String, "20");
@@ -54,6 +58,14 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costdetails", "CostPerMq", SchemaDb.String, "20");
             dbS.AddColumnToTable("costdetails", "CostPerMl", SchemaDb.String, "20");
 
+            dbS.AddColumnToTable("costdetails", "SelectorPrintedArticle", SchemaDb.Int, "0");
+
+            dbS.AddColumnToTable("costdetails", "CostTakenFrom", SchemaDb.Int, "0");
+
+            //dbS.AddColumnToTable("costdetails", "CodProductPartPrintableArticle", SchemaDb.String, "50");
+            //dbS.AddForeignKey("costdetails", "CodProductPartPrintableArticle", "productparts", "CodProductPart");
+
+            #endregion
 
             dbS.AddColumnToTable("costdetails", "CodComputedBy", SchemaDb.String, "50");
             dbS.AddForeignKey("costdetails", "CodComputedBy", "costdetails", "CodCostDetail");

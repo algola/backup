@@ -62,39 +62,11 @@ namespace PapiroMVC.Models
             }
         }
 
-        public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles, Cost taskCost)
+        public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
             ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
 
-            base.InitCostDetail(tskExec, articles,taskCost);
-            productPartPrintabelArticles = taskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
-
-            #region Format
-            List<string> formats = new List<string>();
-            //
-            //voglio sapere quali sono i formati degli articoli
-            foreach (var item in productPartPrintabelArticles)
-            {
-                var formatList = articles.OfType<SheetPrintableArticle>()
-                            .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
-                                x.Color == item.Color &&
-                                x.NameOfMaterial == item.NameOfMaterial)
-                                    .Select(x => x.Format);
-
-                formats = formats.Union(formatList.ToList()).ToList();
-            }
-
-            BuyingFormats = formats;
-
-            #endregion
-        }
-
-
-        public override void InitCostDetail2(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
-        {
-            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
-
-            base.InitCostDetail2(tskExec, articles);
+            base.InitCostDetail(tskExec, articles);
             productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
 
             #region Format
@@ -116,5 +88,37 @@ namespace PapiroMVC.Models
 
             #endregion
         }
+
+        public override List<PrintedArticleCostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles,IQueryable<Cost> costs)
+        {
+            List<PrintedArticleCostDetail> lst = new List<PrintedArticleCostDetail>();            
+
+            foreach (var item in this.ProductPart.ProductPartPrintableArticles)
+            {
+                PrintedArticleCostDetail x = new PrintedSheetArticleCostDetail();
+                x.ComputedBy = this;
+                x.ProductPart = this.ProductPart;
+                
+                //devo pescare il costo e associarlo al dettaglio
+                if (x.CodCost == null)
+                {
+                    var cost = costs.Where(pp => pp.CodProductPartPrintableArticle == item.CodProductPartPrintableArticle).FirstOrDefault();
+//da non usare MAIIII                    x.TaskCost = cost;
+                    x.CodCost = cost.CodCost;
+                    x.CodCostDetail = cost.CodCost;
+
+                    x.CostDetailCostCodeRigen();
+
+                }
+
+                this.Computes.Add(x);
+                lst.Add(x);
+
+
+            }
+
+            return lst;
+        }
+
     }
 }

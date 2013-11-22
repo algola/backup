@@ -31,7 +31,6 @@
         </div>
 
 
-        
         @Html.HiddenFor(model => model.TimeStampTable)
 
         @Html.AlgolaEditorFor(model => model.TaskExecutorName)
@@ -39,33 +38,29 @@
 
         @Html.EditorFor(model => model.Dismissed)
 
-        @Html.AlgolaAutocompleteFor(model => model.Width, "WidthAutoComplete", "TaskExecutor")
-        @Html.HiddenFor(model => model.FormatMin)
-        @Html.HiddenFor(model => model.FormatMax)
+        @Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
+        @Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
+        @Html.AlgolaEditorFor(model => model.WeightMin)
+        @Html.AlgolaEditorFor(model => model.WeightMax)
 
-        @*Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
-        @*
-        @*Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
-        *@
-        
-        @Html.HiddenFor(model => model.WeightMin)
-        @Html.HiddenFor(model => model.WeightMax)
-
-        @Html.HiddenFor(model => model.Pinza)
-        @Html.HiddenFor(model => model.ControPinza)
+        @Html.AlgolaEditorFor(model => model.Pinza)
+        @Html.AlgolaEditorFor(model => model.ControPinza)
         @Html.AlgolaEditorFor(model => model.Laterale)
 
         <h3>**Stampa</h3>
 
         @Html.EditorFor(model => model.ColorSide1)
-        @Html.HiddenFor(model => model.ColorSide2)
+        @Html.EditorFor(model => model.ColorSide2)
         @Html.EditorFor(model => model.BWSide1)
-        @Html.HiddenFor(model => model.BWSide2)
+        @Html.EditorFor(model => model.BWSide2)
 
 
         @Html.AlgolaEditorFor(model => model.InkUsage)
         @Html.AlgolaEditorFor(model => model.InkUsageForfait)
 
+        <h3>**Scarti</h3>
+
+        @Html.AlgolaAutocompleteFor(model => model.Width, "WidthAutoComplete", "TaskExecutor")
 
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)

@@ -119,7 +119,7 @@ namespace Services
             base.Edit(entity);
         }
 
-        public Document GetSingle(string codDocument)
+        public new Document GetSingle(string codDocument)
         {
             var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
             return query;

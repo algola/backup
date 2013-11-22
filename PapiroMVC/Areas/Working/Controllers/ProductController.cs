@@ -93,8 +93,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             d.Quantities.Add(0);
             d.Quantities.Add(0);
-            d.Quantities.Add(0);
-            d.Quantities.Add(0);
+//            d.Quantities.Add(0);
+//            d.Quantities.Add(0);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";

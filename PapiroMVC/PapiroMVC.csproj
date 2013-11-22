@@ -251,6 +251,9 @@
     <Compile Include="Areas\Working\Controllers\ProductController.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
     <Compile Include="Areas\Working\Models\Cost\ICostDetailCreator.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRollArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedSheetArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingGain.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSinglePlotterPrinting.cs" />
@@ -951,6 +954,9 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
+    <Compile Include="Models\RigidPlotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Single.cs" />
     <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
@@ -4966,6 +4972,8 @@
     <Content Include="Areas\Working\Views\Document\_CommonScriptDraw.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartBookSheetPrinting.cshtml" />
     <Content Include="Areas\Working\Views\Document\PrintedCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Copy of ProductPartRigidArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateRigid.cshtml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />

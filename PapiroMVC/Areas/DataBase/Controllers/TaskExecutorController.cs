@@ -27,7 +27,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             taskExecutorRepository.SetDbName(CurrentDatabase);
         }
 
-        public TaskExecutorController(ITaskExecutorRepository _tskExDataRep,ITypeOfTaskRepository _typeOfTask)
+        public TaskExecutorController(ITaskExecutorRepository _tskExDataRep, ITypeOfTaskRepository _typeOfTask)
         {
             taskExecutorRepository = _tskExDataRep;
             typeOfTaskRepository = _typeOfTask;
@@ -70,15 +70,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskExecutorOn);          
+                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskExecutorOn);
                     c.Copy(r);
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
 
-//                    deprecated  
-//                    return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"]) });
+                    //                    deprecated  
+                    //                    return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"]) });
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
-               
+
                 }
                 catch (Exception ex)
                 {
@@ -156,7 +156,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         /// </summary>
         /// <param name="id">TaskExecutors id</param>
         /// <returns></returns>
-        [HttpGet]        
+        [HttpGet]
         public ActionResult TaskExecutorCost(string id)
         {
             var c = new TaskExecutorNewCostDetail();
@@ -231,7 +231,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             GenEmptyStep(taskExecutor);
 
-            var tskEst = taskExecutor.SetTaskExecutorEstimatedOn.First();            
+            var tskEst = taskExecutor.SetTaskExecutorEstimatedOn.First();
             switch (tskEst.TypeOfEstimatedOn)
             {
                 case TaskEstimatedOn.EstimatedOnType.OnRun:
@@ -257,7 +257,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //if there are more than one cost return different model and different view
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count > 1)
             {
-                ViewBag.ActionMethod = (string) ViewBag.ActionMethod + "s";
+                ViewBag.ActionMethod = (string)ViewBag.ActionMethod + "s";
                 return View("TaskEstimatedOn", taskExecutor.SetTaskExecutorEstimatedOn.ToList());
             }
             else
@@ -301,8 +301,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     break;
             }
 
-
-
             //if cost is just selected (to prevent two submissions)
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
@@ -335,34 +333,34 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             break;
                     }
 
-                tskEst.CodOptionTypeOfTask = item.CodOptionTypeOfTask;
-                taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
+                    tskEst.CodOptionTypeOfTask = item.CodOptionTypeOfTask;
+                    taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
 
                 }
             }
-                else
+            else
+            {
+                switch (c.TypeTaskExecutorEstimatedOn)
                 {
-                     switch (c.TypeTaskExecutorEstimatedOn)
-                    {
-                        case TaskEstimatedOn.EstimatedOnType.OnRun:
-                            tskEst = new TaskEstimatedOnRun();
-                            retView = "TaskEstimatedOnRun";
-                            break;
-                        case TaskEstimatedOn.EstimatedOnType.OnTime:
-                            tskEst = new TaskEstimatedOnTime();
-                            retView = "TaskEstimatedOnTime";
-                            break;
-                        case TaskEstimatedOn.EstimatedOnType.OnMq:
-                            tskEst = new TaskEstimatedOnMq();
-                            retView = "TaskEstimatedOnMq";
-                            break;
-                        case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
-                            break;
-                        case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
-                            break;
-                        default:
-                            break;
-                    }
+                    case TaskEstimatedOn.EstimatedOnType.OnRun:
+                        tskEst = new TaskEstimatedOnRun();
+                        retView = "TaskEstimatedOnRun";
+                        break;
+                    case TaskEstimatedOn.EstimatedOnType.OnTime:
+                        tskEst = new TaskEstimatedOnTime();
+                        retView = "TaskEstimatedOnTime";
+                        break;
+                    case TaskEstimatedOn.EstimatedOnType.OnMq:
+                        tskEst = new TaskEstimatedOnMq();
+                        retView = "TaskEstimatedOnMq";
+                        break;
+                    case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
+                        break;
+                    case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
+                        break;
+                    default:
+                        break;
+                }
 
                 //Attenzione nella stampa manca l'optiontypeoftask
                 taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
@@ -371,7 +369,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
             //se diverso da stampa allora devo creare un numero di costi pari alle opzioni di TypeOfTask
-            
+
             taskExecutorRepository.Edit(taskExecutor);
             taskExecutorRepository.Save();
 
@@ -439,7 +437,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet")});
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet") });
                 }
                 catch (Exception ex)
                 {
@@ -465,6 +463,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //Action Method speci
             ViewBag.ActionMethod = "CreatePlotter";
             var x = new Plotter();
+
+            x.FormatMax = "0x0";
+            x.FormatMin = "0x0";
             x.CodTypeOfTask = "STAMPA";
             return View(x);
         }
@@ -542,7 +543,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.Save();
                     //hooray it passed - go back to index
                     return Json(new { redirectUrl = Url.Action("IndexDigitalSheet") });
-                
+
                 }
                 catch (Exception ex)
                 {
@@ -617,10 +618,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // GET: /Article/Edit/5
         public ActionResult Edit(string id)
         {
-            //this is a common point where edit function is called
+
             //base on type we have to call right method
 
-            //load article
+            //load taskexecutor
             var task = taskExecutorRepository.GetSingle(id);
             ActionResult ret = null;
 
@@ -669,6 +670,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (tskEx == null)
                 return HttpNotFound();
 
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this is a common point where edit function is called
             ViewBag.ActionMethod = "EditLithoSheet";
             return View(tskEx);
         }
@@ -681,6 +686,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (tskEx == null)
                 return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditPlotter";
@@ -697,6 +705,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (tskEx == null)
                 return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditDigitalSheet";
@@ -749,7 +760,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet")});
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet") });
                 }
                 catch (Exception ex)
                 {
@@ -771,17 +782,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    /* controllare le lastre
-                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                    var filteredItems = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                    if (filteredItems.Count() == 0) throw new Exception();
-
-                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
-
-                    */
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
@@ -825,7 +825,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet")});
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet") });
                 }
                 catch (Exception ex)
                 {
@@ -918,7 +918,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.AvarageRunPerHour = c.AvarageRunPerHour;
                         }
                         else
-                        { 
+                        {
                             taskEstimatedOn.steps.Add(c);
                         }
 
@@ -934,7 +934,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditAvarageRunPerRunStep";
-//            return View("EditAvarageRunPerRunStep", c);
+            //            return View("EditAvarageRunPerRunStep", c);
         }
 
         [HttpPost]
@@ -1116,6 +1116,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditCostPerRunStep";
             //            return View("EditCostPerRunStep", c);
         }
-    
+
     }
 }

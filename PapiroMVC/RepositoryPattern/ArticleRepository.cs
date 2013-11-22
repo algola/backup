@@ -9,7 +9,6 @@ namespace Services
     public class ArticleRepository : GenericRepository<dbEntities, Article>, IArticleRepository
     {
 
-
         public IQueryable<Article> GetPrintableArticleCost(ProductPartsPrintableArticle a)
         {
             return this.GetAll().OfType<Printable>().Where(x => x.NameOfMaterial == a.NameOfMaterial &&
@@ -221,7 +220,7 @@ namespace Services
             base.Edit(entity);
         }
 
-        public Article GetSingle(string codArticle)
+        public new Article GetSingle(string codArticle)
         {
             var query = Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").FirstOrDefault(x => x.CodArticle == codArticle);
             return query;

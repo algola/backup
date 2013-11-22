@@ -15,5 +15,6 @@ namespace PapiroMVC.Models
     public partial class PrintedArticleCostDetail : CostDetail
     {
         public string CostPerUnit { get; set; }
+        public Nullable<int> CostTakenFrom { get; set; }
     }
 }

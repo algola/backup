@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class PrintingPlotterCostDetail : CostDetail
+    public partial class PrintingPlotterCostDetail : PrintingCostDetail
     {
 
         public PrintingPlotterCostDetail()
@@ -51,6 +51,22 @@ namespace PapiroMVC.Models
                 ((ProductPartPlotterPrinting)this.ProductPartPrinting).Width = this.BuyingWidth??1;
                 this.ProductPartPrinting.Update();
             }
+        }
+
+        public override List<PrintedArticleCostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        {
+            List<PrintedArticleCostDetail> lst = new List<PrintedArticleCostDetail>();
+
+            foreach (var item in this.ProductPart.ProductPartPrintableArticles)
+            {
+                var x = new PrintedRollArticleCostDetail();
+                x.ComputedBy = this;
+                x.ProductPart = this.ProductPart;
+
+                this.Computes.Add(x);
+            }
+
+            return lst;
         }
 
     }

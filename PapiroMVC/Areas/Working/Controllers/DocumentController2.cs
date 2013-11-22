@@ -64,7 +64,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             else
             {
                 Console.WriteLine("");
-                cv.InitCostDetail2(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
             }
 
@@ -112,6 +112,16 @@ namespace PapiroMVC.Areas.Working.Controllers
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
 
                         costDetailRepository.Add(cv);
+//                        costDetailRepository.Save();
+
+                        var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+                        List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
+                        foreach (var item in x)
+                        {
+                            item.GetCostFromList(articleRepository.GetAll());
+                            costDetailRepository.Add(item);                        
+                        }
+
                         costDetailRepository.Save();
 
                         break;

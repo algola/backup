@@ -147,7 +147,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     foreach (var qtsitem in qts)
                     {
-                        if (qtsitem !=0)
+                        if (qtsitem != 0)
                         {
                             documentProduct = new DocumentProduct();
                             documentProduct.CodProduct = product.CodProduct;
@@ -185,7 +185,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                                     cost.CodProductPartTask = productPartTask.CodProductPartTask;
                                     cost.Description = "***Lavorazione della parte" +
                                         productPartTask.CodOptionTypeOfTask;
-                                    
+
                                     documentProduct.Costs.Add(cost);
                                 }
                             }
@@ -261,15 +261,23 @@ namespace PapiroMVC.Areas.Working.Controllers
                     product = new ProductBookSheet();
                 }
                 else
-                    if (id == "PVC" ||
-                        id == "Manifesti" ||
+                    if (
                         id == "Fotoquadri" ||
                         id == "Striscioni" ||
                         id == "SuppRigidi" ||
                         id == "Poster") product = new ProductRigid();
                     else
                     {
-                        product = new ProductSingleSheet();
+                        if (
+                            id == "PVC" ||
+                            id == "Manifesti")
+                        {
+                            product = new ProductRigid();
+                        }
+                        else
+                        {
+                            product = new ProductSingleSheet();
+                        }
                     }
 
             product.CodMenuProduct = id;

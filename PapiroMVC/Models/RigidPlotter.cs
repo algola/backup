@@ -12,8 +12,7 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PrintingPlotterCostDetail : PrintingCostDetail
+    public partial class RigidPlotter : Digital
     {
-        public Nullable<double> BuyingWidth { get; set; }
     }
 }

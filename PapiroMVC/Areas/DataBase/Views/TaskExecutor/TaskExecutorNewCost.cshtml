@@ -4,17 +4,18 @@
 @using PapiroMVC.Models
 
 @{
-    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";        
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)Html.T(strings, "PrinterTitle");
+    ViewBag.Desc = (string)Html.T(strings, "NoCostSelected");       
 }
-
-<h3>**Nessun costo inserito</h3>
 
 @using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
 {
     @Html.ValidationSummary(true)
 
     <fieldset>
-        <legend>****aaaa</legend>
+        <legend>@Html.T(strings, "SelectCost")</legend>
+        ù
 
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
@@ -60,7 +61,7 @@
         }
         <br />
     <p>
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new {Area="Database"})');">            
+        <button type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">            
                     <i class="icon-arrow-left"></i>
                      @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
@@ -91,6 +92,22 @@
 
 @section breadcrumb {
 
+}
+
+@section title{
+    @ViewBag.Title
+}
+
+@section description{
+    @ViewBag.Desc
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
 }
 
 @section ScriptS{

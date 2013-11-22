@@ -4,6 +4,7 @@ using PapiroMVC.Models;
 using PapiroMVC.Areas.Working.Controllers;
 using Moq;
 using Services;
+using System.Collections.Generic;
 
 
 namespace UnitTestPapiroMVC
@@ -12,21 +13,53 @@ namespace UnitTestPapiroMVC
     public class CreateProductTest
     {
         [TestMethod]
-        public void CreateProduct()
+        public void CreateFromZero()
         {
-            String id = "4-0-1";
+            String id = "6-0-0";
 
-            CostDetailRepository cdRepository = new CostDetailRepository();
-            ArticleRepository artRepository = new ArticleRepository();
+            DocumentRepository documentRepository = new DocumentRepository();
+            CostDetailRepository costDetailRepository = new CostDetailRepository();
+            ArticleRepository articleRepository = new ArticleRepository();
             DocumentRepository docRepository = new DocumentRepository();
             TaskExecutorRepository taskExecutorRepository = new TaskExecutorRepository();
 
             Cost cost = docRepository.GetCost(id);
-            var costDetail = cdRepository.GetSingle(id);
-            costDetail.InitCostDetail(taskExecutorRepository.GetAll(), artRepository.GetAll(), cost);
+            var cv = new PrintedSheetArticleCostDetail();
+//            cv.TaskCost = cost;
+            cv.CodCost = cost.CodCost;
+            cv.CodCostDetail = cost.CodCost;
 
-            cdRepository.Add(costDetail);
-            cdRepository.Save();
+//            cv.CostDetailCostCodeRigen();
+
+            costDetailRepository.Add(cv);
+            costDetailRepository.Save();
+
+        }
+
+        [TestMethod]
+        public void CreatePPrintableCostFromPrinting()
+        {
+            String id = "6-0-1";
+
+            DocumentRepository documentRepository = new DocumentRepository();
+            CostDetailRepository costDetailRepository = new CostDetailRepository();
+            ArticleRepository articleRepository = new ArticleRepository();
+            DocumentRepository docRepository = new DocumentRepository();
+            TaskExecutorRepository taskExecutorRepository = new TaskExecutorRepository();
+
+            Cost cost = docRepository.GetCost(id);
+            var cv = costDetailRepository.GetSingle(id);
+
+            var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+            List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
+            foreach (var item in x)
+            {
+                item.GetCostFromList(articleRepository.GetAll());
+                costDetailRepository.Add(item);
+            }
+
+            //            costDetailRepository.Add(costDetail);
+            costDetailRepository.Save();
 
 
         }

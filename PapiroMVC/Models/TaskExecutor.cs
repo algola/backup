@@ -17,7 +17,7 @@ namespace PapiroMVC.Models
         public TaskExecutor()
         {
             this.SetTaskExecutorEstimatedOn = new HashSet<TaskEstimatedOn>();
-            this.taskexecutortypeoftasks = new HashSet<TaskExecutorTypeOfTask>();
+            this.TypeOfTasks = new HashSet<TaskExecutorTypeOfTask>();
             this.costdetails = new HashSet<CostDetail>();
         }
     
@@ -41,7 +41,7 @@ namespace PapiroMVC.Models
         public string CodTypeOfTask { get; set; }
     
         public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }
-        public virtual ICollection<TaskExecutorTypeOfTask> taskexecutortypeoftasks { get; set; }
+        public virtual ICollection<TaskExecutorTypeOfTask> TypeOfTasks { get; set; }
         public virtual TypeOfTask typeoftask { get; set; }
         public virtual ICollection<CostDetail> costdetails { get; set; }
     }

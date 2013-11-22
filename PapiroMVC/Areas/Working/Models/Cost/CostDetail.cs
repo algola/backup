@@ -43,16 +43,10 @@ namespace PapiroMVC.Models
         { 
         }
 
-        public virtual void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles, Cost taskCost)
+        public virtual void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
        //     TaskCost = taskCost;
         }
-
-        public virtual void InitCostDetail2(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
-        {
-            //     TaskCost = taskCost;
-        }
-
 
         public ProductPartPrintingGain GainPrintingOnBuying 
         {
@@ -67,7 +61,6 @@ namespace PapiroMVC.Models
             }
         
         }
-
 
 
         public virtual void CostDetailCostCodeRigen()

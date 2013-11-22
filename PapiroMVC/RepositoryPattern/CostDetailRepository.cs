@@ -34,8 +34,8 @@ namespace Services
 
         public override void Edit(CostDetail entity)
         {
-            var fromBD = Context.CostDetail.Single(p => p.CodCostDetail == entity.CodCostDetail);
-            Context.Entry(fromBD).CurrentValues.SetValues(entity);
+            //var fromBD = Context.CostDetail.Single(p => p.CodCostDetail == entity.CodCostDetail);
+           // Context.Entry(fromBD).CurrentValues.SetValues(entity);
 
             if (entity.ProductPartPrinting != null)
             {
@@ -115,6 +115,7 @@ namespace Services
                .Except(modOrAdded.OfType<ProductPartPrinting>())
                .Except(modOrAdded.OfType<ProductPartPrintingGain>())
                .Except(modOrAdded.OfType<Makeready>());
+
 
             foreach (var item in notAll)
             {

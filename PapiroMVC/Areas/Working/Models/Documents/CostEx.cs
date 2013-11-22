@@ -125,9 +125,7 @@ namespace PapiroMVC.Models
 
         public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-
             CostDetail cv = null;
-
             ProductPart productPart = null;
             
             #region Lavorazione
@@ -157,7 +155,7 @@ namespace PapiroMVC.Models
                             cv = new PrintingSheetCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles, this);
+                            cv.InitCostDetail(tskExec, articles);
 
                             ((PrintingSheetCostDetail)cv).BuyingFormat =
                                  (((PrintingSheetCostDetail)cv).BuyingFormat == "" || ((PrintingSheetCostDetail)cv).BuyingFormat == null) ?
@@ -186,6 +184,27 @@ namespace PapiroMVC.Models
                         case TaskExecutor.ExecutorType.DigitalWeb:
                             break;
                         case TaskExecutor.ExecutorType.Plotter:
+                            cv = new PrintingPlotterCostDetail();
+
+                            cv.TaskCost = this;
+                            cv.InitCostDetail(tskExec, articles);
+
+                            ((PrintingPlotterCostDetail)cv).BuyingWidth =
+                                 (((PrintingPlotterCostDetail)cv).BuyingWidth == 0 || ((PrintingPlotterCostDetail)cv).BuyingWidth == null) ?
+                                 (((PrintingPlotterCostDetail)cv).BuyingWidths != null) && (((PrintingPlotterCostDetail)cv).BuyingWidths.Count > 0) ? ((PrintingPlotterCostDetail)cv).BuyingWidths.FirstOrDefault() : 0
+                                 : ((PrintingPlotterCostDetail)cv).BuyingWidth;
+
+                            //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
+                            ((PrintingPlotterCostDetail)cv).PrintingFormat =
+                                (((PrintingPlotterCostDetail)cv).PrintingFormat == "" || ((PrintingPlotterCostDetail)cv).PrintingFormat == null) ?
+                                ""
+                                : ((PrintingPlotterCostDetail)cv).PrintingFormat;
+
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
                             break;
                         case TaskExecutor.ExecutorType.PrePostPress:
                             break;
@@ -199,12 +218,18 @@ namespace PapiroMVC.Models
 
             #endregion
 
-            //if (this.CodProductPartPrintableArticle != null)
-            //{
-            //    var productPartPrintableArticle = this.ProductPartsPrintableArticle;
-            //    productPart = this.ProductPartsPrintableArticle.ProductPart;
-            //    productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
-            //}
+            #region Materiale
+            
+            if (this.CodProductPartPrintableArticle != null)
+            {
+                var productPartPrintableArticle = this.ProductPartsPrintableArticle;
+                productPart = this.ProductPartsPrintableArticle.ProductPart;
+
+                //il tipo di materiale dipende dalla stampa o dal tipo di prodotto?               
+                //productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
+            }
+
+            #endregion
 
             cv.ProductPart = productPart;
 

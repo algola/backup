@@ -12,7 +12,6 @@ namespace Services
     {
         public ProductFormatName[] GetAllById(string id)
         {
-
             ProductFormatName[] ret;
 
             switch (id)
@@ -197,7 +196,14 @@ namespace Services
                             new ProductFormatName {CodFormat= "10x21", FormatName="10x21" },
                             new ProductFormatName {CodFormat= "0x0", FormatName="0x0" }};
                     break;
-
+                case "SuppRigidi":
+                    ret = new ProductFormatName[4] {  
+                            new ProductFormatName {CodFormat= "35x50", FormatName="35x50" },
+                            new ProductFormatName {CodFormat= "50x70", FormatName="50x70" },
+                            new ProductFormatName {CodFormat= "70x100", FormatName="70x100" },
+                            new ProductFormatName {CodFormat= "0x0", FormatName="0x0" }                    
+                    };
+                    break;
            
                 default :
                     ret = new ProductFormatName[0] { };

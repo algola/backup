@@ -228,6 +228,15 @@
   <data name="LithoSheetGridCaption" xml:space="preserve">
     <value>Macchine offset a foglio</value>
   </data>
+  <data name="NoCostInserted" xml:space="preserve">
+    <value>Nessun costo inserito</value>
+  </data>
+  <data name="NoCostInsertedCaption" xml:space="preserve">
+    <value>Selezionare un tipo di costo</value>
+  </data>
+  <data name="NoCostSelected" xml:space="preserve">
+    <value>Nessuna tipologia di costo</value>
+  </data>
   <data name="OnMqNewCostCaption" xml:space="preserve">
     <value>Costo al Mq</value>
   </data>
@@ -260,6 +269,9 @@
   </data>
   <data name="SaveNewBasedOn" xml:space="preserve">
     <value>Salva come nuova</value>
+  </data>
+  <data name="SelectCost" xml:space="preserve">
+    <value>Selezionare una tipologia di calcolo cost</value>
   </data>
   <data name="SheetwiseAfterPrintingUnitCaption" xml:space="preserve">
     <value>Castelli Reversibili</value>
