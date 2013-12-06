@@ -29,6 +29,10 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "Version", SchemaDb.String, "4");
             dbS.AddColumnToTable("taskexecutors", "Dismissed", SchemaDb.Bool, "0");
 
+            //universal code used for supplier's item
+            dbS.AddColumnToTable("taskexecutors", "UniversalCodPapiro", SchemaDb.String, "50");
+
+
             dbS.AddColumnToTable("taskexecutors", "FormatMin", SchemaDb.String, "9");
             dbS.AddColumnToTable("taskexecutors", "FormatMax", SchemaDb.String, "9");
             dbS.AddColumnToTable("taskexecutors", "WeightMin", SchemaDb.IntUS, "0");
@@ -52,7 +56,7 @@ namespace PapiroMVC.Model
             // 0 = Binding  
             dbS.AddColumnToTable("taskexecutors", "SelectorBindingPrePostPress", SchemaDb.Int, "0");
 
-            // 0 = lithosheet // 1 = lithoweb // 2 = digialsheet // 3 = digitalroll // 4 = plotter
+            // 0 = lithosheet // 1 = lithoroll // 2 = digialsheet // 3 = digitalroll // 4 = plotter
             //litosheet
             dbS.AddColumnToTable("taskexecutors", "Selector", SchemaDb.Int, "0");
 
@@ -75,6 +79,10 @@ namespace PapiroMVC.Model
 
             //plotter                
             dbS.AddColumnToTable("taskexecutors", "Width", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "ColorJet", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "WhiteUV", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "ColorUV", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "Cutting", SchemaDb.Bool, "0");
 
             //PrePostPress IsUnitComputationManual
             dbS.AddColumnToTable("taskexecutors", "IsUnitComputationManual", SchemaDb.Bool, "0");
@@ -111,8 +119,28 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStarting", SchemaDb.String, "20");
             dbS.AddForeignKey("taskexecutorestimatedon", "CodOptionTypeOfTask", "optiontypeoftask", "CodOptionTypeOfTask");
 
-            //BindingEstimatedOnTime
 
+            //0 = DigitalOnRime // 1 = DigitalOnRun
+            dbS.AddColumnToTable("taskexecutorestimatedon", "SelectorTimeRunDigital", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunningBW", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStartingBW", SchemaDb.String, "20");
+
+            //0 = PlotterMq
+            dbS.AddColumnToTable("taskexecutorestimatedon", "SelectorPlotterMq", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostInkJetLow", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostInkJetMed", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostInkJetHight", SchemaDb.String, "20");
+
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostUVLow", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostUVMed", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostUVHight", SchemaDb.String, "20");
+
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostWhite", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostCutting", SchemaDb.String, "20");
+
+
+
+            //BindingEstimatedOnTime
             dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHour4", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime4", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHour6", SchemaDb.IntUS, "0");
@@ -138,6 +166,14 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostForfait", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostForfaitForSheet", SchemaDb.String, "20");
 
+            //DigitalOnRun
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerUnitBW", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentCostPerUnitBW", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentDeficitOnCostForWeightStepBW", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingCost1BW", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingCost2BW", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostForfaitBW", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostForfaitForSheetBW", SchemaDb.String, "20");
 
             //BindingEstimatedOnUnit
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerUnit4", SchemaDb.String, "20");
@@ -169,6 +205,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("steps", "AvarageRunPerHour", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("steps", "CostPerUnit", SchemaDb.String, "20");
             dbS.AddColumnToTable("steps", "DeficitRate", SchemaDb.String, "20");
+
+            //CostPerRunStepBW
+            dbS.AddColumnToTable("steps", "SelectorCostBW", SchemaDb.Int, "0");
 
             //Binding On Time
             dbS.AddColumnToTable("steps", "AvarageRunPerHour4", SchemaDb.IntUS, "0");

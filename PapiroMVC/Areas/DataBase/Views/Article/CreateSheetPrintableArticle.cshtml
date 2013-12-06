@@ -11,7 +11,7 @@
 }
 
 @section description{
-ViewBag.Title
+    @ViewBag.Title
 }
 
 @Html.Partial("_EditAndCreateSheetPrintableArticle", Model)
@@ -20,7 +20,6 @@ ViewBag.Title
 
 }
 
-
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
 }
@@ -28,4 +27,8 @@ ViewBag.Title
 @section specificPluginScript {
     <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
 }

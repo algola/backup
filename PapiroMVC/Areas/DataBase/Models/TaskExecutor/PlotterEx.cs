@@ -10,13 +10,8 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Plotter_MetaData))]
-    public partial class Plotter : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
+    public  abstract partial class Plotter : TaskExecutor, IDataErrorInfo, ICloneable, IDeleteRelated
     {
-
-        public Plotter()
-        {
-            this.TypeOfExecutor = TaskExecutor.ExecutorType.Plotter;
-        }
 
         #region Added Properties
 
@@ -37,14 +32,6 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
-
-                if (proprieta == "Width")
-                {
-                    if (this.Width < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
 
                 return result;
             }
@@ -75,11 +62,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((Plotter)to).Width = this.Width;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
         }
 
         #endregion

@@ -1,19 +1,17 @@
-﻿@model PapiroMVC.Models.Plotter
+﻿@model PapiroMVC.Models.DigitalRoll
 @using PapiroMVC.Validation
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-
-    //we want ot use different resource only to share it between areas and parts
     string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
 
     foreach (PapiroMVC.Models.TypeOfTask item in ViewBag.TypeOfTaskList)
     {
-        item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
+        item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask.Replace("-", "_"));
     }
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPA" : Model.CodTypeOfTask;
-  
 }
 
 <div id="status">
@@ -22,7 +20,6 @@
     {
         @Html.ValidationSummary(true)
 
-
         <div class="control-group">
             <div class="controls col-sm-9">
                 @Html.DropDownListFor(y => y.CodTypeOfTask,
@@ -30,41 +27,41 @@
             </div>
         </div>
 
-
         
         @Html.HiddenFor(model => model.TimeStampTable)
 
         @Html.AlgolaEditorFor(model => model.TaskExecutorName)
-        @Html.AlgolaEditorFor(model => model.Version)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(model => model.Dismissed)
+        @Html.HiddenFor(model => model.UniversalCodPapiro)
 
-        @Html.EditorFor(model => model.Dismissed)
 
-        @Html.AlgolaAutocompleteFor(model => model.Width, "WidthAutoComplete", "TaskExecutor")
-        @Html.HiddenFor(model => model.FormatMin)
-        @Html.HiddenFor(model => model.FormatMax)
-
-        @*Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
-        @*
-        @*Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
-        *@
-        
-        @Html.HiddenFor(model => model.WeightMin)
-        @Html.HiddenFor(model => model.WeightMax)
+        @Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
+        @Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
+        @Html.AlgolaEditorFor(model => model.WeightMin)
+        @Html.AlgolaEditorFor(model => model.WeightMax)
 
         @Html.HiddenFor(model => model.Pinza)
         @Html.HiddenFor(model => model.ControPinza)
         @Html.AlgolaEditorFor(model => model.Laterale)
 
-        <h3>**Stampa</h3>
+        <h3>****Stampa</h3>
 
         @Html.EditorFor(model => model.ColorSide1)
-        @Html.HiddenFor(model => model.ColorSide2)
+        @Html.EditorFor(model => model.ColorSide2)
         @Html.EditorFor(model => model.BWSide1)
-        @Html.HiddenFor(model => model.BWSide2)
+        @Html.EditorFor(model => model.BWSide2)
 
 
-        @Html.AlgolaEditorFor(model => model.InkUsage)
-        @Html.AlgolaEditorFor(model => model.InkUsageForfait)
+        @Html.HiddenFor(model => model.InkUsage)
+        @Html.HiddenFor(model => model.InkUsageForfait)
+
+        <h3>***Scarti</h3>
+
+        @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart, "ProofSheetFirstStartAutoComplete", "TaskExecutor")
+        @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart, "ProofSheetSecondsStartAutoComplete", "TaskExecutor")
+
+        @Html.AlgolaAutocompleteFor(model => model.ProductionWaste, "ProductionWaste", "TaskExecutor")
 
 
         @Html.HiddenFor(model => model.TimeStampTable)
@@ -76,23 +73,25 @@
 
         <p>
 
-            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPlotter", "TaskExecutor", new { Area = "Database" })');">
+
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexDigitalSheetAndRoll", "TaskExecutor", new { Area = "Database" })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
 
-            <button class="default" type="submit" name="@ViewBag.ActionMethod">
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Save")
             </button>
 
-            @if (ViewBag.ActionMethod != "CreatePlotter")
+            @if (ViewBag.ActionMethod != "CreateDigitalRoll")
             {
-                <button class="button" type="submit" name="CreatePlotter">
+                <button class="btn" type="submit" name="CreateDigitalRoll">
                     <i class="icon-save"></i>
                     @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
                 </button>
             }
+
         </p>
 
     }

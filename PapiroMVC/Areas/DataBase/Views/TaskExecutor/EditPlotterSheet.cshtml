@@ -1,13 +1,14 @@
 ﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.Plotter
+@model PapiroMVC.Models.PlotterSheet
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "PlotterGridCaption");
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingPlotterTitle") + @Model.TaskExecutorName;
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
-}
 
-@Html.Partial("_EditAndCreatePlotter", Model)
+    }
+
+@Html.Partial("_EditAndCreatePlotterSheet", Model)
 
 
 @section breadcrumb {
@@ -21,7 +22,6 @@
 @section description{
     @ViewBag.Desc
 }
-
 
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />

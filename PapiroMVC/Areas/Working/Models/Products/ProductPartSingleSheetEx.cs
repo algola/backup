@@ -14,7 +14,6 @@ namespace PapiroMVC.Models
         {
             TypeOfProductPart = ProductPart.ProductPartType.ProductPartSingleSheet;
         }
-
         
         #region Proprietà aggiuntive       
         #endregion

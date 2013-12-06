@@ -24,14 +24,14 @@ namespace Services
         {
             c.TimeStampTable = DateTime.Now;
             int i = 0;
-            foreach (var item in c.SetTaskExecutorEstimatedOn.OrderBy(x=>x.CodTaskExecutorOn))
+            foreach (var item in c.SetTaskExecutorEstimatedOn.OrderBy(x=>x.CodTaskEstimatedOn))
             {
 
-                item.CodTaskExecutorOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString()+ (i++).ToString();
+                item.CodTaskEstimatedOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString()+ (i++).ToString();
                 foreach (var step in item.steps)
                 {
                     item.TimeStampTable = DateTime.Now;
-                    step.CodTaskEstimatedOn = item.CodTaskExecutorOn;
+                    step.CodTaskEstimatedOn = item.CodTaskEstimatedOn;
                 }
             }
         }
@@ -91,7 +91,7 @@ namespace Services
 
         public TaskEstimatedOn GetSingleEstimatedOn(string cod)
         {
-            return (this.Context.taskexecutorestimatedon.Include("steps").Include("taskexecutors").First(x => x.CodTaskExecutorOn == cod));           
+            return (this.Context.taskexecutorestimatedon.Include("steps").Include("taskexecutors").First(x => x.CodTaskEstimatedOn == cod));           
         }
 
         public Step GetSingleStep(int cod)

@@ -65,10 +65,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((LithoSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
-            ((LithoSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
-            ((LithoSheet)to).ProductionWaste = this.ProductionWaste;
-
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
             //to.Descrizione = this.Descrizione;

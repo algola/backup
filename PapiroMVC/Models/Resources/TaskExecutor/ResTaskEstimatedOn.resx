@@ -120,10 +120,10 @@
   <data name="CodTaskExecutor" xml:space="preserve">
     <value>xxxxxx</value>
   </data>
-  <data name="CodTaskExecutorOn" xml:space="preserve">
+  <data name="CodTaskEstimatedOn" xml:space="preserve">
     <value>xxxxxx</value>
   </data>
-  <data name="CodTaskExecutorOnToolTip" xml:space="preserve">
+  <data name="CodTaskEstimatedOnToolTip" xml:space="preserve">
     <value>xxxxxx</value>
   </data>
   <data name="CodTaskExecutorToolTip" xml:space="preserve">

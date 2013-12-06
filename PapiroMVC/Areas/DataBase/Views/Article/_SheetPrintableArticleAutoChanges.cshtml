@@ -5,7 +5,7 @@
 @{
     
     string strings = "~/Areas/DataBase/Views/Article/Strings";
-    
+
     ViewBag.ProcessCostType = new List<SelectListItem>
                 {
                     new SelectListItem {Text = (string)HttpContext.GetLocalResourceObject(strings, "OptAllCost"), 
@@ -30,49 +30,59 @@
 
 <!-- autocomplete works properly only if script is reloaded in partial view -->
 <script src="/Scripts/autocomplete.js" type="text/javascript"></script>
- 
-@using (Ajax.BeginForm("SheetAutomaticallyChangesValidation", new { controller = "Article", area = "DataBase" }, new AjaxOptions
+
+@using (Ajax.BeginForm("SheetAutomaticallyChangesValidation",
+    new { controller = "Article", area = "DataBase" }, new AjaxOptions
 {
     HttpMethod = "POST",
-//    UpdateTargetId = "sheetPrintableArticleAutoChanges",
-//    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
+    //    UpdateTargetId = "sheetPrintableArticleAutoChanges",
+    //    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
     OnSuccess = "sendSheetAutomaticallyChanges",
     OnFailure = "ReloadForm(xhr)",
-    OnBegin = "showProcessingMsg", 
+    OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg"
-}))
+}, new { @class = "form-horizontal" }))
 {          
-        @Html.ValidationSummary(true)
+    @Html.ValidationSummary(true)
     
-    <fieldset>
-        <legend>SheetPrintableArticleViewModelAutoChanges</legend>
 
-            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
-            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
+    @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
+    @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
 
-            @Html.AlgolaAutocompleteFor(model => model.Hand, "HandAutoComplete", "Article", new { id = "Hand" })
-<br />            
-            @Html.AlgolaEditorFor(model => model.CostPerKg, new { id = "CostPerKg" })
-<br />
-            @Html.DropDownListFor(model=>model.TypeOfCostToModify, 
+    @Html.AlgolaAutocompleteFor(model => model.Hand, "HandAutoComplete", "Article", new { id = "Hand" })
+    @Html.AlgolaEditorFor(model => model.CostPerKg, new { id = "CostPerKg" })
+
+
+    <div class="col-sm-3 control-label no-padding-right">
+    </div>
+
+    <div class="col-sm-9">
+        @Html.DropDownListFor(model => model.TypeOfCostToModify,
             ViewBag.ProcessCostType as IEnumerable<SelectListItem>,
-            new { @style = "width: 255px;", 
-                id = "optTypeOfCostToModify" 
+            new
+            {
+                @style = "width: 255px;",
+                id = "optTypeOfCostToModify"
             })
-<br />  
-<br />  
-            @Html.LabelFor(model=>model.TypeOfNoBvToModify)
-            @Html.DropDownListFor(model=>model.TypeOfNoBvToModify, 
-            ViewBag.ProcessNoBvType as IEnumerable<SelectListItem>,
-            new { @style = "width: 255px;", 
-                id = "optTypeOfNoBvToModify" 
-            })
-<br />  
-<br />  
+    </div><br />
+    
+    <div class="col-sm-3 control-label no-padding-right">
+        @Html.LabelFor(model => model.TypeOfNoBvToModify)
+    </div>
+    
+    <div class="col-sm-9">
 
-    </fieldset>
+        @Html.DropDownListFor(model => model.TypeOfNoBvToModify,
+            ViewBag.ProcessNoBvType as IEnumerable<SelectListItem>,
+            new
+            {
+                @style = "width: 255px;",
+                id = "optTypeOfNoBvToModify"
+            })
+    </div>
     <br />
-    <input class="button"  type="submit" value="Elabora")' />
+    <input class="default btn btn-primary" type="submit" value="Elabora****" />
+    
 }
 
 <script type="text/javascript">
@@ -120,8 +130,8 @@
             contentType: "application/json; charset=utf-8",
             success: function (data) {
                 $.Dialog({
-                    'title': '@Html.T(strings,"MsgBoxAutomaticChangesTitle")',
-                    'content': '@Html.T(strings,"MsgBoxAutomaticChangesContent")',
+                    'title': '@Html.T(strings, "MsgBoxAutomaticChangesTitle")',
+                    'content': '@Html.T(strings, "MsgBoxAutomaticChangesContent")',
                     'buttons': {
                         'Ok': {
                             'action': function () { }

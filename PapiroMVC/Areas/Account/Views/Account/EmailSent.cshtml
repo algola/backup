@@ -1,11 +1,32 @@
 ﻿@using PapiroMVC.Validation
+
 @{
     string strings = "~/Areas/Account/Views/Account/Strings";
-    ViewBag.Title = Html.T(strings, "RecoveryPasswordTitle");
+    ViewBag.Title = Html.T(strings, "ConfirmEditProfileTitle");
 }
-<h1>@ViewBag.Title</h1>
-<h2>@Html.T(strings, "TitleCEmailSent")</h2>
-<br />
-<p class="message-info">
-    @Html.T(strings, "EmailSent").
-</p>
+
+<div class="alert alert-block alert-success">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+
+    <i class="icon-ok green"></i>
+    @Html.T(strings, "EmailSent")
+</div>
+
+@section title{
+    @Html.T(strings, "ConfirmEditProfileTitle")
+}
+
+@section description{
+    @Html.T(strings, "TitleCEmailSent")
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}

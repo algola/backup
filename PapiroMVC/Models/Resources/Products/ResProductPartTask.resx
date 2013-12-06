@@ -237,6 +237,69 @@
   <data name="CodRILIEVO_A_SECCO_SI" xml:space="preserve">
     <value>Rilevo a secco</value>
   </data>
+  <data name="CodSTAMPADIGITALE_FRONTE_BN" xml:space="preserve">
+    <value>Stampati fronte in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPADIGITALE_FRONTE_COL" xml:space="preserve">
+    <value>Stampati fronte a colori</value>
+  </data>
+  <data name="CodSTAMPADIGITALE_FR_BN" xml:space="preserve">
+    <value>Stampati fronte retro in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPADIGITALE_FR_COL" xml:space="preserve">
+    <value>Stampati fronte retro a colori</value>
+  </data>
+  <data name="CodSTAMPADIGITALE_NO" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_1" xml:space="preserve">
+    <value>Stampati a 1 colore</value>
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_2" xml:space="preserve">
+    <value>Stampati a 2 colori</value>
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_3" xml:space="preserve">
+    <value>Stampati a 3 colori</value>
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_4" xml:space="preserve">
+    <value>Stampati a 4 colori</value>
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_5" xml:space="preserve">
+    <value>Stampati a 5 colori</value>
+  </data>
+  <data name="CodSTAMPAOFFaROTOLO_NO" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CodSTAMPAOFFeDIGITALE_FRONTE_BN" xml:space="preserve">
+    <value>Stampati fronte in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPAOFFeDIGITALE_FRONTE_COL" xml:space="preserve">
+    <value>Stampati fronte a colori</value>
+  </data>
+  <data name="CodSTAMPAOFFeDIGITALE_FR_BN" xml:space="preserve">
+    <value>Stampati fronte retro in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPAOFFeDIGITALE_FR_COL" xml:space="preserve">
+    <value>Stampati fronte retro a colori</value>
+  </data>
+  <data name="CodSTAMPAOFFeDIGITALE_NO" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CodSTAMPAOFF_FRONTE_BN" xml:space="preserve">
+    <value>Stampati fronte in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPAOFF_FRONTE_COL" xml:space="preserve">
+    <value>Stampati fronte a colori</value>
+  </data>
+  <data name="CodSTAMPAOFF_FR_BN" xml:space="preserve">
+    <value>Stampati fronte retro in bianco e nero</value>
+  </data>
+  <data name="CodSTAMPAOFF_FR_COL" xml:space="preserve">
+    <value>Stampati fronte retro a colori</value>
+  </data>
+  <data name="CodSTAMPAOFF_NO" xml:space="preserve">
+    <value />
+  </data>
   <data name="CodSTAMPA_FRONTE_BN" xml:space="preserve">
     <value>Stampati fronte in bianco e nero</value>
   </data>
@@ -305,5 +368,35 @@
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_ALTA" xml:space="preserve">
+    <value>Stampa UV alta qualità</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_ALTADN" xml:space="preserve">
+    <value>Stampa UV alta qualità Day/Night</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_ALTAW" xml:space="preserve">
+    <value>Stampa UV alta qualità e bianco</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_BASSA" xml:space="preserve">
+    <value>Stampa UV bassa qualità</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_BASSADN" xml:space="preserve">
+    <value>Stampa UV bassa qualità Day/Night</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_BASSAW" xml:space="preserve">
+    <value>Stampa UV bassa qualità e bianco</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_MEDIA" xml:space="preserve">
+    <value>Stampa UV media qualità</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_MEDIADN" xml:space="preserve">
+    <value>Stampa UV media qualità Day/Night</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_MEDIAW" xml:space="preserve">
+    <value>Stampa UV media qualità e bianco</value>
+  </data>
+  <data name="CodSTAMPARIGIDO_NO" xml:space="preserve">
+    <value />
   </data>
 </root>

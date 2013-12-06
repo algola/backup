@@ -222,7 +222,7 @@
                             <h2>Button with icon</h2>
                             <button><i class="icon-bookmark"></i> Button</button>
                             <button>Button <i class="icon-bookmark"></i></button>
-                            <button class="default">Button <i class="icon-bookmark"></i></button>
+                            <button class="default btn btn-primary">Button <i class="icon-bookmark"></i></button>
                             <a class="button">Button <i class="icon-bookmark"></i></a>
 <pre class="prettyprint linenums">
     &lt;button&gt;&lt;i class="icon-*"&gt;&lt;/i&gt;Caption&lt;/button&gt;

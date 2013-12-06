@@ -8,7 +8,8 @@
     function editArticle(cellvalue, options, rowobject) {
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
 
-        return link.replace("-1", cellvalue);
+        return '<i class="icon-cogs icon-1x icon-only">' + '</i> ' +
+            link.replace("-1", cellvalue);
     }
 
     function typeOfArticle(cellvalue, options, rowobject) {

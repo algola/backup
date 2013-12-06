@@ -5,12 +5,12 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("DeficitForWeightStepList", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
-    string editUrl = Url.Action("EditDeficitForWeightStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
+    string url = Url.Action("DeficitForWeightStepList", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
+    string editUrl = Url.Action("EditDeficitForWeightStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
 }
 
-<table id="gridDeficitForWeight@(Model.CodTaskExecutorOn)"><tr><td/></tr></table> 
-<div id="pagerDeficitForWeight@(Model.CodTaskExecutorOn)"></div> 
+<table id="gridDeficitForWeight@(Model.CodTaskEstimatedOn)"><tr><td/></tr></table> 
+<div id="pagerDeficitForWeight@(Model.CodTaskEstimatedOn)"></div> 
 
     <script type="text/javascript">
 
@@ -18,7 +18,7 @@
 
             var lastSel = -1;
 
-            var myGrid = $("#gridDeficitForWeight@(Model.CodTaskExecutorOn)").jqGrid({
+            var myGrid = $("#gridDeficitForWeight@(Model.CodTaskEstimatedOn)").jqGrid({
                 url: '@url',
                 editUrl: '@editUrl',
                 datatype: 'json',
@@ -30,7 +30,7 @@
                     { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToWeightCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },    
                     { name: 'DeficitRate', label: '@HttpContext.GetLocalResourceObject(strings, "DeficitRateCaption")', width: 100, align: 'right', editable: true }],
 
-                pager: '#pagerDeficitForWeight@(Model.CodTaskExecutorOn)',
+                pager: '#pagerDeficitForWeight@(Model.CodTaskEstimatedOn)',
                 
                 rowNum: 10,
                 rowList: [10, 20, 500],
@@ -51,7 +51,7 @@
                             //...
                         },
                         aftersavefunc: function(){
-                            $("#gridDeficitForWeight@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+                            $("#gridDeficitForWeight@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
                         },
                         url: '@editUrl'
                     });
@@ -61,7 +61,7 @@
 
             });
 
-            myGrid.jqGrid('navGrid', '#pagerDeficitForWeight@(Model.CodTaskExecutorOn)', { edit: false, add: false, del: false, search: false });
+            myGrid.jqGrid('navGrid', '#pagerDeficitForWeight@(Model.CodTaskEstimatedOn)', { edit: false, add: false, del: false, search: false });
 
         });
 
@@ -78,7 +78,7 @@
         }
 
         function reloadDeficitForWeight() {
-            $("#gridDeficitForWeight@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+            $("#gridDeficitForWeight@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
         }
 
     </script>

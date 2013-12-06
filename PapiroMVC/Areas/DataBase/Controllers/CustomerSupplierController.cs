@@ -7,6 +7,7 @@ using PapiroMVC.Models;
 using Services;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Areas.DataBase.ViewModels;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -126,9 +127,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //
         // POST: /CustomerSupplier/Create
+        [HttpParamAction]
         [HttpPost]
         public ActionResult CreateCustomer(Customer c)
         {
+            ViewBag.ActionMethod = "CreateCustomer";
+
             return CreateCustomerSupplier(c);
         }
 
@@ -199,9 +203,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         //
         // POST: /CustomerSupplier/CreateSupplier
 
+        [HttpParamAction]
         [HttpPost]
         public ActionResult CreateSupplier(Supplier c)
         {
+            ViewBag.ActionMethod = "CreateSupplier";
             return CreateCustomerSupplier(c);
         }
 
@@ -218,14 +224,18 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //
         // GET: /CustomerSupplier/Edit/5
+        
         [HttpGet]
         public ActionResult EditCustomer(string id)
         {
+            ViewBag.ActionMethod = "EditCustomer";
+
             return View(customerSupplierRepository.GetSingle(id));
         }
 
         //
         // POST: /CustomerSupplier/Edit/5
+        [HttpParamAction]
         [HttpPost]
         public ActionResult EditCustomer(Customer c)
         {
@@ -242,6 +252,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
+            ViewBag.ActionMethod = "EditCustomer";
+
             //If we come here, something went wrong. Return it back.        
             return PartialView("_EditAndCreateSupplier", c);                                   
         }
@@ -251,10 +263,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // GET: /CustomerSupplier/EditSupplier/5
         public ActionResult EditSupplier(string id)
         {
+            ViewBag.ActionMethod = "EditSupplier";
             return View(customerSupplierRepository.GetSingle(id));
         }
         //
         // POST: /CustomerSupplier/Edit/5
+        [HttpParamAction]
         [HttpPost]
         public ActionResult EditSupplier(Supplier s)
         {
@@ -271,6 +285,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
+            ViewBag.ActionMethod = "EditSupplier";
+
             //If we come here, something went wrong. Return it back.        
             return PartialView("_EditAndCreateSupplier", s);
         }
@@ -348,12 +364,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 cs.CodTypeOfBase = "0002";
             }
 //            ViewBag.TypeOfBaseList = 
+
+            ViewBag.ActionMethod = "CreateBase";
             return View(cs);
         }
 
         //
         // POST: /CustomerSupplierBase/Create
-
+        [HttpParamAction]
         [HttpPost]
         public ActionResult CreateBase(CustomerSupplierBase cs)
         {
@@ -378,6 +396,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
         }
+
+            ViewBag.ActionMethod = "CreateBase";
+
             //If we come here, something went wrong. Return it back.        
             return PartialView("_EditAndCreateBase",cs);            
         }
@@ -395,12 +416,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //Load each type of base
             ViewBag.TypeOfBaseList = typeOfBaseRepository.GetAll();            
             CustomerSupplierBase cs = customerSupplierBaseRepository.GetSingle(id);
+            ViewBag.ActionMethod = "EditBase";
+
             return View(cs);
         }
 
         //
         // POST: /CustomerSupplierBase/Edit/5
 
+        [HttpParamAction]
         [HttpPost]
         public ActionResult EditBase(String id, CustomerSupplierBase csB)
         {
@@ -420,6 +444,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
+            ViewBag.ActionMethod = "EditBase";
+
             //If we come here, something went wrong. Return it back.        
             return PartialView("_EditAndCreateBase",csB);           
         }

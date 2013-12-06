@@ -4,8 +4,34 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleConfirmation");               
 }
 
-<h2>@ViewBag.Title</h2>
-<br />
-<p class="message-info">
-    @Html.T(strings, "ConfirmationMessage").
-</p>
+
+<div class="space-6"></div>
+<div class="alert alert-info">
+    <i class="icon-hand-right"></i>
+    @Html.T(strings, "ConfirmationMessage")
+    <button class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+</div>
+
+@section title{
+    @Html.T(strings, "Register")
+}
+
+@section description{
+    @Html.T(strings, "TitleConfirmation")
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -26,7 +26,7 @@ namespace PapiroMVC.Models
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
             ProductPartTask partTask;
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPA_NO");
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPARIGIDO_NO");
             partTask.Hidden = false;
             partTask.IndexOf = 1;
 
@@ -123,5 +123,29 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+
+        public override List<ProductPartTask> GetInitalizedPartTask()
+        {
+            var tsksInPart = new List<ProductPartTask>();
+
+            ProductPartTask pt;
+
+            String[] codTypeOfTasks = { "STAMPARIGIDO" };
+
+            foreach (var item in codTypeOfTasks)
+            {
+                pt = new ProductPartTask();
+                //default selection
+                pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
+                pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
+                pt.Hidden = true;
+                tsksInPart.Add(pt);
+            }
+
+            return tsksInPart;
+        }
+
+    
     }
 }

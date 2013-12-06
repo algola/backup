@@ -4,14 +4,14 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "LithoSheetGridCaption");
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TitleLithoSheetAndRollIndex");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
 }
 
 
 <div id='lithoSheet'>
     <!-- pass RollPrintableArticleAutoChenges is used to can help html filed with facilities -->
-    @Html.Partial("_ListLithoSheet")
+    @Html.Partial("_ListLithoSheetAndRoll")
 </div>
 
 <div id='script'>
@@ -42,3 +42,10 @@
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 }
+
+<script>
+    $(function () {        
+        document.getElementById("taskexecutorSlidebar").className = "active open";
+        document.getElementById("lithoSlidebar").className = "active";
+    });
+</script>

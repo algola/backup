@@ -130,7 +130,7 @@
     <value>Anagrafiche</value>
   </data>
   <data name="DigitalSheetMenu" xml:space="preserve">
-    <value>Stampa Digitale Foglio</value>
+    <value>Stampa Digitale</value>
   </data>
   <data name="EnglishMenu" xml:space="preserve">
     <value>English</value>
@@ -139,7 +139,7 @@
     <value>Italiano</value>
   </data>
   <data name="LithoSheetMenu" xml:space="preserve">
-    <value>Stampa Litho Foglio</value>
+    <value>Stampa Offset</value>
   </data>
   <data name="LoginMenu" xml:space="preserve">
     <value>Login</value>
@@ -259,7 +259,7 @@
     <value>Materiali Stampabili a Rigidi</value>
   </data>
   <data name="AppName" xml:space="preserve">
-    <value>Papirosky</value>
+    <value>PapiroSky</value>
   </data>
   <data name="AccessAccount" xml:space="preserve">
     <value>Log-in</value>

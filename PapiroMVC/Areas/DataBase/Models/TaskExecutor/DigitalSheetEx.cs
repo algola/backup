@@ -75,10 +75,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((DigitalSheet)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
-            ((DigitalSheet)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
-            ((DigitalSheet)to).ProductionWaste = this.ProductionWaste;
-
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
             //to.Descrizione = this.Descrizione;

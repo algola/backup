@@ -69,12 +69,12 @@
 
 
             <p>
-                <button type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new {Area="Database"})');">            
+                <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new {Area="Database"})');">            
                     <i class="icon-arrow-left"></i>
                      @HttpContext.GetLocalResourceObject(strings, "Cancel")
                 </button>                
                 
-                <button class="default" type="submit">
+                <button class="default btn btn-primary" type="submit">
                     <i class="icon-save"></i>
                     @HttpContext.GetLocalResourceObject(strings, "Save")
                 </button>  

@@ -137,7 +137,14 @@ namespace PapiroMVC.Models
                 productPart = this.ProductPartTask.ProductPart;
             }
 
+
             if (codTypeOfTask == "STAMPA")
+            { 
+            
+            }
+
+            if (codTypeOfTask == "STAMPA" ||
+                codTypeOfTask == "SRAMPARIGIDO")
             {
                 String codParte = String.Empty;
 
@@ -146,6 +153,25 @@ namespace PapiroMVC.Models
                  * etichette in rotolo, manifesti etc...
                  * per ora carico.
                  */
+
+                if (codTypeOfTask == "STAMPARIGIDO" )
+                {
+                    tskExec=tskExec.OfType<PlotterSheet>();
+                }
+
+                if (codTypeOfTask == "STAMPAOFF")
+                {
+                    tskExec = tskExec.OfType<LithoSheet>();                
+                }
+
+                if (codTypeOfTask == "STAMPAOFFeDIGITALE")
+                {
+                    var tskExec1 = tskExec.OfType<LithoSheet>();
+                    var tskExec2 = tskExec.OfType<DigitalSheet>();
+
+                    tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
+                }
+
 
                 if (tskExec.Count() > 0)
                 {
@@ -174,16 +200,16 @@ namespace PapiroMVC.Models
                             }
 
                             break;
-                        case TaskExecutor.ExecutorType.LithoWeb:
+                        case TaskExecutor.ExecutorType.LithoRoll:
                             break;
                         case TaskExecutor.ExecutorType.DigitalSheet:
                             cv = new PrintingSheetCostDetail();
                             cv.TaskExecutors = tskExec.ToList();
                             cv.TaskCost = this;
                             break;
-                        case TaskExecutor.ExecutorType.DigitalWeb:
+                        case TaskExecutor.ExecutorType.DigitalRoll:
                             break;
-                        case TaskExecutor.ExecutorType.Plotter:
+                        case TaskExecutor.ExecutorType.PlotterRoll:
                             cv = new PrintingPlotterCostDetail();
 
                             cv.TaskCost = this;

@@ -225,11 +225,11 @@ Globalize.cultures[ "default" ] = {
 				// short time pattern
 				t: "h:mm tt",
 				// long time pattern
-				T: "h:mm:ss tt",
+				T: "h:hh:mm tt",
 				// long date, short time pattern
 				f: "dddd, MMMM dd, yyyy h:mm tt",
 				// long date, long time pattern
-				F: "dddd, MMMM dd, yyyy h:mm:ss tt",
+				F: "dddd, MMMM dd, yyyy h:hh:mm tt",
 				// month/day pattern
 				M: "MMMM dd",
 				// month/year pattern

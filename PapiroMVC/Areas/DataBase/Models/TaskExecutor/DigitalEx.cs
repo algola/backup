@@ -65,6 +65,10 @@ namespace PapiroMVC.Models
             ((Digital)to).BWSide1 = this.BWSide1;
             ((Digital)to).BWSide2 = this.BWSide2;
 
+            ((Digital)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
+            ((Digital)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
+            ((Digital)to).ProductionWaste = this.ProductionWaste;
+
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
             //to.Descrizione = this.Descrizione;

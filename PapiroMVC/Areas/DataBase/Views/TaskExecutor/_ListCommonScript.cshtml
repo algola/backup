@@ -3,6 +3,42 @@
 }
 
 <script type="text/javascript">
+
+
+
+    function typeOfTaskExecutor(cellvalue, options, rowobject) {
+
+        var link = "type";
+
+
+        //following string has to be located in view and in validation (metadata)
+        var sheet = '@HttpContext.GetLocalResourceObject(strings, "SheetType")';
+        var roll = '@HttpContext.GetLocalResourceObject(strings, "RollType")';
+        var plotterRoll = '@HttpContext.GetLocalResourceObject(strings, "PlotterRollType")';
+        var plotterSheet = '@HttpContext.GetLocalResourceObject(strings, "PlotterSheetType")';
+
+            if (cellvalue == "LithoSheet")
+                return link.replace("type", sheet);
+
+            if (cellvalue == "LithoRoll")
+                return link.replace("type", roll);
+
+            if (cellvalue == "DigitalSheet")
+                return link.replace("type", sheet);
+
+            if (cellvalue == "DigitalRoll")
+                return link.replace("type", roll);
+
+            if (cellvalue == "PlotterRoll")
+                return link.replace("type", plotterRoll);
+
+            if (cellvalue == "PlotterSheet")
+                return link.replace("type", plotterSheet);
+
+            return link;
+        }
+
+
     function editRow(cellvalue, options, rowobject) {
 
 
@@ -12,6 +48,7 @@
                                           (object) new { id = -1 },
                                           new {@class="a tbutton smallcost"})';
        
+
         if (rowobject[0] === 'CostError') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
@@ -44,6 +81,14 @@
                                           new {@class="a tbutton smallcostOnTime"})';
                 }
 
+        if (rowobject[0] === 'PlotterOnMq') {
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnMq"),
+                                          "TaskExecutorCost",
+                                          "TaskExecutor",
+                                          (object) new { id = -1 },
+                                          new {@class="a tbutton smallcostOnTime"})';
+        }
+
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
 
         var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
@@ -57,7 +102,12 @@
                  },
                  new {@class="tbutton smalledit"})'
 
-        return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
+        
+
+        return '<i class="icon-cogs icon-1x icon-only">' + '</i> ' +
+            link.replace("-1", cellvalue) + " " +
+            '<i class="icon-dashboard icon-1x icon-only">' + '</i> ' +
+            link2.replace("-1", cellvalue);
 
     }
 </script>

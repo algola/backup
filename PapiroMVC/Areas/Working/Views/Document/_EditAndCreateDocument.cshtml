@@ -42,11 +42,11 @@
         <br />
         <br />
     
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateProduct", "Product", new { Area = "Working" })');">
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateProduct", "Product", new { Area = "Working" })');">
             <i class="icon-plus"></i>
             @Html.T(stringsGrid, "NewProduct")
         </button>        
-        <button class="default" type="submit" name="@ViewBag.ActionMethod">
+        <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
             <i class="icon-save"></i>
             @HttpContext.GetLocalResourceObject(stringsGrid, "Save")
         </button> 

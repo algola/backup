@@ -1,39 +1,107 @@
 ﻿@using PapiroMVC.Validation
 
+@{
+   
+    ViewBag.MetaTitle = "Gestionale per Tipografie, Litografie e Stampa Digitale. Il migliore";
+     
+}
+
 @section title{
-    home page
+    Home Page
 }
 
 @section description{
-    così appare nella home page la descrizione
+    benvenuto
 }
 
-<form class="form-horizontal" role="form">
-    <div class="form-group">
-        <label class="col-sm-3 control-label no-padding-right" for="form-field-1">Text Field </label>
+@*
 
-        <div class="col-sm-9">
-            <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
-        </div>
-
-    </div>
-
-    <div class="space-4"></div>
-</form>
-
-@section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.custom.min.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/chosen.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap-timepicker.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/daterangepicker.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/colorpicker.css" />
+@{
+    ViewContext.RequestContext.RouteData.DataTokens.Add("GoingToRenderChildAction",
+                                                         true);
 }
 
-@section specificPluginScript {
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
-    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+@Html.Action("Price", "Home")
+
+@{
+    ViewContext.RequestContext.RouteData.DataTokens["GoingToRenderChildAction"] = false;
 }
 
+*@
 
+<div class="alert alert-block alert-success">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+
+    <i class="icon-ok green"></i>
+    Benvenuto in <strong class="green">PapiroSky <small>(v0.0.1)</small> </strong>, il gestionale "cloud" per la stampa.
+
+</div>
+
+
+<div class="span12">
+    <!--PAGE CONTENT BEGINS-->
+    <h3 class="header smaller red">
+        <i class="icon-cloud"></i>
+        Software per Preventivi e commesse per tipografie
+    </h3>
+    <div class="space-5"></div>
+
+    <p>
+        Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroSky è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie. 
+    </p>
+
+    <ol class="round">
+        <li class="one">
+            <h5 class="green">Gestisci il tuo profilo</h5>
+            PapiroSky permette di gestire in piena autonomia il proprio profilo, 
+        impostare i propri dati e modificarli in ogni momento.
+        Permette di caricare documenti di vario tipo e condividerli con gli utenti del sistema.
+        </li>
+
+        <li class="two">
+            <h5 class="green">La tua azienda</h5>
+            PapiroSky consente di creare senza limiti listini, aggiornare prezzi in piena autonomia.
+        </li>
+
+        <li class="three">
+            <h5 class="green">Crea preventivi</h5>
+            PapiroSky rappresenta un ottimo strumento per creare in modo semplice e veloce preventivi per stampa digitale offset e grande formato.
+        </li>
+    </ol>
+
+</div>
+
+
+<div class="span12">
+    <div class="space-5"></div>
+
+    @section specificPlugInStyle {
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.custom.min.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/chosen.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap-timepicker.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/daterangepicker.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/colorpicker.css" />
+    }
+
+    @section specificPluginScript {
+        <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+        <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+    }
+
+</div>
+
+
+<span class='st_sharethis_hcount' displaytext='ShareThis'></span>
+<span class='st_facebook_hcount' displaytext='Facebook'></span>
+<span class='st_twitter_hcount' displaytext='Tweet'></span>
+<span class='st_linkedin_hcount' displaytext='LinkedIn'></span>
+<span class='st_pinterest_hcount' displaytext='Pinterest'></span>
+<span class='st_email_hcount' displaytext='Email'></span>
+
+<script type="text/javascript">var switchTo5x = true;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({ publisher: "b7885f9a-6e87-4b09-b610-1c9cf6e7e4f1", doNotHash: true, doNotCopy: true, hashAddressBar: false });</script>

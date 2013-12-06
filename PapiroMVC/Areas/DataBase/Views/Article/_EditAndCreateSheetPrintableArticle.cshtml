@@ -7,19 +7,18 @@
 }
 
 <div id="status">
+    @Scripts.Render("~/bundles/autocomplete")
 
-@Scripts.Render("~/bundles/jqueryval")
-
-@using (Ajax.BeginForm("Action", "Article", new AjaxOptions
+    @using (Ajax.BeginForm("Action", "Article", new AjaxOptions
 {
     UpdateTargetId = "status",
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg",
     OnSuccess = "OnSuccess"
 }, new { @class = "form-horizontal" }))
-{
+    {
   
-      @Html.ValidationSummary(true)
+        @Html.ValidationSummary(true)
 
 
         @Html.HiddenFor(model => model.Article.TimeStampTable)
@@ -46,41 +45,37 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.UnitOfMeasure, "UnitOfMeasuerAutoComplete", "Article")
                
        
-    <div id='_SheetPrintableArticlePakedCost'>
-        @Html.Partial("_SheetPrintableArticlePakedCost", Model)
-    </div>
+        <div id='_SheetPrintableArticlePakedCost'>
+            @Html.Partial("_SheetPrintableArticlePakedCost", Model)
+        </div>
 
-    <div id='_SheetPrintableArticlePalletCost'>
-        @Html.Partial("_SheetPrintableArticlePalletCost", Model)
-    </div>
+        <div id='_SheetPrintableArticlePalletCost'>
+            @Html.Partial("_SheetPrintableArticlePalletCost", Model)
+        </div>
 
-    <!--
+        <!--
     <div id='_SheetPrintableArticleCuttedCost'>
         Html.Partial("_SheetPrintableArticleCuttedCost", Model)
     </div>
         --> 
-    <br />      
-    <p>
-        
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new { Area = "Database" })');">            
-            <i class ="icon-arrow-left"></i>
-            @HttpContext.GetLocalResourceObject(strings, "Cancel")
-        </button>
+        <br />      
+        <p>
 
-        <button class="default" type="submit" name="@ViewBag.ActionMethod">
-                 <i class="icon-save"></i>    
-                 @HttpContext.GetLocalResourceObject(strings, "Save")
-             </button>        
-        
-        @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")
-        {
-            <input class="button" type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
-        }
-    </p>
-}
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new { Area = "Database" })');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+            @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")
+            {
+                <input class="btn" type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+            }
+        </p>
+    }
 
 </div>
-
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }

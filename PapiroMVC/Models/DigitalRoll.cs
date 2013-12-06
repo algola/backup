@@ -12,7 +12,7 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class RigidPlotter : Digital
+    public partial class DigitalRoll : Digital
     {
     }
 }

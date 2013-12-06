@@ -33,10 +33,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             typeOfTaskRepository = _typeOfTask;
         }
 
-        public ActionResult IndexLithoSheet()
+        public ActionResult IndexLithoSheetAndRoll()
         {
             //deprecated
-            TempData["TaskExecutorIndex"] = "IndexLithoSheet";
+            TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
             return View();
         }
 
@@ -47,10 +47,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
-        public ActionResult IndexDigitalSheet()
+        public ActionResult IndexDigitalSheetAndRoll()
         {
             //deprecated
-            TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+            TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
             return View();
         }
 
@@ -70,7 +70,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskExecutorOn);
+                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
                     c.Copy(r);
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
@@ -100,7 +100,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskExecutorOn);
+                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
                     c.Copy(r);
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
@@ -130,7 +130,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskExecutorOn);
+                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
                     c.Copy(r);
                     taskExecutorRepository.Edit(r.taskexecutors);
                     taskExecutorRepository.Save();
@@ -151,6 +151,37 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("TaskEstimatedOnMq", c);
         }
 
+        [HttpPost]
+        public ActionResult PlotterOnMq(PlotterOnMq c, string returnUrl)
+        {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
+                    c.Copy(r);
+                    taskExecutorRepository.Edit(r.taskexecutors);
+                    taskExecutorRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+
+                    //deprecated
+                    //return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"])});
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "PlotterOnMq";
+            return PartialView("PlotterOnMq", c);
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -159,7 +190,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpGet]
         public ActionResult TaskExecutorCost(string id)
         {
-            var c = new TaskExecutorNewCostDetail();
+            var c = new TaskExecutorNewCostViewModel();
             //load from database taskexecutor
 
             var taskExecutor = taskExecutorRepository.GetSingle(id);
@@ -167,18 +198,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             switch (taskExecutor.TypeOfExecutor)
             {
                 case TaskExecutor.ExecutorType.LithoSheet:
-                    TempData["TaskExecutorIndex"] = "IndexLithoSheet";
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.LithoWeb:
-                    TempData["TaskExecutorIndex"] = "IndexLithoWeb";
+                case TaskExecutor.ExecutorType.LithoRoll:
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
                     break;
                 case TaskExecutor.ExecutorType.DigitalSheet:
-                    TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.DigitalWeb:
-                    TempData["TaskExecutorIndex"] = "IndexDigitalWeb";
+                case TaskExecutor.ExecutorType.DigitalRoll:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.Plotter:
+                case TaskExecutor.ExecutorType.PlotterSheet:
+                    TempData["TaskExecutorIndex"] = "IndexPlotter";
+                    break;
+                case TaskExecutor.ExecutorType.PlotterRoll:
                     TempData["TaskExecutorIndex"] = "IndexPlotter";
                     break;
                 case TaskExecutor.ExecutorType.PrePostPress:
@@ -203,16 +237,19 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     case TaskExecutor.ExecutorType.LithoSheet:
                         ViewBag.TypeCost = "RunTime";
                         break;
-                    case TaskExecutor.ExecutorType.LithoWeb:
+                    case TaskExecutor.ExecutorType.LithoRoll:
                         ViewBag.TypeCost = "RunTime";
                         break;
                     case TaskExecutor.ExecutorType.DigitalSheet:
                         ViewBag.TypeCost = "RunTime";
                         break;
-                    case TaskExecutor.ExecutorType.DigitalWeb:
+                    case TaskExecutor.ExecutorType.DigitalRoll:
                         ViewBag.TypeCost = "RunTime";
                         break;
-                    case TaskExecutor.ExecutorType.Plotter:
+                    case TaskExecutor.ExecutorType.PlotterRoll:
+                        ViewBag.TypeCost = "Mq";
+                        break;
+                    case TaskExecutor.ExecutorType.PlotterSheet:
                         ViewBag.TypeCost = "Mq";
                         break;
                     case TaskExecutor.ExecutorType.PrePostPress:
@@ -243,7 +280,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 case TaskEstimatedOn.EstimatedOnType.OnMq:
                     ViewBag.ActionMethod = "TaskEstimatedOnMq";
                     break;
-
+                case TaskEstimatedOn.EstimatedOnType.DigitalOnTime:
+                    ViewBag.ActionMethod = "DigitalOnTime";
+                    break;
+                case TaskEstimatedOn.EstimatedOnType.PlotterOnMq:
+                    ViewBag.ActionMethod = "PlotterOnMq";
+                    break;
                 case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
                     break;
 
@@ -267,7 +309,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostDetail c, string FieldToPreventTowSubmission)
+        public ActionResult TaskExecutorNewCost(TaskExecutorNewCostViewModel c, string FieldToPreventTwoSubmission)
         {
 
             var taskExecutor = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
@@ -277,18 +319,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             switch (taskExecutor.TypeOfExecutor)
             {
                 case TaskExecutor.ExecutorType.LithoSheet:
-                    TempData["TaskExecutorIndex"] = "IndexLithoSheet";
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.LithoWeb:
-                    TempData["TaskExecutorIndex"] = "IndexLithoWeb";
+                case TaskExecutor.ExecutorType.LithoRoll:
+                    TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
                     break;
                 case TaskExecutor.ExecutorType.DigitalSheet:
-                    TempData["TaskExecutorIndex"] = "IndexDigitalSheet";
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.DigitalWeb:
-                    TempData["TaskExecutorIndex"] = "IndexDigitalWeb";
+                case TaskExecutor.ExecutorType.DigitalRoll:
+                    TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
                     break;
-                case TaskExecutor.ExecutorType.Plotter:
+                case TaskExecutor.ExecutorType.PlotterSheet:
+                    TempData["TaskExecutorIndex"] = "IndexPlotter";
+                    break;
+                case TaskExecutor.ExecutorType.PlotterRoll:
                     TempData["TaskExecutorIndex"] = "IndexPlotter";
                     break;
                 case TaskExecutor.ExecutorType.PrePostPress:
@@ -318,12 +363,32 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             retView = "TaskEstimatedOnRun";
                             break;
                         case TaskEstimatedOn.EstimatedOnType.OnTime:
-                            tskEst = new TaskEstimatedOnTime();
-                            retView = "TaskEstimatedOnTime";
+
+                            if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll ||
+                                taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                            {
+                                tskEst = new DigitalOnTime();
+                                retView = "DigitalOnTime";
+                            }
+                            else
+                            {
+                                tskEst = new TaskEstimatedOnTime();
+                                retView = "TaskEstimatedOnTime";
+                            }
                             break;
                         case TaskEstimatedOn.EstimatedOnType.OnMq:
-                            tskEst = new TaskEstimatedOnMq();
-                            retView = "TaskEstimatedOnMq";
+
+                            if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterRoll ||
+                                taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterSheet)
+                            {
+                                tskEst = new PlotterOnMq();
+                                retView = "PlotterOnMq";
+                            }
+                            else
+                            {
+                                tskEst = new TaskEstimatedOnMq();
+                                retView = "TaskEstimatedOnMq";
+                            }
                             break;
                         case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
                             break;
@@ -347,12 +412,32 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         retView = "TaskEstimatedOnRun";
                         break;
                     case TaskEstimatedOn.EstimatedOnType.OnTime:
-                        tskEst = new TaskEstimatedOnTime();
-                        retView = "TaskEstimatedOnTime";
+
+                        if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll ||
+                            taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                        {
+                            tskEst = new DigitalOnTime();
+                            retView = "DigitalOnTime";
+                        }
+                        else
+                        {
+                            tskEst = new TaskEstimatedOnTime();
+                            retView = "TaskEstimatedOnTime";
+                        }
                         break;
                     case TaskEstimatedOn.EstimatedOnType.OnMq:
-                        tskEst = new TaskEstimatedOnMq();
-                        retView = "TaskEstimatedOnMq";
+
+                        if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterRoll ||
+                            taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterSheet)
+                        {
+                            tskEst = new PlotterOnMq();
+                            retView = "PlotterOnMq";
+                        }
+                        else
+                        {
+                            tskEst = new TaskEstimatedOnMq();
+                            retView = "TaskEstimatedOnMq";
+                        }
                         break;
                     case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
                         break;
@@ -408,7 +493,29 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "CreateLithoSheet";
 
             var x = new LithoSheet();
+
+            //            TODO: Elaborazione dell'array del tipo di lavorazione che può svolgere.
             x.CodTypeOfTask = "STAMPA";
+
+            return View(x);
+        }
+
+        [HttpGet]
+        public ActionResult CreateLithoRoll()
+        {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreateLithoRoll";
+
+            var x = new LithoRoll();
+
+            //            TODO: Elaborazione dell'array del tipo di lavorazione che può svolgere.
+            x.CodTypeOfTask = "STAMPA";
+
             return View(x);
         }
 
@@ -437,7 +544,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet") });
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheetAndRoll") });
                 }
                 catch (Exception ex)
                 {
@@ -453,16 +560,57 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_EditAndCreateLithoSheet", c);
         }
 
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateLithoRoll(LithoRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+
+                        /***********************************
+                          c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                          c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
+                          c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
+                        /************************************/
+                    }
+
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheetAndRoll") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateLithoRoll";
+            return PartialView("_EditAndCreateLithoRoll", c);
+        }
+
         [HttpGet]
-        public ActionResult CreatePlotter()
+        public ActionResult CreatePlotterRoll()
         {
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //this feature is needed when in the view there are more than one input (submit button) form
             //Action Method speci
-            ViewBag.ActionMethod = "CreatePlotter";
-            var x = new Plotter();
+            ViewBag.ActionMethod = "CreatePlotterRoll";
+            var x = new PlotterRoll();
 
             x.FormatMax = "0x0";
             x.FormatMin = "0x0";
@@ -470,6 +618,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(x);
         }
 
+        [HttpGet]
+        public ActionResult CreatePlotterSheet()
+        {
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreatePlotterSheet";
+            var x = new PlotterSheet();
+
+            x.FormatMax = "0x0";
+            x.CodTypeOfTask = "STAMPA";
+            return View(x);
+        }
 
         [HttpGet]
         public ActionResult CreateDigitalSheet()
@@ -487,9 +650,25 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        [HttpGet]
+        public ActionResult CreateDigitalRoll()
+        {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+            var x = new DigitalRoll();
+            x.CodTypeOfTask = "STAMPA";
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreateDigitalRoll";
+            return View(x);
+        }
+
+
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreatePlotter(Plotter c)
+        public ActionResult CreatePlotterRoll(PlotterRoll c)
         {
             if (ModelState.IsValid)
             {
@@ -518,11 +697,44 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-            ViewBag.ActionMethod = "CreatePlotter";
-            return PartialView("_EditAndCreatePlotter", c);
+            ViewBag.ActionMethod = "CreatePlotterRoll";
+            return PartialView("_EditAndCreatePlotterRoll", c);
         }
 
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreatePlotterSheet(PlotterSheet c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+                    }
 
+                    c.TimeStampTable = DateTime.Now;
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    //hooray it passed - go back to index
+                    return Json(new { redirectUrl = Url.Action("IndexPlotter") });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreatePlotterSheet";
+            return PartialView("_EditAndCreatePlotterSheet", c);
+        }
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -542,7 +754,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
                     //hooray it passed - go back to index
-                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet") });
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheetAndRoll") });
 
                 }
                 catch (Exception ex)
@@ -559,6 +771,43 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "CreateDigitalSheet";
             return PartialView("_EditAndCreateDigitalSheet", c);
         }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateDigitalRoll(DigitalRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+                    }
+
+                    c.TimeStampTable = DateTime.Now;
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    //hooray it passed - go back to index
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheetAndRoll") });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
+
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateDigitalRoll";
+            return PartialView("_EditAndCreateDigitalRoll", c);
+        }
+
 
 
         [HttpGet]
@@ -635,9 +884,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         break;
                     }
 
+                case TaskExecutor.ExecutorType.LithoRoll:
+                    {
+                        ret = RedirectToAction("EditLithoRoll", "TaskExecutor", new { id = id });
+                        break;
+                    }
+
                 case TaskExecutor.ExecutorType.DigitalSheet:
                     {
                         ret = RedirectToAction("EditDigitalSheet", "TaskExecutor", new { id = id });
+                        break;
+                    }
+
+                case TaskExecutor.ExecutorType.DigitalRoll:
+                    {
+                        ret = RedirectToAction("EditDigitalRoll", "TaskExecutor", new { id = id });
                         break;
                     }
 
@@ -646,9 +907,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         ret = RedirectToAction("EditPrePostPress", "TaskExecutor", new { id = id });
                         break;
                     }
-                case TaskExecutor.ExecutorType.Plotter:
+                case TaskExecutor.ExecutorType.PlotterSheet:
                     {
-                        ret = RedirectToAction("EditPlotter", "TaskExecutor", new { id = id });
+                        ret = RedirectToAction("EditPlotterSheet", "TaskExecutor", new { id = id });
+                        break;
+                    }
+                case TaskExecutor.ExecutorType.PlotterRoll:
+                    {
+                        ret = RedirectToAction("EditPlotterRoll", "TaskExecutor", new { id = id });
                         break;
                     }
 
@@ -678,11 +944,29 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
-
-        public ActionResult EditPlotter(string id)
+        public ActionResult EditLithoRoll(string id)
         {
-            Plotter tskEx = new Plotter();
-            tskEx = (Plotter)taskExecutorRepository.GetSingle(id);
+            LithoRoll tskEx = new LithoRoll();
+            tskEx = (LithoRoll)taskExecutorRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this is a common point where edit function is called
+            ViewBag.ActionMethod = "EditLithoRoll";
+            return View(tskEx);
+        }
+
+
+        public ActionResult EditPlotterSheet(string id)
+        {
+            PlotterSheet tskEx = new PlotterSheet();
+            tskEx = (PlotterSheet)taskExecutorRepository.GetSingle(id);
 
             if (tskEx == null)
                 return HttpNotFound();
@@ -691,11 +975,27 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //is used to know where we are from and go
-            ViewBag.ActionMethod = "EditPlotter";
+            ViewBag.ActionMethod = "EditPlotterSheet";
             return View(tskEx);
         }
 
 
+
+        public ActionResult EditPlotterRoll(string id)
+        {
+            PlotterRoll tskEx = new PlotterRoll();
+            tskEx = (PlotterRoll)taskExecutorRepository.GetSingle(id);
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditPlotterRoll";
+            return View(tskEx);
+        }
 
 
         public ActionResult EditDigitalSheet(string id)
@@ -711,6 +1011,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditDigitalSheet";
+            return View(tskEx);
+        }
+
+        public ActionResult EditDigitalRoll(string id)
+        {
+            DigitalRoll tskEx = new DigitalRoll();
+            tskEx = (DigitalRoll)taskExecutorRepository.GetSingle(id);
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditDigitalRoll";
             return View(tskEx);
         }
 
@@ -760,7 +1076,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexLithoSheet") });
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheetAndRoll") });
                 }
                 catch (Exception ex)
                 {
@@ -772,6 +1088,46 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             ViewBag.ActionMethod = "EditLithoSheet";
             return PartialView("_EditAndCreateLithoSheet", c);
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditLithoRoll(LithoRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    //controllare le lastre!!!!!!!!!!!!!!!!!!!!! se è sono articoli validi come per i fornitori di seguito
+                    /*
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+
+                     */
+
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexLithoSheetAndRoll") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back.      
+
+            ViewBag.ActionMethod = "EditLithoRoll";
+            return PartialView("_EditAndCreateLithoRoll", c);
         }
 
         [HttpParamAction]
@@ -797,10 +1153,63 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //multi submit
             ViewBag.ActionMethod = "EditPlotter";
-            return PartialView("_EditAndCreatePlotter", c);
+            return PartialView("_EditAndCreatePlotterRoll", c);
         }
 
 
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditPlotterRoll(PlotterRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPlotter") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditPlotterRoll";
+            return PartialView("_EditAndCreatePlotterRoll", c);
+        }
+
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditPlotterSheet(PlotterSheet c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPlotter") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditPlotterSheet";
+            return PartialView("_EditAndCreatePlotterSheet", c);
+        }
 
 
         [HttpParamAction]
@@ -825,7 +1234,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheet") });
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheetAndRoll") });
                 }
                 catch (Exception ex)
                 {
@@ -838,6 +1247,43 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //multi submit
             ViewBag.ActionMethod = "EditDigitalSheet";
             return PartialView("_EditAndCreateDigitalSheet", c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditDigitalRoll(DigitalRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    /* controllare le lastre
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                    */
+
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDigitalSheetAndRoll") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+
+            //multi submit
+            ViewBag.ActionMethod = "EditDigitalRoll";
+            return PartialView("_EditAndCreateDigitalRoll", c);
         }
 
 

@@ -7,10 +7,7 @@ using PapiroMVC.Models.Resources.TaskExecutor;
 
 namespace PapiroMVC.Models
 {
-    public partial class DigitalWeb_MetaData : Digital_MetaData
+    public partial class DigitalRoll_MetaData : Digital_MetaData
     {
-        [DisplayNameLocalized(typeof(ResDigitalWeb), "PaperFirstStartLenght")]
-        [Tooltip(typeof(ResDigitalWeb), "PaperFirstStartLenghtToolTip")]
-        public Nullable<long> PaperFirstStartLenght { get; set; }
     }
 }

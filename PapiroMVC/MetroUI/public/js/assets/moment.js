@@ -43,12 +43,12 @@
         // preliminary iso regex
         // 0000-00-00 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000
         isoRegex = /^\s*\d{4}-\d\d-\d\d((T| )(\d\d(:\d\d(:\d\d(\.\d\d?\d?)?)?)?)?([\+\-]\d\d:?\d\d)?)?/,
-        isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
+        isoFormat = 'YYYY-MM-DDTHH:hh:mmZ',
 
         // iso time formats and regexes
         isoTimes = [
-            ['HH:mm:ss.S', /(T| )\d\d:\d\d:\d\d\.\d{1,3}/],
-            ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
+            ['HH:hh:mm.S', /(T| )\d\d:\d\d:\d\d\.\d{1,3}/],
+            ['HH:hh:mm', /(T| )\d\d:\d\d:\d\d/],
             ['HH:mm', /(T| )\d\d:\d\d/],
             ['HH', /(T| )\d\d/]
         ],
@@ -1052,7 +1052,7 @@
         },
 
         toString : function () {
-            return this.format("ddd MMM DD YYYY HH:mm:ss [GMT]ZZ");
+            return this.format("ddd MMM DD YYYY HH:hh:mm [GMT]ZZ");
         },
 
         toDate : function () {
@@ -1060,7 +1060,7 @@
         },
 
         toJSON : function () {
-            return moment.utc(this).format('YYYY-MM-DD[T]HH:mm:ss.SSS[Z]');
+            return moment.utc(this).format('YYYY-MM-DD[T]HH:hh:mm.SSS[Z]');
         },
 
         toArray : function () {

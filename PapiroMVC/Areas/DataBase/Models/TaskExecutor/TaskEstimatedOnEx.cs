@@ -20,7 +20,9 @@ namespace PapiroMVC.Models
             OnTime,
             OnMq,
             BindingOnTime,
-            BindingOnRun
+            BindingOnRun,
+            DigitalOnTime,
+            PlotterOnMq
         }
 
         public EstimatedOnType TypeOfEstimatedOn

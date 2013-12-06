@@ -12,8 +12,11 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Plotter : Digital
+    public abstract partial class Plotter : TaskExecutor
     {
-        public Nullable<long> Width { get; set; }
+        public Nullable<bool> ColorJet { get; set; }
+        public Nullable<bool> WhiteUV { get; set; }
+        public Nullable<bool> ColorUV { get; set; }
+        public Nullable<bool> Cutting { get; set; }
     }
 }

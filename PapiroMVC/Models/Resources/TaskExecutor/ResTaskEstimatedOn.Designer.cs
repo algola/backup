@@ -72,18 +72,18 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         /// <summary>
         ///   Looks up a localized string similar to xxxxxx.
         /// </summary>
-        public static string CodTaskExecutorOn {
+        public static string CodTaskEstimatedOn {
             get {
-                return ResourceManager.GetString("CodTaskExecutorOn", resourceCulture);
+                return ResourceManager.GetString("CodTaskEstimatedOn", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to xxxxxx.
         /// </summary>
-        public static string CodTaskExecutorOnToolTip {
+        public static string CodTaskEstimatedOnToolTip {
             get {
-                return ResourceManager.GetString("CodTaskExecutorOnToolTip", resourceCulture);
+                return ResourceManager.GetString("CodTaskEstimatedOnToolTip", resourceCulture);
             }
         }
         

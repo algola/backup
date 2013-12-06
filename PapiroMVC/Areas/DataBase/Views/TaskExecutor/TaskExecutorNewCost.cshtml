@@ -1,4 +1,4 @@
-﻿@model PapiroMVC.Models.TaskExecutorNewCostDetail
+﻿@model PapiroMVC.Models.TaskExecutorNewCostViewModel
 
 @using PapiroMVC.Validation
 @using PapiroMVC.Models
@@ -12,10 +12,10 @@
 @using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
 {
     @Html.ValidationSummary(true)
-
+    
     <fieldset>
         <legend>@Html.T(strings, "SelectCost")</legend>
-        ù
+       
 
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
@@ -61,20 +61,19 @@
         }
         <br />
     <p>
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">            
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">            
                     <i class="icon-arrow-left"></i>
                      @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
             
-        <button class="default" type="submit">
+        <button class="default btn btn-primary" type="submit">
             <i class="icon-save"></i>
             @HttpContext.GetLocalResourceObject(strings, "Save")
         </button> 
 
     </p>
-
     </fieldset>
-}
+    }
 
 <script type="text/javascript">
 

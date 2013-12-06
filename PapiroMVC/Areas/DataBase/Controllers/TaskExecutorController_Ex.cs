@@ -15,13 +15,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-       
+
         private IQueryable<TaskExecutor> TaskExecutorList(GridSettings gridSettings)
         {
             //use it in filter
             string codTaskExecutorFilter = string.Empty;
             string taskExecutorNameFilter = string.Empty;
             string formatMaxFilter = string.Empty;
+
 
             //if gridsetting is a search option
             if (gridSettings.isSearch)
@@ -33,11 +34,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 taskExecutorNameFilter = gridSettings.where.rules.Any(r => r.field == "TaskExecutorName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "TaskExecutorName").data : string.Empty;
 
-                taskExecutorNameFilter = gridSettings.where.rules.Any(r => r.field == "FormatMax") ?
+                formatMaxFilter = gridSettings.where.rules.Any(r => r.field == "FormatMax") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "FormatMax").data : string.Empty;
 
             }
-
 
             //read all
             var q = taskExecutorRepository.GetAll();
@@ -57,24 +57,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 q = q.Where(c => c.FormatMax.ToLower().Contains(formatMaxFilter.ToLower()));
             }
-
-            /*
-            if (!string.IsNullOrEmpty(nameOfMaterialFilter))
-            {
-                q = q.Where(c => c.NameOfMaterial.ToLower().Contains(nameOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(typeOfMaterialFilter))
-            {
-                q = q.Where(c => c.TypeOfMaterial.ToLower().Contains(typeOfMaterialFilter.ToLower()));
-            }
-
-            if (!string.IsNullOrEmpty(colorFilter))
-            {
-                q = q.Where(c => c.Color.ToLower().Contains(supplierNameFilter.ToLower()));
-            }
-
-             */
 
             //if is sorting
             switch (gridSettings.sortColumn)
@@ -259,10 +241,43 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return q;
         }
 
-        public ActionResult LithoSheetList(GridSettings gridSettings)
+        public ActionResult LithoSheetAndRollList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
+            //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
+            var q = this.LithoList(gridSettings);
+
+
+            string typeOfTaskExecutorFilter = string.Empty;
+            //if gridsetting is a search option
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string sheetType = resman.GetString("SheetType");
+            string rollType = resman.GetString("RollType");
+
+
+            if (gridSettings.isSearch)
+            {
+                typeOfTaskExecutorFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfTaskExecutor") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfTaskExecutor").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(typeOfTaskExecutorFilter))
+            {
+                Boolean isCust = false, isSupp = false;
+
+                //to match with language we have to compare filter with resource
+                isCust = (sheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isSupp = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
+                var a = isCust ? (IQueryable<TaskExecutor>)q.OfType<LithoSheet>() : q.Where(x => x.CodTaskExecutor == "");
+                var b = isSupp ? (IQueryable<TaskExecutor>)q.OfType<LithoRoll>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var res = (a.Union(b));
+                q = (IQueryable<Litho>)res;
+            }
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -297,22 +312,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,
                             a.FormatMax,
                             a.PrintingUnit.ToString(),
                             a.SheetwiseAfterPrintingUnit.ToString()
 
-/*                            a.TypeOfMaterial,
-                            a.NameOfMaterial,
-                            a.Color,
-                            a.Weight.ToString(),
-                            a.Width.ToString(),
-                            a.CustomerSupplierMaker.BusinessName,
-                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
-                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMq,
-                            ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
-                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMl,            
-*/                        }
+                        }
                     }
                 ).ToArray()
             };
@@ -321,10 +327,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
-        public ActionResult DigitalSheetList(GridSettings gridSettings)
+        public ActionResult DigitalSheetListAndRoll(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = this.DigitalList(gridSettings).OfType<DigitalSheet>();
+            // var q = this.DigitalList(gridSettings).OfType<DigitalSheet>();
+            var q = this.DigitalList(gridSettings);
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -359,6 +366,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,
                             a.FormatMax,
                             a.BWSide1.ToString(),
@@ -374,10 +382,50 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
-        public ActionResult PlotterList(GridSettings gridSettings)
+        public IQueryable<Plotter> PlotterList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = this.DigitalList(gridSettings).OfType<Plotter>();
+            var q = this.TaskExecutorList(gridSettings).OfType<Plotter>();
+            return q;
+        }
+
+        public ActionResult PlotterListSheetAndRoll(GridSettings gridSettings)
+        {
+
+            //common serarch and order
+            var q = this.PlotterList(gridSettings);
+
+            string typeOfTaskExecutorFilter = string.Empty;
+            //if gridsetting is a search option
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string sheetType = resman.GetString("PlotterSheetType");
+            string rollType = resman.GetString("PlotterRollType");
+
+
+            if (gridSettings.isSearch)
+            {
+                typeOfTaskExecutorFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfTaskExecutor") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfTaskExecutor").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(typeOfTaskExecutorFilter))
+            {
+                Boolean isCust = false, isSupp = false;
+
+                //to match with language we have to compare filter with resource
+                isCust = (sheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isSupp = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
+                var a = isCust ? (IQueryable<TaskExecutor>)q.OfType<PlotterSheet>() : q.Where(x => x.CodTaskExecutor == "");
+                var b = isSupp ? (IQueryable<TaskExecutor>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var res = (a.Union(b));
+                q = (IQueryable<Plotter>)res;
+            }
+
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -409,15 +457,18 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
-                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
+                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"PlotterOnMq":"",                                           
+  
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,
                             a.FormatMax,
-                            a.BWSide1.ToString(),
-                            a.BWSide2.ToString(),
-                            a.ColorSide1.ToString(),
-                            a.ColorSide2.ToString(),
+                            //a.BWSide1.ToString(),
+                            //a.BWSide2.ToString(),
+                            //a.ColorSide1.ToString(),
+                            //a.ColorSide2.ToString(),
                         }
                     }
                 ).ToArray()
@@ -496,7 +547,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //read all
             var z = taskExecutorRepository.GetSingleEstimatedOn(codTaskExecutorOn);
             var z2 = z.steps;
-            return z2.OrderBy(x=>x.FromUnit).AsQueryable();        
+            return z2.OrderBy(x => x.FromUnit).AsQueryable();
         }
 
         public ActionResult AvarageRunPerRunStepList(string codTaskExecutorOn, GridSettings gridSettings)
@@ -678,11 +729,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-        
+
+
+        //SAREBBE MEGLIO FARE IL POLIMORFISMO A SECONDA DEL TASKEXECUTOR
         private void GenEmptyStep(TaskExecutor taskExecutor)
         {
             taskExecutor = taskExecutorRepository.GetSingle(taskExecutor.CodTaskExecutor);
-
 
             foreach (var tskEst in taskExecutor.SetTaskExecutorEstimatedOn)
             {
@@ -697,7 +749,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new AvarageRunPerRunStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -710,7 +762,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new DeficitForWeightStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -724,7 +776,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new DeficitOnCostForWeightStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -737,7 +789,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new BindingAvarageRunPerRunStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -750,7 +802,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new BindingCostPerRunStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -763,7 +815,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new CostPerMqStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -777,7 +829,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new CostPerRunStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -791,7 +843,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep = new BindingAvarageRunPerRunStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
-                    newStep.CodTaskEstimatedOn = tskEst.CodTaskExecutorOn;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
@@ -800,7 +852,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             taskExecutorRepository.Edit(taskExecutor);
             taskExecutorRepository.Save();
-            
+
         }
 
         /// <summary>
@@ -833,14 +885,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return Json(new
                 {
                     message = e.Message
-                });            
+                });
             }
 
             return Json(new
             {
                 message = "Ok"
             });
-        
+
 
         }
     }

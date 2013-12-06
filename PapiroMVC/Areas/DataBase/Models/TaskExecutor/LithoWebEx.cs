@@ -9,13 +9,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-    [MetadataType(typeof(LithoWeb_MetaData))]
-    public partial class LithoWeb : Litho, IDataErrorInfo, ICloneable, IDeleteRelated
+    [MetadataType(typeof(LithoRoll_MetaData))]
+    public partial class LithoRoll : Litho, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public LithoWeb()
+        public LithoRoll()
         {
-            this.TypeOfExecutor = TaskExecutor.ExecutorType.LithoWeb;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.LithoRoll;
         }
 
         #region Added Properties
@@ -38,13 +38,6 @@ namespace PapiroMVC.Models
             {
                 string result = base[proprieta];
 
-                if (proprieta == "PaperFirstStartLenght")
-                {
-                    if (this.PaperFirstStartLenght < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
 
                 return result;
             }
@@ -75,7 +68,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((LithoWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;

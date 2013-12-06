@@ -232,7 +232,9 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Save();
 
                     this.SendConfirmationEmail(model.UserName);
-                    return RedirectToAction("Confirmation", "Account");                
+//                    return RedirectToAction("Confirmation", "Account");
+                    return Json(new { redirectUrl = Url.Action("Confirmation") });
+
                 }
                 else
                 {
@@ -241,7 +243,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return PartialView("_Register",model);
         }
 
 
@@ -285,22 +287,20 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Edit(model.Profile);
                     profDataRep.Save();
                     
-
                     
-                    //TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
-                    //la scorri e per ciascun menu-prodotto in lista: 
-                    //lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
+                    ////TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
+                    ////la scorri e per ciascun menu-prodotto in lista: 
+                    ////lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
 
+                    //foreach (var item in model.MenuProducts)
+                    //{
+                    //    var temp=profMenuRep.GetSingle(item.CodMenuProduct);
+                    //    temp.Hidden = item.Hidden;
+                    //    profMenuRep.Edit(temp);
+                    //}
+                    //profMenuRep.Save();
+                    
 
-                    foreach (var item in model.MenuProducts)
-                    {
-                        var temp=profMenuRep.GetSingle(item.CodMenuProduct);
-                        temp.Hidden = item.Hidden;
-                        profMenuRep.Edit(temp);
-
-                    }
-
-                    profMenuRep.Save();
                     //aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
                     //applichi il metodo Edit del repository dei menu-prodotti al temp
 

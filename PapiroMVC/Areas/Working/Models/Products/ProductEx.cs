@@ -59,7 +59,7 @@ namespace PapiroMVC.Models
 
         }
 
-        //initialize only posiible part task like... plastificatura etc...
+        //initialize only possible part task like... plastificatura etc...
         public virtual List<ProductPartTask> GetInitalizedPartTask()
         {
             var tsksInPart = new List<ProductPartTask>();
@@ -83,7 +83,6 @@ namespace PapiroMVC.Models
 
         public virtual void InitProduct()
         {
-
             InitPageTask();
             InitProductTask();
 
@@ -324,12 +323,7 @@ namespace PapiroMVC.Models
             {
                 this.ProductName = this.ToString();
             }
-
         }
-
-
-
-
     }
 
 

@@ -31,31 +31,25 @@
     OnFailure = "ReloadForm(xhr)",
     OnBegin = "showProcessingMsg", 
     OnComplete = "hideProcessingMsg"
-}))
+}, new { @class = "form-horizontal" }))
 {          
         @Html.ValidationSummary(true)
     
-    <fieldset>
-        <legend>RigidPrintableArticleViewModelAutoChanges</legend>
-
             @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
             @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
 
             @Html.AlgolaEditorFor(model => model.CostPerMq, new { id = "CostPerMq" })
 
-<br />  
-            @Html.LabelFor(model=>model.TypeOfNoBvToModify)
+    @*
+                @Html.LabelFor(model=>model.TypeOfNoBvToModify)
             @Html.DropDownListFor(model=>model.TypeOfNoBvToModify, 
             ViewBag.ProcessNoBvType as IEnumerable<SelectListItem>,
             new { @style = "width: 255px;", 
                 id = "optTypeOfNoBvToModify" 
             })
-<br />  
-<br />  
-
-    </fieldset>
+    *@
     
-    <input class="button" type="submit" value="Elabora")' />
+    <input class="default btn btn-primary"  type="submit" value="Elabora****")' />
 }
 
 

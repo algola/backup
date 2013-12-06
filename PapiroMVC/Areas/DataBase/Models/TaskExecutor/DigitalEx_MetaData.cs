@@ -21,5 +21,15 @@ namespace PapiroMVC.Models
         public Nullable<bool> ColorSide1 { get; set; }
         [DisplayNameLocalized(typeof(ResDigital), "ColorSide2")]
         public Nullable<bool> ColorSide2 { get; set; }
+        [DisplayNameLocalized(typeof(ResDigitalSheet), "ProofSheetFirstStart")]
+        [Tooltip(typeof(ResDigitalSheet), "ProofSheetFirstStartToolTip")]
+        public Nullable<long> ProofSheetFirstStart { get; set; }
+        [DisplayNameLocalized(typeof(ResDigitalSheet), "ProofSheetSecondsStart")]
+        [Tooltip(typeof(ResDigitalSheet), "ProofSheetSecondStartToolTip")]
+        public Nullable<long> ProofSheetSecondsStart { get; set; }
+        [DisplayNameLocalized(typeof(ResDigitalSheet), "ProductionWaste")]
+        [Tooltip(typeof(ResDigitalSheet), "ProductionWasteToolTip")]
+        public Nullable<double> ProductionWaste { get; set; }
+
     }
 }

@@ -1635,7 +1635,7 @@ var dateFormatters = {
 	tt	: function(d)	{ return d.getHours() < 12 ? 'am' : 'pm' },
 	T	: function(d)	{ return d.getHours() < 12 ? 'A' : 'P' },
 	TT	: function(d)	{ return d.getHours() < 12 ? 'AM' : 'PM' },
-	u	: function(d)	{ return formatDate(d, "yyyy-MM-dd'T'HH:mm:ss'Z'") },
+	u	: function(d)	{ return formatDate(d, "yyyy-MM-dd'T'HH:hh:mm'Z'") },
 	S	: function(d)	{
 		var date = d.getDate();
 		if (date > 10 && date < 20) {

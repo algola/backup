@@ -179,7 +179,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult WidthAutoComplete(string term)
         {
-            Plotter[] formats = taskExecutorRepository.GetAll().OfType<Plotter>().ToArray();
+            PlotterRoll[] formats = taskExecutorRepository.GetAll().OfType<PlotterRoll>().ToArray();
 
             var notNull = formats.Except(formats.Where(item => string.IsNullOrEmpty(item.Width.ToString())));
 

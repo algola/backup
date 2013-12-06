@@ -12,18 +12,22 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(TaskExecutor_MetaData))]
     public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated
     {
-       
+
         #region Proprietà aggiuntive
         public enum ExecutorType : int
         {
-            LithoSheet=0,
-            LithoWeb=1,
-            DigitalSheet=2,
-            DigitalWeb=3,
-            Plotter=4,
-            PrePostPress=5,
-            Binding=6
+            LithoSheet = 0,
+            LithoRoll = 1,
+            DigitalSheet = 2,
+            DigitalRoll = 3,
+            PlotterSheet = 4,
+            PlotterRoll = 5,
+            PrePostPress = 6,
+            Binding = 7
         }
+
+        public string[] CodTypeOfTaskList { get; set; }
+
 
         public ExecutorType TypeOfExecutor
         {
@@ -164,7 +168,7 @@ namespace PapiroMVC.Models
         public void ChildsNull()
         {
             //Set all chied to null 
-            
+
             //Example
             //this.Prodotto = null;
         }

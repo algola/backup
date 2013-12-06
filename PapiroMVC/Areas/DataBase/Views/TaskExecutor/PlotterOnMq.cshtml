@@ -1,0 +1,112 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.PlotterOnMq
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnMq");
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("PlotterOnMq", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</legend>
+
+            @Html.Hidden("returnUrl", TempData["TaskExecutorIndex"])
+
+            @Html.HiddenFor(model => model.TimeStampTable)
+            @Html.HiddenFor(model => model.CodTaskExecutor)
+            @Html.HiddenFor(model => model.CodTaskEstimatedOn)
+
+
+            @Html.AlgolaEditorFor(model => model.StartingCost1)
+            @Html.HiddenFor(model => model.StartingCost2)
+
+            @Html.HiddenFor(model => model.CostForfait)
+            @Html.HiddenFor(model => model.CostForfaitForSheet)
+
+        </fieldset>
+        <fieldset>
+            <legend>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</legend>
+
+            @*            @Html.AlgolaEditorFor(model => model.CostPerUnit)
+            *@
+
+            @Html.AlgolaEditorFor(model => model.CostInkJetLow)
+            @Html.ValidationMessageFor(model => model.CostInkJetLow)
+
+            @Html.AlgolaEditorFor(model => model.CostInkJetMed)
+            @Html.AlgolaEditorFor(model => model.CostInkJetHight)
+            @Html.AlgolaEditorFor(model => model.CostUVLow)
+            @Html.AlgolaEditorFor(model => model.CostUVMed)
+            @Html.AlgolaEditorFor(model => model.CostUVHight)
+            @Html.AlgolaEditorFor(model => model.CostWhite)
+            @Html.AlgolaEditorFor(model => model.CostCutting)
+
+            @*
+
+            @Html.EditorFor(model => model.UseDifferentCostPerUnit)
+            <div id="_listAvarageRunPerRunStep">
+                @Html.Partial("_ListCostPerRunStep", Model)
+            </div>
+            <br />
+            @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
+
+            <div id="_listDeficitForWeightStep">
+                @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
+            </div>
+            *@
+        </fieldset> 
+
+        <p>
+            <br />
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
+                <i class="icon-undo bigger-125"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+            @ViewBag.ActionMethod
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save bigger-160"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+        </p>
+    }
+
+
+</div>
+
+
+@section breadcrumb {
+
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+@section title{
+    @ViewBag.Title
+}
+
+@section description{
+    @ViewBag.Desc
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+}

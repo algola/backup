@@ -28,6 +28,8 @@ namespace PapiroMVC.Models
                     case ProductPart.ProductPartType.ProductPartSinglePlotter:
                         this.ProductPartPrinting = new ProductPartSinglePlotterPrinting();
                         break;
+                    case Models.ProductPart.ProductPartType.ProductPartSingleSheet:
+                        this.ProductPartPrinting = new ProductPartSingleSheetPrinting();
                     default:
                         throw new Exception();
                         break;

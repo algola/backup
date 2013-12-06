@@ -23,5 +23,17 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResLitho), "ChangePlateTime")]
         [Tooltip(typeof(ResLitho), "ChangePlateTimeToolTip")]
         public Nullable<System.TimeSpan> ChangePlateTime { get; set; }
+
+
+        [DisplayNameLocalized(typeof(ResLithoSheet), "ProofSheetFirstStart")]
+        [Tooltip(typeof(ResLithoSheet), "ProofSheetFirstStartToolTip")]
+        public Nullable<long> ProofSheetFirstStart { get; set; }
+        [DisplayNameLocalized(typeof(ResLithoSheet), "ProofSheetSecondsStart")]
+        [Tooltip(typeof(ResLithoSheet), "ProofSheetSecondsStartToolTip")]
+        public Nullable<long> ProofSheetSecondsStart { get; set; }
+        [DisplayNameLocalized(typeof(ResLithoSheet), "ProductionWaste")]
+        [Tooltip(typeof(ResLithoSheet), "ProductionWasteToolTip")]
+        public Nullable<double> ProductionWaste { get; set; }
+
     }
 }

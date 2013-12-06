@@ -18,5 +18,8 @@ namespace PapiroMVC.Models
         public Nullable<bool> BWSide2 { get; set; }
         public Nullable<bool> ColorSide1 { get; set; }
         public Nullable<bool> ColorSide2 { get; set; }
+        public Nullable<long> ProofSheetFirstStart { get; set; }
+        public Nullable<long> ProofSheetSecondsStart { get; set; }
+        public Nullable<double> ProductionWaste { get; set; }
     }
 }

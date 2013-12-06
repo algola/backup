@@ -86,6 +86,11 @@ namespace PapiroMVC.Models
             ((Litho)to).Sheetwise = this.Sheetwise;
             ((Litho)to).WashUpTime = this.WashUpTime;
 
+
+            ((Litho)to).ProofSheetFirstStart = this.ProofSheetFirstStart;
+            ((Litho)to).ProofSheetSecondsStart = this.ProofSheetSecondsStart;
+            ((Litho)to).ProductionWaste = this.ProductionWaste;
+
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;
             //to.Descrizione = this.Descrizione;

@@ -425,7 +425,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("Index")});
+                    return Json(new { redirectUrl = Url.Action("IndexSheetPrintableArticle") });
                 }
                 catch (Exception ex)
                 {
@@ -468,7 +468,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("Index") });
+                    return Json(new { redirectUrl = Url.Action("IndexRigidPrintableArticle") });
                 }
                 catch (Exception ex)
                 {
@@ -520,7 +520,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     articleRepository.Edit(c.Article);
                     articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("Index")});
+                    return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle") });
                 }
                 catch (Exception ex)
                 {

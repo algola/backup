@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(TaskEstimatedOnUnit_MetaData))]
-    public abstract partial class TaskEstimatedOnUnit : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class TaskEstimatedOnUnit : TaskEstimatedOn, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         #region Proprietà aggiuntive
         #endregion
@@ -83,22 +83,6 @@ namespace PapiroMVC.Models
         }
 
         #endregion
-    }
-
-    public partial class TaskEstimatedOnRun
-    {      
-        public TaskEstimatedOnRun()
-        {
-            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.OnRun;
-        }
-    }
-
-    public partial class TaskEstimatedOnMq
-    {
-        public TaskEstimatedOnMq()
-        {
-            this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.OnMq;
-        }
     }
 
 }

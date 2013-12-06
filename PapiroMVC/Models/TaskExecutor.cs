@@ -39,10 +39,11 @@ namespace PapiroMVC.Models
         public Nullable<bool> IsEstimatedOnTimeBinding { get; set; }
         public Nullable<bool> IsEstimatedOnRunBinding { get; set; }
         public string CodTypeOfTask { get; set; }
+        public string UniversalCodPapiro { get; set; }
     
         public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }
         public virtual ICollection<TaskExecutorTypeOfTask> TypeOfTasks { get; set; }
-        public virtual TypeOfTask typeoftask { get; set; }
+        public virtual TypeOfTask typeoftask_ { get; set; }
         public virtual ICollection<CostDetail> costdetails { get; set; }
     }
 }

@@ -31,13 +31,10 @@
     OnFailure = "ReloadForm(xhr)",
     OnBegin = "showProcessingMsg", 
     OnComplete = "hideProcessingMsg"
-}))
+}, new { @class = "form-horizontal" }))
 {          
         @Html.ValidationSummary(true)
     
-    <fieldset>
-        <legend>RollPrintableArticleViewModelAutoChanges</legend>
-
             @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
             @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
 
@@ -47,19 +44,16 @@
             @Html.AlgolaEditorFor(model => model.CostPerMl, new { id = "CostPerMl" })
             @Html.AlgolaEditorFor(model => model.CostPerMq, new { id = "CostPerMq" })
 
-<br />  
+        @*
             @Html.LabelFor(model=>model.TypeOfNoBvToModify)
             @Html.DropDownListFor(model=>model.TypeOfNoBvToModify, 
             ViewBag.ProcessNoBvType as IEnumerable<SelectListItem>,
             new { @style = "width: 255px;", 
                 id = "optTypeOfNoBvToModify" 
+        *@
             })
-<br />  
-<br />  
-
-    </fieldset>
     
-    <input class="button" type="submit" value="Elabora")' />
+    <input class="default btn btn-primary"  type="submit" value="Elabora****")' />
 }
 
 
@@ -86,7 +80,7 @@
             Hand: document.getElementById("Hand").value,
             CostPerMl: document.getElementById("CostPerMl").value,
             CostPerMq: document.getElementById("CostPerMq").value,
-            TypeOfNoBvToModify: document.getElementById("optTypeOfNoBvToModify").options[document.getElementById("optTypeOfNoBvToModify").selectedIndex].value
+//            TypeOfNoBvToModify: document.getElementById("optTypeOfNoBvToModify").options[document.getElementById("optTypeOfNoBvToModify").selectedIndex].value
         };
 
         //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).

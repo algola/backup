@@ -85,7 +85,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         
         public ActionResult CreateProduct(string id)
         {
-
             var c = InitProduct(id);
 
             var d = new ProductViewModel();

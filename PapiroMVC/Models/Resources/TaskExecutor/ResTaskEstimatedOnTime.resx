@@ -126,11 +126,23 @@
   <data name="CostPerHourRunning" xml:space="preserve">
     <value>Costo all'ora (tiratura)</value>
   </data>
+  <data name="CostPerHourRunningBW" xml:space="preserve">
+    <value>Costo all'ora (tiratura)</value>
+  </data>
+  <data name="CostPerHourRunningBWToolTip" xml:space="preserve">
+    <value>Indica il costo orario della lavorazione/macchina</value>
+  </data>
   <data name="CostPerHourRunningToolTip" xml:space="preserve">
     <value>Indica il costo orario della lavorazione/macchina</value>
   </data>
   <data name="CostPerHourStarting" xml:space="preserve">
     <value>Costo all'ora (avviamento)</value>
+  </data>
+  <data name="CostPerHourStartingBW" xml:space="preserve">
+    <value>Costo all'ora (avviamento)</value>
+  </data>
+  <data name="CostPerHourStartingBWToolTip" xml:space="preserve">
+    <value>Indica il costo orario in avviamento</value>
   </data>
   <data name="CostPerHourStartingToolTip" xml:space="preserve">
     <value>Indica il costo orario in avviamento</value>
@@ -145,16 +157,16 @@
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="StartingTime1" xml:space="preserve">
-    <value>Tempo Avviamento</value>
+    <value>Tempo (hh:mm) Primo avviamento</value>
   </data>
   <data name="StartingTime1ToolTip" xml:space="preserve">
-    <value>Indica il tempo in mm:ss di avviamento</value>
+    <value>Indica il tempo in hh:mm relativo al primo avviamento</value>
   </data>
   <data name="StartingTime2" xml:space="preserve">
-    <value>Tempo Avviamenti Successivi</value>
+    <value>Tempo (hh:mm) Avviamenti successivi</value>
   </data>
   <data name="StartingTime2ToolTip" xml:space="preserve">
-    <value>Indica il tempo in mm:ss degli avviamenti successivi</value>
+    <value>Indica il tempo in hh:mm degli avviamenti successivi al primo</value>
   </data>
   <data name="TimeForfait" xml:space="preserve">
     <value>Tempo minimale</value>

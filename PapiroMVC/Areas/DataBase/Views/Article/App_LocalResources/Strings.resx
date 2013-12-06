@@ -150,8 +150,11 @@
   <data name="CostPerSheetCaption" xml:space="preserve">
     <value>Costo al Foglio</value>
   </data>
+  <data name="CreateRigidPrintableArticle" xml:space="preserve">
+    <value>Nuovo materiale Rigido</value>
+  </data>
   <data name="CreateRollPrintableArticle" xml:space="preserve">
-    <value>Nuovo Materiale in Rotolo</value>
+    <value>Nuovo materiale in Rotolo</value>
   </data>
   <data name="CreateSheetPrintableArticle" xml:space="preserve">
     <value>Nuovo materiale a Foglio</value>

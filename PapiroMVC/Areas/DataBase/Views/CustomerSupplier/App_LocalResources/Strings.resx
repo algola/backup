@@ -168,6 +168,9 @@
   <data name="CustomerSupplierCreatedMessage" xml:space="preserve">
     <value>Anagrafica creata correttamente. Cliccare sullo sfondo per procedere all'inserimento delle Sedi.</value>
   </data>
+  <data name="CustomerSuppliers" xml:space="preserve">
+    <value>Clienti/Fornitori</value>
+  </data>
   <data name="CustomerType" xml:space="preserve">
     <value>Cliente</value>
   </data>

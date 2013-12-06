@@ -111,13 +111,13 @@
 <br />
 <div>
 
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new {Area="Database"})');">            
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new {Area="Database"})');">            
             <i class="icon-arrow-left"></i>
             @HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList")
         </button>
 
 
-        <button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateBase", "CustomerSupplier", new {Area="Database"})');">            
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateBase", "CustomerSupplier", new {Area="Database"})');">            
             <i class="icon-plus"></i>               
             @HttpContext.GetLocalResourceObject(strings, "CreateBase")
         </button>

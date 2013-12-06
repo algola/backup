@@ -32,9 +32,11 @@
         @Html.HiddenFor(model => model.TimeStampTable)
 
         @Html.AlgolaEditorFor(model => model.TaskExecutorName)
-        @Html.AlgolaEditorFor(model => model.Version)
 
-        @Html.EditorFor(model => model.Dismissed)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(model => model.Dismissed)
+        @Html.HiddenFor(model => model.UniversalCodPapiro)
+
 
         @Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMin", "TaskExecutor")
         @Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMax", "TaskExecutor")
@@ -54,12 +56,12 @@
 
         <p>
 
-            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPrePostPress", "TaskExecutor", new { Area = "Database" })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPrePostPress", "TaskExecutor", new { Area = "Database" })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
 
-            <button class="default" type="submit" name="@ViewBag.ActionMethod">
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Save")
             </button>

@@ -5,67 +5,29 @@
     string strings = "~/Areas/Account/Views/Account/Strings";
     ViewBag.Title = (string)Html.T(strings, "TitleRegister");
     ViewBag.STitle = (string)Html.T(strings, "NewAccount");
-
-    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
-    if (err.Key != null)
-    {
-        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
-    }       
-           
+                
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.STitle</h2>
-</hgroup>
-
-@using (Html.BeginForm()) {
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>@Html.T(strings, "RegistrationLegend")</legend>
-
-        @Html.AlgolaEditorFor(m => m.UserName)
-
-        <p class="message-info">
-            @Html.T(strings, "EmailWarning")
-        </p>
-
-        @Html.AlgolaEditorFor(m => m.Email)
-
-        <div class="editor-label">
-            @Html.LabelFor(m => m.Password)
-        </div>
-
-        <div class="editor-field">
-            @Html.PasswordFor(m => m.Password)
-            @Html.ValidationMessageFor(m => m.Password)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(m => m.ConfirmPassword)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(m => m.ConfirmPassword)
-            @Html.ValidationMessageFor(m => m.ConfirmPassword)
-        </div>
-
-        @Html.AlgolaEditorFor(m => m.OrganizationName)
-        @Html.AlgolaEditorFor(m => m.Base)
-        @Html.AlgolaEditorFor(m => m.Culture)
-        @Html.AlgolaEditorFor(m => m.Refeere)
-        @Html.AlgolaEditorFor(m => m.Phone)
-        @Html.AlgolaEditorFor(m => m.VatNumber)
-        @Html.AlgolaEditorFor(m => m.TaxCode)
-        <br />
-
-        <button class="default" type="submit">
-            @Html.T(strings, "RegisterSubmit")
-        </button>
-
-    </fieldset>
+@section title{
+    @Html.T(strings, "Register")
 }
 
-@section Scripts {
+@section description{
+    @Html.T(strings, "RegisterLink") 
+}
+
+
+@Html.Partial("_Register", Model)
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
+
+@section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
 }

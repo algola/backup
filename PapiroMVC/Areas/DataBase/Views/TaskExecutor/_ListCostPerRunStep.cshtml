@@ -5,8 +5,8 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("CostPerRunStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn});
-    string editUrl = Url.Action("EditCostPerRunStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
+    string url = Url.Action("CostPerRunStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn});
+    string editUrl = Url.Action("EditCostPerRunStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
 }
 
 <table id="gridCostPerRunStep"><tr><td/></tr></table> 

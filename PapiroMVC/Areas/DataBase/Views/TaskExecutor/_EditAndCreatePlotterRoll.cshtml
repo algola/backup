@@ -1,0 +1,106 @@
+﻿@model PapiroMVC.Models.PlotterRoll
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
+    foreach (PapiroMVC.Models.TypeOfTask item in ViewBag.TypeOfTaskList)
+    {
+        item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
+    }
+
+    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPA" : Model.CodTypeOfTask;
+  
+}
+
+<div id="status">
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+
+        <div class="control-group">
+            <div class="controls col-sm-9">
+                @Html.DropDownListFor(y => y.CodTypeOfTask,
+                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+            </div>
+        </div>
+
+
+        
+        @Html.HiddenFor(model => model.TimeStampTable)
+
+        @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(model => model.Dismissed)
+
+        @Html.HiddenFor(model => model.UniversalCodPapiro)
+
+        @Html.AlgolaAutocompleteFor(model => model.Width, "WidthAutoComplete", "TaskExecutor")
+        @Html.HiddenFor(model => model.FormatMin)
+        @Html.HiddenFor(model => model.FormatMax)
+
+@*Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
+        @*
+        @*Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
+        *@
+        
+        @Html.HiddenFor(model => model.WeightMin)
+        @Html.HiddenFor(model => model.WeightMax)
+
+        @Html.HiddenFor(model => model.Pinza)
+        @Html.HiddenFor(model => model.ControPinza)
+        @Html.AlgolaEditorFor(model => model.Laterale)
+
+        <h3>**Stampa</h3>
+        
+        @Html.EditorFor(model => model.ColorUV)
+        @Html.EditorFor(model => model.WhiteUV)
+        @Html.EditorFor(model => model.ColorJet)
+        @Html.HiddenFor(model => model.Cutting)
+
+        @*
+        @Html.AlgolaEditorFor(model => model.InkUsage)
+        @Html.AlgolaEditorFor(model => model.InkUsageForfait)
+        *@
+
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodTaskExecutor)
+
+        @Html.HiddenFor(model => model.IsEstimatedOnTime)
+        @Html.HiddenFor(model => model.IsEstimatedOnRun)
+        @Html.HiddenFor(model => model.IsEstimatedOnMq)
+
+        <p>
+
+            <button  class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPlotter", "TaskExecutor", new { Area = "Database" })');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+            @if (ViewBag.ActionMethod != "CreatePlotterRoll")
+            {
+                <button class="btn"  type="submit" name="CreatePlotterRoll">
+                    <i class="icon-save"></i>
+                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                </button>
+            }
+        </p>
+
+    }
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

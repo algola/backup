@@ -21,10 +21,12 @@ namespace PapiroMVC.Models
     
         public System.DateTime TimeStampTable { get; set; }
         public string CodTaskExecutor { get; set; }
-        public string CodTaskExecutorOn { get; set; }
+        public string CodTaskEstimatedOn { get; set; }
         public string CostForfait { get; set; }
         public string CostForfaitForSheet { get; set; }
         public string CodOptionTypeOfTask { get; set; }
+        public Nullable<double> CostPerUnitBW { get; set; }
+        public Nullable<bool> UseDifferentDeficitOnCostForWeightStepBW { get; set; }
     
         public virtual TaskExecutor taskexecutors { get; set; }
         public virtual ICollection<Step> steps { get; set; }

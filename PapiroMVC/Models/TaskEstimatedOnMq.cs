@@ -14,5 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class TaskEstimatedOnMq : TaskEstimatedOnUnit
     {
+
     }
 }

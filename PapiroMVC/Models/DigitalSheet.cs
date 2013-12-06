@@ -14,8 +14,5 @@ namespace PapiroMVC.Models
     
     public partial class DigitalSheet : Digital
     {
-        public Nullable<long> ProofSheetFirstStart { get; set; }
-        public Nullable<long> ProofSheetSecondsStart { get; set; }
-        public Nullable<double> ProductionWaste { get; set; }
     }
 }

@@ -12,8 +12,7 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LithoWeb : Litho
+    public partial class LithoRoll : Litho
     {
-        public Nullable<long> PaperFirstStartLenght { get; set; }
     }
 }

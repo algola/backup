@@ -1,14 +1,13 @@
 ﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.Plotter
+@model PapiroMVC.Models.LithoRoll
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingPlotterTitle") + @Model.TaskExecutorName;
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "CreateLithoRollTitle");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+}
 
-    }
-
-@Html.Partial("_EditAndCreatePlotter", Model)
+@Html.Partial("_EditAndCreateLithoRoll", Model)
 
 
 @section breadcrumb {

@@ -14,9 +14,7 @@ namespace PapiroMVC.Models
         {
             get;
             set;
-        }
-
- 
+        } 
     }
 
 //Order By 
@@ -25,5 +23,4 @@ namespace PapiroMVC.Models
         public String CodCategory { get; set; }
         public String IndexOfCategory { get; set; }
     };
-    
 }

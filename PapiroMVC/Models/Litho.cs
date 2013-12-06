@@ -19,5 +19,8 @@ namespace PapiroMVC.Models
         public Nullable<bool> Sheetwise { get; set; }
         public Nullable<System.TimeSpan> WashUpTime { get; set; }
         public Nullable<System.TimeSpan> ChangePlateTime { get; set; }
+        public Nullable<long> ProofSheetFirstStart { get; set; }
+        public Nullable<long> ProofSheetSecondsStart { get; set; }
+        public Nullable<double> ProductionWaste { get; set; }
     }
 }

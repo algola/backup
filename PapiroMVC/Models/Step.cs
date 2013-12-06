@@ -19,6 +19,7 @@ namespace PapiroMVC.Models
         public long IdStep { get; set; }
         public Nullable<double> FromUnit { get; set; }
         public Nullable<double> ToUnit { get; set; }
+        public Nullable<int> SelectorCostBW { get; set; }
     
         public virtual TaskEstimatedOn taskexecutorestimatedon { get; set; }
     }

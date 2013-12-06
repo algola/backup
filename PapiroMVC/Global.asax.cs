@@ -38,18 +38,25 @@ namespace PapiroMVC
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-
-            Console.Write("ppeoeoe");
             // code to change culture
 
+            //OLD VERSION
 
-            string cultureName = null;
-            // Attempt to read the culture cookie from Request
-            HttpCookie cultureCookie = Request.Cookies["_culture"];
-            if (cultureCookie != null)
-                cultureName = cultureCookie.Value;
-            else
-                cultureName = Request.UserLanguages[0]; // obtain it from HTTP header AcceptLanguages
+            //string cultureName = null;
+            //// Attempt to read the culture cookie from Request
+            //HttpCookie cultureCookie = Request.Cookies["_culture"];
+            //if (cultureCookie != null)
+            //    cultureName = cultureCookie.Value;
+            //else
+            //    cultureName = Request.UserLanguages[0]; // obtain it from HTTP header AcceptLanguages
+
+            string cultureName = String.Empty;
+            var dom = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+            if (dom.Contains("localhost")||dom.Contains("gestionale"))
+            {
+                cultureName = "it-IT";
+            }
 
             // Validate culture name
             cultureName = CultureHelper.GetImplementedCulture(cultureName); // This is safe
@@ -57,7 +64,6 @@ namespace PapiroMVC
             // Modify current thread's cultures            
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-
 
         }
     }

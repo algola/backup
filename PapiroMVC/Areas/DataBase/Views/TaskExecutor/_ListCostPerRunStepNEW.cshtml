@@ -5,20 +5,20 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("CostPerRunStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn});
-    string editUrl = Url.Action("EditCostPerRunStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
+    string url = Url.Action("CostPerRunStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn});
+    string editUrl = Url.Action("EditCostPerRunStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
 }
 
-<table id="gridCostPerRunStep@(Model.CodTaskExecutorOn)"><tr><td/></tr></table> 
-<div id="pagerCostPerRunStep@(Model.CodTaskExecutorOn)"></div> 
+<table id="gridCostPerRunStep@(Model.CodTaskEstimatedOn)"><tr><td/></tr></table> 
+<div id="pagerCostPerRunStep@(Model.CodTaskEstimatedOn)"></div> 
 
     <script type="text/javascript">
 
         $(function () {
 
-            var lastSel@(Model.CodTaskExecutorOn) = -1;
+            var lastSel@(Model.CodTaskEstimatedOn) = -1;
 
-            var myGrid = $("#gridCostPerRunStep@(Model.CodTaskExecutorOn)").jqGrid({
+            var myGrid = $("#gridCostPerRunStep@(Model.CodTaskEstimatedOn)").jqGrid({
                 url: '@url',
                 editUrl: '@editUrl',
                 datatype: 'json',
@@ -30,7 +30,7 @@
                     { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToRunCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
                     { name: 'CostPerUnit', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerUnitCaption")', width: 100, align: 'right', editable: true }],
 
-                pager: '#pagerCostPerRunStep@(Model.CodTaskExecutorOn)',
+                pager: '#pagerCostPerRunStep@(Model.CodTaskEstimatedOn)',
                 
                 rowNum: 15,
                 rowList: [15, 20, 50],
@@ -38,9 +38,9 @@
                 autowidth: false,
 
                 onSelectRow: function (id) {
-                    if (id && id !== lastSel@(Model.CodTaskExecutorOn)) {
-                        myGrid.jqGrid('restoreRow', lastSel@(Model.CodTaskExecutorOn));
-                        lastSel@(Model.CodTaskExecutorOn) = id;
+                    if (id && id !== lastSel@(Model.CodTaskEstimatedOn)) {
+                        myGrid.jqGrid('restoreRow', lastSel@(Model.CodTaskEstimatedOn));
+                        lastSel@(Model.CodTaskEstimatedOn) = id;
                     }
                 },
 
@@ -51,7 +51,7 @@
                             //...
                         },
                         aftersavefunc: function(){
-                            $("#gridCostPerRunStep@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+                            $("#gridCostPerRunStep@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
                         },
                         url: '@editUrl'
                     });
@@ -61,7 +61,7 @@
 
             });
 
-            myGrid.jqGrid('navGrid', '#pagerCostPerRunStep@(Model.CodTaskExecutorOn)', { edit: false, add: false, del: false, search: false });
+            myGrid.jqGrid('navGrid', '#pagerCostPerRunStep@(Model.CodTaskEstimatedOn)', { edit: false, add: false, del: false, search: false });
 
         });
 
@@ -78,7 +78,7 @@
         }
 
         function reloadCostPerRunStep() {
-            $("#gridCostPerRunStep@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+            $("#gridCostPerRunStep@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
         }
 
     </script>

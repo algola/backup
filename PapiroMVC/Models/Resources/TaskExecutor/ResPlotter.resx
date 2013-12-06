@@ -117,14 +117,38 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ColorJet" xml:space="preserve">
+    <value>Stampa Ink-Jet</value>
+  </data>
+  <data name="ColorJetToolTip" xml:space="preserve">
+    <value>il plotter può stampare a ink-jet</value>
+  </data>
+  <data name="ColorUV" xml:space="preserve">
+    <value>Stampa UV</value>
+  </data>
+  <data name="ColorUVToolTip" xml:space="preserve">
+    <value>il plotter può stampare UV</value>
+  </data>
   <data name="CurrencyValidation" xml:space="preserve">
     <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
   </data>
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="Cutting" xml:space="preserve">
+    <value>Taglio</value>
+  </data>
+  <data name="CuttingToolTip" xml:space="preserve">
+    <value>il plotter può tagliare</value>
+  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
+  </data>
+  <data name="WhiteUV" xml:space="preserve">
+    <value>Stampa Bianco UV</value>
+  </data>
+  <data name="WhiteUVToolTip" xml:space="preserve">
+    <value>il plotter può stampare il bianco UV</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Luce (cm)</value>

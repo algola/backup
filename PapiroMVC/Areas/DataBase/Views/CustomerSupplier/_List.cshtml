@@ -1,15 +1,15 @@
 ﻿@model List<PapiroMVC.Models.CustomerSupplier>
 @using Mvc.HtmlHelpers
-@using MvcContrib.UI.Grid 
+@using MvcContrib.UI.Grid
 
 @{
     string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
-    }
+}
 
 @(Html.jqGrid("CustomGrid")
 
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))    
-    // columns
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
+        // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
         .setCustomFormatter("editCustomerSupplier")
@@ -42,40 +42,44 @@
     .setPager("CustomGridAccountPager")
     .setPrint(true)
     .setLoadText("")
-    .setAutoWidth(true) 
+    .setAutoWidth(true)
     .setSearchToolbar(true)
-  
+
     // error handler
     .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
-                            
+
     // render the html
     .Render()
 )
 <br />
 
-<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new {Area="Database"})');">            
-    <i class="icon-plus"></i>            
-        @HttpContext.GetLocalResourceObject(strings, "CreateCustomer")
-                </button>
+<button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new { Area = "Database" })');">
+    <i class="icon-plus"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateCustomer")
+</button>
 
 
-<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSupplier", "CustomerSupplier", new {Area="Database"})');">            
-                  <i class="icon-plus"></i>
-     @HttpContext.GetLocalResourceObject(strings, "CreateSupplier")
-                </button>
+<button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSupplier", "CustomerSupplier", new { Area = "Database" })');">
+    <i class="icon-plus"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateSupplier")
+</button>
 
 
 <script type="text/javascript">
     function editCustomerSupplier(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1" }, new { @class = "tbutton smalledit" })';
 
         var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
                                           "IndexBase",
                                           "CustomerSupplier",
-                                          (object) new { id = -1 },
-                                          new {@class="tbutton smallbase"})';
+                                          (object)new { id = -1 },
+                                          new { @class = "tbutton smallbase" })';
 
-        return link.replace("-1", cellvalue) + " " + link2.replace("-1", cellvalue);
+        return '<i class="icon-cogs icon-1x icon-only">' + '</i> ' +
+                link.replace("-1", cellvalue) + " " +
+                '<i class="icon-dashboard icon-1x icon-only">' + '</i> ' +
+                link2.replace("-1", cellvalue);
+
     }
 
     function typeOfCustomerSupplier(cellvalue, options, rowobject) {
@@ -86,14 +90,14 @@
         var customer = '@HttpContext.GetLocalResourceObject(strings, "CustomerType")';
         var supplier = '@HttpContext.GetLocalResourceObject(strings, "SupplierType")';
 
-            if (cellvalue == "Customer")
-                return link.replace("type", customer);
+        if (cellvalue == "Customer")
+            return link.replace("type", customer);
 
-            if (cellvalue == "Supplier")
-                return link.replace("type", supplier);
+        if (cellvalue == "Supplier")
+            return link.replace("type", supplier);
 
-            return link;
-        }
+        return link;
+    }
 
 
     /*

@@ -9,13 +9,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-    [MetadataType(typeof(DigitalWeb_MetaData))]
-    public partial class DigitalWeb : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
+    [MetadataType(typeof(DigitalRoll_MetaData))]
+    public partial class DigitalRoll : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public DigitalWeb()
+        public DigitalRoll()
         {
-            this.TypeOfExecutor = TaskExecutor.ExecutorType.DigitalWeb;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.DigitalRoll;
         }
 
         #region Added Properties
@@ -37,14 +37,6 @@ namespace PapiroMVC.Models
             get
             {
                 string result = base[proprieta];
-
-                if (proprieta == "PaperFirstStartLenght")
-                {
-                    if (this.PaperFirstStartLenght < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
 
                 return result;
             }
@@ -75,7 +67,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             base.Copy(to);
 
-            ((DigitalWeb)to).PaperFirstStartLenght = this.PaperFirstStartLenght;
 
             //to.Quantita = this.Quantita;
             //to.Prezzo = this.Prezzo;

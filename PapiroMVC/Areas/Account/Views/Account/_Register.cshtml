@@ -1,0 +1,87 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.RegisterModel
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }       
+           
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+
+    @using (Ajax.BeginForm("Register", "Account", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+    {
+
+        @Html.ValidationSummary(true)
+
+
+        @Html.AlgolaEditorFor(m => m.UserName)
+
+@*        <p class="message-info">
+            @Html.T(strings, "EmailWarning")
+        </p>
+*@
+  
+        <div title="" class="control-group">
+            <div class="col-sm-3 control-label no-padding-right">
+                @Html.LabelFor(m => m.Password)
+            </div>
+
+            <div class="controls col-sm-9">
+                @Html.PasswordFor(m => m.Password)
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+        </div>     
+        
+        <div title="" class="control-group">
+            <div class="col-sm-3 control-label no-padding-right">
+                @Html.LabelFor(m => m.ConfirmPassword)
+            </div>
+
+            <div class="controls col-sm-9">
+                @Html.PasswordFor(m => m.ConfirmPassword)
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+        </div>     
+
+        <div class="space-6"></div>
+        <div class="alert alert-info">
+            <i class="icon-hand-right"></i>
+            @Html.T(strings, "EmailWarning")
+            <button class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+        </div>
+
+        @Html.AlgolaEditorFor(m => m.Email)        
+        
+        @Html.AlgolaEditorFor(m => m.OrganizationName)
+        @Html.AlgolaEditorFor(m => m.VatNumber)
+        @Html.AlgolaEditorFor(m => m.TaxCode)
+
+        @Html.AlgolaEditorFor(m => m.Base)
+        @Html.AlgolaEditorFor(m => m.Culture)
+        @Html.AlgolaEditorFor(m => m.Refeere)
+        @Html.AlgolaEditorFor(m => m.Phone)
+        <br />
+
+        <button class="default btn btn-primary" type="submit">
+            @Html.T(strings, "RegisterSubmit")
+        </button>
+
+    }
+
+</div>

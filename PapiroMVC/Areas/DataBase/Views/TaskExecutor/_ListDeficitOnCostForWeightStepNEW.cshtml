@@ -5,12 +5,12 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("DeficitOnCostForWeightStepList", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
-    string editUrl = Url.Action("EditDeficitOnCostForWeightStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskExecutorOn });
+    string url = Url.Action("DeficitOnCostForWeightStepList", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
+    string editUrl = Url.Action("EditDeficitOnCostForWeightStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
 }
 
-<table id="gridDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)"><tr><td/></tr></table> 
-<div id="pagerDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)"></div> 
+<table id="gridDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)"><tr><td/></tr></table> 
+<div id="pagerDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)"></div> 
 
     <script type="text/javascript">
 
@@ -18,7 +18,7 @@
 
             var lastSel = -1;
 
-            var myGrid = $("#gridDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)").jqGrid({
+            var myGrid = $("#gridDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)").jqGrid({
                 url: '@url',
                 editUrl: '@editUrl',
                 datatype: 'json',
@@ -30,7 +30,7 @@
                     { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToWeightCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },    
                     { name: 'DeficitRate', label: '@HttpContext.GetLocalResourceObject(strings, "DeficitRateCaption")', width: 100, align: 'right', editable: true }],
 
-                pager: '#pagerDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)',
+                pager: '#pagerDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)',
                 
                 rowNum: 10,
                 rowList: [10, 20, 500],
@@ -51,7 +51,7 @@
                             //...
                         },
                         aftersavefunc: function(){
-                            $("#gridDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+                            $("#gridDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
                         },
                         url: '@editUrl'
                     });
@@ -61,7 +61,7 @@
 
             });
 
-            myGrid.jqGrid('navGrid', '#pagerDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)', { edit: false, add: false, del: false, search: false });
+            myGrid.jqGrid('navGrid', '#pagerDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)', { edit: false, add: false, del: false, search: false });
 
         });
 
@@ -78,7 +78,7 @@
         }
 
         function reloadDeficitOnCostForWeightStep() {
-            $("#gridDeficitOnCostForWeightStep@(Model.CodTaskExecutorOn)").trigger("reloadGrid");
+            $("#gridDeficitOnCostForWeightStep@(Model.CodTaskEstimatedOn)").trigger("reloadGrid");
         }
 
     </script>

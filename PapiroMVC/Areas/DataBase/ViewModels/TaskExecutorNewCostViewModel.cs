@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public class TaskExecutorNewCostDetail
+    public class TaskExecutorNewCostViewModel
     {
 
         Boolean isEstimatedOnMq;

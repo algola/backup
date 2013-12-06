@@ -12,8 +12,9 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DigitalWeb : Digital
+    public partial class DigitalOnTime : TaskEstimatedOnTime
     {
-        public Nullable<long> PaperFirstStartLenght { get; set; }
+        public string CostPerHourStartingBW { get; set; }
+        public string CostPerHourRunningBW { get; set; }
     }
 }

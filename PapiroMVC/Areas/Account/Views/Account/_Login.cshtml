@@ -4,61 +4,59 @@
 @{
     string strings = "~/Areas/Account/Views/Account/Strings";
 
-
-    var err = ViewData.ModelState.FirstOrDefault(x=>x.Key=="PersError");
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
     if (err.Key != null)
     {
-        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));        
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
     }
-    
+
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "LoginTitle");
     
 }
 
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+
+    @using (Ajax.BeginForm("Login", "Account", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+    {
 
 
-<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+        @Html.ValidationSummary(true)
 
-    <hgroup class="title">
-        <h1>@ViewBag.Title</h1>
-        <h2></h2>
-    </hgroup>
-
-@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", HttpMethod="POST", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess="OnSuccess" })) {
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>Log in Form</legend>
-            @Html.AlgolaEditorFor(m => m.UserName)
-            @Html.AlgolaEditorFor(m => m.Password)
-            @Html.CheckBoxFor(m => m.RememberMe)
-            @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+        @Html.AlgolaEditorFor(m => m.UserName)
+        @Html.AlgolaEditorFor(m => m.Password)
+        @Html.EditorFor(m => m.RememberMe)
     
         <br />
-        <br />
-
         <p>
-            <button type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Home", new { Area = "" })');">
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+
+            @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", null, "icon-remove bigger-125", "btn btn-warning")
+
+            <button class="btn btn-primary" type="submit">
+                <i class="icon-key bigger-125"></i>
+                @Html.T(strings, "LoginButton")
             </button>
 
-            <button class="default" type="submit">
-                @HttpContext.GetLocalResourceObject(strings, "LoginButton")
-            </button>
+
         </p>        
-    </fieldset>
-
-    <p>
-        @Html.ActionLink(Html.T(strings, "RegisterLink"), "Register") @Html.T(strings, "RegisterMessageAfterLink")
-    </p>
+        <p>
+            @Html.ActionLink(Html.T(strings, "RecoveryPasswordLink"), "RecoveryPassword", null, null) @Html.T(strings, "RecoveryPasswordAfterLink")
+        </p>
+        <p>
+            @Html.ActionLink(Html.T(strings, "RegisterLink"), "Register") @Html.T(strings, "RegisterMessageAfterLink")
+        </p>
         
-    <p>
-        @Html.ActionLink(Html.T(strings, "RecoveryPasswordLink"), "RecoveryPassword",null,null) @Html.T(strings, "RecoveryPasswordAfterLink")
-    </p>
     }
 
 
-</div>        
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

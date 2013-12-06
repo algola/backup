@@ -4,17 +4,22 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("DigitalSheetList", new { controller ="TaskExecutor", area = "DataBase" });
+    string url = Url.Action("DigitalSheetListAndRoll", new { controller = "TaskExecutor", area = "DataBase" });
 }
 
 <table id="gridDigitalSheet"><tr><td/></tr></table>
 <div id="pagerDigitalSheet"></div> 
 
 <br />
-<button type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new {Area="Database"})');">            
-      <i class="icon-plus"></i>             
-     @HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet")
-                </button>
+<button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database" })');">
+    <i class="icon-fa-list-ul align-top bigger-125"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet")
+</button>
+
+<button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalRoll", "TaskExecutor", new { Area = "Database" })');">
+    <i class="fa-undo align-top bigger-125"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateDigitalRoll")
+</button>
 
     <script type="text/javascript">
 
@@ -32,6 +37,7 @@
                     { name: 'Error', label: '', width: 45, align: 'center', hidden:true, editable: false },
                     { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
                     { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false  },                    
+                    { name: 'TypeOfTaskExecutor', label: '@Html.T(strings, "TypeOfTaskExecutor")', width: 60, editable: false, hidden: false, formatter: typeOfTaskExecutor },
                     { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
                     { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },
                     { name: 'BWSide1', label: '@Html.T(strings, "BWSide1")', width: 45, align: 'center', editable: false, formatter: 'checkbox' },

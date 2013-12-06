@@ -219,6 +219,18 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterOnMqEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterOnMqEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterRollEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnRunEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnRunEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnTimeEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
@@ -372,10 +384,16 @@
     <Compile Include="Models\Digital.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DigitalSheet.cs">
+    <Compile Include="Models\DigitalOnRun.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DigitalWeb.cs">
+    <Compile Include="Models\DigitalOnTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Document.cs">
@@ -387,10 +405,10 @@
     <Compile Include="Models\Litho.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LithoSheet.cs">
+    <Compile Include="Models\LithoRoll.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LithoWeb.cs">
+    <Compile Include="Models\LithoSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Makeready.cs">
@@ -439,6 +457,15 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Plotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterOnMq.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PrePostPress.cs">
@@ -741,6 +768,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPlotterOnMq.Designer.cs">
+      <DependentUpon>ResPlotterOnMq.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.Designer.cs">
       <DependentUpon>ResOptionTypeOfTask.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -954,13 +986,21 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
-    <Compile Include="Models\RigidPlotter.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Single.cs" />
     <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ICostDetailRepository.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPARIGIDO.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPA_OFFSET_ROTOLO.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPA_DIGITALE.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPA_OFFSETeDIGITALE.cs" />
+    <Compile Include="RepositoryPattern\Task\STAMPA_OFFSET.cs" />
+    <Compile Include="Routing\TranslatedAreaRegistrationContextExtensions.cs" />
+    <Compile Include="Routing\DictionaryRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\IRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\RouteValueTranslation.cs" />
+    <Compile Include="Routing\TranslatedRoute.cs" />
+    <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
     <Compile Include="Validation\ProductViewModelModelBinder.cs" />
     <Compile Include="Validation\HtmlHelperExtension.cs" />
     <Compile Include="Validation\DisplayLocalizedAttribute.cs" />
@@ -2004,6 +2044,7 @@
     <Content Include="Content\themes\smoothness\jquery-ui-1.8.custom.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="papiro.png" />
     <Content Include="Views\Shared\App_LocalResources\Cuts.resx">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -3328,13 +3369,13 @@
     <Content Include="Areas\DataBase\Views\Article\_DataProcessedCorrectly.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexLithoSheetAndRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\IndexSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\IndexRollPrintableArticle.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexDigitalSheetAndRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoSheet.cshtml" />
@@ -3590,9 +3631,9 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPrePostPress.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListPlotter.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPlotter.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotter.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotter.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotterSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotterSheet.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\OptionTypeOfTask.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\Boolean.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductTask.cshtml" />
@@ -4974,6 +5015,26 @@
     <Content Include="Areas\Working\Views\Document\PrintedCostDetail.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\Copy of ProductPartRigidArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateRigid.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateDigitalRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditTaskEstimatedOn.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\DigitalOnTime.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotterSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\PlotterOnMq.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_LayoutAceTheme.cshtml">
+      <SubType>
+      </SubType>
+    </Content>
+    <Content Include="Areas\Account\Views\Shared\_MsgProcessOk.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Register.cshtml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -5110,6 +5171,7 @@
     <Content Include="Views\Order\_DisplayCustomer.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -5216,6 +5278,12 @@
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPlotterOnMq.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPlotterOnMq.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.TaskExecutor</CustomToolNamespace>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.resx">
@@ -5609,6 +5677,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Account\Registration.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -5628,12 +5697,12 @@
     </Content>
     <Content Include="Areas\Account\Views\Account\Verify.cshtml" />
     <Content Include="Areas\Account\Views\Account\Confirmation.cshtml" />
-    <Content Include="Views\Home\Copy of Index.cshtml" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Shared\_SideBarAceTheme.cshtml" />
     <Content Include="Views\Shared\_LayoutAceTheme.cshtml" />
     <Content Include="Views\Shared\_TopBarAceTheme.cshtml" />
-    <Content Include="Views\Home\Copy %282%29 of Index.cshtml" />
+    <Content Include="Views\Home\_Price.cshtml" />
+    <Content Include="Views\Home\Price.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />
@@ -5655,9 +5724,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.en-us.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Validation</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>

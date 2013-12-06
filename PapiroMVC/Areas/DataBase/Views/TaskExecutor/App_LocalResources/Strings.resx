@@ -162,11 +162,23 @@
   <data name="CostsOnTime" xml:space="preserve">
     <value>a tempo</value>
   </data>
+  <data name="CreateDigitalRoll" xml:space="preserve">
+    <value>Nuova Digitale a rotolo</value>
+  </data>
+  <data name="CreateDigitalRollTitle" xml:space="preserve">
+    <value>Nuova Digitale a rotolo</value>
+  </data>
   <data name="CreateDigitalSheet" xml:space="preserve">
     <value>Nuova Digitale a foglio</value>
   </data>
   <data name="CreateDigitalSheetTitle" xml:space="preserve">
     <value>Nuova Digitale a foglio</value>
+  </data>
+  <data name="CreateLithoRoll" xml:space="preserve">
+    <value>Nuova Offset a rotolo</value>
+  </data>
+  <data name="CreateLithoRollTitle" xml:space="preserve">
+    <value>Nuova Offset a rotolo</value>
   </data>
   <data name="CreateLithoSheet" xml:space="preserve">
     <value>Nuova Offset a foglio</value>
@@ -174,10 +186,10 @@
   <data name="CreateLithoSheetTitle" xml:space="preserve">
     <value>Nuova Offset a foglio</value>
   </data>
-  <data name="CreatePlotter" xml:space="preserve">
+  <data name="CreatePlotterRoll" xml:space="preserve">
     <value>Nuovo Plotter</value>
   </data>
-  <data name="CreatePlotterTitle" xml:space="preserve">
+  <data name="CreatePlotterRollTitle" xml:space="preserve">
     <value>Nuovo Plotter</value>
   </data>
   <data name="CreatePrePostPress" xml:space="preserve">
@@ -225,8 +237,8 @@
   <data name="IdStepCaption" xml:space="preserve">
     <value>Id Step</value>
   </data>
-  <data name="LithoSheetGridCaption" xml:space="preserve">
-    <value>Macchine offset a foglio</value>
+  <data name="TitleLithoSheetAndRollIndex" xml:space="preserve">
+    <value>Macchine da stampa offset</value>
   </data>
   <data name="NoCostInserted" xml:space="preserve">
     <value>Nessun costo inserito</value>
@@ -291,13 +303,34 @@
   <data name="TaskExecutorNameCaption" xml:space="preserve">
     <value>Nome</value>
   </data>
-  <data name="TitleDigitalSheetIndex" xml:space="preserve">
-    <value>Macchine digitali a foglio</value>
+  <data name="TitleDigitalSheetAndRollIndex" xml:space="preserve">
+    <value>Macchine da stampa digitali</value>
   </data>
   <data name="ToRunCaption" xml:space="preserve">
     <value>a copie</value>
   </data>
   <data name="ToWeightCaption" xml:space="preserve">
     <value>a Gr/mq</value>
+  </data>
+  <data name="RollTyope" xml:space="preserve">
+    <value>Rotolo</value>
+  </data>
+  <data name="SheetType" xml:space="preserve">
+    <value>Foglio</value>
+  </data>
+  <data name="TypeOfTaskExecutor" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="CreatePlotterSheet" xml:space="preserve">
+    <value>Nuovo Plotter Rigido</value>
+  </data>
+  <data name="CreatePlotterSheetTitle" xml:space="preserve">
+    <value>Nuovo Plotter Rigido</value>
+  </data>
+  <data name="PlotterRollType" xml:space="preserve">
+    <value>Rotolo</value>
+  </data>
+  <data name="PlotterSheetType" xml:space="preserve">
+    <value>Rigido</value>
   </data>
 </root>

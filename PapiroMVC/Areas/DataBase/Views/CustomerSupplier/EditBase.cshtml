@@ -15,3 +15,24 @@
 @section breadcrumb {
 
 }
+
+@section title{
+    @Html.T(strings, "CustomerSuppliers")
+}
+
+@section description{
+    @Html.T(strings, "TitleEditCustomerBase")
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}

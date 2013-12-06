@@ -14,7 +14,7 @@
 
     @Html.HiddenFor(model => model.TimeStampTable)
     @Html.HiddenFor(model => model.CodTaskExecutor)
-    @Html.HiddenFor(model => model.CodTaskExecutorOn)
+    @Html.HiddenFor(model => model.CodTaskEstimatedOn)
 
 
     @Html.AlgolaEditorFor(model => model.StartingCost1)
@@ -32,13 +32,13 @@
 
     @Html.EditorFor(model => model.UseDifferentCostPerUnit)
 
-    <div id="_listAvarageRunPerRunStep@(Model.CodTaskExecutorOn)">
+    <div id="_listAvarageRunPerRunStep@(Model.CodTaskEstimatedOn)">
         @Html.Partial("_ListCostPerRunStepNEW", Model)
     </div>
 
     @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
 
-    <div id="_listDeficitForWeightStep@(Model.CodTaskExecutorOn)">
+    <div id="_listDeficitForWeightStep@(Model.CodTaskEstimatedOn)">
         @Html.Partial("_ListDeficitOnCostForWeightStepNEW", Model)
     </div>
 

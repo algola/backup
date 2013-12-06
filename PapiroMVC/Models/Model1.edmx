@@ -523,6 +523,7 @@
           <Property Name="CostPerUnit32" Type="double" />
           <Property Name="StartingCost32" Type="double" />
           <Property Name="BindingCost" Type="double" />
+          <Property Name="SelectorCostBW" Type="int" />
         </EntityType>
         <EntityType Name="taskexecutorestimatedon">
           <Key>
@@ -581,6 +582,25 @@
           <Property Name="BindingCost" Type="char" MaxLength="20" />
           <Property Name="BindingStartingCost" Type="char" MaxLength="20" />
           <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" />
+          <Property Name="SelectorTimeRunDigital" Type="int" />
+          <Property Name="CostPerHourRunningBW" Type="char" MaxLength="20" />
+          <Property Name="CostPerHourStartingBW" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnitBW" Type="double" />
+          <Property Name="UseDifferentCostPerUnitBW" Type="bit" />
+          <Property Name="UseDifferentDeficitOnCostForWeightStepBW" Type="bit" />
+          <Property Name="StartingCost1BW" Type="char" MaxLength="20" />
+          <Property Name="StartingCost2BW" Type="char" MaxLength="20" />
+          <Property Name="CostForfaitBW" Type="char" MaxLength="20" />
+          <Property Name="CostForfaitForSheetBW" Type="char" MaxLength="20" />
+          <Property Name="SelectorPlotterMq" Type="int" />
+          <Property Name="CostInkJetLow" Type="char" MaxLength="20" />
+          <Property Name="CostInkJetMed" Type="char" MaxLength="20" />
+          <Property Name="CostInkJetHight" Type="char" MaxLength="20" />
+          <Property Name="CostUVLow" Type="char" MaxLength="20" />
+          <Property Name="CostUVMed" Type="char" MaxLength="20" />
+          <Property Name="CostUVHight" Type="char" MaxLength="20" />
+          <Property Name="CostWhite" Type="char" MaxLength="20" />
+          <Property Name="CostCutting" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
@@ -626,6 +646,11 @@
           <Property Name="IsEstimatedOnTimeBinding" Type="bit" />
           <Property Name="IsEstimatedOnRunBinding" Type="bit" />
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
+          <Property Name="UniversalCodPapiro" Type="char" MaxLength="50" />
+          <Property Name="ColorJet" Type="bit" />
+          <Property Name="WhiteUV" Type="bit" />
+          <Property Name="ColorUV" Type="bit" />
+          <Property Name="Cutting" Type="bit" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -1250,8 +1275,8 @@
             <End Role="taskexecutortypeoftask" EntitySet="TaskExecutorTypeOfTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_taskexecutors_CodTypeOfTask" Association="dbModel.FK_taskexecutors_CodTypeOfTask">
-            <End Role="TypeOfTask" EntitySet="TypeOfTasks" />
-            <End Role="TaskExecutor" EntitySet="taskexecutors" />
+            <End EntitySet="TypeOfTasks" Role="TypeOfTask" />
+            <End EntitySet="taskexecutors" Role="TaskExecutor" />
           </AssociationSet>
           <EntitySet Name="OptionTypeOfTasks" EntityType="dbModel.OptionTypeOfTask" />
           <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="dbModel.FK_optiontypeoftask_CodTypeOfTask">
@@ -1380,55 +1405,56 @@
           <Property Type="Boolean" Name="IsEstimatedOnRunBinding" />
           <NavigationProperty Name="TypeOfTasks" Relationship="dbModel.FK_taskexecutortypeoftask_CodTaskExecutor" FromRole="TaskExecutor" ToRole="taskexecutortypeoftask" />
           <Property Type="String" Name="CodTypeOfTask" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="typeoftask" Relationship="dbModel.FK_taskexecutors_CodTypeOfTask" FromRole="TaskExecutor" ToRole="TypeOfTask" />
+          <NavigationProperty Name="typeoftask_" Relationship="dbModel.FK_taskexecutors_CodTypeOfTask" FromRole="TaskExecutor" ToRole="TypeOfTask" />
           <NavigationProperty Name="costdetails" Relationship="dbModel.FK_costdetails_CodTaskExecutorSelected" FromRole="TaskExecutor" ToRole="costdetail" />
-        </EntityType>
+          <Property Type="String" Name="UniversalCodPapiro" MaxLength="50" FixedLength="false" Unicode="false" />
+          </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
           <Property Type="Int64" Name="SheetwiseAfterPrintingUnit" />
           <Property Type="Boolean" Name="Sheetwise" />
           <Property Type="Time" Name="WashUpTime" Precision="0" />
           <Property Type="Time" Name="ChangePlateTime" Precision="0" />
-        </EntityType>
-        <EntityType Name="LithoSheet" BaseType="dbModel.Litho">
           <Property Type="Int64" Name="ProofSheetFirstStart" />
           <Property Type="Int64" Name="ProofSheetSecondsStart" />
           <Property Type="Double" Name="ProductionWaste" />
         </EntityType>
-        <EntityType Name="LithoWeb" BaseType="dbModel.Litho">
-          <Property Type="Int64" Name="PaperFirstStartLenght" />
+        <EntityType Name="LithoSheet" BaseType="dbModel.Litho">
+          </EntityType>
+        <EntityType Name="LithoRoll" BaseType="dbModel.Litho">
         </EntityType>
         <EntityType Name="Digital" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Boolean" Name="BWSide1" />
           <Property Type="Boolean" Name="BWSide2" />
           <Property Type="Boolean" Name="ColorSide1" />
           <Property Type="Boolean" Name="ColorSide2" />
-        </EntityType>
-        <EntityType Name="DigitalSheet" BaseType="dbModel.Digital">
           <Property Type="Int64" Name="ProofSheetFirstStart" />
           <Property Type="Int64" Name="ProofSheetSecondsStart" />
           <Property Type="Double" Name="ProductionWaste" />
         </EntityType>
-        <EntityType Name="DigitalWeb" BaseType="dbModel.Digital">
-          <Property Type="Int64" Name="PaperFirstStartLenght" />
+        <EntityType Name="DigitalSheet" BaseType="dbModel.Digital">
+          </EntityType>
+        <EntityType Name="DigitalRoll" BaseType="dbModel.Digital">
         </EntityType>
-        <EntityType Name="Plotter" BaseType="dbModel.Digital">
+        <EntityType Name="PlotterRoll" BaseType="dbModel.Plotter">
           <Property Type="Int64" Name="Width" />
         </EntityType>
         <EntityType Name="TaskEstimatedOn" Abstract="true">
           <Key>
-            <PropertyRef Name="CodTaskExecutorOn" />
+            <PropertyRef Name="CodTaskEstimatedOn" />
           </Key>
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
           <Property Type="String" Name="CodTaskExecutor" MaxLength="50" Unicode="false" FixedLength="true" />
-          <Property Type="String" Name="CodTaskExecutorOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
+          <Property Type="String" Name="CodTaskEstimatedOn" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="CostForfait" />
           <Property Type="String" Name="CostForfaitForSheet" />
           <NavigationProperty Name="taskexecutors" Relationship="dbModel.FK_TaskEstimatedOn_CodTaskExecutor" FromRole="TaskEstimatedOn" ToRole="TaskExecutor" />
           <NavigationProperty Name="steps" Relationship="dbModel.FK_Steps_CodTaskEstimatedOn" FromRole="TaskEstimatedOn" ToRole="steps" />
           <Property Type="String" Name="CodOptionTypeOfTask" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="OptionTypeOfTask" Relationship="dbModel.FK_taskexecutorestimatedon_CodOptionTypeOfTask" FromRole="TaskEstimatedOn" ToRole="OptionTypeOfTask" />
-        </EntityType>
+          <Property Type="Double" Name="CostPerUnitBW" />
+          <Property Type="Boolean" Name="UseDifferentDeficitOnCostForWeightStepBW" />
+          </EntityType>
         <Association Name="FK_TaskEstimatedOn_CodTaskExecutor">
           <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1" />
           <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="*" />
@@ -1450,14 +1476,14 @@
           <Property Type="String" Name="CostPerHourRunning" />
           <Property Type="String" Name="CostPerHourStarting" />
           <Property Type="Boolean" Name="UseDifferentDeficitForWeightStep" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="TaskEstimatedOnUnit" BaseType="dbModel.TaskEstimatedOn" Abstract="true">
           <Property Type="String" Name="CostPerUnit" />
           <Property Type="Boolean" Name="UseDifferentCostPerUnit" />
           <Property Type="String" Name="StartingCost1" />
           <Property Type="String" Name="StartingCost2" />
           <Property Type="Boolean" Name="UseDifferentDeficitOnCostForWeightStep" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="TaskEstimatedOnRun" BaseType="dbModel.TaskEstimatedOnUnit">
         </EntityType>
         <EntityType Name="TaskEstimatedOnMq" BaseType="dbModel.TaskEstimatedOnUnit">
@@ -1472,13 +1498,14 @@
           <NavigationProperty Name="taskexecutorestimatedon" Relationship="dbModel.FK_Steps_CodTaskEstimatedOn" FromRole="steps" ToRole="TaskEstimatedOn" />
           <Property Type="Double" Name="FromUnit" />
           <Property Type="Double" Name="ToUnit" />
+          <Property Type="Int32" Name="SelectorCostBW" />
         </EntityType>
         <Association Name="FK_Steps_CodTaskEstimatedOn">
           <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="0..1" />
           <End Type="dbModel.Step" Role="steps" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TaskEstimatedOn">
-              <PropertyRef Name="CodTaskExecutorOn" />
+              <PropertyRef Name="CodTaskEstimatedOn" />
             </Principal>
             <Dependent Role="steps">
               <PropertyRef Name="CodTaskEstimatedOn" />
@@ -1984,10 +2011,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutors_CodTypeOfTask">
-          <End Type="dbModel.TypeOfTask" Role="TypeOfTask" Multiplicity="0..1">
+          <End Type="dbModel.TypeOfTask" Multiplicity="0..1" Role="TypeOfTask">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="*" />
+          <End Type="dbModel.TaskExecutor" Multiplicity="*" Role="TaskExecutor" />
           <ReferentialConstraint>
             <Principal Role="TypeOfTask">
               <PropertyRef Name="CodTypeOfTask" />
@@ -2528,7 +2555,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="RigidPlotter" BaseType="dbModel.Digital" />
+        <EntityType Name="PlotterSheet" BaseType="dbModel.Plotter" />
+        <EntityType Name="DigitalOnTime" BaseType="dbModel.TaskEstimatedOnTime" >
+          <Property Type="String" Name="CostPerHourStartingBW" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostPerHourRunningBW" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DigitalOnRun" BaseType="dbModel.TaskEstimatedOnRun" >
+          <Property Type="String" Name="StartingCost1BW" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="StartingCost2BW" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="UseDifferentCostPerUnitBW" />
+          <Property Type="String" Name="CostForfaitBW" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostForfaitForSheetBW" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Plotter" BaseType="dbModel.TaskExecutor" Abstract="true" >
+          <Property Type="Boolean" Name="ColorJet" />
+          <Property Type="Boolean" Name="WhiteUV" />
+          <Property Type="Boolean" Name="ColorUV" />
+          <Property Type="Boolean" Name="Cutting" />
+        </EntityType>
+        <EntityType Name="PlotterOnMq" BaseType="dbModel.TaskEstimatedOnMq" >
+          <Property Type="String" Name="CostInkJetLow" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostInkJetMed" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostInkJetHight" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostUVLow" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostUVMed" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostUVHight" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostWhite" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CostCutting" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2538,6 +2592,7 @@
           <EntitySetMapping Name="taskexecutors">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="UniversalCodPapiro" ColumnName="UniversalCodPapiro" />
                 <ScalarProperty Name="CodTypeOfTask" ColumnName="CodTypeOfTask" />
                 <ScalarProperty Name="IsEstimatedOnRunBinding" ColumnName="IsEstimatedOnRunBinding" />
                 <ScalarProperty Name="IsEstimatedOnTimeBinding" ColumnName="IsEstimatedOnTimeBinding" />
@@ -2560,6 +2615,9 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Litho)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
+                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
+                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ChangePlateTime" ColumnName="ChangePlateTime" />
                 <ScalarProperty Name="WashUpTime" ColumnName="WashUpTime" />
@@ -2572,21 +2630,20 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoSheet)">
               <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
-                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
-                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
                 <Condition ColumnName="Selector" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoWeb)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.LithoRoll)">
               <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
                 <Condition ColumnName="Selector" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Digital)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
+                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
+                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="ColorSide2" ColumnName="ColorSide2" />
                 <ScalarProperty Name="ColorSide1" ColumnName="ColorSide1" />
@@ -2598,24 +2655,13 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalSheet)">
               <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="ProductionWaste" ColumnName="ProductionWaste" />
-                <ScalarProperty Name="ProofSheetSecondsStart" ColumnName="ProofSheetSecondsStart" />
-                <ScalarProperty Name="ProofSheetFirstStart" ColumnName="ProofSheetFirstStart" />
                 <Condition ColumnName="Selector" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalWeb)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalRoll)">
               <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
                 <Condition ColumnName="Selector" Value="3" />
-              </MappingFragment>
-            </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Plotter)">
-              <MappingFragment StoreEntitySet="taskexecutors">
-                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="Width" ColumnName="Width" />
-                <Condition ColumnName="Selector" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrinterMachine)">
@@ -2639,18 +2685,37 @@
                 <Condition ColumnName="SelectorBindingPrePostPress" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RigidPlotter)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PlotterRoll)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
+                <ScalarProperty Name="Width" ColumnName="Width" />
+                <Condition ColumnName="Selector" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PlotterSheet)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
               <MappingFragment StoreEntitySet="taskexecutors">
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <Condition ColumnName="Selector" Value="5" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Plotter)">
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
+                <ScalarProperty Name="Cutting" ColumnName="Cutting" />
+                <ScalarProperty Name="ColorUV" ColumnName="ColorUV" />
+                <ScalarProperty Name="WhiteUV" ColumnName="WhiteUV" />
+                <ScalarProperty Name="ColorJet" ColumnName="ColorJet" />
+                <Condition ColumnName="SelectorExecutor" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
             </EntitySetMapping>
           <EntitySetMapping Name="taskexecutorestimatedon">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStepBW" ColumnName="UseDifferentDeficitOnCostForWeightStepBW" />
+                <ScalarProperty Name="CostPerUnitBW" ColumnName="CostPerUnitBW" />
                 <ScalarProperty Name="CodOptionTypeOfTask" ColumnName="CodOptionTypeOfTask" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="CostForfaitForSheet" ColumnName="CostForfaitForSheet" />
                 <ScalarProperty Name="CostForfait" ColumnName="CostForfait" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
@@ -2660,7 +2725,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
                 <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
                 <ScalarProperty Name="TimeForfait" ColumnName="TimeForfait" />
@@ -2674,7 +2739,7 @@
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnUnit)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStep" ColumnName="UseDifferentDeficitOnCostForWeightStep" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="StartingCost2" ColumnName="StartingCost2" />
                 <ScalarProperty Name="StartingCost1" ColumnName="StartingCost1" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
@@ -2684,19 +2749,13 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnRun)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <Condition ColumnName="SelectorMqRun" Value="0" />
-              </MappingFragment>
-            </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
-              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
-                <Condition ColumnName="SelectorMqRun" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.BindingEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="StartingTimeBinding" ColumnName="StartingTimeBinding" />
                 <ScalarProperty Name="AvarageRunPerHourBinding" ColumnName="AvarageRunPerHourBinding" />
                 <ScalarProperty Name="StartingTime32" ColumnName="StartingTime32" />
@@ -2722,7 +2781,7 @@
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="BindingStartingCost" ColumnName="BindingStartingCost" />
                 <ScalarProperty Name="UseDifferentCostPerUnit" ColumnName="UseDifferentCostPerUnit" />
-                <ScalarProperty Name="CodTaskExecutorOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="BindingCost" ColumnName="BindingCost" />
                 <ScalarProperty Name="StartingCost32" ColumnName="StartingCost32" />
                 <ScalarProperty Name="CostPerUnit32" ColumnName="CostPerUnit32" />
@@ -2741,10 +2800,50 @@
                 <Condition ColumnName="SelectorUnitTime" Value="3" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalOnTime)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="CostPerHourStartingBW" ColumnName="CostPerHourStartingBW" />
+                <ScalarProperty Name="CostPerHourRunningBW" ColumnName="CostPerHourRunningBW" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <Condition ColumnName="SelectorTimeRunDigital" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DigitalOnRun)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="UseDifferentCostPerUnitBW" ColumnName="UseDifferentCostPerUnitBW" />
+                <ScalarProperty Name="CostForfaitForSheetBW" ColumnName="CostForfaitForSheetBW" />
+                <ScalarProperty Name="CostForfaitBW" ColumnName="CostForfaitBW" />
+                <ScalarProperty Name="StartingCost2BW" ColumnName="StartingCost2BW" />
+                <ScalarProperty Name="StartingCost1BW" ColumnName="StartingCost1BW" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <Condition ColumnName="SelectorTimeRunDigital" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PlotterOnMq)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <ScalarProperty Name="CostCutting" ColumnName="CostCutting" />
+                <ScalarProperty Name="CostWhite" ColumnName="CostWhite" />
+                <ScalarProperty Name="CostUVHight" ColumnName="CostUVHight" />
+                <ScalarProperty Name="CostUVMed" ColumnName="CostUVMed" />
+                <ScalarProperty Name="CostUVLow" ColumnName="CostUVLow" />
+                <ScalarProperty Name="CostInkJetHight" ColumnName="CostInkJetHight" />
+                <ScalarProperty Name="CostInkJetMed" ColumnName="CostInkJetMed" />
+                <ScalarProperty Name="CostInkJetLow" ColumnName="CostInkJetLow" />
+                <Condition ColumnName="SelectorPlotterMq" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnMq)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <Condition ColumnName="SelectorMqRun" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="steps">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Step)">
               <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="SelectorCostBW" ColumnName="SelectorCostBW" />
                 <ScalarProperty Name="ToUnit" ColumnName="ToUnit" />
                 <ScalarProperty Name="FromUnit" ColumnName="FromUnit" />
                 <ScalarProperty Name="IdStep" ColumnName="IdStep" />
@@ -3519,7 +3618,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="71">
+      <Diagram Name="Model1" ZoomLevel="82">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />
@@ -3529,8 +3628,8 @@
           <ConnectorPoint PointX="1.25" PointY="10.375" />
           <ConnectorPoint PointX="1.25" PointY="10.75" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.LithoWeb" Width="1.5" PointX="2.125" PointY="19.5" Height="1.2110807291666657" />
-        <InheritanceConnector EntityType="dbModel.LithoWeb" ManuallyRouted="false">
+        <EntityTypeShape EntityType="dbModel.LithoRoll" Width="1.5" PointX="2.125" PointY="19.5" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.LithoRoll" ManuallyRouted="false">
           <ConnectorPoint PointX="1.875" PointY="9.9802864583333335" />
           <ConnectorPoint PointX="1.875" PointY="10.375" />
           <ConnectorPoint PointX="2.875" PointY="10.375" />
@@ -3544,20 +3643,14 @@
           <ConnectorPoint PointX="4.625" PointY="10.375" />
           <ConnectorPoint PointX="4.625" PointY="10.75" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.DigitalWeb" Width="1.5" PointX="5.5" PointY="19.5" Height="1.2110807291666657" />
-        <InheritanceConnector EntityType="dbModel.DigitalWeb" ManuallyRouted="false">
+        <EntityTypeShape EntityType="dbModel.DigitalRoll" Width="1.5" PointX="5.5" PointY="19.5" Height="1.2110807291666657" />
+        <InheritanceConnector EntityType="dbModel.DigitalRoll" ManuallyRouted="false">
           <ConnectorPoint PointX="5.125" PointY="9.7879850260416656" />
           <ConnectorPoint PointX="5.125" PointY="10.375" />
           <ConnectorPoint PointX="6.25" PointY="10.375" />
           <ConnectorPoint PointX="6.25" PointY="10.75" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.Plotter" Width="1.5" PointX="7.125" PointY="19.5" Height="1.2110807291666657" />
-        <InheritanceConnector EntityType="dbModel.Plotter" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.125" PointY="9.7879850260416656" />
-          <ConnectorPoint PointX="5.125" PointY="10.375" />
-          <ConnectorPoint PointX="7.875" PointY="10.375" />
-          <ConnectorPoint PointX="7.875" PointY="10.75" />
-        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.PlotterRoll" Width="1.5" PointX="6.625" PointY="15.5" Height="1.2110807291666657" />
         <InheritanceConnector EntityType="dbModel.Digital" ManuallyRouted="false">
           <ConnectorPoint PointX="2.5" PointY="6.9033821614583326" />
           <ConnectorPoint PointX="2.5" PointY="7.625" />
@@ -3575,7 +3668,7 @@
           <ConnectorPoint PointX="4.75" PointY="2.8074446614583328" />
           <ConnectorPoint PointX="10.25" PointY="2.8074446614583328" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnTime" Width="2.125" PointX="8.875" PointY="16" Height="2.7494921874999996" />
+        <EntityTypeShape EntityType="dbModel.TaskEstimatedOnTime" Width="2.125" PointX="9.375" PointY="16" Height="2.7494921874999996" />
         <InheritanceConnector EntityType="dbModel.TaskEstimatedOnTime" ManuallyRouted="false">
           <ConnectorPoint PointX="11.5" PointY="3.9898893229166661" />
           <ConnectorPoint PointX="11.5" PointY="6.8749999999999982" />
@@ -3603,7 +3696,7 @@
           <ConnectorPoint PointX="14.375" PointY="10.25" />
           <ConnectorPoint PointX="14.375" PointY="10.625" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.CostPerRunStep" Width="1.5" PointX="15.5" PointY="14" Height="1.2110807291666665" />
+        <EntityTypeShape EntityType="dbModel.CostPerRunStep" Width="1.5" PointX="15.25" PointY="14" Height="1.2110807291666665" />
         <EntityTypeShape EntityType="dbModel.DeficitForWeightStep" Width="1.5" PointX="17.125" PointY="14" Height="1.2110807291666665" />
         <EntityTypeShape EntityType="dbModel.CostPerMqStep" Width="1.5" PointX="18.75" PointY="14" Height="1.2110807291666674" />
         <EntityTypeShape EntityType="dbModel.DeficitOnCostForWeightStep" Width="1.5" PointX="20.375" PointY="14" Height="1.2110807291666674" />
@@ -3790,7 +3883,7 @@
           <ConnectorPoint PointX="5.375" PointY="5.125" />
           <ConnectorPoint PointX="5.375" PointY="5.5" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.BindingTsk" Width="1.5" PointX="6.625" PointY="16.75" Height="1.018779296874996" />
+        <EntityTypeShape EntityType="dbModel.BindingTsk" Width="1.5" PointX="6.625" PointY="17.5" Height="1.018779296874996" />
         <InheritanceConnector EntityType="dbModel.BindingTsk" ManuallyRouted="false">
           <ConnectorPoint PointX="5.375" PointY="6.7110807291666665" />
           <ConnectorPoint PointX="5.375" PointY="7.625" />
@@ -3945,8 +4038,17 @@
         <AssociationConnector Association="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying" />
         <AssociationConnector Association="dbModel.FK_productpartprintinggain_CodProductPartPrinting" />
         <InheritanceConnector EntityType="dbModel.PrintingPlotterCostDetail" />
-        <EntityTypeShape EntityType="dbModel.RigidPlotter" Width="1.5" PointX="8.625" PointY="19.375" />
-        <InheritanceConnector EntityType="dbModel.RigidPlotter" />
+        <EntityTypeShape EntityType="dbModel.PlotterSheet" Width="1.5" PointX="8.625" PointY="15.625" />
+        <EntityTypeShape EntityType="dbModel.DigitalOnTime" PointX="10" PointY="20.875" Width="1.5" />
+        <InheritanceConnector EntityType="dbModel.DigitalOnTime" />
+        <EntityTypeShape EntityType="dbModel.DigitalOnRun" Width="1.5" PointX="12.125" PointY="20.875" />
+        <InheritanceConnector EntityType="dbModel.DigitalOnRun" />
+        <EntityTypeShape EntityType="dbModel.Plotter" Width="1.5" PointX="7.375" PointY="14.25" />
+        <InheritanceConnector EntityType="dbModel.Plotter" />
+        <InheritanceConnector EntityType="dbModel.PlotterRoll" />
+        <InheritanceConnector EntityType="dbModel.PlotterSheet" />
+        <EntityTypeShape EntityType="dbModel.PlotterOnMq" Width="1.5" PointX="15" PointY="22.125" />
+        <InheritanceConnector EntityType="dbModel.PlotterOnMq" />
         </Diagram>
     </Diagrams>
   </Designer>

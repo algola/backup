@@ -1,3 +1,23 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var dom = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+
+
+    var cultureName = String.Empty;
+
+    if (dom.Contains("localhost") || dom.Contains("gestionale"))
+    {
+        cultureName = "it-IT";
+    }
+
+    // Validate culture name
+    cultureName = PapiroMVC.Validation.CultureHelper.GetImplementedCulture(cultureName); // This is safe
+
+    // Modify current thread's cultures            
+    System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+    System.Threading.Thread.CurrentThread.CurrentUICulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+
+        
+    Layout = "./Shared/_LayoutAceTheme.cshtml";
 }

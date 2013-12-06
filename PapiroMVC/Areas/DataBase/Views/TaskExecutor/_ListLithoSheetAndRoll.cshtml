@@ -1,0 +1,107 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    string url = Url.Action("LithoSheetAndRollList", new { controller = "TaskExecutor", area = "DataBase" });
+}
+
+<table id="gridLithoSheet">
+    <tr>
+        <td />
+    </tr>
+</table>
+<div id="pagerLithoSheet"></div>
+
+<br />
+<button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database" })');">
+    <i class="icon-fa-list-ul align-top bigger-125"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateLithoSheet")
+</button>
+
+<button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoRoll", "TaskExecutor", new { Area = "Database" })');">
+    <i class="fa-undo align-top bigger-125"></i>
+    @HttpContext.GetLocalResourceObject(strings, "CreateLithoRoll")
+</button>
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var lastSel = -1;
+
+        var myGrid = $("#gridLithoSheet").jqGrid({
+            caption: '@Html.T(strings, "TitleLithoSheetAndRollIndex")',
+            url: '@url',
+            editUrl: '',
+            datatype: 'json',
+            multiselect: true,
+            colModel: [
+                { name: 'Error', label: '', width: 45, align: 'center', hidden: true, editable: false },
+                { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
+                    { name: 'CodExecutor', label: '@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false },
+                    { name: 'TypeOfTaskExecutor', label: '@Html.T(strings, "TypeOfTaskExecutor")', width: 60, editable: false, hidden: false, formatter: typeOfTaskExecutor },
+                    { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
+                    { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },
+                    { name: 'PrintingUnit', label: '@Html.T(strings, "PrintingUnitCaption")', width: 45, align: 'center', editable: false },
+                    { name: 'SheetwiseAfterPrintingUnit', label: '@Html.T(strings, "SheetwiseAfterPrintingUnitCaption")', width: 45, align: 'center', editable: false },
+
+                ],
+
+            pager: '#pagerLithoSheet',
+            height: 300,
+
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: true,
+
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    myGrid.jqGrid('restoreRow', lastSel);
+                    lastSel = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid.jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridLithoSheet").trigger("reloadGrid");
+                    },
+                    url: ''
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            }
+        });
+
+        myGrid.jqGrid('navGrid', '#pagerLithoSheet', { edit: false, add: false, del: false, search: false });
+
+    });
+
+        function insFmatter(cellvalue, options, rowobject) {
+            if (cellvalue == 9999999999)
+                return '';
+            else
+                return cellvalue;
+        }
+
+        function delStepCostPerMqStep(cellvalue, options, rowobject) {
+            var link = '@Ajax.ActionLink((string)Html.T(strings, "DeletingStep"), "DeletingStep", new { id = "-1" }, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerMqStep" })';
+            return link.replace("-1", cellvalue)
+        }
+
+        function reloadCostPerMqStep() {
+            $("#gridLithoSheet").trigger("reloadGrid");
+        }
+
+</script>
+
+
+

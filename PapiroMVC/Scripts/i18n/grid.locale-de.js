@@ -139,7 +139,7 @@ $.extend($.jgrid,{
 				//    H - 24-hour format of an hour with leading zeros
 				//    i - Minutes with leading zeros
 				//    s - Seconds, with leading zeros
-		        FullDateTime: "l, j. F Y H:i:s", // in jQuery UI Datepicker: "dddd, d. MMMM yyyy HH:mm:ss"
+		        FullDateTime: "l, j. F Y H:i:s", // in jQuery UI Datepicker: "dddd, d. MMMM yyyy HH:hh:mm"
 				// month day:
 				//    d - Day of the month, 2 digits with leading zeros
 				//    F - A full textual representation of a month
@@ -152,7 +152,7 @@ $.extend($.jgrid,{
 				//    H - 24-hour format of an hour with leading zeros
 				//    i - Minutes with leading zeros
 				//    s - Seconds, with leading zeros
-		        LongTime: "H:i:s", // in jQuery UI Datepicker: "HH:mm:ss"
+		        LongTime: "H:i:s", // in jQuery UI Datepicker: "HH:hh:mm"
 		        SortableDateTime: "Y-m-d\\TH:i:s",
 		        UniversalSortableDateTime: "Y-m-d H:i:sO",
 				// month with year

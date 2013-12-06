@@ -1,10 +1,44 @@
-﻿@model PapiroMVC.Areas.DataBase.ViewModels.CustomerSupplierIndexViewModel
+﻿@using PapiroMVC.Validation
+
+@model PapiroMVC.Areas.DataBase.ViewModels.CustomerSupplierIndexViewModel
+
+
+@{
+    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
+}
 
 <div id='customersupplierlist'>
     @Html.Partial("_List", Model.List)
 </div>
 
+@section title{
+    @Html.T(strings, "CustomerSuppliers")
+}
+
+@section description{
+    @Html.T(strings, "TitleIndex")
+}
 
 @section breadcrumb {
 
 }
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+}
+
+
+<script>
+    $(function () {        
+        document.getElementById("customerSlidebar").className = "active open";
+    });
+</script>

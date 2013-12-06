@@ -1,18 +1,18 @@
 ﻿@using PapiroMVC.Validation
 @model PapiroMVC.Models.LoginModel
 
-@{
+@{  
     string strings = "~/Areas/Account/Views/Account/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "VerifyTitle");
 
     if (TempData["message"] == "Activated")
     {
-        ViewBag.Message = @Html.T(strings,"VerifyActivated");            
+        ViewBag.Message = @Html.T(strings, "VerifyActivated");
     }
 
     if (TempData["message"] == "JustActivated")
     {
-        ViewBag.Message = @Html.T(strings,"VerifyJustActivated");            
+        ViewBag.Message = @Html.T(strings, "VerifyJustActivated");
     }
 
     if (TempData["message"] == "Error")
@@ -21,16 +21,42 @@
     }          
 }
 
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>@ViewBag.Message</h2>
-</hgroup>
+<h2>@ViewBag.Message</h2>
 
-    <br />
-    <p>
-        <button type="button" class="default" onclick="Javascript:window.location.replace('@Url.Action("Index", "Home", new {Area=""})');">            
-           <i class="icon-home"></i>
-             @HttpContext.GetLocalResourceObject(strings, "Home")
-        </button>
-     </p>
- 
+@if (TempData["message"] == "Activated" || TempData["message"] == "JustActivated")
+{
+    var model = new PapiroMVC.Models.LoginModel();
+    
+    @Html.Partial("_Login", model)
+}
+else
+{
+<p>
+    <button type="button" class="btn default" onclick="Javascript:window.location.replace('@Url.Action("Index", "Home", new { Area = "" })');">
+        <i class="icon-home"></i>
+        @HttpContext.GetLocalResourceObject(strings, "Home")
+    </button>
+</p>        
+}
+
+@section title{
+ViewBag.Title
+}
+
+@section description{
+    @Html.T(strings, "TitleConfirmation")
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

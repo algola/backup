@@ -8,6 +8,12 @@ namespace PapiroMVC.Controllers
 {
     public class HomeController : ControllerAlgolaBase
     {
+
+        public ActionResult Price()
+        {
+            return View("Price");
+        }
+
         public ActionResult Autocomplete(string term)
         {
             var items = new[] { "Modena", "Roccavivara", "Fabbrico", "Assisi", "Rolo", "Reggio Emilia" };

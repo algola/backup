@@ -7,10 +7,10 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class LithoWeb_MetaData : Litho_MetaData
+    public partial class LithoRoll_MetaData : Litho_MetaData
     {
-        [DisplayNameLocalized(typeof(ResLithoWeb), "PaperFirstStartLenght")]
-        [Tooltip(typeof(ResLithoWeb), "PaperFirstStartLenghtToolTip")]
+        [DisplayNameLocalized(typeof(ResLithoRoll), "PaperFirstStartLenght")]
+        [Tooltip(typeof(ResLithoRoll), "PaperFirstStartLenghtToolTip")]
         public Nullable<long> PaperFirstStartLenght { get; set; }
     }
 }
