@@ -8,8 +8,9 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Models
 {
 
+    [Serializable]
     [MetadataType(typeof(CustomerSupplierBase_MetaData))]
-    public partial class CustomerSupplierBase : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class CustomerSupplierBase : IDataErrorInfo
     {
         #region Gestione Errori
 
@@ -212,48 +213,6 @@ namespace PapiroMVC.Models
 
                 return ret;
             }
-        }
-
-        #endregion
-
-        #region Metodi per gestire Copie
-
-        public virtual void Copy(CustomerSupplierBase to)
-        {
-            //All properties of object
-            //and pointer of sons
-            to.CodCustomerSupplier = this.CodCustomerSupplier;
-            to.CodCustomerSupplierBase = this.CodCustomerSupplierBase;
-            to.CodTypeOfBase = this.CodTypeOfBase;
-            to.Address = this.Address;
-            to.City = this.City;
-            to.Province = this.Province;
-            to.PostalCode = this.PostalCode;
-            to.Country = this.Country;
-            to.Phone = this.Phone;
-            to.Fax = this.Fax;
-            to.Email = this.Email;
-            to.Note = this.Note;
-            to.Referee = this.Referee;
-            to.Pec = this.Pec;
-            to.TypeOfBase = this.TypeOfBase;
-        }
-
-
-        public object Clone()
-        {
-            //creo una copia dell'oggetto da utilizzare per le modifiche
-            var tipoDelloOggetto = this.GetType();
-            //istanzio una copia che sarà gestita dall'invio
-            CustomerSupplierBase copiaCustomerSupplierBase = (CustomerSupplierBase)Activator.CreateInstance(tipoDelloOggetto);
-            //l'oggetto copisa sarà una copia del contenuto dell'oggetto originale
-            this.Copy(copiaCustomerSupplierBase);
-
-            return copiaCustomerSupplierBase;
-        }
-
-        public void ChildsNull()
-        {
         }
 
         #endregion

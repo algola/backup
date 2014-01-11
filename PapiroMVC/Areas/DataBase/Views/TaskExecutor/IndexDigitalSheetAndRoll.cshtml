@@ -6,6 +6,7 @@
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
     ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "DigitalSheetGridCaption");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleDigital");
 
 }
 

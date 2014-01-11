@@ -24,12 +24,12 @@ namespace PapiroMVC.Areas.DataBase
 
             DictionaryRouteValueTranslationProvider translationProvider = new DictionaryRouteValueTranslationProvider(
                 new List<RouteValueTranslation> {
-                    new RouteValueTranslation(cultureIT, "HomeDb", "personalizza"),
-                    new RouteValueTranslation(cultureIT, "Article", "materiali_per_la_stampa"),
-                    new RouteValueTranslation(cultureIT, "CustomerSupplier", "anagrafica_clienti_fornitori_tipografia"),
-                    new RouteValueTranslation(cultureIT, "IndexSheetPrintableArticle", "a_foglio_stampa_digitale_offset"),
-                    new RouteValueTranslation(cultureIT, "IndexRollPrintableArticle", "a_rotolo_stampa_etichette_digitale_offset"),
-                    new RouteValueTranslation(cultureIT, "IndexRigidPrintableArticle", "rigido_forex_vetrofanie_plotter_uv"),
+                    new RouteValueTranslation(cultureIT, "HomeDb", "configuratore-stampa-e-carta"),
+                    new RouteValueTranslation(cultureIT, "Article", "materiale-in-anagrafica"),
+                    new RouteValueTranslation(cultureIT, "CustomerSupplier", "anagrafica-clienti-fornitori-tipografia"),
+                    new RouteValueTranslation(cultureIT, "IndexSheetPrintableArticle", "a-foglio-stampa-digitale-offset"),
+                    new RouteValueTranslation(cultureIT, "IndexRollPrintableArticle", "a-rotolo-stampa-etichette-digitale-offset"),
+                    new RouteValueTranslation(cultureIT, "IndexRigidPrintableArticle", "rigido-forex-vetrofanie-plotter-uv"),
                 }
             );
 

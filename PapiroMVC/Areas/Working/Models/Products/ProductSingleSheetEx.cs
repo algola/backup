@@ -26,13 +26,21 @@ namespace PapiroMVC.Models
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
             ProductPartTask partTask;
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPA_NO");
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
             partTask.Hidden = false;
             partTask.IndexOf = 1;
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
 
+        }
+
+        public override string ToString()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProduct);
+            var s = (string)t.GetProperty("CodMenuProduct" + this.CodMenuProduct).GetValue(null, null);
+
+            return s + " " + base.ToString();
         }
 
 

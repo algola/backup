@@ -5,52 +5,49 @@
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
+    string url = Url.Action("Costs", "Document", new { codDocumentProduct = Model.CodDocumentProduct });
 }
 
-@(Html.jqGrid("CostGrid" + Model.CodDocumentProduct)
+<table id="costGrid@(Model.CodDocumentProduct)">
+    <tr>
+        <td />
+    </tr>
+</table>
+<div id="pagerCostGrid(@Model.CodDocumentProduct)"></div>
 
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
-        // columns
-    .addColumn(new Column("Id")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
-        .setCustomFormatter("editCost")
-        .setSortable(false))
-    .addColumn(new Column("CodCost")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodCost"))
-        .setWidth(150)
-        .setSortable(false))
-    .addColumn(new Column("Description")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Description"))
-        .setWidth(350)
-        .setSortable(false))
-    .addColumn(new Column("UnitCost")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "UnitCost"))
-        .setWidth(50)
-        .setSortable(false))
-    .addColumn(new Column("Quantity")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Quantity"))
-        .setWidth(50)
-        .setSortable(false))
-    .addColumn(new Column("TotalCost")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TotalCost"))
-        .setWidth(50)
-        .setSortable(false))
+<script type="text/javascript">
+
+    $(function () {
+
+        var lastSel = -1;
+
+        var myGrid = $("#costGrid@(Model.CodDocumentProduct)").jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editCost },
+                    { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true },
+                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 350, align: 'right', editable: true },
+                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false },
+                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: false },
+                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false }],
+
+            pager: '#pagercostGrid@(Model.CodDocumentProduct)',
             
-    .setUrl(Url.Action("Costs", "Document", new { codDocumentProduct = Model.CodDocumentProduct }))
+            rowNum: 100,
+            rowList: [100, 200, 500],
+            viewrecords: true,
+            autowidth: false,
+            width: 650,
+            
+        });
 
-    .setHeight(300)
-    .setRowNum(10)
-    .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("CostGridAccountPager")
-    .setPrint(true)
-    .setLoadText("")
-    .setAutoWidth(true)
-    .setSearchToolbar(true)
+        myGrid.jqGrid('navGrid', '#pagercostGrid@(Model.CodDocumentProduct)', { edit: false, add: false, del: false, search: false });
 
-    // error handler
-    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+    });
 
-    // render the html
-    .Render()
-)
+    function reloadDeficitForWeight() {
+        $("#gridDeficitForWeight").trigger("reloadGrid");
+    }
 
+</script>

@@ -156,6 +156,12 @@
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
   </data>
+  <data name="ProductPartBookSheet" xml:space="preserve">
+    <value>interni</value>
+  </data>
+  <data name="ProductPartCoverSheet" xml:space="preserve">
+    <value>copertina</value>
+  </data>
   <data name="ProductPartName" xml:space="preserve">
     <value>Nome della parte del prodotto</value>
   </data>
@@ -163,10 +169,10 @@
     <value>Nome della parte del prodotto</value>
   </data>
   <data name="ProductPartTasks" xml:space="preserve">
-    <value>Compito dell parte del prodotto</value>
+    <value>Compito della parte del prodotto</value>
   </data>
   <data name="ProductPartTasksToolTip" xml:space="preserve">
-    <value>Compito dell parte del prodotto</value>
+    <value>Compito della parte del prodotto</value>
   </data>
   <data name="ProductToolTip" xml:space="preserve">
     <value>Prodotto</value>
@@ -184,6 +190,6 @@
     <value>Numero Soggetti</value>
   </data>
   <data name="SubjectNumberToolTip" xml:space="preserve">
-    <value>Numero Soggetti</value>
+    <value>il numero di soggetti differti in stampa con lo stesso formato e caratteristiche </value>
   </data>
 </root>

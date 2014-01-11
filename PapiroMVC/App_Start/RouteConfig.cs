@@ -28,12 +28,15 @@ namespace PapiroMVC
             DictionaryRouteValueTranslationProvider translationProvider = new DictionaryRouteValueTranslationProvider(
                 new List<RouteValueTranslation> {
                     new RouteValueTranslation(cultureEN, "Home", "printing_software"),
-                    new RouteValueTranslation(cultureEN, "About", "About"),
-                    new RouteValueTranslation(cultureIT, "Home", "software_gestionale_per_tipografie"),
+                    new RouteValueTranslation(cultureEN, "About", "about"),
+                    new RouteValueTranslation(cultureIT, "Home", "software_gestionale_ecommerce_per_tipografie"),
                     new RouteValueTranslation(cultureIT, "Price", "on_line_gratis_e_prezzi"),
                     new RouteValueTranslation(cultureIT, "DataBase", "gestione_personalizzata"),
                     new RouteValueTranslation(cultureIT, "HomeDb", "personalizza"),
-
+                    new RouteValueTranslation(cultureIT, "ECommerce", "e-commerce-stampa"),
+                    new RouteValueTranslation(cultureIT, "About", "chi-siamo"),
+                    new RouteValueTranslation(cultureIT, "Adv", "pubblicita-annunci-macchine-da-stampa")
+                    
                 }
             );
 

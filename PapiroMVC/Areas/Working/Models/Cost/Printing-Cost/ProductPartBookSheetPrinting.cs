@@ -5,10 +5,8 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-
     public partial class ProductPartBookSheetPrinting : ProductPartSheetPrinting
     {
-
         enum EnumSignature : int
         {
             s4 = 4,
@@ -23,7 +21,6 @@ namespace PapiroMVC.Models
         {
             TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartBookSheetPrinting;
         }
-
 
         public override void Update()
         {
@@ -40,7 +37,14 @@ namespace PapiroMVC.Models
             this.GainPartOnPrinting.CalculateGain();
 
         }
+
+        public override double CalculatedMq
+        {
+            get
+            {
+                return base.CalculatedMq * (((ProductPartBookSheet)Part).Pages?? 4)/4;
+            }
+        }
+
     }
-
-
 }

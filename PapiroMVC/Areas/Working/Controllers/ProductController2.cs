@@ -175,7 +175,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 {
                                     cost = new Cost();
                                     cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;
-                                    cost.Description = "***Materiale";
+                                    cost.Description = productPartsPrintableArticle.ToString();
+                                    
+                                    cost.Description += (productPart.ProductPartName??"")==""?"":" (" + productPart.ProductPartName + ")";
+
                                     documentProduct.Costs.Add(cost);
                                 }
 
@@ -183,8 +186,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 {
                                     cost = new Cost();
                                     cost.CodProductPartTask = productPartTask.CodProductPartTask;
-                                    cost.Description = "***Lavorazione della parte" +
-                                        productPartTask.CodOptionTypeOfTask;
+                                    cost.Description = productPartTask.ToString();
+                                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
                                     documentProduct.Costs.Add(cost);
                                 }
@@ -195,7 +198,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     documentRepository.Save();
 
                     //TODO: Sending singlaR notification to client to reload basket product
-                    return Json(new { redirectUrl = Url.Action("Index", new { id = document.CodDocument }) });
+                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct}) });
                 }
                 catch (Exception ex)
                 {

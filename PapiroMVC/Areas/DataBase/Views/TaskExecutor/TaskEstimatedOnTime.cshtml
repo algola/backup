@@ -5,11 +5,9 @@
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
     ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnTime");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
-
 }
 
 <div id="status">
-
 
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("TaskEstimatedOnTime", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
@@ -29,7 +27,7 @@
             <div class="editor-field">
                 @Html.AlgolaEditorFor(model => model.StartingTime1)
                 @Html.AlgolaEditorFor(model => model.StartingTime2)
-                @Html.AlgolaEditorFor(model => model.TimeForfait)
+                @*deprecated  @Html.AlgolaEditorFor(model => model.TimeForfait) *@
             </div>
         </fieldset>
 
@@ -55,10 +53,10 @@
             <legend>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</legend>
 
             @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
-            @Html.AlgolaEditorFor(model => model.CostPerHourStarting)
+            @*deprecated           @Html.AlgolaEditorFor(model => model.CostPerHourStarting) *@
             @Html.AlgolaEditorFor(model => model.CostForfait)
-            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
-
+            @*deprecated            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+*@
         </fieldset>
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">

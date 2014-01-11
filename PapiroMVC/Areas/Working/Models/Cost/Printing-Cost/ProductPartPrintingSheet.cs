@@ -13,7 +13,6 @@ namespace PapiroMVC.Models
 
         public override void Update()
         {
-
             var gain = (ProductPartPrintingSheetGain)GainPartOnPrinting;
 
             gain.LargerFormat = PrintingFormat;

@@ -58,9 +58,10 @@
 @Html.HiddenFor(model => model.ProductName)
 @Html.HiddenFor(model => model.TimeStampTable)
 @Html.HiddenFor(model => model.CodProduct)
-@Html.HiddenFor(model => model.ProductName)
 @Html.HiddenFor(model => model.CodMenuProduct)
 @Html.HiddenFor(model => model.TypeOfProduct)
+
+<div class="space"></div>
 
 
 <div class="tabbable">
@@ -113,6 +114,7 @@
     </div>
 </div>
 
+<div class="space"></div>
 
 <!-- ProductTasks -->
 @for (int i = 0; i < Model.ProductTasks.Count; i++)

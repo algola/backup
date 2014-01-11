@@ -24,39 +24,39 @@
 
         var gidProductDocument = $("#documentProduct").jqGrid({
             url: '@url',
-                datatype: 'json',
-                colModel: [
-                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct },
+            datatype: 'json',
+            colModel: [
+                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct },
                     { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 200, align: 'left', editable: false }
                 ],
 
-                pager: '#pagerDocumentProduct',
+            pager: '#pagerDocumentProduct',
 
-                rowNum: 15,
-                rowList: [15, 20, 50],
-                viewrecords: true,
-                autowidth: true,
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: true,
 
-                onSelectRow: function (id) {
-                    if (id && id !== lastSelPD) {
-                        gidProductDocument.jqGrid('restoreRow', lastSelPD);
-                        lastSelPD = id;
-                    }
-                },
+            onSelectRow: function (id) {
+                if (id && id !== lastSelPD) {
+                    gidProductDocument.jqGrid('restoreRow', lastSelPD);
+                    lastSelPD = id;
+                }
+            },
 
-                subGrid: true,
-                subGridRowExpanded: function (subgrid_id, row_id) {
-                    // we pass two parameters
-                    // subgrid_id is a id of the div tag created within a table
-                    // the row_id is the id of the row
-                    // If we want to pass additional parameters to the url we can use
-                    // the method getRowData(row_id) - which returns associative array in type name-value
-                    // here we can easy construct the following
-                    var subgrid_table_id;
-                    subgrid_table_id = subgrid_id + "_t";
-                    jQuery("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table>");
-                    jQuery("#" + subgrid_table_id).jqGrid({
-                        url: '@subUrl&CodProduct=' + row_id,
+            subGrid: true,
+            subGridRowExpanded: function (subgrid_id, row_id) {
+                // we pass two parameters
+                // subgrid_id is a id of the div tag created within a table
+                // the row_id is the id of the row
+                // If we want to pass additional parameters to the url we can use
+                // the method getRowData(row_id) - which returns associative array in type name-value
+                // here we can easy construct the following
+                var subgrid_table_id;
+                subgrid_table_id = subgrid_id + "_t";
+                jQuery("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table>");
+                jQuery("#" + subgrid_table_id).jqGrid({
+                    url: '@subUrl&CodProduct=' + row_id,
                         datatype: 'json',
                         colModel: [
                         { name: 'CodDocumentProduct', label: 'CodDocumentProduct', key: true, width: 10, editable: false, hidden: true },
@@ -71,11 +71,11 @@
                     });
                 }
 
-            });
-
-            gidProductDocument.jqGrid('navGrid', '#pagerdocumentProduct', { edit: false, add: false, del: false, search: false });
-
         });
+
+        gidProductDocument.jqGrid('navGrid', '#pagerdocumentProduct', { edit: false, add: false, del: false, search: false });
+
+    });
 
         function editProduct(cellvalue, options, rowobject) {
             var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';

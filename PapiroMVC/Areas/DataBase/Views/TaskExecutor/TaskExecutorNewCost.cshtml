@@ -5,7 +5,10 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Title = (string)Html.T(strings, "PrinterTitle");
+    
+//    ViewBag.Title =  (string)Html.T(strings, "PrinterTitle");
+    ViewBag.Title = Model.TaskExecutorName;
+    
     ViewBag.Desc = (string)Html.T(strings, "NoCostSelected");       
 }
 
@@ -16,7 +19,6 @@
     <fieldset>
         <legend>@Html.T(strings, "SelectCost")</legend>
        
-
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
         @if (((string)ViewBag.TypeCost).Contains("Time"))

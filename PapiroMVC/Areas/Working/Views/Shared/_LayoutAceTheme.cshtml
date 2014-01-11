@@ -5,14 +5,14 @@
 <head>
 
     <meta charset="utf-8" />
-    
-    <title>Dashboard - Ace Admin</title>
+
+    <title>@ViewBag.MetaTitle</title>
 
     <meta name="description" content="overview &amp; stats" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/PapiroStar.ico" rel="shortcut icon" type="image/x-icon" />
 
     <script src="~/Scripts/jquery-2.0.3.min.js"></script>
-
 
     <!--basic styles-->
     <link href="~/Content/acetheme/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -113,48 +113,49 @@
 
         </div>
         <!-- /.main-container -->
+    </div>
 
-
-        <!-- Le javascript
+    <!-- Le javascript
     ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Placed at the end of the document so the pages load faster -->
 
-        <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
+    <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
 
-        <!--basic scripts-->
+    <!--basic scripts-->
 
-        <!--[if !IE]>-->
+    <!--[if !IE]>-->
 
-        <script type="text/javascript">
-            window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
-        </script>
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+    </script>
 
-        <!--<![endif]-->
+    <!--<![endif]-->
 
-        <!--[if IE]>
+    <!--[if IE]>
 <script type="text/javascript">
  window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
 </script>
 <![endif]-->
 
-        <script type="text/javascript">
-            if ("ontouchend" in document) document.write("<script src='/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-        </script>
-        <script src="~/Content/acetheme/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        if ("ontouchend" in document) document.write("<script src='/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="~/Content/acetheme/assets/js/bootstrap.min.js"></script>
 
-        <!-- page specific plugin scripts -->
-        @RenderSection("specificPluginScript", required: false)
+    <!-- page specific plugin scripts -->
+    @RenderSection("specificPluginScript", required: false)
 
-        @Html.Partial("_loading")
 
-        <script src="~/Content/acetheme/assets//js/prettify.js"></script>
+    @Html.Partial("_loading")
 
-        <!--ace scripts-->
+    <script src="~/Content/acetheme/assets//js/prettify.js"></script>
 
-        <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
-        <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+    <!--ace scripts-->
 
-        <!-- inline scripts related to this page -->
+    <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+
+    <!-- inline scripts related to this page -->
     @RenderSection("Scripts", required: false)
 
 </body>

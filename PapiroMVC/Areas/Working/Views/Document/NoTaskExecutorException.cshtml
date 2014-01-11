@@ -1,0 +1,54 @@
+﻿@using PapiroMVC.Validation
+@* nella viewbag voglio l'id del TaskExecutor da poter reindirizzare l'inserimento di un costo *@
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+@section title{
+            @Html.T(strings, "NoTaskExecutorException")
+}
+
+@section description{
+    @Html.T(strings, "NoTaskExecutorExceptionDesc")
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<div class="error-container">
+    <div class="well no-padding-left no-padding-rigth">
+        <h1 class="grey lighter smaller">
+            @Html.T(strings, "NoTaskExecutorExceptionDesc")
+        </h1>
+
+        <hr>
+        <h3 class="lighter smaller">
+            <i class="icon-wrench icon-animated-wrench bigger-125"></i>
+            @Html.T(strings, "NoTaskExecutorExceptionPage")
+        </h3>
+
+        <div class="space"></div>
+
+        <div>
+            @Html.ActionLink("**configuratore", "Index", "HomeDb", new { area = "DataBase"}, null)
+        </div>
+
+        <hr>
+        <div class="space"></div>
+
+    </div>
+</div>

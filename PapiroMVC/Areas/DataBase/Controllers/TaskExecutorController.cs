@@ -70,13 +70,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
-                    c.Copy(r);
-                    taskExecutorRepository.Edit(r.taskexecutors);
+                    taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
-                    //                    deprecated  
-                    //                    return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"]) });
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
 
                 }
@@ -91,6 +87,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("TaskEstimatedOnTime", c);
         }
 
+        
         [HttpPost]
         public ActionResult TaskEstimatedOnRun(TaskEstimatedOnRun c, string returnUrl)
         {
@@ -100,9 +97,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
-                    c.Copy(r);
-                    taskExecutorRepository.Edit(r.taskexecutors);
+                    taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
@@ -121,6 +116,63 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("TaskEstimatedOnRun", c);
         }
 
+        [HttpParamAction]
+        public ActionResult DigitalOnRun(DigitalOnRun c, string returnUrl)
+        {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    taskExecutorRepository.AddEstimatedOn(c);
+                    taskExecutorRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+
+                    //deprecated
+                    //return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"])});
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "DigitalOnRun";
+            return PartialView("DigitalOnRun", c);
+        }
+
+        [HttpParamAction]
+        public ActionResult DigitalOnTime(DigitalOnTime c, string returnUrl)
+        {
+            TempData["TaskExecutorIndex"] = returnUrl;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    taskExecutorRepository.AddEstimatedOn(c);
+                    taskExecutorRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action(returnUrl) });
+
+                    //deprecated
+                    //return Json(new { redirectUrl = Url.Action((string)TempData["TaskExecutorIndex"])});
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "DigitalOnTime";
+            return PartialView("DigitalOnTime", c);
+        }
+
+
         [HttpPost]
         public ActionResult TaskEstimatedOnMq(TaskEstimatedOnMq c, string returnUrl)
         {
@@ -130,9 +182,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
-                    c.Copy(r);
-                    taskExecutorRepository.Edit(r.taskexecutors);
+                    taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
@@ -152,6 +202,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpPost]
+        [HttpParamAction]
         public ActionResult PlotterOnMq(PlotterOnMq c, string returnUrl)
         {
             TempData["TaskExecutorIndex"] = returnUrl;
@@ -160,9 +211,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
-                    c.Copy(r);
-                    taskExecutorRepository.Edit(r.taskexecutors);
+                    taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
@@ -182,6 +231,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -194,6 +245,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //load from database taskexecutor
 
             var taskExecutor = taskExecutorRepository.GetSingle(id);
+            c.TaskExecutorName = taskExecutor.TaskExecutorName;
 
             switch (taskExecutor.TypeOfExecutor)
             {
@@ -283,6 +335,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 case TaskEstimatedOn.EstimatedOnType.DigitalOnTime:
                     ViewBag.ActionMethod = "DigitalOnTime";
                     break;
+                case TaskEstimatedOn.EstimatedOnType.DigitalOnRun:
+                    ViewBag.ActionMethod = "DigitalOnRun";
+                    break;
                 case TaskEstimatedOn.EstimatedOnType.PlotterOnMq:
                     ViewBag.ActionMethod = "PlotterOnMq";
                     break;
@@ -350,7 +405,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
 
-            if (taskExecutor.CodTypeOfTask != "STAMPA")
+            if (taskExecutor.CodTypeOfTask != "STAMPA" &&
+                taskExecutor.CodTypeOfTask != "STAMPARIGIDO")
             {
                 var optionTypeOfTaskList = typeOfTaskRepository.GetSingle(taskExecutor.CodTypeOfTask).OptionTypeOfTasks;
 
@@ -359,8 +415,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     switch (c.TypeTaskExecutorEstimatedOn)
                     {
                         case TaskEstimatedOn.EstimatedOnType.OnRun:
-                            tskEst = new TaskEstimatedOnRun();
-                            retView = "TaskEstimatedOnRun";
+                            if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll ||
+                                taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                            {
+                                tskEst = new DigitalOnRun();
+                                retView = "DigitalOnRun";
+                            }
+                            else
+                            {
+                                tskEst = new TaskEstimatedOnRun();
+                                retView = "TaskEstimatedOnRun";
+                            }
                             break;
                         case TaskEstimatedOn.EstimatedOnType.OnTime:
 
@@ -408,8 +473,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 switch (c.TypeTaskExecutorEstimatedOn)
                 {
                     case TaskEstimatedOn.EstimatedOnType.OnRun:
-                        tskEst = new TaskEstimatedOnRun();
-                        retView = "TaskEstimatedOnRun";
+                        if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll ||
+                            taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                        {
+                            tskEst = new DigitalOnRun();
+                            retView = "DigitalOnRun";
+                        }
+                        else
+                        {
+                            tskEst = new TaskEstimatedOnRun();
+                            retView = "TaskEstimatedOnRun";
+                        }
                         break;
                     case TaskEstimatedOn.EstimatedOnType.OnTime:
 
@@ -622,7 +696,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult CreatePlotterSheet()
         {
             //Load each type of base
-            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPARIGIDO");
 
             //this feature is needed when in the view there are more than one input (submit button) form
             //Action Method speci
@@ -630,7 +704,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             var x = new PlotterSheet();
 
             x.FormatMax = "0x0";
-            x.CodTypeOfTask = "STAMPA";
+            x.CodTypeOfTask = "STAMPARIGIDO";
             return View(x);
         }
 
@@ -1560,6 +1634,51 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditCostPerRunStep";
+            //            return View("EditCostPerRunStep", c);
+        }
+
+        [HttpPost]
+        public void EditCostPerRunStepBW(string codTaskExecutorOn, CostPerRunStepBW c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    {
+                        var taskEstimatedOn = taskExecutorRepository.GetSingleEstimatedOn(codTaskExecutorOn);
+                        var taskExecutor = taskExecutorRepository.GetSingle(taskEstimatedOn.CodTaskExecutor);
+
+                        //look for to=0 from=0
+                        var chkStep = taskEstimatedOn.steps.OfType<CostPerRunStepBW>().FirstOrDefault(x => x.IdStep == c.IdStep);
+
+                        c.TimeStampTable = DateTime.Now;
+
+                        if (chkStep != null)
+                        {
+                            chkStep.FromUnit = c.FromUnit;
+                            chkStep.ToUnit = c.ToUnit;
+                            chkStep.CostPerUnit = c.CostPerUnit;
+                        }
+                        else
+                        {
+                            taskEstimatedOn.steps.Add(c);
+                        }
+
+                        GenEmptyStep(taskExecutor);
+
+                        taskExecutorRepository.Edit(taskExecutor);
+                        taskExecutorRepository.Save();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditCostPerRunStepBW";
             //            return View("EditCostPerRunStep", c);
         }
 

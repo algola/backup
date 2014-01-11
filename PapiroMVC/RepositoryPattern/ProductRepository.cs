@@ -12,16 +12,14 @@ namespace Services
     {
         public string GetNewCode(Product a)
         {
-            var codes = (from COD in this.GetAll() select COD.CodProduct).ToArray().OrderBy(x => x, new SemiNumericComparer());
-            var csCode = codes.Count() != 0 ? codes.Last() : "0";
-
-            return AlphaCode.GetNextCode(csCode);
+            var csCode = (from COD in this.GetAll() select COD.CodProduct).Max();
+            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
         }
 
         private void ProductPartCodeRigen(Product c)
         {
             //polimorfismo
-            c.ProductPartCodeRigen();
+            c.ProductCodeRigen();
        }
 
         public override void Add(Product entity)

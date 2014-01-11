@@ -1,4 +1,5 @@
 ﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
 @model PapiroMVC.Models.ProductViewModel
 
 @{
@@ -7,6 +8,10 @@
 
     //Prendo il titolo dal menù
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
+
+    //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
+    List<MenuProduct> menuP = ViewBag.MenuProd;
+    var theMenuItem = menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault();
 
     //add all task in page
     Session.Add("TsksInPage", Model.Product.TsksInPage);    
@@ -44,3 +49,11 @@
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(function () {
+        document.getElementById("newProductSlidebar").className = "active open";
+        document.getElementById("CodCat@(theMenuItem.CodCategory)").className = "active open";
+        document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
+    });
+</script>

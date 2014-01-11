@@ -421,7 +421,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPA_FR_BN {
             get {
@@ -430,7 +430,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro a colori.
+        ///   Looks up a localized string similar to stampa fronte retro a colori.
         /// </summary>
         public static string CodSTAMPA_FR_COL {
             get {
@@ -439,7 +439,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte in bianco e nero.
         /// </summary>
         public static string CodSTAMPA_FRONTE_BN {
             get {
@@ -448,7 +448,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte a colori.
+        ///   Looks up a localized string similar to stampa fronte a colori.
         /// </summary>
         public static string CodSTAMPA_FRONTE_COL {
             get {
@@ -466,7 +466,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPADIGITALE_FR_BN {
             get {
@@ -475,7 +475,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro a colori.
+        ///   Looks up a localized string similar to stampa fronte retro a colori.
         /// </summary>
         public static string CodSTAMPADIGITALE_FR_COL {
             get {
@@ -484,7 +484,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte in bianco e nero.
         /// </summary>
         public static string CodSTAMPADIGITALE_FRONTE_BN {
             get {
@@ -493,7 +493,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte a colori.
+        ///   Looks up a localized string similar to stampa fronte a colori.
         /// </summary>
         public static string CodSTAMPADIGITALE_FRONTE_COL {
             get {
@@ -511,7 +511,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPAOFF_FR_BN {
             get {
@@ -520,7 +520,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro a colori.
+        ///   Looks up a localized string similar to stampa fronte retro a colori.
         /// </summary>
         public static string CodSTAMPAOFF_FR_COL {
             get {
@@ -529,7 +529,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte in bianco e nero.
         /// </summary>
         public static string CodSTAMPAOFF_FRONTE_BN {
             get {
@@ -538,7 +538,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte a colori.
+        ///   Looks up a localized string similar to stampa fronte a colori.
         /// </summary>
         public static string CodSTAMPAOFF_FRONTE_COL {
             get {
@@ -556,7 +556,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati a 1 colore.
+        ///   Looks up a localized string similar to stampa a 1 colore.
         /// </summary>
         public static string CodSTAMPAOFFaROTOLO_1 {
             get {
@@ -565,7 +565,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati a 2 colori.
+        ///   Looks up a localized string similar to stampa a 2 colori.
         /// </summary>
         public static string CodSTAMPAOFFaROTOLO_2 {
             get {
@@ -574,7 +574,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati a 3 colori.
+        ///   Looks up a localized string similar to stampa a 3 colori.
         /// </summary>
         public static string CodSTAMPAOFFaROTOLO_3 {
             get {
@@ -583,7 +583,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati a 4 colori.
+        ///   Looks up a localized string similar to stampa a 4 colori.
         /// </summary>
         public static string CodSTAMPAOFFaROTOLO_4 {
             get {
@@ -592,7 +592,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati a 5 colori.
+        ///   Looks up a localized string similar to stampa a 5 colori.
         /// </summary>
         public static string CodSTAMPAOFFaROTOLO_5 {
             get {
@@ -610,7 +610,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPAOFFeDIGITALE_FR_BN {
             get {
@@ -619,7 +619,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte retro a colori.
+        ///   Looks up a localized string similar to stampa fronte retro a colori.
         /// </summary>
         public static string CodSTAMPAOFFeDIGITALE_FR_COL {
             get {
@@ -628,7 +628,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte in bianco e nero.
+        ///   Looks up a localized string similar to stampa fronte in bianco e nero.
         /// </summary>
         public static string CodSTAMPAOFFeDIGITALE_FRONTE_BN {
             get {
@@ -637,7 +637,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampati fronte a colori.
+        ///   Looks up a localized string similar to stampa fronte a colori.
         /// </summary>
         public static string CodSTAMPAOFFeDIGITALE_FRONTE_COL {
             get {

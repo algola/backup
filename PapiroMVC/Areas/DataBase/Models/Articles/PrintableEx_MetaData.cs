@@ -11,8 +11,9 @@ namespace PapiroMVC.Models
     public partial class Printable_MetaData : Article_MetaData
     {
         [Required(ErrorMessageResourceType = typeof(ResPrintable), ErrorMessageResourceName = "RequiredField"),
-        DisplayNameLocalized(typeof(ResPrintable), "TypeOfMaterial")]
+        DisplayNameLocalized(typeof(ResPrintable), "TypeOfMaterial"),Tooltip(typeof(ResPrintable), "TypeOfMaterialToolTip")]
         public string TypeOfMaterial { get; set; }
+
         [DisplayNameLocalized(typeof(ResPrintable), "Weight")]
         public Nullable<long> Weight { get; set; }
         [DisplayNameLocalized(typeof(ResPrintable), "Color")]
@@ -20,7 +21,7 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResPrintable), "Thikness")]
         public Nullable<double> Thikness { get; set; }
         [Required(ErrorMessageResourceType = typeof(ResPrintable), ErrorMessageResourceName = "RequiredField"),
-        DisplayNameLocalized(typeof(ResPrintable), "NameOfMaterial")]
+        DisplayNameLocalized(typeof(ResPrintable), "NameOfMaterial"), Tooltip(typeof(ResPrintable), "NameOfMaterialToolTip")]
         public string NameOfMaterial { get; set; }
         [DisplayNameLocalized(typeof(ResPrintable), "NoBv")]
         public Nullable<bool> NoBv { get; set; }

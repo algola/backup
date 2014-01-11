@@ -1,0 +1,63 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+@{
+    string strings = "~/Views/Shared/Strings";
+    List<MenuProduct> menuProd = ViewBag.MenuProd;
+    var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
+
+    List<MenuProduct> selectedMenuProd;
+    
+}
+
+        <li id="newProductSlidebar">
+            <a href="#" class="dropdown-toggle">
+                <i class="icon-plus"></i>
+
+                Inserisci Prodotto
+									<b class="arrow icon-angle-down"></b>
+            </a>
+
+            <ul class="submenu">
+                
+                @foreach (var item in categories)
+                {
+                    <li id="CodCat@(item.CodCategory)">
+                        <a href="#" class="dropdown-toggle">
+                            <i class=""></i>
+                            <span class="menu-text">
+                                @Html.T(strings, "CodCat" + item.CodCategory)
+                            </span>
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+
+                        <ul class="submenu">
+
+                            @{                                                        
+                                selectedMenuProd = menuProd.FindAll(x => x.CodCategory == item.CodCategory && !x.Hidden.Value).ToList();
+                            }
+
+                            @foreach (var menuItem in selectedMenuProd)
+                            {
+
+                                <li id="@(menuItem.CodMenuProduct)SideBar">
+                                    @try
+                                    {                                    
+                                        @Html.ActionLinkImage(@Html.T(strings, "CodMenuProduct" + menuItem.CodMenuProduct), "CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }, "")                                
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine(menuItem.CodMenuProduct);
+                                        throw;
+                                    }
+                                </li>                            
+
+                            }
+                        </ul>
+                    </li>                   
+                }
+
+
+
+            </ul>
+        </li>

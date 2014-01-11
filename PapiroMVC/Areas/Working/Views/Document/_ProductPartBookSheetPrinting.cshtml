@@ -11,38 +11,44 @@
     
 }
 
+@*
 <canvas id="printingBookSheet" width="500" height="170"></canvas>
-
 NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadies.Count
+
+*@
+NUMERO DI SEGNATURE: @Model.GainPartOnPrinting.Makereadies.Count
+MAX SHAPE: @Model.GainPartOnPrinting.MaxShape
 
 <script type="text/javascript">
 
     //this event is fired only the first time
     $(document).ready(function () {
-        drawPrintingAndSheet(); //draw printing and work
+//        alert('call drawPrintingAndSheet');
+//        drawPrintingAndSheet(); //draw printing and work
     });
 
 
     function drawPrintingAndSheet() {
 
-
         var side1 = '@Model.PrintingFormat.GetSide1()';
         var side2 = '@Model.PrintingFormat.GetSide2()';
 
-        var c_canvas = document.getElementById("printingBookSheet");
+        var c_canvas = document.getElementById("printingSingleSheet");
         var context = c_canvas.getContext("2d");
-
+        
         var zoom = 2.5;
+        zoom = zoomGlo;
+
         var offsetX = 0;
         var offsetY = 0;
 
         var bv = '@g.TypeOfPerfecting';
-            var maxG = '@(g.PrintedPages/4)';
+        var maxG = '@(g.PrintedPages/4)';
 
         drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
 
         var side1pr = '@Model.Part.FormatOpened.GetSide1()';
-            var side2pr = '@Model.Part.FormatOpened.GetSide2()';
+        var side2pr = '@Model.Part.FormatOpened.GetSide2()';
 
         var sideOnSide = '@g.SideOnSide';
 

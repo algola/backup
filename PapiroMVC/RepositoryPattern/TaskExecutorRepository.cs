@@ -8,6 +8,17 @@ namespace Services
 
     public class TaskExecutorRepository : GenericRepository<dbEntities, TaskExecutor>, ITaskExecutorRepository
     {
+        public void AddEstimatedOn(TaskEstimatedOn item)
+        {
+            if (Context.Entry(item).State != System.Data.EntityState.Added)
+            {
+                var tskEst = item;
+                var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
+                Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
+            }
+        
+        }
+
         /// <summary>
         /// Take next code in string numerical order.
         /// </summary>
@@ -15,9 +26,8 @@ namespace Services
         /// <returns></returns>
         public string GetNewCode(TaskExecutor c)
         {
-            var codes = (from COD in this.GetAll() select COD.CodTaskExecutor).ToArray().OrderBy(x => x, new SemiNumericComparer());
-            var csCode = codes.Count() != 0 ? codes.Last() : "0";
-            return AlphaCode.GetNextCode(csCode);
+            var csCode = (from COD in this.GetAll() select COD.CodTaskExecutor).Max();
+            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
         }
 
         private void TaskExecutorCostCodeRigen(TaskExecutor c)

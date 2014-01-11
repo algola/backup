@@ -333,4 +333,19 @@
   <data name="PlotterSheetType" xml:space="preserve">
     <value>Rigido</value>
   </data>
+  <data name="NoTaskEstimatedOnExceptionPage" xml:space="preserve">
+    <value>E' però possibile inserirne uno ora!</value>
+  </data>
+  <data name="MetaTitleDigital" xml:space="preserve">
+    <value>Macchine da stampa digitali a foglio e a rotolo: gestione, insermento e modifica. Xerox, Kodak, Roland, etc...</value>
+  </data>
+  <data name="MetaTitleLitho" xml:space="preserve">
+    <value>Macchine da stampa offset a foglio e a rotolo: gestione, insermento e modifica. Hidelberg, Roland, SpeedMaster, 70x100, 50x70, etc...</value>
+  </data>
+  <data name="MetaTitlePlotter" xml:space="preserve">
+    <value>Macchine da stampa per supporti rigidi: gestione, insermento e modifica. Roland, Plotter</value>
+  </data>
+  <data name="MetaTitlePrePostPress" xml:space="preserve">
+    <value>Macchine o lavoranti, interni ed esterni: pre e post stampa. Punto Metallico, Plastificatura, Oro a caldo</value>
+  </data>
 </root>

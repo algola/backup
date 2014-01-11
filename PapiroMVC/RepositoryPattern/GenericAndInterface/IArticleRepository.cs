@@ -9,9 +9,7 @@ namespace Services
     public interface IArticleRepository : IGenericRepository<Article>
     {
         string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy);
-        //Article GetSingle(string codArticle);
-
-        IQueryable<Article> GetPrintableArticleCost(ProductPartsPrintableArticle a);
-    
+        //Article GetSingle(string codArticle);    
     }
 }
+

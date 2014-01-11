@@ -1,0 +1,18 @@
+﻿@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Views/Shared/Strings";
+}
+
+<h5 class="header smaller purple">
+    @*<i class="icon-cloud"></i>*@
+    **Sei già registrato? Usa il link qui sotto per accedere al sistema, altrimenti registrati gratuitamente per iniziare.
+</h5>
+
+<div class="span1">
+    @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "icon-key")
+</div>
+<div class="span3">
+    @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "icon-group")
+</div>
+

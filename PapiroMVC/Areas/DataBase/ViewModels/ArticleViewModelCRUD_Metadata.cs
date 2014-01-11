@@ -19,4 +19,15 @@ namespace PapiroMVC.Models
             DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "SupplyerBuy")]
         public string SupplyerBuy { get; set; }
     }
+
+
+    public class SheetPrintableArticleViewModel_Metadata : ArticleViewModel_Metadata
+    {
+        public SheetPrintableArticle Article
+        {
+            get;
+            set;
+        }
+    }
+
 }

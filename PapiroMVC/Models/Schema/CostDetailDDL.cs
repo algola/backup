@@ -46,6 +46,29 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
 
 
+            dbS.AddColumnToTable("costdetails", "Starts", SchemaDb.Double, "0");
+
+            //calcolo battute di stampa
+            dbS.AddColumnToTable("costdetails", "GainForRun", SchemaDb.Double, "0");
+            //calcolo delle battute del materiale
+            dbS.AddColumnToTable("costdetails", "GainForRunForPrintableArticle", SchemaDb.Double, "0");
+
+            //calcolo battute di stampa
+            dbS.AddColumnToTable("costdetails", "GainForMqRun", SchemaDb.Double, "0");
+            //calcolo delle battute del materiale
+            dbS.AddColumnToTable("costdetails", "GainForMqRunForPrintableArticle", SchemaDb.Double, "0");
+
+            //calcolo del peso della stampa
+            dbS.AddColumnToTable("costdetails", "GainForWeigthRun", SchemaDb.Double, "0");
+            //calcolo del peso del materiale
+            dbS.AddColumnToTable("costdetails", "GainForWeigthRunForPrintableArticle", SchemaDb.Double, "0");
+
+            dbS.AddColumnToTable("costdetails", "TypeOfQuantity", SchemaDb.Int, "0");
+
+            ////serve per i rigidi che non possono essere spaccati per la messa in macchina
+            //dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
+
+
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
 
             #region Printable Article

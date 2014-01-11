@@ -4,6 +4,16 @@
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateSheetPrintableArticle");
+
+
+    //show personalized error
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }       
+
+    
 }
 
 <div id="status">
@@ -20,9 +30,7 @@
   
         @Html.ValidationSummary(true)
 
-
-        @Html.HiddenFor(model => model.Article.TimeStampTable)
-        
+        @Html.HiddenFor(model => model.Article.TimeStampTable)        
         @Html.HiddenFor(model => model.Article.CodArticle)
         @Html.HiddenFor(model => model.Article.ArticleName)
 

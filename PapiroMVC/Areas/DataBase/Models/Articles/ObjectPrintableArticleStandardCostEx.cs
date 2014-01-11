@@ -9,8 +9,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(ObjectPrintableArticleStandardCost_MetaData))]
-    public partial class ObjectPrintableArticleStandardCost : ObjectPrintableArticleCost,  ICloneable, IDeleteRelated
+    public partial class ObjectPrintableArticleStandardCost : ObjectPrintableArticleCost
     {
         public ObjectPrintableArticleStandardCost()
         {
@@ -21,21 +22,6 @@ namespace PapiroMVC.Models
 
         #endregion
 
-
-        #region Handle copy for modify
-
-        public override void Copy(ArticleCost to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
-
-        #endregion
 
     }
 }

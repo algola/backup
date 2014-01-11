@@ -7,32 +7,38 @@
 
 <div id="status">
     @Scripts.Render("~/bundles/autocomplete")
-
     @using (Ajax.BeginForm("Action", "CustomerSupplier", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
         @Html.ValidationSummary(true)
 
-    @Html.HiddenFor(model => model.TimeStampTable)
 
-    @Html.HiddenFor(model => model.CodCustomerSupplier)
-    @Html.AlgolaEditorFor(model => model.BusinessName)
-    @Html.AlgolaEditorFor(model => model.VatNumber)
-    @Html.AlgolaEditorFor(model => model.TaxCode)
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodCustomerSupplier)
+        @Html.AlgolaEditorFor(model => model.BusinessName)
+        @Html.AlgolaEditorFor(model => model.VatNumber)
+        @Html.AlgolaEditorFor(model => model.TaxCode)
 
-    @Html.HiddenFor(model => model.Outdated)
+        @Html.HiddenFor(model => model.Outdated)
 
-    <br />
-    <p>
+        <br />
+        <p>
 
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new { Area = "Database" })');">
-            <i class="icon-arrow-left"></i>
-            @HttpContext.GetLocalResourceObject(strings, "Cancel")
-        </button>
 
-        <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-            <i class="icon-save"></i>
-            @HttpContext.GetLocalResourceObject(strings, "Save")
-        </button>
-    </p>
+
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new { Area = "Database" })');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+        </p>
+    
+    
     }
+
 
 </div>

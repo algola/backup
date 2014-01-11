@@ -138,6 +138,12 @@
   <data name="CreateDocumentDescription" xml:space="preserve">
     <value>nuovo documento</value>
   </data>
+  <data name="CreateEstimateMenu" xml:space="preserve">
+    <value>Nuovo Preventivo</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
   <data name="DeletingStep" xml:space="preserve">
     <value>elimina</value>
   </data>
@@ -171,11 +177,50 @@
   <data name="EditDocumet" xml:space="preserve">
     <value>Modifica Documento</value>
   </data>
+  <data name="EditEstimateDesc" xml:space="preserve">
+    <value>compilazione</value>
+  </data>
+  <data name="EditEstimateMetaTitle" xml:space="preserve">
+    <value>Software Preventivi tipografia e gestionale centro stampa: compilazione del preventivo</value>
+  </data>
   <data name="ErrorLoading" xml:space="preserve">
     <value>Errore di caricamento</value>
   </data>
+  <data name="Estimate" xml:space="preserve">
+    <value>Preventivo</value>
+  </data>
+  <data name="Estimates" xml:space="preserve">
+    <value>Preventivi</value>
+  </data>
+  <data name="EstimatesDesc" xml:space="preserve">
+    <value>elenco</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="NoTaskEstimatedOnException" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="NoTaskEstimatedOnExceptionDesc" xml:space="preserve">
+    <value>nessun costo è stato specificato</value>
+  </data>
+  <data name="NoTaskEstimatedOnExceptionPage" xml:space="preserve">
+    <value>E' possibile inserire un costo ora</value>
+  </data>
+  <data name="NoTaskExecutorException" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="NoTaskExecutorExceptionDesc" xml:space="preserve">
+    <value>nessuna macchina/esecutore è stato specificata per questa lavorazione</value>
+  </data>
+  <data name="NoTaskExecutorExceptionPage" xml:space="preserve">
+    <value>E' possibile inserire una ora grazie al configuratore</value>
+  </data>
   <data name="OperationsCaption" xml:space="preserve">
     <value>Operazioni</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Stampa OpenXML</value>
   </data>
   <data name="ProductDescription" xml:space="preserve">
     <value>Prodotto</value>
@@ -185,6 +230,9 @@
   </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantità</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
   </data>
   <data name="TitleIndex" xml:space="preserve">
     <value>Documento</value>

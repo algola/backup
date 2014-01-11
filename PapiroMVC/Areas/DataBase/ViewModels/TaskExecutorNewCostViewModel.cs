@@ -13,6 +13,7 @@ namespace PapiroMVC.Models
         Boolean isEstimatedOnRun;
         Boolean isEstimatedOnTime;
 
+        public string TaskExecutorName { get; set; }
         public string CodTaskExecutor { get; set; }
 
         public TaskEstimatedOn.EstimatedOnType TypeTaskExecutorEstimatedOn 

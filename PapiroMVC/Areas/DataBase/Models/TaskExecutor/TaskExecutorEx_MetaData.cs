@@ -62,17 +62,17 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResTaskExecutor), "LateraleToolTip")]
         public Nullable<double> Laterale { get; set; }
 
-        [DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnTime")]
-        [Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnTimeToolTip")]
-        public Nullable<bool> IsEstimatedOnTime { get; set; }
+        //[DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnTime")]
+        //[Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnTimeToolTip")]
+        //public Nullable<bool> IsEstimatedOnTime { get; set; }
 
-        [DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnRun")]
-        [Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnRunToolTip")]
-        public Nullable<bool> IsEstimatedOnRun { get; set; }
+        //[DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnRun")]
+        //[Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnRunToolTip")]
+        //public Nullable<bool> IsEstimatedOnRun { get; set; }
 
-        [DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnMq")]
-        [Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnMqToolTip")]
-        public Nullable<bool> IsEstimatedOnMq { get; set; }
+        //[DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnMq")]
+        //[Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnMqToolTip")]
+        //public Nullable<bool> IsEstimatedOnMq { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "SetTaskExecutorEstimatedOn")]
         [Tooltip(typeof(ResTaskExecutor), "SetTaskExecutorEstimatedOnToolTip")]

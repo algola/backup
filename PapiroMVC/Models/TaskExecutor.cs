@@ -33,11 +33,6 @@ namespace PapiroMVC.Models
         public Nullable<double> Pinza { get; set; }
         public Nullable<double> ControPinza { get; set; }
         public Nullable<double> Laterale { get; set; }
-        public Nullable<bool> IsEstimatedOnTime { get; set; }
-        public Nullable<bool> IsEstimatedOnRun { get; set; }
-        public Nullable<bool> IsEstimatedOnMq { get; set; }
-        public Nullable<bool> IsEstimatedOnTimeBinding { get; set; }
-        public Nullable<bool> IsEstimatedOnRunBinding { get; set; }
         public string CodTypeOfTask { get; set; }
         public string UniversalCodPapiro { get; set; }
     

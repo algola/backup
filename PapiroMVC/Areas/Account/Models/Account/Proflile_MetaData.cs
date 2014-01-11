@@ -1,6 +1,7 @@
 ﻿using PapiroMVC.Models.Resources.Account;
 using PapiroMVC.Validation;
 using System.ComponentModel.DataAnnotations;
+
 namespace PapiroMVC.Models
 {
     using System;
@@ -8,7 +9,7 @@ namespace PapiroMVC.Models
 
     public partial class Profile_MetaData
     {
-
+        [Tooltip(typeof(Registration), "OrganizationName")]
         [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldOrganizationName")]
         [DisplayNameLocalized(typeof(Registration), "OrganizationName")]
         public string CompanyName { get; set; }

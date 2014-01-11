@@ -15,18 +15,20 @@ using System.IO;
 using SchemaManagemet;
 using System.Threading.Tasks;
 using Services;
+using System.Reflection;
+using System.Resources;
 
 namespace PapiroMVC.Controllers
 {
 
     public class ControllerAlgolaBase : AsyncController
     {
-        
+
         //user connected to website
         public MembershipUser CurrentUser
-        { 
-            get; 
-            set; 
+        {
+            get;
+            set;
         }
 
         /// <summary>
@@ -63,27 +65,35 @@ namespace PapiroMVC.Controllers
             else
                 ViewData["CurrentUser"] = null;
 
-        
+            if (Thread.CurrentThread.CurrentUICulture.ToString().ToLower().Contains("it"))
+            {
+                ViewBag.Lang = "it";
+            }
+
+            if (Thread.CurrentThread.CurrentUICulture.ToString().ToLower().Contains("en"))
+            {
+                ViewBag.Lang = "en";
+            }
+
         }
 
         protected override void ExecuteCore()
         {
-
             base.ExecuteCore();
         }
 
 
         public void UpdateDatabase(string dbName)
         {
-          //  profilesEntities ctxProfiles = new profilesEntities();
+            //  profilesEntities ctxProfiles = new profilesEntities();
             ProfilesDDL tblProfile = new ProfilesDDL("profiles");
 
             dbEntities ctx = new dbEntities();
 
             tblProfile.UpdateSchema(ctx);
-                        
+
             if (CurrentDatabase != null)
-            {                
+            {
                 //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
                 ctx.Database.Connection.Open();
             }
@@ -97,7 +107,6 @@ namespace PapiroMVC.Controllers
             tables.Add(new ProductsDDL(dbName));
             tables.Add(new DocumentsDDL(dbName));
             tables.Add(new MenuProductDDL(dbName));
-
 
             tables.Add(new CostDetailDDL(dbName));
 
@@ -126,7 +135,7 @@ namespace PapiroMVC.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
-                
+
         /// <summary>
         /// This method helps to get the error information from the MVC "ModelState".
         /// We can not directly send the ModelState to the client in Json. The "ModelState"
@@ -146,6 +155,75 @@ namespace PapiroMVC.Controllers
             }
 
             return errors;
+        }
+
+
+        private delegate void LongTimeTask_Delegate(string s);
+
+
+        // POST: /Account/Login
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult UpdateAs()
+        {
+            //http://www.codeproject.com/Articles/426120/Calling-a-method-in-Csharp-asynchronously-using-de
+
+            LongTimeTask_Delegate d = null;
+            d = new LongTimeTask_Delegate(longJob);
+
+            IAsyncResult R = null;
+
+            MembershipUserCollection all = Membership.GetAllUsers();
+            foreach (MembershipUser item in all)
+            {
+                R = d.BeginInvoke(item.UserName, null, null); //invoking the method                
+            }
+
+            R = d.BeginInvoke("db", null, null);
+
+            return RedirectToAction("Index", "Home", new { area = "" });
+            //            return Json(new { redirectUrl = Url.Action("Index", "Home", new { area = "" }) },JsonRequestBehavior.AllowGet);
+
+        }
+
+        private void longJob(string userName)
+        {
+            UpdateDatabase(userName);
+        }
+
+
+        public ActionResult MetaGenerator(string domain, string page)
+        {
+            domain = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port).ToLower();
+
+            var host = new System.Uri(domain).Host;
+            int index = host.LastIndexOf('.'), last = 3;
+            while (index > 0 && index >= last - 3)
+            {
+                last = index;
+                index = host.LastIndexOf('.', last - 1);
+            }
+
+            var res = host.Substring(index + 1);
+
+            res = "~/Views/Shared/" + (res == "localhost" ? "gestionestampa.com" : res);
+
+            try
+            {
+                TempData["MetaTitle"] = HttpContext.GetLocalResourceObject(res, page.ToLower() + "Title") + " - PapiroStar ";
+                TempData["MetaDescription"] = HttpContext.GetLocalResourceObject(res, page.ToLower() + "Description");
+                TempData["MetaKeyword"] = HttpContext.GetLocalResourceObject(res, page.ToLower() + "Keyword");
+                TempData["MetaRobots"] = HttpContext.GetLocalResourceObject(res, page.ToLower() + "Robots") == null ? "index,follow" : HttpContext.GetLocalResourceObject(res, page.ToLower() + "Robots");
+            }
+            catch (Exception)
+            {
+                TempData["MetaTitle"] = "";
+                TempData["MetaDescription"] = "";
+                TempData["MetaKeyword"] = "";
+                TempData["MetaRobots"] = "noindex, nofollow";
+            }
+
+            return null;
         }
 
     }

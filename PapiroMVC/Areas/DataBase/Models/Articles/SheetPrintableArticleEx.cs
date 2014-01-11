@@ -9,8 +9,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(SheetPrintableArticle_MetaData))]
-    public partial class SheetPrintableArticle : Printable, ICloneable, IDeleteRelated
+    public partial class SheetPrintableArticle : Printable
     {
         public SheetPrintableArticle()
         {
@@ -21,26 +22,6 @@ namespace PapiroMVC.Models
 
         #endregion
 
-
-        #region Handle copy for modify
-
-        public override void Copy(Article to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            ((SheetPrintableArticle)to).Format = this.Format;
-            ((SheetPrintableArticle)to).NoPinza = this.NoPinza;
-            ((SheetPrintableArticle)to).SheetPerPacked = this.SheetPerPacked;
-            ((SheetPrintableArticle)to).SheetPerPallet = this.SheetPerPallet;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
-
-        #endregion
 
         public override string ToString()
         {

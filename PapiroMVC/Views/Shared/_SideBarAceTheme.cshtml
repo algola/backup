@@ -11,20 +11,44 @@
     </script>
 
     <ul class="nav nav-list">
+
         <li id="homeSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
         </li>
 
-        <li id="databaseSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, " icon-cogs", "menu-text")
+        @if (Request.IsAuthenticated)
+        {      
+
+            <li id="databaseSlidebar">
+                @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, " icon-cogs", "menu-text")
+            </li>
+
+            <li id="documentSlidebar">
+                @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+            </li>
+
+        }
+
+
+        <li id="aboutSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "About"), "About", "Home", new { area = "" }, "icon-info", "menu-text")
         </li>
 
-        <li id="documentSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+        <li id="advSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "Adv"), "Adv", "Home", new { area = "" }, "icon-home", "menu-text")
         </li>
+
+        <li id="ecommerceSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "ECommerce"), "ECommerce", "Home", new { area = "" }, "icon-group", "menu-text")
+        </li>
+
 
     </ul>
     <!-- /.nav-list -->
+
+
+
+
 
     <div class="sidebar-collapse" id="sidebar-collapse">
         <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>

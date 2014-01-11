@@ -9,7 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(SheetPrintableArticlePalletCost_MetaData))]
-    public partial class SheetPrintableArticlePalletCost : SheetPrintableArticleCost, ICloneable, IDeleteRelated
+    [Serializable]
+    public partial class SheetPrintableArticlePalletCost : SheetPrintableArticleCost
     {
         public SheetPrintableArticlePalletCost()
         {
@@ -17,21 +18,6 @@ namespace PapiroMVC.Models
         }
 
         #region Added Properties
-
-        #endregion
-
-        #region Handle copy for modify
-
-        public override void Copy(ArticleCost to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
 
         #endregion
 

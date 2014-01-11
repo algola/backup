@@ -20,9 +20,10 @@ namespace Services
             return this.GetAllOptionTypeOfTask().FirstOrDefault(x => x.CodOptionTypeOfTask == id);
         }
 
-
         public override IQueryable<TypeOfTask> GetAll()
         {
+            Console.WriteLine(Context.Database.Connection.ConnectionString);
+
             var c = Context.TypeOfTasks.Include("OptionTypeOfTasks");
 
             foreach (var item in c)
@@ -35,7 +36,6 @@ namespace Services
                 }                
 
             }          
-
 
             var tbCode = new TypeOfTask[18];
 
@@ -53,7 +53,7 @@ namespace Services
             tbCode[11] = new FORO() { CodCategoryOfTask = "PREPOST" };
             tbCode[12] = new RILIEVO_A_SECCO() { CodCategoryOfTask = "PREPOST" };
 
-            tbCode[13] = new STAMPARIGIDO() { CodCategoryOfTask = "STAMPA" };
+            tbCode[13] = new STAMPARIGIDO() { CodCategoryOfTask = "STAMPARIGIDO" };
             tbCode[14] = new STAMPAOFF() { CodCategoryOfTask = "STAMPA" };
             tbCode[15] = new STAMPAOFFeDIGITALE() { CodCategoryOfTask = "STAMPA" };
             tbCode[16] = new STAMPADIGITALE() { CodCategoryOfTask = "STAMPA" };

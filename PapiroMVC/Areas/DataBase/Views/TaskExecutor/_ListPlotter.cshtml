@@ -34,7 +34,8 @@
 
         var myGrid = $("#gridPlotter").jqGrid({
             caption: '@Html.T(strings, "PlotterGridCaption")',
-                url: '@url',
+            caption: '',
+            url: '@url',
                 editUrl: '',
                 datatype: 'json',
                 multiselect: true,

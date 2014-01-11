@@ -3,30 +3,70 @@
 
 @{
     string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
+    string strings = "~/Areas/Working/Views/Document/Strings";
+
     string url = Url.Action("CustomerSupplierList", new { controller = "CustomerSupplier", area = "DataBase" });    
 }
 
 <div id="status">
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal", @id = "documentForm" }))
     {
-        
-        @Html.ValidationSummary(true)
-            
-        @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "readonly" })
-        @Html.HiddenFor(model => model.CodDocument)
-        @Html.AlgolaEditorFor(model => model.DateDocument)
-        @Html.HiddenFor(model => model.DocumentName)
-        @Html.AlgolaEditorFor(model => model.Notes)
-        @Html.AlgolaEditorFor(model => model.Number)
-        @Html.HiddenFor(model => model.TimeStampTable)
+        <div class="row-fluid">
 
-        @Html.HiddenFor(model => model.CodCustomer)
+            <div class="btn-group">
+                <button class="btn btn-small btn-info">@Html.T(strings, "Menu")</button>
 
-        <div class="controls col-sm-9">
-            <a href="javascript:void(0)" id="staticDialogCustomer">@Html.T(stringsGrid, "DialogTitle")</a>
-            <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+                <button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle">
+                    <span class="caret"></span>
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#" onclick="save();">@Html.T(strings, "Save")</a>
+                    </li>
+
+                    <li>
+                        <a href="#" onclick="estimateOpenxml();">@Html.T(strings, "Print")</a>
+                    </li>
+
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="#">No link</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="span12">
+
+                @Html.ValidationSummary(true)
+
+                <div class="controls col-sm-9">
+                    <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+                </div>
+
+
+                @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
+                @Html.HiddenFor(model => model.CodDocument)
+                @Html.AlgolaEditorFor(model => model.DateDocument)
+                @Html.HiddenFor(model => model.DocumentName)
+                @Html.HiddenFor(model => model.Notes)
+                @Html.AlgolaEditorFor(model => model.Number)
+                @Html.HiddenFor(model => model.TimeStampTable)
+
+                @Html.HiddenFor(model => model.CodCustomer)
+
+            </div>
+
+
+        </div>   
+
+        <div id="_listDocumentProduct">
+            @Html.Partial("_ListDocumentProduct", Model)
         </div>
+
         
         <div id="dialog-message" class="hide">
 
@@ -39,102 +79,137 @@
 
         </div>
         
-        <br />
-        <br />
-    
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateProduct", "Product", new { Area = "Working" })');">
-            <i class="icon-plus"></i>
-            @Html.T(stringsGrid, "NewProduct")
-        </button>        
-        <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-            <i class="icon-save"></i>
-            @HttpContext.GetLocalResourceObject(stringsGrid, "Save")
-        </button> 
+        <div class="space"></div>
 
     }
-
-    <div id="_listDocumentProduct">
-        @Html.Partial("_ListDocumentProduct", Model)
-    </div>
 
 
 </div>
 
 <script type="text/javascript">
 
+    function estimateOpenxml() {
+
+        clearValidationErrors();
+
+        var datastring = $("#documentForm").serialize();
+
+        //at firt time save estimate or
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action(ViewBag.ActionMethod, "Document"))",
+            data: datastring,
+            success: function (data) {
+                window.location.href = "@(Url.Action("PrintEstimate", "Document", new { id = Model.CodDocument }))";
+                return;
+            },
+            error: function (xhr) {
+                $('#status').html(xhr);
+            }
+        });
+        }
+
+        function save() {
+
+            clearValidationErrors();
+
+            var datastring = $("#documentForm").serialize();
+
+            //at firt time save estimate or
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action(ViewBag.ActionMethod, "Document"))",
+            data: datastring,
+            success: function (data) {
+                return;
+            },
+            error: function (xhr) {
+                alert('error');
+                $('#status').html(xhr);
+            }
+        });
+    }
+
+
+    function clearValidationErrors() {
+        $('.validation-summary-errors').html('');
+        $('.input-validation-error').removeClass('input-validation-error');
+        $('.field-validation-error').remove();
+    }
+
     var lastSel = -1;
+
 
     $(document).ready(
 
         function () {
 
             $('#DateDocument').datepicker({ dateFormat: "dd/mm/yy" });
-//            var lastSel = -1;
-
+            //            var lastSel = -1;
 
             var myGrid = $("#gridArticle").jqGrid({
                 url: '@url',
-                 datatype: 'json',
-                 colModel: [
-                     { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
-                     { name: 'CodCustomer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodCustemerSupplierCaption")', width: 120, align: 'left', editable: false, hidden: false },
+                    datatype: 'json',
+                    colModel: [
+                        { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                        { name: 'CodCustomer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodCustemerSupplierCaption")', width: 120, align: 'left', editable: false, hidden: false },
                     { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CustomersCaption")', width: 120, align: 'left', editable: false, hidden: true },
                     { name: 'BusinessName', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "BusinessNameCaption")', width: 120, align: 'left', editable: false, hidden: false },
 
-                ],
+                    ],
 
+                    pager: '#pagerArticle',
 
-                 pager: '#pagerArticle',
+                    rowNum: 15,
+                    rowList: [15, 20, 50],
+                    viewrecords: true,
+                    autowidth: false,
 
-                 rowNum: 15,
-                 rowList: [15, 20, 50],
-                 viewrecords: true,
-                 autowidth: false,
+                    onSelectRow: function (id) {
+                        if (id && id !== lastSel) {
+                            myGrid.jqGrid('restoreRow', lastSel);
+                            lastSel = id;
+                        }
+                    },
 
-                 onSelectRow: function (id) {
-                     if (id && id !== lastSel) {
-                         myGrid.jqGrid('restoreRow', lastSel);
-                         lastSel = id;
-                     }
-                 },
-
-                 ondblClickRow: function (id, ri, ci) {
-                     myGrid.jqGrid('editRow', id, {
-                         keys: true,
-                         oneditfunc: function () {
-                             //...
-                         },
-                         aftersavefunc: function () {
-                             $("#gridArticle").trigger("reloadGrid");
-                         },
-                         url: 'editUrl'
-                     });
-                     //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
-                     return;
-                 }
-
-             });
-
-            myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: true });
-            myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
-
-        });
-
-    $("#staticDialog").on('click', function (e) {
-        e.preventDefault();
-
-        var dialog = $("#dialog-message").dialog({
-            width: 'auto',
-            modal: true,
-            title: '@Html.T(stringsGrid, "DialogSubTitle")',
-            title_html: true,
-            buttons: [
-                {
-                    text: '@Html.T(stringsGrid, "Cancel")',
-                    "class": "btn btn-mini",
-                    click: function () {
+                    ondblClickRow: function (id, ri, ci) {
+                        myGrid.jqGrid('editRow', id, {
+                            keys: true,
+                            oneditfunc: function () {
+                                //...
+                            },
+                            aftersavefunc: function () {
+                                $("#gridArticle").trigger("reloadGrid");
+                            },
+                            url: 'editUrl'
+                        });
+                        //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                        return;
                     }
-                },
+
+                });
+
+                myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: true });
+                myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+            });
+
+            $("#staticDialog").on('click', function (e) {
+                e.preventDefault();
+
+                var dialog = $("#dialog-message").dialog({
+                    width: 'auto',
+                    modal: true,
+                    title: '@Html.T(stringsGrid, "DialogSubTitle")',
+                    title_html: true,
+                    buttons: [
+                        {
+                            text: '@Html.T(stringsGrid, "Cancel")',
+                            "class": "btn btn-mini",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        },
                 {
                     text: '@Html.T(stringsGrid, "Ok")',
                     "class": "btn btn-primary btn-mini",
@@ -151,23 +226,21 @@
                             celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
 
                         $('#Customer').val(celValueCustemerSupplier);
+                        $(this).dialog("close");
 
                     }
-
                 }
-            ]
-        });
+                    ]
+                });
 
-           /**
-           dialog.data( "uiDialog" )._title = function(title) {
-               title.html( this.options.title );
-           };
-           **/
-       });
+                /**
+                dialog.data( "uiDialog" )._title = function(title) {
+                    title.html( this.options.title );
+                };
+                **/
+            });
 
-    function reloadArticle() {
-        $("#gridArticle").trigger("reloadGrid");
-    }
-
+            function reloadArticle() {
+                $("#gridArticle").trigger("reloadGrid");
+            }
 </script>
-

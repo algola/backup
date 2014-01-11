@@ -3,7 +3,7 @@
 
 @{
     string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
-    string url = Url.Action("SheetPrintableArticleList", new { controller = "Article", area = "DataBase" });
+    string url = Url.Action("SheetPrintableArticleListPerProduct", new { controller = "Article", area = "DataBase"});
 
     var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
 }
@@ -52,8 +52,6 @@
             url: '@url',
             datatype: 'json',
             colModel: [
-                { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
-                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },

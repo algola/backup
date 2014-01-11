@@ -51,7 +51,6 @@ namespace PapiroMVC
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 //           "~/Content/Site.css",        
-                //         "~/MetroUI/css/modern.css",
                         "~/Content/DivShowHide.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

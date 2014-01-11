@@ -135,11 +135,23 @@
   <data name="StartingCost1" xml:space="preserve">
     <value>Costo primo Avviamento</value>
   </data>
+  <data name="StartingCost1BW" xml:space="preserve">
+    <value>Costo primo Avviamento B/N</value>
+  </data>
+  <data name="StartingCost1BWToolTip" xml:space="preserve">
+    <value>E' possibile specificare un costo di avviamento differente se la stampa è a Bianco e Nero</value>
+  </data>
   <data name="StartingCost1ToolTip" xml:space="preserve">
     <value>Indica il costo del primo avviamento</value>
   </data>
   <data name="StartingCost2" xml:space="preserve">
     <value>Costo Avviamenti successivi</value>
+  </data>
+  <data name="StartingCost2BW" xml:space="preserve">
+    <value>Costo Avviamenti successivi B/N</value>
+  </data>
+  <data name="StartingCost2BWToolTip" xml:space="preserve">
+    <value>E' possibile specificare un costo di avviamento differente se la stampa è a Bianco e Nero</value>
   </data>
   <data name="StartingCost2ToolTip" xml:space="preserve">
     <value>Indica il costo degli avviamenti successivi al primo</value>
@@ -147,8 +159,14 @@
   <data name="UseDifferentCostPerUnit" xml:space="preserve">
     <value>Usa costi copia scaglionati</value>
   </data>
+  <data name="UseDifferentCostPerUnitBW" xml:space="preserve">
+    <value>Usa costi copia scaglionati per B/N</value>
+  </data>
   <data name="UseDifferentCostPerUnitToolTip" xml:space="preserve">
     <value>Indica che è possibile usare costi copia per scaglioni di tiratura</value>
+  </data>
+  <data name="UseDifferentCostPerUnitToolTipBW" xml:space="preserve">
+    <value>Indica che è possibile usare costi copia per scaglioni di tiratura quando la stampa è Bianco e Nero</value>
   </data>
   <data name="UseDifferentDeficitOnCostForWeightStep" xml:space="preserve">
     <value>Usa penalizzazioni per grammatura</value>

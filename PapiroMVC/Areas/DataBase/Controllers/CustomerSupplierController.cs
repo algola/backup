@@ -93,6 +93,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // GET: /CustomerSupplier/CreateCustomer
         public ActionResult CreateCustomer()
         {
+            ViewBag.ActionMethod = "CreateCustomer";
             return View(new Customer());
         }
 
@@ -132,7 +133,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult CreateCustomer(Customer c)
         {
             ViewBag.ActionMethod = "CreateCustomer";
-
             return CreateCustomerSupplier(c);
         }
 
@@ -140,6 +140,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // GET: /CustomerSupplier/CreateSuplier
         public ActionResult CreateSupplier()
         {
+            ViewBag.ActionMethod = "CreateSupplier";
             return View(new Supplier());
         }
 

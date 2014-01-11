@@ -90,8 +90,20 @@ namespace PapiroMVC.Validation
         {
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
 
+
+            string tool = "";
+            var getTool = String.Empty;
+
+            if (metadata.AdditionalValues.ContainsKey("ToolTip"))
+            {
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
+            }
+            if (getTool != null && getTool != "")
+            {
+                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
+            }
+
             var algolaEditFor = new TagBuilder("div");
-            algolaEditFor.Attributes.Add("Title", GetToolTip(html, expression));
             algolaEditFor.AddCssClass("control-group");
 
             //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
@@ -121,10 +133,26 @@ namespace PapiroMVC.Validation
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("controls col-sm-9");
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
+
+
+            var builder = new TagBuilder("span");
+            builder.AddCssClass("grey");
+
+            if (metadata.IsRequired)
+                builder.InnerHtml = "*";
+            else
+                builder.InnerHtml = "&nbsp;&nbsp;";
+
+            editFor.InnerHtml += builder;
+
+            editFor.InnerHtml += tool;
+
             //            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
             //            algolaEditFor.InnerHtml += labelFor;
+
+
             algolaEditFor.InnerHtml += editFor;
 
             return new HtmlString(algolaEditFor + Environment.NewLine);
@@ -148,10 +176,25 @@ namespace PapiroMVC.Validation
 
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
 
+
+            string tool = "";
+            var getTool = String.Empty;
+
+            if (metadata.AdditionalValues.ContainsKey("ToolTip"))
+            {
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
+            }
+
+            if (getTool != null && getTool != "")
+            {
+                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
+            }
+
+
             var algolaEditFor = new TagBuilder("div");
             algolaEditFor.Attributes.Add("Title", GetToolTip(html, expression));
             algolaEditFor.AddCssClass("control-group");
-            
+
             var htmlatt = new RouteValueDictionary();
             htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
 
@@ -160,6 +203,18 @@ namespace PapiroMVC.Validation
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("controls col-sm-9");
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
+
+            var builder = new TagBuilder("span");
+            builder.AddCssClass("grey");
+
+            if (metadata.IsRequired)
+                builder.InnerHtml = "*";
+            else
+                builder.InnerHtml = "&nbsp;&nbsp;";
+
+            editFor.InnerHtml += builder;
+            editFor.InnerHtml += tool;
+
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
 
             algolaEditFor.InnerHtml += editFor;
@@ -383,6 +438,27 @@ namespace PapiroMVC.Validation
             }
             return ret;
         }
+
+        public static string Seo(this HtmlHelper helper, string path, string key, string type)
+        {
+            string ret = String.Empty;
+            try
+            {
+                ret = (string)HttpContext.GetLocalResourceObject(path, key+type);
+            }
+            catch (Exception e)
+            {
+                ret = "Stringa non definita nel file della lingua";
+                Console.WriteLine(e.Message);
+            }
+            return ret;
+        }
+
+        public static MvcHtmlString If(this MvcHtmlString value, bool evaluation)
+        {
+            return evaluation ? value : MvcHtmlString.Empty;
+        }
+
     }
 
     public static class LocalizationHelper
@@ -393,6 +469,6 @@ namespace PapiroMVC.Validation
             return new HtmlString(string.Format("<meta name=\"accept-language\" content=\"{0}\"/>", acceptLang));
         }
     }
-
+    
 
 }

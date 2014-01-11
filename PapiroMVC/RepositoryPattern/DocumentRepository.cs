@@ -20,20 +20,25 @@ namespace Services
                 .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles")
                 .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles.Costs")
                 .Include("ProductPartsPrintableArticle")
+                .Include("ProductPartsPrintableArticle.ProductPart")
+                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks")
+                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks.OptionTypeOfTask")
+                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks.Costs")
+
                 .Include("ProductTask").Where(x => x.CodCost == codCost).FirstOrDefault();
         }
 
         public IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct)
         {
-            return Context.Costs.Where(x => x.CodDocumentProduct == codDocumentProduct);
+            return Context.Costs.Include("CostDetails").Where(x => x.CodDocumentProduct == codDocumentProduct);
         }
 
         public string GetNewCode(Document a)
         {
-            var codes = (from COD in this.GetAll() select COD.CodDocument).ToArray().OrderBy(x => x, new SemiNumericComparer());
-            var csCode = codes.Count() != 0 ? codes.Last() : "0";
-
-            return AlphaCode.GetNextCode(csCode);
+            //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
+            //con un colpo solo!!!
+            var csCode = (from COD in this.GetAll() select COD.CodDocument).Max();
+            return AlphaCode.GetNextCode(csCode??"0").PadLeft(6,'0');        
         }
 
         private void DocumentProductCodeRigen(Document c)
@@ -42,14 +47,14 @@ namespace Services
 
             //prodotti in documento
             var ppart = c.DocumentProducts.ToList();
-            foreach (var item in c.DocumentProducts)
+            foreach (var item in c.DocumentProducts.OrderBy(y => y.CodDocumentProduct))
             {
                 item.CodDocumentProduct = c.CodDocument + "-" + ppart.IndexOf(item).ToString();
                 item.CodDocument = c.CodDocument;
                 item.TimeStampTable = DateTime.Now;
 
-                var costl = item.Costs.OrderBy(x=>x.CodCost).ToList();
-                foreach (var itemCost in item.Costs.OrderBy(x=>x.CodCost))
+                var costl = item.Costs.OrderBy(x => x.CodCost).ToList();
+                foreach (var itemCost in item.Costs.OrderBy(x => x.CodCost))
                 {
                     itemCost.TimeStampTable = DateTime.Now;
                     itemCost.CodDocumentProduct = item.CodDocumentProduct;
@@ -104,19 +109,30 @@ namespace Services
             {
                 if (Context.Entry(item).State != System.Data.EntityState.Added)
                 {
-                    Context.Entry(item).State = System.Data.EntityState.Modified;
+                    var dcProduct = item;
+                    var fromBD2 = Context.DocumentProducts.Single(p => p.CodDocumentProduct == dcProduct.CodDocumentProduct);
+                    Context.Entry(fromBD2).CurrentValues.SetValues(dcProduct);
+
+                    //                    Context.Entry(item).State = System.Data.EntityState.Modified;
                 }
                 foreach (var item2 in item.Costs)
                 {
                     if (Context.Entry(item2).State != System.Data.EntityState.Added)
                     {
-                        Context.Entry(item2).State = System.Data.EntityState.Modified;
+                        var cost = item2;
+                        var fromBD2 = Context.Costs.Single(p => p.CodCost == cost.CodCost);
+                        Context.Entry(fromBD2).CurrentValues.SetValues(cost);
+                        //                        Context.Entry(item2).State = System.Data.EntityState.Modified;
                     }
                 }
 
             }
 
-            base.Edit(entity);
+            var doc = entity;
+            var fromBD = Context.Documents.Single(p => p.CodDocument == doc.CodDocument);
+            Context.Entry(fromBD).CurrentValues.SetValues(doc);
+
+            //            base.Edit(entity);
         }
 
         public new Document GetSingle(string codDocument)
@@ -127,7 +143,9 @@ namespace Services
 
         public IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct)
         {
-            var query = Context.DocumentProducts.Include("Costs").Include("Product").Where(x => x.CodProduct == codProduct);
+            var query = Context.DocumentProducts.Include("Costs")
+                .Include("Costs.CostDetails")
+                .Include("Product").Where(x => x.CodProduct == codProduct);
             return query;
         }
         public override void SetDbName(string name)

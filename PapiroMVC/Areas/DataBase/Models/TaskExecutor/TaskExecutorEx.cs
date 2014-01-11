@@ -9,9 +9,78 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(TaskExecutor_MetaData))]
     public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated
     {
+        /// <summary>
+        /// filters whitch taskexecutor can run codTypeOfTask task
+        /// </summary>
+        /// <param name="codTypeOfTask"></param>
+        /// <returns></returns>
+        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor>tskExec, string codTypeOfTask)
+        {
+            if (codTypeOfTask == "STAMPARIGIDO")
+            {
+                tskExec = tskExec.OfType<PlotterSheet>();
+            }
+
+            if (codTypeOfTask == "STAMPAOFF")
+            {
+                tskExec = tskExec.OfType<LithoSheet>();
+            }
+
+            if (codTypeOfTask == "STAMPAOFFeDIGITALE")
+            {
+                var tskExec1 = tskExec.OfType<LithoSheet>();
+                var tskExec2 = tskExec.OfType<DigitalSheet>();
+
+                tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
+            }
+
+            return tskExec;
+
+        }
+
+        public virtual double Starts(string codOptionTypeOfTask)
+        {
+            throw new Exception("Not implemented");
+        }
+
+        public CostDetail.QuantityType TypeOfQuantity
+        {
+            get
+            {
+                CostDetail.QuantityType ret = CostDetail.QuantityType.RunTypeOfQuantity;
+                var estimatedOn = this.SetTaskExecutorEstimatedOn.FirstOrDefault();
+                if (estimatedOn != null)
+                {
+                    switch (estimatedOn.TypeOfEstimatedOn)
+                    {
+                        case TaskEstimatedOn.EstimatedOnType.OnRun:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnTime:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.OnMq:
+                            ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.BindingOnRun:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.DigitalOnTime:
+                            break;
+                        case TaskEstimatedOn.EstimatedOnType.PlotterOnMq:
+                            ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                return ret;
+            }
+        }
 
         #region Proprietà aggiuntive
         public enum ExecutorType : int

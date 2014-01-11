@@ -1,0 +1,35 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Document
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    //Prendo il titolo dal menù
+    ViewBag.MetaTitle = Html.T(strings, "EditEstimateMetaTitle");
+}
+
+@section title{
+    @Html.T(strings, "Estimate")
+}
+
+@section description{
+    @Html.T(strings, "EditEstimateDesc")
+}
+
+@Html.Partial("_EditAndCreateDocument", Model)
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}

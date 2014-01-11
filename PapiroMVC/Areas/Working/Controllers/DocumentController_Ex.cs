@@ -54,7 +54,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DocumentList(GridSettings gridSettings)
+        private IQueryable<Document> DocumentList(GridSettings gridSettings)
         {
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
@@ -83,16 +83,28 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             switch (gridSettings.sortColumn)
             {
+                case "Customer":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Customer) : q.OrderBy(c => c.Customer);
+                    break;
                 case "CodDocument":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodDocument) : q.OrderBy(c => c.CodDocument);
                     break;
                 case "DocumentName":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.DocumentName) : q.OrderBy(c => c.DocumentName);
                     break;
+                default:
+                    q = q.OrderByDescending(c => c.CodDocument);
+                    break;
             }
+            return q;
+        }
 
-            var q2 = q.ToList();
-            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+        public ActionResult EstimateList(GridSettings gridSettings)
+        {
+
+            var q = this.DocumentList(gridSettings).OfType<Estimate>();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
             int totalRecords = q.Count();
 
@@ -112,14 +124,15 @@ namespace PapiroMVC.Areas.Working.Controllers
                 records = totalRecords,
                 rows =
                 (
-                    from a in q3
+                    from a in q3.ToList()
                     select new
                     {
                         id = a.CodDocument,
                         cell = new string[] 
                         {                       
                             a.CodDocument,
-                            a.CodDocument,
+                            a.Customer,
+                            a.Number.ToString(),
                             a.DocumentName,
                         }
                     }
@@ -127,6 +140,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
         }
 
         public ActionResult DocumentProductsList(string CodDocument, GridSettings gridSettings)
@@ -134,10 +149,11 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (CodDocument != null)
             {
-                var q = documentRepository.GetSingle(CodDocument).DocumentProducts;
+                var q = documentRepository.GetSingle(CodDocument).DocumentProducts.Select((p) =>
+                            new { CodProduct = p.CodProduct, ProductName = p.ProductName }).Distinct();
 
-                var q2 = q.ToList();
-                var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+                //var q2 = q.ToList();
+                var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
 
                 int totalRecords = q.Count();
 
@@ -162,13 +178,14 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {
                             id = a.CodProduct,
                             cell = new string[] 
-                        {                       
-                            a.CodProduct,
-                            a.ProductName   //attributo derivato
+                            {                       
+                                a.CodProduct,
+                                a.ProductName   //attributo derivato
+                            }
                         }
-                        }
-                    ).Distinct().ToArray()
+                    ).ToArray()
                 };
+
 
                 return Json(jsonData, JsonRequestBehavior.AllowGet);
             }

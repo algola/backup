@@ -33,7 +33,28 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             base.Initialize(requestContext);
             documentRepository.SetDbName(CurrentDatabase);
+            productRepository.SetDbName(CurrentDatabase);
+
+            typeOfTaskRepository.SetDbName(CurrentDatabase);
+            taskExecutorRepository.SetDbName(CurrentDatabase);
+
+            articleRepository.SetDbName(CurrentDatabase);
+            customerSupplierRepository.SetDbName(CurrentDatabase);
+            costDetailRepository.SetDbName(CurrentDatabase);
+
             ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+
+            //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
+            //oppure per crearne uno nuovo vuoto
+            if (Session["CodDocument"] == null || documentRepository.GetSingle((string)Session["CodDocument"]) == null)
+            {
+                ViewBag.CodDocument = null;
+            }
+            else
+            {
+                ViewBag.CodDocument = Session["CodDocument"];
+            }
+
 
         }
 
@@ -52,7 +73,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository = _documentRepository;
             productRepository = _productRepository;
             taskExecutorRepository = _taskExecutorRepository;
-            articleRepository=_articleRepository;
+            articleRepository = _articleRepository;
             customerSupplierRepository = _customerSupplierRepository;
             menu = _menuProduct;
             costDetailRepository = _costDetailRepository;
@@ -61,6 +82,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         //
         // GET: /Working/Document/
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Working/Document/
+        public ActionResult ListEstimate()
         {
             return View();
         }
@@ -92,10 +120,25 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Add(c);
             documentRepository.Save();
             Session["CodDocument"] = c.CodDocument;
-
+            
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditDocument";
             return View("EditDocument", c);
+        }
+
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateEstimate()
+        {
+            var c = new Estimate();
+            c.CodDocument = documentRepository.GetNewCode(c);
+            documentRepository.Add(c);
+            documentRepository.Save();
+            Session["CodDocument"] = c.CodDocument;
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditEstimate";
+            return View("EditEstimate", c);
         }
 
 

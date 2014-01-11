@@ -28,8 +28,23 @@ namespace PapiroMVC.Areas.Working.Controllers
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
+
+            documentRepository.SetDbName(CurrentDatabase);
             productRepository.SetDbName(CurrentDatabase);
             ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+            typeOfTaskRepository.SetDbName(CurrentDatabase);
+
+            //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
+            //oppure per crearne uno nuovo vuoto
+            if (Session["CodDocument"] == null || documentRepository.GetSingle((string)Session["CodDocument"]) == null)
+            {
+                ViewBag.CodDocument = null;
+            }
+            else
+            {
+                ViewBag.CodDocument = Session["CodDocument"];
+            }
+
         }
 
 
@@ -82,7 +97,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         [HttpParamAction]
         [HttpGet]
-        
+
         public ActionResult CreateProduct(string id)
         {
             var c = InitProduct(id);
@@ -92,14 +107,13 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             d.Quantities.Add(0);
             d.Quantities.Add(0);
-//            d.Quantities.Add(0);
-//            d.Quantities.Add(0);
+            //            d.Quantities.Add(0);
+            //            d.Quantities.Add(0);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";
             return View("CreateProduct", d);
         }
-
 
     }
 }

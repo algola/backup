@@ -7,7 +7,7 @@
 
 <div id="status">
 
-    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/autocomplete")
 
     @using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }))
     {
@@ -76,8 +76,3 @@
 
     }
 </div>
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

@@ -3,6 +3,7 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleRigid");
 }
 
 @section title{
@@ -10,7 +11,7 @@
 }
 
 @section description{
-    @Html.T(strings, "RigidPrintableArticle")
+    @Html.T(strings, "RigidPrintableArticleGridCaption")
 }
 
 <div id='rollprintablearticle'>

@@ -41,14 +41,19 @@ namespace PapiroMVC.Models
 
         public override void InitProduct()
         {
-
             base.InitProduct();
 
             var cover = new ProductPartCoverSheet();
             cover.ProductPartTasks = this.GetInitalizedPartTask();
+            cover.ProductPartName = "";
+            cover.WidthWings = 0;
+            cover.Back = 0;
+
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPart);
+            cover.ProductPartName = (string)t.GetProperty(cover.TypeOfProductPart.ToString()).GetValue(null, null);
 
             ProductPartTask partTask;
-            partTask = cover.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPA_NO");
+            partTask = cover.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
             partTask.Hidden = false;
             partTask.IndexOf = 1;
 
@@ -66,7 +71,7 @@ namespace PapiroMVC.Models
             var intern = new ProductPartBookSheet();
             intern.ProductPartTasks = this.GetInitalizedPartTask();
 
-            partTask = intern.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPA_NO");
+            partTask = intern.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
             partTask.Hidden = false;
             partTask.IndexOf = 1;
 
@@ -75,6 +80,9 @@ namespace PapiroMVC.Models
             intern.ProductPartPrintableArticles.Add(material);
             ProductParts.Add(intern);
 
+            //descrizone che poi andrà nei costi per identificare la parte!
+            intern.ProductPartName = (string)t.GetProperty(intern.TypeOfProductPart.ToString()).GetValue(null, null);
+            intern.ProductPartName += " 1";
 
         }
 
@@ -171,7 +179,7 @@ namespace PapiroMVC.Models
         #endregion
 
 
-        public override void ProductPartCodeRigen()
+        public override void ProductCodeRigen()
         {
             //parti del prodotto
             var ppart = this.ProductParts.ToList();
@@ -179,7 +187,7 @@ namespace PapiroMVC.Models
             {
                 item.Format = this.Format;
             }
-            base.ProductPartCodeRigen();
+            base.ProductCodeRigen();
         }
 
     }

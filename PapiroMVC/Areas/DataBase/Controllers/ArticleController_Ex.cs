@@ -10,6 +10,7 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
+using System.Threading;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -48,7 +49,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             HttpContext.Response.StatusCode = 500;
             HttpContext.Response.Clear();
-            return PartialView("_RollPrintableArticleAutoChanges",x);
+            return PartialView("_RollPrintableArticleAutoChanges", x);
         }
 
         //this method works on data from ajax post in _ListRollPrintableArticle 
@@ -190,13 +191,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 isObject = (objectType.ToLower().Contains(typeOfArticleFilter.ToLower()));
                 isRigid = (rigidType.ToLower().Contains(typeOfArticleFilter.ToLower()));
 
-                var a = isRoll ? (IQueryable<Article>)q.OfType<RollPrintableArticle>() : articleRepository.FindBy(x=>x.CodArticle=="");
+                var a = isRoll ? (IQueryable<Article>)q.OfType<RollPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
                 var b = isSheet ? (IQueryable<Article>)q.OfType<SheetPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
                 var c = isObject ? (IQueryable<Article>)q.OfType<ObjectPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
                 var d = isRigid ? (IQueryable<Article>)q.OfType<RigidPrintableArticle>() : articleRepository.FindBy(x => x.CodArticle == "");
 
                 var res = (a.Union(b).Union(c).Union(d));
-                q = (IQueryable<Article>)res;                            
+                q = (IQueryable<Article>)res;
             }
 
             switch (gridSettings.sortColumn)
@@ -356,7 +357,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var weightDouble = Convert.ToDouble(weightArticleFilter);
+                    var weightDouble = Convert.ToDouble(weightArticleFilter, Thread.CurrentThread.CurrentUICulture);
                     q = q.Where(c => c.Weight == weightDouble);
                 }
                 catch (Exception e)
@@ -379,6 +380,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 case "Weight":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Weight) : q.OrderBy(c => c.Weight);
                     break;
+                default:
+                    q = q.OrderBy(c => c.ArticleName);
+                    break;
             }
 
             return q;
@@ -386,8 +390,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult SheetPrintableArticleList(GridSettings gridSettings)
         {
+            IQueryable<SheetPrintableArticle> q;
+
             //common serarch and order
-            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>();
+            q = PrintableList(gridSettings).OfType<SheetPrintableArticle>();
 
             string formatArticleFilter = string.Empty;
             string sheetPerPackedFilter = string.Empty;
@@ -415,7 +421,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var sheetPerPackedDouble = Convert.ToDouble(sheetPerPackedFilter);
+                    var sheetPerPackedDouble = Convert.ToDouble(sheetPerPackedFilter, Thread.CurrentThread.CurrentUICulture);
                     q = q.Where(c => c.SheetPerPacked == sheetPerPackedDouble);
                 }
                 catch (Exception e)
@@ -428,7 +434,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var sheetPerPalletDouble = Convert.ToDouble(sheetPerPalletFilter);
+                    var sheetPerPalletDouble = Convert.ToDouble(sheetPerPalletFilter, Thread.CurrentThread.CurrentUICulture);
                     q = q.Where(c => c.SheetPerPallet == sheetPerPalletDouble);
                 }
                 catch (Exception e)
@@ -437,8 +443,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
-            var q2 = q.ToList();
-            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
             int totalRecords = q.Count();
 
@@ -458,7 +464,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 records = totalRecords,
                 rows =
                 (
-                    from a in q3
+                    from a in q3.ToList()
                     select new
                     {
                         id = a.CodArticle,
@@ -482,20 +488,26 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     }
                 ).ToArray()
             };
-
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+
 
         }
 
         public ActionResult SheetPrintableArticleListPerProduct(GridSettings gridSettings)
         {
-            //common serarch and order
-            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>().Distinct();
+            var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>().Select(p => new 
+            {
+                TypeOfMaterial = p.TypeOfMaterial,
+                NameOfMaterial = p.NameOfMaterial,
+                Color = p.Color,
+                Weight = p.Weight,
+            }).Distinct();
 
-            var q2 = q.ToList();
-            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+            q = q.OrderBy(c => c.TypeOfMaterial);
 
-            int totalRecords = q.Count();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
+
+            int totalRecords = q.ToList().Count();
 
             // create json data
             int pageIndex = gridSettings.pageIndex;
@@ -506,6 +518,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             int startRow = (pageIndex - 1) * pageSize;
             int endRow = startRow + pageSize;
 
+            
             var jsonData = new
             {
                 total = totalPages,
@@ -516,20 +529,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     from a in q3
                     select new
                     {
-                        id = a.CodArticle,
-                        cell = new string[] 
-                        {                       
-                            a.CodArticle,
-                            a.CodArticle,
-                            a.TypeOfMaterial,
-                            a.NameOfMaterial,
-                            a.Color,
-                            a.Weight.ToString(),
-                        }
+                        a.TypeOfMaterial,
+                        a.NameOfMaterial,
+                        a.Color,
+                        a.Weight,
                     }
                 ).ToArray()
             };
-
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
@@ -553,7 +559,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    var widthtDouble = Convert.ToDouble(widthArticleFilter);
+                    var widthtDouble = Convert.ToDouble(widthArticleFilter, Thread.CurrentThread.CurrentUICulture);
                     q = q.Where(c => c.Width == widthtDouble);
                 }
                 catch (Exception e)

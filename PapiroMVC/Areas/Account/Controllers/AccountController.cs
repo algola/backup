@@ -17,7 +17,6 @@ namespace PapiroMVC.Areas.Account.Controllers
     [Authorize]
     public class AccountController : ControllerAlgolaBase
     {
-
         private readonly IProfileRepository profDataRep;
         protected IMenuProductRepository profMenuRep;
 
@@ -28,27 +27,44 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         public void SendConfirmationEmail(string userName)
         {
+            Type res = typeof(PapiroMVC.Models.Resources.Account.Registration);
+
             MembershipUser user = Membership.GetUser(userName);
             string confirmationGuid = user.ProviderUserKey.ToString();
             string verifyUrl = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
                              "/account/verify?ID=" + confirmationGuid;
 
+            var password= user.GetPassword();
+            //var newPassword = member.ResetPassword(currentUser);
+
+            var messagePwd = string.Format("Login: {0}\r\n", user.UserName);
+            messagePwd += string.Format("Password: {0}\r\n", password);
+
+            string messageStr = string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBody1").GetValue(null, null) ?? "");
+                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody2").GetValue(null, null)??"");
+                messageStr += string.Format("\r\n{0}\r\n", messagePwd);
+                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody3").GetValue(null, null)??"");
+                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody4").GetValue(null, null)??"");
+                messageStr += string.Format("\r\n{0}\r\n", verifyUrl);
+                messageStr += string.Format("\r\n{0}\r\n", (string)res.GetProperty("RegistrationBodyF1").GetValue(null, null) ?? "");
+                        
             var message = new MailMessage("papirosoftware@gmail.com", user.Email)
             {
-                Subject = "Please confirm your email",
-                Body = verifyUrl
-
+                Subject = (string)res.GetProperty("RegistrationTitle").GetValue(null, null)??"",
+                Body = messageStr
             };
+
+            message.Bcc.Add(new MailAddress("a.degola@algola.com"));
 
             var client = new SmtpClient();
             client.EnableSsl = true;
-            client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@"); 
+            client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@");
             client.Port = 587;
             client.Send(message);
         }
 
         //constructor
-        public AccountController(IProfileRepository _profDataRep,IMenuProductRepository _profMenuRep)
+        public AccountController(IProfileRepository _profDataRep, IMenuProductRepository _profMenuRep)
         {
             //TODOCHRIS
             //passare al costruttore anche un riferimento di tipo IMenuProductRepository
@@ -56,7 +72,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             profMenuRep = _profMenuRep;
             profDataRep = _profDataRep;
         }
-        
+
         //
         // GET: /Account/Login
 
@@ -68,6 +84,13 @@ namespace PapiroMVC.Areas.Account.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult LoginInvite(string returnUrl)
+        {
+            return PartialView("_LoginInvite");
+        }
         //
         // POST: /Account/Login
         [AllowAnonymous]
@@ -79,7 +102,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             {
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
-                 //   base.UpdateDatabase(model.UserName);
+                    //   base.UpdateDatabase(model.UserName);
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
@@ -95,8 +118,8 @@ namespace PapiroMVC.Areas.Account.Controllers
                     AsyncManager.Parameters.Add("model", model);
 
 
-//                    AsyncManager.OutstandingOperations.Increment(1);
-                    System.Threading.Tasks.Task.Factory.StartNew(() => longJob(model));                
+                    //                    AsyncManager.OutstandingOperations.Increment(1);
+                    System.Threading.Tasks.Task.Factory.StartNew(() => longJob(model));
                 }
                 else
                 {
@@ -111,11 +134,12 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         private void longJob(LoginModel model)
         {
-            base.UpdateDatabase(model.UserName);
+            //base.UpdateDatabase(model.UserName);
+
             //you can also set the parameter here
             //AsyncManager.Parameters.Add("redirect", false);
 
-            
+
             //if we want to wait the end
             //            AsyncManager.OutstandingOperations.Decrement();
         }
@@ -136,7 +160,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     return Redirect(returnUrl);
                 }
             }
-            return PartialView("_Login",model);
+            return PartialView("_Login", model);
         }
 
         /*
@@ -180,7 +204,7 @@ namespace PapiroMVC.Areas.Account.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home",new {Area=""});
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
 
         //
@@ -201,22 +225,22 @@ namespace PapiroMVC.Areas.Account.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
-                Membership.CreateUser(model.UserName, 
-                    model.Password, model.Email, 
-                    passwordQuestion: null, 
-                    passwordAnswer: null, 
-                    isApproved: false, 
-                    providerUserKey: null, 
+                Membership.CreateUser(model.UserName,
+                    model.Password, model.Email,
+                    passwordQuestion: null,
+                    passwordAnswer: null,
+                    isApproved: false,
+                    providerUserKey: null,
                     status: out createStatus);
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     //TO DO: create a new user in main database
                     //
-                    
+
                     var nProf = new Profile();
                     nProf.Name = model.UserName;
                     nProf.CompanyName = model.OrganizationName;
@@ -226,13 +250,13 @@ namespace PapiroMVC.Areas.Account.Controllers
                     nProf.TaxCode = model.TaxCode;
                     nProf.Refeere = model.Refeere;
                     nProf.VatNumber = model.VatNumber;
-                    
+
 
                     profDataRep.Add(nProf);
                     profDataRep.Save();
 
                     this.SendConfirmationEmail(model.UserName);
-//                    return RedirectToAction("Confirmation", "Account");
+                    //                    return RedirectToAction("Confirmation", "Account");
                     return Json(new { redirectUrl = Url.Action("Confirmation") });
 
                 }
@@ -243,7 +267,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return PartialView("_Register",model);
+            return PartialView("_Register", model);
         }
 
 
@@ -252,7 +276,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         public ActionResult EditProfile()
         {
-            
+
             //TODOCHRIS
             //non dovrai passare alla View(profile) un oggetto di tipo profile... ma dovrai creare un oggetto nuovo (new) di tipo
             //ViewModel 
@@ -260,14 +284,14 @@ namespace PapiroMVC.Areas.Account.Controllers
             //e alla prorpietà MenuProducts il getAll() dal repository del MenuProduct
 
             //ricolrdati che devi fare il ToList() del getall perchè vogliamo una lista nel ViewModel
-            
+
             var menuP = profMenuRep.GetAll().ToList();
             var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
-           // return View(profile);
+            // return View(profile);
 
             var temp = new ProfileViewModel();
-            temp.Profile=profile;
-            temp.MenuProducts=menuP;
+            temp.Profile = profile;
+            temp.MenuProducts = menuP;
 
             return View(temp);
 
@@ -277,17 +301,17 @@ namespace PapiroMVC.Areas.Account.Controllers
         // POST: /Account/EditProfile
 
         [HttpPost]
-        public ActionResult EditProfile(ProfileViewModel model)
+        public ActionResult EditProfile(ProfileViewModel model, FormCollection x)
         {
             if (ModelState.IsValid)
             {
-                try 
+                try
                 {
                     //TODOCHRIS: SALVA model.Profile
                     profDataRep.Edit(model.Profile);
                     profDataRep.Save();
-                    
-                    
+
+
                     ////TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
                     ////la scorri e per ciascun menu-prodotto in lista: 
                     ////lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
@@ -299,7 +323,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     //    profMenuRep.Edit(temp);
                     //}
                     //profMenuRep.Save();
-                    
+
 
                     //aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
                     //applichi il metodo Edit del repository dei menu-prodotti al temp
@@ -308,7 +332,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
-                
+
                 catch (Exception)
                 {
                     ModelState.AddModelError("PersError", "GenericError");
@@ -317,7 +341,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             // If we got this far, something failed, redisplay form
 
-            return PartialView("_EditProfile",model);
+            return PartialView("_EditProfile", model);
         }
 
         //
@@ -352,7 +376,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                 if (changePasswordSucceeded)
                 {
-                    return Json(new { redirectUrl = Url.Action("ChangePasswordSuccess")});
+                    return Json(new { redirectUrl = Url.Action("ChangePasswordSuccess") });
                 }
                 else
                 {
@@ -361,50 +385,97 @@ namespace PapiroMVC.Areas.Account.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return PartialView("_ChangePassword",model);
+            return PartialView("_ChangePassword", model);
         }
 
         //
         // GET: /Account/RecoveryPassword
-                [AllowAnonymous]
+        [AllowAnonymous]
 
         public ActionResult RecoveryPassword()
         {
+            TempData["EmailError"] = false;
+
             return View();
         }
 
         //
         // POST: /Account/RecoveryPassword
-                [AllowAnonymous]
+        [AllowAnonymous]
 
         [HttpPost]
         public ActionResult RecoveryPassword(RecoveryPasswordModel model)
         {
+            Type res = typeof(PapiroMVC.Models.Resources.Account.Registration);
+
             if (ModelState.IsValid)
             {
+                TempData["EmailError"] = false;
 
                 string currentUser = String.Empty;
+                MembershipUser member;
+
                 try
                 {
-                     currentUser = Membership.GetUserNameByEmail(model.Email); 
+                    currentUser = Membership.GetUserNameByEmail(model.Email);
                 }
                 catch (Exception)
                 {
-
+                    TempData["EmailError"] = false;
                 }
 
-                if (currentUser != String.Empty)
+                if (currentUser != String.Empty && currentUser != null)
                 {
+                    //devo inviare la password                    
+                    member = Membership.GetUser(currentUser);
 
-                    
+                    member.UnlockUser();
+                    var password = member.GetPassword();
+                    //var newPassword = member.ResetPassword(currentUser);
+
+                    var messagePwd = string.Format("Login: {0}\r\n", member.UserName);
+                    messagePwd += string.Format("Password: {0}\r\n", password);
+
+                    string messageStr = string.Format("{0}\r\n", (string)res.GetProperty("RecoveryBody1").GetValue(null, null) ?? "");
+                    messageStr += string.Format("{0}\r\n", (string)res.GetProperty("RecoveryBody2").GetValue(null, null) ?? "");
+                    messageStr += string.Format("\r\n{0}\r\n", messagePwd);
+                    messageStr += string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBodyF1").GetValue(null, null) ?? "");
+
+                    var message = new MailMessage("papirosoftware@gmail.com", member.Email)
+                    {
+                        Subject = (string)res.GetProperty("RecoveryTitle").GetValue(null, null) ?? "",
+                        Body = messageStr
+                    };
+
+                    try
+                    {
+                        var client = new SmtpClient();
+                        client.EnableSsl = true;
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@");
+                        client.Port = 587;
+                        client.Send(message);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Could not send e-mail. Exception caught: " + e);
+                    }
+
+                    return Json(new { redirectUrl = Url.Action("EmailSent") });
+                    //return RedirectToAction("EmailSent", "Account");  
                 }
-                return Json(new { redirectUrl = Url.Action("EmailSent") });
-                //return RedirectToAction("EmailSent", "Account");  
+                else
+                {
+                    TempData["EmailError"] = true;
+                    // If we got this far, something failed, redisplay form
+                    return PartialView("_RecoveryPassword", model);
+                }
 
             }
 
+            TempData["EmailError"] = true;
             // If we got this far, something failed, redisplay form
-            return PartialView("_RecoveryPassword",model);
+            return PartialView("_RecoveryPassword", model);
         }
 
         //
@@ -458,7 +529,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                TempData["message"] = "Error";                
+                TempData["message"] = "Error";
             }
             return View();
         }

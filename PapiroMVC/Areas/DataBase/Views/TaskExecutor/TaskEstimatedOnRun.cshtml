@@ -5,9 +5,7 @@
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
     ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnRun");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
-
 }
-
 
 <div id="status">
 
@@ -31,7 +29,7 @@
             @Html.AlgolaEditorFor(model => model.StartingCost2)
 
             @Html.AlgolaEditorFor(model => model.CostForfait)
-            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+@*            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet) *@
 
         </fieldset>
         <fieldset>

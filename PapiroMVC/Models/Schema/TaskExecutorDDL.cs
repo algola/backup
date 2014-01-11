@@ -26,6 +26,7 @@ namespace PapiroMVC.Model
             dbS.AddTable("taskexecutors");
             dbS.AddColumnToTable("taskexecutors", "CodTaskExecutor", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("taskexecutors", "TaskExecutorName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("taskexecutors", "CodTask", SchemaDb.String, "50");
             dbS.AddColumnToTable("taskexecutors", "Version", SchemaDb.String, "4");
             dbS.AddColumnToTable("taskexecutors", "Dismissed", SchemaDb.Bool, "0");
 
@@ -158,7 +159,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHourBinding", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimeBinding", SchemaDb.Time, "0");
 
-            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerUnit", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerUnit", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentCostPerUnit", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "UseDifferentDeficitOnCostForWeightStep", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingCost1", SchemaDb.String, "20");

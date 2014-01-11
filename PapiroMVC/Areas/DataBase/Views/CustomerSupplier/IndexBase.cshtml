@@ -1,27 +1,28 @@
-﻿@using MvcContrib.UI.Grid 
+﻿@using MvcContrib.UI.Grid
 @using PapiroMVC.Validation
 @using Mvc.HtmlHelpers
 @model PapiroMVC.Models.CustomerSupplier
+
+@{
+    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleBase");
+}
 
 <div id='customersupplierbase'>
     @Html.Partial("_ListBase", Model)
 </div>
 
-@{
-    string strings = "~/Areas/DataBase/Views/CustomerSupplier/Strings";
-}
 
 @section breadcrumb {
 
 }
 
-
 @section title{
-    @Html.T(strings, "CustomerSuppliers")
+    @Html.T(strings, "CustomerSuppliers") 
 }
 
 @section description{
-    @Html.T(strings, "TitleIndexBase")
+    @Html.T(strings, "TitleIndexBase") @Html.DisplayFor(o => o.BusinessName)
 }
 
 
@@ -39,7 +40,7 @@
 
 
 <script>
-    $(function () {        
+    $(function () {
         document.getElementById("customerSlidebar").className = "active open";
     });
 </script>

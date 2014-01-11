@@ -32,6 +32,10 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("documents", "CodCustomer", SchemaDb.String, "50");
             dbS.AddColumnToTable("documents", "Customer", SchemaDb.String, "50");
+
+            dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");
+            
+            
             //foreign key
             dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
 

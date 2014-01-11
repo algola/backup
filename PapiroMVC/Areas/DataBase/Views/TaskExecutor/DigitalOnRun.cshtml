@@ -1,0 +1,116 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.DigitalOnRun
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TaskEstimatedOnRun");
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</legend>
+
+            @Html.Hidden("returnUrl", TempData["TaskExecutorIndex"])
+            <div class="well no-padding-left no-padding-rigth">
+                @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.CodTaskExecutor)
+                @Html.HiddenFor(model => model.CodTaskEstimatedOn)
+
+                @Html.AlgolaEditorFor(model => model.StartingCost1)
+                @Html.AlgolaEditorFor(model => model.StartingCost2)
+
+                @Html.AlgolaEditorFor(model => model.CostForfait)
+            </div>
+
+            @Html.AlgolaEditorFor(model => model.StartingCost1BW)
+            @Html.AlgolaEditorFor(model => model.StartingCost2BW)
+
+            @Html.AlgolaEditorFor(model => model.CostForfaitBW)
+            @*            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+*@
+        </fieldset>
+        <fieldset>
+            <legend>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</legend>
+
+            <div class="well no-padding-left no-padding-rigth">
+                @Html.AlgolaEditorFor(model => model.CostPerUnit)
+
+                @Html.EditorFor(model => model.UseDifferentCostPerUnit)
+                <div id="_listAvarageRunPerRunStep">
+                    @Html.Partial("_ListCostPerRunStep", Model)
+                </div>
+                <br />
+            </div>
+
+            @Html.AlgolaEditorFor(model => model.CostPerUnitBW)
+
+            @Html.EditorFor(model => model.UseDifferentCostPerUnitBW)
+            <div id="_listAvarageRunPerRunStepBW">
+                @Html.Partial("_ListCostPerRunStepBW", Model)
+            </div>
+            <br />
+
+            <div class="well no-padding-left no-padding-rigth">
+                @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
+
+                <div id="_listDeficitForWeightStep">
+                    @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
+                </div>
+            </div>
+
+            <br />
+        </fieldset>
+        
+        <p>
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
+                <i class="icon-undo bigger-125"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save bigger-160"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+        </p>
+
+    }
+
+</div>
+
+
+@section breadcrumb {
+
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section title{
+    @ViewBag.Title
+}
+
+@section description{
+    @ViewBag.Desc
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+}

@@ -6,12 +6,47 @@ using System.ComponentModel;
 
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(TaskEstimatedOnTime_MetaData))]
-    public partial class TaskEstimatedOnTime: TaskEstimatedOn, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class TaskEstimatedOnTime : TaskEstimatedOn
     {
+
+        public override double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        {
+            TimeSpan totalTime;
+            totalTime = this.StartingTime1 ?? TimeSpan.Zero;
+
+            for (int i = 0; i < starts - 1; i++)
+            {
+                totalTime += (StartingTime2 ?? TimeSpan.Zero);
+            }
+
+            if (UseDifferentRunPerHour ?? false)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                if (AvarageRunPerHour == null)
+                {
+                    totalTime = TimeSpan.Zero;
+                }
+                else
+                {
+                    //ore
+                    var tot = (running / AvarageRunPerHour);
+                    var hour = (double)Math.Truncate((decimal)tot);
+                    var min = (double)Math.Truncate((decimal)((tot - hour) * 60));
+                    totalTime += TimeSpan.FromHours(hour) + TimeSpan.FromMinutes(min);
+                }
+            }
+
+            return (totalTime.TotalMinutes) / 60 * Convert.ToDouble(CostPerHourRunning, Thread.CurrentThread.CurrentUICulture);
+        }
 
         public TaskEstimatedOnTime()
         {
@@ -19,78 +54,6 @@ namespace PapiroMVC.Models
         }
 
         #region Proprietà aggiuntive
-
-        #endregion
-
-        #region Error Handler
-
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""                       
-               };
-
-        public override string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                ////validazione della proprietà Note
-                //if (proprieta == "Note")
-                //{
-                //    if (this.Note != null)
-                //    {
-                //        Regex exp = new Regex(@"^[\w\s\x00-\xFF]{0,255}$", RegexOptions.IgnoreCase);
-                //        if (!exp.IsMatch(this.Note))
-                //        {
-                //            result = "Superata la lunghezza delle note consentita";
-                //        }
-                //    }
-                //}
-                ////validazione della proprietà Prodotto
-                //if (proprieta == "Prodotto")
-                //{
-                //    if (this.Prodotto == null)
-                //    {
-                //        result = "Nessuno prodotto selezionato";
-                //    }
-                //}
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public override bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret && base.IsValid;
-            }
-        }
-
-        #endregion
-
-        #region Handle copy for modify
-
-        public override void Copy(TaskEstimatedOn to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-            ((TaskEstimatedOnTime)to).AvarageRunPerHour = this.AvarageRunPerHour;
-            ((TaskEstimatedOnTime)to).UseDifferentRunPerHour = this.UseDifferentRunPerHour;
-            ((TaskEstimatedOnTime)to).StartingTime1 = this.StartingTime1;
-            ((TaskEstimatedOnTime)to).StartingTime2 = this.StartingTime2;
-            ((TaskEstimatedOnTime)to).TimeForfait = this.TimeForfait;
-            ((TaskEstimatedOnTime)to).CostPerHourRunning = this.CostPerHourRunning;
-            ((TaskEstimatedOnTime)to).CostPerHourStarting = this.CostPerHourStarting;
-        }
 
         #endregion
 

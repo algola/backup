@@ -18,7 +18,7 @@
 
     @Scripts.Render("~/bundles/autocomplete")
 
-    @using (Ajax.BeginForm("Login", "Account", new AjaxOptions
+    @using (Ajax.BeginForm("Login", "Account", new {area = "Account"}, new AjaxOptions
 {
     UpdateTargetId = "status",
     OnBegin = "showProcessingMsg",

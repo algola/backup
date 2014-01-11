@@ -138,8 +138,38 @@
   <data name="Phone" xml:space="preserve">
     <value>Numero di telefono</value>
   </data>
+  <data name="RecoveryBody1" xml:space="preserve">
+    <value>Gentile Cliente,</value>
+  </data>
+  <data name="RecoveryBody2" xml:space="preserve">
+    <value>di seguito le credenziali di accesso a PapiroStar da Lei richieste.</value>
+  </data>
+  <data name="RecoveryBodyF1" xml:space="preserve">
+    <value>PapiroStar - Gestionale Cloud per la Stampa</value>
+  </data>
+  <data name="RecoveryTitle" xml:space="preserve">
+    <value>PapiroStar credenziali di accesso</value>
+  </data>
   <data name="Refeere" xml:space="preserve">
     <value>Nominativo referente</value>
+  </data>
+  <data name="RegistrationBody1" xml:space="preserve">
+    <value>Grazie per esserti iscritto su PapiroStar!</value>
+  </data>
+  <data name="RegistrationBody2" xml:space="preserve">
+    <value>Di seguito i tuoi codici di accesso personali:</value>
+  </data>
+  <data name="RegistrationBody3" xml:space="preserve">
+    <value>Prima di procedere con il login è però indispensabile che venga confermata l'iscrizione.</value>
+  </data>
+  <data name="RegistrationBody4" xml:space="preserve">
+    <value>Clicca sul link di seguito:</value>
+  </data>
+  <data name="RegistrationBodyF1" xml:space="preserve">
+    <value>PapiroStar - Gestionale Cloud per la Stampa</value>
+  </data>
+  <data name="RegistrationTitle" xml:space="preserve">
+    <value>Benvenuto su PapiroStar</value>
   </data>
   <data name="RequiredFieldBase" xml:space="preserve">
     <value>Inserire indirizzo aziendale</value>

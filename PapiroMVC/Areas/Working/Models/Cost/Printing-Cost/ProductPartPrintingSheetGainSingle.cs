@@ -45,8 +45,8 @@ namespace PapiroMVC.Models
 
             try
             {
-                int gain1_1 = (int)decimal.Truncate(LargerFormat.GetSide1() / SmallerFormat.GetSide1());
-                int gain2_2 = (int)decimal.Truncate(LargerFormat.GetSide2() / SmallerFormat.GetSide2());
+                int gain1_1 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide1() / SmallerFormat.GetSide1())));
+                int gain2_2 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide2() / SmallerFormat.GetSide2())));
 
                 int gain2_2Perf = (gain2_2 % 2) == 0 ? gain2_2 : gain2_2 - 1;
                 int gain1_1Perf = (gain1_1 % 2) == 0 ? gain1_1 : gain1_1 - 1;
@@ -55,8 +55,8 @@ namespace PapiroMVC.Models
                 var gSideOnSide16 = gain1_1 * gain2_2Perf;
                 var gSideOnSide12 = gain1_1Perf * gain2_2;
 
-                var gain1_2 = (int)decimal.Truncate(LargerFormat.GetSide1() / SmallerFormat.GetSide2());
-                var gain2_1 = (int)decimal.Truncate(LargerFormat.GetSide2() / SmallerFormat.GetSide1());
+                var gain1_2 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide1() / SmallerFormat.GetSide2())));
+                var gain2_1 = (int)decimal.Truncate(((decimal)(LargerFormat.GetSide2() / SmallerFormat.GetSide1())));
 
                 int gain2_1Perf = (gain2_1 % 2) == 0 ? gain2_1 : gain2_1 - 1;
                 int gain1_2Perf = (gain1_2 % 2) == 0 ? gain1_2 : gain1_2 - 1;
@@ -132,13 +132,12 @@ namespace PapiroMVC.Models
 
                 }
 
-
                 var calculatedShape = MaxShape != 0 ? Math.Min((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0), MaxShape ?? ((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0))) : (gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0);
 
                 if (SubjectNumber <= calculatedShape)
                 {
                     gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (SubjectNumber != 0 ? SubjectNumber : 1)) * (SubjectNumber != 0 ? SubjectNumber : 1);
-                    gr.PrintedSubjects = gr.PrintedShapes / SubjectNumber;
+                    gr.PrintedSubjects =  SubjectNumber;
                 }
                 else
                 {

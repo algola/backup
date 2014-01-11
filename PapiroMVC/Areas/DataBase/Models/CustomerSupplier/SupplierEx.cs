@@ -5,6 +5,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     public partial class Supplier : CustomerSupplier
     {
         public Supplier()

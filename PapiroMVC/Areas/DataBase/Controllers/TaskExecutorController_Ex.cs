@@ -363,7 +363,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
-                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":                                           
+                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
+                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TypeOfExecutor.ToString(),
@@ -533,14 +535,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
         }
-
-
-
-
-
-
-
-
 
         private IQueryable<Step> StepsList(string codTaskExecutorOn, GridSettings gridSettings)
         {
@@ -731,6 +725,51 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        public ActionResult CostPerRunStepListBW(string codTaskExecutorOn, GridSettings gridSettings)
+        {
+            var q = StepsList(codTaskExecutorOn, gridSettings).OfType<CostPerRunStepBW>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.IdStep,
+                        cell = new string[] 
+                        {       
+                            a.IdStep.ToString(),
+                            a.IdStep.ToString(),
+                            a.CodTaskEstimatedOn.ToString(),
+                            a.FromUnit.ToString(),
+                            a.ToUnit.ToString(),
+                            a.CostPerUnit.ToString()
+                         }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
         //SAREBBE MEGLIO FARE IL POLIMORFISMO A SECONDA DEL TASKEXECUTOR
         private void GenEmptyStep(TaskExecutor taskExecutor)
         {
@@ -833,6 +872,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     newStep.TimeStampTable = DateTime.Now;
                     tskEst.steps.Add(newStep);
                 }
+
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<CostPerRunStepBW>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new CostPerRunStepBW();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
 
 
                 //look for to=0 from=0

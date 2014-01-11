@@ -14,7 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class PlotterOnMq : TaskEstimatedOnMq
     {
-
         public string CostInkJetLow { get; set; }
         public string CostInkJetMed { get; set; }
         public string CostInkJetHight { get; set; }

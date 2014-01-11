@@ -166,7 +166,7 @@
     <value>Nuovi Fornitori</value>
   </data>
   <data name="CustomerSupplierCreatedMessage" xml:space="preserve">
-    <value>Anagrafica creata correttamente. Cliccare sullo sfondo per procedere all'inserimento delle Sedi.</value>
+    <value>Anagrafica creata correttamente. Procedere all'inserimento delle Sedi.</value>
   </data>
   <data name="CustomerSuppliers" xml:space="preserve">
     <value>Clienti/Fornitori</value>
@@ -188,6 +188,12 @@
   </data>
   <data name="LeaveEmptyAutomation" xml:space="preserve">
     <value>Se lasciato vuoto, sarà assegnato un codice dal sistema (scelta consigliata)</value>
+  </data>
+  <data name="MetaTitleBase" xml:space="preserve">
+    <value>Gestione anagrafica delle sedi dei clienti e dei fornitori della tipografie, semplice ed intuitiva grazie al gestionale completo e gratuito per centri stampa</value>
+  </data>
+  <data name="MetaTitleCustomerSupplier" xml:space="preserve">
+    <value>Gestione anagrafica dei clienti e dei fornitori della tipografie, semplice ed intuitiva grazie al gestionale gratuito per tipografie</value>
   </data>
   <data name="NoteCaption" xml:space="preserve">
     <value>Note</value>

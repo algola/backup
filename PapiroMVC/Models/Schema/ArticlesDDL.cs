@@ -70,6 +70,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "PrintableFormat", SchemaDb.String, "9");
             dbS.AddColumnToTable("articles", "MqForafait", SchemaDb.Double, "0");
 
+            dbS.AddColumnToTable("articles", "Selector", SchemaDb.Int, "0");
+
+
             //Index
             dbS.AddIndex("articles", "ArticleName");
             dbS.AddIndex("articles", "TypeOfMaterial,SupplierMaker");

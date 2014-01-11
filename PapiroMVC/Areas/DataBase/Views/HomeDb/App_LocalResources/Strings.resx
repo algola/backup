@@ -123,4 +123,7 @@
   <data name="Home" xml:space="preserve">
     <value>home page</value>
   </data>
+  <data name="MetaTitle" xml:space="preserve">
+    <value>Gestionale per preventivi e commesse per stampa digitale e offset. Gratuito. Intuitivo e facile da configurare e usare.</value>
+  </data>
 </root>

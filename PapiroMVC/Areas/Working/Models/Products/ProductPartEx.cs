@@ -9,7 +9,7 @@ using PapiroMVC.Models.Resources.Products;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPart_MetaData))]
-    public partial class ProductPart : ICloneable, IDeleteRelated
+    public partial class ProductPart 
     {
         public virtual void UpdateOpenedFormat()
         {
@@ -65,7 +65,9 @@ namespace PapiroMVC.Models
             ProductPartCoverSheet = 1,
             ProductPartBookSheet = 2,
             ProductPartBlockSheet = 3,
-            ProductPartSinglePlotter = 4
+            ProductPartSinglePlotter  = 4,
+
+            ProductPartRigid = 5,
         }
 
         public ProductPartType TypeOfProductPart
@@ -121,61 +123,5 @@ namespace PapiroMVC.Models
             return ptArt + pTasks;
         }
 
-        #region Handle copy for modify
-
-        public virtual void Copy(ProductPart to)
-        {
-            //All properties of object
-            //and pointer of sons
-
-            to.CodProduct = this.CodProduct;
-            to.TimeStampTable = this.TimeStampTable;
-            to.CodProductPart = this.CodProductPart;
-            to.Format = this.Format;
-            to.PrintingType = this.PrintingType;
-            to.Product = this.Product;
-            to.ProductPartName = this.ProductPartName;
-            to.ProductPartPrintableArticles = this.ProductPartPrintableArticles;
-            to.ProductPartTasks = this.ProductPartTasks;
-            to.ServicesNumber = this.ServicesNumber;
-            to.SubjectNumber = this.SubjectNumber;
-        }
-
-        public object Clone()
-        {
-            //creo una copia dell'oggetto da utilizzare per le modifiche
-            var kindOfObject = this.GetType();
-
-            //istanzio una copia che sarà gestita dall'invio
-            ProductPart copyOfObject = (ProductPart)Activator.CreateInstance(kindOfObject);
-            //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
-            this.Copy(copyOfObject);
-
-            //CREATE DUPLICATION OF ANY FIRST GENERATION OF CHILD
-            //Example
-            //ProductPart partCopy = (ProductPart)Activator.CreateInstance(copyOfObject.Prodotto.GetType());
-            ////l'oggetto partCopy sarà una copia del contenuto dell'oggetto originale
-            //this.Prodotto.Copia(partCopy);
-
-            //sulla copia del prodotto in producto assegno la copia del suo prodotto
-            //Example
-            //copiaProdottoInProducto.Prodotto = null;
-            //copiaProdotto.ProdottoInProducto = null;
-            //copiaProdottoInProducto.Prodotto = copiaProdotto;
-            //copiaProdotto.ProdottoInProducto.Add(copiaProdottoInProducto);
-            //END COPY OF CHILD
-
-            return copyOfObject;
-        }
-
-        public void ChildsNull()
-        {
-            //Set all chied to null 
-
-            //Example
-            //this.Prodotto = null;
-        }
-
-        #endregion
     }
 }

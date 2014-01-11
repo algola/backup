@@ -14,17 +14,9 @@ namespace Services
         /// <returns></returns>
         public string GetNewCode(CustomerSupplier c)
         {
-
-            var codes = (from COD in Context.customersuppliers select COD.CodCustomerSupplier).ToArray().OrderBy(x => x, new SemiNumericComparer());
-
-            var csCode = codes.Count() != 0 ? codes.Last() : "0";
-
-            if (csCode == null)
-                csCode = "0";
-            return AlphaCode.GetNextCode(csCode);
-
+            var csCode = (from COD in this.GetAll() select COD.CodCustomerSupplier).Max();
+            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
         }
-
         
         public override IQueryable<CustomerSupplier> GetAll()
         {

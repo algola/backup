@@ -61,6 +61,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chi siamo.
+        /// </summary>
+        public static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Log-in.
         /// </summary>
         public static string AccessAccount {
@@ -70,7 +79,16 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PapiroSky.
+        ///   Looks up a localized string similar to Pubblicità.
+        /// </summary>
+        public static string Adv {
+            get {
+                return ResourceManager.GetString("Adv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PapiroStar.
         /// </summary>
         public static string AppName {
             get {
@@ -322,11 +340,47 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Community.
+        /// </summary>
+        public static string Community {
+            get {
+                return ResourceManager.GetString("Community", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contatti.
+        /// </summary>
+        public static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nuovo Preventivo.
+        /// </summary>
+        public static string CreateEstimateMenu {
+            get {
+                return ResourceManager.GetString("CreateEstimateMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lingua.
         /// </summary>
         public static string CultureMenu {
             get {
                 return ResourceManager.GetString("CultureMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preventivo Corrente.
+        /// </summary>
+        public static string CurrentEstimateMenu {
+            get {
+                return ResourceManager.GetString("CurrentEstimateMenu", resourceCulture);
             }
         }
         
@@ -358,6 +412,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to - DEMO.
+        /// </summary>
+        public static string Demo {
+            get {
+                return ResourceManager.GetString("Demo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa Digitale.
         /// </summary>
         public static string DigitalSheetMenu {
@@ -367,11 +430,20 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Documenti.
+        ///   Looks up a localized string similar to Area Lavoro.
         /// </summary>
         public static string DocumentMenu {
             get {
                 return ResourceManager.GetString("DocumentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to e-Commerce.
+        /// </summary>
+        public static string ECommerce {
+            get {
+                return ResourceManager.GetString("ECommerce", resourceCulture);
             }
         }
         
@@ -394,11 +466,29 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Preventivi.
+        /// </summary>
+        public static string EstimateMenu {
+            get {
+                return ResourceManager.GetString("EstimateMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italiano.
         /// </summary>
         public static string ItalianMenu {
             get {
                 return ResourceManager.GetString("ItalianMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ultimo Preventivo.
+        /// </summary>
+        public static string LastEstimateMenu {
+            get {
+                return ResourceManager.GetString("LastEstimateMenu", resourceCulture);
             }
         }
         
@@ -520,6 +610,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inizia.
+        /// </summary>
+        public static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Macchine e Lavorazioni.
         /// </summary>
         public static string TaskExecutorMenu {
@@ -529,7 +628,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Papiro Software Specifico Per Industrie Grafie Tipografie e Studi Grafici.
+        ///   Looks up a localized string similar to PapiroStar Software Specifico Per Industrie Grafie Tipografie e Studi Grafici.
         /// </summary>
         public static string Title {
             get {
@@ -543,6 +642,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         public static string UpdateDbMenu {
             get {
                 return ResourceManager.GetString("UpdateDbMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Benvenuto.
+        /// </summary>
+        public static string Welcome {
+            get {
+                return ResourceManager.GetString("Welcome", resourceCulture);
             }
         }
     }

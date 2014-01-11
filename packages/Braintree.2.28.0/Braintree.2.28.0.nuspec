@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Braintree</id>
+    <version>2.28.0</version>
+    <title>Braintree</title>
+    <authors>Braintee</authors>
+    <owners>Braintee</owners>
+    <projectUrl>https://github.com/braintree/braintree_dotnet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Braintree client library</description>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <references>
+      <reference file="Braintree-2.28.0.dll" />
+    </references>
+  </metadata>
+</package>

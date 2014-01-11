@@ -17,6 +17,7 @@
     @Html.T(strings, "EditCostDesc")
 }
 
+<h3 class="header smaller lighter green">Macchina da stampa / lavorazione</h3>
 <div class="control-group">
     <div class="controls col-sm-9">
         @Html.DropDownListFor(y => y.CodTaskExecutorSelected,
@@ -30,6 +31,7 @@
           case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
               Html.RenderPartial("_PrintingSheetCostDetail", Model);
               break;
+              
 @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
               break;
           case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
@@ -41,6 +43,8 @@
       }}
 
 </div>
+
+
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
                 <i class="icon-undo bigger-125"></i>

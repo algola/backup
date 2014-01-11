@@ -12,7 +12,7 @@
         item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
     }
 
-    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPA" : Model.CodTypeOfTask;
+    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPARIGIDO" : Model.CodTypeOfTask;
   
 }
 
@@ -72,10 +72,6 @@
 
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)
-
-        @Html.HiddenFor(model => model.IsEstimatedOnTime)
-        @Html.HiddenFor(model => model.IsEstimatedOnRun)
-        @Html.HiddenFor(model => model.IsEstimatedOnMq)
 
         <p>
 

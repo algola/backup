@@ -3,10 +3,10 @@
     var dom = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
    (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 
-
     var cultureName = String.Empty;
 
-    if (dom.Contains("localhost") || dom.Contains("gestionale"))
+    dom = dom.ToLower();
+    if (dom.Contains("localhost") || dom.Contains("stampa"))
     {
         cultureName = "it-IT";
     }
@@ -21,3 +21,5 @@
 
     Layout = "~/Views/Shared/_LayoutAceTheme.cshtml";
 }
+
+

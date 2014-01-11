@@ -2,7 +2,7 @@
 @model PapiroMVC.Models.ProfileViewModel
 @{
     string strings = "~/Areas/Account/Views/Account/Strings";
-//    string strings2 = "~/Views/Shared/Strings";
+    //    string strings2 = "~/Views/Shared/Strings";
 
     var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
     if (err.Key != null)
@@ -20,12 +20,11 @@
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg",
     OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+}, new { @class = "form-horizontal", @id = "braintree-payment-form" }))
     {
         @Html.AntiForgeryToken();
         @Html.ValidationSummary(true)
 
-        
         <div class="span12">
             <!--PAGE CONTENT BEGINS-->
 
@@ -58,7 +57,7 @@
                     <div id="faq-tab-1" class="tab-pane fade active in">
                         <h4 class="blue">
                             <i class="icon-ok bigger-110"></i>
-                            @Html.T(strings, "MyCompany");
+                            @Html.T(strings, "MyCompany")
                         </h4>
 
                         <div class="space-8"></div>
@@ -78,7 +77,7 @@
                     <div id="faq-tab-2" class="tab-pane fade">
                         <h4 class="blue">
                             <i class="green icon-user bigger-110"></i>
-                            @Html.T(strings, "Modules");
+                            @Html.T(strings, "Modules")
                         </h4>
 
                         <div class="space-8"></div>
@@ -98,18 +97,24 @@ Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ulla
                     <div id="faq-tab-3" class="tab-pane fade">
                         <h4 class="blue">
                             <i class="green icon-user bigger-110"></i>
-                            @Html.T(strings, "Modules");
+                            @Html.T(strings, "Modules")
                         </h4>
 
                         <div class="space-8"></div>
 
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut mi ante, placerat non egestas quis, faucibus rutrum lorem. Suspendisse tristique, tellus vel blandit egestas, dui erat convallis lectus, et sagittis velit nunc at nisl. In commodo metus enim, eu laoreet metus dignissim et. Nam in aliquam lectus. Duis sollicitudin eget augue sit amet malesuada. Vestibulum laoreet est posuere, malesuada risus vel, gravida lacus. Proin ornare pretium ultrices. Vivamus ac dolor eu elit interdum aliquet. Quisque posuere nec enim eu egestas. Ut bibendum nibh tortor, eget convallis turpis bibendum a. Nunc mattis ut quam vel gravida. Donec ullamcorper nisi erat, ultricies faucibus nibh molestie at. Vestibulum at hendrerit est. Fusce mattis aliquet ligula, a commodo massa. Phasellus quis nunc fringilla, ultrices orci quis, pretium eros. Nam eget enim sit amet eros posuere cursus quis ut metus.
-
-Curabitur viverra vel tellus sit amet mollis. Nunc eget tincidunt enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent placerat lectus in massa tempor pellentesque. Suspendisse potenti. Aenean quis vehicula nunc. Ut porttitor, magna sed interdum pharetra, mi risus condimentum metus, eget vehicula est magna rutrum risus. Maecenas nec massa a erat ultrices pellentesque in sit amet massa. Donec rhoncus, sem facilisis ultricies molestie, sapien augue mollis metus, sit amet euismod ligula ipsum sit amet quam.
-
-Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ullamcorper metus. Phasellus interdum leo lectus, eu sollicitudin massa condimentum vel. Duis facilisis dolor vel mi iaculis, ac dignissim sapien sollicitudin. Cras in consectetur leo. Nunc sollicitudin neque eu consequat ultrices. Proin lobortis gravida mi, id tincidunt elit hendrerit a.
-
+                            <label>Card Number</label>
+                            <input type="text" size="20" autocomplete="off" data-encrypted-name="number" />
+                        </p>
+                        <p>
+                            <label>CVV</label>
+                            <input type="text" size="4" autocomplete="off" data-encrypted-name="cvv" />
+                        </p>
+                        <p>
+                            <label>Expiration (MM/YYYY)</label>
+                            <input type="text" size="2" data-encrypted-name="month" />
+                            /
+                            <input type="text" size="4" data-encrypted-name="year" />
                         </p>
 
                     </div>
@@ -123,16 +128,38 @@ Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ulla
 
         <p>
 
+
+             <a href="#" onclick="save();">ciao</a>
+
+
             @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", null, "icon-remove bigger-125", "btn btn-warning")
 
-            <button class="btn btn-primary" type="submit">
+            <button class="btn btn-primary" onclick="save();">
                 <i class="icon-save bigger-125"></i>
                 @Html.T(strings, "Save")
             </button>
 
-
         </p>        
 
     }
+
+    <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+
+    <script>
+        var ajax_submit = function (e) {
+            
+            alert("ciao");
+
+            form = $('#braintree-payment-form');
+            e.preventDefault();
+            $("#submit").attr("disabled", "disabled");
+            $.post(form.attr('action'), form.serialize(), function (data) {
+                form.parent().replaceWith(data);
+            });
+        }
+        var braintree = Braintree.create("MIIBCgKCAQEAzXjSG4ufnkVJSyNKRZlM8yY4GDQDGq4UVOVPdsMQb4Rp8idazki3AbyhKxft0s9jT77xVztia0ry2sPBP4vSBu5qjGPIEgZnNnJVhQ9JNySkJvs3vThIMfy108vmX2kVv1xGUIoSKNp0R/+B/CZLgVyGvHL8qvxwx8ztXWI2Yqn2PALOffMnUCs11aFkEuMGzcGTAkHJuW6GV0vWEe6oPZ9O/SbVZ2zpNPj1Hwwh50Dmr6+bLsJ3u4AMGr9y97O3gj5Ra2Y2q83uB8biNG15zycF6/XhkM6N56HD9sCsoLZp74HYTB9SSMe62A4cBnx7dcK9aVLOU9icxgYMauGwuQIDAQAB");
+        braintree.onSubmitEncryptForm('braintree-payment-form', ajax_submit);
+  </script>
+
 </div>
 

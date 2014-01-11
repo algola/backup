@@ -14,7 +14,7 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
-    {        
+    {
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
 
@@ -30,24 +30,24 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ArticleController(IArticleRepository _articleDataRep, ICustomerSupplierRepository _dataRepCS)
         {
             articleRepository = _articleDataRep;
-            customerSupplierRepository = _dataRepCS;   
+            customerSupplierRepository = _dataRepCS;
         }
 
         //
         // GET: /Article/
         public ActionResult Index()
         {
-            return View (new ArticleAutoChangesViewModel());
+            return View(new ArticleAutoChangesViewModel());
         }
 
         public ActionResult IndexSheetPrintableArticle()
-        { 
-            return View (new SheetPrintableArticleAutoChanges());
+        {
+            return View(new SheetPrintableArticleAutoChanges());
         }
 
         public ActionResult IndexRollPrintableArticle()
         {
-            return View (new RollPrintableArticleAutoChanges());
+            return View(new RollPrintableArticleAutoChanges());
         }
 
         public ActionResult IndexRigidPrintableArticle()
@@ -60,7 +60,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult Details(string id)
         {
-            Article article = db.articles.Find(id); 
+            Article article = db.articles.Find(id);
             return View(article);
         }
 
@@ -82,17 +82,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
                     articleRepository.Add(c.Article);
                     //rigeneration name of article
-                    c.Article.ArticleName = c.Article.ToString();                                                                                        
+                    c.Article.ArticleName = c.Article.ToString();
                     articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("Index")});
+                    return Json(new { redirectUrl = Url.Action("Index") });
+                }
+                catch (NoSupplierException)
+                {
+                    ModelState.AddModelError("PersError", "NoSupplierError");
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
+            
             }
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
@@ -118,12 +123,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository,c.SupplierMaker,c.SupplyerBuy);                    
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
                     articleRepository.Add(c.Article);
                     //rigeneration name of article
                     c.Article.ArticleName = c.Article.ToString();
                     articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle")});
+                    return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle") });
                 }
                 catch (Exception ex)
                 {
@@ -192,43 +197,43 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     //WeightS
                     foreach (var weight in c.Weights)
-	                {
+                    {
                         //control if weigth is valid
                         if (weight > 0)
-                        foreach (var width in c.Widths)
-                        {
-                            if (width > 0)
+                            foreach (var width in c.Widths)
                             {
+                                if (width > 0)
+                                {
 
-                                c.Article.Weight = (long)weight;
-                                c.Article.Width = width;
+                                    c.Article.Weight = (long)weight;
+                                    c.Article.Width = width;
 
-                                c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);                    
+                                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
 
-                                //c.RollPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
-                                c.RollPrintableArticleStandardCost.TimeStampTable = DateTime.Now;
+                                    //c.RollPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
+                                    c.RollPrintableArticleStandardCost.TimeStampTable = DateTime.Now;
 
-                                //                       c.RollPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
-                                //                       c.RollPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
-                                c.RollPrintableArticleStandardCost.CodArticle = c.Article.CodArticle;
-                                c.RollPrintableArticleStandardCost.CodArticleCost = c.Article.CodArticle + "_STD";
+                                    //                       c.RollPrintableArticleCuttedCost.CodArticle = c.Article.CodArticle;
+                                    //                       c.RollPrintableArticleCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                                    c.RollPrintableArticleStandardCost.CodArticle = c.Article.CodArticle;
+                                    c.RollPrintableArticleStandardCost.CodArticleCost = c.Article.CodArticle + "_STD";
 
 
-                                c.Article.ArticleName = c.Article.ToString();
+                                    c.Article.ArticleName = c.Article.ToString();
 
-                                c.Article.TimeStampTable = DateTime.Now;
+                                    c.Article.TimeStampTable = DateTime.Now;
 
-                                a = (RollPrintableArticle)c.Article.Clone();
-                                
-                                //cost = (RollPrintableArticleStandardCost)c.RollPrintableArticleStandardCost.Clone();
-                                //a.ArticleCosts.Clear();
-                                //a.ArticleCosts.Add(cost);
-                                
-                                articleRepository.Add(a);
-                                articleRepository.Save();
+                                    a = (RollPrintableArticle)c.Article.Clone();
+
+                                    //cost = (RollPrintableArticleStandardCost)c.RollPrintableArticleStandardCost.Clone();
+                                    //a.ArticleCosts.Clear();
+                                    //a.ArticleCosts.Add(cost);
+
+                                    articleRepository.Add(a);
+                                    articleRepository.Save();
+                                }
                             }
-                        }
-	                }
+                    }
 
 
                     return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle") });
@@ -238,7 +243,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return PartialView("_WizardRollPrintableArticle",c);
+            return PartialView("_WizardRollPrintableArticle", c);
         }
 
         [HttpGet]
@@ -271,19 +276,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     c.Article.Format = format;
 
                                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
-
-                                    c.SheetPrintableArticleCuttedCost.TimeStampTable = DateTime.Now;
-                                    c.SheetPrintableArticlePakedCost.TimeStampTable = DateTime.Now;
-                                    c.SheetPrintableArticlePalletCost.TimeStampTable = DateTime.Now;
-
                                     c.Article.ArticleName = c.Article.ToString();
 
-                                    c.Article.TimeStampTable = DateTime.Now;
 
-                                    a = (SheetPrintableArticle)c.Article.Clone();
+                                    a = c.Article.Clone();
 
                                     articleRepository.Add(a);
                                     articleRepository.Save();
+
                                 }
                             }
                     }
@@ -296,7 +296,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-            return PartialView("_WizardSheetPrintableArticle",c);
+            return PartialView("_WizardSheetPrintableArticle", c);
         }
 
         #region Edit
@@ -313,30 +313,30 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ActionResult ret = null;
 
             //check type
-            
+
             switch (article.TypeOfArticle)
             {
                 case Article.ArticleType.SheetPrintableArticle:
                     {
-                        ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id }); 
+                        ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
                         break;
                     }
-                         
+
                 case Article.ArticleType.RollPrintableArticle:
                     {
-                        ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id }); 
+                        ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
                         break;
                     }
-    
+
                 case Article.ArticleType.RigidPrintableArticle:
                     {
-                        ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id }); 
+                        ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
                         break;
                     }
 
                 case Article.ArticleType.ObjectPrintableArticle:
                     {
-                        ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id }); 
+                        ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
                         break;
                     }
             }
@@ -347,8 +347,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult EditSheetPrintableArticle(string id)
         {
-            SheetPrintableArticleViewModel viewModel=new SheetPrintableArticleViewModel();
-            viewModel.Article = (SheetPrintableArticle) articleRepository.GetSingle(id);
+            SheetPrintableArticleViewModel viewModel = new SheetPrintableArticleViewModel();
+            viewModel.Article = (SheetPrintableArticle)articleRepository.GetSingle(id);
 
             //get producer and maker
 
@@ -398,8 +398,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditSheetPrintableArticle(SheetPrintableArticleViewModel c)
-        {                                
-            if (ModelState.IsValid) 
+        {
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -436,7 +436,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //If we come here, something went wrong. Return it back.      
 
             ViewBag.ActionMethod = "EditSheetPrintableArticle";
-            return PartialView("_EditAndCreateSheetPrintableArticle", c);       
+            return PartialView("_EditAndCreateSheetPrintableArticle", c);
         }
 
         [HttpParamAction]
@@ -508,7 +508,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
-//                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+                    //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
                         item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
@@ -550,7 +550,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 // TODO: Add update logic here
 
-                return Json(new { redirectUrl = Url.Action("Index")});
+                return Json(new { redirectUrl = Url.Action("Index") });
             }
             catch
             {
@@ -576,7 +576,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 // TODO: Add delete logic here
 
-                return Json(new { redirectUrl = Url.Action("Index")});
+                return Json(new { redirectUrl = Url.Action("Index") });
             }
             catch
             {

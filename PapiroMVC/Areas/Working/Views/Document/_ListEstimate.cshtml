@@ -1,0 +1,65 @@
+﻿@using Mvc.HtmlHelpers
+@using MvcContrib.UI.Grid
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+@(Html.jqGrid("EstimateGrid")
+
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
+    .setCaption("")
+
+    .setMultiSelect(true)
+
+        // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setWidth(35)
+        .setCustomFormatter("editEstimate")
+        .setSortable(false))
+    .addColumn(new Column("Customer")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Customer"))
+        .setWidth(50)
+        .setSortable(true))
+    .addColumn(new Column("CodDocument")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodDocument"))
+        .setWidth(20)
+        .setSortable(true)
+        .setFirstSortOrder(SortOrder.desc))
+    .addColumn(new Column("DocumentName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "DocumentName"))
+        .setWidth(100)
+        .setSearch(true)
+        .setSortable(false))
+
+        .setUrl(Url.Action("EstimateList", "Document"))
+
+    .setHeight(300)
+    .setRowNum(10)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("EstimateGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true)
+    .setSearchToolbar(true)
+
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+
+    // render the html
+    .Render()
+)
+<br />
+
+<div>
+
+    <button class="btn radius-4" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDocument", "Document", new { Area = "Working" })');">
+        <i class="icon-plus bigger-125"></i>
+        @HttpContext.GetLocalResourceObject(strings, "CreateDocument")
+        <span class="badge badge-transparent">
+            <i class="light-red icon-asterisk"></i>
+        </span>
+    </button>
+
+</div>

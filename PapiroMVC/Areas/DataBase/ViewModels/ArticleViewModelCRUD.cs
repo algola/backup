@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Models
 {
-  
+
     /// <summary>
     /// data used to create and edit
     /// </summary>
@@ -55,7 +55,7 @@ namespace PapiroMVC.Models
                     article = new RollPrintableArticle();
                     SupplyerBuy = "";
                     SupplierMaker = "";
-//                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
+                    //                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new RollPrintableArticleStandardCost());
                 }
                 return article;
@@ -93,12 +93,13 @@ namespace PapiroMVC.Models
         //this field is used to link on view suppplier to article
         //autocomplete is called to recognize supplier
         //after editing / creation / etc.. we have to find supplier by name and link code to article
-                
+
         public string SupplierMaker { get; set; }
         public string SupplyerBuy { get; set; }
-    
+
     }
 
+    [MetadataType(typeof(SheetPrintableArticleViewModel_Metadata))]
     public class SheetPrintableArticleViewModel : ArticleViewModel
     {
         SheetPrintableArticle article;
@@ -111,17 +112,17 @@ namespace PapiroMVC.Models
                     article = new SheetPrintableArticle();
                     SupplyerBuy = "";
                     SupplierMaker = "";
-//CUTTED                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
+                    //CUTTED                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePalletCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePakedCost());
                 }
                 return article;
             }
-            set 
+            set
             {
                 article = value;
-                SupplierMaker = article.CustomerSupplierMaker==null?null:article.CustomerSupplierMaker.BusinessName;
-                SupplyerBuy = article.CustomerSupplierBuy==null?null:article.CustomerSupplierBuy.BusinessName;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
             }
         }
 
@@ -135,14 +136,14 @@ namespace PapiroMVC.Models
         }
         */
 
-        public  SheetPrintableArticlePalletCost SheetPrintableArticlePalletCost
+        public SheetPrintableArticlePalletCost SheetPrintableArticlePalletCost
         {
             get
             {
                 return (SheetPrintableArticlePalletCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePalletCost);
             }
         }
-        public  SheetPrintableArticlePakedCost SheetPrintableArticlePakedCost
+        public SheetPrintableArticlePakedCost SheetPrintableArticlePakedCost
         {
             get
             {

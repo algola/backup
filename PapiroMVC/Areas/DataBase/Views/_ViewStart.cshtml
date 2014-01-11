@@ -5,7 +5,8 @@
 
     var cultureName = String.Empty;
 
-    if (dom.Contains("localhost") || dom.Contains("gestionale"))
+    dom = dom.ToLower();
+    if (dom.Contains("localhost") || dom.Contains("stampa"))
     {
         cultureName = "it-IT";
     }

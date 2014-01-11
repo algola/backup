@@ -14,16 +14,19 @@
     typeOfArticle[3] = (string)@Html.T(strings, "RigidPrintableArticleType");
 }
 
-<div id="containerbox"> <!-- Main Page -->
+<div id="containerbox">
+    <!-- Main Page -->
 
-@(Html.jqGrid("ArticleGrid")
-    
+    @(Html.jqGrid("ArticleGrid")
+
     .setCaption((string)@Html.T(strings, "RollPrintableArticleGridCaption"))
+        .setCaption("")
+
     .setMultiSelect(true)
-        // columns
+            // columns
     .addColumn(new Column("Id")
         .setLabel((string)@Html.T(strings, "OperationsCaption"))
-        .setWidth(@Html.T(strings, "OperationsCaptionWidth")==null?60:Convert.ToInt32(@Html.T(strings, "OperationsCaptionWidth")))
+        .setWidth(@Html.T(strings, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(@Html.T(strings, "OperationsCaptionWidth")))
         .setCustomFormatter("editArticle")
         .setSortable(false))
     .addColumn(new Column("CodArticle")
@@ -32,7 +35,7 @@
         .setSortable(true))
 
     .addColumn(new Column("TypeOfMaterial")
-        .setLabel((string)@Html.T(strings, "TypeOfMaterialCaption"))        
+        .setLabel((string)@Html.T(strings, "TypeOfMaterialCaption"))
         .setWidth(100)
         .setSortable(true)
         .setSearch(true))
@@ -67,7 +70,7 @@
         .setLabel((string)@Html.T(strings, "SupplierNameCaption"))
         .setSearch(true)
         .setWidth(150))
-        
+
     .addColumn(new Column("CostPerMq")
         .setLabel((string)@Html.T(strings, "CostPerMqCaption"))
         .setTitle(false)
@@ -80,7 +83,7 @@
         .setSearch(true)
         .setWidth(45)
         .setAlign(Align.right))
-        
+
     .setUrl(Url.Action("RollPrintableArticleList", "Article"))
 
     .setHeight(300)
@@ -103,17 +106,17 @@
     <br />
 
 
-        <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new {Area="Database"})');">            
-            <i class="icon-plus"></i>
-            @Html.T(strings, "CreateRollPrintableArticle")
-        </button>
+    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database" })');">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "CreateRollPrintableArticle")
+    </button>
 
-        <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new {Area="Database"})');">            
-           <i class="icon-plus"></i>
-             @Html.T(strings, "WizardRollPrintableArticle")
-        </button>
+    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new { Area = "Database" })');">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "WizardRollPrintableArticle")
+    </button>
 
-    </div>
+</div>
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 @*

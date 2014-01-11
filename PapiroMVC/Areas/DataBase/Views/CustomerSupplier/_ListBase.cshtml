@@ -1,5 +1,6 @@
 ﻿@model PapiroMVC.Models.CustomerSupplier
 @using Mvc.HtmlHelpers
+@using PapiroMVC.Validation
 @using MvcContrib.UI.Grid
 
 @{    
@@ -10,7 +11,17 @@
     {
         if ((bool)TempData["CreateCustomerSupplier"] == true)
         {
-            ViewBag.Message = (string)HttpContext.GetLocalResourceObject(strings, "CustomerSupplierCreatedMessage");
+            
+        
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-ok green"></i>
+        @Html.T(strings, "CustomerSupplierCreatedMessage")
+    </div>
+
         }
         else
         {
@@ -29,6 +40,7 @@
 
     // columns
     .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndexBase") + " " + @Html.DisplayFor(o => o.BusinessName))
+    .setCaption("")
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
         .setCustomFormatter("editCustomerSupplier")
@@ -111,29 +123,29 @@
 <br />
 <div>
 
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new {Area="Database"})');">            
-            <i class="icon-arrow-left"></i>
-            @HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList")
-        </button>
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "CustomerSupplier", new { Area = "Database" })');">
+        <i class="icon-arrow-left"></i>
+        @HttpContext.GetLocalResourceObject(strings, "BackToCustomerSupplierList")
+    </button>
 
 
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateBase", "CustomerSupplier", new {Area="Database"})');">            
-            <i class="icon-plus"></i>               
-            @HttpContext.GetLocalResourceObject(strings, "CreateBase")
-        </button>
-   
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateBase", "CustomerSupplier", new { Area = "Database", Id = Model.CodCustomerSupplier })');">
+        <i class="icon-plus"></i>
+        @HttpContext.GetLocalResourceObject(strings, "CreateBase")
+    </button>
+
 </div>
 
 
 <script type="text/javascript">
     function editCustomerSupplier(cellvalue, options, rowobject) {
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit" + "Base", new { id = "-1" },new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit" + "Base", new { id = "-1" }, new { @class = "tbutton smalledit" })';
         return link.replace("-1", cellvalue);
     }
 
 
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
 
         if ('@(ViewBag.Message)' != "") {
             $.blockUI({

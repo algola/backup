@@ -29,6 +29,7 @@
 
             var myGrid = $("#gridDigitalSheet").jqGrid({
                 caption: '@Html.T(strings, "DigitalSheetGridCaption")',
+                caption: '',
                 url: '@url',
                 editUrl: '',
                 datatype: 'json',
@@ -36,7 +37,7 @@
                 colModel: [
                     { name: 'Error', label: '', width: 45, align: 'center', hidden:true, editable: false },
                     { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
-                    { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false  },                    
+                    { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: true  },                    
                     { name: 'TypeOfTaskExecutor', label: '@Html.T(strings, "TypeOfTaskExecutor")', width: 60, editable: false, hidden: false, formatter: typeOfTaskExecutor },
                     { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
                     { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },

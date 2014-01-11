@@ -10,34 +10,16 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(SheetPrintableArticleCost_MetaData))]
-    public abstract partial class SheetPrintableArticleCost : ArticleCost, ICloneable, IDeleteRelated
+    public abstract partial class SheetPrintableArticleCost : ArticleCost
     {
 
         #region Added Properties
 
         #endregion
 
-       
-
-        #region Handle copy for modify
-
-        public override void Copy(ArticleCost to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            ((SheetPrintableArticleCost)to).CostPerKg = this.CostPerKg;
-            ((SheetPrintableArticleCost)to).CostPerSheet = this.CostPerSheet;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
-
-        #endregion
-
+      
     }
 }
 

@@ -9,6 +9,8 @@
 @(Html.jqGrid("CustomGrid")
 
     .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
+        .setCaption("")
+
         // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))

@@ -8,14 +8,36 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPartSingleSheet_MetaData))]
-    public partial class ProductPartSingleSheet : ProductPart,  ICloneable, IDeleteRelated
+    public partial class ProductPartSingleSheet : ProductPart, ICloneable, IDeleteRelated
     {
+
+        public override string ToString()
+        {
+
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProduct);
+
+            String s = String.Empty;
+
+            if ((FormatOpened ?? Format) == Format)
+            {
+                s = (string)t.GetProperty("FormatOnly").GetValue(null, null) + " " + FormatOpened;
+            }
+            else
+            {
+                s = (string)t.GetProperty("FormatOpened").GetValue(null, null) + " " + FormatOpened + " " +
+                   (string)t.GetProperty("Format").GetValue(null, null) + " " + Format;
+            }
+
+            return s + " " +
+                base.ToString();
+        }
+
         public ProductPartSingleSheet()
         {
             TypeOfProductPart = ProductPart.ProductPartType.ProductPartSingleSheet;
         }
-        
-        #region Proprietà aggiuntive       
+
+        #region Proprietà aggiuntive
         #endregion
 
         #region Handle copy for modify

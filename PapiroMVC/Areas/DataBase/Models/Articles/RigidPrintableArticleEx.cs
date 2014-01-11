@@ -10,8 +10,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(RigidPrintableArticle_MetaData))]
-    public partial class RigidPrintableArticle : Printable, ICloneable, IDeleteRelated
+    public partial class RigidPrintableArticle : Printable
     {
         public RigidPrintableArticle()
         {
@@ -22,22 +23,6 @@ namespace PapiroMVC.Models
 
         #endregion
 
-        #region Handle copy for modify
-
-        public override void Copy(Article to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            ((RigidPrintableArticle)to).Format = this.Format;
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
-
-        #endregion
 
     }
 }

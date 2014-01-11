@@ -1,77 +1,75 @@
 ﻿@using PapiroMVC.Validation
 
-@{
-   
-    ViewBag.MetaTitle = "Gestionale per Tipografie, Litografie e Stampa Digitale. Il migliore";
-     
-}
+@{   
+    string strings = "~/Views/Home/Strings";
+    string seo = "~/Views/Shared/Seo";
+
+    }
+
+@Html.Action("MetaGenerator", new
+{ 
+    area = "",    
+    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
+})
 
 @section title{
-    Home Page
+    @Html.T(strings, "HomeTitle")
 }
 
 @section description{
-    benvenuto
+    @Html.T(strings, "HomeDesc")
 }
-
-@*
 
 @{
-    ViewContext.RequestContext.RouteData.DataTokens.Add("GoingToRenderChildAction",
-                                                         true);
+    ViewContext.RequestContext.RouteData.DataTokens.Add("GoingToRenderChildAction", true);
 }
-
-@Html.Action("Price", "Home")
 
 @{
     ViewContext.RequestContext.RouteData.DataTokens["GoingToRenderChildAction"] = false;
 }
 
-*@
-
-<div class="alert alert-block alert-success">
-    <button type="button" class="close" data-dismiss="alert">
-        <i class="icon-remove"></i>
-    </button>
-
-    <i class="icon-ok green"></i>
-    Benvenuto in <strong class="green">PapiroSky <small>(v0.0.1)</small> </strong>, il gestionale "cloud" per la stampa.
-
-</div>
-
-
 <div class="span12">
-    <!--PAGE CONTENT BEGINS-->
-    <h3 class="header smaller red">
-        <i class="icon-cloud"></i>
-        Software per Preventivi e commesse per tipografie
-    </h3>
-    <div class="space-5"></div>
 
-    <p>
-        Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroSky è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie. 
-    </p>
+    <div class="span12">
 
-    <ol class="round">
-        <li class="one">
-            <h5 class="green">Gestisci il tuo profilo</h5>
-            PapiroSky permette di gestire in piena autonomia il proprio profilo, 
+        <div class="alert alert-block alert-success">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+
+            <i class="icon-ok green"></i>
+            @Html.T(strings, "Advise1")
+        </div>
+
+        <p>
+            Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroStar è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie. 
+        </p>
+
+        <ol class="round">
+            <li class="one">
+                <h5 class="green">Gestisci il tuo profilo</h5>
+                PapiroStar permette di gestire in piena autonomia il proprio profilo, 
         impostare i propri dati e modificarli in ogni momento.
         Permette di caricare documenti di vario tipo e condividerli con gli utenti del sistema.
-        </li>
+            </li>
 
-        <li class="two">
-            <h5 class="green">La tua azienda</h5>
-            PapiroSky consente di creare senza limiti listini, aggiornare prezzi in piena autonomia.
-        </li>
+            <li class="two">
+                <h5 class="green">La tua azienda</h5>
+                PapiroStar consente di creare senza limiti listini, aggiornare prezzi in piena autonomia.
+            </li>
 
-        <li class="three">
-            <h5 class="green">Crea preventivi</h5>
-            PapiroSky rappresenta un ottimo strumento per creare in modo semplice e veloce preventivi per stampa digitale offset e grande formato.
-        </li>
-    </ol>
+            <li class="three">
+                <h5 class="green">Crea preventivi</h5>
+                PapiroStar rappresenta un ottimo strumento per creare in modo semplice e veloce preventivi per stampa digitale offset e grande formato.
+            </li>
+        </ol>
+
+    </div>
 
 </div>
+
+
+@*@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)*@
 
 
 <div class="span12">
@@ -79,18 +77,17 @@
 
     @section specificPlugInStyle {
         <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.custom.min.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/chosen.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap-timepicker.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/daterangepicker.css" />
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/colorpicker.css" />
     }
 
     @section specificPluginScript {
         <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
         <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
     }
+
+    @section Scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
 
 </div>
 
@@ -105,3 +102,4 @@
 <script type="text/javascript">var switchTo5x = true;</script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({ publisher: "b7885f9a-6e87-4b09-b610-1c9cf6e7e4f1", doNotHash: true, doNotCopy: true, hashAddressBar: false });</script>
+

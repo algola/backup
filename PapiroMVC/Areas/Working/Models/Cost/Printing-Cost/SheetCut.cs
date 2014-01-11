@@ -5,7 +5,6 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-
     //Extension methods must be defined in a static class
     public static class StringExtension
     {
@@ -17,28 +16,36 @@ namespace PapiroMVC.Models
             return "";
         }
 
-        public static decimal GetSide1(this string format)
+        public static double GetSide1(this string format)
         {
             format = format == null ? "0x0" : format;
 
             Regex pattern = new Regex(@"^(?<side1>(\d{1,4})((\,\d{0,5}){0,1}))[xX](?<side2>(\d{1,4})((\,\d{0,5}){0,1})?$)");
             Match match = pattern.Match(format);
-            return decimal.Parse(match.Groups["side1"].Value);
+            return double.Parse(match.Groups["side1"].Value);
         }
-        public static decimal GetSide2(this string format)
+        public static double GetSide2(this string format)
         {
             format = format == null ? "0x0" : format;
 
             Regex pattern = new Regex(@"^(?<side1>(\d{1,4})((\,\d{0,5}){0,1}))[xX](?<side2>(\d{1,4})((\,\d{0,5}){0,1})?$)");
             Match match = pattern.Match(format);
-            return decimal.Parse(match.Groups["side2"].Value);
+            return double.Parse(match.Groups["side2"].Value);
         }
-
     }
 
     public class Cut
     {
+        /// <summary>
+        /// this cut fits in taskexecutor
+        /// </summary>
+        public bool Valid { get; set; }
+
         public String CodCut { get; set; }
+
+        /// <summary>
+        /// it is exposed on views
+        /// </summary>
         public String CutName { get; set; }
         public static T Max<T>(T x, T y)
         {
@@ -62,11 +69,10 @@ namespace PapiroMVC.Models
 
         public string GetCuttetFormat(string format)
         {
-
             string result;
 
-            decimal side1 = format.GetSide1();
-            decimal side2 = format.GetSide2();
+            double side1 = format.GetSide1();
+            double side2 = format.GetSide2();
 
             if (side1 < side2)
             {
@@ -94,14 +100,41 @@ namespace PapiroMVC.Models
         static SheetCut()
         {
             cuts = new Dictionary<String, Cut>();
-            cuts.Add("ct1-0", new Cut("ct1-0", 0, 0)); //70x100
-            cuts.Add("ct1-1", new Cut("ct1-1", 2, 0)); //50x70
-            cuts.Add("ct2-0", new Cut("ct2-0", 2, 2)); //35x50
-            cuts.Add("ct2-2", new Cut("ct2-2", 3, 0)); //
+            cuts.Add("ct0-0", new Cut("ct1-0", 0, 0)); //70x100
+            cuts.Add("ct2-0", new Cut("ct1-1", 2, 0)); //50x70
+            cuts.Add("ct2-2", new Cut("ct2-0", 2, 2)); //35x50
+            cuts.Add("ct3-0", new Cut("ct3-0", 3, 0)); //33,3x70
+            cuts.Add("ct3-2", new Cut("ct3-2", 3, 2)); //33,3x35
+            cuts.Add("ct3-3", new Cut("ct3-3", 3, 3)); //23,3x33,3
+
+            cuts.Add("ct4-2", new Cut("ct4-2", 4, 2)); //25x35
+            cuts.Add("ct4-3", new Cut("ct4-3", 4, 3)); //23,3x25
+
+            cuts.Add("ct5-2", new Cut("ct5-2", 5, 2)); //20x35
+            cuts.Add("ct4-4", new Cut("ct4-4", 4, 4)); //17,5x25
+            cuts.Add("ct5-4", new Cut("ct5-4", 5, 4)); //17,5x20
         }
 
         public static List<Cut> Cuts()
         {
+            return cuts.Values.ToList();
+        }
+
+        public static bool IsValid(string maxFormat, string minFormat, string ftoRes)
+        {
+            return (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
+                (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2());
+        }
+
+        public static List<Cut> Cuts(string buyingFormat, string maxFormat, string minFormat)
+        {
+            foreach (var item in cuts.Values)
+            {
+                var ftoRes = item.GetCuttetFormat(buyingFormat);
+                item.Valid = (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
+                (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2()); ;
+            }
+
             return cuts.Values.ToList();
         }
 

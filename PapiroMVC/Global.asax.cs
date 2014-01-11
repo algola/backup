@@ -33,7 +33,9 @@ namespace PapiroMVC
             ModelBinders.Binders.Add(typeof(ProductPart), new ProductPartModelBinder());
             ModelBinders.Binders.Add(typeof(ProductPartsPrintableArticle), new ProductPartsPrintableArticleModelBinder());
             ModelBinders.Binders.Add(typeof(ProductPartTask), new ProductPartTaskModelBinder());
-            
+
+            ModelMetadataProviders.Current = new CustomModelMetadataProvider();
+
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -53,9 +55,11 @@ namespace PapiroMVC
             string cultureName = String.Empty;
             var dom = Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
 
-            if (dom.Contains("localhost")||dom.Contains("gestionale"))
+            dom = dom.ToLower();
+
+            if (dom.Contains("localhost") || dom.Contains("stampa"))
             {
-                cultureName = "it-IT";
+                cultureName = "it-IT";                
             }
 
             // Validate culture name

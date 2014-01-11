@@ -1,0 +1,24 @@
+﻿@using PapiroMVC.Validation
+
+@{   
+    string strings = "~/Views/Home/Strings";
+}
+
+@section title{
+    @Html.T(strings, "ECommerceTitle")
+}
+
+@section description{
+    @Html.T(strings, "EcommerceDesc")
+
+}
+
+@if (ViewData.ContainsKey("TransactionId"))
+{
+    <h2>Success! Transaction ID: @ViewData["TransactionId"]</h2>
+}
+else
+{
+    <h2>Error: @ViewData["Message"]</h2>
+}
+

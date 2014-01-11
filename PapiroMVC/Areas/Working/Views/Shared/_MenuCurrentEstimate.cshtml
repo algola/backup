@@ -1,0 +1,16 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model string
+
+@{
+    string strings = "~/Views/Shared/Strings";
+    List<MenuProduct> menuProd = ViewBag.MenuProd;
+    var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
+
+    List<MenuProduct> selectedMenuProd;
+    
+}
+
+<li id="documentSlidebar">
+    @Html.ActionLinkImageSpan(Html.T(strings, "CurrentEstimateMenu"), "EditEstimate", "Document", new { area = "Working", id=Model }, "icon-dashboard", "menu-text")
+</li>

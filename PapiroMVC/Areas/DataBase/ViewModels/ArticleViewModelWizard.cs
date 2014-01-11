@@ -116,7 +116,7 @@ namespace PapiroMVC.Models
                     article.SheetPerPallet = 0;
                     SupplierMaker = "";
                     SupplyerBuy = "";
-                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
+//                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePakedCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePalletCost());
                 }
@@ -191,13 +191,13 @@ namespace PapiroMVC.Models
             }
         }
 
-        public SheetPrintableArticleCuttedCost SheetPrintableArticleCuttedCost
-        {
-            get
-            {
-                return (SheetPrintableArticleCuttedCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost);
-            }
-        }
+        //public SheetPrintableArticleCuttedCost SheetPrintableArticleCuttedCost
+        //{
+        //    get
+        //    {
+        //        return (SheetPrintableArticleCuttedCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticleCuttedCost);
+        //    }
+        //}
 
         public SheetPrintableArticlePalletCost SheetPrintableArticlePalletCost
         {

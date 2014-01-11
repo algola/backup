@@ -1,0 +1,49 @@
+﻿@using PapiroMVC.Validation
+@{   
+    string strings = "~/Views/Home/Strings";
+}
+
+@Html.Action("MetaGenerator", new
+{
+    area = "",
+    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
+})
+
+@section title{
+    @Html.T(strings, "ECommerceTitle")
+}
+
+@section description{
+    @Html.T(strings, "EcommerceDesc")
+}
+
+<div class="span12">
+
+    <form action="@Url.Action("CreateTransaction")" method="POST" id="braintree-payment-form">
+        <p>
+            <label>Card Number</label>
+            <input type="text" size="20" autocomplete="off" data-encrypted-name="number" />
+        </p>
+        <p>
+            <label>CVV</label>
+            <input type="text" size="4" autocomplete="off" data-encrypted-name="cvv" />
+        </p>
+        <p>
+            <label>Expiration (MM/YYYY)</label>
+            <input type="text" size="2" name="month" />
+            /
+            <input type="text" size="4" name="year" />
+        </p>
+        <input type="submit" id="submit" />
+    </form>
+</div>
+
+@section specificPluginScript {
+}
+
+    <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+
+<script>
+    var braintree = Braintree.create("MIIBCgKCAQEAzXjSG4ufnkVJSyNKRZlM8yY4GDQDGq4UVOVPdsMQb4Rp8idazki3AbyhKxft0s9jT77xVztia0ry2sPBP4vSBu5qjGPIEgZnNnJVhQ9JNySkJvs3vThIMfy108vmX2kVv1xGUIoSKNp0R/+B/CZLgVyGvHL8qvxwx8ztXWI2Yqn2PALOffMnUCs11aFkEuMGzcGTAkHJuW6GV0vWEe6oPZ9O/SbVZ2zpNPj1Hwwh50Dmr6+bLsJ3u4AMGr9y97O3gj5Ra2Y2q83uB8biNG15zycF6/XhkM6N56HD9sCsoLZp74HYTB9SSMe62A4cBnx7dcK9aVLOU9icxgYMauGwuQIDAQAB");
+    braintree.onSubmitEncryptForm('braintree-payment-form');
+</script>

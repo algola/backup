@@ -11,7 +11,7 @@ namespace Services
         string GetNewCode(TaskExecutor c);
         new TaskExecutor GetSingle(string cod);
         TaskEstimatedOn GetSingleEstimatedOn(string cod);
+        void AddEstimatedOn(TaskEstimatedOn tskEst);
         Step GetSingleStep(int cod);
     }
-
 }

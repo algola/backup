@@ -8,27 +8,29 @@ using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Models
 {
-    public interface ICostDetail
-    {
-        void Update();
-    }
-
     //in questa viewmodel carico il costo
     //ed espongo l'eleco delle macchine che possono eseguire il task
 
     //se è un articolo--> ?? decider
 
     //    [MetadataType(typeof(TaskCostDetail_MetaData))]
-    public partial class CostDetail : ICostDetail
+    public partial class CostDetail
     {
+        public enum QuantityType : int
+        {
+            RunTypeOfQuantity = 0,
+            MqTypeOfQuantity = 1,
+            WeigthTypeOfQuantity = 2, //quantità e prezzo al kg
+        }
+
         public enum CostDetailType : int
         {
-            PrintingSheetCostDetail = 0,  //digital and litho sheet
-            PrintingRollCostDetail = 1,  //digital and litho sheet
-            PrintingPlotterCostDetail = 2, //plotter
+            PrintingSheetCostDetail = 0,  //digital and litho sheet and rigid
+            PrintingRollCostDetail = 1,  //digital and litho sheet and plotter
 
             PrintedSheetArticleCostDetail = 10,
-            PrintedRollArticleCostDetail = 11
+            PrintedRollArticleCostDetail = 11,
+            PrintedRigidArticleCostDetail = 12
         }
 
         public CostDetailType TypeOfCostDetail
@@ -40,15 +42,21 @@ namespace PapiroMVC.Models
         public List<TaskExecutor> TaskExecutors { get; set; }
 
         public virtual void Update()
-        { 
+        {
+
+        }
+
+        public virtual void UpdateCoeff()
+        {
+
         }
 
         public virtual void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-       //     TaskCost = taskCost;
+            //     TaskCost = taskCost;
         }
 
-        public ProductPartPrintingGain GainPrintingOnBuying 
+        public ProductPartPrintingGain GainPrintingOnBuying
         {
             get
             {
@@ -59,14 +67,13 @@ namespace PapiroMVC.Models
                 GainPrintingOnBuyings.Clear();
                 GainPrintingOnBuyings.Add(value);
             }
-        
-        }
 
+        }
 
         public virtual void CostDetailCostCodeRigen()
         {
             this.TimeStampTable = DateTime.Now;
- //           this.CodCostDetail = this.CodCost;
+            //           this.CodCostDetail = this.CodCost;
 
             if (this.GainPrintingOnBuying != null)
             {
@@ -77,7 +84,7 @@ namespace PapiroMVC.Models
                 foreach (var mr in GainPrintingOnBuying.Makereadies)
                 {
                     mr.CodMakeready = GainPrintingOnBuying.CodProductPartPrintingGain + "-" + mrArray.IndexOf(mr);
-                    mr.CodProductPartPrintingGain = GainPrintingOnBuying.CodProductPartPrintingGain;                   
+                    mr.CodProductPartPrintingGain = GainPrintingOnBuying.CodProductPartPrintingGain;
                     mr.TimeStampTable = DateTime.Now;
                 }
             }
@@ -96,11 +103,42 @@ namespace PapiroMVC.Models
                     foreach (var mr in ProductPartPrinting.GainPartOnPrinting.Makereadies.OrderBy(x => x.CodMakeready))
                     {
                         mr.CodMakeready = ProductPartPrinting.GainPartOnPrinting.CodProductPartPrintingGain + "-" + mrArray.IndexOf(mr);
-                        mr.CodProductPartPrintingGain = ProductPartPrinting.GainPartOnPrinting.CodProductPartPrintingGain;                   
+                        mr.CodProductPartPrintingGain = ProductPartPrinting.GainPartOnPrinting.CodProductPartPrintingGain;
                         mr.TimeStampTable = DateTime.Now;
                     }
                 }
             }
         }
+
+        public virtual double Quantity(double qta)
+        {
+            double ret;
+
+            switch ((QuantityType)(TypeOfQuantity??0))
+            {
+                case QuantityType.RunTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+                case QuantityType.MqTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret =  Math.Truncate(1000* qta * (this.GainForMqRun ?? 0))/1000;
+                    break;
+                case QuantityType.WeigthTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+                default:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+            }
+
+            return ret;
+        }
+
+        public virtual double UnitCost(double qta)
+        {
+            //in questo metodo voglio calcolare il prezzo unitario
+            throw new NotImplementedException();
+        }
+
     }
 }

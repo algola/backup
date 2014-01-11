@@ -3,19 +3,13 @@ using System.Linq;
 using PapiroMVC.Models;
 using PapiroMVC.DbCodeManagement;
 using System.Threading;
+using PapiroMVC.Validation;
 
 namespace Services
 {
+
     public class ArticleRepository : GenericRepository<dbEntities, Article>, IArticleRepository
     {
-
-        public IQueryable<Article> GetPrintableArticleCost(ProductPartsPrintableArticle a)
-        {
-            return this.GetAll().OfType<Printable>().Where(x => x.NameOfMaterial == a.NameOfMaterial &&
-                x.TypeOfMaterial == a.TypeOfMaterial &&
-                x.Weight == x.Weight &&
-                x.Color == x.Color);
-        }
 
         public string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy)
         {
@@ -24,7 +18,7 @@ namespace Services
             var filteredItems = customerSuppliers.Where(
                 item => item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-            if (filteredItems.Count() == 0) throw new Exception();
+            if (filteredItems.Count() == 0) throw new NoSupplierException();
 
             a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
@@ -33,15 +27,14 @@ namespace Services
             var filteredItems2 = customerSuppliers.Where(
                 item => item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-            if (filteredItems2.Count() == 0) throw new Exception();
+            if (filteredItems2.Count() == 0) throw new NoSupplierException();
 
             //if #suppliers < 1 then no supplier has selected correctly and then thow error
             a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
 
-            var codes = (from COD in this.GetAll() select COD.CodArticle).ToArray().OrderBy(x => x, new SemiNumericComparer());
-            var csCode = codes.Count() != 0 ? codes.Last() : "0";
+            var csCode = (from COD in this.GetAll() select COD.CodArticle).Max();
 
-            return AlphaCode.GetNextCode(csCode);
+            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6,'0');
         }
 
         private void ArticleCostCodeRigen(Article c)

@@ -6,6 +6,8 @@
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
     ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "PlotterGridCaption");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitlePlotter");
+
 }
 
 <div id='digitalSheet'>

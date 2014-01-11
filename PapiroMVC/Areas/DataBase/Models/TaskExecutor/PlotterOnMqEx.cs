@@ -6,92 +6,60 @@ using System.ComponentModel;
 
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(PlotterOnMq_MetaData))]
-    public  partial class PlotterOnMq: TaskEstimatedOnMq, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class PlotterOnMq : TaskEstimatedOnMq
     {
+
+        public override double GetCost(string codOptionTypeOfTask, double starts, double mq)
+        {
+
+            double costMq = 0;
+
+            if (codOptionTypeOfTask.Contains("BASSA"))
+            {
+                costMq += Convert.ToDouble(CostUVLow, Thread.CurrentThread.CurrentUICulture);
+            }
+
+            if (codOptionTypeOfTask.Contains("ALTA"))
+            {
+                costMq += Convert.ToDouble(CostUVHight, Thread.CurrentThread.CurrentUICulture);
+            }
+
+            if (codOptionTypeOfTask.Contains("MEDIA"))
+            {
+                costMq += Convert.ToDouble(CostUVMed, Thread.CurrentThread.CurrentUICulture);
+            }
+
+            if (codOptionTypeOfTask.Contains("W"))
+            {
+                costMq += Convert.ToDouble(CostWhite, Thread.CurrentThread.CurrentUICulture);
+            }
+
+            if (codOptionTypeOfTask.Contains("DN"))
+            {
+                costMq *= 2;
+                costMq += Convert.ToDouble(CostWhite, Thread.CurrentThread.CurrentUICulture);                
+            }
+
+            var total = Convert.ToDouble(StartingCost1, Thread.CurrentThread.CurrentUICulture) +
+                Convert.ToDouble(StartingCost2, Thread.CurrentThread.CurrentUICulture) * (starts - 1) +
+                costMq * mq;
+
+            return total;
+
+        }
+
         public PlotterOnMq()
         {
             this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.PlotterOnMq;
         }
 
         #region Proprietà aggiuntive
-        #endregion
-
-        #region Error Handler
-
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""                       
-               };
-
-        public override string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                ////validazione della proprietà Note
-                //if (proprieta == "Note")
-                //{
-                //    if (this.Note != null)
-                //    {
-                //        Regex exp = new Regex(@"^[\w\s\x00-\xFF]{0,255}$", RegexOptions.IgnoreCase);
-                //        if (!exp.IsMatch(this.Note))
-                //        {
-                //            result = "Superata la lunghezza delle note consentita";
-                //        }
-                //    }
-                //}
-                ////validazione della proprietà Prodotto
-                //if (proprieta == "Prodotto")
-                //{
-                //    if (this.Prodotto == null)
-                //    {
-                //        result = "Nessuno prodotto selezionato";
-                //    }
-                //}
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public override bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret && base.IsValid;
-            }
-        }
-
-        #endregion
-
-        #region Handle copy for modify
-
-        public override void Copy(TaskEstimatedOn to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            ((PlotterOnMq)to).CostInkJetLow = this.CostInkJetLow;
-            ((PlotterOnMq)to).CostInkJetMed = this.CostInkJetMed;
-            ((PlotterOnMq)to).CostInkJetHight = this.CostInkJetHight;
-            ((PlotterOnMq)to).CostUVLow = this.CostUVLow;
-            ((PlotterOnMq)to).CostUVMed = this.CostUVMed;
-            ((PlotterOnMq)to).CostUVHight = this.CostUVHight;
-            ((PlotterOnMq)to).CostWhite = this.CostWhite;
-            ((PlotterOnMq)to).CostCutting = this.CostCutting;
-        }
-
         #endregion
     }
 

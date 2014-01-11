@@ -121,7 +121,7 @@
     <value>Ragione Sociale</value>
   </data>
   <data name="BusinessNameToolTip" xml:space="preserve">
-    <value>Ragione Sociale del cliente/fornitore</value>
+    <value>La ragione sociale del cliente comparirà nei documenti riferiti ad esso e potrà essere usata per la ricerca</value>
   </data>
   <data name="CodCustomerSupplier" xml:space="preserve">
     <value>Codice Cliente (se lasciato vuoto sarà assegnato dal sistema)</value>

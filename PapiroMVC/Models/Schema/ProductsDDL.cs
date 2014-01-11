@@ -71,6 +71,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparts", "PrintingType", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparts", "Format", SchemaDb.String, "20");
 
+            dbS.AddColumnToTable("productparts", "CodProductPart_", SchemaDb.String, "50");
+
+
             // 0 = ProductPartSingleSheet // 1 =  ProductPartCoverSheet // 2 = ProductPartBookSheet // 3 = ProductPartBlockSheet // etc... 
             dbS.AddColumnToTable("productparts", "SelectorProductPart", SchemaDb.Int, "0");
 

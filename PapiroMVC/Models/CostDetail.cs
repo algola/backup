@@ -26,6 +26,14 @@ namespace PapiroMVC.Models
         public string CodCost { get; set; }
         public string CodProductPart { get; set; }
         public string CodComputedBy { get; set; }
+        public Nullable<double> Starts { get; set; }
+        public Nullable<double> GainForRun { get; set; }
+        public Nullable<double> GainForRunForPrintableArticle { get; set; }
+        public Nullable<double> GainForMqRun { get; set; }
+        public Nullable<double> GainForMqRunForPrintableArticle { get; set; }
+        public Nullable<int> TypeOfQuantity { get; set; }
+        public Nullable<double> GainForWeigthRun { get; set; }
+        public Nullable<double> GainForWeigthRunForPrintableArticle { get; set; }
     
         public virtual Cost TaskCost { get; set; }
         public virtual ProductPart ProductPart { get; set; }

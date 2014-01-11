@@ -24,7 +24,7 @@
 
         @Html.HiddenFor(model => model.Article.CodArticle)
         @Html.HiddenFor(model => model.Article.ArticleName)
-
+       
         @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 

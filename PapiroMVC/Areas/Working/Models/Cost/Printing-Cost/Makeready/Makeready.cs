@@ -7,6 +7,6 @@ namespace PapiroMVC.Models
 {
     public partial class Makeready
     {
-      
+
     }
 }

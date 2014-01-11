@@ -4,12 +4,24 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
 
 namespace PapiroMVC.Models
 {    
     [MetadataType(typeof(DocumentProduct_MetaData))]
     public partial class DocumentProduct : IDataErrorInfo, ICloneable, IDeleteRelated
     {
+        public void UpdateCost()
+        {
+            double total = 0;
+            foreach (var item in Costs)
+            {
+               total += Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture);
+            }
+            TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+            UnitPrice = ((total / Quantity??0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));
+        }
+
         #region Proprietà aggiuntive
 
  

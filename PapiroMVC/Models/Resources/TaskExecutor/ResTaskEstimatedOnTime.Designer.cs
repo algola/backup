@@ -88,7 +88,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Costo all&apos;ora (tiratura).
+        ///   Looks up a localized string similar to Costo all&apos;ora (tiratura) per BN.
         /// </summary>
         public static string CostPerHourRunningBW {
             get {
@@ -97,7 +97,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indica il costo orario della lavorazione/macchina.
+        ///   Looks up a localized string similar to E&apos; possibile indicare un costo orario della lavorazione/macchina quando la stampa è in Bianco e Nero.
         /// </summary>
         public static string CostPerHourRunningBWToolTip {
             get {
@@ -124,7 +124,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Costo all&apos;ora (avviamento).
+        ///   Looks up a localized string similar to Costo all&apos;ora (avviamento) per BN.
         /// </summary>
         public static string CostPerHourStartingBW {
             get {
@@ -133,7 +133,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indica il costo orario in avviamento.
+        ///   Looks up a localized string similar to E&apos; possibile indicare un costo orario per l&apos;avviamento quando la stampa è in Bianco e Nero.
         /// </summary>
         public static string CostPerHourStartingBWToolTip {
             get {

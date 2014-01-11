@@ -12,7 +12,7 @@ namespace PapiroMVC.Models
     {
         public override void UpdateOpenedFormat()
         {
-            this.FormatOpened = (this.Format.GetSide1() * 2 + Convert.ToDecimal(this.WidthWings ?? 0)).ToString()+ "x"+ this.Format.GetSide2().ToString();
+            this.FormatOpened = (this.Format.GetSide1() * 2 + Convert.ToDouble(this.WidthWings ?? 0)).ToString()+ "x"+ this.Format.GetSide2().ToString();
         }
 
         public ProductPartCoverSheet()

@@ -4,26 +4,21 @@
 
 @{
     
-    string strings = "~/Areas/Working/Views/Document/Strings";
-    string stringsCod = "~/Views/Shared/Cuts";
+    //string strings = "~/Areas/Working/Views/Document/Strings";
+    //string stringsCod = "~/Views/Shared/Cuts";
 
-    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
-    
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();    
 }
-
-<canvas id="printingSingleSheet" width="500" height="170"></canvas>
 
 
 <script type="text/javascript">
 
     //this event is fired only the first time
     $(document).ready(function () {
-        drawPrintingAndSheet(); //draw printing and work
+//        drawPrintingAndSheet(); //draw printing and work
     });
 
-
     function drawPrintingAndSheet() {
-
 
         var side1 = '@Model.PrintingFormat.GetSide1()';
         var side2 = '@Model.PrintingFormat.GetSide2()';
@@ -32,11 +27,13 @@
         var context = c_canvas.getContext("2d");
 
         var zoom = 2.5;
+        zoom = zoomGlo;
+
         var offsetX = 0;
         var offsetY = 0;
 
         var bv = '@g.TypeOfPerfecting';
-        var maxG = '@g.PrintedSubjects';
+        var maxG = '@g.PrintedShapes';
 
         drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
 

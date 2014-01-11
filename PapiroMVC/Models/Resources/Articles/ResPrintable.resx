@@ -132,6 +132,9 @@
   <data name="NameOfMaterial" xml:space="preserve">
     <value>Nome materiale</value>
   </data>
+  <data name="NameOfMaterialToolTip" xml:space="preserve">
+    <value>es. 'Hello', 'Garda', etc... per le patinate; '3mm', '5mm' per il Forex, etc...</value>
+  </data>
   <data name="NoBv" xml:space="preserve">
     <value>no b/v</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="TypeOfMaterial" xml:space="preserve">
     <value>Tipo di materiale</value>
+  </data>
+  <data name="TypeOfMaterialToolTip" xml:space="preserve">
+    <value>es. 'Patinata Lucida, 'Patinata Opaca', 'UsoMano', etc... per i foglio e le bobine; 'Forex', 'Polyonda', etc... per i rigidi</value>
   </data>
   <data name="Weight" xml:space="preserve">
     <value>gr/mq</value>

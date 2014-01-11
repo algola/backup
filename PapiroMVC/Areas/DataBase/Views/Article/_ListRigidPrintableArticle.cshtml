@@ -20,6 +20,8 @@
     @(Html.jqGrid("ArticleGrid")
 
     .setCaption((string)@Html.T(strings, "RigidPrintableArticleGridCaption"))
+    .setCaption("")
+
     .setMultiSelect(true)
             // columns
     .addColumn(new Column("Id")

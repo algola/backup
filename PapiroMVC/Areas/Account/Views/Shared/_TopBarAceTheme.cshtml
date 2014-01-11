@@ -13,7 +13,13 @@
             <small>
                 <i class="icon-group"></i>
             </small>
-            @Html.T(strings, "AppName")
+            @*            @Html.T(strings, "AppName")*@
+            <b>P</b>apiro<b>S</b>tar
+                        @if (!Request.IsAuthenticated)
+                        {
+                            @Html.T(strings, "Demo");
+                        }
+
         </a>
         <!--/.brand-->
     </div>
@@ -22,77 +28,6 @@
         <ul class="nav ace-nav">
             @if (Request.IsAuthenticated)
             {   
-                <li class="green" style="float: left">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <i id="invitationIcon" class="icon-envelope"></i>
-                        <span id="invitation" class="badge badge-success"></span>
-                    </a>
-
-                    <ul class="pull-right dropdown-navbar dropdown-menu dropdown-caret dropdown-closer">
-                        <li class="nav-header">
-                            <i class="icon-envelope-alt"></i>
-                            5 Messages
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <img src="~/Content/acetheme/assets/avatars/avatar.png" class="msg-photo" alt="Alex's Avatar" />
-                                <span class="msg-body">
-                                    <span class="msg-title">
-                                        <span class="blue">Alex:</span>
-                                        Ciao sociis natoque penatibus et auctor ...
-                                    </span>
-
-                                    <span class="msg-time">
-                                        <i class="icon-time"></i>
-                                        <span>a moment ago</span>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <img src="~/Content/acetheme/assets/avatars/avatar3.png" class="msg-photo" alt="Susan's Avatar" />
-                                <span class="msg-body">
-                                    <span class="msg-title">
-                                        <span class="blue">Susan:</span>
-                                        Vestibulum id ligula porta felis euismod ...
-                                    </span>
-
-                                    <span class="msg-time">
-                                        <i class="icon-time"></i>
-                                        <span>20 minutes ago</span>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                <img src="~/Content/acetheme/assets/avatars/avatar4.png" class="msg-photo" alt="Bob's Avatar" />
-                                <span class="msg-body">
-                                    <span class="msg-title">
-                                        <span class="blue">Bob:</span>
-                                        Nullam quis risus eget urna mollis ornare ...
-                                    </span>
-
-                                    <span class="msg-time">
-                                        <i class="icon-time"></i>
-                                        <span>3:15 pm</span>
-                                    </span>
-                                </span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">See all messages
-										    <i class="icon-arrow-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
                 <li class="light-blue" style="float: right">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="User's Photo" />
@@ -112,6 +47,14 @@
                         <li>
                             @Html.ActionLinkImage(Html.T(strings, "ChangePasswordMenu"), "ChangePassword", "Account", new { @class = "username", title = "Change password", area = "Account" }, "icon-user")
                         </li>
+
+                        @if (User.Identity.Name == "db")
+                        {
+                            <li>
+                                @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "icon-group")
+                            </li>
+                            
+                        }
 
                         <li class="divider"></li>
 
@@ -137,13 +80,10 @@
 
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { id = "loginLink" }, "icon-key")
+                            @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "icon-key")
                         </li>
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { id = "registerLink" }, "icon-group")
-                        </li>
-                        <li>
-                            @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "icon-group")
+                            @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "icon-group")
                         </li>
                     </ul>
                 </li>

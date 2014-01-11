@@ -7,9 +7,9 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Models
 {
-
+        [Serializable]
     [MetadataType(typeof(CustomerSupplier_MetaData))]
-    public abstract partial class CustomerSupplier : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class CustomerSupplier : IDataErrorInfo
     {
 
         public enum CustomerSupplierType : int
@@ -61,39 +61,6 @@ namespace PapiroMVC.Models
 
                 return ret;
             }
-        }
-
-        #endregion
-
-        #region Metodi per gestire Copie
-
-        public virtual void Copy(CustomerSupplier to)
-        {
-            //All properties of object
-            //and pointer of sons
-            to.CodCustomerSupplier = this.CodCustomerSupplier;
-            to.BusinessName = this.BusinessName;
-            to.VatNumber = this.VatNumber;
-            to.TaxCode = this.TaxCode;
-            to.Outdated = this.Outdated;
-            to.CustomerSupplierBases = this.CustomerSupplierBases;
-        }
-
-
-        public object Clone()
-        {
-            //creo una copia dell'oggetto da utilizzare per le modifiche
-            var tipoDelloOggetto = this.GetType();
-            //istanzio una copia che sarà gestita dall'invio
-            CustomerSupplier copiaCustomerSupplier = (CustomerSupplier)Activator.CreateInstance(tipoDelloOggetto);
-            //l'oggetto copisa sarà una copia del contenuto dell'oggetto originale
-            this.Copy(copiaCustomerSupplier);
-
-            return copiaCustomerSupplier;
-        }
-
-        public void ChildsNull()
-        {
         }
 
         #endregion

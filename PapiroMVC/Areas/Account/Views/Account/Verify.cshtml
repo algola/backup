@@ -21,7 +21,15 @@
     }          
 }
 
-<h2>@ViewBag.Message</h2>
+        <div class="alert alert-info">
+            <i class="icon-hand-right"></i>
+            @ViewBag.Message
+            <button class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+        </div>
+
+
 
 @if (TempData["message"] == "Activated" || TempData["message"] == "JustActivated")
 {
@@ -40,7 +48,7 @@ else
 }
 
 @section title{
-ViewBag.Title
+    @ViewBag.Title
 }
 
 @section description{

@@ -9,9 +9,121 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
     [MetadataType(typeof(DigitalSheet_MetaData))]
-    public partial class DigitalSheet : Digital, IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DigitalSheet : Digital
     {
+
+        public override double Starts(string codOptionTypeOfTask)
+        {
+
+            double starts = 0;
+
+            switch (codOptionTypeOfTask)
+            {
+                //4 colori offset fronte e retro
+                case "STAMPAOFF_FR_COL":
+                    if (ColorSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+                    break;
+
+                case "STAMPAOFF_FR_BN":
+                    if (BWSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+
+                    break;
+
+                case "STAMPAOFF_FRONTE_COL":
+                    starts = 1;
+                    break;
+
+                case "STAMPAOFF_FRONTE_BN":
+                    starts = 1;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FR_COL":
+                    if (ColorSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FR_BN":
+                    if (BWSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FRONTE_COL":
+                    starts = 1;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FRONTE_BN":
+                    starts = 1;
+                    break;
+
+                case "STAMPADIGITALE_FR_COL":
+                    if (ColorSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+                    break;
+
+                case "STAMPADIGITALE_FR_BN":
+                    if (BWSide2 ?? false)
+                    {
+                        starts = 1;
+                    }
+                    else
+                    {
+                        starts = 2;
+                    }
+
+                    break;
+
+                case "STAMPADIGITALE_FRONTE_COL":
+                    starts = 1;
+                    break;
+
+                case "STAMPADIGITALE_FRONTE_BN":
+                    starts = 1;
+                    break;
+
+                default:
+                    throw new Exception();
+                    break;
+            }
+
+            return starts;
+        }
+
+
 
         public DigitalSheet()
         {
@@ -19,66 +131,6 @@ namespace PapiroMVC.Models
         }
 
         #region Added Properties
-
-        #endregion
-
-        #region Error Handle
-
-        private static readonly string[] proprietaDaValidare =
-               {
-                   "ProofSheetFirstStart"
-                   //Specify validation property
-                   //    "FormatMin",
-                   //    "FormatMax",
-               };
-
-        public override string this[string proprieta]
-        {
-            get
-            {
-                string result = base[proprieta];
-
-                if (proprieta == "ProofSheetFirstStart")
-                {
-                    if (this.ProofSheetFirstStart < 0)
-                    {
-                        result = "Messagge Error";
-                    }
-                }
-
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public override bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret && base.IsValid;
-            }
-        }
-
-        #endregion
-
-        #region Handle copy for modify
-
-        public override void Copy(TaskExecutor to)
-        {
-            //All properties of object
-            //and pointer of sons
-            base.Copy(to);
-
-            //to.Quantita = this.Quantita;
-            //to.Prezzo = this.Prezzo;
-            //to.Descrizione = this.Descrizione;
-        }
 
         #endregion
 

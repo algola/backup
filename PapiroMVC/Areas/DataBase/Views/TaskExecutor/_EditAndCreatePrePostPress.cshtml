@@ -50,10 +50,6 @@
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
-        @Html.HiddenFor(model => model.IsEstimatedOnTime)
-        @Html.HiddenFor(model => model.IsEstimatedOnRun)
-        @Html.HiddenFor(model => model.IsEstimatedOnMq)
-
         <p>
 
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPrePostPress", "TaskExecutor", new { Area = "Database" })');">

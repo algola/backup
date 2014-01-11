@@ -168,6 +168,15 @@
   <data name="FormatCaption" xml:space="preserve">
     <value>Formato</value>
   </data>
+  <data name="MetaTitleRigid" xml:space="preserve">
+    <value>Gestione di supporti rigidi come Forex, Polyonda, Microforato, etc... </value>
+  </data>
+  <data name="MetaTitleRoll" xml:space="preserve">
+    <value>Gestione di rotoli di carta come Patinata, Etichette in rotolo, UsoMano, carta per Plotter, etc...</value>
+  </data>
+  <data name="MetaTitleSheet" xml:space="preserve">
+    <value>Gestione di fogli di carta come Patinata Lucida, Opaca, UsoMano, carta Fedrigoni, per Edizioni, etc...</value>
+  </data>
   <data name="MsgBoxAutomaticChangesContent" xml:space="preserve">
     <value>Elaborazione avvenuta con successo. premere ok per continuare.</value>
   </data>
@@ -176,6 +185,9 @@
   </data>
   <data name="NameOfMaterialCaption" xml:space="preserve">
     <value>Nome</value>
+  </data>
+  <data name="NoSupplierError" xml:space="preserve">
+    <value>Un fornitore non è stato trovato in archivio, riprovare</value>
   </data>
   <data name="ObjectPrintableArticleType" xml:space="preserve">
     <value>Generico</value>
@@ -203,6 +215,9 @@
   </data>
   <data name="OptPallet" xml:space="preserve">
     <value>Applica ai costi della carta bandierata</value>
+  </data>
+  <data name="RigidPrintableArticleGridCaption" xml:space="preserve">
+    <value>Materiali stampabili rigidi</value>
   </data>
   <data name="RigidPrintableArticleType" xml:space="preserve">
     <value>Rigido/Banner/Mq</value>

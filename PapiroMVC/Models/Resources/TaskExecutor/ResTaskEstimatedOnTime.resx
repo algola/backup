@@ -127,10 +127,10 @@
     <value>Costo all'ora (tiratura)</value>
   </data>
   <data name="CostPerHourRunningBW" xml:space="preserve">
-    <value>Costo all'ora (tiratura)</value>
+    <value>Costo all'ora (tiratura) per BN</value>
   </data>
   <data name="CostPerHourRunningBWToolTip" xml:space="preserve">
-    <value>Indica il costo orario della lavorazione/macchina</value>
+    <value>E' possibile indicare un costo orario della lavorazione/macchina quando la stampa è in Bianco e Nero</value>
   </data>
   <data name="CostPerHourRunningToolTip" xml:space="preserve">
     <value>Indica il costo orario della lavorazione/macchina</value>
@@ -139,10 +139,10 @@
     <value>Costo all'ora (avviamento)</value>
   </data>
   <data name="CostPerHourStartingBW" xml:space="preserve">
-    <value>Costo all'ora (avviamento)</value>
+    <value>Costo all'ora (avviamento) per BN</value>
   </data>
   <data name="CostPerHourStartingBWToolTip" xml:space="preserve">
-    <value>Indica il costo orario in avviamento</value>
+    <value>E' possibile indicare un costo orario per l'avviamento quando la stampa è in Bianco e Nero</value>
   </data>
   <data name="CostPerHourStartingToolTip" xml:space="preserve">
     <value>Indica il costo orario in avviamento</value>
