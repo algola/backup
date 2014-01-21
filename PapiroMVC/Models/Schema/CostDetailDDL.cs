@@ -127,6 +127,8 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("productpartprintinggain", "UsePerfecting", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("productpartprintinggain", "MaxShape", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("productpartprintinggain", "DCut", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productpartprintinggain", "IsDCut", SchemaDb.Bool, "0");
 
             // 0 = Sheet // 1 = Plotter 
             dbS.AddColumnToTable("productpartprintinggain", "Selector", SchemaDb.Int, "0");

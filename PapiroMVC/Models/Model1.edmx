@@ -238,6 +238,8 @@
           <Property Name="Selector" Type="int" />
           <Property Name="SelectorSheet" Type="int" />
           <Property Name="SelectorPlotter" Type="int" />
+          <Property Name="DCut" Type="double" />
+          <Property Name="IsDCut" Type="bit" />
         </EntityType>
         <EntityType Name="productparts">
           <Key>
@@ -2432,6 +2434,8 @@
           <NavigationProperty Name="CostDetail" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrintingGainBuying" FromRole="ProductPartPrintingGain" ToRole="CostDetail" />
           <Property Type="String" Name="CodProductPartPrinting" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductPartPrinting" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrinting" FromRole="ProductPartPrintingGain" ToRole="ProductPartPrinting" />
+          <Property Name="DCut" Type="Double" />
+          <Property Name="IsDCut" Type="Boolean" />
           </EntityType>
         <Association Name="FK_productpartprintinggain_CodProductPartPrintingGain">
           <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="1">
@@ -3515,6 +3519,8 @@
           <EntitySetMapping Name="ProductPartPrintingGain">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingGain)">
               <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="IsDCut" ColumnName="IsDCut" />
+                <ScalarProperty Name="DCut" ColumnName="DCut" />
                 <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
                 <ScalarProperty Name="CodProductPartPrintingGainBuying" ColumnName="CodProductPartPrintingGainBuying" />
                 <ScalarProperty Name="CodProductPartPrintingGain" ColumnName="CodProductPartPrintingGain" />

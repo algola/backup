@@ -25,6 +25,8 @@ namespace PapiroMVC.Models
         public Nullable<int> MaxShape { get; set; }
         public string CodProductPartPrintingGainBuying { get; set; }
         public string CodProductPartPrinting { get; set; }
+        public Nullable<double> DCut { get; set; }
+        public Nullable<bool> IsDCut { get; set; }
     
         public virtual ProductPartPrinting ProductPartPrinting___ { get; set; }
         public virtual ICollection<Makeready> Makereadies { get; set; }
