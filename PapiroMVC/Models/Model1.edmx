@@ -1276,7 +1276,7 @@
           <EntitySet Name="Costs" EntityType="dbModel.Cost" />
           <EntitySet Name="DocumentProducts" EntityType="dbModel.DocumentProduct" />
           <EntitySet Name="Documents" EntityType="dbModel.Document" />
-          <EntitySet Name="productpartstoproducttasks1" EntityType="dbModel.productpartstoproducttask" />
+          <EntitySet Name="ProductPartsToProductTasks" EntityType="dbModel.productpartstoproducttask" />
           <AssociationSet Name="FK_costs_CodDocumentProduct" Association="dbModel.FK_costs_CodDocumentProduct">
             <End Role="documentproduct" EntitySet="DocumentProducts" />
             <End Role="cost" EntitySet="Costs" />
@@ -1303,11 +1303,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_productpartstoproducttask_CodProductPart" Association="dbModel.FK_productpartstoproducttask_CodProductPart">
             <End Role="ProductPart" EntitySet="ProductParts" />
-            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttasks1" />
+            <End Role="productpartstoproducttask" EntitySet="ProductPartsToProductTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_productpartstoproducttask_CodProductTask" Association="dbModel.FK_productpartstoproducttask_CodProductTask">
             <End Role="ProductTask" EntitySet="ProductTasks" />
-            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttasks1" />
+            <End Role="productpartstoproducttask" EntitySet="ProductPartsToProductTasks" />
           </AssociationSet>
           <AssociationSet Name="FK_documentproducts_CodProduct" Association="dbModel.FK_documentproducts_CodProduct">
             <End Role="Product" EntitySet="Products" />
@@ -3377,7 +3377,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="productpartstoproducttasks1">
+          <EntitySetMapping Name="ProductPartsToProductTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.productpartstoproducttask)">
               <MappingFragment StoreEntitySet="productpartstoproducttask">
                 <ScalarProperty Name="CodProductPartToProductTask" ColumnName="CodProductPartToProductTask" />
