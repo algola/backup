@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PapiroMVC.Validation
+
+@{
     string strings = "~/Areas/Working/Views/Document/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
 }
@@ -11,12 +13,12 @@
 
     function editEstimate(cellvalue, options, rowobject) {
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", new {id= "-1"},new {@class="tbutton smalledit"})';
-            return link.replace("-1", cellvalue);
-        }
+        return link.replace("-1", cellvalue);
+    }
 
     function typeOfDocument(cellvalue, options, rowobject) {
 
-        var link = "type"; 
+        var link = "type";
         var bookSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentBookSingleSheetType")';
         var singleSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentSingleSheetType")';
         var blockSheetType = '@HttpContext.GetLocalResourceObject(strings, "DocumentBlockSheetType")';
@@ -34,5 +36,46 @@
         return link;
     }
 
-</script>
 
+    $("#delete").click(function () {
+        var grid = jQuery("#estimateGrid");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+        if (ids.length > 0) {
+
+            $("#dialog-confirm").dialog({
+                height: 280,
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        //alert("Confirm");
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeleteEstimates","Document",null)',
+                            data: {
+                                ids: JSON.stringify(ids)
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                //if (msg.isRedirect) {
+                                //    window.location.href = msg.redirectUrl;
+                                //}
+                                $("#estimateGrid").trigger("reloadGrid");
+                            },
+                            error: function (res, status, exeption) {
+                                $("#estimateGrid").trigger("reloadGrid");
+
+                            }
+                        });
+
+                        $(this).dialog('close');
+                    }
+                }
+            });
+        }
+    });
+
+
+</script>

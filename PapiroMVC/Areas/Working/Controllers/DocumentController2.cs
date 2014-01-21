@@ -316,13 +316,27 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditEstimate(string id)
         {
-            Session["CodDocument"] = id;
-            var prod = documentRepository.GetSingle(id);
+            try
+            {
+                Session["CodDocument"] = id;
+                var prod = documentRepository.GetSingle(id);
 
-            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-            ViewBag.ActionMethod = "EditEstimate";
-            return View(prod);
+                if (prod == null)
+                {
+                    throw new NullReferenceException();
+                }
+
+                //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+                ViewBag.ActionMethod = "EditEstimate";
+                return View(prod);
+
+            }
+            catch (NullReferenceException)
+            {
+                return RedirectToAction("HttpError404", "Error", new { area = "" });
+            }
         }
+        
 
         [HttpGet]
         public ActionResult EditLastEstimate()
@@ -339,7 +353,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return View("EditEstimate",prod);
             }
 
-            throw new NullReferenceException();
+            return new HttpNotFoundResult("****Errore non trovato");
         }
 
 

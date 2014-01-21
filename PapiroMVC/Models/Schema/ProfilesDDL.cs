@@ -34,10 +34,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("profile", "TaxCode", SchemaDb.String, "50");
             dbS.AddColumnToTable("profile", "test", SchemaDb.String, "50");
 
-            dbS.AddColumnToTable("profile", "Target", SchemaDb.String, "255");
-            dbS.AddColumnToTable("profile", "Last3Dgt", SchemaDb.String, "3");
-            dbS.AddColumnToTable("profile", "ExpiredM", SchemaDb.String, "2");
-            dbS.AddColumnToTable("profile", "ExpiredY", SchemaDb.String, "4");
+            dbS.AddColumnToTable("profile", "BrianTreeCustomerId", SchemaDb.String, "255");
 
         }
     }

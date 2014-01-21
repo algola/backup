@@ -10,10 +10,15 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
+
+    [HandleError]
+    [AuthorizeUser]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         private readonly IDocumentRepository documentRepository;
@@ -25,7 +30,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
         private readonly ICostDetailRepository costDetailRepository;
-
 
         protected dbEntities db;
 
@@ -54,10 +58,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 ViewBag.CodDocument = Session["CodDocument"];
             }
-
-
         }
-
 
         public DocumentController(IDocumentRepository _documentRepository,
             ITypeOfTaskRepository _typeOfTaskRepository,
@@ -93,7 +94,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View();
         }
 
-
         //
         // POST: /Working/Document/Create
         [HttpPost]
@@ -110,6 +110,20 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult DeleteEstimates(string ids)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
+            {
+                var c = documentRepository.GetSingle(id);
+                documentRepository.Delete(c);
+            }
+
+            documentRepository.Save();
+
+            return Json(new { redirectUrl = Url.Action("ListEstimate", "Document", new { area = "Working" }) });
+        }
 
         [HttpParamAction]
         [HttpGet]
@@ -120,7 +134,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Add(c);
             documentRepository.Save();
             Session["CodDocument"] = c.CodDocument;
-            
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditDocument";
             return View("EditDocument", c);
@@ -132,6 +146,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var c = new Estimate();
             c.CodDocument = documentRepository.GetNewCode(c);
+            c.EstimateNumber = documentRepository.GetNewEstimateNumber(c);
             documentRepository.Add(c);
             documentRepository.Save();
             Session["CodDocument"] = c.CodDocument;
@@ -140,7 +155,5 @@ namespace PapiroMVC.Areas.Working.Controllers
             ViewBag.ActionMethod = "EditEstimate";
             return View("EditEstimate", c);
         }
-
-
     }
 }

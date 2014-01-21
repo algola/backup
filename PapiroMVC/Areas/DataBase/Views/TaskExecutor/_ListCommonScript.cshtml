@@ -46,15 +46,14 @@
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcost"})';
+                                          new {@class=""})';
        
-
         if (rowobject[0] === 'CostError') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcost error"})';
+                                          new {@class=""})';
         }
 
         if (rowobject[0] === 'CostMq') {
@@ -62,7 +61,7 @@
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcostOnMq"})';
+                                          new {@class=""})';
                 }
 
         if (rowobject[0] === 'CostRun') {
@@ -70,7 +69,7 @@
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcostOnRun"})';
+                                          new {@class=""})';
                 }
 
         if (rowobject[0] === 'CostTime') {
@@ -78,7 +77,7 @@
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcostOnTime"})';
+                                          new {@class=""})';
                 }
 
         if (rowobject[0] === 'PlotterOnMq') {
@@ -86,10 +85,10 @@
                                           "TaskExecutorCost",
                                           "TaskExecutor",
                                           (object) new { id = -1 },
-                                          new {@class="a tbutton smallcostOnTime"})';
+                                          new {@class=""})';
         }
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class=""})';
 
         var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
                  "Edit", 
@@ -100,14 +99,11 @@
                  OnBegin="showProcessingMsg();",
                  OnComplete = "hideProcessingMsg();"
                  },
-                 new {@class="tbutton smalledit"})'
+                 new {@class=""})'
 
         
 
-        return '<i class="icon-cogs icon-1x icon-only">' + '</i> ' +
-            link.replace("-1", cellvalue) + " " +
-            '<i class="icon-dashboard icon-1x icon-only">' + '</i> ' +
-            link2.replace("-1", cellvalue);
+        return link.replace("-1", cellvalue) + " | " + link2.replace("-1", cellvalue);
 
     }
 </script>

@@ -1,4 +1,5 @@
-﻿using PapiroMVC.Models;
+﻿using PapiroMVC.Controllers;
+using PapiroMVC.Models;
 using PapiroMVC.Validation;
 using System;
 using System.Collections.Generic;
@@ -59,7 +60,7 @@ namespace PapiroMVC
 
             if (dom.Contains("localhost") || dom.Contains("stampa"))
             {
-                cultureName = "it-IT";                
+                cultureName = "it-IT";
             }
 
             // Validate culture name
@@ -70,7 +71,7 @@ namespace PapiroMVC
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
 
         }
+
+
     }
-
-
 }

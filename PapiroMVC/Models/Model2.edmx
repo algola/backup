@@ -20,12 +20,18 @@
           <Property Name="Phone" Type="char" MaxLength="50" />
           <Property Name="VatNumber" Type="char" MaxLength="50" />
           <Property Name="TaxCode" Type="char" MaxLength="50" />
+          <Property Name="test" Type="char" MaxLength="50" />
+          <Property Name="Target" Type="char" />
+          <Property Name="Last3Dgt" Type="char" MaxLength="3" />
+          <Property Name="ExpiredM" Type="char" MaxLength="2" />
+          <Property Name="ExpiredY" Type="char" MaxLength="4" />
+          <Property Name="BrianTreeCustomerId" Type="char" />
         </EntityType>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="profilesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="profilesEntities" p1:LazyLoadingEnabled="true" >
+        <EntityContainer Name="profilesEntities" p1:LazyLoadingEnabled="false" >
           <EntitySet Name="Profiles" EntityType="profilesModel.Profile" />
         </EntityContainer>
         <EntityType Name="Profile">
@@ -40,6 +46,12 @@
           <Property Type="String" Name="Phone" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="VatNumber" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TaxCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="test" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Target" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Last3Dgt" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ExpiredM" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ExpiredY" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BrianTreeCustomerId" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -50,6 +62,12 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="profilesModel.Profile">
               <MappingFragment StoreEntitySet="profile">
+                <ScalarProperty Name="BrianTreeCustomerId" ColumnName="BrianTreeCustomerId" />
+                <ScalarProperty Name="ExpiredY" ColumnName="ExpiredY" />
+                <ScalarProperty Name="ExpiredM" ColumnName="ExpiredM" />
+                <ScalarProperty Name="Last3Dgt" ColumnName="Last3Dgt" />
+                <ScalarProperty Name="Target" ColumnName="Target" />
+                <ScalarProperty Name="test" ColumnName="test" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />

@@ -5,7 +5,9 @@
     string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
     string strings = "~/Areas/Working/Views/Document/Strings";
 
-    string url = Url.Action("CustomerSupplierList", new { controller = "CustomerSupplier", area = "DataBase" });    
+    string url = Url.Action("CustomerSupplierList", new {onlyCustomer=true, controller = "CustomerSupplier", area = "DataBase" });
+
+    var pageMessage = Html.T(strings, "LeavingPageMsg");
 }
 
 <div id="status">
@@ -47,13 +49,13 @@
                     <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
                 </div>
 
-
                 @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
                 @Html.HiddenFor(model => model.CodDocument)
                 @Html.AlgolaEditorFor(model => model.DateDocument)
-                @Html.HiddenFor(model => model.DocumentName)
+                @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
                 @Html.HiddenFor(model => model.Notes)
-                @Html.AlgolaEditorFor(model => model.Number)
+
+                @Html.AlgolaEditorFor(model => model.EstimateNumber)
                 @Html.HiddenFor(model => model.TimeStampTable)
 
                 @Html.HiddenFor(model => model.CodCustomer)
@@ -61,24 +63,24 @@
             </div>
 
 
-        </div>   
+        </div>
 
         <div id="_listDocumentProduct">
             @Html.Partial("_ListDocumentProduct", Model)
         </div>
 
-        
+
         <div id="dialog-message" class="hide">
 
-            <table id="gridArticle">
+            <table id="gridCustomer">
                 <tr>
                     <td />
                 </tr>
             </table>
-            <div id="pagerArticle"></div>
+            <div id="pagerCustomer"></div>
 
         </div>
-        
+
         <div class="space"></div>
 
     }
@@ -107,18 +109,21 @@
                 $('#status').html(xhr);
             }
         });
-        }
+    }
 
-        function save() {
+    function save() {
 
-            clearValidationErrors();
 
-            var datastring = $("#documentForm").serialize();
+        window.onbeforeunload = null;
 
-            //at firt time save estimate or
-            $.ajax({
-                type: "POST",
-                url: "@(Url.Action(ViewBag.ActionMethod, "Document"))",
+        clearValidationErrors();
+
+        var datastring = $("#documentForm").serialize();
+
+        //at firt time save estimate or
+        $.ajax({
+            type: "POST",
+            url: "@(Url.Action(ViewBag.ActionMethod, "Document"))",
             data: datastring,
             success: function (data) {
                 return;
@@ -144,103 +149,133 @@
 
         function () {
 
+
+            $('textarea').autosize({ append: "\n" });
             $('#DateDocument').datepicker({ dateFormat: "dd/mm/yy" });
             //            var lastSel = -1;
 
-            var myGrid = $("#gridArticle").jqGrid({
+            var myGrid = $("#gridCustomer").jqGrid({
                 url: '@url',
-                    datatype: 'json',
-                    colModel: [
-                        { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
-                        { name: 'CodCustomer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodCustemerSupplierCaption")', width: 120, align: 'left', editable: false, hidden: false },
-                    { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CustomersCaption")', width: 120, align: 'left', editable: false, hidden: true },
-                    { name: 'BusinessName', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "BusinessNameCaption")', width: 120, align: 'left', editable: false, hidden: false },
+                datatype: 'json',
+                colModel: [
+                    { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
+                    { name: 'CodCustomer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodCustemerSupplierCaption")', width: 120, align: 'left', editable: false, hidden: true },
+                { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CustomersCaption")', width: 120, align: 'left', editable: false, hidden: true },
+                { name: 'BusinessName', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "BusinessNameCaption")', width: 200, align: 'left', editable: false, hidden: false },
 
-                    ],
+                ],
 
-                    pager: '#pagerArticle',
+                pager: '#pagerCustomer',
 
-                    rowNum: 15,
-                    rowList: [15, 20, 50],
-                    viewrecords: true,
-                    autowidth: false,
+                rowNum: 15,
+                rowList: [15, 20, 50],
+                viewrecords: true,
+                autowidth: false,
 
-                    onSelectRow: function (id) {
-                        if (id && id !== lastSel) {
-                            myGrid.jqGrid('restoreRow', lastSel);
-                            lastSel = id;
-                        }
-                    },
-
-                    ondblClickRow: function (id, ri, ci) {
-                        myGrid.jqGrid('editRow', id, {
-                            keys: true,
-                            oneditfunc: function () {
-                                //...
-                            },
-                            aftersavefunc: function () {
-                                $("#gridArticle").trigger("reloadGrid");
-                            },
-                            url: 'editUrl'
-                        });
-                        //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
-                        return;
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        myGrid.jqGrid('restoreRow', lastSel);
+                        lastSel = id;
                     }
+                },
 
-                });
-
-                myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: true });
-                myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
-
-            });
-
-            $("#staticDialog").on('click', function (e) {
-                e.preventDefault();
-
-                var dialog = $("#dialog-message").dialog({
-                    width: 'auto',
-                    modal: true,
-                    title: '@Html.T(stringsGrid, "DialogSubTitle")',
-                    title_html: true,
-                    buttons: [
-                        {
-                            text: '@Html.T(stringsGrid, "Cancel")',
-                            "class": "btn btn-mini",
-                            click: function () {
-                                $(this).dialog("close");
-                            }
+                ondblClickRow: function (id, ri, ci) {
+                    myGrid.jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
                         },
-                {
-                    text: '@Html.T(stringsGrid, "Ok")',
-                    "class": "btn btn-primary btn-mini",
-                    click: function () {
-
-                        var myGrid = $('#gridArticle'),
-                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                            celValueCodCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'CodCustomer');
-
-                        $('#CodCustomer').val(celValueCodCustemerSupplier);
-
-                        var myGrid = $('#gridArticle'),
-                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                            celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
-
-                        $('#Customer').val(celValueCustemerSupplier);
-                        $(this).dialog("close");
-
-                    }
+                        aftersavefunc: function () {
+                            $("#gridCustomer").trigger("reloadGrid");
+                        },
+                        url: 'editUrl'
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                    return;
                 }
-                    ]
-                });
 
-                /**
-                dialog.data( "uiDialog" )._title = function(title) {
-                    title.html( this.options.title );
-                };
-                **/
             });
 
-            function reloadArticle() {
-                $("#gridArticle").trigger("reloadGrid");
+            myGrid.jqGrid('navGrid', '#pagerCustomer', { edit: false, add: false, del: false, search: true });
+            myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+        });
+
+    $("#staticDialog").on('click', function (e) {
+        e.preventDefault();
+
+
+
+        window.onbeforeunload = function () {
+            return "@pageMessage";
+        };
+
+
+        var dialog = $("#dialog-message").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+        {
+            text: '@Html.T(stringsGrid, "Ok")',
+            "class": "btn btn-primary btn-mini",
+            click: function () {
+
+                var myGrid = $('#gridCustomer'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueCodCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'CodCustomer');
+
+                $('#CodCustomer').val(celValueCodCustemerSupplier);
+
+                var myGrid = $('#gridCustomer'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
+
+                $('#Customer').val(celValueCustemerSupplier);
+                $(this).dialog("close");
+
             }
+        }
+            ]
+        });
+
+        /**
+        dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+        };
+        **/
+    });
+
+    function reloadArticle() {
+        $("#gridCustomer").trigger("reloadGrid");
+    }
+
+
+    $('input[name=Customer]').change(function () {
+        window.onbeforeunload = function () {
+            return "@pageMessage";
+        };
+    });
+
+    $('input[name=DateDocument]').change(function () {
+        window.onbeforeunload = function () {
+            return "@pageMessage";
+        };
+    });
+
+    $('input[name=DocumentName]').change(function () {
+        window.onbeforeunload = function () {
+            return "@pageMessage";
+        };
+    });
+
+    
 </script>

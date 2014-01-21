@@ -348,4 +348,10 @@
   <data name="MetaTitlePrePostPress" xml:space="preserve">
     <value>Macchine o lavoranti, interni ed esterni: pre e post stampa. Punto Metallico, Plastificatura, Oro a caldo</value>
   </data>
+  <data name="PrintSection" xml:space="preserve">
+    <value>Stampa</value>
+  </data>
+  <data name="WasteSection" xml:space="preserve">
+    <value>Scarti</value>
+  </data>
 </root>

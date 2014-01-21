@@ -10,9 +10,6 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(Document_MetaData))]
     public partial class Document
     {
-
-
-
         #region Proprietà aggiuntive
 
 

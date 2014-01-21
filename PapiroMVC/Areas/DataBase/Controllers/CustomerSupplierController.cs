@@ -108,7 +108,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         c.CodCustomerSupplier = customerSupplierRepository.GetNewCode(c);
                     }
+
                     c.TimeStampTable = DateTime.Now;
+                    
                     customerSupplierRepository.Add(c);
                     customerSupplierRepository.Save();
 
@@ -203,7 +205,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //
         // POST: /CustomerSupplier/CreateSupplier
-
         [HttpParamAction]
         [HttpPost]
         public ActionResult CreateSupplier(Supplier c)

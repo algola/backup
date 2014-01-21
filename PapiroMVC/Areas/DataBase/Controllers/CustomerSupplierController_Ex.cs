@@ -9,7 +9,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 {   
     public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-        public ActionResult CustomerSupplierList(GridSettings gridSettings)
+        public ActionResult CustomerSupplierList(GridSettings gridSettings, bool onlyCustomer)
         {
             string codCustomerSupplierFilter = string.Empty;
             string businessNameFilter = string.Empty;
@@ -43,6 +43,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         
             }
             var q = customerSupplierRepository.GetAll();
+
+            if (onlyCustomer)
+            {
+                q = q.OfType<Customer>();
+            }
 
             if (!string.IsNullOrEmpty(codCustomerSupplierFilter))
             {

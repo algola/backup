@@ -144,6 +144,18 @@
   <data name="Customer" xml:space="preserve">
     <value>Cliente</value>
   </data>
+  <data name="DeleteCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="DeleteCommand" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeleteMessageEstimate" xml:space="preserve">
+    <value>Si stanno per cancellare i preventivi selezionati, procedere?</value>
+  </data>
+  <data name="DeleteOk" xml:space="preserve">
+    <value>Si</value>
+  </data>
   <data name="DeletingStep" xml:space="preserve">
     <value>elimina</value>
   </data>
@@ -152,6 +164,9 @@
   </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
+  </data>
+  <data name="DocumentName" xml:space="preserve">
+    <value>Descrizione/Nome</value>
   </data>
   <data name="Documents" xml:space="preserve">
     <value>Documenti</value>
@@ -189,11 +204,17 @@
   <data name="Estimate" xml:space="preserve">
     <value>Preventivo</value>
   </data>
+  <data name="EstimateNumber" xml:space="preserve">
+    <value>Prev N°</value>
+  </data>
   <data name="Estimates" xml:space="preserve">
     <value>Preventivi</value>
   </data>
   <data name="EstimatesDesc" xml:space="preserve">
     <value>elenco</value>
+  </data>
+  <data name="LeavingPageMsg" xml:space="preserve">
+    <value>Alcune modifiche devono ancora essere salvate</value>
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>

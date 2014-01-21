@@ -61,6 +61,25 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
+
+        public ActionResult FromMinFormatAutoComplete(string term)
+        {
+            RigidPrintableArticle[] formats = articleRepository.GetAll().OfType<RigidPrintableArticle>().ToArray();
+
+            var filteredItems = formats.Where(
+            item => item.FromMinFormat.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.FromMinFormat,
+                                 label = art.FromMinFormat,
+                                 value = art.FromMinFormat
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// AutoComplete
         /// </summary>

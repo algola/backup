@@ -15,7 +15,6 @@
 }
 
 <div id="status">
-
     @Scripts.Render("~/bundles/autocomplete")
 
     @using (Ajax.BeginForm("Login", "Account", new {area = "Account"}, new AjaxOptions
@@ -24,9 +23,10 @@
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg",
     OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+}, new { @class = "form-horizontal", @id="frm" }))
     {
 
+    <div class="well nopadding">
 
         @Html.ValidationSummary(true)
 
@@ -44,15 +44,19 @@
                 @Html.T(strings, "LoginButton")
             </button>
 
-
         </p>        
+        
+        </div>
+        
+        <div class="space-10"></div>
+        <div class="well nopadding">
         <p>
             @Html.ActionLink(Html.T(strings, "RecoveryPasswordLink"), "RecoveryPassword", null, null) @Html.T(strings, "RecoveryPasswordAfterLink")
         </p>
         <p>
             @Html.ActionLink(Html.T(strings, "RegisterLink"), "Register") @Html.T(strings, "RegisterMessageAfterLink")
         </p>
-        
+        </div>
     }
 
 

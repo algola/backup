@@ -8,7 +8,5 @@ namespace Services
 {
     public interface ICostDetailRepository : IGenericRepository<CostDetail>
     {
-    
-
     }
 }

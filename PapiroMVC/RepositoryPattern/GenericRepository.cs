@@ -44,7 +44,7 @@ namespace Services
 
     public abstract class GenericRepository<C, T> : IGenericRepository<T>
         where T : class
-        where C : DbContext , new()
+        where C : DbContext, new()
     {
         public virtual void SetDbName(string name)
         {
@@ -56,9 +56,9 @@ namespace Services
             _entities = new C();
             if (name != null)
             {
-                _entities.Database.Connection.ConnectionString = _entities.Database.Connection.ConnectionString.Replace("db",name);
+                _entities.Database.Connection.ConnectionString = _entities.Database.Connection.ConnectionString.Replace("db", name);
                 _entities.Database.Connection.Open();
-            } 
+            }
             _entities.Configuration.ProxyCreationEnabled = false;
         }
 
@@ -66,20 +66,20 @@ namespace Services
 
         public C Context
         {
-            get 
-            {                
+            get
+            {
                 if (_entities == null)
-                {                                        
+                {
                     _entities = new C();
                     _entities.Configuration.ProxyCreationEnabled = false;
                 }
-                 
-                return _entities; 
+
+                return _entities;
             }
-            
-            set 
-            { 
-                _entities = value; 
+
+            set
+            {
+                _entities = value;
             }
         }
 
@@ -112,19 +112,8 @@ namespace Services
 
         public virtual void Save()
         {
-            try
-            {
-                Context.Configuration.ValidateOnSaveEnabled = false;            
-                this.Context.SaveChanges();
-            }
-            catch(Exception e)
-            {
-                var valErr=this.Context.GetValidationErrors();
-                Console.WriteLine(e.Message);
-                Console.WriteLine(valErr);
-                throw e;
-            }
-  
+            Context.Configuration.ValidateOnSaveEnabled = false;
+            this.Context.SaveChanges();
         }
 
         public virtual T GetSingle(string Cod)

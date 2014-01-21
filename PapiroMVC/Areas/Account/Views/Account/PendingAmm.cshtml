@@ -1,0 +1,40 @@
+﻿@using PapiroMVC.Validation
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleConfirmation");               
+}
+
+@Html.Action("MetaGenerator", new
+{
+    area = "",
+    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
+})
+
+@section title{
+    @Html.T(strings, "ConfirmEditProfileTitle")
+}
+
+@section description{
+    @Html.T(strings, "EditProfileTitle")
+}
+
+<div class="span12">
+
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <strong>
+            <i class="icon-remove"></i>
+            @Html.T(strings, "PendingAmm1")
+        </strong>
+
+        @Html.T(strings, "PendingAmm2")
+        <br>
+    </div>
+
+    <div class="space-10"></div>
+    @Html.T(strings, "PendingAmm3")
+
+</div>

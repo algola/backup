@@ -153,4 +153,13 @@
   <data name="IndexTitle" xml:space="preserve">
     <value>Software Gestionale Gratis per la stampa digitale e stampa offset</value>
   </data>
+  <data name="PendingDescription" xml:space="preserve">
+    <value>Gratis, Carta di credito per preventivi per tipografie, litografie e stampa digitale, gestione commesse e magazzino</value>
+  </data>
+  <data name="PendingKeyword" xml:space="preserve">
+    <value>registrazione utente, attivazione al gestionale</value>
+  </data>
+  <data name="PendingTitle" xml:space="preserve">
+    <value>Account e carta di credito Software Gestionale Gratis per la stampa digitale e stampa offset</value>
+  </data>
 </root>

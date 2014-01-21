@@ -33,6 +33,9 @@ MAX SHAPE: @Model.GainPartOnPrinting.MaxShape
         var side1 = '@Model.PrintingFormat.GetSide1()';
         var side2 = '@Model.PrintingFormat.GetSide2()';
 
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
         var c_canvas = document.getElementById("printingSingleSheet");
         var context = c_canvas.getContext("2d");
         

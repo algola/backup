@@ -625,7 +625,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodTaskEstimatedOn.ToString(),
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
-                            a.DeficitRate.ToString()
+                            a.DeficitRate
                          }
                     }
                 ).ToArray()
@@ -670,7 +670,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodTaskEstimatedOn.ToString(),
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
-                            a.DeficitRate.ToString()
+                            a.DeficitRate
                          }
                     }
                 ).ToArray()
@@ -715,7 +715,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodTaskEstimatedOn.ToString(),
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
-                            a.CostPerUnit.ToString()
+                            a.CostPerUnit
                          }
                     }
                 ).ToArray()
@@ -761,7 +761,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodTaskEstimatedOn.ToString(),
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
-                            a.CostPerUnit.ToString()
+                            a.CostPerUnit
                          }
                     }
                 ).ToArray()

@@ -22,7 +22,7 @@ namespace PapiroMVC.Models.Resources.Account {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Registration {
+    public class Registration {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace PapiroMVC.Models.Resources.Account {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PapiroMVC.Models.Resources.Account.Registration", typeof(Registration).Assembly);
@@ -51,7 +51,7 @@ namespace PapiroMVC.Models.Resources.Account {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Indirizzo.
         /// </summary>
-        internal static string Base {
+        public static string Base {
             get {
                 return ResourceManager.GetString("Base", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Ridigitare la password.
         /// </summary>
-        internal static string ConfirmPassword {
+        public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string Email {
+        public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Ragione Sociale.
         /// </summary>
-        internal static string OrganizationName {
+        public static string OrganizationName {
             get {
                 return ResourceManager.GetString("OrganizationName", resourceCulture);
             }
@@ -99,16 +99,34 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
-        internal static string Password {
+        public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registrazione.
+        /// </summary>
+        public static string PendingOk1 {
+            get {
+                return ResourceManager.GetString("PendingOk1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to avvenuta con successo.
+        /// </summary>
+        public static string PendingOk2 {
+            get {
+                return ResourceManager.GetString("PendingOk2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Numero di telefono.
         /// </summary>
-        internal static string Phone {
+        public static string Phone {
             get {
                 return ResourceManager.GetString("Phone", resourceCulture);
             }
@@ -117,7 +135,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Gentile Cliente,.
         /// </summary>
-        internal static string RecoveryBody1 {
+        public static string RecoveryBody1 {
             get {
                 return ResourceManager.GetString("RecoveryBody1", resourceCulture);
             }
@@ -126,7 +144,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to di seguito le credenziali di accesso a PapiroStar da Lei richieste..
         /// </summary>
-        internal static string RecoveryBody2 {
+        public static string RecoveryBody2 {
             get {
                 return ResourceManager.GetString("RecoveryBody2", resourceCulture);
             }
@@ -135,7 +153,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to PapiroStar - Gestionale Cloud per la Stampa.
         /// </summary>
-        internal static string RecoveryBodyF1 {
+        public static string RecoveryBodyF1 {
             get {
                 return ResourceManager.GetString("RecoveryBodyF1", resourceCulture);
             }
@@ -144,7 +162,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to PapiroStar credenziali di accesso.
         /// </summary>
-        internal static string RecoveryTitle {
+        public static string RecoveryTitle {
             get {
                 return ResourceManager.GetString("RecoveryTitle", resourceCulture);
             }
@@ -153,7 +171,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Nominativo referente.
         /// </summary>
-        internal static string Refeere {
+        public static string Refeere {
             get {
                 return ResourceManager.GetString("Refeere", resourceCulture);
             }
@@ -162,7 +180,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Grazie per esserti iscritto su PapiroStar!.
         /// </summary>
-        internal static string RegistrationBody1 {
+        public static string RegistrationBody1 {
             get {
                 return ResourceManager.GetString("RegistrationBody1", resourceCulture);
             }
@@ -171,7 +189,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Di seguito i tuoi codici di accesso personali:.
         /// </summary>
-        internal static string RegistrationBody2 {
+        public static string RegistrationBody2 {
             get {
                 return ResourceManager.GetString("RegistrationBody2", resourceCulture);
             }
@@ -180,7 +198,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Prima di procedere con il login è però indispensabile che venga confermata l&apos;iscrizione..
         /// </summary>
-        internal static string RegistrationBody3 {
+        public static string RegistrationBody3 {
             get {
                 return ResourceManager.GetString("RegistrationBody3", resourceCulture);
             }
@@ -189,7 +207,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Clicca sul link di seguito:.
         /// </summary>
-        internal static string RegistrationBody4 {
+        public static string RegistrationBody4 {
             get {
                 return ResourceManager.GetString("RegistrationBody4", resourceCulture);
             }
@@ -198,7 +216,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to PapiroStar - Gestionale Cloud per la Stampa.
         /// </summary>
-        internal static string RegistrationBodyF1 {
+        public static string RegistrationBodyF1 {
             get {
                 return ResourceManager.GetString("RegistrationBodyF1", resourceCulture);
             }
@@ -207,7 +225,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Benvenuto su PapiroStar.
         /// </summary>
-        internal static string RegistrationTitle {
+        public static string RegistrationTitle {
             get {
                 return ResourceManager.GetString("RegistrationTitle", resourceCulture);
             }
@@ -216,7 +234,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire indirizzo aziendale.
         /// </summary>
-        internal static string RequiredFieldBase {
+        public static string RequiredFieldBase {
             get {
                 return ResourceManager.GetString("RequiredFieldBase", resourceCulture);
             }
@@ -225,7 +243,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire una email valida.
         /// </summary>
-        internal static string RequiredFieldEmail {
+        public static string RequiredFieldEmail {
             get {
                 return ResourceManager.GetString("RequiredFieldEmail", resourceCulture);
             }
@@ -234,7 +252,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire la Ragione Sociale.
         /// </summary>
-        internal static string RequiredFieldOrganizationName {
+        public static string RequiredFieldOrganizationName {
             get {
                 return ResourceManager.GetString("RequiredFieldOrganizationName", resourceCulture);
             }
@@ -243,7 +261,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire numero aziendale.
         /// </summary>
-        internal static string RequiredFieldPhone {
+        public static string RequiredFieldPhone {
             get {
                 return ResourceManager.GetString("RequiredFieldPhone", resourceCulture);
             }
@@ -252,7 +270,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire nominativo di un referente.
         /// </summary>
-        internal static string RequiredFieldRefeere {
+        public static string RequiredFieldRefeere {
             get {
                 return ResourceManager.GetString("RequiredFieldRefeere", resourceCulture);
             }
@@ -261,7 +279,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inderire il codice fiscale.
         /// </summary>
-        internal static string RequiredFieldTaxCode {
+        public static string RequiredFieldTaxCode {
             get {
                 return ResourceManager.GetString("RequiredFieldTaxCode", resourceCulture);
             }
@@ -270,7 +288,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire un nome utente.
         /// </summary>
-        internal static string RequiredFieldUserName {
+        public static string RequiredFieldUserName {
             get {
                 return ResourceManager.GetString("RequiredFieldUserName", resourceCulture);
             }
@@ -279,7 +297,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire la Partita Iva.
         /// </summary>
-        internal static string RequiredFieldVatNumber {
+        public static string RequiredFieldVatNumber {
             get {
                 return ResourceManager.GetString("RequiredFieldVatNumber", resourceCulture);
             }
@@ -288,7 +306,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire una password.
         /// </summary>
-        internal static string RequiredPassword {
+        public static string RequiredPassword {
             get {
                 return ResourceManager.GetString("RequiredPassword", resourceCulture);
             }
@@ -297,7 +315,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Codice Fiscale.
         /// </summary>
-        internal static string TaxCode {
+        public static string TaxCode {
             get {
                 return ResourceManager.GetString("TaxCode", resourceCulture);
             }
@@ -306,16 +324,34 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Nome Utente.
         /// </summary>
-        internal static string UserName {
+        public static string UserName {
             get {
                 return ResourceManager.GetString("UserName", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Il nome utente contiene spazi o caratteri non validi.
+        /// </summary>
+        public static string UserNameFormatValidation {
+            get {
+                return ResourceManager.GetString("UserNameFormatValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^\S+\w{8,32}\S{1,}.
+        /// </summary>
+        public static string UserNameRegex {
+            get {
+                return ResourceManager.GetString("UserNameRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Le due password non combaciano.
         /// </summary>
-        internal static string ValidationConfirmPassword {
+        public static string ValidationConfirmPassword {
             get {
                 return ResourceManager.GetString("ValidationConfirmPassword", resourceCulture);
             }
@@ -324,7 +360,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Inserire una email valida.
         /// </summary>
-        internal static string ValidationEmail {
+        public static string ValidationEmail {
             get {
                 return ResourceManager.GetString("ValidationEmail", resourceCulture);
             }
@@ -333,7 +369,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to La password deve contenere almeno 6 caratteri alfanumerici.
         /// </summary>
-        internal static string ValidationPassword {
+        public static string ValidationPassword {
             get {
                 return ResourceManager.GetString("ValidationPassword", resourceCulture);
             }
@@ -342,7 +378,7 @@ namespace PapiroMVC.Models.Resources.Account {
         /// <summary>
         ///   Looks up a localized string similar to Partita Iva.
         /// </summary>
-        internal static string VatNumber {
+        public static string VatNumber {
             get {
                 return ResourceManager.GetString("VatNumber", resourceCulture);
             }

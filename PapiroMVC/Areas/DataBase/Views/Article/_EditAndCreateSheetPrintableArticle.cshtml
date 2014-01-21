@@ -13,7 +13,6 @@
         ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
     }       
 
-    
 }
 
 <div id="status">
@@ -46,7 +45,6 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.SheetPerPacked, "SheetPerPackedAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.SheetPerPallet, "SheetPerPackedAutoComplete", "Article")
 
-
         @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
         @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
@@ -74,7 +72,7 @@
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
 
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+            <button class="default btn btn-primary" data-loading-text="Loading..." type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Save")
             </button>

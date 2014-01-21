@@ -3,23 +3,23 @@
 @model PapiroMVC.Models.ProductPartCoverSheetPrinting
 
 @{
-    
+
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
-    
+
 }
 
 @*
-<canvas id="printingSingleSheet" width="500" height="170"></canvas>
+    <canvas id="printingSingleSheet" width="500" height="170"></canvas>
 *@
 
 <script type="text/javascript">
 
     //this event is fired only the first time
     $(document).ready(function () {
-//        drawPrintingAndSheet(); //draw printing and work
+        //        drawPrintingAndSheet(); //draw printing and work
     });
 
 
@@ -27,37 +27,43 @@
 
 
         var side1 = '@Model.PrintingFormat.GetSide1()';
-            var side2 = '@Model.PrintingFormat.GetSide2()';
+        var side2 = '@Model.PrintingFormat.GetSide2()';
 
-            var c_canvas = document.getElementById("printingSingleSheet");
-            var context = c_canvas.getContext("2d");
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-            var zoom = 2.5;
-            zoom = zoomGlo;
+        var c_canvas = document.getElementById("printingSingleSheet");
+        var context = c_canvas.getContext("2d");
 
-            var offsetX = 0;
-            var offsetY = 0;
+        var zoom = 2.5;
+        zoom = zoomGlo;
 
-            var bv = '@g.TypeOfPerfecting';
-//        var maxG = '@g.PrintedSubjects';
+        var offsetX = 0;
+        var offsetY = 0;
+
+        var bv = '@g.TypeOfPerfecting';
+        //        var maxG = '@g.PrintedSubjects';
         var maxG = '@g.PrintedShapes';
 
 
-            drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
+        drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
 
-            var side1pr = '@Model.Part.FormatOpened.GetSide1()';
+        var side1pr = '@Model.Part.FormatOpened.GetSide1()';
         var side2pr = '@Model.Part.FormatOpened.GetSide2()';
 
-            var sideOnSide = '@g.SideOnSide';
+        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-            var gain1 = parseInt('@g.ShapeOnSide1');
-            var gain2 = parseInt('@g.ShapeOnSide2');
+        var sideOnSide = '@g.SideOnSide';
 
-            drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG);
+        var gain1 = parseInt('@g.ShapeOnSide1');
+        var gain2 = parseInt('@g.ShapeOnSide2');
 
-        }
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG);
+
+    }
 
 </script>
 
 
-@Html.Partial("_CommonScriptDraw",g)
+@Html.Partial("_CommonScriptDraw", g)

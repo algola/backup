@@ -110,6 +110,8 @@ namespace PapiroMVC.Models
             }
         }
 
+        Double _quantity;
+
         public virtual double Quantity(double qta)
         {
             double ret;

@@ -14,6 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class DeficitOnCostForWeightStep : Step
     {
-        public Nullable<double> DeficitRate { get; set; }
+        public string DeficitRate { get; set; }
     }
 }

@@ -1,0 +1,28 @@
+﻿@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Views/Home/Strings";
+}
+
+@Html.Action("MetaGenerator", new
+{
+    area = "",
+    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
+})
+
+@section title{
+    @Html.T(strings, "HomeTitle")
+}
+
+@section description{
+    @Html.T(strings, "HomeDesc")
+}
+
+@{
+    ViewContext.RequestContext.RouteData.DataTokens.Add("GoingToRenderChildAction", true);
+}
+
+@{
+    ViewContext.RequestContext.RouteData.DataTokens["GoingToRenderChildAction"] = false;
+}
+

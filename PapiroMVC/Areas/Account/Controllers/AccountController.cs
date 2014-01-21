@@ -11,6 +11,8 @@ using PapiroMVC.Models;
 using Services;
 using PapiroMVC.Controllers;
 using System.Threading.Tasks;
+using Braintree;
+using Ninject;
 
 namespace PapiroMVC.Areas.Account.Controllers
 {
@@ -19,11 +21,86 @@ namespace PapiroMVC.Areas.Account.Controllers
     {
         private readonly IProfileRepository profDataRep;
         protected IMenuProductRepository profMenuRep;
+        protected ICustomerSupplierRepository crFrom;
+        protected ICustomerSupplierRepository crTo;
+
+        protected ITaskExecutorRepository trFrom;
+        protected ITaskExecutorRepository trTo;
+
+        protected IArticleRepository arFrom;
+        protected IArticleRepository arTo;
+
+        protected ITypeOfTaskRepository ttrFrom;
+        protected ITypeOfTaskRepository ttrTo;
+
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+        }
 
         /***
          * send email to just registered user
          * 
          */
+
+        public ActionResult ResultPending()
+        {
+            return View();
+        }
+
+        public ActionResult Pending()
+        {
+            return View("PendingAmm");
+        }
+
+        [HttpPost]
+        public ActionResult Pending(FormCollection collection)
+        {
+            var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
+
+            CustomerRequest request = new CustomerRequest
+            {
+                Company = profile.CompanyName,
+                CreditCard = new CreditCardRequest
+                {
+                    BillingAddress = new CreditCardAddressRequest
+                    {
+                        Company = profile.CompanyName,
+                        StreetAddress = profile.Base
+                    },
+                    Number = collection["number"],
+                    ExpirationMonth = collection["month"],
+                    ExpirationYear = collection["year"],
+                    CVV = collection["cvv"]
+                }
+            };
+
+            Result<Braintree.Customer> result = Constants.Gateway.Customer.Create(request);
+
+            if (result.IsSuccess())
+            {
+                try
+                {
+                    Roles.RemoveUserFromRole(CurrentUser.ToString(), "Pending");
+                    profile.BrianTreeCustomerId = result.Target.Id;
+                }
+                catch (Exception)
+                {
+
+                }
+
+                Braintree.Customer customer = result.Target;
+                ViewData["CustomerName"] = customer.FirstName + " " + customer.LastName;
+                ViewData["Message"] = "";
+            }
+            else
+            {
+                ViewData["Message"] = result.Message;
+            }
+
+            return View("ResultPending");
+
+        }
 
         public void SendConfirmationEmail(string userName)
         {
@@ -34,23 +111,23 @@ namespace PapiroMVC.Areas.Account.Controllers
             string verifyUrl = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) +
                              "/account/verify?ID=" + confirmationGuid;
 
-            var password= user.GetPassword();
+            var password = user.GetPassword();
             //var newPassword = member.ResetPassword(currentUser);
 
             var messagePwd = string.Format("Login: {0}\r\n", user.UserName);
             messagePwd += string.Format("Password: {0}\r\n", password);
 
             string messageStr = string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBody1").GetValue(null, null) ?? "");
-                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody2").GetValue(null, null)??"");
-                messageStr += string.Format("\r\n{0}\r\n", messagePwd);
-                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody3").GetValue(null, null)??"");
-                messageStr += string.Format("{0}\r\n",(string)res.GetProperty("RegistrationBody4").GetValue(null, null)??"");
-                messageStr += string.Format("\r\n{0}\r\n", verifyUrl);
-                messageStr += string.Format("\r\n{0}\r\n", (string)res.GetProperty("RegistrationBodyF1").GetValue(null, null) ?? "");
-                        
+            messageStr += string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBody2").GetValue(null, null) ?? "");
+            messageStr += string.Format("\r\n{0}\r\n", messagePwd);
+            messageStr += string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBody3").GetValue(null, null) ?? "");
+            messageStr += string.Format("{0}\r\n", (string)res.GetProperty("RegistrationBody4").GetValue(null, null) ?? "");
+            messageStr += string.Format("\r\n{0}\r\n", verifyUrl);
+            messageStr += string.Format("\r\n{0}\r\n", (string)res.GetProperty("RegistrationBodyF1").GetValue(null, null) ?? "");
+
             var message = new MailMessage("papirosoftware@gmail.com", user.Email)
             {
-                Subject = (string)res.GetProperty("RegistrationTitle").GetValue(null, null)??"",
+                Subject = (string)res.GetProperty("RegistrationTitle").GetValue(null, null) ?? "",
                 Body = messageStr
             };
 
@@ -64,13 +141,30 @@ namespace PapiroMVC.Areas.Account.Controllers
         }
 
         //constructor
-        public AccountController(IProfileRepository _profDataRep, IMenuProductRepository _profMenuRep)
+        public AccountController(IProfileRepository _profDataRep,
+            IMenuProductRepository _profMenuRep,
+            ICustomerSupplierRepository _crFrom,
+            ICustomerSupplierRepository _crTo,
+            IArticleRepository _arFrom,
+            IArticleRepository _arTo,
+            ITaskExecutorRepository _trFrom,
+            ITaskExecutorRepository _trTo,
+            ITypeOfTaskRepository _ttrFrom,
+            ITypeOfTaskRepository _ttrTo)
         {
             //TODOCHRIS
             //passare al costruttore anche un riferimento di tipo IMenuProductRepository
             //e fare le stesse cose che si fanno ora per il IProfileRepository
             profMenuRep = _profMenuRep;
             profDataRep = _profDataRep;
+            crFrom = _crFrom;
+            crTo = _crTo;
+            arFrom = _arFrom;
+            arTo = _arTo;
+            trFrom = _trFrom;
+            trTo = _trTo;
+            ttrFrom = _ttrFrom;
+            ttrTo = _ttrTo;
         }
 
         //
@@ -83,7 +177,6 @@ namespace PapiroMVC.Areas.Account.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
 
         [HttpGet]
         [AllowAnonymous]
@@ -126,6 +219,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     AsyncManager.Parameters.Add("redirect", false);
                     AsyncManager.Parameters.Add("model", model);
                     AsyncManager.Parameters.Add("returnUrl", returnUrl);
+
                     ModelState.AddModelError("PersError", "LoginMessageError");
                 }
             }
@@ -223,8 +317,11 @@ namespace PapiroMVC.Areas.Account.Controllers
         [HttpPost]
         public ActionResult Register(RegisterModel model)
         {
+
             if (ModelState.IsValid)
             {
+
+
 
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
@@ -239,7 +336,6 @@ namespace PapiroMVC.Areas.Account.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     //TO DO: create a new user in main database
-                    //
 
                     var nProf = new Profile();
                     nProf.Name = model.UserName;
@@ -250,7 +346,6 @@ namespace PapiroMVC.Areas.Account.Controllers
                     nProf.TaxCode = model.TaxCode;
                     nProf.Refeere = model.Refeere;
                     nProf.VatNumber = model.VatNumber;
-
 
                     profDataRep.Add(nProf);
                     profDataRep.Save();
@@ -301,46 +396,43 @@ namespace PapiroMVC.Areas.Account.Controllers
         // POST: /Account/EditProfile
 
         [HttpPost]
-        public ActionResult EditProfile(ProfileViewModel model, FormCollection x)
+        public ActionResult EditProfile(ProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //TODOCHRIS: SALVA model.Profile
                     profDataRep.Edit(model.Profile);
                     profDataRep.Save();
 
+                    //            //TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
+                    //            //la scorri e per ciascun menu-prodotto in lista: 
+                    //            //lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
 
-                    ////TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
-                    ////la scorri e per ciascun menu-prodotto in lista: 
-                    ////lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
-
-                    //foreach (var item in model.MenuProducts)
-                    //{
-                    //    var temp=profMenuRep.GetSingle(item.CodMenuProduct);
-                    //    temp.Hidden = item.Hidden;
-                    //    profMenuRep.Edit(temp);
-                    //}
-                    //profMenuRep.Save();
+                    //            foreach (var item in model.MenuProducts)
+                    //            {
+                    //                var temp=profMenuRep.GetSingle(item.CodMenuProduct);
+                    //                temp.Hidden = item.Hidden;
+                    //                profMenuRep.Edit(temp);
+                    //            }
+                    //            profMenuRep.Save();
 
 
-                    //aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
-                    //applichi il metodo Edit del repository dei menu-prodotti al temp
+                    //            aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
+                    //            applichi il metodo Edit del repository dei menu-prodotti al temp
 
-                    //al termine del ciclo applichi il metodo Save del repository (più o meno come sopra per il profilo!!!!)
+                    //            al termine del ciclo applichi il metodo Save del repository (più o meno come sopra per il profilo!!!!)
 
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
 
-                catch (Exception)
+                catch (Exception e)
                 {
                     ModelState.AddModelError("PersError", "GenericError");
                 }
             }
 
-            // If we got this far, something failed, redisplay form
-
+            //If we got this far, something failed, redisplay form
             return PartialView("_EditProfile", model);
         }
 
@@ -512,6 +604,11 @@ namespace PapiroMVC.Areas.Account.Controllers
                 if (!user.IsApproved)
                 {
                     user.IsApproved = true;
+
+                    if (!Roles.RoleExists("Pending"))
+                        Roles.CreateRole("Pending");
+
+                    Roles.AddUserToRole(user.UserName, "Pending");
                     Membership.UpdateUser(user);
 
                     //when usere has logged in system, database will be updated. 
@@ -519,6 +616,55 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                     FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
                     TempData["message"] = "Activated";
+
+                    //customer
+                    crTo.SetDbName(user.UserName);
+                    crFrom.SetDbName("examples");
+
+                    var cFs = crFrom.GetAll();
+                    foreach (var cf in cFs)
+                    {
+                        crTo.Add(cf);
+                    }
+
+                    crTo.Save();
+
+                    //articles
+                    arTo.SetDbName(user.UserName);
+                    arFrom.SetDbName("examples");
+
+                    var aFs = arFrom.GetForImport();
+                    foreach (var a in aFs)
+                    {
+                        arTo.Add(a);
+                    }
+
+                    arTo.Save();
+
+
+                    //typeoftask
+                    ttrTo.SetDbName(user.UserName);
+                    ttrFrom.SetDbName("examples");
+                    var ttFs = ttrFrom.GetAll();
+                    foreach (var a in ttFs)
+                    {
+                        ttrTo.Add(a);
+                    }
+
+                    ttrTo.Save();
+
+
+                    //taskExecutors
+                    trTo.SetDbName(user.UserName);
+                    trFrom.SetDbName("examples");
+                    var tFs = trFrom.GetAll();
+                    foreach (var a in tFs)
+                    {
+                        trTo.Add(a);
+                    }
+
+                    trTo.Save();
+
                 }
                 else
                 {

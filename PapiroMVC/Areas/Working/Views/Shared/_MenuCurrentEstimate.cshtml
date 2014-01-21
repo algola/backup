@@ -7,9 +7,12 @@
     List<MenuProduct> menuProd = ViewBag.MenuProd;
     var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
 
-    List<MenuProduct> selectedMenuProd;
-    
+    List<MenuProduct> selectedMenuProd;    
 }
+
+<li id="newEstimateSlidebar">
+    @Html.ActionLinkImageSpan(Html.T(strings, "CreateEstimateMenu"), "CreateEstimate", "Document", new { area = "Working" }, "icon-dashboard", "menu-text")
+</li>
 
 <li id="documentSlidebar">
     @Html.ActionLinkImageSpan(Html.T(strings, "CurrentEstimateMenu"), "EditEstimate", "Document", new { area = "Working", id=Model }, "icon-dashboard", "menu-text")

@@ -30,6 +30,9 @@ namespace PapiroMVC.Areas.DataBase
                     new RouteValueTranslation(cultureIT, "IndexSheetPrintableArticle", "a-foglio-stampa-digitale-offset"),
                     new RouteValueTranslation(cultureIT, "IndexRollPrintableArticle", "a-rotolo-stampa-etichette-digitale-offset"),
                     new RouteValueTranslation(cultureIT, "IndexRigidPrintableArticle", "rigido-forex-vetrofanie-plotter-uv"),
+                    new RouteValueTranslation(cultureIT, "TaskExecutor", "macchina-da-stampa-o-lavorazione"),
+                
+                
                 }
             );
 

@@ -24,8 +24,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResStep), "ToUnit")]
         [Tooltip(typeof(ResStep), "ToUnitToolTip")]
         public Nullable<double> ToUnit { get; set; }
-        [DisplayNameLocalized(typeof(ResStep), "taskexecutorestimatedon")]
-        [Tooltip(typeof(ResStep), "taskexecutorestimatedonToolTip")]
-        public virtual TaskEstimatedOn_MetaData taskexecutorestimatedon { get; set; }
+
     }
 }

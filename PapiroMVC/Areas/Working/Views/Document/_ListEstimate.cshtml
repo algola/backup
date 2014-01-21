@@ -1,11 +1,12 @@
 ﻿@using Mvc.HtmlHelpers
 @using MvcContrib.UI.Grid
+@using PapiroMVC.Validation
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
 }
 
-@(Html.jqGrid("EstimateGrid")
+@(Html.jqGrid("estimateGrid")
 
     .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
     .setCaption("")
@@ -15,18 +16,19 @@
         // columns
     .addColumn(new Column("Id")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
-        .setWidth(35)
+        .setWidth(25)
         .setCustomFormatter("editEstimate")
         .setSortable(false))
     .addColumn(new Column("Customer")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Customer"))
         .setWidth(50)
         .setSortable(true))
-    .addColumn(new Column("CodDocument")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodDocument"))
-        .setWidth(20)
+    .addColumn(new Column("EstimateNumber")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "EstimateNumber"))
+        .setWidth(15)
         .setSortable(true)
-        .setFirstSortOrder(SortOrder.desc))
+        .setFirstSortOrder(SortOrder.desc)
+        .setAlign(Align.right))
     .addColumn(new Column("DocumentName")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "DocumentName"))
         .setWidth(100)
@@ -38,7 +40,7 @@
     .setHeight(300)
     .setRowNum(10)
     .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("EstimateGridAccountPager")
+    .setPager("estimateGridAccountPager")
     .setPrint(true)
     .setLoadText("")
     .setAutoWidth(true)
@@ -54,12 +56,18 @@
 
 <div>
 
-    <button class="btn radius-4" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDocument", "Document", new { Area = "Working" })');">
-        <i class="icon-plus bigger-125"></i>
-        @HttpContext.GetLocalResourceObject(strings, "CreateDocument")
+    <button class="btn btn-danger" type="button" id="delete">
+        <i class="icon-trash bigger-125"></i>
+        @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
         <span class="badge badge-transparent">
             <i class="light-red icon-asterisk"></i>
         </span>
     </button>
+
+</div>
+
+<div id="dialog-confirm" class="hide">
+
+    @Html.T(strings,"DeleteMessageEstimate")
 
 </div>

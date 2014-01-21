@@ -175,7 +175,7 @@
     <value>Introdurre nome utente e password validi per accedere al sistema</value>
   </data>
   <data name="LoginMessageError" xml:space="preserve">
-    <value>Nome utente o password non validi. Login non effettuato</value>
+    <value>Nome utente o password non validi, oppure l'utente non è ancora verificato. Login non effettuato</value>
   </data>
   <data name="LoginTitle" xml:space="preserve">
     <value>Pagina di login</value>
@@ -266,5 +266,33 @@
   </data>
   <data name="RecoveryPasswordMessage" xml:space="preserve">
     <value>Verrà inviata una mail con la password all'indirizzo di registrazione.</value>
+  </data>
+  <data name="Pending1" xml:space="preserve">
+    <value>Attenzione!</value>
+    <comment>!</comment>
+  </data>
+  <data name="Pending2" xml:space="preserve">
+    <value>Non risulta ancora associata una carta di credito.</value>
+  </data>
+  <data name="Pending3" xml:space="preserve">
+    <value>Per poter usare il PapiroStar è indispensabile associare l'account ad una carta di credito. Questo anche se si userà il software solo nelle sezioni gratuite.</value>
+  </data>
+  <data name="Pending4" xml:space="preserve">
+    <value>L'introduzione di una carta di credito è una operazione sicura. I dati della carta sono mantenuti da un istituto bancario e nessun'altro, compreso gli amminstratori del sito può venirne a conoscenza.</value>
+  </data>
+  <data name="PendingBack" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
+  <data name="PendingAmm1" xml:space="preserve">
+    <value>Attenzione!</value>
+  </data>
+  <data name="PendingAmm2" xml:space="preserve">
+    <value>Questo account non risulta ancora attivato dall'amministrazione.</value>
+  </data>
+  <data name="PendingAmm3" xml:space="preserve">
+    <value>Per poter usare il PapiroStar in versione "Candiate Release" è indispensabile l'apporvazione dell'amministrazione del portale. </value>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>Mail errata oppure non inserita nel sistema</value>
   </data>
 </root>

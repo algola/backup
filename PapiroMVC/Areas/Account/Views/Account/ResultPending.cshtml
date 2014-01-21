@@ -1,0 +1,63 @@
+﻿@using PapiroMVC.Validation
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleConfirmation");               
+}
+
+@section title{
+    @Html.T(strings, "ConfirmEditProfileTitle")
+}
+
+@section description{
+    @Html.T(strings, "EditProfileTitle")
+}
+
+<div class="span12">
+
+    @if (ViewData["Message"] != "")
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-remove"></i>
+            </button>
+
+            <strong>
+                <i class="icon-remove"></i>
+                @Html.T(strings, "Pending1")
+            </strong>
+
+            @ViewData["Message"]
+            @Html.T(strings, "ErrorPending")
+            <br>
+        </div>
+        <div class="space-10"></div>    
+        @Html.ActionLinkButton(Html.T(strings, "PendingBack"), "Pending", "Account", new { area = "Account" }, "icon-remove bigger-125", "btn btn-warning")
+        
+    }
+    else
+    {
+        <div class="alert alert-succes">
+            <button type="button" class="close" data-dismiss="alert">
+                <i class="icon-ok"></i>
+            </button>
+
+            <strong>
+                <i class="icon-ok"></i>
+                @Html.T(strings, "PendingOk1")
+            </strong>
+
+            @Html.T(strings, "PendingOk2")
+            <br>
+        </div>
+
+        <div class="space-10"></div>    
+        @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", new { area = "" }, "icon-home bigger-125", "btn btn-primary")
+
+    }
+
+
+</div>
+@section specificPluginScript {
+
+}
+

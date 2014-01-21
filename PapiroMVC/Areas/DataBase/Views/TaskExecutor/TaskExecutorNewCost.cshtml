@@ -16,15 +16,13 @@
 {
     @Html.ValidationSummary(true)
     
-    <fieldset>
-        <legend>@Html.T(strings, "SelectCost")</legend>
        
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
-        @if (((string)ViewBag.TypeCost).Contains("Time"))
+        if (((string)ViewBag.TypeCost).Contains("Time"))
         {
          <div>
-            <div class="editor-field", style="float:left" >
+            <div class="editor-field" style="float:left" >
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnTime)
             </div>
             <div class="editor-label">
@@ -34,10 +32,10 @@
     <br />
         }
 
-        @if (((string)ViewBag.TypeCost).Contains("Mq"))
+        if (((string)ViewBag.TypeCost).Contains("Mq"))
         {
          <div>
-            <div class="editor-field", style="float:left" >
+            <div class="editor-field" style="float:left" >
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnMq)
             </div>
             <div class="editor-label">
@@ -48,11 +46,11 @@
     <br />
         }
 
-        @if (((string)ViewBag.TypeCost).Contains("Run"))
+        if (((string)ViewBag.TypeCost).Contains("Run"))
         {
 
          <div>
-            <div class="editor-field", style="float:left" >
+            <div class="editor-field" style="float:left" >
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnRun)
             </div>
             <div class="editor-label">
@@ -74,7 +72,6 @@
         </button> 
 
     </p>
-    </fieldset>
     }
 
 <script type="text/javascript">

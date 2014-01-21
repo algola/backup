@@ -9,6 +9,7 @@ namespace Services
     public interface IDocumentRepository : IGenericRepository<Document>
     {
         string GetNewCode(Document a);
+        string GetNewEstimateNumber(Document a);
         IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct);
         Document GetFromSession();
         void SaveOnSession(Document a);

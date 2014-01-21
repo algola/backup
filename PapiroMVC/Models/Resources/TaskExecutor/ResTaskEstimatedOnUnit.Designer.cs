@@ -61,6 +61,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Forfait BW.
+        /// </summary>
+        public static string CostForfaitBW {
+            get {
+                return ResourceManager.GetString("CostForfaitBW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indica il forfait totale (minimale) in caso di stampa bianco e nero.
+        /// </summary>
+        public static string CostForfaitBWToolTip {
+            get {
+                return ResourceManager.GetString("CostForfaitBWToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Costo a copia.
         /// </summary>
         public static string CostPerUnit {

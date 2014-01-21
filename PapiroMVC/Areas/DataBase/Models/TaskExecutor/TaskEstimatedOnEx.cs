@@ -45,6 +45,5 @@ namespace PapiroMVC.Models
             throw new NotImplementedException();
         }
 
-
     }
 }

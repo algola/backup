@@ -27,14 +27,16 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("documents", "CodDocument", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("documents", "DocumentName", SchemaDb.String, "100");
             dbS.AddColumnToTable("documents", "DateDocument", SchemaDb.Date, "100");
-            dbS.AddColumnToTable("documents", "Number", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("documents", "Number", SchemaDb.Int, "0"); // deprecated
+            dbS.AddColumnToTable("documents", "EstimateNumber", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documents", "EstimateNumberSerie", SchemaDb.String, "20");
+
             dbS.AddColumnToTable("documents", "Notes", SchemaDb.String, "100");
 
             dbS.AddColumnToTable("documents", "CodCustomer", SchemaDb.String, "50");
             dbS.AddColumnToTable("documents", "Customer", SchemaDb.String, "50");
 
-            dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");
-            
+            dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");            
             
             //foreign key
             dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");

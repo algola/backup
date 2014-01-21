@@ -14,6 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class CostPerRunStep : Step
     {
-        public Nullable<double> CostPerUnit { get; set; }
+        public string CostPerUnit { get; set; }
     }
 }

@@ -148,10 +148,22 @@
     <value>Data Documento</value>
   </data>
   <data name="DocumentName" xml:space="preserve">
-    <value>Nome Documento</value>
+    <value>Descrizione/Nome</value>
   </data>
   <data name="DocumentNameToolTip" xml:space="preserve">
-    <value>Nome Documento</value>
+    <value>Una descrizione o un nome identificativo</value>
+  </data>
+  <data name="EstimateNumber" xml:space="preserve">
+    <value>Preventivo N</value>
+  </data>
+  <data name="EstimateNumberSerie" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="EstimateNumberSerieToolTip" xml:space="preserve">
+    <value>Serie di riferimento del progressivo</value>
+  </data>
+  <data name="EstimateNumberToolTip" xml:space="preserve">
+    <value>Numero progressivo del preventivo</value>
   </data>
   <data name="Notes" xml:space="preserve">
     <value>Note</value>

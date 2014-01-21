@@ -64,6 +64,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(article);
         }
 
+        [AuthorizeUser]
         [HttpGet]
         public ActionResult CreateSheetPrintableArticle()
         {
@@ -74,6 +75,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpParamAction]
+        [AuthorizeUser]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateSheetPrintableArticle(SheetPrintableArticleViewModel c)
         {
@@ -97,7 +99,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
-            
+
             }
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
@@ -106,6 +108,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
         public ActionResult CreateRollPrintableArticle()
@@ -116,6 +119,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpParamAction]
+        [AuthorizeUser]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateRollPrintableArticle(RollPrintableArticleViewModel c)
         {
@@ -142,6 +146,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+        [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
         public ActionResult CreateRigidPrintableArticle()
@@ -152,6 +157,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpParamAction]
+        [AuthorizeUser]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateRigidPrintableArticle(RigidPrintableArticleViewModel c)
         {
@@ -159,10 +165,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
+                   
                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
-                    articleRepository.Add(c.Article);
-                    //rigeneration name of article
+
                     c.Article.ArticleName = c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
                     articleRepository.Save();
                     return Json(new { redirectUrl = Url.Action("IndexRigidPrintableArticle") });
                 }

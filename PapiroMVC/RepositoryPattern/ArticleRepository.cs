@@ -39,6 +39,8 @@ namespace Services
 
         private void ArticleCostCodeRigen(Article c)
         {
+
+            c.ArticleName = c.ToString();
             c.TimeStampTable = DateTime.Now;
 
             foreach (var item in c.ArticleCosts)
@@ -181,6 +183,7 @@ namespace Services
 
         public override void Add(Article entity)
         {
+
             ArticleCostCodeRigen(entity);
 
             //cehck if name is just inserted
@@ -194,12 +197,21 @@ namespace Services
             }
             else
                 base.Add(entity);
+
+
+
         }
 
         public override IQueryable<Article> GetAll()
         {
             Console.WriteLine(Context.Database.Connection.ConnectionString);
             return Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy");
+        }
+
+        public virtual IQueryable<Article> GetForImport()
+        {
+            Console.WriteLine(Context.Database.Connection.ConnectionString);
+            return Context.articles.Include("articlecosts");
         }
 
         public override void Edit(Article entity)

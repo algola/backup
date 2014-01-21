@@ -15,5 +15,7 @@ namespace PapiroMVC.Models
     public partial class RigidPrintableArticle : Printable
     {
         public string Format { get; set; }
+        public Nullable<bool> ToNexMq { get; set; }
+        public string FromMinFormat { get; set; }
     }
 }

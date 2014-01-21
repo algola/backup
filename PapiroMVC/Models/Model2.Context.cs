@@ -18,6 +18,7 @@ namespace PapiroMVC.Models
         public profilesEntities()
             : base("name=profilesEntities")
         {
+            this.Configuration.LazyLoadingEnabled = false;
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

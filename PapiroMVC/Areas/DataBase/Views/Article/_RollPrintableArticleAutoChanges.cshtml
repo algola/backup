@@ -53,7 +53,7 @@
         *@
             })
     
-    <input class="default btn btn-primary"  type="submit" value="Elabora****")' />
+    <input class="default btn btn-primary"  type="submit" value="@Html.T(strings,"Run")" />
 }
 
 
@@ -123,6 +123,8 @@
     function ReloadForm(xhr) {
         $('#rollPrintableArticleAutoChanges').html(xhr.responseText);
     }
+
+
     function ClearValidationErrors() {
         $('.validation-summary-errors').html('');
         $('.input-validation-error').removeClass('input-validation-error');

@@ -50,7 +50,6 @@ namespace PapiroMVC.Model
             //ProductBlockSheet
             //0..1 part of ProductPartCoverSheet
             //n parts of ProductPartBlockSheet
-            dbS.AddColumnToTable("productparts", "ServicesNumber", SchemaDb.Int, "0");
 
             //Index
             dbS.AddIndex("products", "ProductName");
@@ -80,6 +79,7 @@ namespace PapiroMVC.Model
             //ProductPartSingleSheet
             dbS.AddColumnToTable("productparts", "SubjectNumber", SchemaDb.Int, "0");
             dbS.AddColumnToTable("productparts", "RawCut", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("productparts", "ServicesNumber", SchemaDb.Int, "0");
 
             //ProductPartCoverSheet
             dbS.AddColumnToTable("productparts", "WidthWings", SchemaDb.Double, "0"); //larghezza alette

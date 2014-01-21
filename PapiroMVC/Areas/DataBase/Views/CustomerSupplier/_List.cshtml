@@ -36,7 +36,7 @@
     .addColumn(new Column("TaxCode")
         .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaxCodeCaption"))
         .setWidth(200))
-    .setUrl(Url.Action("CustomerSupplierList", "CustomerSupplier"))
+    .setUrl(Url.Action("CustomerSupplierList", "CustomerSupplier", new { onlyCustomer=false }))
 
     .setHeight(300)
     .setRowNum(10)
@@ -77,11 +77,8 @@
                                           (object)new { id = -1 },
                                           new { @class = "tbutton smallbase" })';
 
-        return '<i class="icon-cogs icon-1x icon-only">' + '</i> ' +
-                link.replace("-1", cellvalue) + " " +
-                '<i class="icon-dashboard icon-1x icon-only">' + '</i> ' +
+        return link.replace("-1", cellvalue) + " | " +
                 link2.replace("-1", cellvalue);
-
     }
 
     function typeOfCustomerSupplier(cellvalue, options, rowobject) {

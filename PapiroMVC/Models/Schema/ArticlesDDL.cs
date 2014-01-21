@@ -63,8 +63,10 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
 
             //Rigid
-            dbS.AddColumnToTable("articles", "Thikness", SchemaDb.Double, "0");
-            
+            dbS.AddColumnToTable("articles", "Thikness", SchemaDb.Double, "0"); //mm
+            dbS.AddColumnToTable("articles", "ToNexMq", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("articles", "FromMinFormat",  SchemaDb.String, "9"); //quadratura minima
+
             //Object
             dbS.AddColumnToTable("articles", "Size", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "PrintableFormat", SchemaDb.String, "9");

@@ -132,10 +132,31 @@
   <data name="Format" xml:space="preserve">
     <value>Formato (cm x cm)</value>
   </data>
+  <data name="FromMinFormat" xml:space="preserve">
+    <value>Quadratura minima</value>
+  </data>
+  <data name="FromMinFormatToolTip" xml:space="preserve">
+    <value>Quando si imposta una quadratura minima, nel calcolo del materiale si userà questa quadratura come minimale</value>
+  </data>
+  <data name="FromMinFormatValidation" xml:space="preserve">
+    <value>^$|^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FromMinFormatValidationError" xml:space="preserve">
+    <value>formato di quadratura minima non valido. Es. 70x70 </value>
+  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="RequiredField1" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ToNexMq" xml:space="preserve">
+    <value>Arrotonda a Mq successivo</value>
+  </data>
+  <data name="ToNexMqToolTip" xml:space="preserve">
+    <value>Quando si seleziona questa opzione, il prezzo del materiale è arrotondato al mq successivo calcolato</value>
   </data>
 </root>

@@ -4,188 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dbModel.Store" Alias="Self" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="dbModelStoreContainer">
-          <EntitySet Name="articlecost" EntityType="dbModel.Store.articlecost" store:Type="Tables" Schema="db" />
-          <EntitySet Name="articles" EntityType="dbModel.Store.articles" store:Type="Tables" Schema="db" />
-          <EntitySet Name="costdetails" EntityType="dbModel.Store.costdetails" store:Type="Tables" Schema="db" />
-          <EntitySet Name="costs" EntityType="dbModel.Store.costs" store:Type="Tables" Schema="db" />
-          <EntitySet Name="customersupplierbases" EntityType="dbModel.Store.customersupplierbases" store:Type="Tables" Schema="db" />
-          <EntitySet Name="customersuppliers" EntityType="dbModel.Store.customersuppliers" store:Type="Tables" Schema="db" />
-          <EntitySet Name="documentproducts" EntityType="dbModel.Store.documentproducts" store:Type="Tables" Schema="db" />
-          <EntitySet Name="documents" EntityType="dbModel.Store.documents" store:Type="Tables" Schema="db" />
-          <EntitySet Name="makereadies" EntityType="dbModel.Store.makereadies" store:Type="Tables" Schema="db" />
-          <EntitySet Name="menuproduct" EntityType="dbModel.Store.menuproduct" store:Type="Tables" Schema="db" />
-          <EntitySet Name="optiontypeoftask" EntityType="dbModel.Store.optiontypeoftask" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productpartprinting" EntityType="dbModel.Store.productpartprinting" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productpartprintinggain" EntityType="dbModel.Store.productpartprintinggain" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productparts" EntityType="dbModel.Store.productparts" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productpartsprintablearticle" EntityType="dbModel.Store.productpartsprintablearticle" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productpartstoproducttask" EntityType="dbModel.Store.productpartstoproducttask" store:Type="Tables" Schema="db" />
-          <EntitySet Name="productparttasks" EntityType="dbModel.Store.productparttasks" store:Type="Tables" Schema="db" />
-          <EntitySet Name="products" EntityType="dbModel.Store.products" store:Type="Tables" Schema="db" />
-          <EntitySet Name="producttasks" EntityType="dbModel.Store.producttasks" store:Type="Tables" Schema="db" />
-          <EntitySet Name="steps" EntityType="dbModel.Store.steps" store:Type="Tables" Schema="db" />
-          <EntitySet Name="taskexecutorestimatedon" EntityType="dbModel.Store.taskexecutorestimatedon" store:Type="Tables" Schema="db" />
-          <EntitySet Name="taskexecutors" EntityType="dbModel.Store.taskexecutors" store:Type="Tables" Schema="db" />
-          <EntitySet Name="taskexecutortypeoftask" EntityType="dbModel.Store.taskexecutortypeoftask" store:Type="Tables" Schema="db" />
-          <EntitySet Name="typeofbase" EntityType="dbModel.Store.typeofbase" store:Type="Tables" Schema="db" />
-          <EntitySet Name="typeoftask" EntityType="dbModel.Store.typeoftask" store:Type="Tables" Schema="db" />
-          <AssociationSet Name="FK_articlecost_CodArticle" Association="dbModel.Store.FK_articlecost_CodArticle">
-            <End Role="articles" EntitySet="articles" />
-            <End Role="articlecost" EntitySet="articlecost" />
-          </AssociationSet>
-          <AssociationSet Name="FK_articles_CodSupplierBuy" Association="dbModel.Store.FK_articles_CodSupplierBuy">
-            <End Role="customersuppliers" EntitySet="customersuppliers" />
-            <End Role="articles" EntitySet="articles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_articles_CodSupplierMaker" Association="dbModel.Store.FK_articles_CodSupplierMaker">
-            <End Role="customersuppliers" EntitySet="customersuppliers" />
-            <End Role="articles" EntitySet="articles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costdetails_CodComputedBy" Association="dbModel.Store.FK_costdetails_CodComputedBy">
-            <End Role="costdetails" EntitySet="costdetails" />
-            <End Role="costdetails1" EntitySet="costdetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costdetails_CodCost" Association="dbModel.Store.FK_costdetails_CodCost">
-            <End Role="costs" EntitySet="costs" />
-            <End Role="costdetails" EntitySet="costdetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costdetails_CodProductPart" Association="dbModel.Store.FK_costdetails_CodProductPart">
-            <End Role="productparts" EntitySet="productparts" />
-            <End Role="costdetails" EntitySet="costdetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costdetails_CodTaskExecutorSelected" Association="dbModel.Store.FK_costdetails_CodTaskExecutorSelected">
-            <End Role="taskexecutors" EntitySet="taskexecutors" />
-            <End Role="costdetails" EntitySet="costdetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costs_CodDocumentProduct" Association="dbModel.Store.FK_costs_CodDocumentProduct">
-            <End Role="documentproducts" EntitySet="documentproducts" />
-            <End Role="costs" EntitySet="costs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costs_CodProductPartPrintableArticle" Association="dbModel.Store.FK_costs_CodProductPartPrintableArticle">
-            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
-            <End Role="costs" EntitySet="costs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costs_CodProductPartTask" Association="dbModel.Store.FK_costs_CodProductPartTask">
-            <End Role="productparttasks" EntitySet="productparttasks" />
-            <End Role="costs" EntitySet="costs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_costs_CodProductTask" Association="dbModel.Store.FK_costs_CodProductTask">
-            <End Role="producttasks" EntitySet="producttasks" />
-            <End Role="costs" EntitySet="costs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerSupplierBases_CodCustomerSupplier" Association="dbModel.Store.FK_CustomerSupplierBases_CodCustomerSupplier">
-            <End Role="customersuppliers" EntitySet="customersuppliers" />
-            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CustomerSupplierBases_CodTypeOfBase" Association="dbModel.Store.FK_CustomerSupplierBases_CodTypeOfBase">
-            <End Role="typeofbase" EntitySet="typeofbase" />
-            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_documentproducts_CodDocument" Association="dbModel.Store.FK_documentproducts_CodDocument">
-            <End Role="documents" EntitySet="documents" />
-            <End Role="documentproducts" EntitySet="documentproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_documentproducts_CodProduct" Association="dbModel.Store.FK_documentproducts_CodProduct">
-            <End Role="products" EntitySet="products" />
-            <End Role="documentproducts" EntitySet="documentproducts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_documents_CodCustomer" Association="dbModel.Store.FK_documents_CodCustomer">
-            <End Role="customersuppliers" EntitySet="customersuppliers" />
-            <End Role="documents" EntitySet="documents" />
-          </AssociationSet>
-          <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="dbModel.Store.FK_makereadies_CodProductPartPrintingGain">
-            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
-            <End Role="makereadies" EntitySet="makereadies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="dbModel.Store.FK_optiontypeoftask_CodTypeOfTask">
-            <End Role="typeoftask" EntitySet="typeoftask" />
-            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="dbModel.Store.FK_productpartprinting_CodProductPart">
-            <End Role="productparts" EntitySet="productparts" />
-            <End Role="productpartprinting" EntitySet="productpartprinting" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartprinting_CodProductPartPrinting" Association="dbModel.Store.FK_productpartprinting_CodProductPartPrinting">
-            <End Role="costdetails" EntitySet="costdetails" />
-            <End Role="productpartprinting" EntitySet="productpartprinting" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrinting" Association="dbModel.Store.FK_productpartprintinggain_CodProductPartPrinting">
-            <End Role="productpartprinting" EntitySet="productpartprinting" />
-            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying" Association="dbModel.Store.FK_productpartprintinggain_CodProductPartPrintingGainBuying">
-            <End Role="costdetails" EntitySet="costdetails" />
-            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productparts_CodProduct" Association="dbModel.Store.FK_productparts_CodProduct">
-            <End Role="products" EntitySet="products" />
-            <End Role="productparts" EntitySet="productparts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartsprintablearticle_CodProductPart" Association="dbModel.Store.FK_productpartsprintablearticle_CodProductPart">
-            <End Role="productparts" EntitySet="productparts" />
-            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartstoproducttask_CodProductPart" Association="dbModel.Store.FK_productpartstoproducttask_CodProductPart">
-            <End Role="productparts" EntitySet="productparts" />
-            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productpartstoproducttask_CodProductTask" Association="dbModel.Store.FK_productpartstoproducttask_CodProductTask">
-            <End Role="producttasks" EntitySet="producttasks" />
-            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productparttasks_CodOptionTypeOfTask" Association="dbModel.Store.FK_productparttasks_CodOptionTypeOfTask">
-            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
-            <End Role="productparttasks" EntitySet="productparttasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_productparttasks_CodProductPart" Association="dbModel.Store.FK_productparttasks_CodProductPart">
-            <End Role="productparts" EntitySet="productparts" />
-            <End Role="productparttasks" EntitySet="productparttasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producttasks_CodOptionTypeOfTask" Association="dbModel.Store.FK_producttasks_CodOptionTypeOfTask">
-            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
-            <End Role="producttasks" EntitySet="producttasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_producttasks_CodProduct" Association="dbModel.Store.FK_producttasks_CodProduct">
-            <End Role="products" EntitySet="products" />
-            <End Role="producttasks" EntitySet="producttasks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Steps_CodPrinterEstimatedOn" Association="dbModel.Store.FK_Steps_CodPrinterEstimatedOn">
-            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
-            <End Role="steps" EntitySet="steps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Steps_CodTaskEstimatedOn" Association="dbModel.Store.FK_Steps_CodTaskEstimatedOn">
-            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
-            <End Role="steps" EntitySet="steps" />
-          </AssociationSet>
-          <AssociationSet Name="FK_taskexecutorestimatedon_CodOptionTypeOfTask" Association="dbModel.Store.FK_taskexecutorestimatedon_CodOptionTypeOfTask">
-            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
-            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
-          </AssociationSet>
-          <AssociationSet Name="FK_taskexecutorestimatedon_CodTaskExecutor" Association="dbModel.Store.FK_taskexecutorestimatedon_CodTaskExecutor">
-            <End Role="taskexecutors" EntitySet="taskexecutors" />
-            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
-          </AssociationSet>
-          <AssociationSet Name="FK_taskexecutors_CodTypeOfTask" Association="dbModel.Store.FK_taskexecutors_CodTypeOfTask">
-            <End Role="typeoftask" EntitySet="typeoftask" />
-            <End Role="taskexecutors" EntitySet="taskexecutors" />
-          </AssociationSet>
-          <AssociationSet Name="FK_taskexecutortypeoftask_CodTaskExecutor" Association="dbModel.Store.FK_taskexecutortypeoftask_CodTaskExecutor">
-            <End Role="taskexecutors" EntitySet="taskexecutors" />
-            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
-          </AssociationSet>
-          <AssociationSet Name="FK_taskexecutortypeoftask_CodTypeOfTask" Association="dbModel.Store.FK_taskexecutortypeoftask_CodTypeOfTask">
-            <End Role="typeoftask" EntitySet="typeoftask" />
-            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="dbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="articlecost">
           <Key>
             <PropertyRef Name="CodArticleCost" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodArticleCost" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodArticleCost" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodArticle" Type="char" MaxLength="50" />
           <Property Name="SelectorArticleCost" Type="int" />
           <Property Name="CostPerKg" Type="char" MaxLength="20" />
@@ -210,8 +35,8 @@
           <Key>
             <PropertyRef Name="CodArticle" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodArticle" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodArticle" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="ArticleName" Type="char" MaxLength="100" />
           <Property Name="CodSupplierBuy" Type="char" MaxLength="50" />
           <Property Name="CodSupplierMaker" Type="char" MaxLength="50" />
@@ -235,49 +60,51 @@
           <Property Name="PrintableFormat" Type="char" MaxLength="9" />
           <Property Name="MqForafait" Type="double" />
           <Property Name="Selector" Type="int" />
+          <Property Name="ToNexMq" Type="bit" />
+          <Property Name="FromMinFormat" Type="char" MaxLength="9" />
         </EntityType>
         <EntityType Name="costdetails">
           <Key>
             <PropertyRef Name="CodCostDetail" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodCostDetail" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="Selector" Type="int" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodCostDetail" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodTaskExecutorSelected" Type="char" MaxLength="50" />
           <Property Name="CodCost" Type="char" MaxLength="50" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
+          <Property Name="Selector" Type="int" />
           <Property Name="PrintingFormat" Type="char" MaxLength="20" />
           <Property Name="BuyingFormat" Type="char" MaxLength="20" />
-          <Property Name="SelectorPrinting" Type="int" />
-          <Property Name="SelectorPrintedArticle" Type="int" />
           <Property Name="BuyingWidth" Type="double" />
-          <Property Name="CostPerKg" Type="char" MaxLength="20" />
-          <Property Name="CostPerSheet" Type="char" MaxLength="20" />
-          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
-          <Property Name="CostPerMq" Type="char" MaxLength="20" />
-          <Property Name="CostPerMl" Type="char" MaxLength="20" />
-          <Property Name="CodComputedBy" Type="char" MaxLength="50" />
-          <Property Name="CostTakenFrom" Type="int" />
           <Property Name="Starts" Type="double" />
           <Property Name="GainForRun" Type="double" />
           <Property Name="GainForRunForPrintableArticle" Type="double" />
           <Property Name="GainForMqRun" Type="double" />
           <Property Name="GainForMqRunForPrintableArticle" Type="double" />
-          <Property Name="TypeOfQuantity" Type="int" />
           <Property Name="GainForWeigthRun" Type="double" />
           <Property Name="GainForWeigthRunForPrintableArticle" Type="double" />
+          <Property Name="TypeOfQuantity" Type="int" />
+          <Property Name="SelectorPrinting" Type="int" />
+          <Property Name="SelectorPrintedArticle" Type="int" />
+          <Property Name="CostPerKg" Type="char" MaxLength="20" />
+          <Property Name="CostPerSheet" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
+          <Property Name="CostPerMq" Type="char" MaxLength="20" />
+          <Property Name="CostPerMl" Type="char" MaxLength="20" />
+          <Property Name="CostTakenFrom" Type="int" />
+          <Property Name="CodComputedBy" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
             <PropertyRef Name="CodCost" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodCost" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodCost" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodDocumentProduct" Type="char" MaxLength="50" />
           <Property Name="CodProductTask" Type="char" MaxLength="50" />
           <Property Name="CodProductPartTask" Type="char" MaxLength="50" />
           <Property Name="CodProductPartPrintableArticle" Type="char" MaxLength="50" />
-          <Property Name="Description" Type="char" />
+          <Property Name="Description" Type="char" MaxLength="255" />
           <Property Name="Quantity" Type="double" />
           <Property Name="UnitCost" Type="char" MaxLength="20" />
           <Property Name="TotalCost" Type="char" MaxLength="20" />
@@ -286,30 +113,30 @@
           <Key>
             <PropertyRef Name="CodCustomerSupplierBase" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="CodCustomerSupplier" Type="char" MaxLength="70" />
-          <Property Name="CodCustomerSupplierBase" Type="char" Nullable="false" MaxLength="100" />
+          <Property Name="CodCustomerSupplierBase" Type="char" MaxLength="100" Nullable="false" />
           <Property Name="CodTypeOfBase" Type="char" MaxLength="50" />
-          <Property Name="Address" Type="char" />
-          <Property Name="City" Type="char" />
-          <Property Name="Province" Type="char" />
+          <Property Name="Address" Type="char" MaxLength="255" />
+          <Property Name="City" Type="char" MaxLength="255" />
+          <Property Name="Province" Type="char" MaxLength="255" />
           <Property Name="PostalCode" Type="char" MaxLength="10" />
           <Property Name="Country" Type="char" MaxLength="250" />
           <Property Name="Phone" Type="char" MaxLength="50" />
           <Property Name="Fax" Type="char" MaxLength="50" />
-          <Property Name="Email" Type="char" />
+          <Property Name="Email" Type="char" MaxLength="255" />
           <Property Name="Note" Type="text" />
           <Property Name="Referee" Type="char" MaxLength="200" />
-          <Property Name="Pec" Type="char" />
+          <Property Name="Pec" Type="char" MaxLength="255" />
         </EntityType>
         <EntityType Name="customersuppliers">
           <Key>
             <PropertyRef Name="CodCustomerSupplier" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodCustomerSupplier" Type="char" Nullable="false" MaxLength="70" StoreGeneratedPattern="Identity" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodCustomerSupplier" Type="char" MaxLength="70" Nullable="false" />
           <Property Name="Selector" Type="int" />
-          <Property Name="BusinessName" Type="char" />
+          <Property Name="BusinessName" Type="char" MaxLength="255" />
           <Property Name="VatNumber" Type="char" MaxLength="50" />
           <Property Name="TaxCode" Type="char" MaxLength="50" />
           <Property Name="Outdated" Type="bit" />
@@ -318,42 +145,44 @@
           <Key>
             <PropertyRef Name="CodDocumentProduct" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodDocumentProduct" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodDocumentProduct" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodDocument" Type="char" MaxLength="50" />
           <Property Name="ProductName" Type="char" MaxLength="100" />
           <Property Name="CodProduct" Type="char" MaxLength="50" />
           <Property Name="Quantity" Type="int" />
-          <Property Name="TotalAmount" Type="char" MaxLength="20" />
           <Property Name="UnitPrice" Type="char" MaxLength="20" />
+          <Property Name="TotalAmount" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="documents">
           <Key>
             <PropertyRef Name="CodDocument" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodDocument" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodDocument" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="DocumentName" Type="char" MaxLength="100" />
-          <Property Name="CodCustomer" Type="char" MaxLength="50" />
-          <Property Name="Customer" Type="char" MaxLength="50" />
-          <Property Name="SelectorDocument" Type="int" />
+          <Property Name="DateDocument" Type="date" />
           <Property Name="Number" Type="int" />
           <Property Name="Notes" Type="char" MaxLength="100" />
-          <Property Name="DateDocument" Type="date" />
+          <Property Name="CodCustomer" Type="char" MaxLength="50" />
+          <Property Name="Customer" Type="char" MaxLength="50" />
           <Property Name="Selector" Type="char" MaxLength="50" />
+          <Property Name="SelectorDocument" Type="int" />
+          <Property Name="EstimateNumber" Type="char" MaxLength="20" />
+          <Property Name="EstimateNumberSerie" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="makereadies">
           <Key>
             <PropertyRef Name="CodMakeready" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodMakeready" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodMakeready" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodProductPartPrintingGain" Type="char" MaxLength="50" />
           <Property Name="ShapeOnSide1" Type="int" />
           <Property Name="ShapeOnSide2" Type="int" />
           <Property Name="ShapeOnShape" Type="bit" />
           <Property Name="TypeOfPerfecting" Type="char" MaxLength="20" />
-          <Property Name="CalculatedGain" Type="decimal" />
+          <Property Name="CalculatedGain" Type="decimal" Precision="10" Scale="0" />
           <Property Name="Selector" Type="int" />
           <Property Name="PrintedShapes" Type="int" />
           <Property Name="PrintedSubjects" Type="int" />
@@ -365,8 +194,8 @@
           <Key>
             <PropertyRef Name="CodMenuProduct" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodMenuProduct" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodMenuProduct" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="Enabled" Type="bit" />
           <Property Name="CodCategory" Type="char" MaxLength="50" />
           <Property Name="Hidden" Type="bit" />
@@ -377,8 +206,8 @@
           <Key>
             <PropertyRef Name="CodOptionTypeOfTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodOptionTypeOfTask" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="OptionName" Type="char" MaxLength="100" />
           <Property Name="IdexOf" Type="int" />
@@ -387,8 +216,8 @@
           <Key>
             <PropertyRef Name="CodProductPartPrinting" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPartPrinting" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartPrinting" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="Selector" Type="int" />
           <Property Name="PrintingFormat" Type="char" MaxLength="20" />
           <Property Name="Width" Type="double" />
@@ -400,8 +229,8 @@
           <Key>
             <PropertyRef Name="CodProductPartPrintingGain" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPartPrintingGain" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartPrintingGain" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodProductPartPrinting" Type="char" MaxLength="50" />
           <Property Name="CodProductPartPrintingGainBuying" Type="char" MaxLength="50" />
           <Property Name="UsePerfecting" Type="bit" />
@@ -414,13 +243,13 @@
           <Key>
             <PropertyRef Name="CodProductPart" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPart" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPart" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodProduct" Type="char" MaxLength="50" />
           <Property Name="ProductPartName" Type="char" MaxLength="100" />
           <Property Name="PrintingType" Type="char" MaxLength="20" />
-          <Property Name="CodProductPart_" Type="char" MaxLength="50" />
           <Property Name="Format" Type="char" MaxLength="20" />
+          <Property Name="CodProductPart_" Type="char" MaxLength="50" />
           <Property Name="SelectorProductPart" Type="int" />
           <Property Name="SubjectNumber" Type="int" />
           <Property Name="RawCut" Type="bit" />
@@ -434,22 +263,22 @@
           <Key>
             <PropertyRef Name="CodProductPartPrintableArticle" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPartPrintableArticle" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartPrintableArticle" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
           <Property Name="ProductPartPrintableArticleName" Type="char" MaxLength="100" />
-          <Property Name="SelectorProductPartPrintableArticle" Type="int" />
           <Property Name="TypeOfMaterial" Type="char" MaxLength="200" />
           <Property Name="NameOfMaterial" Type="char" MaxLength="200" />
           <Property Name="Color" Type="char" MaxLength="100" />
           <Property Name="Weight" Type="uint" />
+          <Property Name="SelectorProductPartPrintableArticle" Type="int" />
         </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
             <PropertyRef Name="CodProductPartToProductTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPartToProductTask" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartToProductTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
           <Property Name="CodProductTask" Type="char" MaxLength="50" />
         </EntityType>
@@ -457,116 +286,129 @@
           <Key>
             <PropertyRef Name="CodProductPartTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductPartTask" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="CodProductPart" Type="char" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="Hidden" Type="bit" />
           <Property Name="IndexOf" Type="int" />
+          <Property Name="CodProductPart" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="products">
           <Key>
             <PropertyRef Name="CodProduct" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProduct" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="SelectorProduct" Type="int" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProduct" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="ProductName" Type="char" MaxLength="100" />
           <Property Name="id" Type="char" MaxLength="100" />
           <Property Name="Format" Type="char" MaxLength="50" />
+          <Property Name="SelectorProduct" Type="int" />
         </EntityType>
         <EntityType Name="producttasks">
           <Key>
             <PropertyRef Name="CodProductTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodProductTask" Type="char" Nullable="false" MaxLength="50" />
-          <Property Name="CodProduct" Type="char" MaxLength="50" />
-          <Property Name="ProductTaskName" Type="char" MaxLength="100" />
-          <Property Name="SelectorProductTask" Type="int" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="Hidden" Type="bit" />
           <Property Name="IndexOf" Type="int" />
+          <Property Name="CodProduct" Type="char" MaxLength="50" />
+          <Property Name="ProductTaskName" Type="char" MaxLength="100" />
+          <Property Name="SelectorProductTask" Type="int" />
         </EntityType>
         <EntityType Name="steps">
           <Key>
             <PropertyRef Name="IdStep" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="CodTaskEstimatedOn" Type="char" MaxLength="50" />
-          <Property Name="IdStep" Type="uint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="IdStep" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FromUnit" Type="double" />
           <Property Name="ToUnit" Type="double" />
           <Property Name="Selector" Type="int" />
           <Property Name="AvarageRunPerHour" Type="uint" />
-          <Property Name="CostPerUnit" Type="double" />
-          <Property Name="DeficitRate" Type="double" />
-          <Property Name="AvarageRunPerHour4" Type="uint" />
-          <Property Name="StartingTime4" Type="time" />
-          <Property Name="AvarageRunPerHour6" Type="uint" />
-          <Property Name="StartingTime6" Type="time" />
-          <Property Name="AvarageRunPerHour8" Type="uint" />
-          <Property Name="StartingTime8" Type="time" />
-          <Property Name="AvarageRunPerHour12" Type="uint" />
-          <Property Name="StartingTime12" Type="time" />
-          <Property Name="AvarageRunPerHour16" Type="uint" />
-          <Property Name="StartingTime16" Type="time" />
-          <Property Name="AvarageRunPerHour24" Type="uint" />
-          <Property Name="StartingTime24" Type="time" />
-          <Property Name="AvarageRunPerHour32" Type="uint" />
-          <Property Name="StartingTime32" Type="time" />
-          <Property Name="AvarageRunPerHourBinding" Type="uint" />
-          <Property Name="StartingTimeBinding" Type="time" />
-          <Property Name="CostPerUnit4" Type="double" />
-          <Property Name="StartingCost4" Type="double" />
-          <Property Name="CostPerUnit6" Type="double" />
-          <Property Name="StartingCost6" Type="double" />
-          <Property Name="CostPerUnit8" Type="double" />
-          <Property Name="StartingCost8" Type="double" />
-          <Property Name="CostPerUnit12" Type="double" />
-          <Property Name="StartingCost12" Type="double" />
-          <Property Name="CostPerUnit16" Type="double" />
-          <Property Name="StartingCost16" Type="double" />
-          <Property Name="CostPerUnit24" Type="double" />
-          <Property Name="StartingCost24" Type="double" />
-          <Property Name="CostPerUnit32" Type="double" />
-          <Property Name="StartingCost32" Type="double" />
-          <Property Name="BindingCost" Type="double" />
+          <Property Name="CostPerUnit" Type="char" MaxLength="20" />
+          <Property Name="DeficitRate" Type="char" MaxLength="20" />
           <Property Name="SelectorCostBW" Type="int" />
+          <Property Name="AvarageRunPerHour4" Type="uint" />
+          <Property Name="StartingTime4" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour6" Type="uint" />
+          <Property Name="StartingTime6" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour8" Type="uint" />
+          <Property Name="StartingTime8" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour12" Type="uint" />
+          <Property Name="StartingTime12" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour16" Type="uint" />
+          <Property Name="StartingTime16" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour24" Type="uint" />
+          <Property Name="StartingTime24" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHour32" Type="uint" />
+          <Property Name="StartingTime32" Type="time" Precision="0" />
+          <Property Name="AvarageRunPerHourBinding" Type="uint" />
+          <Property Name="StartingTimeBinding" Type="time" Precision="0" />
+          <Property Name="CostPerUnit4" Type="char" MaxLength="20" />
+          <Property Name="StartingCost4" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit6" Type="char" MaxLength="20" />
+          <Property Name="StartingCost6" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit8" Type="char" MaxLength="20" />
+          <Property Name="StartingCost8" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit12" Type="char" MaxLength="20" />
+          <Property Name="StartingCost12" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit16" Type="char" MaxLength="20" />
+          <Property Name="StartingCost16" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit24" Type="char" MaxLength="20" />
+          <Property Name="StartingCost24" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnit32" Type="char" MaxLength="20" />
+          <Property Name="StartingCost32" Type="char" MaxLength="20" />
+          <Property Name="BindingCost" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutorestimatedon">
           <Key>
             <PropertyRef Name="CodTaskEstimatedOn" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="CodTaskExecutor" Type="char" MaxLength="50" />
-          <Property Name="CodTaskEstimatedOn" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="CodTaskEstimatedOn" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="SelectorUnitTime" Type="int" />
           <Property Name="SelectorMqRun" Type="int" />
           <Property Name="AvarageRunPerHour" Type="uint" />
           <Property Name="UseDifferentRunPerHour" Type="bit" />
           <Property Name="UseDifferentDeficitForWeightStep" Type="bit" />
-          <Property Name="StartingTime1" Type="time" />
-          <Property Name="StartingTime2" Type="time" />
-          <Property Name="TimeForfait" Type="time" />
+          <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" />
+          <Property Name="StartingTime1" Type="time" Precision="0" />
+          <Property Name="StartingTime2" Type="time" Precision="0" />
+          <Property Name="TimeForfait" Type="time" Precision="0" />
           <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
           <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
+          <Property Name="SelectorTimeRunDigital" Type="int" />
+          <Property Name="CostPerHourRunningBW" Type="char" MaxLength="20" />
+          <Property Name="CostPerHourStartingBW" Type="char" MaxLength="20" />
+          <Property Name="SelectorPlotterMq" Type="int" />
+          <Property Name="CostInkJetLow" Type="char" MaxLength="20" />
+          <Property Name="CostInkJetMed" Type="char" MaxLength="20" />
+          <Property Name="CostInkJetHight" Type="char" MaxLength="20" />
+          <Property Name="CostUVLow" Type="char" MaxLength="20" />
+          <Property Name="CostUVMed" Type="char" MaxLength="20" />
+          <Property Name="CostUVHight" Type="char" MaxLength="20" />
+          <Property Name="CostWhite" Type="char" MaxLength="20" />
+          <Property Name="CostCutting" Type="char" MaxLength="20" />
           <Property Name="AvarageRunPerHour4" Type="uint" />
-          <Property Name="StartingTime4" Type="time" />
+          <Property Name="StartingTime4" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour6" Type="uint" />
-          <Property Name="StartingTime6" Type="time" />
+          <Property Name="StartingTime6" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour8" Type="uint" />
-          <Property Name="StartingTime8" Type="time" />
+          <Property Name="StartingTime8" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour12" Type="uint" />
-          <Property Name="StartingTime12" Type="time" />
+          <Property Name="StartingTime12" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour16" Type="uint" />
-          <Property Name="StartingTime16" Type="time" />
+          <Property Name="StartingTime16" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour24" Type="uint" />
-          <Property Name="StartingTime24" Type="time" />
+          <Property Name="StartingTime24" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHour32" Type="uint" />
-          <Property Name="StartingTime32" Type="time" />
+          <Property Name="StartingTime32" Type="time" Precision="0" />
           <Property Name="AvarageRunPerHourBinding" Type="uint" />
-          <Property Name="StartingTimeBinding" Type="time" />
+          <Property Name="StartingTimeBinding" Type="time" Precision="0" />
           <Property Name="CostPerUnit" Type="char" MaxLength="20" />
           <Property Name="UseDifferentCostPerUnit" Type="bit" />
           <Property Name="UseDifferentDeficitOnCostForWeightStep" Type="bit" />
@@ -574,6 +416,13 @@
           <Property Name="StartingCost2" Type="char" MaxLength="20" />
           <Property Name="CostForfait" Type="char" MaxLength="20" />
           <Property Name="CostForfaitForSheet" Type="char" MaxLength="20" />
+          <Property Name="CostPerUnitBW" Type="double" />
+          <Property Name="UseDifferentCostPerUnitBW" Type="bit" />
+          <Property Name="UseDifferentDeficitOnCostForWeightStepBW" Type="bit" />
+          <Property Name="StartingCost1BW" Type="char" MaxLength="20" />
+          <Property Name="StartingCost2BW" Type="char" MaxLength="20" />
+          <Property Name="CostForfaitBW" Type="char" MaxLength="20" />
+          <Property Name="CostForfaitForSheetBW" Type="char" MaxLength="20" />
           <Property Name="CostPerUnit4" Type="char" MaxLength="20" />
           <Property Name="StartingCost4" Type="char" MaxLength="20" />
           <Property Name="CostPerUnit6" Type="char" MaxLength="20" />
@@ -590,36 +439,18 @@
           <Property Name="StartingCost32" Type="char" MaxLength="20" />
           <Property Name="BindingCost" Type="char" MaxLength="20" />
           <Property Name="BindingStartingCost" Type="char" MaxLength="20" />
-          <Property Name="CodOptionTypeOfTask" Type="char" MaxLength="50" />
-          <Property Name="SelectorTimeRunDigital" Type="int" />
-          <Property Name="CostPerHourRunningBW" Type="char" MaxLength="20" />
-          <Property Name="CostPerHourStartingBW" Type="char" MaxLength="20" />
-          <Property Name="CostPerUnitBW" Type="double" />
-          <Property Name="UseDifferentCostPerUnitBW" Type="bit" />
-          <Property Name="UseDifferentDeficitOnCostForWeightStepBW" Type="bit" />
-          <Property Name="StartingCost1BW" Type="char" MaxLength="20" />
-          <Property Name="StartingCost2BW" Type="char" MaxLength="20" />
-          <Property Name="CostForfaitBW" Type="char" MaxLength="20" />
-          <Property Name="CostForfaitForSheetBW" Type="char" MaxLength="20" />
-          <Property Name="SelectorPlotterMq" Type="int" />
-          <Property Name="CostInkJetLow" Type="char" MaxLength="20" />
-          <Property Name="CostInkJetMed" Type="char" MaxLength="20" />
-          <Property Name="CostInkJetHight" Type="char" MaxLength="20" />
-          <Property Name="CostUVLow" Type="char" MaxLength="20" />
-          <Property Name="CostUVMed" Type="char" MaxLength="20" />
-          <Property Name="CostUVHight" Type="char" MaxLength="20" />
-          <Property Name="CostWhite" Type="char" MaxLength="20" />
-          <Property Name="CostCutting" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
             <PropertyRef Name="CodTaskExecutor" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodTaskExecutor" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodTaskExecutor" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="TaskExecutorName" Type="char" MaxLength="100" />
+          <Property Name="CodTask" Type="char" MaxLength="50" />
           <Property Name="Version" Type="char" MaxLength="4" />
           <Property Name="Dismissed" Type="bit" />
+          <Property Name="UniversalCodPapiro" Type="char" MaxLength="50" />
           <Property Name="FormatMin" Type="char" MaxLength="9" />
           <Property Name="FormatMax" Type="char" MaxLength="9" />
           <Property Name="WeightMin" Type="uint" />
@@ -632,8 +463,8 @@
           <Property Name="PrintingUnit" Type="uint" />
           <Property Name="SheetwiseAfterPrintingUnit" Type="uint" />
           <Property Name="Sheetwise" Type="bit" />
-          <Property Name="WashUpTime" Type="time" />
-          <Property Name="ChangePlateTime" Type="time" />
+          <Property Name="WashUpTime" Type="time" Precision="0" />
+          <Property Name="ChangePlateTime" Type="time" Precision="0" />
           <Property Name="SelectorLithoDigital" Type="int" />
           <Property Name="SelectorBindingPrePostPress" Type="int" />
           <Property Name="Selector" Type="int" />
@@ -647,26 +478,24 @@
           <Property Name="ColorSide1" Type="bit" />
           <Property Name="ColorSide2" Type="bit" />
           <Property Name="Width" Type="uint" />
-          <Property Name="IsUnitComputationManual" Type="bit" />
-          <Property Name="IsEstimatedOnTime" Type="bit" />
-          <Property Name="IsEstimatedOnRun" Type="bit" />
-          <Property Name="IsEstimatedOnMq" Type="bit" />
-          <Property Name="CodTask" Type="char" MaxLength="20" />
-          <Property Name="IsEstimatedOnTimeBinding" Type="bit" />
-          <Property Name="IsEstimatedOnRunBinding" Type="bit" />
-          <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
-          <Property Name="UniversalCodPapiro" Type="char" MaxLength="50" />
           <Property Name="ColorJet" Type="bit" />
           <Property Name="WhiteUV" Type="bit" />
           <Property Name="ColorUV" Type="bit" />
           <Property Name="Cutting" Type="bit" />
+          <Property Name="IsUnitComputationManual" Type="bit" />
+          <Property Name="IsEstimatedOnTime" Type="bit" />
+          <Property Name="IsEstimatedOnRun" Type="bit" />
+          <Property Name="IsEstimatedOnMq" Type="bit" />
+          <Property Name="IsEstimatedOnTimeBinding" Type="bit" />
+          <Property Name="IsEstimatedOnRunBinding" Type="bit" />
+          <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
             <PropertyRef Name="CodTaskExecutorTypeOfTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodTaskExecutorTypeOfTask" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodTaskExecutorTypeOfTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="CodTaskExecutor" Type="char" MaxLength="50" />
         </EntityType>
@@ -674,24 +503,24 @@
           <Key>
             <PropertyRef Name="CodTypeOfBase" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodTypeOfBase" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodTypeOfBase" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="BaseName" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="typeoftask">
           <Key>
             <PropertyRef Name="CodTypeOfTask" />
           </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Nullable="false" />
-          <Property Name="CodTypeOfTask" Type="char" Nullable="false" MaxLength="50" />
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodTypeOfTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="TaskName" Type="char" MaxLength="100" />
           <Property Name="CodCategoryOfTask" Type="char" MaxLength="100" />
         </EntityType>
         <Association Name="FK_articlecost_CodArticle">
-          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="0..1">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="articlecost" Type="dbModel.Store.articlecost" Multiplicity="*" />
+          <End Role="articlecost" Type="Self.articlecost" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="articles">
               <PropertyRef Name="CodArticle" />
@@ -701,25 +530,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_articles_CodSupplierBuy">
-          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="customersuppliers">
-              <PropertyRef Name="CodCustomerSupplier" />
-            </Principal>
-            <Dependent Role="articles">
-              <PropertyRef Name="CodSupplierBuy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_articles_CodSupplierMaker">
-          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1">
+          <End Role="customersuppliers" Type="Self.customersuppliers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="articles" Type="dbModel.Store.articles" Multiplicity="*" />
+          <End Role="articles" Type="Self.articles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="customersuppliers">
               <PropertyRef Name="CodCustomerSupplier" />
@@ -730,10 +545,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costdetails_CodComputedBy">
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="0..1">
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costdetails1" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <End Role="costdetails1" Type="Self.costdetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="costdetails">
               <PropertyRef Name="CodCostDetail" />
@@ -744,10 +559,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costdetails_CodCost">
-          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="0..1">
+          <End Role="costs" Type="Self.costs" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="costs">
               <PropertyRef Name="CodCost" />
@@ -758,10 +573,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costdetails_CodProductPart">
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparts">
               <PropertyRef Name="CodProductPart" />
@@ -772,10 +587,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costdetails_CodTaskExecutorSelected">
-          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="*" />
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="taskexecutors">
               <PropertyRef Name="CodTaskExecutor" />
@@ -786,10 +601,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costs_CodDocumentProduct">
-          <End Role="documentproducts" Type="dbModel.Store.documentproducts" Multiplicity="0..1">
+          <End Role="documentproducts" Type="Self.documentproducts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="*" />
+          <End Role="costs" Type="Self.costs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="documentproducts">
               <PropertyRef Name="CodDocumentProduct" />
@@ -800,10 +615,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costs_CodProductPartPrintableArticle">
-          <End Role="productpartsprintablearticle" Type="dbModel.Store.productpartsprintablearticle" Multiplicity="0..1">
+          <End Role="productpartsprintablearticle" Type="Self.productpartsprintablearticle" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="*" />
+          <End Role="costs" Type="Self.costs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productpartsprintablearticle">
               <PropertyRef Name="CodProductPartPrintableArticle" />
@@ -814,10 +629,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costs_CodProductPartTask">
-          <End Role="productparttasks" Type="dbModel.Store.productparttasks" Multiplicity="0..1">
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="*" />
+          <End Role="costs" Type="Self.costs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparttasks">
               <PropertyRef Name="CodProductPartTask" />
@@ -828,10 +643,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_costs_CodProductTask">
-          <End Role="producttasks" Type="dbModel.Store.producttasks" Multiplicity="0..1">
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="costs" Type="dbModel.Store.costs" Multiplicity="*" />
+          <End Role="costs" Type="Self.costs" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="producttasks">
               <PropertyRef Name="CodProductTask" />
@@ -841,11 +656,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerSupplierBases_CodCustomerSupplier">
-          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1">
+        <Association Name="FK_customersupplierbases_CodCustomerSupplier">
+          <End Role="customersuppliers" Type="Self.customersuppliers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="customersupplierbases" Type="dbModel.Store.customersupplierbases" Multiplicity="*" />
+          <End Role="customersupplierbases" Type="Self.customersupplierbases" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="customersuppliers">
               <PropertyRef Name="CodCustomerSupplier" />
@@ -855,11 +670,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerSupplierBases_CodTypeOfBase">
-          <End Role="typeofbase" Type="dbModel.Store.typeofbase" Multiplicity="0..1">
+        <Association Name="FK_customersupplierbases_CodTypeOfBase">
+          <End Role="typeofbase" Type="Self.typeofbase" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="customersupplierbases" Type="dbModel.Store.customersupplierbases" Multiplicity="*" />
+          <End Role="customersupplierbases" Type="Self.customersupplierbases" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeofbase">
               <PropertyRef Name="CodTypeOfBase" />
@@ -870,10 +685,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_documentproducts_CodDocument">
-          <End Role="documents" Type="dbModel.Store.documents" Multiplicity="0..1">
+          <End Role="documents" Type="Self.documents" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="documentproducts" Type="dbModel.Store.documentproducts" Multiplicity="*" />
+          <End Role="documentproducts" Type="Self.documentproducts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="documents">
               <PropertyRef Name="CodDocument" />
@@ -884,10 +699,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_documentproducts_CodProduct">
-          <End Role="products" Type="dbModel.Store.products" Multiplicity="0..1">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="documentproducts" Type="dbModel.Store.documentproducts" Multiplicity="*" />
+          <End Role="documentproducts" Type="Self.documentproducts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="products">
               <PropertyRef Name="CodProduct" />
@@ -898,10 +713,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_documents_CodCustomer">
-          <End Role="customersuppliers" Type="dbModel.Store.customersuppliers" Multiplicity="0..1">
+          <End Role="customersuppliers" Type="Self.customersuppliers" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="documents" Type="dbModel.Store.documents" Multiplicity="*" />
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="customersuppliers">
               <PropertyRef Name="CodCustomerSupplier" />
@@ -912,10 +727,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_makereadies_CodProductPartPrintingGain">
-          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="0..1">
+          <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="makereadies" Type="dbModel.Store.makereadies" Multiplicity="*" />
+          <End Role="makereadies" Type="Self.makereadies" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productpartprintinggain">
               <PropertyRef Name="CodProductPartPrintingGain" />
@@ -926,10 +741,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_optiontypeoftask_CodTypeOfTask">
-          <End Role="typeoftask" Type="dbModel.Store.typeoftask" Multiplicity="0..1">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="optiontypeoftask" Type="dbModel.Store.optiontypeoftask" Multiplicity="*" />
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeoftask">
               <PropertyRef Name="CodTypeOfTask" />
@@ -940,10 +755,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartprinting_CodProductPart">
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="*" />
+          <End Role="productpartprinting" Type="Self.productpartprinting" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparts">
               <PropertyRef Name="CodProductPart" />
@@ -954,10 +769,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartprinting_CodProductPartPrinting">
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="1">
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="0..1" />
+          <End Role="productpartprinting" Type="Self.productpartprinting" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="costdetails">
               <PropertyRef Name="CodCostDetail" />
@@ -968,10 +783,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartprintinggain_CodProductPartPrinting">
-          <End Role="productpartprinting" Type="dbModel.Store.productpartprinting" Multiplicity="0..1">
+          <End Role="productpartprinting" Type="Self.productpartprinting" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="*" />
+          <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productpartprinting">
               <PropertyRef Name="CodProductPartPrinting" />
@@ -982,10 +797,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying">
-          <End Role="costdetails" Type="dbModel.Store.costdetails" Multiplicity="0..1">
+          <End Role="costdetails" Type="Self.costdetails" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartprintinggain" Type="dbModel.Store.productpartprintinggain" Multiplicity="*" />
+          <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="costdetails">
               <PropertyRef Name="CodCostDetail" />
@@ -996,10 +811,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productparts_CodProduct">
-          <End Role="products" Type="dbModel.Store.products" Multiplicity="0..1">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="*" />
+          <End Role="productparts" Type="Self.productparts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="products">
               <PropertyRef Name="CodProduct" />
@@ -1010,10 +825,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartsprintablearticle_CodProductPart">
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartsprintablearticle" Type="dbModel.Store.productpartsprintablearticle" Multiplicity="*" />
+          <End Role="productpartsprintablearticle" Type="Self.productpartsprintablearticle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparts">
               <PropertyRef Name="CodProductPart" />
@@ -1024,10 +839,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartstoproducttask_CodProductPart">
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartstoproducttask" Type="dbModel.Store.productpartstoproducttask" Multiplicity="*" />
+          <End Role="productpartstoproducttask" Type="Self.productpartstoproducttask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparts">
               <PropertyRef Name="CodProductPart" />
@@ -1038,10 +853,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productpartstoproducttask_CodProductTask">
-          <End Role="producttasks" Type="dbModel.Store.producttasks" Multiplicity="0..1">
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productpartstoproducttask" Type="dbModel.Store.productpartstoproducttask" Multiplicity="*" />
+          <End Role="productpartstoproducttask" Type="Self.productpartstoproducttask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="producttasks">
               <PropertyRef Name="CodProductTask" />
@@ -1052,10 +867,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productparttasks_CodOptionTypeOfTask">
-          <End Role="optiontypeoftask" Type="dbModel.Store.optiontypeoftask" Multiplicity="0..1">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productparttasks" Type="dbModel.Store.productparttasks" Multiplicity="*" />
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="optiontypeoftask">
               <PropertyRef Name="CodOptionTypeOfTask" />
@@ -1066,10 +881,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productparttasks_CodProductPart">
-          <End Role="productparts" Type="dbModel.Store.productparts" Multiplicity="0..1">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="productparttasks" Type="dbModel.Store.productparttasks" Multiplicity="*" />
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="productparts">
               <PropertyRef Name="CodProductPart" />
@@ -1080,10 +895,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_producttasks_CodOptionTypeOfTask">
-          <End Role="optiontypeoftask" Type="dbModel.Store.optiontypeoftask" Multiplicity="0..1">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="producttasks" Type="dbModel.Store.producttasks" Multiplicity="*" />
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="optiontypeoftask">
               <PropertyRef Name="CodOptionTypeOfTask" />
@@ -1094,10 +909,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_producttasks_CodProduct">
-          <End Role="products" Type="dbModel.Store.products" Multiplicity="0..1">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="producttasks" Type="dbModel.Store.producttasks" Multiplicity="*" />
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="products">
               <PropertyRef Name="CodProduct" />
@@ -1107,25 +922,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Steps_CodPrinterEstimatedOn">
-          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="0..1">
+        <Association Name="FK_steps_CodTaskEstimatedOn">
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="steps" Type="dbModel.Store.steps" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="taskexecutorestimatedon">
-              <PropertyRef Name="CodTaskEstimatedOn" />
-            </Principal>
-            <Dependent Role="steps">
-              <PropertyRef Name="CodTaskEstimatedOn" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Steps_CodTaskEstimatedOn">
-          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="steps" Type="dbModel.Store.steps" Multiplicity="*" />
+          <End Role="steps" Type="Self.steps" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="taskexecutorestimatedon">
               <PropertyRef Name="CodTaskEstimatedOn" />
@@ -1136,10 +937,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutorestimatedon_CodOptionTypeOfTask">
-          <End Role="optiontypeoftask" Type="dbModel.Store.optiontypeoftask" Multiplicity="0..1">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="*" />
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="optiontypeoftask">
               <PropertyRef Name="CodOptionTypeOfTask" />
@@ -1150,10 +951,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutorestimatedon_CodTaskExecutor">
-          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="taskexecutorestimatedon" Type="dbModel.Store.taskexecutorestimatedon" Multiplicity="*" />
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="taskexecutors">
               <PropertyRef Name="CodTaskExecutor" />
@@ -1164,10 +965,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutors_CodTypeOfTask">
-          <End Role="typeoftask" Type="dbModel.Store.typeoftask" Multiplicity="0..1">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="*" />
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeoftask">
               <PropertyRef Name="CodTypeOfTask" />
@@ -1178,10 +979,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutortypeoftask_CodTaskExecutor">
-          <End Role="taskexecutors" Type="dbModel.Store.taskexecutors" Multiplicity="0..1">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="taskexecutortypeoftask" Type="dbModel.Store.taskexecutortypeoftask" Multiplicity="*" />
+          <End Role="taskexecutortypeoftask" Type="Self.taskexecutortypeoftask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="taskexecutors">
               <PropertyRef Name="CodTaskExecutor" />
@@ -1192,10 +993,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_taskexecutortypeoftask_CodTypeOfTask">
-          <End Role="typeoftask" Type="dbModel.Store.typeoftask" Multiplicity="0..1">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="taskexecutortypeoftask" Type="dbModel.Store.taskexecutortypeoftask" Multiplicity="*" />
+          <End Role="taskexecutortypeoftask" Type="Self.taskexecutortypeoftask" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="typeoftask">
               <PropertyRef Name="CodTypeOfTask" />
@@ -1205,6 +1006,173 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="dbModelStoreContainer">
+          <EntitySet Name="articlecost" EntityType="Self.articlecost" Schema="db" store:Type="Tables" />
+          <EntitySet Name="articles" EntityType="Self.articles" Schema="db" store:Type="Tables" />
+          <EntitySet Name="costdetails" EntityType="Self.costdetails" Schema="db" store:Type="Tables" />
+          <EntitySet Name="costs" EntityType="Self.costs" Schema="db" store:Type="Tables" />
+          <EntitySet Name="customersupplierbases" EntityType="Self.customersupplierbases" Schema="db" store:Type="Tables" />
+          <EntitySet Name="customersuppliers" EntityType="Self.customersuppliers" Schema="db" store:Type="Tables" />
+          <EntitySet Name="documentproducts" EntityType="Self.documentproducts" Schema="db" store:Type="Tables" />
+          <EntitySet Name="documents" EntityType="Self.documents" Schema="db" store:Type="Tables" />
+          <EntitySet Name="makereadies" EntityType="Self.makereadies" Schema="db" store:Type="Tables" />
+          <EntitySet Name="menuproduct" EntityType="Self.menuproduct" Schema="db" store:Type="Tables" />
+          <EntitySet Name="optiontypeoftask" EntityType="Self.optiontypeoftask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productpartprinting" EntityType="Self.productpartprinting" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productpartprintinggain" EntityType="Self.productpartprintinggain" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productparts" EntityType="Self.productparts" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productpartsprintablearticle" EntityType="Self.productpartsprintablearticle" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productpartstoproducttask" EntityType="Self.productpartstoproducttask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productparttasks" EntityType="Self.productparttasks" Schema="db" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="db" store:Type="Tables" />
+          <EntitySet Name="producttasks" EntityType="Self.producttasks" Schema="db" store:Type="Tables" />
+          <EntitySet Name="steps" EntityType="Self.steps" Schema="db" store:Type="Tables" />
+          <EntitySet Name="taskexecutorestimatedon" EntityType="Self.taskexecutorestimatedon" Schema="db" store:Type="Tables" />
+          <EntitySet Name="taskexecutors" EntityType="Self.taskexecutors" Schema="db" store:Type="Tables" />
+          <EntitySet Name="taskexecutortypeoftask" EntityType="Self.taskexecutortypeoftask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="typeofbase" EntityType="Self.typeofbase" Schema="db" store:Type="Tables" />
+          <EntitySet Name="typeoftask" EntityType="Self.typeoftask" Schema="db" store:Type="Tables" />
+          <AssociationSet Name="FK_articlecost_CodArticle" Association="Self.FK_articlecost_CodArticle">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlecost" EntitySet="articlecost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_CodSupplierMaker" Association="Self.FK_articles_CodSupplierMaker">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodComputedBy" Association="Self.FK_costdetails_CodComputedBy">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="costdetails1" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodCost" Association="Self.FK_costdetails_CodCost">
+            <End Role="costs" EntitySet="costs" />
+            <End Role="costdetails" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodProductPart" Association="Self.FK_costdetails_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="costdetails" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costdetails_CodTaskExecutorSelected" Association="Self.FK_costdetails_CodTaskExecutorSelected">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="costdetails" EntitySet="costdetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costs_CodDocumentProduct" Association="Self.FK_costs_CodDocumentProduct">
+            <End Role="documentproducts" EntitySet="documentproducts" />
+            <End Role="costs" EntitySet="costs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costs_CodProductPartPrintableArticle" Association="Self.FK_costs_CodProductPartPrintableArticle">
+            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
+            <End Role="costs" EntitySet="costs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costs_CodProductPartTask" Association="Self.FK_costs_CodProductPartTask">
+            <End Role="productparttasks" EntitySet="productparttasks" />
+            <End Role="costs" EntitySet="costs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costs_CodProductTask" Association="Self.FK_costs_CodProductTask">
+            <End Role="producttasks" EntitySet="producttasks" />
+            <End Role="costs" EntitySet="costs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customersupplierbases_CodCustomerSupplier" Association="Self.FK_customersupplierbases_CodCustomerSupplier">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customersupplierbases_CodTypeOfBase" Association="Self.FK_customersupplierbases_CodTypeOfBase">
+            <End Role="typeofbase" EntitySet="typeofbase" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentproducts_CodDocument" Association="Self.FK_documentproducts_CodDocument">
+            <End Role="documents" EntitySet="documents" />
+            <End Role="documentproducts" EntitySet="documentproducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentproducts_CodProduct" Association="Self.FK_documentproducts_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="documentproducts" EntitySet="documentproducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documents_CodCustomer" Association="Self.FK_documents_CodCustomer">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="Self.FK_makereadies_CodProductPartPrintingGain">
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+            <End Role="makereadies" EntitySet="makereadies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="Self.FK_optiontypeoftask_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="Self.FK_productpartprinting_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprinting_CodProductPartPrinting" Association="Self.FK_productpartprinting_CodProductPartPrinting">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrinting" Association="Self.FK_productpartprintinggain_CodProductPartPrinting">
+            <End Role="productpartprinting" EntitySet="productpartprinting" />
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying" Association="Self.FK_productpartprintinggain_CodProductPartPrintingGainBuying">
+            <End Role="costdetails" EntitySet="costdetails" />
+            <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparts_CodProduct" Association="Self.FK_productparts_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="productparts" EntitySet="productparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartsprintablearticle_CodProductPart" Association="Self.FK_productpartsprintablearticle_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartstoproducttask_CodProductPart" Association="Self.FK_productpartstoproducttask_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartstoproducttask_CodProductTask" Association="Self.FK_productpartstoproducttask_CodProductTask">
+            <End Role="producttasks" EntitySet="producttasks" />
+            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparttasks_CodOptionTypeOfTask" Association="Self.FK_productparttasks_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="productparttasks" EntitySet="productparttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparttasks_CodProductPart" Association="Self.FK_productparttasks_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productparttasks" EntitySet="productparttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producttasks_CodOptionTypeOfTask" Association="Self.FK_producttasks_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="producttasks" EntitySet="producttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producttasks_CodProduct" Association="Self.FK_producttasks_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="producttasks" EntitySet="producttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_steps_CodTaskEstimatedOn" Association="Self.FK_steps_CodTaskEstimatedOn">
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+            <End Role="steps" EntitySet="steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutorestimatedon_CodOptionTypeOfTask" Association="Self.FK_taskexecutorestimatedon_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutorestimatedon_CodTaskExecutor" Association="Self.FK_taskexecutorestimatedon_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutors_CodTypeOfTask" Association="Self.FK_taskexecutors_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutortypeoftask_CodTaskExecutor" Association="Self.FK_taskexecutortypeoftask_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutortypeoftask_CodTypeOfTask" Association="Self.FK_taskexecutortypeoftask_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1517,19 +1485,19 @@
           </ReferentialConstraint>
         </Association>
         <EntityType Name="CostPerRunStep" BaseType="dbModel.Step">
-          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="String" Name="CostPerUnit" />
         </EntityType>
         <EntityType Name="AvarageRunPerRunStep" BaseType="dbModel.Step">
           <Property Type="Int64" Name="AvarageRunPerHour" />
         </EntityType>
         <EntityType Name="DeficitForWeightStep" BaseType="dbModel.Step">
-          <Property Type="Double" Name="DeficitRate" />
+          <Property Type="String" Name="DeficitRate" />
         </EntityType>
         <EntityType Name="CostPerMqStep" BaseType="dbModel.Step">
-          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="String" Name="CostPerUnit" />
         </EntityType>
         <EntityType Name="DeficitOnCostForWeightStep" BaseType="dbModel.Step">
-          <Property Type="Double" Name="DeficitRate" />
+          <Property Type="String" Name="DeficitRate" />
         </EntityType>
         <EntityType Name="ArticleCost" Abstract="true">
           <Key>
@@ -1617,6 +1585,8 @@
         </EntityType>
         <EntityType Name="RigidPrintableArticle" BaseType="dbModel.Printable">
           <Property Type="String" Name="Format" MaxLength="9" Unicode="false" FixedLength="true" />
+          <Property Name="ToNexMq" Type="Boolean" />
+          <Property Name="FromMinFormat" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ObjectPrintableArticle" BaseType="dbModel.Printable">
           <Property Type="String" Name="Size" MaxLength="50" Unicode="false" FixedLength="true" />
@@ -1657,7 +1627,7 @@
             <PropertyRef Name="CodCustomerSupplier" />
           </Key>
           <Property Type="DateTime" Name="TimeStampTable" Nullable="false" Precision="0" />
-          <Property Type="String" Name="CodCustomerSupplier" Nullable="false" MaxLength="70" Unicode="false" FixedLength="true" a:StoreGeneratedPattern="Identity" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
+          <Property Type="String" Name="CodCustomerSupplier" Nullable="false" MaxLength="70" Unicode="false" FixedLength="true" a:StoreGeneratedPattern="None" xmlns:a="http://schemas.microsoft.com/ado/2009/02/edm/annotation" />
           <Property Type="String" Name="BusinessName" MaxLength="255" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="VatNumber" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="TaxCode" MaxLength="50" Unicode="false" FixedLength="true" />
@@ -1768,21 +1738,21 @@
           <Property Type="Time" Name="StartingTimeBinding" Precision="0" />
         </EntityType>
         <EntityType Name="BindingCostPerRunStep" BaseType="dbModel.Step">
-          <Property Type="Double" Name="CostPerUnit4" />
-          <Property Type="Double" Name="StartingCost4" />
-          <Property Type="Double" Name="CostPerUnit6" />
-          <Property Type="Double" Name="StartingCost6" />
-          <Property Type="Double" Name="CostPerUnit8" />
-          <Property Type="Double" Name="StartingCost8" />
-          <Property Type="Double" Name="CostPerUnit12" />
-          <Property Type="Double" Name="StartingCost12" />
-          <Property Type="Double" Name="CostPerUnit16" />
-          <Property Type="Double" Name="StartingCost16" />
-          <Property Type="Double" Name="CostPerUnit24" />
-          <Property Type="Double" Name="StartingCost24" />
-          <Property Type="Double" Name="CostPerUnit32" />
-          <Property Type="Double" Name="StartingCost32" />
-          <Property Type="Double" Name="BindingCost" />
+          <Property Type="String" Name="CostPerUnit4" />
+          <Property Type="String" Name="StartingCost4" />
+          <Property Type="String" Name="CostPerUnit6" />
+          <Property Type="String" Name="StartingCost6" />
+          <Property Type="String" Name="CostPerUnit8" />
+          <Property Type="String" Name="StartingCost8" />
+          <Property Type="String" Name="CostPerUnit12" />
+          <Property Type="String" Name="StartingCost12" />
+          <Property Type="String" Name="CostPerUnit16" />
+          <Property Type="String" Name="StartingCost16" />
+          <Property Type="String" Name="CostPerUnit24" />
+          <Property Type="String" Name="StartingCost24" />
+          <Property Type="String" Name="CostPerUnit32" />
+          <Property Type="String" Name="StartingCost32" />
+          <Property Type="String" Name="BindingCost" />
         </EntityType>
         <Association Name="FK_articles_customersuppliers">
           <End Type="dbModel.CustomerSupplier" Role="CustomerSupplier" Multiplicity="0..1" />
@@ -2167,6 +2137,8 @@
           <Property Type="Int32" Name="Number" />
           <Property Type="String" Name="Notes" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="DateDocument" />
+          <Property Name="EstimateNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="EstimateNumberSerie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
@@ -2594,7 +2566,7 @@
         </EntityType>
         <EntityType Name="ProductPartRigidPrinting" BaseType="dbModel.ProductPartSheetPrinting" />
         <EntityType Name="CostPerRunStepBW" BaseType="dbModel.Step">
-          <Property Type="Double" Name="CostPerUnit" />
+          <Property Type="String" Name="CostPerUnit" />
         </EntityType>
         <EntityType Name="PrintedRigidArticleCostDetail" BaseType="dbModel.PrintedArticleCostDetail" >
           <Property Type="String" Name="CostPerMq" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -3081,6 +3053,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.RigidPrintableArticle)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="ToNexMq" ColumnName="ToNexMq" />
+                <ScalarProperty Name="FromMinFormat" ColumnName="FromMinFormat" />
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <ScalarProperty Name="Format" ColumnName="Format" />
                 <Condition ColumnName="SelectorSheetRollWide" Value="2" />
@@ -3383,6 +3357,8 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Document)">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="EstimateNumberSerie" ColumnName="EstimateNumberSerie" />
+                <ScalarProperty Name="EstimateNumber" ColumnName="EstimateNumber" />
                 <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
                 <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
@@ -3635,11 +3611,12 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="39">
+      <Diagram Name="Model1" ZoomLevel="43">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />

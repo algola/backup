@@ -237,6 +237,9 @@
   <data name="RollPrintableArticleViewModelWizard" xml:space="preserve">
     <value>Creazione Automatica dei Materiali Stampabili in rotolo</value>
   </data>
+  <data name="Run" xml:space="preserve">
+    <value>Elabora</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
   </data>
@@ -268,7 +271,7 @@
     <value>Creazione Automatica dei Materiali a Foglio</value>
   </data>
   <data name="SupplierNameCaption" xml:space="preserve">
-    <value>Fornitore</value>
+    <value>Produttore</value>
   </data>
   <data name="TypeOfCostToModify" xml:space="preserve">
     <value>Applica modifiche ai costi</value>

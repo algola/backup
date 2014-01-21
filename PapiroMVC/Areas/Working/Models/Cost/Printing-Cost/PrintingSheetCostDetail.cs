@@ -91,6 +91,8 @@ namespace PapiroMVC.Models
                 }
             }
 
+            this.ProductPartPrinting.CostDetail = this;
+
             if (GainPrintingOnBuying == null)
             {
                 GainPrintingOnBuying = new ProductPartPrintingSheetGainSingle();
@@ -103,6 +105,7 @@ namespace PapiroMVC.Models
 
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 1;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 1;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).CalculateGain();
 

@@ -55,6 +55,7 @@ namespace PapiroMVC.Models
     public class RegisterModel
     {
         [Required(ErrorMessageResourceType = typeof(Registration), ErrorMessageResourceName = "RequiredFieldUserName")]
+        [RegularExpressionLocalizedAttribute(typeof(Registration), "UserNameRegex", "UserNameFormatValidation")]        
         [DisplayNameLocalized(typeof(Registration), "UserName")]
         public string UserName { get; set; }
 

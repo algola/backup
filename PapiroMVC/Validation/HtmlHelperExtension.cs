@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -74,6 +75,183 @@ namespace PapiroMVC.Validation
             tag.MergeAttributes(htmlAttributesDictionary);
             return tag;
         }
+
+
+        /// <summary>
+        /// HtmlHelper Extension
+        /// This Method create automaticaly HTML with LabelFor + EditFor + Validation Message + Title displaing ToolTip Attribute
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="html"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static IHtmlString AlgolaNoDescEditorFor<TModel, TProperty>(
+                this HtmlHelper<TModel> html,
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
+
+
+            string tool = "";
+            var getTool = String.Empty;
+
+            if (metadata.AdditionalValues.ContainsKey("ToolTip"))
+            {
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
+            }
+            if (getTool != null && getTool != "")
+            {
+                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
+            }
+
+            var algolaEditFor = new TagBuilder("div");
+            algolaEditFor.AddCssClass("control-group");
+
+            //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
+
+            //    <div class="col-sm-9">
+            //        <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
+            //    </div>
+            //</div>
+
+            var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttribute);
+            {
+                attrs.Add("class", "col-xs-10 col-sm-5");
+                attrs.Add("placeholder", "Username");
+            }
+            htmlAttribute = attrs;
+
+            //var labelFor = new TagBuilder("div");
+            //labelFor.AddCssClass("editor-label col-sm-3 control-label no-padding-right");
+            //labelFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression);
+
+            var htmlatt = new RouteValueDictionary();
+            htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
+
+            algolaEditFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression, htmlatt);
+
+
+            var editFor = new TagBuilder("div");
+            editFor.AddCssClass("controls col-sm-9");
+
+            var valu = (metadata.Model) == null ? false : (bool)metadata.Model;
+
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.CheckBox(html, "", valu);
+
+
+            var builder = new TagBuilder("span");
+            builder.AddCssClass("grey");
+
+            if (metadata.IsRequired)
+                builder.InnerHtml = "*";
+            else
+                builder.InnerHtml = "&nbsp;&nbsp;";
+
+            editFor.InnerHtml += builder;
+
+            editFor.InnerHtml += tool;
+
+            //            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
+
+            //            algolaEditFor.InnerHtml += labelFor;
+
+
+            algolaEditFor.InnerHtml += editFor;
+
+            return new HtmlString(algolaEditFor + Environment.NewLine);
+        }
+
+
+        private const int TextAreaRows = 2;
+        private const int TextAreaColumns = 20;
+
+        // ...
+
+
+        /// <summary>
+        /// HtmlHelper Extension
+        /// This Method create automaticaly HTML with LabelFor + EditFor + Validation Message + Title displaing ToolTip Attribute
+        /// </summary>
+        /// <typeparam name="TModel"></typeparam>
+        /// <typeparam name="TProperty"></typeparam>
+        /// <param name="html"></param>
+        /// <param name="expression"></param>
+        /// <returns></returns>
+        public static IHtmlString AlgolaTextAreaFor<TModel, TProperty>(
+                this HtmlHelper<TModel> html,
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
+
+            string tool = "";
+            var getTool = String.Empty;
+
+            if (metadata.AdditionalValues.ContainsKey("ToolTip"))
+            {
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
+            }
+            if (getTool != null && getTool != "")
+            {
+                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
+            }
+
+            var algolaEditFor = new TagBuilder("div");
+            algolaEditFor.AddCssClass("control-group");
+
+            //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
+
+            //    <div class="col-sm-9">
+            //        <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5">
+            //    </div>
+            //</div>
+
+            var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttribute);
+            {
+                attrs.Add("class", "col-xs-10 col-sm-5");
+                attrs.Add("placeholder", "Username");
+            }
+            htmlAttribute = attrs;
+
+            //var labelFor = new TagBuilder("div");
+            //labelFor.AddCssClass("editor-label col-sm-3 control-label no-padding-right");
+            //labelFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression);
+
+            var htmlatt = new RouteValueDictionary();
+            htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
+
+            algolaEditFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression, htmlatt);
+
+
+            var editFor = new TagBuilder("div");
+            editFor.AddCssClass("controls col-sm-9 autosize-transition");
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.TextAreaExtensions.TextAreaFor(html, expression, htmlAttribute);
+
+            var builder = new TagBuilder("span");
+            builder.AddCssClass("grey");
+
+            if (metadata.IsRequired)
+                builder.InnerHtml = "*";
+            else
+                builder.InnerHtml = "&nbsp;&nbsp;";
+
+            editFor.InnerHtml += builder;
+
+            editFor.InnerHtml += tool;
+
+            //            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, htmlAttribute);
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.ValidationExtensions.ValidationMessageFor(html, expression);
+
+            //            algolaEditFor.InnerHtml += labelFor;
+
+
+            algolaEditFor.InnerHtml += editFor;
+
+            return new HtmlString(algolaEditFor + Environment.NewLine);
+        }
+
+
 
         /// <summary>
         /// HtmlHelper Extension
@@ -391,6 +569,19 @@ namespace PapiroMVC.Validation
             return MvcHtmlString.Create(anchorHtml);
         }
 
+        public static IHtmlString ToolTipFor<TModel, TValue>(
+                 this HtmlHelper<TModel> html,
+                 Expression<Func<TModel, TValue>> expression)
+        {
+            var data = ModelMetadata.FromLambdaExpression<TModel, TValue>(expression, html.ViewData);
+            if (data.AdditionalValues.ContainsKey("Tooltip"))
+                return new HtmlString((string)data.AdditionalValues["Tooltip"]);
+
+            return new HtmlString("");
+
+        }
+
+
     }
 
 
@@ -444,7 +635,7 @@ namespace PapiroMVC.Validation
             string ret = String.Empty;
             try
             {
-                ret = (string)HttpContext.GetLocalResourceObject(path, key+type);
+                ret = (string)HttpContext.GetLocalResourceObject(path, key + type);
             }
             catch (Exception e)
             {
@@ -469,6 +660,6 @@ namespace PapiroMVC.Validation
             return new HtmlString(string.Format("<meta name=\"accept-language\" content=\"{0}\"/>", acceptLang));
         }
     }
-    
+
 
 }

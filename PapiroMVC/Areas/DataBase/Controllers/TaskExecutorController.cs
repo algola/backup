@@ -25,6 +25,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             base.Initialize(requestContext);
             taskExecutorRepository.SetDbName(CurrentDatabase);
+            typeOfTaskRepository.SetDbName(CurrentDatabase);
         }
 
         public TaskExecutorController(ITaskExecutorRepository _tskExDataRep, ITypeOfTaskRepository _typeOfTask)
@@ -606,14 +607,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
 
-                        /***********************************
+                        /*-----------------------------------
                           c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
                           c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
                           c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
-                        /************************************/
+                        /*/
                     }
 
                     taskExecutorRepository.Add(c);
@@ -647,14 +648,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
 
-                        /***********************************
+                        /*-------------------------------------
                           c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
                           c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
                           c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
                           c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
-                        /************************************/
+                        /*/
                     }
 
                     taskExecutorRepository.Add(c);
@@ -725,6 +726,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
+        
         public ActionResult CreateDigitalRoll()
         {
 
@@ -741,6 +743,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpParamAction]
+        
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreatePlotterRoll(PlotterRoll c)
         {
@@ -777,6 +780,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult CreatePlotterSheet(PlotterSheet c)
         {
             if (ModelState.IsValid)
@@ -812,6 +816,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult CreateDigitalSheet(DigitalSheet c)
         {
             if (ModelState.IsValid)
@@ -848,6 +853,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult CreateDigitalRoll(DigitalRoll c)
         {
             if (ModelState.IsValid)
@@ -885,6 +891,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
+        
         public ActionResult CreatePrePostPress()
         {
             //this feature is needed when in the view there are more than one input (submit button) form
@@ -900,6 +907,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult CreatePrePostPress(PrePostPress c)
         {
             if (ModelState.IsValid)
@@ -999,7 +1007,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return ret;
         }
 
-
+        
         public ActionResult EditLithoSheet(string id)
         {
             LithoSheet tskEx = new LithoSheet();
@@ -1018,6 +1026,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
+        
         public ActionResult EditLithoRoll(string id)
         {
             LithoRoll tskEx = new LithoRoll();
@@ -1036,7 +1045,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
-
+        
+        
         public ActionResult EditPlotterSheet(string id)
         {
             PlotterSheet tskEx = new PlotterSheet();
@@ -1054,7 +1064,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-
+        
         public ActionResult EditPlotterRoll(string id)
         {
             PlotterRoll tskEx = new PlotterRoll();
@@ -1071,7 +1081,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
-
+        
         public ActionResult EditDigitalSheet(string id)
         {
             DigitalSheet tskEx = new DigitalSheet();
@@ -1088,6 +1098,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
+        
         public ActionResult EditDigitalRoll(string id)
         {
             DigitalRoll tskEx = new DigitalRoll();
@@ -1104,7 +1115,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(tskEx);
         }
 
-
+        
         public ActionResult EditPrePostPress(string id)
         {
             PrePostPress tskEx = new PrePostPress();
@@ -1127,6 +1138,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // POST: /Article/Edit/5
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditLithoSheet(LithoSheet c)
         {
             if (ModelState.IsValid)
@@ -1167,6 +1179,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditLithoRoll(LithoRoll c)
         {
             if (ModelState.IsValid)
@@ -1206,6 +1219,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditPlotter(Plotter c)
         {
             if (ModelState.IsValid)
@@ -1234,6 +1248,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditPlotterRoll(PlotterRoll c)
         {
             if (ModelState.IsValid)
@@ -1262,6 +1277,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditPlotterSheet(PlotterSheet c)
         {
             if (ModelState.IsValid)
@@ -1288,6 +1304,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditDigitalSheet(DigitalSheet c)
         {
             if (ModelState.IsValid)
@@ -1325,6 +1342,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditDigitalRoll(DigitalRoll c)
         {
             if (ModelState.IsValid)
@@ -1363,6 +1381,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        
         public ActionResult EditPrePostPress(PrePostPress c)
         {
             if (ModelState.IsValid)

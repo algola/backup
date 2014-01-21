@@ -11,7 +11,6 @@ namespace PapiroMVC.Models
 {
     public abstract partial class Document_MetaData
     {
-
         [DisplayNameLocalized(typeof(ResDocuments), "CodDocument")]
         [Tooltip(typeof(ResDocuments), "CodDocumentToolTip")]
         public string CodDocument { get; set; }
@@ -19,7 +18,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResDocuments), "DocumentName")]
         [Tooltip(typeof(ResDocuments), "DocumentNameToolTip")]
         public string DocumentName { get; set; }
-
 
         [DisplayNameLocalized(typeof(ResDocuments), "CodCustomer")]
         [Tooltip(typeof(ResDocuments), "CodCustomerToolTip")]
@@ -32,6 +30,14 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResDocuments), "DateDocument")]
         [Tooltip(typeof(ResDocuments), "DateDocumentToolTip")]
         public Nullable<int> DateDocument { get; set; }
+
+        [DisplayNameLocalized(typeof(ResDocuments), "EstimateNumber")]
+        [Tooltip(typeof(ResDocuments), "EstimateNumberToolTip")]
+        public string EstimateNumber { get; set; }
+
+        [DisplayNameLocalized(typeof(ResDocuments), "EstimateNumberSerie")]
+        [Tooltip(typeof(ResDocuments), "EstimateNumberSerieToolTip")]
+        public string EstimateNumberSerie { get; set; }
 
         [DisplayNameLocalized(typeof(ResDocuments), "Number")]
         [Tooltip(typeof(ResDocuments), "NumberToolTip")]

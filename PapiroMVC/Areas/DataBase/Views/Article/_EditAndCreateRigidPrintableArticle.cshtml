@@ -24,7 +24,7 @@
 
         @Html.HiddenFor(model => model.Article.CodArticle)
         @Html.HiddenFor(model => model.Article.ArticleName)
-       
+
         @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
@@ -33,6 +33,11 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.Format, "FormatAutoComplete", "Article")
 
+        @Html.AlgolaAutocompleteFor(model => model.Article.Thikness, "ThiknessAutoComplete", "Article")
+        @Html.EditorFor(model => model.Article.ToNexMq)
+        @Html.AlgolaAutocompleteFor(model => model.Article.FromMinFormat, "FromMinFormatComplete", "Article")
+
+        
         @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
         @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
@@ -57,11 +62,11 @@
 
             @if (ViewBag.ActionMethod != "CreateRigidPrintableArticle")
             {
-                <input class="btn" type="submit" name="CreateRigidPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                <input class="btn" type="submit" name="CreateRigidPrintableArticle" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
             }
 
         </p>
-    
+
     }
 
 </div>

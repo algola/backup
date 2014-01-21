@@ -17,12 +17,30 @@ using System.Threading.Tasks;
 using Services;
 using System.Reflection;
 using System.Resources;
+using Braintree;
 
 namespace PapiroMVC.Controllers
 {
 
     public class ControllerAlgolaBase : AsyncController
     {
+
+        public class Constants
+        {
+            public static BraintreeGateway Gateway = new BraintreeGateway
+            {
+                Environment = Braintree.Environment.SANDBOX,
+                MerchantId = "5gm9czps9t926mfc",
+                PublicKey = "bf3wvjm5pg8dc2nd",
+                PrivateKey = "ba7e172f99d577277d2aaa62701da6a2"
+            };
+        }
+
+        public ActionResult Errors(string id)
+        {
+            Console.Write(id);
+            return null;
+        }
 
         //user connected to website
         public MembershipUser CurrentUser
@@ -114,6 +132,7 @@ namespace PapiroMVC.Controllers
             {
                 item.UpdateSchema(ctx);
             }
+
 
             ctx.Dispose();
         }
@@ -217,7 +236,7 @@ namespace PapiroMVC.Controllers
             }
             catch (Exception)
             {
-                TempData["MetaTitle"] = "";
+                TempData["MetaTitle"] = "PapiroStar";
                 TempData["MetaDescription"] = "";
                 TempData["MetaKeyword"] = "";
                 TempData["MetaRobots"] = "noindex, nofollow";
@@ -225,6 +244,5 @@ namespace PapiroMVC.Controllers
 
             return null;
         }
-
     }
 }

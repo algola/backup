@@ -46,7 +46,7 @@
         @Html.AlgolaEditorFor(model => model.ControPinza)
         @Html.AlgolaEditorFor(model => model.Laterale)
 
-        <h3>****Stampa</h3>
+        <h3>@Html.T(strings,"PrintSection")</h3>
 
         @Html.EditorFor(model => model.ColorSide1)
         @Html.EditorFor(model => model.ColorSide2)
@@ -57,7 +57,7 @@
         @Html.HiddenFor(model => model.InkUsage)
         @Html.HiddenFor(model => model.InkUsageForfait)
 
-        <h3>***Scarti</h3>
+        <h3>@Html.T(strings,"WasteSection")</h3>
 
         @Html.AlgolaAutocompleteFor(model => model.ProofSheetFirstStart, "ProofSheetFirstStartAutoComplete", "TaskExecutor")
         @Html.AlgolaAutocompleteFor(model => model.ProofSheetSecondsStart, "ProofSheetSecondsStartAutoComplete", "TaskExecutor")

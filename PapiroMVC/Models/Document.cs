@@ -28,6 +28,8 @@ namespace PapiroMVC.Models
         public Nullable<int> Number { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> DateDocument { get; set; }
+        public string EstimateNumber { get; set; }
+        public string EstimateNumberSerie { get; set; }
     
         public virtual CustomerSupplier CustomerSupplier { get; set; }
         public virtual ICollection<DocumentProduct> DocumentProducts { get; set; }

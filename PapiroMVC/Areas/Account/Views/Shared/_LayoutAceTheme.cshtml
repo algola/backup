@@ -1,16 +1,19 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en">
+<html lang="@ViewBag.Lang">
 
 <head>
 
     <meta charset="utf-8" />
 
-    <title>@ViewBag.MetaTitle</title>
-
     <meta name="description" content="overview &amp; stats" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="~/PapiroStar.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="~/papiro.png" rel="shortcut icon" type="image/x-icon" />
+
+    <title>@TempData["MetaTitle"]</title>
+    <meta name="description" content="@TempData["MetaDescription"]" />
+    <meta name="keyword" content="@TempData["MetaKeyword"]" />
+    <meta name="robots" content="@TempData["MetaRobots"]" />
 
     <script src="~/Scripts/jquery-2.0.3.min.js"></script>
     <script src="~/Scripts/spin.js"></script>
@@ -54,6 +57,21 @@
 		<script src="~/Content/acetheme/assets/js/html5shiv.js"></script>
 		<script src="~/Content/acetheme/assets/js/respond.min.js"></script>
 		<![endif]-->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-29766054-1', 'gestionestampa.com');
+        ga('send', 'pageview');
+
+    </script>
+
+
 </head>
 
 <body>

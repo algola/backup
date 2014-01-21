@@ -10,17 +10,12 @@
         ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
     }   
 }
+
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
 
-    @using (Ajax.BeginForm("EditProfile", "Account", new AjaxOptions
-{
-    UpdateTargetId = "status",
-    OnBegin = "showProcessingMsg",
-    OnComplete = "hideProcessingMsg",
-    OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal", @id = "braintree-payment-form" }))
+    @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "braintree-payment-form" }))
     {
         @Html.AntiForgeryToken();
         @Html.ValidationSummary(true)
@@ -102,21 +97,6 @@ Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ulla
 
                         <div class="space-8"></div>
 
-                        <p>
-                            <label>Card Number</label>
-                            <input type="text" size="20" autocomplete="off" data-encrypted-name="number" />
-                        </p>
-                        <p>
-                            <label>CVV</label>
-                            <input type="text" size="4" autocomplete="off" data-encrypted-name="cvv" />
-                        </p>
-                        <p>
-                            <label>Expiration (MM/YYYY)</label>
-                            <input type="text" size="2" data-encrypted-name="month" />
-                            /
-                            <input type="text" size="4" data-encrypted-name="year" />
-                        </p>
-
                     </div>
 
                 </div>
@@ -129,12 +109,9 @@ Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ulla
         <p>
 
 
-             <a href="#" onclick="save();">ciao</a>
-
-
             @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", null, "icon-remove bigger-125", "btn btn-warning")
 
-            <button class="btn btn-primary" onclick="save();">
+            <button class="btn btn-primary" type="submit">
                 <i class="icon-save bigger-125"></i>
                 @Html.T(strings, "Save")
             </button>
@@ -144,22 +121,24 @@ Quisque vitae elit rhoncus, condimentum tortor id, euismod tellus. Fusce eu ulla
     }
 
     <script src="https://js.braintreegateway.com/v1/braintree.js"></script>
-
     <script>
+
         var ajax_submit = function (e) {
-            
-            alert("ciao");
 
             form = $('#braintree-payment-form');
             e.preventDefault();
+
             $("#submit").attr("disabled", "disabled");
-            $.post(form.attr('action'), form.serialize(), function (data) {
-                form.parent().replaceWith(data);
-            });
+            $.post(form.attr('action'),
+                form.serialize(),
+                function (data) {
+                    OnSuccess(data);
+                });
         }
+
         var braintree = Braintree.create("MIIBCgKCAQEAzXjSG4ufnkVJSyNKRZlM8yY4GDQDGq4UVOVPdsMQb4Rp8idazki3AbyhKxft0s9jT77xVztia0ry2sPBP4vSBu5qjGPIEgZnNnJVhQ9JNySkJvs3vThIMfy108vmX2kVv1xGUIoSKNp0R/+B/CZLgVyGvHL8qvxwx8ztXWI2Yqn2PALOffMnUCs11aFkEuMGzcGTAkHJuW6GV0vWEe6oPZ9O/SbVZ2zpNPj1Hwwh50Dmr6+bLsJ3u4AMGr9y97O3gj5Ra2Y2q83uB8biNG15zycF6/XhkM6N56HD9sCsoLZp74HYTB9SSMe62A4cBnx7dcK9aVLOU9icxgYMauGwuQIDAQAB");
         braintree.onSubmitEncryptForm('braintree-payment-form', ajax_submit);
-  </script>
+    </script>
 
 </div>
 

@@ -9,16 +9,6 @@ namespace PapiroMVC.Controllers
 {
     public class HomeController : ControllerAlgolaBase
     {
-        public class Constants
-        {
-            public static BraintreeGateway Gateway = new BraintreeGateway
-            {
-                Environment = Braintree.Environment.SANDBOX,
-                MerchantId = "5gm9czps9t926mfc",
-                PublicKey = "bf3wvjm5pg8dc2nd",
-                PrivateKey = "ba7e172f99d577277d2aaa62701da6a2"
-            };
-        }
 
         [Authorize]
         public ActionResult Payment()

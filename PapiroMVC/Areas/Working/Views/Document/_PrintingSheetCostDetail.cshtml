@@ -129,6 +129,9 @@
 
     function drawBuiyngFormat(context, buyingFormatV, buyingFormatH, offsety, offsetx, zoom, bv) {
 
+        buyingFormatH.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        buyingFormatV.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
         buyingFormatH *= zoom;
         buyingFormatV *= zoom;
 
@@ -147,6 +150,10 @@
     }
 
     function drawPrintingFormat(context, printingFormatV, printingFormatH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2) {
+
+
+        printingFormatH.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        printingFormatV.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
         printingFormatH *= zoom;
         printingFormatV *= zoom;
@@ -202,6 +209,10 @@
 
         var side1pr = '@Model.PrintingFormat.GetSide1()';
         var side2pr = '@Model.PrintingFormat.GetSide2()';
+
+        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
 
         var sideOnSide = '@g.SideOnSide';
 

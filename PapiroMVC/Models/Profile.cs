@@ -22,5 +22,11 @@ namespace PapiroMVC.Models
         public string Phone { get; set; }
         public string VatNumber { get; set; }
         public string TaxCode { get; set; }
+        public string test { get; set; }
+        public string Target { get; set; }
+        public string Last3Dgt { get; set; }
+        public string ExpiredM { get; set; }
+        public string ExpiredY { get; set; }
+        public string BrianTreeCustomerId { get; set; }
     }
 }

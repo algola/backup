@@ -3,28 +3,31 @@
 @model PapiroMVC.Models.ProductPartRigidPrinting
 
 @{
-    
+
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
-    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();    
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
 }
 
 @*
-<canvas id="printingSingleSheet" width="500" height="170"></canvas>
+    <canvas id="printingSingleSheet" width="500" height="170"></canvas>
 *@
 
 <script type="text/javascript">
 
     //this event is fired only the first time
     $(document).ready(function () {
-//        drawPrintingAndSheet(); //draw printing and work
+        //        drawPrintingAndSheet(); //draw printing and work
     });
 
     function drawPrintingAndSheet() {
 
         var side1 = '@Model.PrintingFormat.GetSide1()';
         var side2 = '@Model.PrintingFormat.GetSide2()';
+
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
         var c_canvas = document.getElementById("printingSingleSheet");
         var context = c_canvas.getContext("2d");
@@ -42,6 +45,9 @@
 
         var side1pr = '@Model.Part.FormatOpened.GetSide1()';
         var side2pr = '@Model.Part.FormatOpened.GetSide2()';
+
+        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
         var sideOnSide = '@g.SideOnSide';
 

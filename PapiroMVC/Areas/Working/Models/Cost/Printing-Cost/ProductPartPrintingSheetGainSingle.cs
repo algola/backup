@@ -12,6 +12,9 @@ namespace PapiroMVC.Models
         public int SubjectNumber { get; set; }
         //this is the maxShape imposed by input
 
+        //this is mul to SubjectNumber to calculate maxShape
+        public int Quantity { get; set; }
+
         public override void CalculateGain()
         {
             if (Makereadies == null)
@@ -40,7 +43,6 @@ namespace PapiroMVC.Models
         //Sheet BuyingFormat
         protected override Makeready CalculateShapeOnBuyingFormat()
         {
-
             MakereadyPrintingSingleSheet gr = new MakereadyPrintingSingleSheet();
 
             try
@@ -129,15 +131,27 @@ namespace PapiroMVC.Models
                             }
                         }
                     }
-
                 }
 
                 var calculatedShape = MaxShape != 0 ? Math.Min((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0), MaxShape ?? ((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0))) : (gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0);
 
-                if (SubjectNumber <= calculatedShape)
+                //if (SubjectNumber <= calculatedShape)
+                //{
+                //    gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (SubjectNumber != 0 ? SubjectNumber : 1)) * (SubjectNumber != 0 ? SubjectNumber : 1);
+                //    gr.PrintedSubjects =  SubjectNumber;
+                //}
+                //else
+                //{
+                //    gr.PrintedShapes = calculatedShape;
+                //    gr.PrintedSubjects = gr.PrintedShapes;
+                //}
+
+                var subMolQta = SubjectNumber * Quantity;
+
+                if (subMolQta <= calculatedShape)
                 {
-                    gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (SubjectNumber != 0 ? SubjectNumber : 1)) * (SubjectNumber != 0 ? SubjectNumber : 1);
-                    gr.PrintedSubjects =  SubjectNumber;
+                    gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (subMolQta != 0 ? subMolQta : 1)) * (subMolQta != 0 ? subMolQta : 1);
+                    gr.PrintedSubjects = subMolQta;
                 }
                 else
                 {

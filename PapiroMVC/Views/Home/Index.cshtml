@@ -1,14 +1,12 @@
 ﻿@using PapiroMVC.Validation
 
-@{   
+@{
     string strings = "~/Views/Home/Strings";
-    string seo = "~/Views/Shared/Seo";
-
-    }
+}
 
 @Html.Action("MetaGenerator", new
-{ 
-    area = "",    
+{
+    area = "",
     page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
 })
 
@@ -42,15 +40,15 @@
         </div>
 
         <p>
-            Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroStar è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie. 
+            Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroStar è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie.
         </p>
 
         <ol class="round">
             <li class="one">
                 <h5 class="green">Gestisci il tuo profilo</h5>
-                PapiroStar permette di gestire in piena autonomia il proprio profilo, 
-        impostare i propri dati e modificarli in ogni momento.
-        Permette di caricare documenti di vario tipo e condividerli con gli utenti del sistema.
+                PapiroStar permette di gestire in piena autonomia il proprio profilo,
+                impostare i propri dati e modificarli in ogni momento.
+                Permette di caricare documenti di vario tipo e condividerli con gli utenti del sistema.
             </li>
 
             <li class="two">
@@ -77,11 +75,19 @@
 
     @section specificPlugInStyle {
         <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+
+
+
     }
 
     @section specificPluginScript {
         <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
         <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+
+        <!--ace scripts-->
+        <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
+        <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+
     }
 
     @section Scripts{
@@ -103,3 +109,17 @@
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({ publisher: "b7885f9a-6e87-4b09-b610-1c9cf6e7e4f1", doNotHash: true, doNotCopy: true, hashAddressBar: false });</script>
 
+
+@*
+    <div class="bs-example">
+        <p class="popover-examples">
+            <a href="#" class="btn btn-lg btn-primary" data-toggle="popover" data-content="And here's some amazing content. It's very engaging.">Popover Example</a>
+        </p>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".popover-examples a").popover();
+        });
+    </script>
+*@

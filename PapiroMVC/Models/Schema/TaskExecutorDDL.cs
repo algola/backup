@@ -46,7 +46,7 @@ namespace PapiroMVC.Model
 
             //litho
             dbS.AddColumnToTable("taskexecutors", "PrintingUnit", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("taskexecutors", "SheetwiseAfterPrintingUnit", SchemaDb.ByteUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "SheetwiseAfterPrintingUnit", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "Sheetwise", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "WashUpTime", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutors", "ChangePlateTime", SchemaDb.Time, "0");

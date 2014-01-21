@@ -38,7 +38,6 @@ namespace Services
             var fromBD = Context.CostDetail.Single(p => p.CodCostDetail == entity.CodCostDetail);
             Context.Entry(fromBD).CurrentValues.SetValues(entity);
 
-
             foreach (var item in entity.Computes)
             {
                 item.CodComputedBy = entity.CodCostDetail;

@@ -41,8 +41,19 @@ namespace Services
             return AlphaCode.GetNextCode(csCode??"0").PadLeft(6,'0');        
         }
 
+        public string GetNewEstimateNumber(Document a)
+        {
+            //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
+            //con un colpo solo!!!
+            var csCode = (from COD in this.GetAll() select COD.EstimateNumber).Max();
+            return AlphaCode.GetNextIntCode(csCode ?? "0").PadLeft(6, '0');
+        }
+
         private void DocumentProductCodeRigen(Document c)
         {
+
+            c.EstimateNumber = c.EstimateNumber.PadLeft(6, '0');
+
             c.TimeStampTable = DateTime.Now;
 
             //prodotti in documento
