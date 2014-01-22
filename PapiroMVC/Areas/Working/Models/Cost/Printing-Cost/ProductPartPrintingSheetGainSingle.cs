@@ -12,8 +12,6 @@ namespace PapiroMVC.Models
         public int SubjectNumber { get; set; }
         //this is the maxShape imposed by input
 
-        //this is mul to SubjectNumber to calculate maxShape
-        public int Quantity { get; set; }
 
         public override void CalculateGain()
         {
@@ -45,10 +43,12 @@ namespace PapiroMVC.Models
         {
             MakereadyPrintingSingleSheet gr = new MakereadyPrintingSingleSheet();
 
+            var dCut = DCut ?? 0;
+
             try
             {
-                int gain1_1 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide1() / SmallerFormat.GetSide1())));
-                int gain2_2 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide2() / SmallerFormat.GetSide2())));
+                int gain1_1 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() + dCut) / (SmallerFormat.GetSide1() + dCut))));
+                int gain2_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide2() + dCut) / (SmallerFormat.GetSide2() + dCut))));
 
                 int gain2_2Perf = (gain2_2 % 2) == 0 ? gain2_2 : gain2_2 - 1;
                 int gain1_1Perf = (gain1_1 % 2) == 0 ? gain1_1 : gain1_1 - 1;
@@ -57,8 +57,8 @@ namespace PapiroMVC.Models
                 var gSideOnSide16 = gain1_1 * gain2_2Perf;
                 var gSideOnSide12 = gain1_1Perf * gain2_2;
 
-                var gain1_2 = (int)decimal.Truncate((decimal)((LargerFormat.GetSide1() / SmallerFormat.GetSide2())));
-                var gain2_1 = (int)decimal.Truncate(((decimal)(LargerFormat.GetSide2() / SmallerFormat.GetSide1())));
+                var gain1_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1()+dCut) / (SmallerFormat.GetSide2()+dCut))));
+                var gain2_1 = (int)decimal.Truncate(((decimal)((LargerFormat.GetSide2() + dCut) / (SmallerFormat.GetSide1() + dCut))));
 
                 int gain2_1Perf = (gain2_1 % 2) == 0 ? gain2_1 : gain2_1 - 1;
                 int gain1_2Perf = (gain1_2 % 2) == 0 ? gain1_2 : gain1_2 - 1;
@@ -67,7 +67,7 @@ namespace PapiroMVC.Models
                 var gSideNotSide16 = gain1_2 * gain2_1Perf;
                 var gSideNotSide12 = gain1_2Perf * gain2_1;
 
-                if (!(UsePerfecting??false))
+                if (!(UsePerfecting ?? false))
                 {
                     gr.TypeOfPerfecting = "";
 

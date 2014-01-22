@@ -115,6 +115,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spaziatura cm.
+        /// </summary>
+        public static string DCut {
+            get {
+                return ResourceManager.GetString("DCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra.
+        /// </summary>
+        public static string DCutToolTip {
+            get {
+                return ResourceManager.GetString("DCutToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to F.to chiuso lavoro.
         /// </summary>
         public static string Format {
@@ -147,6 +165,24 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string FormatToolTip {
             get {
                 return ResourceManager.GetString("FormatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spaziatura tra Soggeti.
+        /// </summary>
+        public static string IsDCut {
+            get {
+                return ResourceManager.GetString("IsDCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Impostare quando le pose sono spaziate una con l&apos;altra.
+        /// </summary>
+        public static string IsDCutToolTip {
+            get {
+                return ResourceManager.GetString("IsDCutToolTip", resourceCulture);
             }
         }
         

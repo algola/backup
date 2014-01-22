@@ -176,8 +176,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                                     cost = new Cost();
                                     cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;
                                     cost.Description = productPartsPrintableArticle.ToString();
-                                    
-                                    cost.Description += (productPart.ProductPartName??"")==""?"":" (" + productPart.ProductPartName + ")";
+
+                                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
                                     documentProduct.Costs.Add(cost);
                                 }
@@ -198,7 +198,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     documentRepository.Save();
 
                     //TODO: Sending singlaR notification to client to reload basket product
-                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct}) });
+                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
                 }
                 catch (Exception ex)
                 {
@@ -238,50 +238,59 @@ namespace PapiroMVC.Areas.Working.Controllers
         private Product InitProduct(string id)
         {
             Product product;
+            product = new ProductSingleSheet();
 
             if (id == "Buste" ||
-                id == "BigliettiVisita" ||
-                id == "EtichetteCartellini" ||
-                id == "CartolineInviti" ||
                 id == "Volantini" ||
                 id == "Pieghevoli" ||
                 id == "CartaIntestata" ||
                 id == "Locandine" ||
-                id == "CartolinePostali" ||
-                id == "FogliMacchina" ||
-                id == "AltriFormati")
+                id == "FogliMacchina")
             {
                 product = new ProductSingleSheet();
             }
-            else
-                if (id == "PuntoMetallico" ||
-                    id == "SpiraleMetallica" ||
-                    id == "BrossuraFresata" ||
-                    id == "BrossuraCucitaFilo" ||
-                    id == "RivistePostalizzazione" ||
-                    id == "SchedeNonRilegate")
-                {
-                    product = new ProductBookSheet();
-                }
-                else
-                    if (
-                        id == "Fotoquadri" ||
-                        id == "Striscioni" ||
-                        id == "SuppRigidi" ||
-                        id == "Poster") product = new ProductRigid();
-                    else
-                    {
-                        if (
-                            id == "PVC" ||
-                            id == "Manifesti")
-                        {
-                            product = new ProductRigid();
-                        }
-                        else
-                        {
-                            product = new ProductSingleSheet();
-                        }
-                    }
+
+            if (
+                id == "BigliettiVisita" ||
+                id == "EtichetteCartellini" ||
+                id == "CartolineInviti" ||
+                id == "CartolinePostali" ||
+                id == "AltriFormati")
+            {
+                product = new ProductSingleSheet();
+                product.ShowDCut = true;
+                product.DCut = 0.5;
+            }
+
+            if (id == "PuntoMetallico" ||
+                id == "SpiraleMetallica" ||
+                id == "BrossuraFresata" ||
+                id == "BrossuraCucitaFilo" ||
+                id == "RivistePostalizzazione" ||
+                id == "SchedeNonRilegate")
+            {
+                product = new ProductBookSheet();
+            }
+
+
+            if (
+                id == "Fotoquadri" ||
+                id == "SuppRigidi" ||
+                id == "Poster")
+            {
+                product = new ProductRigid();
+                product.ShowDCut = true;
+                product.DCut = 2;
+            }
+
+            if (
+                id == "PVC" ||
+                id == "Manifesti" ||
+                id == "Striscioni")
+            {
+                product = new ProductRigid();
+            }
+
 
             product.CodMenuProduct = id;
             product.ProductTaskName = prodTskNameRepository.GetAllById(id);

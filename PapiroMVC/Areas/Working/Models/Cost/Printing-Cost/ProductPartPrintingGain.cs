@@ -11,6 +11,9 @@ namespace PapiroMVC.Models
         //SETUPS
         //------------------------------------------------------------------------------------------------------------------------        
         public string SmallerFormat { get; set; }
+
+        //this is mul to SubjectNumber to calculate maxShape
+        public int Quantity { get; set; }
         
         //this method calculate gain with aux of CalculateShapeOnBuyingFormat()
         public abstract void CalculateGain();

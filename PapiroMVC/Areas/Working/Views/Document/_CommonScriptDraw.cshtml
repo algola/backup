@@ -32,7 +32,7 @@
 
     }
 
-    function drawPrinting(context, printingFormatV, printingFormatH, SheetV, SheetH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2, maxGain) {
+    function drawPrinting(context, printingFormatV, printingFormatH, SheetV, SheetH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2, maxGain, dCut) {
 
         if (maxGain == 0) {
             maxGain = gainOnSide1 * gainOnSide2;
@@ -40,6 +40,8 @@
 
         printingFormatH *= zoom;
         printingFormatV *= zoom;
+
+        dCut *= zoom;
 
         SheetH *= zoom;
         SheetV *= zoom;
@@ -59,24 +61,24 @@
 
         if (sideOnside == 'True') {
 
-            offsetx = (SheetH - (printingFormatH * gainOnSide2)) / 2
-            offsety = (SheetV - (printingFormatV * gainOnSide1)) / 2
+            offsetx = (SheetH+dCut - ((printingFormatH+dCut) * gainOnSide2)) / 2
+            offsety = (SheetV+dCut - ((printingFormatV+dCut) * gainOnSide1)) / 2
 
 
             for (var j = 0, countShape = 0; j < gainOnSide1 && countShape < maxGain; j++) {
                 for (var i = 0; i < gainOnSide2 && countShape < maxGain; i++, countShape++) {
-                    context.rect(offsetx + printingFormatH * i, offsety + printingFormatV * j, printingFormatH, printingFormatV);
+                    context.rect(offsetx + (printingFormatH+dCut) * i, offsety + (printingFormatV+dCut) * j, printingFormatH, printingFormatV);
                 }
             }
         }
         else {
 
-            offsetx = (SheetH - (printingFormatV * gainOnSide2)) / 2
-            offsety = (SheetV - (printingFormatH * gainOnSide1)) / 2
+            offsetx = (SheetH+dCut - ((printingFormatV+dCut) * gainOnSide2)) / 2
+            offsety = (SheetV+dCut - ((printingFormatH+dCut) * gainOnSide1)) / 2
 
             for (var j = 0, countShape = 0; j < gainOnSide2 && countShape < maxGain; j++) {
                 for (var i = 0; i < gainOnSide1 && countShape < maxGain; i++, countShape++) {
-                    context.rect(offsetx + printingFormatV * j, offsety + printingFormatH * i, printingFormatV, printingFormatH);
+                    context.rect(offsetx + (printingFormatV+dCut) * j, offsety + (printingFormatH+dCut) * i, printingFormatV, printingFormatH);
                 }
             }
 

@@ -17,10 +17,15 @@ namespace PapiroMVC.Models
 
             gain.LargerFormat = PrintingFormat;
             gain.SmallerFormat = Part.FormatOpened;
+
+
             if (gain.SmallerFormat == "" || gain.SmallerFormat == null)
             {
                 gain.SmallerFormat = Part.Format;
             }
+
+            gain.Quantity = this.CostDetail.TaskCost.DocumentProduct.Quantity ?? 0;
+            gain.DCut = (Part.IsDCut??false)?Part.DCut:0;
 
             GainPartOnPrinting = gain;
         }

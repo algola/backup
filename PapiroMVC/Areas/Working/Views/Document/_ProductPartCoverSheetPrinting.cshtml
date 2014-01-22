@@ -59,7 +59,10 @@
         var gain1 = parseInt('@g.ShapeOnSide1');
         var gain2 = parseInt('@g.ShapeOnSide2');
 
-        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG);
+        var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut);
+
 
     }
 

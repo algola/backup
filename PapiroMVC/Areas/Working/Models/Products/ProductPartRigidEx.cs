@@ -10,7 +10,6 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductPartRigidEx_MetaData))]
     public partial class ProductPartRigid : ProductPart
     {
-
         public ProductPartRigid()
         {
             TypeOfProductPart = ProductPartType.ProductPartRigid;

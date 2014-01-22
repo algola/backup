@@ -33,6 +33,8 @@ namespace PapiroMVC.Models
         public string CodProductPart_ { get; set; }
         public string FormatOpened { get; set; }
         public Nullable<int> SubjectNumber { get; set; }
+        public Nullable<double> DCut { get; set; }
+        public Nullable<bool> IsDCut { get; set; }
     
         public virtual Product Product { get; set; }
         public virtual ICollection<ProductPartsPrintableArticle> ProductPartPrintableArticles { get; set; }

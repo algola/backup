@@ -8,6 +8,7 @@
     string stringsCod = "~/Views/Shared/Cuts";
 
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
+    var dCut = Model.GainPartOnPrinting.DCut ?? 0;
 }
 
 @*
@@ -54,7 +55,10 @@
         var gain1 = parseInt('@g.ShapeOnSide1');
         var gain2 = parseInt('@g.ShapeOnSide2');
 
-        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG);
+        var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut);
+
 
     }
 

@@ -88,6 +88,8 @@ namespace PapiroMVC.Model
             //ProductPartBookSheet
             dbS.AddColumnToTable("productparts", "FormatOpened", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparts", "Pages", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("productparts", "DCut", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productparts", "IsDCut", SchemaDb.Bool, "0");
 
             //ProductPartBlockSheet
 

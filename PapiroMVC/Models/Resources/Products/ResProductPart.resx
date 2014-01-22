@@ -135,6 +135,12 @@
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="DCut" xml:space="preserve">
+    <value>Spaziatura cm</value>
+  </data>
+  <data name="DCutToolTip" xml:space="preserve">
+    <value>Questo spazio viene lasciato tra una posa e un'altra</value>
+  </data>
   <data name="Format" xml:space="preserve">
     <value>F.to chiuso lavoro</value>
   </data>
@@ -146,6 +152,12 @@
   </data>
   <data name="FormatToolTip" xml:space="preserve">
     <value>Formato chiuso del lavoro finito</value>
+  </data>
+  <data name="IsDCut" xml:space="preserve">
+    <value>Spaziatura tra Soggeti</value>
+  </data>
+  <data name="IsDCutToolTip" xml:space="preserve">
+    <value>Impostare quando le pose sono spaziate una con l'altra</value>
   </data>
   <data name="PrintingType" xml:space="preserve">
     <value>Tipo di Stampa</value>

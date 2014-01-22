@@ -13,6 +13,9 @@ namespace PapiroMVC.Models
     {
         #region Proprietà aggiuntive
 
+        public bool ShowDCut { get; set; }
+        public Nullable<double> DCut { get; set; }
+
         //list of all TypeOfTask in the system
         public IQueryable<TypeOfTask> SystemTaskList { get; set; }
 

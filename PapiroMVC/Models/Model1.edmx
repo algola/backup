@@ -260,6 +260,8 @@
           <Property Name="FormatOpened" Type="char" MaxLength="20" />
           <Property Name="Pages" Type="int" />
           <Property Name="ServicesNumber" Type="int" />
+          <Property Name="DCut" Type="double" />
+          <Property Name="IsDCut" Type="bit" />
         </EntityType>
         <EntityType Name="productpartsprintablearticle">
           <Key>
@@ -1800,6 +1802,8 @@
           <Property Type="Int32" Name="SubjectNumber" />
           <NavigationProperty Name="CostDetails" Relationship="dbModel.FK_costdetails_CodProductPart" FromRole="ProductPart" ToRole="costdetail" />
           <NavigationProperty Name="productpartprintings" Relationship="dbModel.FK_productpartprinting_CodProductPart" FromRole="ProductPart" ToRole="ProductPartPrinting" />
+          <Property Name="DCut" Type="Double" />
+          <Property Name="IsDCut" Type="Boolean" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -3141,6 +3145,8 @@
           <EntitySetMapping Name="ProductParts">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPart)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="IsDCut" ColumnName="IsDCut" />
+                <ScalarProperty Name="DCut" ColumnName="DCut" />
                 <ScalarProperty Name="SubjectNumber" ColumnName="SubjectNumber" />
                 <ScalarProperty Name="FormatOpened" ColumnName="FormatOpened" />
                 <ScalarProperty Name="CodProductPart_" ColumnName="CodProductPart_" />
@@ -3622,7 +3628,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="43">
+      <Diagram Name="Model1" ZoomLevel="73">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />

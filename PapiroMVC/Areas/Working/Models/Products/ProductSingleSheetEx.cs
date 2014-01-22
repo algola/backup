@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductSingleSheet_MetaData))]
-    public partial class ProductSingleSheet : Product , IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class ProductSingleSheet : Product, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
         public ProductSingleSheet()
@@ -22,6 +22,10 @@ namespace PapiroMVC.Models
 
             var p = new ProductPartSheetArticle();
             var part = new ProductPartSingleSheet();
+
+            part.DCut = DCut;
+            part.ShowDCut = ShowDCut;
+            part.IsDCut = false;
 
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
@@ -66,7 +70,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get

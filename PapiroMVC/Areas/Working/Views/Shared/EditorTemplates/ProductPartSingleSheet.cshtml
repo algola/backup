@@ -50,6 +50,18 @@
     }
 </div>
 
+@if (Model.ShowDCut)
+{
+    @Html.EditorFor(model=>model.IsDCut);    
+    @Html.HiddenFor(model => model.DCut);   
+}else
+{ 
+    @Html.HiddenFor(model => model.IsDCut);    
+    @Html.HiddenFor(model => model.DCut);   
+}
+
+@Html.HiddenFor(model => model.ShowDCut)
+
 
 <div id ="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
 

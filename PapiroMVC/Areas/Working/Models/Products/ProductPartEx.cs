@@ -9,12 +9,15 @@ using PapiroMVC.Models.Resources.Products;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPart_MetaData))]
-    public partial class ProductPart 
+    public partial class ProductPart
     {
+
         public virtual void UpdateOpenedFormat()
         {
             this.FormatOpened = this.Format;
         }
+
+        public bool ShowDCut { get; set; }
 
         protected List<ProductPartsPrintableArticle> productPartPrintableArticles;
         public List<ProductPartsPrintableArticle> ProductPartsPrintableArticlePerView
@@ -22,13 +25,13 @@ namespace PapiroMVC.Models
             get
             {
                 if (productPartPrintableArticles == null)
-                { 
+                {
                     productPartPrintableArticles = this.ProductPartPrintableArticles.ToList();
                 }
                 return productPartPrintableArticles;
             }
 
-            set 
+            set
             {
                 productPartPrintableArticles = value;
                 ProductPartPrintableArticles = productPartPrintableArticles;
@@ -57,15 +60,15 @@ namespace PapiroMVC.Models
             }
 
         }
-          
-        #region Proprietà aggiuntive       
+
+        #region Proprietà aggiuntive
         public enum ProductPartType : int
         {
             ProductPartSingleSheet = 0,
             ProductPartCoverSheet = 1,
             ProductPartBookSheet = 2,
             ProductPartBlockSheet = 3,
-            ProductPartSinglePlotter  = 4,
+            ProductPartSinglePlotter = 4,
 
             ProductPartRigid = 5,
         }
@@ -80,9 +83,9 @@ namespace PapiroMVC.Models
         /// Formato peronalizzato, usato quando l'utente non trova il formato giusto nel DownBox
         /// </summary>
         protected String formatPersonalized;
-        public String FormatPersonalized 
+        public String FormatPersonalized
         {
-            get 
+            get
             {
                 return formatPersonalized;
             }

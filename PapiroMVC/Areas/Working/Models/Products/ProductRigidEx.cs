@@ -23,6 +23,10 @@ namespace PapiroMVC.Models
             var p = new ProductPartRigidArticle();
             var part = new ProductPartRigid();
 
+            part.DCut = DCut;
+            part.ShowDCut = ShowDCut;
+            part.IsDCut = false;
+
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
             ProductPartTask partTask;

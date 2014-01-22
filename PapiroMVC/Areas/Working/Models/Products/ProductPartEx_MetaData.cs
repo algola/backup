@@ -40,5 +40,14 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "FormatPersonalizedToolTip")]
         public string FormatPersonalized { get; set; }
 
+        [DisplayNameLocalized(typeof(ResProductPart), "DCut")]
+        [Tooltip(typeof(ResProductPart), "DCutToolTip")]
+        public Nullable<double> DCut { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPart), "IsDCut")]
+        [Tooltip(typeof(ResProductPart), "IsDCutToolTip")]
+        public Nullable<bool> IsDCut { get; set; }
+
+
     }
 }

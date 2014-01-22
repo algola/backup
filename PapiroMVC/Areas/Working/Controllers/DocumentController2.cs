@@ -545,8 +545,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             return invoice_table;
         }
 
-
-
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditEstimate(Estimate c)

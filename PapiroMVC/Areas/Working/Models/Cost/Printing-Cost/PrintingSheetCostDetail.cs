@@ -114,6 +114,7 @@ namespace PapiroMVC.Models
             {
                 this.ProductPartPrinting.Part = this.ProductPart;
                 this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
+                
                 this.ProductPartPrinting.Update();
             }
         }

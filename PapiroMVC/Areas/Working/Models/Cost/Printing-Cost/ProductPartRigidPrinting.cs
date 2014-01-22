@@ -25,7 +25,6 @@ namespace PapiroMVC.Models
             base.Update();
 
             ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartRigid)Part).SubjectNumber ?? 1;
-            ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).Quantity = this.CostDetail.TaskCost.DocumentProduct.Quantity??0;
 
             ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
             GainPartOnPrinting.CalculateGain();

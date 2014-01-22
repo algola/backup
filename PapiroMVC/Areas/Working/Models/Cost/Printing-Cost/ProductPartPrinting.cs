@@ -35,7 +35,7 @@ namespace PapiroMVC.Models
 
         public virtual void Update()
         {
-
+            
         }
 
         public ProductPartPrintingGain GainPartOnPrinting 
@@ -80,7 +80,5 @@ namespace PapiroMVC.Models
                 return format.GetSide1() * format.GetSide2() / 10000 * ( Part.SubjectNumber ?? 1);
             }
         }
-
     }
-
 }
