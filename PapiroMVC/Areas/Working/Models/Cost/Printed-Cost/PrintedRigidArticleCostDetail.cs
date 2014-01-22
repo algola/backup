@@ -53,7 +53,7 @@ namespace PapiroMVC.Models
 
             if (article.FromMinFormat != null)
             {
-                var to = article.FromMinFormat.GetSide1() * article.FromMinFormat.GetSide1();
+                var to = article.FromMinFormat.GetSide1() * article.FromMinFormat.GetSide1() / 10000;
                 ret = ret <= to ? to : ret;
             }
 
