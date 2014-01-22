@@ -49,7 +49,8 @@ namespace PapiroMVC.Validation
             {
                 Regex reg = new Regex(_valueToCompare.ToString(),RegexOptions.IgnoreCase);
                 if (value == null) value = "";
-                return reg.IsMatch(value.ToString());                       
+                var xxx=reg.IsMatch(value.ToString());
+                return xxx;                    
             }
             catch (Exception)
             {

@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MessaInMacchinaBookTest.cs" />
     <Compile Include="CreateProductTest.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PapiroMVC\PapiroMVC.csproj">

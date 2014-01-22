@@ -340,7 +340,7 @@ namespace PapiroMVC.Models.Resources.Account {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ^\S+\w{8,32}\S{1,}.
+        ///   Looks up a localized string similar to ^[a-zA-Z0-9]*$.
         /// </summary>
         public static string UserNameRegex {
             get {
