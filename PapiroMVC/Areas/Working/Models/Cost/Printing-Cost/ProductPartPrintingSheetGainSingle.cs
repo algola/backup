@@ -159,7 +159,7 @@ namespace PapiroMVC.Models
                     gr.PrintedSubjects = gr.PrintedShapes;
                 }
 
-                gr.CalculatedGain = gr.PrintedShapes / gr.PrintedSubjects;
+                gr.CalculatedGain = gr.PrintedShapes / SubjectNumber;
 
             }
             catch (Exception)

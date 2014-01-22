@@ -108,6 +108,8 @@
           <Property Name="Quantity" Type="double" />
           <Property Name="UnitCost" Type="char" MaxLength="20" />
           <Property Name="TotalCost" Type="char" MaxLength="20" />
+          <Property Name="ForceZero" Type="bit" />
+          <Property Name="Hidden" Type="bit" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -2111,6 +2113,8 @@
           <Property Type="String" Name="UnitCost" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TotalCost" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CostDetails" Relationship="dbModel.FK_costdetails_CodCost" FromRole="Cost" ToRole="costdetail" />
+          <Property Name="ForceZero" Type="Boolean" />
+          <Property Name="Hidden" Type="Boolean" />
         </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -3337,6 +3341,8 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="Hidden" ColumnName="Hidden" />
+                <ScalarProperty Name="ForceZero" ColumnName="ForceZero" />
                 <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
                 <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

@@ -29,6 +29,8 @@ namespace PapiroMVC.Models
         public Nullable<double> Quantity { get; set; }
         public string UnitCost { get; set; }
         public string TotalCost { get; set; }
+        public Nullable<bool> ForceZero { get; set; }
+        public Nullable<bool> Hidden { get; set; }
     
         public virtual DocumentProduct DocumentProduct { get; set; }
         public virtual ProductPartsPrintableArticle ProductPartsPrintableArticle { get; set; }

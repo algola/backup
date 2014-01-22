@@ -11,7 +11,7 @@ namespace PapiroMVC.Areas.Working.Controllers
     {
         public ActionResult Costs(GridSettings gridSettings, String codDocumentProduct)
         {
-            var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct);
+            var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct).Where(x=>!(x.Hidden??false));
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();

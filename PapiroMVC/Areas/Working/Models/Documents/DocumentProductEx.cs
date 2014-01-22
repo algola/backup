@@ -16,10 +16,10 @@ namespace PapiroMVC.Models
             double total = 0;
             foreach (var item in Costs)
             {
-               total += Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture);
+                total += !(item.ForceZero??false)?Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture):0;
             }
             TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
-            UnitPrice = ((total / Quantity??0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));
+            UnitPrice = ((total / Quantity??0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));        
         }
 
         #region Proprietà aggiuntive

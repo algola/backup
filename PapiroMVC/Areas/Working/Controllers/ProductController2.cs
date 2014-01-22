@@ -166,6 +166,12 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 cost = new Cost();
                                 cost.CodProductTask = productTask.CodProductTask;
                                 cost.Description = "***Lavorazione del prodotto";
+
+                                if (productTask.CodOptionTypeOfTask.Contains("_NO"))
+                                {
+                                    cost.Hidden = true;
+                                    cost.ForceZero = true;
+                                }
                                 documentProduct.Costs.Add(cost);
                             }
 
@@ -189,6 +195,12 @@ namespace PapiroMVC.Areas.Working.Controllers
                                     cost.CodProductPartTask = productPartTask.CodProductPartTask;
                                     cost.Description = productPartTask.ToString();
                                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+
+                                    if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                                    {
+                                        cost.Hidden = true;
+                                        cost.ForceZero = true;
+                                    }
 
                                     documentProduct.Costs.Add(cost);
                                 }

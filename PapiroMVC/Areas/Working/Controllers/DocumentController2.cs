@@ -180,10 +180,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 switch (cv.TypeOfCostDetail)
                 {
-
                     //if it is a printing... we have to 
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
-
 
                         if (cv.Computes.Count == 0)
                         {

@@ -102,6 +102,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costs", "UnitCost", SchemaDb.String, "20");
             dbS.AddColumnToTable("costs", "TotalCost", SchemaDb.String, "20");
 
+            //force to zero
+            dbS.AddColumnToTable("costs", "ForceZero", SchemaDb.Bool, "0");
+            //Hide
+            dbS.AddColumnToTable("costs", "Hidden", SchemaDb.Bool, "0");
+
+
         }
     }
 }
