@@ -15,9 +15,12 @@ namespace PapiroMVC.Models
         {
             var gain = (ProductPartPrintingSheetGain)GainPartOnPrinting;
 
+            gain.Pinza = this.CostDetail.TaskexEcutorSelected.Pinza;
+            gain.ControPinza = this.CostDetail.TaskexEcutorSelected.ControPinza;
+            gain.Laterale = this.CostDetail.TaskexEcutorSelected.Laterale;
+
             gain.LargerFormat = PrintingFormat;
             gain.SmallerFormat = Part.FormatOpened;
-
 
             if (gain.SmallerFormat == "" || gain.SmallerFormat == null)
             {

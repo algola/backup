@@ -43,25 +43,34 @@ namespace PapiroMVC.Models
         {
             MakereadyPrintingSingleSheet gr = new MakereadyPrintingSingleSheet();
 
+            Nullable<double> pinza = Pinza;
+            Nullable<double> controPinza = ControPinza;
+            Nullable<double> laterale = Laterale;
+
             var dCut = DCut ?? 0;
 
             try
             {
-                int gain1_1 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() + dCut) / (SmallerFormat.GetSide1() + dCut))));
-                int gain2_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide2() + dCut) / (SmallerFormat.GetSide2() + dCut))));
+                int gain1_1 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - controPinza + dCut) / (SmallerFormat.GetSide1() + dCut))));
+                int gain1_1ddp = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - pinza + dCut) / (SmallerFormat.GetSide1() + dCut))));
+                
+                int gain2_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide2() - laterale - laterale + dCut) / (SmallerFormat.GetSide2() + dCut))));
 
+                //TODO: controllare la pinza e doppia pinza!!!!!
                 int gain2_2Perf = (gain2_2 % 2) == 0 ? gain2_2 : gain2_2 - 1;
-                int gain1_1Perf = (gain1_1 % 2) == 0 ? gain1_1 : gain1_1 - 1;
+                int gain1_1Perf = (gain1_1ddp % 2) == 0 ? gain1_1ddp : gain1_1ddp - 1;
 
                 var gSideOnSide = gain1_1 * gain2_2;
                 var gSideOnSide16 = gain1_1 * gain2_2Perf;
                 var gSideOnSide12 = gain1_1Perf * gain2_2;
 
-                var gain1_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1()+dCut) / (SmallerFormat.GetSide2()+dCut))));
-                var gain2_1 = (int)decimal.Truncate(((decimal)((LargerFormat.GetSide2() + dCut) / (SmallerFormat.GetSide1() + dCut))));
+                var gain1_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - controPinza + dCut) / (SmallerFormat.GetSide2() + dCut))));
+                var gain1_2ddp = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - pinza + dCut) / (SmallerFormat.GetSide2() + dCut))));
+
+                var gain2_1 = (int)decimal.Truncate(((decimal)((LargerFormat.GetSide2() - laterale - laterale + dCut) / (SmallerFormat.GetSide1() + dCut))));
 
                 int gain2_1Perf = (gain2_1 % 2) == 0 ? gain2_1 : gain2_1 - 1;
-                int gain1_2Perf = (gain1_2 % 2) == 0 ? gain1_2 : gain1_2 - 1;
+                int gain1_2Perf = (gain1_2ddp % 2) == 0 ? gain1_2ddp : gain1_2ddp - 1;
 
                 var gSideNotSide = gain1_2 * gain2_1;
                 var gSideNotSide16 = gain1_2 * gain2_1Perf;

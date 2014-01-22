@@ -11,10 +11,13 @@ namespace PapiroMVC.Models
         //------------------------------------------------------------------------------------------------------------------------
         public string LargerFormat { get; set; }
 
+
+
+
         /// <summary>
         /// if is true system computes gain with Perfecting and put result in aspecific properties
         /// </summary>
-//        public bool UsePerfecting { get; set; }
+        //        public bool UsePerfecting { get; set; }
 
     }
 

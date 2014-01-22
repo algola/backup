@@ -7,6 +7,11 @@ namespace PapiroMVC.Models
 {
     public  abstract partial class ProductPartPrintingGain
     {
+
+        public Nullable<double> Pinza { get; set; }
+        public Nullable<double> ControPinza { get; set; }
+        public Nullable<double> Laterale { get; set; }
+
              
         //SETUPS
         //------------------------------------------------------------------------------------------------------------------------        
