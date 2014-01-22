@@ -151,6 +151,13 @@ namespace PapiroMVC.Models
                 if (subMolQta <= calculatedShape)
                 {
                     gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (subMolQta != 0 ? subMolQta : 1)) * (subMolQta != 0 ? subMolQta : 1);
+                    //se le quantità non superano le printed shape... allora limito le shape alle quantità
+
+                    if (gr.PrintedShapes > subMolQta)
+                    {
+                        gr.PrintedShapes = subMolQta;
+                    }
+
                     gr.PrintedSubjects = subMolQta;
                 }
                 else
