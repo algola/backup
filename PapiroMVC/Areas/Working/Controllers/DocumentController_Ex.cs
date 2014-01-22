@@ -132,7 +132,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {                       
                             a.CodDocument,
                             a.Customer,
-                            a.EstimateNumber.ToString(),
+                            a.EstimateNumber,
                             a.DocumentName,
                         }
                     }

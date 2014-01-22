@@ -3312,7 +3312,7 @@
     <Content Include="Images\png\64x64\.DS_Store" />
     <Content Include="Images\png\64x64\Thumbs.db" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
-    <None Include="Properties\PublishProfiles\FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\new.gestionestampa.com.pubxml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
