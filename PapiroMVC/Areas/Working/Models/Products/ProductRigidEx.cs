@@ -38,7 +38,7 @@ namespace PapiroMVC.Models
             ProductParts.Add(part);
 
         }
-        
+
         #region Error Handle
 
         private static readonly string[] proprietaDaValidare =
@@ -54,7 +54,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -150,6 +150,13 @@ namespace PapiroMVC.Models
             return tsksInPart;
         }
 
-    
+        public override string ToString()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProduct);
+            var s = (string)t.GetProperty("CodMenuProduct" + this.CodMenuProduct).GetValue(null, null);
+
+            return s + " " + base.ToString();
+        }
+
     }
 }

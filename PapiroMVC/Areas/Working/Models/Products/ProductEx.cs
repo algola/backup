@@ -170,7 +170,9 @@ namespace PapiroMVC.Models
                 pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
             }
 
-            return pParts + pTasks;
+            var sb = pParts + pTasks;
+            sb.ToString().TrimEnd('\r', '\n');
+            return sb;
 
         }
 

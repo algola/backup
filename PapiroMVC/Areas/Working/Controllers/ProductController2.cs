@@ -160,6 +160,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                             //ProductTask
                             //only code 
+                            //                            foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
                             foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
                             {
                                 cost = new Cost();
@@ -182,7 +183,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                                     documentProduct.Costs.Add(cost);
                                 }
 
-                                foreach (var productPartTask in productPart.ProductPartTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
+                                foreach (var productPartTask in productPart.ProductPartTasks)
                                 {
                                     cost = new Cost();
                                     cost.CodProductPartTask = productPartTask.CodProductPartTask;

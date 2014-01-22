@@ -236,7 +236,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
         /// <summary>
-        /// Pubòish error in a specific page
+        /// Publish error in a specific page
         /// </summary>
         /// <param name="id"></param>
         /// <param name="CodTaskExecutor"></param>
