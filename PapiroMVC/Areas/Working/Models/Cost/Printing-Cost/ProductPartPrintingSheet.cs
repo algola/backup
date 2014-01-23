@@ -14,10 +14,21 @@ namespace PapiroMVC.Models
         public override void Update()
         {
             var gain = (ProductPartPrintingSheetGain)GainPartOnPrinting;
+            TaskExecutor tsk;
 
-            gain.Pinza = this.CostDetail.TaskexEcutorSelected.Pinza;
-            gain.ControPinza = this.CostDetail.TaskexEcutorSelected.ControPinza;
-            gain.Laterale = this.CostDetail.TaskexEcutorSelected.Laterale;
+            try
+            {
+                tsk = this.CostDetail.TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == this.CostDetail.CodTaskExecutorSelected);
+                gain.Pinza = tsk.Pinza;
+                gain.ControPinza = tsk.ControPinza;
+                gain.Laterale = tsk.Laterale;
+            }
+            catch (Exception)
+            {
+                gain.Pinza = 0;
+                gain.ControPinza = 0;
+                gain.Laterale = 0;
+            }
 
             gain.LargerFormat = PrintingFormat;
             gain.SmallerFormat = Part.FormatOpened;
@@ -28,7 +39,7 @@ namespace PapiroMVC.Models
             }
 
             gain.Quantity = this.CostDetail.TaskCost.DocumentProduct.Quantity ?? 0;
-            gain.DCut = (Part.IsDCut??false)?Part.DCut:0;
+            gain.DCut = (Part.IsDCut ?? false) ? Part.DCut : 0;
 
             GainPartOnPrinting = gain;
         }

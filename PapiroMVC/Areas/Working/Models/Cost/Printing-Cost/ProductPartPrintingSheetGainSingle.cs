@@ -43,9 +43,9 @@ namespace PapiroMVC.Models
         {
             MakereadyPrintingSingleSheet gr = new MakereadyPrintingSingleSheet();
 
-            Nullable<double> pinza = Pinza;
-            Nullable<double> controPinza = ControPinza;
-            Nullable<double> laterale = Laterale;
+            double pinza = Pinza??0;
+            double controPinza = ControPinza??0;
+            double laterale = Laterale??0;
 
             var dCut = DCut ?? 0;
 
