@@ -312,39 +312,40 @@
 
     $('#NewProductCommand_NewProduct')
         .on("keypress", function (e) {
-        /* ENTER PRESSED*/
-        if (e.keyCode == 13) {
-            alert("pasqualino");
+            /* ENTER PRESSED*/
+            if (e.keyCode == 13) {
 
-            var datastring = $("#documentForm").serialize();
+                var datastring = $("#documentForm").serialize();
 
-            alert(datastring);
-            //at firt time save estimate or
-            $.ajax({
-                type: "POST",
-                url: "@(Url.Action("NewProductCurrentEstimate", "Document"))",
-                data: datastring,
-                success: function (data) {
-                    if (data.redirectUrl) {
-                        hideProcessingMsg();
-                        // if the server returned a JSON object containing an url 
-                        // property we redirect the browser to that url
-                        window.location.href = data.redirectUrl;
+                //at firt time save estimate or
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("NewProductCurrentEstimate", "Document"))",
+                    data: datastring,
+                    success: function (data) {
+                        if (data.redirectUrl) {
+                            hideProcessingMsg();
+                            // if the server returned a JSON object containing an url
+                            // property we redirect the browser to that url
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            if (data.error) {
+                                $('#NewProductCommand_NewProduct').val("");
+                            }
+                        }
+
+                        return;
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                        $('#status2').html(xhr);
                     }
-                    return;
+                });
 
-                return;
-            },
-            error: function (xhr) {
-                alert('error');
-                $('#status').html(xhr);
+
+
+                return false;
             }
         });
-
-
-
-            return false;
-        }
-    });
 
 </script>

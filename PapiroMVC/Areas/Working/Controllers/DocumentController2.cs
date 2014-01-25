@@ -586,7 +586,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-
         [HttpParamAction]
         public ActionResult NewProductCurrentEstimate(Estimate c)
         {
@@ -617,7 +616,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
             else
             {
-                return PartialView("_NewProductCommand", c);
+                return Json(new { error = true });
             }
 
         }
