@@ -236,6 +236,7 @@
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
     <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\NewProductCommand_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx_MetaData.cs" />
@@ -324,6 +325,7 @@
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\EstimateEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductCommand.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductRigidEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
@@ -801,6 +803,12 @@
     </Compile>
     <Compile Include="Models\Resources\MenuProduct\ResMenuProduct.Designer.cs">
       <DependentUpon>ResMenuProduct.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResNewMenuProductCommand.Designer.cs">
+      <DependentUpon>ResNewMenuProductCommand.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
@@ -3229,6 +3237,7 @@
     <Content Include="Areas\Working\Views\Shared\_MenuCurrentEstimate.cshtml" />
     <Content Include="Areas\Account\Views\Account\ResultPending.cshtml" />
     <Content Include="Areas\Account\Views\Account\PendingAmm.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_NewProductCommand.cshtml" />
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -3471,6 +3480,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResMenuProduct.Designer.cs</LastGenOutput>
       <CustomToolNamespace>PapiroMVC.Models.Resources.MenuProduct</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResNewMenuProductCommand.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResNewMenuProductCommand.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>PapiroMVC.Models.Resources.Products</CustomToolNamespace>
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

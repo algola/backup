@@ -124,6 +124,11 @@ namespace PapiroMVC.Areas.Working.Controllers
                             cv = costDetailRepository.GetSingle(id);
                             cost = documentRepository.GetCost(id);
                             break;
+                        case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
+                            id = cv.ComputedBy.CodCostDetail;
+                            cv = costDetailRepository.GetSingle(id);
+                            cost = documentRepository.GetCost(id);
+                            break;
                         case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
                             break;
                         default:
@@ -220,7 +225,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return Json(new { redirectUrl = Url.Action("Error", new { id = "NoTaskEstimatedOnException", taskExecutor = e.Data["TaskExecutor"] }) }, JsonRequestBehavior.AllowGet);
             }
 
-            var idRet = (string)Session["idProduct"];
+            var idRet = (string)Session["codProduct"];
 
             if (idRet != null)
             {
@@ -244,7 +249,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             if (id == "NoTaskEstimatedOnException")
             {
                 ViewBag.TaskExecutor = taskExecutor;
-                return View(id,taskExecutor);
+                return View(id, taskExecutor);
             }
 
             return View(id);
@@ -267,7 +272,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult EditDocumentProducts(string id)
         {
             //id is needed for return after edit
-            Session["idProduct"] = id;
+            Session["codProduct"] = id;
 
             var docProd = documentRepository.GetDocumentProductByCodProduct(id);
             var prod = productRepository.GetSingle(id);
@@ -334,7 +339,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return RedirectToAction("HttpError404", "Error", new { area = "" });
             }
         }
-        
+
 
         [HttpGet]
         public ActionResult EditLastEstimate()
@@ -348,7 +353,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
                 ViewBag.ActionMethod = "EditEstimate";
-                return View("EditEstimate",prod);
+                return View("EditEstimate", prod);
             }
 
             return new HttpNotFoundResult("****Errore non trovato");
@@ -578,6 +583,80 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return PartialView("_MenuNewProduct");
             else
                 return null;
+        }
+
+
+
+        [HttpParamAction]
+        public ActionResult NewProductCurrentEstimate(Estimate c)
+        {
+            MenuProduct[] menuProd = menu.GetAll().ToArray();
+            string strings = "~/Views/Shared/Strings";
+
+            foreach (var item in menuProd)
+            {
+                var name = (string)HttpContext.GetLocalResourceObject(strings, "CodMenuProduct" + item.CodMenuProduct);
+                item.Name = name;
+
+                if (name == "")
+                {
+                    Console.WriteLine();
+                }
+            }
+
+            var filteredItems = menuProd.Where(
+                item => item.Name.IndexOf(c.NewProductCommand.NewProduct, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var sel = filteredItems.FirstOrDefault();
+
+            if (sel != null)
+            {               
+                var est = Session["CodDocument"]!=null?Session["CodDocument"]:newEstimate();
+                return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
+            }
+            else
+            {
+                return PartialView("_NewProductCommand", c);
+            }
+
+        }
+
+        [HttpParamAction]
+        public ActionResult NewProductNewEstimate(NewProductCommand c)
+        {
+            MenuProduct[] menuProd = menu.GetAll().ToArray();
+            string strings = "~/Views/Shared/Strings";
+
+            foreach (var item in menuProd)
+            {
+                var name = (string)HttpContext.GetLocalResourceObject(strings, "CodMenuProduct" + item.CodMenuProduct);
+                item.Name = name;
+
+                if (name == "")
+                {
+                    Console.WriteLine();
+                }
+            }
+
+
+            var filteredItems = menuProd.Where(
+                item => item.Name.IndexOf(c.NewProduct, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var sel = filteredItems.FirstOrDefault();
+
+            if (sel != null)
+            {
+                var est = newEstimate();
+
+                return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new {id=sel.CodMenuProduct}) });
+            }
+            else
+            {
+                return PartialView("_NewProductCommand", c);
+            }
+
         }
 
         public ActionResult MenuNewEstimate()

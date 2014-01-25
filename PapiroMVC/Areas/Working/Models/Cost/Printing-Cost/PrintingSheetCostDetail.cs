@@ -7,16 +7,30 @@ namespace PapiroMVC.Models
 {
     public partial class PrintingSheetCostDetail : PrintingCostDetail
     {
-
         public List<Cut> Cuts
         {
             get
             {
+                List<Cut> y;
+
+                //task executor corrente
                 var tsk = TaskExecutors.Where(it => it.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();
 
-                var y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, tsk.FormatMin);
-                List<Cut> x = new List<Cut>();
+                //sperimentale potrebbe essere inserita nella procedura anche il controllo della doppia pinza, etc...
+                if (SheetCut.IsValid(tsk.FormatMax, ProductPart.FormatOpened, tsk.FormatMin))
+                {
+                    //i tagli che vanno bene nel formato minimo e massimo
+                    y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, tsk.FormatMin);
+                }
+                else
+                {
+                    //i tagli che vanno bene nel formato minimo e formato lavoro
+                    y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, ProductPart.FormatOpened);
+                }
 
+
+                //ma solo quelli validi
+                List<Cut> x = new List<Cut>();
                 x = y.Where(k => k.Valid).ToList();
 
                 if (PrintingFormat != null && PrintingFormat != "")
@@ -103,6 +117,10 @@ namespace PapiroMVC.Models
             //la lettura della proprietà Cuts ricalcola il PrintingFormat!!!!
             var fake = this.Cuts;
 
+
+            //i formati di stampa devono essere condizionati anche dal formato del lavoro da stampare
+            //dalla pinza e dalla contropinza e laterale!!!!
+
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 1;
@@ -114,7 +132,7 @@ namespace PapiroMVC.Models
             {
                 this.ProductPartPrinting.Part = this.ProductPart;
                 this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
-                
+
                 this.ProductPartPrinting.Update();
             }
         }

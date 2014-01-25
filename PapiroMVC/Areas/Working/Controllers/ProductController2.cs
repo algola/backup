@@ -145,11 +145,18 @@ namespace PapiroMVC.Areas.Working.Controllers
                     DocumentProduct documentProduct;
                     Cost cost;
 
+                    DocumentProduct firstDocumentProduct = null;
+
                     foreach (var qtsitem in qts)
                     {
                         if (qtsitem != 0)
                         {
                             documentProduct = new DocumentProduct();
+                            //use first document product to lead each tecnical choice
+                            if (firstDocumentProduct == null)
+                            {
+                                firstDocumentProduct = documentProduct;
+                            }
                             documentProduct.CodProduct = product.CodProduct;
                             documentProduct.ProductName = product.ProductName;
                             documentProduct.Quantity = qtsitem;
@@ -210,8 +217,24 @@ namespace PapiroMVC.Areas.Working.Controllers
                     documentRepository.Edit(document);
                     documentRepository.Save();
 
+
+                    //OK questo funziona ma riporta alla lista dei costi
                     //TODO: Sending singlaR notification to client to reload basket product
-                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
+                    //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
+
+                    if (firstDocumentProduct.Costs.FirstOrDefault() != null)
+                    {
+                        Session["codProduct"] = document.DocumentProducts.LastOrDefault().CodProduct;
+
+                        return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
+                    }
+                    else
+                    {
+                        return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
+                    }
+
+
+
                 }
                 catch (Exception ex)
                 {

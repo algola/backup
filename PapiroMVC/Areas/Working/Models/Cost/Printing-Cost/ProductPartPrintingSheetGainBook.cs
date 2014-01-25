@@ -34,7 +34,7 @@ namespace PapiroMVC.Models
         public byte MaxSignature { get; set; }
         public bool Signature { get; set; }
 
-        public override void CalculateGain()        
+        public override void CalculateGain()
         {
             if (Makereadies == null)
             {
@@ -46,9 +46,11 @@ namespace PapiroMVC.Models
 
             try
             {
-                while (PageToPrint > 0)
+                bool noPrinted = false;
+                while (PageToPrint > 0 && !noPrinted)
                 {
                     var res = this.CalculateShapeOnBuyingFormat();
+                    noPrinted = (((MakereadyPrintingBookSheet)res).PrintedPages == 0);
                     this.Makereadies.Add(res);
                     PageToPrint -= ((MakereadyPrintingBookSheet)res).PrintedPages ?? PageToPrint;
                 }
@@ -86,7 +88,7 @@ namespace PapiroMVC.Models
                 var gSideNotSide16 = gain1_2 * gain2_1Perf;
                 var gSideNotSide12 = gain1_2Perf * gain2_1;
 
-                if (!(UsePerfecting??false))
+                if (!(UsePerfecting ?? false))
                 {
                     ret.TypeOfPerfecting = "";
 
@@ -151,26 +153,40 @@ namespace PapiroMVC.Models
                         }
                     }
                 }
-               
+
                 var calculatedShape = MaxShape != 0 ? Math.Min((ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0), MaxShape ?? ((ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0))) : (ret.ShapeOnSide1 ?? 0) * (ret.ShapeOnSide2 ?? 0);
 
-                //4 pages per shape
 
-                //se le pagine da stampare sono meno delle pagine che possono starci su un foglio
-                if (PageToPrint <= calculatedShape * 4)
+                if (calculatedShape != 0)
                 {
-                    ret.PrintablePages = (int)decimal.Truncate(calculatedShape * 4 / (PageToPrint != 0 ? PageToPrint : 4)) * (PageToPrint != 0 ? PageToPrint : 4);
-                    ret.PrintedPages = PageToPrint;
-                    ret.CalculatedGain = ret.PrintablePages / ret.PrintedPages;
+                    //4 pages per shape
+
+                    //se le pagine da stampare sono meno delle pagine che possono starci su un foglio
+                    if (PageToPrint <= calculatedShape * 4)
+                    {
+                        ret.PrintablePages = (int)decimal.Truncate(calculatedShape * 4 / (PageToPrint != 0 ? PageToPrint : 4)) * (PageToPrint != 0 ? PageToPrint : 4);
+                        ret.PrintedPages = PageToPrint;
+                        ret.CalculatedGain = ret.PrintablePages / ret.PrintedPages;
+                    }
+                    else
+                    {
+                        ret.PrintablePages = calculatedShape * 4;
+                        ret.PrintedPages = ret.PrintablePages;
+                        ret.CalculatedGain = 1;
+                    }
+
+                    ret.UpdateSignatures();
+
+
                 }
                 else
                 {
-                    ret.PrintablePages = calculatedShape * 4;
-                    ret.PrintedPages = ret.PrintablePages;
-                    ret.CalculatedGain = 1;
-                }
+                    ret.SideOnSide = true;
+                    ret.ShapeOnSide1 = 0;
+                    ret.ShapeOnSide2 = 0;
+                    ret.PrintedPages = 0;
 
-                ret.UpdateSignatures();
+                }
 
             }
             catch (Exception)

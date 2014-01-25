@@ -4,6 +4,8 @@ using System.Web.Mvc;
 using PapiroMVC.Models;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
+using Resources;
+using System.Resources;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
@@ -11,7 +13,7 @@ namespace PapiroMVC.Areas.Working.Controllers
     {
         public ActionResult Costs(GridSettings gridSettings, String codDocumentProduct)
         {
-            var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct).Where(x=>!(x.Hidden??false));
+            var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct).Where(x => !(x.Hidden ?? false));
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -98,7 +100,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
             return q;
         }
-
 
         public ActionResult EstimateList(GridSettings gridSettings)
         {
@@ -237,6 +238,42 @@ namespace PapiroMVC.Areas.Working.Controllers
             };
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// AutoComplete
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult NewProductAutoComplete(string term)
+        {
+            MenuProduct[] menuProd = menu.GetAll().ToArray();
+
+            string strings = "~/Views/Shared/Strings";
+
+            foreach (var item in menuProd)
+            {
+                var name = (string)HttpContext.GetLocalResourceObject(strings, "CodMenuProduct" + item.CodMenuProduct);
+                item.Name = name;
+
+                if (name=="")
+                {
+                    Console.WriteLine();
+                }
+            }
+
+            var filteredItems = menuProd.Where(
+            item => item.Name.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.Name,
+                                 label = art.Name,
+                                 value = art.Name
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
     }

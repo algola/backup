@@ -10,14 +10,17 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(MenuProduct_MetaData))]
     public partial class MenuProduct
     {
+
+        public string Name { get; set; }
+
         public bool IsSelected
         {
             get;
             set;
-        } 
+        }
     }
 
-//Order By 
+    //Order By 
     public struct MyStruct
     {
         public String CodCategory { get; set; }

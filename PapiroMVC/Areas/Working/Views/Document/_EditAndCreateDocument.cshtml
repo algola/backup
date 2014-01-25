@@ -1,13 +1,22 @@
 ﻿@model PapiroMVC.Models.Document
 @using PapiroMVC.Validation
+@using PapiroMVC.Models
+
 
 @{
     string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
     string strings = "~/Areas/Working/Views/Document/Strings";
 
-    string url = Url.Action("CustomerSupplierList", new {onlyCustomer=true, controller = "CustomerSupplier", area = "DataBase" });
+    string url = Url.Action("CustomerSupplierList", new { onlyCustomer = true, controller = "CustomerSupplier", area = "DataBase" });
 
     var pageMessage = Html.T(strings, "LeavingPageMsg");
+
+
+    if (Model.NewProductCommand == null)
+    {
+        Model.NewProductCommand = new NewProductCommand();
+    }
+
 }
 
 <div id="status">
@@ -45,21 +54,33 @@
 
                 @Html.ValidationSummary(true)
 
-                <div class="controls col-sm-9">
-                    <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
-                </div>
+                <p>
+                    <div class="well no-padding-left no-padding-rigth">
+                        <div class="controls col-sm-9">
+                            <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+                        </div>
+                        @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
+                        @Html.HiddenFor(model => model.CodDocument)
+                        @Html.AlgolaEditorFor(model => model.DateDocument)
+                        @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
+                        @Html.HiddenFor(model => model.Notes)
 
-                @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
-                @Html.HiddenFor(model => model.CodDocument)
-                @Html.AlgolaEditorFor(model => model.DateDocument)
-                @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
-                @Html.HiddenFor(model => model.Notes)
+                        @Html.AlgolaEditorFor(model => model.EstimateNumber)
+                        @Html.HiddenFor(model => model.TimeStampTable)
 
-                @Html.AlgolaEditorFor(model => model.EstimateNumber)
-                @Html.HiddenFor(model => model.TimeStampTable)
+                        @Html.HiddenFor(model => model.CodCustomer)
 
-                @Html.HiddenFor(model => model.CodCustomer)
+                        @Scripts.Render("~/bundles/autocomplete")
+                    </div>
 
+                    @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
+                    {
+                        <div id="status2">
+                            @Html.AlgolaAutocompleteFor(model => model.NewProductCommand.NewProduct, "NewProductAutoComplete", "Document")
+                        </div>
+                    }
+
+                </p>
             </div>
 
 
@@ -89,6 +110,8 @@
 </div>
 
 <script type="text/javascript">
+
+
 
     function estimateOpenxml() {
 
@@ -144,11 +167,9 @@
 
     var lastSel = -1;
 
-
     $(document).ready(
 
         function () {
-
 
             $('textarea').autosize({ append: "\n" });
             $('#DateDocument').datepicker({ dateFormat: "dd/mm/yy" });
@@ -204,8 +225,6 @@
     $("#staticDialog").on('click', function (e) {
         e.preventDefault();
 
-
-
         window.onbeforeunload = function () {
             return "@pageMessage";
         };
@@ -259,23 +278,73 @@
     }
 
 
-    $('input[name=Customer]').change(function () {
-        window.onbeforeunload = function () {
-            return "@pageMessage";
-        };
+    $('input[name=Customer]')
+           .focusout(function () {
+               save();
+           })
+            .change(function () {
+                window.onbeforeunload = function () {
+                    return "@pageMessage";
+                };
+            });
+
+    $('input[name=DateDocument]')
+       .focusout(function () {
+           save();
+       })
+       .change(function () {
+           alert("cha");
+           window.onbeforeunload = function () {
+               return "@pageMessage";
+           };
+       });
+
+    $('input[name=DocumentName]')
+           .focusout(function () {
+               save();
+           })
+        .change(function () {
+            window.onbeforeunload = function () {
+                return "@pageMessage";
+            };
+        });
+
+
+    $('#NewProductCommand_NewProduct')
+        .on("keypress", function (e) {
+        /* ENTER PRESSED*/
+        if (e.keyCode == 13) {
+            alert("pasqualino");
+
+            var datastring = $("#documentForm").serialize();
+
+            alert(datastring);
+            //at firt time save estimate or
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("NewProductCurrentEstimate", "Document"))",
+                data: datastring,
+                success: function (data) {
+                    if (data.redirectUrl) {
+                        hideProcessingMsg();
+                        // if the server returned a JSON object containing an url 
+                        // property we redirect the browser to that url
+                        window.location.href = data.redirectUrl;
+                    }
+                    return;
+
+                return;
+            },
+            error: function (xhr) {
+                alert('error');
+                $('#status').html(xhr);
+            }
+        });
+
+
+
+            return false;
+        }
     });
 
-    $('input[name=DateDocument]').change(function () {
-        window.onbeforeunload = function () {
-            return "@pageMessage";
-        };
-    });
-
-    $('input[name=DocumentName]').change(function () {
-        window.onbeforeunload = function () {
-            return "@pageMessage";
-        };
-    });
-
-    
 </script>

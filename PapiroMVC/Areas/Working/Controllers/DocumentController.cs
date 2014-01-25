@@ -140,17 +140,27 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View("EditDocument", c);
         }
 
-        [HttpParamAction]
-        [HttpGet]
-        public ActionResult CreateEstimate()
+
+        private Estimate newEstimate()
         {
             var c = new Estimate();
             c.CodDocument = documentRepository.GetNewCode(c);
             c.EstimateNumber = documentRepository.GetNewEstimateNumber(c);
+            c.DateDocument = DateTime.Now;
             documentRepository.Add(c);
             documentRepository.Save();
             Session["CodDocument"] = c.CodDocument;
 
+            return c;
+        }
+
+
+
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateEstimate()
+        {
+            var c = newEstimate();
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditEstimate";
             return View("EditEstimate", c);

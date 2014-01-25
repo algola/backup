@@ -1,0 +1,34 @@
+﻿@model PapiroMVC.Models.NewProductCommand
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+
+    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        @Html.AlgolaAutocompleteFor(model => model.NewProduct, "NewProductAutoComplete", "Document");
+        
+        <br />
+        <p>
+            <button class="default btn btn-primary" type="submit" name="NewProductNewEstimate">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+        </p>
+
+    }
+
+</div>

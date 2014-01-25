@@ -1,6 +1,7 @@
 ﻿@using Mvc.HtmlHelpers
 @using MvcContrib.UI.Grid
 @using PapiroMVC.Validation
+@using PapiroMVC.Models
 
 
 @{
@@ -24,7 +25,7 @@
 </p>
 <div class="vspace"></div>
 <p>
-....
+    @Html.Partial("_NewProductCommand",new NewProductCommand())
 </p>
 
 @Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
@@ -43,11 +44,18 @@
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+
 }
 
 @section specificPluginScript {
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
 }
 
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}

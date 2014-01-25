@@ -106,7 +106,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             d.Product = c;
 
             d.Quantities.Add(0);
-            d.Quantities.Add(0);
+        
+            //              d.Quantities.Add(0);
             //            d.Quantities.Add(0);
             //            d.Quantities.Add(0);
 
