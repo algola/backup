@@ -3,7 +3,7 @@
 @model PapiroMVC.Models.PrintingSheetCostDetail
 
 @{
-    
+
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsCod = "~/Views/Shared/Cuts";
 
@@ -13,7 +13,7 @@
 }
 
 <div id="sheetCostDetail">
-    <h3 class="header smaller lighter green">F.to acquisto supporto stampa</h3>
+    <h3 class="header smaller lighter green">***F.to acquisto supporto stampa</h3>
 
     <div class="control-group">
         <div class="controls col-sm-9">
@@ -23,40 +23,40 @@
         <canvas id="buyingSheet" width="500" height="170"></canvas>
     </div>
 
-<div class="space"></div>
-<h3 class="header smaller lighter green">Montaggio</h3>
+    <div class="space"></div>
+    <h3 class="header smaller lighter green">***Montaggio</h3>
 
-<div class="control-group">
-    <div class="controls col-sm-9">
-        @Html.DropDownListFor(y => y.PrintingFormat,
+    <div class="control-group">
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor(y => y.PrintingFormat,
                 new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat" })
+        </div>
     </div>
-</div>
-@Html.AlgolaEditorFor(y => y.ProductPart.Format)
+    @Html.AlgolaEditorFor(y => y.ProductPart.Format)
 
-<canvas id="printingSingleSheet" width="500" height="170"></canvas>
-<div id="partialPrinting">
-    @if (Model.ProductPartPrinting != null)
-    {
-        switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
+    <canvas id="printingSingleSheet" width="500" height="170"></canvas>
+    <div id="partialPrinting">
+        @if (Model.ProductPartPrinting != null)
         {
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
-                Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
-                Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
-                Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartRigidPrinting:
-                Html.RenderPartial("_ProductPartRigidPrinting", Model.ProductPartPrinting);
-                break;
-            default:
-                break;
+            switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
+            {
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
+                    Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
+                    Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
+                    Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartRigidPrinting:
+                    Html.RenderPartial("_ProductPartRigidPrinting", Model.ProductPartPrinting);
+                    break;
+                default:
+                    break;
+            }
         }
-    }
-</div>
+    </div>
 
 </div>
 
@@ -221,6 +221,9 @@
         drawPrintingFormat(context, side1pr, side2pr, offsetX, offsetY, zoom, sideOnSide, gain1, gain2);
 
         drawPrintingAndSheet();
+
+        alert("_PrintingSheetCostDetail");
+        save();
 
     }
 

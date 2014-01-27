@@ -7,6 +7,8 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     //Prendo il titolo dal menù
     ViewBag.Title = Html.T(strings, "EditCost");
+
+    string url = Url.Action("Costs", "Document", new { codDocumentProduct = Model.TaskCost.CodDocumentProduct });
 }
 
 @section title{
@@ -16,6 +18,17 @@
 @section description{
     @Html.T(strings, "EditCostDesc")
 }
+
+<div id="dialog" title="***Basic dialog">
+
+    <table id="costGrid@(Model.TaskCost.CodDocumentProduct)">
+        <tr>
+            <td />
+        </tr>
+    </table>
+    <div id="pagerCostGrid(@Model.TaskCost.CodDocumentProduct)"></div>
+</div>
+
 
 <h3 class="header smaller lighter green">Macchina da stampa / lavorazione</h3>
 <div class="control-group">
@@ -32,18 +45,17 @@
             Html.RenderPartial("_PrintingSheetCostDetail", Model);
             break;
 
-            @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
-                    break;
-                case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
-                    break;
-                case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
-                    break;
-            *@          default:
+    @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
+            break;
+        case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+            break;
+        case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
+            break;
+    *@          default:
             break;
     }}
 
 </div>
-
 
 <p>
     <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
@@ -67,12 +79,13 @@
             type: 'GET',
             datatype: 'json',
             success: function (result) {
-                if (result.redirectUrl) {
-                    hideProcessingMsg();
-                    // if the server returned a JSON object containing an url
-                    // property we redirect the browser to that url
-                    window.location.href = result.redirectUrl;
-                }
+                //if (result.redirectUrl) {
+                //    hideProcessingMsg();
+                //    // if the server returned a JSON object containing an url
+                //    // property we redirect the browser to that url
+                //    window.location.href = result.redirectUrl;
+                reloadGrid();
+                //                }
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -83,6 +96,62 @@
             }
         });
     }
+</script>
+
+<script>
+
+    $(function () {
+        var offset = $("#dialog").offset();
+        var topPadding = 50;
+
+        $("#dialog").stop().animate({
+            marginTop: $(window).scrollTop() - offset.top + topPadding
+        });
+
+        $(window).scroll(function () {
+            $("#dialog").stop().animate({
+                marginTop: $(window).scrollTop() - offset.top + topPadding
+            });
+        });
+    })
+
+</script>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var lastSel = -1;
+
+        var myGrid = $("#costGrid@(Model.TaskCost.CodDocumentProduct)").jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: true },
+                    { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true },
+                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 70, align: 'right', editable: true },
+                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false },
+                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: false },
+                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false }],
+
+            pager: '#pagercostGrid@(Model.TaskCost.CodDocumentProduct)',
+
+            rowNum: 100,
+            rowList: [100, 200, 500],
+            viewrecords: true,
+            autowidth: true,
+            width: 650,
+
+        });
+
+        myGrid.jqGrid('navGrid', '#pagercostGrid@(Model.TaskCost.CodDocumentProduct)', { edit: false, add: false, del: false, search: false });
+
+    });
+
+    function reloadGrid() {
+        $("#costGrid@(Model.TaskCost.CodDocumentProduct)").trigger("reloadGrid");
+    }
+
 </script>
 
 
@@ -130,6 +199,16 @@
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+
+    <style type="text/css">
+        #dialog {
+            width: 350px;
+            float: right;
+            background: #fff;
+            padding: 10px;
+        }
+    </style>
+
 }
 
 @section specificPluginScript {

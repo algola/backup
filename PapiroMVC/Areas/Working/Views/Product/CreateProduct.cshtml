@@ -12,7 +12,7 @@
     //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
     List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"]; // ViewBag.MenuProd;
     TempData.Keep("MenuProd");
-    
+
     var theMenuItem = menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault();
 
     //add all task in page
@@ -25,7 +25,7 @@
 
 @section description{
     @ViewBag.Title
-        @* @Html.T(strings, "CreateProductDesc")*@
+    @* @Html.T(strings, "CreateProductDesc")*@
 }
 
 @Html.Partial("_EditAndCreateProduct", Model)
@@ -53,10 +53,22 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
+
+<div id="dialog" title="Basic dialog">
+    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+
+
 <script>
     $(function () {
         document.getElementById("newProductSlidebar").className = "active open";
         document.getElementById("CodCat@(theMenuItem.CodCategory)").className = "active open";
         document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
     });
+
+
+    $(function () {
+        $("#dialog").dialog();
+    });
+
 </script>
