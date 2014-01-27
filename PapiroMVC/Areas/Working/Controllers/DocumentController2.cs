@@ -48,7 +48,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpPost]
         public ActionResult ChangeProductPartFormatFormatInPrintingSheetCostDetail(string format)
         {
-
             PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
 
             if (ModelState.IsValid)

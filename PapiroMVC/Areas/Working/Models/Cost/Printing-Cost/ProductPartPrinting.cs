@@ -6,16 +6,11 @@ using System.Web;
 namespace PapiroMVC.Models
 {
 
-
-
     /// <summary>
     /// Get PrintingFormat and calculating gain on this Format based on specifit type
     /// </summary>
     public partial class ProductPartPrinting
     {
-
-
-
         public enum ProductPartPrintingType : int
         {
             ProductPartSingleSheetPrinting = 0,

@@ -19,7 +19,7 @@
     @Html.T(strings, "EditCostDesc")
 }
 
-<div id="dialog" title="***Basic dialog">
+<div id="dialog" title="***Basic dialog" class="span4">
 
     <table id="costGrid@(Model.TaskCost.CodDocumentProduct)">
         <tr>
@@ -58,15 +58,16 @@
 </div>
 
 <p>
-    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditDocumentProducts", "Document", new { Area = "Working", id=Model.TaskCost.DocumentProduct.CodProduct})');">
         <i class="icon-undo bigger-125"></i>
-        @Html.T(strings, "Cancel")
+        @Html.T(strings, "Back")
     </button>
-
+@*
     <button class="default btn btn-primary" onclick="Javascrip:save()" name="@ViewBag.ActionMethod">
         <i class="icon-save bigger-160"></i>
         @Html.T(strings, "Save")
     </button>
+*@
 </p>
 
 <script type="text/javascript">
@@ -89,6 +90,7 @@
             },
 
             error: function (XMLHttpRequest, textStatus, errorThrown) {
+
                 var msg = JSON.parse(XMLHttpRequest.responseText);
                 alert('@Url.Action("Error","Home",new {Area=""})/' + msg.View);
                 window.location.href = '@Url.Action("Error","Home",new {Area=""})/' + msg.View;

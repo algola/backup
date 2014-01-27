@@ -3324,13 +3324,6 @@
     <Content Include="Images\png\64x64\Thumbs.db" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\new.gestionestampa.com.pubxml" />
-    <Content Include="Web x db server.config" />
-    <Content Include="Web x db server.Debug.config">
-      <DependentUpon>Web x db server.config</DependentUpon>
-    </Content>
-    <Content Include="Web x db server.Release.config">
-      <DependentUpon>Web x db server.config</DependentUpon>
-    </Content>
     <Content Include="Images\accent.png" />
     <Content Include="Images\aspNetHome.png" />
     <Content Include="Images\bullet.png" />
@@ -3357,7 +3350,7 @@
     <Content Include="Areas\Account\Views\Account\Register.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Error_.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditRollPrintableArticle.cshtml" />
@@ -3928,8 +3921,6 @@
     <Content Include="Views\Home\Payment.cshtml" />
     <Content Include="Views\Home\PaymentResult.cshtml" />
     <Content Include="Areas\Account\Views\Account\Pending.cshtml" />
-    <Content Include="Views\Error\HttpError403.cshtml" />
-    <Content Include="Views\Error\HttpError404.cshtml" />
     <Content Include="Views\Shared\NotFoundResException.cshtml" />
     <Content Include="Views\Shared\NotImplementedException.cshtml" />
     <Content Include="Web.config" />
@@ -3939,6 +3930,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\ErrorCust.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

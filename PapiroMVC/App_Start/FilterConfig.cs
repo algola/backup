@@ -16,10 +16,11 @@ namespace PapiroMVC
                 View = "NotImplementedException"
             }, 1);
 
-            filters.Add(new CustomHandleErrorAttribute()
+            filters.Add(new CustomHandleErrorAttribute
             {
-                View = "Error"
-            }, 2);
+                ExceptionType = typeof(Exception),
+                View = "ErrorCust"
+            }, 1);
 
             filters.Add(new CustomHandleErrorAttribute
             {

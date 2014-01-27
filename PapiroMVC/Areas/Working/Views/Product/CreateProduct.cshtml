@@ -53,12 +53,6 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-
-<div id="dialog" title="Basic dialog">
-    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
-
-
 <script>
     $(function () {
         document.getElementById("newProductSlidebar").className = "active open";
@@ -66,9 +60,5 @@
         document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
     });
 
-
-    $(function () {
-        $("#dialog").dialog();
-    });
 
 </script>

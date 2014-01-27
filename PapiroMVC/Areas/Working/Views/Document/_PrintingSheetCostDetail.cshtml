@@ -20,7 +20,7 @@
             @Html.DropDownListFor(y => y.BuyingFormat,
                 new SelectList(Model.BuyingFormats), new { id = "ddBuyingFormat" })
         </div>
-        <canvas id="buyingSheet" width="500" height="170"></canvas>
+        <canvas id="buyingSheet" width="300" height="170"></canvas>
     </div>
 
     <div class="space"></div>
@@ -35,7 +35,7 @@
 
     @Html.AlgolaEditorFor(y => y.ProductPart.Format, new { id = "ddPartFormat" })
 
-    <canvas id="printingSingleSheet" width="500" height="170"></canvas>
+    <canvas id="printingSingleSheet" width="300" height="170"></canvas>
     <div id="partialPrinting">
         @if (Model.ProductPartPrinting != null)
         {
