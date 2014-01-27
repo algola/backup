@@ -8,12 +8,16 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(ProductPartsPrintableArticle_MetaData))]
-    public abstract partial class ProductPartsPrintableArticle 
+    public abstract partial class ProductPartsPrintableArticle
     {
+        #region Proprietà aggiuntive
+
+        public virtual bool IsInList(IQueryable<Article> arts)
+        {
+            throw new Exception();
+        }
 
 
-        #region Proprietà aggiuntive       
-     
         public enum TypeOfProductPartsPrintableArticleType : int
         {
             ProductPartSheetArticle = 0,
@@ -34,7 +38,7 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color;            
+            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color;
         }
 
     }

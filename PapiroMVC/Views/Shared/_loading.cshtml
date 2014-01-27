@@ -64,8 +64,8 @@
     });
 
     function showProcessingMsg() {
-        //spinner.spin();
-        //        $('#loadingIndicator').show();
+    //    alert('pronti');
+        clearValidationErrors();
     }
 
     function hideProcessingMsg() {
@@ -73,10 +73,17 @@
         //        $('#loadingIndicator').hide();
     }
 
+
+    function clearValidationErrors() {
+        $('.validation-summary-errors').html('');
+        $('.input-validation-error').removeClass('input-validation-error');
+        $('.field-validation-error').remove();
+    }
+
     function OnSuccess(result) {
         if (result.redirectUrl) {
             hideProcessingMsg();
-            // if the server returned a JSON object containing an url 
+            // if the server returned a JSON object containing an url
             // property we redirect the browser to that url
             window.location.href = result.redirectUrl;
         }

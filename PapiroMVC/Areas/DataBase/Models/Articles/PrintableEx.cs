@@ -12,7 +12,7 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(Printable_MetaData))]
     abstract public partial class Printable : Article
     {
-       
+
         #region Added Properties
 
         #endregion

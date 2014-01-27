@@ -1055,7 +1055,9 @@
     <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
     <Compile Include="Validation\AutorizeUserAttrbute.cs" />
     <Compile Include="Validation\Class1.cs" />
+    <Compile Include="Validation\Error\CustomHandleErrorAttribute.cs" />
     <Compile Include="Validation\Error\NoSupplierException.cs" />
+    <Compile Include="Validation\Error\NotFoundException.cs" />
     <Compile Include="Validation\Error\NoTaskExecutorException.cs" />
     <Compile Include="Validation\Error\NoTaskEstimatedOnException.cs" />
     <Compile Include="Validation\ObjectCopier.cs" />
@@ -3229,8 +3231,8 @@
     <Content Include="Areas\Working\Views\Document\ListEstimate.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\DigitalOnRun.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStepBW.cshtml" />
-    <Content Include="Areas\Working\Views\Document\NoTaskEstimatedOnException.cshtml" />
-    <Content Include="Areas\Working\Views\Document\NoTaskExecutorException.cshtml" />
+    <Content Include="Views\Shared\NoTaskEstimatedOnException.cshtml" />
+    <Content Include="Views\Shared\NoTaskExecutorException.cshtml" />
     <Content Include="Areas\Working\Views\Document\EditEstimate.cshtml" />
     <Content Include="Areas\Working\Views\Shared\_MenuNewProduct.cshtml" />
     <Content Include="Areas\Working\Views\Shared\_MenuNewEstimate.cshtml" />
@@ -3322,12 +3324,12 @@
     <Content Include="Images\png\64x64\Thumbs.db" />
     <None Include="Properties\PublishProfiles\asp.net discount.pubxml" />
     <None Include="Properties\PublishProfiles\new.gestionestampa.com.pubxml" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web x db server.config" />
+    <Content Include="Web x db server.Debug.config">
+      <DependentUpon>Web x db server.config</DependentUpon>
     </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web x db server.Release.config">
+      <DependentUpon>Web x db server.config</DependentUpon>
     </Content>
     <Content Include="Images\accent.png" />
     <Content Include="Images\aspNetHome.png" />
@@ -3928,6 +3930,15 @@
     <Content Include="Areas\Account\Views\Account\Pending.cshtml" />
     <Content Include="Views\Error\HttpError403.cshtml" />
     <Content Include="Views\Error\HttpError404.cshtml" />
+    <Content Include="Views\Shared\NotFoundResException.cshtml" />
+    <Content Include="Views\Shared\NotImplementedException.cshtml" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\uploads\" />

@@ -12,12 +12,13 @@ using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using PapiroMVC.Validation.Error;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
 
-    [HandleError]
+  //  [CustomHandleErrorAttribute(ExceptionType = typeof(NotImplementedException), View = "Error2")]
     [AuthorizeUser]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
@@ -47,6 +48,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             costDetailRepository.SetDbName(CurrentDatabase);
 
             ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+            TempData["MenuProd"] = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
 
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto

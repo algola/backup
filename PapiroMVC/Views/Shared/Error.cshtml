@@ -8,3 +8,24 @@
     <h1 class="error">Error.</h1>
     <h2 class="error">An error occurred while processing your request.</h2>
 </hgroup>
+
+@section title{
+    Errore
+}
+
+@section description{
+    *segnalato allo staff
+}
+
+
+@if (Model != null)
+{
+    <h3>@Model.Exception.GetType().Name</h3>
+    <pre>
+        @Model.Exception.ToString()
+    </pre>
+    <p>
+        thrown in @Model.ControllerName @Model.ActionName
+    </p>
+    </p>
+}

@@ -22,6 +22,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IProductRepository productRepository;
         private readonly IDocumentRepository documentRepository;
         private readonly ITypeOfTaskRepository typeOfTaskRepository;
+        private readonly IArticleRepository articleRepository;
+
 
         protected dbEntities db;
 
@@ -32,7 +34,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.SetDbName(CurrentDatabase);
             productRepository.SetDbName(CurrentDatabase);
             ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+            TempData["MenuProd"] = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
             typeOfTaskRepository.SetDbName(CurrentDatabase);
+            articleRepository.SetDbName(CurrentDatabase);
 
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
@@ -53,7 +57,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             IMenuProductRepository _menuProduct,
             IProductTaskNameRepository _productTaskName,
             IFormatsNameRepository _formatsName,
-            IDocumentRepository _documentRepository
+            IDocumentRepository _documentRepository,
+                     IArticleRepository _articleRepository
+
             )
         {
             formatsRepository = _formatsName;
@@ -62,6 +68,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             typeOfTaskRepository = _typeOfTaskRepository;
             productRepository = _productRepository;
             documentRepository = _documentRepository;
+            articleRepository = _articleRepository;
+
         }
 
 
@@ -106,7 +114,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             d.Product = c;
 
             d.Quantities.Add(0);
-        
+
             //              d.Quantities.Add(0);
             //            d.Quantities.Add(0);
             //            d.Quantities.Add(0);

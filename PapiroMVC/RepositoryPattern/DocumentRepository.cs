@@ -13,19 +13,21 @@ namespace Services
     {
         public Cost GetCost(string codCost)
         {
-            return Context.Costs.Include("ProductPartTask.OptionTypeOfTask")
+            var c=  Context.Costs.Include("ProductPartTask.OptionTypeOfTask")
                 .Include("ProductPartTask")
                 .Include("ProductTask.OptionTypeOfTask")
                 .Include("ProductPartTask.ProductPart")
                 .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles")
                 .Include("ProductPartTask.ProductPart.ProductPartPrintableArticles.Costs")
-                .Include("ProductPartsPrintableArticle")
-                .Include("ProductPartsPrintableArticle.ProductPart")
-                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks")
-                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks.OptionTypeOfTask")
-                .Include("ProductPartsPrintableArticle.ProductPart.ProductPartTasks.Costs")
-
                 .Include("ProductTask").Where(x => x.CodCost == codCost).FirstOrDefault();
+
+
+            c.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.Include("ProductPart")
+                .Include("ProductPart.ProductPartTasks")
+                .Include("ProductPart.ProductPartTasks.OptionTypeOfTask")
+                .Include("ProductPart.ProductPartTasks.Costs").Where(x => x.CodProductPartPrintableArticle == c.CodProductPartPrintableArticle).FirstOrDefault();
+
+            return c;
         }
 
         public IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct)

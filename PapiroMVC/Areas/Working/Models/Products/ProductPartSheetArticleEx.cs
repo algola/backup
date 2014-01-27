@@ -11,6 +11,19 @@ namespace PapiroMVC.Models
     public partial class ProductPartSheetArticle : ProductPartsPrintableArticle, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
+        public override bool IsInList(IQueryable<Article> arts)
+        {
+            var sel = arts.OfType<Printable>();
+            var cont = (sel.Where(c => c.NameOfMaterial == this.NameOfMaterial &&
+                c.TypeOfMaterial == this.TypeOfMaterial &&
+                c.Weight == this.Weight &&
+                c.Color == this.Color).Count());
+
+            return (cont > 0);
+
+        }
+
+
         public ProductPartSheetArticle()
         {
             TypeOfProductPartsPrintableArticle = TypeOfProductPartsPrintableArticleType.ProductPartSheetArticle;
@@ -22,7 +35,7 @@ namespace PapiroMVC.Models
             return base.ToString();
         }
 
-        #region Proprietà aggiuntive  
+        #region Proprietà aggiuntive
 
         #endregion
 
@@ -42,7 +55,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get

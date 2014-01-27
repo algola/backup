@@ -90,7 +90,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             try
             {
-
                 if (cv == null)
                 {
                     if (cost.CodProductPartPrintableArticle != null)
@@ -100,8 +99,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         var productPart = cost.ProductPartsPrintableArticle.ProductPart;
                         var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
 
-                        cost = task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP);
-
+                        cost = documentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
                     }
 
                     cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
@@ -178,52 +176,52 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult SaveCostDetail()
         {
             CostDetail cv = (CostDetail)Session["CostDetail"];
-            try
+            //try
+            //{
+            var pPart = cv.ProductPart;
+            //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
+
+            switch (cv.TypeOfCostDetail)
             {
-                var pPart = cv.ProductPart;
-                //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
+                //if it is a printing... we have to 
+                case CostDetail.CostDetailType.PrintingSheetCostDetail:
 
-                switch (cv.TypeOfCostDetail)
-                {
-                    //if it is a printing... we have to 
-                    case CostDetail.CostDetailType.PrintingSheetCostDetail:
-
-                        if (cv.Computes.Count == 0)
+                    if (cv.Computes.Count == 0)
+                    {
+                        var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+                        List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
+                        foreach (var item in x)
                         {
-                            var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
-                            List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
-                            foreach (var item in x)
-                            {
-                                item.ComputedBy = cv;
-                                item.InitCostDetail(null, articleRepository.GetAll());
-                                //item.UpdateCost();
-                                //item.GetCostFromList(articleRepository.GetAll());
-                                costDetailRepository.Add(item);
-                            }
+                            item.ComputedBy = cv;
+                            item.InitCostDetail(null, articleRepository.GetAll());
+                            //item.UpdateCost();
+                            //item.GetCostFromList(articleRepository.GetAll());
+                            costDetailRepository.Add(item);
                         }
+                    }
 
-                        costDetailRepository.Add(cv);
-                        costDetailRepository.Save();
+                    costDetailRepository.Add(cv);
+                    costDetailRepository.Save();
 
-                        //aggiorna il costo rigenerando prima i coefficienti
-                        UpdateCost(cv.CodCost);
+                    //aggiorna il costo rigenerando prima i coefficienti
+                    UpdateCost(cv.CodCost);
 
-                        break;
-                    case CostDetail.CostDetailType.PrintingRollCostDetail:
-                        break;
+                    break;
+                case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    break;
 
-                    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                        break;
-                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                        break;
-                    default:
-                        break;
-                }
+                case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+                    break;
+                case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                    break;
+                default:
+                    break;
             }
-            catch (NoTaskEstimatedOnException e)
-            {
-                return Json(new { redirectUrl = Url.Action("Error", new { id = "NoTaskEstimatedOnException", taskExecutor = e.Data["TaskExecutor"] }) }, JsonRequestBehavior.AllowGet);
-            }
+            //}
+            //catch (NoTaskEstimatedOnException e)
+            //{
+            //    return Json(new { redirectUrl = Url.Action("Error", new { id = "NoTaskEstimatedOnException", taskExecutor = e.Data["TaskExecutor"] }) }, JsonRequestBehavior.AllowGet);
+            //}
 
             var idRet = (string)Session["codProduct"];
 
@@ -235,24 +233,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
             }
-        }
-
-
-        /// <summary>
-        /// Publish error in a specific page
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="CodTaskExecutor"></param>
-        /// <returns></returns>
-        public ActionResult Error(string id, TaskExecutor taskExecutor, string codTypeOfTask)
-        {
-            if (id == "NoTaskEstimatedOnException")
-            {
-                ViewBag.TaskExecutor = taskExecutor;
-                return View(id, taskExecutor);
-            }
-
-            return View(id);
         }
 
         [HttpParamAction]
@@ -319,25 +299,18 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditEstimate(string id)
         {
-            try
+            Session["CodDocument"] = id;
+            var prod = documentRepository.GetSingle(id);
+
+            if (prod == null)
             {
-                Session["CodDocument"] = id;
-                var prod = documentRepository.GetSingle(id);
-
-                if (prod == null)
-                {
-                    throw new NullReferenceException();
-                }
-
-                //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-                ViewBag.ActionMethod = "EditEstimate";
-                return View(prod);
-
+                throw new NotFoundResException();
             }
-            catch (NullReferenceException)
-            {
-                return RedirectToAction("HttpError404", "Error", new { area = "" });
-            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditEstimate";
+            return View(prod);
+
         }
 
 
@@ -610,8 +583,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             var sel = filteredItems.FirstOrDefault();
 
             if (sel != null)
-            {               
-                var est = Session["CodDocument"]!=null?Session["CodDocument"]:newEstimate();
+            {
+                var est = Session["CodDocument"] != null ? Session["CodDocument"] : newEstimate();
                 return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }
             else
@@ -649,7 +622,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 var est = newEstimate();
 
-                return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new {id=sel.CodMenuProduct}) });
+                return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }
             else
             {

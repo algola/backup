@@ -4,7 +4,7 @@
 @{
     string strings = "~/Views/Shared/Strings";
     List<MenuProduct> menuProd = ViewBag.MenuProd;
-    var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
+    var categories = menuProd != null ? menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList() : null;
 
     List<MenuProduct> selectedMenuProd;
     

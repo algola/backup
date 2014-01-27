@@ -14,6 +14,7 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(RigidPrintableArticle_MetaData))]
     public partial class RigidPrintableArticle : Printable
     {
+
         public RigidPrintableArticle()
         {
             this.TypeOfArticle = Article.ArticleType.RigidPrintableArticle;

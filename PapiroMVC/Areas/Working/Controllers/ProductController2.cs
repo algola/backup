@@ -120,6 +120,18 @@ namespace PapiroMVC.Areas.Working.Controllers
                 }
             }
 
+            //CHECK IF EACH PRINTABLE ARTICLE IS IN LIST
+            foreach (var item in product.ProductParts)
+            {
+                foreach (var pArticle in item.ProductPartPrintableArticles)
+                {
+                    if (!pArticle.IsInList(articleRepository.GetAll()))
+                    { 
+                        ModelState.AddModelError("PersError", "ProductPartPrintableArticleListError");
+                    }
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 try
@@ -209,7 +221,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                                         cost.ForceZero = true;
                                     }
 
-                                    documentProduct.Costs.Add(cost);
+                                    documentProduct.Costs.Add(cost);                                
+                                
                                 }
                             }
                         }

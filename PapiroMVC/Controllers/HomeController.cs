@@ -7,8 +7,20 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Controllers
 {
-    public class HomeController : ControllerAlgolaBase
+    public class HomeController : ControllerAlgolaBase    
     {
+        
+        /// <summary>
+        /// Publish error in a specific page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="CodTaskExecutor"></param>
+        /// <returns></returns>
+        public ActionResult Error(string id)
+        {
+            return View(id);
+        }
+
 
         [Authorize]
         public ActionResult Payment()

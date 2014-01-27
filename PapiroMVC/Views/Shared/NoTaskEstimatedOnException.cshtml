@@ -1,0 +1,30 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@using PapiroMVC.Validation
+
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    ViewBag.Title = "Errore durante una richiesta ad una funzione non ancora implementata";
+}
+
+
+@section title{
+    Errore
+}
+
+@section description{
+    @Html.T(strings, "NoTaskEstimatedOnExceptionDesc")
+}
+
+<h2>Possibili cause</h2>
+<ul>
+    <li>
+        @Html.T(strings, "NoTaskEstimatedOnExceptionDesc")
+    </li>
+</ul>
+
+<div class="vspace-12"></div>
+
+
+        Nella sezione "anagrafica" impostarne un costo relativo alla macchina/risorsa che si vuole usare.
+

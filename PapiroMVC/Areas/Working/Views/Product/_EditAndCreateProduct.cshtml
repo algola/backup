@@ -3,32 +3,42 @@
 
 @{
     string strings = "~/Areas/Working/Views/Product/Strings";
-    ViewBag.FormatsName = Model.Product.FormatsName.ToList();    
+    ViewBag.FormatsName = Model.Product.FormatsName.ToList();
+
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }
+
 }
 
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "Product", new AjaxOptions { 
-        UpdateTargetId = "status", 
-        OnBegin = "showProcessingMsg", 
-        OnComplete = "hideProcessingMsg", 
-        OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Action", "Product", new AjaxOptions
+    {
+        UpdateTargetId = "status",
+        OnBegin = "showProcessingMsg",
+        OnComplete = "hideProcessingMsg",
+        OnSuccess = "OnSuccess"
+    }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
 
         for (int i = 0; i < Model.Quantities.Count; i++)
-        {            
-        <div class="control-group">
-            @Html.LabelFor(model => model.Quantities, new { @class = "col-sm-3 control-label no-padding-right" })
-            <div class="controls col-sm-9">
-                @Html.EditorFor(model => model.Quantities[i])
+        {
+            <div class="control-group">
+                @Html.LabelFor(model => model.Quantities, new { @class = "col-sm-3 control-label no-padding-right" })
+                <div class="controls col-sm-9">
+                    @Html.EditorFor(model => model.Quantities[i])
+                </div>
             </div>
-        </div>            
         }
 
-        @Html.EditorFor(x => x.Product)
-    
+        <div class="well no-padding-left no-padding-right">
+            @Html.EditorFor(x => x.Product)
+        </div>
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
                 <i class="icon-undo bigger-125"></i>

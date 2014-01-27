@@ -10,11 +10,13 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
 
     //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
-    List<MenuProduct> menuP = ViewBag.MenuProd;
+    List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"]; // ViewBag.MenuProd;
+    TempData.Keep("MenuProd");
+    
     var theMenuItem = menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault();
 
     //add all task in page
-    Session.Add("TsksInPage", Model.Product.TsksInPage);    
+    Session.Add("TsksInPage", Model.Product.TsksInPage);
 }
 
 @section title{
@@ -22,7 +24,8 @@
 }
 
 @section description{
-    @Html.T(strings, "CreateProductDesc")
+    @ViewBag.Title
+        @* @Html.T(strings, "CreateProductDesc")*@
 }
 
 @Html.Partial("_EditAndCreateProduct", Model)

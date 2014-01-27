@@ -4,7 +4,9 @@
 @{
     
     string strings = "~/Views/Shared/Strings";
-    List<MenuProduct> menuProd = ViewBag.MenuProd;
+    //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
+    List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"]; // ViewBag.MenuProd;
+    TempData.Keep("MenuProd");
     var categories = menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList();
 
     List<MenuProduct> selectedMenuProd;

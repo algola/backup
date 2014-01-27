@@ -5,30 +5,64 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
 }
 
-<div id="status">
+<div id="status" class="well no-padding-right">
 
+    <h4 class="green smaller lighter">
+        @Html.T(strings, "NewEstimate")
+    </h4>
     @Scripts.Render("~/bundles/autocomplete")
 
-    @using (Ajax.BeginForm("Action", "Document", new AjaxOptions
-{
-    UpdateTargetId = "status",
-    OnBegin = "showProcessingMsg",
-    OnComplete = "hideProcessingMsg",
-    OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Action", "Document", FormMethod.Post, new { @class = "form-horizontal", @id = "newProductForm" }))
     {
-        @Html.ValidationSummary(true)
-
         @Html.AlgolaAutocompleteFor(model => model.NewProduct, "NewProductAutoComplete", "Document");
-        
-        <br />
-        <p>
-            <button class="default btn btn-primary" type="submit" name="NewProductNewEstimate">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-        </p>
-
     }
 
 </div>
+
+
+<script>
+
+    $(document).ready(
+
+    function () {
+
+        $("#NewProduct").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+
+                var datastring = $("#newProductForm").serialize();
+
+                //at firt time save estimate or
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("NewProductNewEstimate", "Document"))",
+                    data: datastring,
+                    success: function (data) {
+                        if (data.redirectUrl) {
+                            hideProcessingMsg();
+                            // if the server returned a JSON object containing an url
+                            // property we redirect the browser to that url
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            if (data.error) {
+                                $('#NewProduct').val("");
+                            }
+                        }
+
+                        return;
+                    },
+                    error: function (xhr) {
+                        alert('error');
+                        $('#status2').html(xhr);
+                    }
+                });
+
+
+
+                return false;
+            }
+        });
+
+    });
+
+</script>

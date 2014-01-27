@@ -27,35 +27,35 @@
 
 <div id="partial">
     @{switch (Model.TypeOfCostDetail)
-      {
-          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
-              Html.RenderPartial("_PrintingSheetCostDetail", Model);
-              break;
-              
-@*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
-              break;
-          case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
-              break;
-          case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
-              break;
-*@          default:
-              break;
-      }}
+    {
+        case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
+            Html.RenderPartial("_PrintingSheetCostDetail", Model);
+            break;
+
+            @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
+                    break;
+                case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+                    break;
+                case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
+                    break;
+            *@          default:
+            break;
+    }}
 
 </div>
 
 
-        <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
-                <i class="icon-undo bigger-125"></i>
-                @Html.T(strings, "Cancel")
-            </button>
+<p>
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "Product", new { Area = "Working" })');">
+        <i class="icon-undo bigger-125"></i>
+        @Html.T(strings, "Cancel")
+    </button>
 
-            <button class="default btn btn-primary" onclick="Javascrip:save()" name="@ViewBag.ActionMethod">
-                <i class="icon-save bigger-160"></i>
-                @Html.T(strings, "Save")
-            </button>
-        </p>
+    <button class="default btn btn-primary" onclick="Javascrip:save()" name="@ViewBag.ActionMethod">
+        <i class="icon-save bigger-160"></i>
+        @Html.T(strings, "Save")
+    </button>
+</p>
 
 <script type="text/javascript">
     function save() {
@@ -69,12 +69,18 @@
             success: function (result) {
                 if (result.redirectUrl) {
                     hideProcessingMsg();
-                    // if the server returned a JSON object containing an url 
+                    // if the server returned a JSON object containing an url
                     // property we redirect the browser to that url
                     window.location.href = result.redirectUrl;
                 }
             },
-            error: function () { alert('something bad happened'); }
+
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                var msg = JSON.parse(XMLHttpRequest.responseText);
+                alert('@Url.Action("Error","Home",new {Area=""})/' + msg.View);
+                window.location.href = '@Url.Action("Error","Home",new {Area=""})/' + msg.View;
+                return;
+            }
         });
     }
 </script>
@@ -92,7 +98,7 @@
             //data are collected into
             var dataToPass = {
                 codTaskExecutor: codTaskExecutor,
-                codCost:'@(Model.TaskCost.CodCost)'
+                codCost: '@(Model.TaskCost.CodCost)'
             };
 
             $.ajax({
@@ -117,7 +123,7 @@
 </script>
 
 @*
-@Html.Partial("_EditAndCreateDocument", Model)
+    @Html.Partial("_EditAndCreateDocument", Model)
 *@
 
 @section specificPlugInStyle {

@@ -195,4 +195,7 @@
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
   </data>
+  <data name="ProductPartPrintableArticleListError" xml:space="preserve">
+    <value>Il materiale da lavorare non è stato trovato in anagrafica</value>
+  </data>
 </root>
