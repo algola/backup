@@ -29,6 +29,7 @@ namespace PapiroMVC.Models
         
 //        [Required(ErrorMessageResourceType = typeof(ResProductPart), ErrorMessageResourceName = "RequiredField")]
         [DisplayNameLocalized(typeof(ResProductPart), "Format")]
+        [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]        
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
        

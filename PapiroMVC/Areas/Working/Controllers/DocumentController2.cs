@@ -35,11 +35,39 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeBuyingFormatInPrintingSheetCostDetail(string BuyingFormat)
+        public ActionResult ChangeBuyingFormatInPrintingSheetCostDetail(string buyingFormat)
         {
             PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
-            cv.BuyingFormat = BuyingFormat;
-            cv.PrintingFormat = BuyingFormat;
+            cv.BuyingFormat = buyingFormat;
+            cv.PrintingFormat = buyingFormat;
+            cv.Update();
+            Session["CostDetail"] = cv;
+            return PartialView("_PrintingSheetCostDetail", cv);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeProductPartFormatFormatInPrintingSheetCostDetail(string format)
+        {
+
+            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
+
+            if (ModelState.IsValid)
+            {
+                var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
+                var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
+               
+                prodPart.Format = format;
+                if (TryValidateModel(prodPart))
+                {
+                    productRepository.Edit(prod);
+                    productRepository.Save();
+
+                    cv.ProductPart.Format = format;
+                    cv.ProductPart.UpdateOpenedFormat();
+                }
+            
+            }
+
             cv.Update();
             Session["CostDetail"] = cv;
             return PartialView("_PrintingSheetCostDetail", cv);

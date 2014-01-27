@@ -169,6 +169,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$.
+        /// </summary>
+        public static string FormatValidation {
+            get {
+                return ResourceManager.GetString("FormatValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to formato non valido.
+        /// </summary>
+        public static string FormatValidationError {
+            get {
+                return ResourceManager.GetString("FormatValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spaziatura tra Soggeti.
         /// </summary>
         public static string IsDCut {

@@ -13,7 +13,7 @@
     List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"]; // ViewBag.MenuProd;
     TempData.Keep("MenuProd");
 
-    var theMenuItem = menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault();
+    var theMenuItem = menuP != null ? menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault() : null;
 
     //add all task in page
     Session.Add("TsksInPage", Model.Product.TsksInPage);

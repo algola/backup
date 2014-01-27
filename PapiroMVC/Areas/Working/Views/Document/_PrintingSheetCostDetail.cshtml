@@ -32,7 +32,8 @@
                 new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat" })
         </div>
     </div>
-    @Html.AlgolaEditorFor(y => y.ProductPart.Format)
+
+    @Html.AlgolaEditorFor(y => y.ProductPart.Format, new { id = "ddPartFormat" })
 
     <canvas id="printingSingleSheet" width="500" height="170"></canvas>
     <div id="partialPrinting">
@@ -62,33 +63,61 @@
 
 <script type="text/javascript">
 
-    $("#ddBuyingFormat").change(function () {
+    $("#ProductPart_Format").keypress(function (event) {
+        if (event.which == 13) {
+            event.preventDefault();
 
-        var buyingFormat = "";
-        $("#ddBuyingFormat option:selected").each(function () {
-            buyingFormat += $(this)[0].value;
-        });
+            //data are collected into
+            var dataToPass = {
+                format: $("#ProductPart_Format").val()
+            };
 
-        //data are collected into
-        var dataToPass = {
-            buyingFormat: buyingFormat,
-        };
+            $.ajax({
+                url: '@(Url.Action("ChangeProductPartFormatFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#sheetCostDetail').html(data);
+                    reloadFormat();
+                },
+                error: function () {
+                    alert("error");
+                },
 
-        $.ajax({
-            url: '@(Url.Action("ChangeBuyingFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
-            type: 'POST',
-            data: JSON.stringify(dataToPass),
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
-                $('#sheetCostDetail').html(data);
-                reloadFormat();
-            },
-            error: function () {
-                alert("error");
-            },
-
-        });
+            });
+        }
     });
+
+
+
+        $("#ddBuyingFormat").change(function () {
+
+            var buyingFormat = "";
+            $("#ddBuyingFormat option:selected").each(function () {
+                buyingFormat += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                buyingFormat: buyingFormat,
+            };
+
+            $.ajax({
+                url: '@(Url.Action("ChangeBuyingFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#sheetCostDetail').html(data);
+                    reloadFormat();
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+        });
 
 </script>
 
@@ -221,8 +250,6 @@
         drawPrintingFormat(context, side1pr, side2pr, offsetX, offsetY, zoom, sideOnSide, gain1, gain2);
 
         drawPrintingAndSheet();
-
-        alert("_PrintingSheetCostDetail");
         save();
 
     }

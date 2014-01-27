@@ -205,7 +205,7 @@ namespace PapiroMVC.Models
                 {
                     item2.CodProductPart = item.CodProductPart;
                     item2.TimeStampTable = DateTime.Now;
-                    item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString();
+                    item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString().PadLeft(3, '0');
                 }
 
                 //articoli della parte del prodotto
@@ -214,7 +214,7 @@ namespace PapiroMVC.Models
                 {
                     item2.CodProductPart = item.CodProductPart;
                     item2.TimeStampTable = DateTime.Now;
-                    item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString();
+                    item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString().PadLeft(3, '0');
                 }
 
             }
@@ -223,7 +223,7 @@ namespace PapiroMVC.Models
             var pt = this.ProductTasks.ToList();
             foreach (var item in this.ProductTasks)
             {
-                item.CodProductTask = this.CodProduct + "-" + pt.IndexOf(item).ToString();
+                item.CodProductTask = this.CodProduct + "-" +  (pt.IndexOf(item).ToString()).PadLeft(3,'0');
                 item.CodProduct = this.CodProduct;
                 item.TimeStampTable = DateTime.Now;
             }

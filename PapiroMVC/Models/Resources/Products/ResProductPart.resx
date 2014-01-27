@@ -153,6 +153,12 @@
   <data name="FormatToolTip" xml:space="preserve">
     <value>Formato chiuso del lavoro finito</value>
   </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FormatValidationError" xml:space="preserve">
+    <value>formato non valido</value>
+  </data>
   <data name="IsDCut" xml:space="preserve">
     <value>Spaziatura tra Soggeti</value>
   </data>
