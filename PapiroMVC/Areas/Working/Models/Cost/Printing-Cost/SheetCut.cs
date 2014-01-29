@@ -117,7 +117,7 @@ namespace PapiroMVC.Models
 
         public static List<Cut> Cuts()
         {
-            return cuts.Values.ToList();
+            return cuts.Values.OrderByDescending(x=>x.CutName).ToList();
         }
 
         public static bool IsValid(string maxFormat, string minFormat, string ftoRes)

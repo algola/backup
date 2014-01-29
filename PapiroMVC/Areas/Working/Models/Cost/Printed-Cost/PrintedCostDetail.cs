@@ -28,6 +28,8 @@ namespace PapiroMVC.Models
         {
             base.UpdateCoeff();
 
+            Error = ComputedBy.Error;
+
             Starts = 1;
             //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
             GainForRun = (double)(this.ComputedBy.GainForRunForPrintableArticle / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1));

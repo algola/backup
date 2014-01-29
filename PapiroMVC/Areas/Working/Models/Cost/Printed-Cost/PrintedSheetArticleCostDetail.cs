@@ -38,6 +38,11 @@ namespace PapiroMVC.Models
 
         public override double UnitCost(double qta)
         {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
             //voglio visualizzare il costo al foglio
 
             if (Convert.ToDouble(CostPerKg) != 0)

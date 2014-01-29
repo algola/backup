@@ -3,7 +3,11 @@
 
 @{
     string strings = "~/Views/Shared/Strings";
-    List<MenuProduct> menuProd = ViewBag.MenuProd;
+
+
+    //Load menu product
+    Html.Action("LoadMenuProduct", "Product", new { area = "Working" });
+    List<MenuProduct> menuProd = (List<MenuProduct>) TempData["MenuProd"];//ViewBag.MenuProd;
     var categories = menuProd != null ? menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList() : null;
 
     List<MenuProduct> selectedMenuProd;

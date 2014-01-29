@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PapiroMVC.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -25,9 +26,11 @@ namespace PapiroMVC.Models
 
             try
             {
-                while (SubjectNumber > 0)
+                bool zero = false;
+                while (SubjectNumber > 0 && !zero)
                 {
                     var res = this.CalculateShapeOnBuyingFormat();
+                    zero = ((((MakereadyPrintingSingleSheet)res).PrintedSubjects??0)==0);
                     this.Makereadies.Add(res);
                     SubjectNumber -= ((MakereadyPrintingSingleSheet)res).PrintedSubjects ?? SubjectNumber;
                 }
@@ -43,9 +46,9 @@ namespace PapiroMVC.Models
         {
             MakereadyPrintingSingleSheet gr = new MakereadyPrintingSingleSheet();
 
-            double pinza = Pinza??0;
-            double controPinza = ControPinza??0;
-            double laterale = Laterale??0;
+            double pinza = Pinza ?? 0;
+            double controPinza = ControPinza ?? 0;
+            double laterale = Laterale ?? 0;
 
             var dCut = DCut ?? 0;
 
@@ -53,7 +56,7 @@ namespace PapiroMVC.Models
             {
                 int gain1_1 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - controPinza + dCut) / (SmallerFormat.GetSide1() + dCut))));
                 int gain1_1ddp = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - pinza - pinza + dCut) / (SmallerFormat.GetSide1() + dCut))));
-                
+
                 int gain2_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide2() - laterale - laterale + dCut) / (SmallerFormat.GetSide2() + dCut))));
 
                 //TODO: controllare la pinza e doppia pinza!!!!!
@@ -144,6 +147,12 @@ namespace PapiroMVC.Models
 
                 var calculatedShape = MaxShape != 0 ? Math.Min((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0), MaxShape ?? ((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0))) : (gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0);
 
+
+                if(calculatedShape == 0)
+                {
+                    throw new ZeroGainException();
+                }
+
                 //if (SubjectNumber <= calculatedShape)
                 //{
                 //    gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (SubjectNumber != 0 ? SubjectNumber : 1)) * (SubjectNumber != 0 ? SubjectNumber : 1);
@@ -178,13 +187,14 @@ namespace PapiroMVC.Models
                 gr.CalculatedGain = gr.PrintedShapes / SubjectNumber;
 
             }
-            catch (Exception)
+            catch (ZeroGainException)
             {
                 gr.SideOnSide = true;
                 gr.ShapeOnSide1 = 0;
                 gr.ShapeOnSide2 = 0;
                 gr.PrintedSubjects = 0;
-                throw new Exception();
+                gr.CalculatedGain = 0;
+                gr.PrintedShapes = 0;
             }
             return gr;
         }

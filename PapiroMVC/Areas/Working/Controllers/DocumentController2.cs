@@ -54,7 +54,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
                 var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
-               
+
                 prodPart.Format = format;
                 if (TryValidateModel(prodPart))
                 {
@@ -64,7 +64,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     cv.ProductPart.Format = format;
                     cv.ProductPart.UpdateOpenedFormat();
                 }
-            
+
             }
 
             cv.Update();
@@ -104,76 +104,90 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+        public CostDetail EditCostAutomatically(string id)
+        {
+            CostDetail cv = costDetailRepository.GetSingle(id);
+            Cost cost = documentRepository.GetCost(id);
+
+            if (cv == null)
+            {
+                if (cost.CodProductPartPrintableArticle != null)
+                {
+                    var codDP = cost.CodDocumentProduct;
+                    var productPartPrintableArticle = cost.ProductPartsPrintableArticle;
+                    var productPart = cost.ProductPartsPrintableArticle.ProductPart;
+                    var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+
+                    cost = documentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
+                }
+
+                cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                //update 
+                cv.Update();
+            }
+            else
+            {
+                //se è un materiale devo aprire per ora la messa in macchina
+
+                switch (cv.TypeOfCostDetail)
+                {
+                    case CostDetail.CostDetailType.PrintingSheetCostDetail:
+                        break;
+                    case CostDetail.CostDetailType.PrintingRollCostDetail:
+
+                        break;
+                    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+                        id = cv.ComputedBy.CodCostDetail;
+                        cv = costDetailRepository.GetSingle(id);
+                        cost = documentRepository.GetCost(id);
+                        break;
+                    case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
+                        id = cv.ComputedBy.CodCostDetail;
+                        cv = costDetailRepository.GetSingle(id);
+                        cost = documentRepository.GetCost(id);
+                        break;
+                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                        break;
+                    default:
+                        break;
+                }
+
+                Console.WriteLine("");
+                cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+            }
+
+            return cv;
+        }
+
+        [HttpGet]
+        public ActionResult EditAndSaveCost(string id)
+        {
+            var cv = EditCostAutomatically(id);
+            SaveCostDetailAutomatically(cv);
+
+            var idRet = (string)Session["codProduct"];
+
+            if (idRet != null)
+            {
+                return Json(new { redirectUrl = Url.Action("EditDocumentProducts", new { id = idRet }) }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
         [HttpParamAction]
         [HttpGet]
         public ActionResult EditCost(string id)
         {
-            var start = DateTime.Now;
-            CostDetail cv = costDetailRepository.GetSingle(id);
-
-            var time = DateTime.Now - start;
-
-            Cost cost = documentRepository.GetCost(id);
-
-            try
-            {
-                if (cv == null)
-                {
-                    if (cost.CodProductPartPrintableArticle != null)
-                    {
-                        var codDP = cost.CodDocumentProduct;
-                        var productPartPrintableArticle = cost.ProductPartsPrintableArticle;
-                        var productPart = cost.ProductPartsPrintableArticle.ProductPart;
-                        var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
-
-                        cost = documentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
-                    }
-
-                    cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-                    //update 
-                    cv.Update();
-                }
-                else
-                {
-                    //se è un materiale devo aprire per ora la messa in macchina
-
-                    switch (cv.TypeOfCostDetail)
-                    {
-                        case CostDetail.CostDetailType.PrintingSheetCostDetail:
-                            break;
-                        case CostDetail.CostDetailType.PrintingRollCostDetail:
-
-                            break;
-                        case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                            id = cv.ComputedBy.CodCostDetail;
-                            cv = costDetailRepository.GetSingle(id);
-                            cost = documentRepository.GetCost(id);
-                            break;
-                        case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
-                            id = cv.ComputedBy.CodCostDetail;
-                            cv = costDetailRepository.GetSingle(id);
-                            cost = documentRepository.GetCost(id);
-                            break;
-                        case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Console.WriteLine("");
-                    cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-                }
-
-            }
-            catch (NoTaskExecutorException e)
-            {
-                return RedirectToAction("Error", new { id = "NoTaskExecutorException", codTypeOfTask = e.Data["CodTypeOfTask"] });
-            }
-
+            var cv = EditCostAutomatically(id);
             Console.WriteLine(cv.GainForRun);
 
             Session["CodCost"] = id;
             Session["CostDetail"] = cv;
+
 
             var viewName = String.Empty;
 
@@ -198,11 +212,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View(viewName, cv);
         }
 
-        [HttpParamAction]
-        [HttpGet]
-        public ActionResult SaveCostDetail()
+
+        public void SaveCostDetailAutomatically(CostDetail cv)
         {
-            CostDetail cv = (CostDetail)Session["CostDetail"];
             //try
             //{
             var pPart = cv.ProductPart;
@@ -244,11 +256,17 @@ namespace PapiroMVC.Areas.Working.Controllers
                 default:
                     break;
             }
-            //}
-            //catch (NoTaskEstimatedOnException e)
-            //{
-            //    return Json(new { redirectUrl = Url.Action("Error", new { id = "NoTaskEstimatedOnException", taskExecutor = e.Data["TaskExecutor"] }) }, JsonRequestBehavior.AllowGet);
-            //}
+
+        }
+
+
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult SaveCostDetail()
+        {
+            CostDetail cv = (CostDetail)Session["CostDetail"];
+
+            SaveCostDetailAutomatically(cv);
 
             var idRet = (string)Session["codProduct"];
 

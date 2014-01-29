@@ -4,6 +4,11 @@
 
 @{
     string strings = "~/Views/Shared/Strings";
+
+
+    
+    //Load menu product
+    Html.Action("LoadMenuProduct", "Product", new { area = "Working" });
     List<MenuProduct> menuProd = ViewBag.MenuProd;    
     var categories = menuProd!=null?menuProd.Select(x => new MyStruct { CodCategory = x.CodCategory, IndexOfCategory = x.IndexOfCategory.ToString() }).Distinct().OrderBy(y => y.IndexOfCategory).ToList():null;
 

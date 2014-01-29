@@ -47,9 +47,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             customerSupplierRepository.SetDbName(CurrentDatabase);
             costDetailRepository.SetDbName(CurrentDatabase);
 
-            ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
-            TempData["MenuProd"] = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
-
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
             if (Session["CodDocument"] == null || documentRepository.GetSingle((string)Session["CodDocument"]) == null)

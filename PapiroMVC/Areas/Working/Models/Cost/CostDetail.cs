@@ -39,6 +39,15 @@ namespace PapiroMVC.Models
             protected set;
         }
 
+
+        public bool IsValid
+        {
+            get
+            {
+                return !(Error != 0 && Error != null);
+            }
+        }
+
         public List<TaskExecutor> TaskExecutors { get; set; }
 
         public virtual void Update()
@@ -116,14 +125,14 @@ namespace PapiroMVC.Models
         {
             double ret;
 
-            switch ((QuantityType)(TypeOfQuantity??0))
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
                 case QuantityType.RunTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);
                     break;
                 case QuantityType.MqTypeOfQuantity:
                     //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
-                    ret =  Math.Truncate(1000* qta * (this.GainForMqRun ?? 0))/1000;
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
                     break;
                 case QuantityType.WeigthTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);

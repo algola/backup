@@ -9,9 +9,11 @@
     //Prendo il titolo dal menù
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
 
+    //Load menu product
+    Html.Action("LoadMenuProduct", "Product", new { area = "Working" });
+    
     //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
-    List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"]; // ViewBag.MenuProd;
-    TempData.Keep("MenuProd");
+    List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"];//ViewBag.MenuProd;
 
     var theMenuItem = menuP != null ? menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault() : null;
 

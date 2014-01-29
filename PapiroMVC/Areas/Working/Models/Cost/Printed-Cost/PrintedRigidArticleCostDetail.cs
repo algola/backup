@@ -41,6 +41,11 @@ namespace PapiroMVC.Models
 
         public override double UnitCost(double qta)
         {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
             return (Convert.ToDouble(CostPerMq));
         }
 

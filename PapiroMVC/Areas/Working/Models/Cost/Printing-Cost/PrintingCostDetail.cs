@@ -34,26 +34,50 @@ namespace PapiroMVC.Models
             TaskexEcutorSelected = TaskExecutors.Where(x => x.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();
             TypeOfQuantity = (int)TaskexEcutorSelected.TypeOfQuantity;
 
-            //avviamenti con associazione macchina -> tipo di lavorazione
-            //per stampare 1 solo foglio --> offset con + avviamenti o digitale per il fr
-            var startsToPrint = TaskexEcutorSelected.Starts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
-            var makereadies = ProductPartPrinting.CalculatedStarts;
+            if (ProductPartPrinting.CalculatedGain == 0)
+            {
+                Error = 1;
 
-            //per stampare 1 stampato---> tot messe in macchina etc.. oppure resa e calcolo resa media
-            var gain = ProductPartPrinting.CalculatedGain;
+                Starts = 0;
+                //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
+                GainForRun = 0;
+                GainForRunForPrintableArticle = 0;
 
-            Starts = (int)Math.Ceiling(startsToPrint * makereadies);
-            //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
-            GainForRun = (startsToPrint * makereadies / gain);
-            GainForRunForPrintableArticle = (makereadies / gain);
+                GainForMqRun = 0;
+                GainForMqRunForPrintableArticle = 0;
 
-            GainForMqRun = (startsToPrint * ProductPartPrinting.CalculatedMq);
-            GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMq);
+            }
+            else
+            {
+                Error = (Error != null && Error != 0 && Error != 1) ? 0 : Error;
+
+                //avviamenti con associazione macchina -> tipo di lavorazione
+                //per stampare 1 solo foglio --> offset con + avviamenti o digitale per il fr
+                var startsToPrint = TaskexEcutorSelected.Starts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                var makereadies = ProductPartPrinting.CalculatedStarts;
+
+                //per stampare 1 stampato---> tot messe in macchina etc.. oppure resa e calcolo resa media
+                var gain = ProductPartPrinting.CalculatedGain;
+
+                Starts = (int)Math.Ceiling(startsToPrint * makereadies);
+                //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
+                GainForRun = (startsToPrint * makereadies / gain);
+                GainForRunForPrintableArticle = (makereadies / gain);
+
+                GainForMqRun = (startsToPrint * ProductPartPrinting.CalculatedMq);
+                GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMq);
+            }
+
 
         }
 
         public override double UnitCost(double qta)
         {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
             //devo usare gli avvimaneti, la tiratura totale e i mq
             //passarli ad un metodo della macchina corrente e mi restituisce il costo totale che dividerò per
             //la quantità!!!!
@@ -69,13 +93,12 @@ namespace PapiroMVC.Models
                 {
                     total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
                 }
+                Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
             }
             catch (NullReferenceException)
             {
                 total = 0;
-                var e = new NoTaskEstimatedOnException();
-                e.Data.Add("TaskExecutor", TaskexEcutorSelected);
-                throw e;
+                Error = 2;
             }
 
             return (total) / Quantity(qta);

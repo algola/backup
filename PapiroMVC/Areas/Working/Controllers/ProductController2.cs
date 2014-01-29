@@ -10,6 +10,7 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
+using System.Net;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -126,7 +127,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 foreach (var pArticle in item.ProductPartPrintableArticles)
                 {
                     if (!pArticle.IsInList(articleRepository.GetAll()))
-                    { 
+                    {
                         ModelState.AddModelError("PersError", "ProductPartPrintableArticleListError");
                     }
                 }
@@ -221,14 +222,31 @@ namespace PapiroMVC.Areas.Working.Controllers
                                         cost.ForceZero = true;
                                     }
 
-                                    documentProduct.Costs.Add(cost);                                
-                                
+                                    documentProduct.Costs.Add(cost);
+
                                 }
                             }
                         }
                     }
                     documentRepository.Edit(document);
                     documentRepository.Save();
+
+
+                    foreach (var cv in firstDocumentProduct.Costs)
+                    {
+                        string output = string.Empty;
+                        var str = string.Format("{0}{1}", Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
+(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port), Url.Action(actionName: "EditAndSaveCost", controllerName: "Document", routeValues: new { area = "Working", id = cv.CodCost }));
+                        WebRequest webRequest = WebRequest.Create(str);
+                        WebResponse webResponse = webRequest.GetResponse();
+                        //if (webResponse.GetResponseStream().CanRead)
+                        //{
+                        //    StreamReader reader = new StreamReader(webResponse.GetResponseStream());
+                        //    output = reader.ReadToEnd();
+                        //}
+                        webResponse.Close();
+
+                    }
 
 
                     //OK questo funziona ma riporta alla lista dei costi

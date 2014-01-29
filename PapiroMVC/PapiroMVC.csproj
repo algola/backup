@@ -311,7 +311,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSingleSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainSingle.cs" />
+    <Compile Include="Validation\Error\ProductPartPrintingSheetGainSingle.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartCoverSheetPrinting.cs" />
@@ -1057,6 +1057,7 @@
     <Compile Include="Validation\Class1.cs" />
     <Compile Include="Validation\Error\CustomHandleErrorAttribute.cs" />
     <Compile Include="Validation\Error\NoSupplierException.cs" />
+    <Compile Include="Validation\Error\ZeroGainException.cs" />
     <Compile Include="Validation\Error\NotFoundException.cs" />
     <Compile Include="Validation\Error\NoTaskExecutorException.cs" />
     <Compile Include="Validation\Error\NoTaskEstimatedOnException.cs" />

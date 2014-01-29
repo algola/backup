@@ -33,8 +33,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             documentRepository.SetDbName(CurrentDatabase);
             productRepository.SetDbName(CurrentDatabase);
-            ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
-            TempData["MenuProd"] = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
             typeOfTaskRepository.SetDbName(CurrentDatabase);
             articleRepository.SetDbName(CurrentDatabase);
 
@@ -70,6 +68,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository = _documentRepository;
             articleRepository = _articleRepository;
 
+        }
+
+        public ActionResult LoadMenuProduct()
+        {
+            ViewBag.MenuProd = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+            TempData["MenuProd"] = menu.GetAll().OrderBy(x => x.IndexOf).ToList();
+            return null;
         }
 
 

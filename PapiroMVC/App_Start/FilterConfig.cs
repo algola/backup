@@ -18,6 +18,12 @@ namespace PapiroMVC
 
             filters.Add(new CustomHandleErrorAttribute
             {
+                ExceptionType = typeof(ZeroGainException),
+                View = "ZeroGainException"
+            }, 1);
+
+            filters.Add(new CustomHandleErrorAttribute
+            {
                 ExceptionType = typeof(Exception),
                 View = "ErrorCust"
             }, 1);

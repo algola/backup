@@ -36,6 +36,8 @@ namespace PapiroMVC.Model
             dbS.AddForeignKey("costdetails", "CodTaskExecutorSelected", "taskexecutors", "CodTaskExecutor");
             dbS.AddForeignKey("costdetails", "CodProductPart", "productparts", "CodProductPart");
 
+            //0 or Null = no error 1 = FormatExcede
+            dbS.AddColumnToTable("costdetails", "Error", SchemaDb.Int, "0");
 
             // 0 = Printing // 1 = PrintedArticle 
             dbS.AddColumnToTable("costdetails", "Selector", SchemaDb.Int, "0");
