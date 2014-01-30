@@ -231,24 +231,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     documentRepository.Edit(document);
                     documentRepository.Save();
 
-
-                    foreach (var cv in firstDocumentProduct.Costs)
-                    {
-                        string output = string.Empty;
-                        var str = string.Format("{0}{1}", Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host +
-(Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port), Url.Action(actionName: "EditAndSaveCost", controllerName: "Document", routeValues: new { area = "Working", id = cv.CodCost }));
-                        WebRequest webRequest = WebRequest.Create(str);
-                        WebResponse webResponse = webRequest.GetResponse();
-                        //if (webResponse.GetResponseStream().CanRead)
-                        //{
-                        //    StreamReader reader = new StreamReader(webResponse.GetResponseStream());
-                        //    output = reader.ReadToEnd();
-                        //}
-                        webResponse.Close();
-
-                    }
-
-
                     //OK questo funziona ma riporta alla lista dei costi
                     //TODO: Sending singlaR notification to client to reload basket product
                     //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
@@ -257,7 +239,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                     {
                         Session["codProduct"] = document.DocumentProducts.LastOrDefault().CodProduct;
 
-                        return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
+                        return Json(new { redirectUrl = Url.Action("EditAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });                    
+                     //   return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
+                    
                     }
                     else
                     {

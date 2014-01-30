@@ -159,23 +159,32 @@ namespace PapiroMVC.Areas.Working.Controllers
             return cv;
         }
 
+
+        [HttpGet]
+        public ActionResult EditAllCost(string id)
+        {
+            var costsProd = documentRepository.GetCostsByCodDocumentProduct(id);
+            var idRet = costsProd.FirstOrDefault().DocumentProduct.CodProduct;
+
+            EditCost(id);
+
+            documentRepository.SetDbName(CurrentDatabase);
+            costDetailRepository.SetDbName(CurrentDatabase);
+
+            SaveCostDetail();
+
+            return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = idRet}) });
+
+        }
+
         [HttpGet]
         public ActionResult EditAndSaveCost(string id)
         {
             var cv = EditCostAutomatically(id);
+            cv.Update();
             SaveCostDetailAutomatically(cv);
 
-            var idRet = (string)Session["codProduct"];
-
-            if (idRet != null)
-            {
-                return Json(new { redirectUrl = Url.Action("EditDocumentProducts", new { id = idRet }) }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
-            }
-
+            return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpParamAction]
@@ -187,7 +196,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             Session["CodCost"] = id;
             Session["CostDetail"] = cv;
-
 
             var viewName = String.Empty;
 
