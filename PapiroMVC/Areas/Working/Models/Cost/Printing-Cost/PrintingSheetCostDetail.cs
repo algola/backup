@@ -237,9 +237,10 @@ namespace PapiroMVC.Models
 
                 }
 
+                //GUID
+                x.Guid = this.Guid;
                 this.Computes.Add(x);
                 lst.Add(x);
-
 
             }
 

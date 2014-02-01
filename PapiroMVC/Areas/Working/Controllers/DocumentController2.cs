@@ -104,8 +104,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
-        public CostDetail EditCostAutomatically(string id)
+        public CostDetail EditCostAutomatically(string id, Guid guid)
         {
+
             CostDetail cv = costDetailRepository.GetSingle(id);
             Cost cost = documentRepository.GetCost(id);
 
@@ -122,13 +123,14 @@ namespace PapiroMVC.Areas.Working.Controllers
                 }
 
                 cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                cv.Guid = guid.ToString();
                 //update 
                 cv.Update();
             }
             else
             {
                 //se è un materiale devo aprire per ora la messa in macchina
-
+                cv.Guid = guid.ToString();
                 switch (cv.TypeOfCostDetail)
                 {
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
@@ -161,37 +163,49 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
         [HttpGet]
-        public ActionResult EditAllCost(string id)
+        public ActionResult EditAndCreateAllCost(string id)
         {
-            var costsProd = documentRepository.GetCostsByCodDocumentProduct(id);
+            var inizio = DateTime.Now;
+
+            //set guid!!!
+            Guid guid = Guid.NewGuid();
+
+            var costsProd = documentRepository.GetCostsByCodDocumentProduct(id).ToList();
             var idRet = costsProd.FirstOrDefault().DocumentProduct.CodProduct;
 
-            EditCost(id);
+            foreach (var codCost in costsProd.Select(x => x.CodCost))
+            {
+                if (!costDetailRepository.IsJustSaved(codCost, guid))
+                {
+                    var cv = EditCostAutomatically(codCost, guid);
 
-            documentRepository.SetDbName(CurrentDatabase);
-            costDetailRepository.SetDbName(CurrentDatabase);
+                    documentRepository.SetDbName(CurrentDatabase);
+                    costDetailRepository.SetDbName(CurrentDatabase);
 
-            SaveCostDetail();
 
-            return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = idRet}) });
+                    SaveCostDetailAutomatically(cv);
+                }
+                else
+                {
+                    Console.WriteLine("");
+                }
+            }
 
-        }
+            var fine = DateTime.Now;
 
-        [HttpGet]
-        public ActionResult EditAndSaveCost(string id)
-        {
-            var cv = EditCostAutomatically(id);
-            cv.Update();
-            SaveCostDetailAutomatically(cv);
+            var tempo = fine.Subtract(inizio);
+            Console.WriteLine(tempo.TotalSeconds);
 
-            return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("EditDocumentProducts", "Document", new { id = idRet });
+            //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = idRet }) });
+
         }
 
         [HttpParamAction]
         [HttpGet]
         public ActionResult EditCost(string id)
         {
-            var cv = EditCostAutomatically(id);
+            var cv = EditCostAutomatically(id,new Guid());
             Console.WriteLine(cv.GainForRun);
 
             Session["CodCost"] = id;

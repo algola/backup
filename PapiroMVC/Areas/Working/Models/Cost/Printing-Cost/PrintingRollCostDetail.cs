@@ -63,6 +63,7 @@ namespace PapiroMVC.Models
                 x.ComputedBy = this;
                 x.ProductPart = this.ProductPart;
 
+                x.Guid = this.Guid;
                 this.Computes.Add(x);
             }
 

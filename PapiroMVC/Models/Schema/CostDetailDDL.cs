@@ -38,6 +38,7 @@ namespace PapiroMVC.Model
 
             //0 or Null = no error 1 = FormatExcede
             dbS.AddColumnToTable("costdetails", "Error", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("costdetails", "Guid", SchemaDb.String, "32");
 
             // 0 = Printing // 1 = PrintedArticle 
             dbS.AddColumnToTable("costdetails", "Selector", SchemaDb.Int, "0");

@@ -153,7 +153,6 @@ namespace PapiroMVC.Models
             CostDetail cv = null;
             ProductPart productPart = null;
 
-
             #region Materiale
 
             if (this.CodProductPartPrintableArticle != null)
@@ -168,9 +167,6 @@ namespace PapiroMVC.Models
             }
 
             #endregion
-            
-            
-            
             
             #region Lavorazione
             //E' una lavorazione!!!!
@@ -305,7 +301,6 @@ namespace PapiroMVC.Models
             }
 
             #endregion
-
 
             cv.ProductPart = productPart;
 

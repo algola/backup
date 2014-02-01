@@ -239,7 +239,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     {
                         Session["codProduct"] = document.DocumentProducts.LastOrDefault().CodProduct;
 
-                        return Json(new { redirectUrl = Url.Action("EditAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });                    
+                        return Json(new { redirectUrl = Url.Action("EditAndCreateAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodDocumentProduct}) });                    
                      //   return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
                     
                     }
@@ -247,8 +247,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     {
                         return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
                     }
-
-
 
                 }
                 catch (Exception ex)

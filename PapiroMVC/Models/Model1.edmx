@@ -94,6 +94,7 @@
           <Property Name="CostTakenFrom" Type="int" />
           <Property Name="CodComputedBy" Type="char" MaxLength="50" />
           <Property Name="Error" Type="int" />
+          <Property Name="Guid" Type="char" MaxLength="32" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -2314,6 +2315,7 @@
           <Property Type="Double" Name="GainForWeigthRun" />
           <Property Type="Double" Name="GainForWeigthRunForPrintableArticle" />
           <Property Name="Error" Type="Int32" />
+          <Property Name="Guid" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -3408,6 +3410,7 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="Error" ColumnName="Error" />
                 <ScalarProperty Name="GainForWeigthRunForPrintableArticle" ColumnName="GainForWeigthRunForPrintableArticle" />
                 <ScalarProperty Name="GainForWeigthRun" ColumnName="GainForWeigthRun" />

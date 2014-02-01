@@ -8,5 +8,6 @@ namespace Services
 {
     public interface ICostDetailRepository : IGenericRepository<CostDetail>
     {
+        bool IsJustSaved(string id, Guid guid);
     }
 }

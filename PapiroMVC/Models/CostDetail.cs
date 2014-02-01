@@ -35,6 +35,7 @@ namespace PapiroMVC.Models
         public Nullable<double> GainForWeigthRun { get; set; }
         public Nullable<double> GainForWeigthRunForPrintableArticle { get; set; }
         public Nullable<int> Error { get; set; }
+        public string Guid { get; set; }
     
         public virtual Cost TaskCost { get; set; }
         public virtual ProductPart ProductPart { get; set; }
