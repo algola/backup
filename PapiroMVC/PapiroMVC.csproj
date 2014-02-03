@@ -1061,6 +1061,8 @@
     <Compile Include="Validation\Error\NotFoundException.cs" />
     <Compile Include="Validation\Error\NoTaskExecutorException.cs" />
     <Compile Include="Validation\Error\NoTaskEstimatedOnException.cs" />
+    <Compile Include="Validation\Json\DynamicJsonConverter.cs" />
+    <Compile Include="Validation\Json\JSonHelper.cs" />
     <Compile Include="Validation\ObjectCopier.cs" />
     <Compile Include="Validation\TaskEstimatedOnBinder.cs" />
     <Compile Include="Validation\ProductViewModelModelBinder.cs" />

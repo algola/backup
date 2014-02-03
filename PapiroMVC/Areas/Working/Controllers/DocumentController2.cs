@@ -23,7 +23,12 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         static Assembly g_assembly;
 
-
+        /// <summary>
+        /// This Action returns partial view of CosteDetail
+        /// </summary>
+        /// <param name="codTaskExecutor"></param>
+        /// <param name="codCost"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult GetPartialCost(String codTaskExecutor, String codCost)
         {
@@ -34,6 +39,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
+
+        /// <summary>
+        /// This Action modifies buyingFormat and Update Cost.
+        /// Is needed  Session["CostDetail"]
+        /// </summary>
+        /// <param name="buyingFormat"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ChangeBuyingFormatInPrintingSheetCostDetail(string buyingFormat)
         {
@@ -45,13 +57,21 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_PrintingSheetCostDetail", cv);
         }
 
+        /// <summary>
+        /// This Action modifies ProductPart format and Update Cost
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ChangeProductPartFormatFormatInPrintingSheetCostDetail(string format)
         {
             PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
 
+            var inizio = DateTime.Now;
+
             if (ModelState.IsValid)
             {
+                //catch ProductPart from repository and save it with canges
                 var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
                 var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
 
@@ -69,9 +89,18 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.Update();
             Session["CostDetail"] = cv;
+
+            var tempo = DateTime.Now.Subtract(inizio);
+            Console.WriteLine(tempo.TotalSeconds);
+
             return PartialView("_PrintingSheetCostDetail", cv);
         }
 
+        /// <summary>
+        /// Action modifies PrintingFormat and Update Cost
+        /// </summary>
+        /// <param name="PrintingFormat"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ChangePrintingFormatInPrintingSheetCostDetail(string PrintingFormat)
         {
@@ -82,9 +111,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_PrintingSheetCostDetail", cv);
         }
 
-
+        /// <summary>
+        /// Uptate cost in Cost from CostDetail
+        /// </summary>
+        /// <param name="id"></param>
         private void UpdateCost(string id)
         {
+            var inizio = DateTime.Now;
+
             CostDetail cv = costDetailRepository.GetSingle(id);
             cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
@@ -101,15 +135,26 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Edit(cv.TaskCost.DocumentProduct.Document);
             documentRepository.Save();
 
+            var tempo = DateTime.Now.Subtract(inizio);
+
+            Console.WriteLine(tempo);
 
         }
 
+
+        /// <summary>
+        /// Action load Cost and generates related CosteDetail if it doesn't exist
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         public CostDetail EditCostAutomatically(string id, Guid guid)
         {
 
             CostDetail cv = costDetailRepository.GetSingle(id);
             Cost cost = documentRepository.GetCost(id);
 
+            //spostare questa logica nella classe 
             if (cv == null)
             {
                 if (cost.CodProductPartPrintableArticle != null)
@@ -123,14 +168,15 @@ namespace PapiroMVC.Areas.Working.Controllers
                 }
 
                 cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-                cv.Guid = guid.ToString();
+                //guid ensures that costdetail is handled only one time when cost are all processed sistematically
+                cv.Guid = guid.ToString("N");
                 //update 
                 cv.Update();
             }
             else
             {
                 //se è un materiale devo aprire per ora la messa in macchina
-                cv.Guid = guid.ToString();
+                cv.Guid = guid.ToString("N");
                 switch (cv.TypeOfCostDetail)
                 {
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
@@ -161,7 +207,11 @@ namespace PapiroMVC.Areas.Working.Controllers
             return cv;
         }
 
-
+        /// <summary>
+        /// Action EditOrCreate all Cost in DocumentProduct
+        /// </summary>
+        /// <param name="id">CodDocumntProduct</param>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult EditAndCreateAllCost(string id)
         {
@@ -169,14 +219,19 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //set guid!!!
             Guid guid = Guid.NewGuid();
+            //all costs to process
 
             var costsProd = documentRepository.GetCostsByCodDocumentProduct(id).ToList();
             var idRet = costsProd.FirstOrDefault().DocumentProduct.CodProduct;
 
+            //process all cost in DocumentProduct
             foreach (var codCost in costsProd.Select(x => x.CodCost))
             {
+                //if cost is just Processed in the same session (this session, identify by guid)
+                //is not processed again
                 if (!costDetailRepository.IsJustSaved(codCost, guid))
                 {
+                    //if costs has to be processed, EditCostAutomatically is called
                     var cv = EditCostAutomatically(codCost, guid);
 
                     documentRepository.SetDbName(CurrentDatabase);

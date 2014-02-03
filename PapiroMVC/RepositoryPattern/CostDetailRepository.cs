@@ -168,7 +168,7 @@ namespace Services
 
         public bool IsJustSaved(string id, Guid guid)
         {
-            var g = guid.ToString();
+            var g = guid.ToString("N");
             var rr = Context.CostDetail.SingleOrDefault(x => x.CodCostDetail == id);
 
             if (rr != null)

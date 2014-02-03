@@ -8,16 +8,16 @@ namespace UnitTestPapiroMVC
     public class MessaInMacchinaBookTest
     {
         [TestMethod]
-        public void MessaInMac()
+        public void Rigido()
         {
 
-            ProductPartBookSheet part = new ProductPartBookSheet();
-            part.Pages = 90;
+            ProductPartRigid part = new ProductPartRigid();
             part.Format = "15x21";
-            part.UpdateOpenedFormat();
+            part.SubjectNumber = 1;
+//            part.UpdateOpenedFormat();
 
-            ProductPartBookSheetPrinting prodPartPrint = new ProductPartBookSheetPrinting();
-            prodPartPrint.PrintingFormat = "70x100";
+            ProductPartSingleSheetPrinting prodPartPrint = new ProductPartSingleSheetPrinting();
+            prodPartPrint.PrintingFormat = "250x100";
             prodPartPrint.Part = part;
 
             prodPartPrint.Update();

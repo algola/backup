@@ -113,6 +113,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         public ActionResult CreateProduct(string id)
         {
+            var inizio = DateTime.Now;
             var c = InitProduct(id);
 
             var d = new ProductViewModel();
@@ -126,6 +127,10 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";
+
+
+            var tempo = DateTime.Now.Subtract(inizio);
+            Console.WriteLine(tempo);
             return View("CreateProduct", d);
         }
 
