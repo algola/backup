@@ -114,7 +114,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult CreateProduct(string id)
         {
             var inizio = DateTime.Now;
-            var c = InitProduct(id);
+            var c = Creator.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
 
             var d = new ProductViewModel();
             d.Product = c;

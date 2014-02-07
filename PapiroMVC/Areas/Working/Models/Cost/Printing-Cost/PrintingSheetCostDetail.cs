@@ -228,6 +228,8 @@ namespace PapiroMVC.Models
                 //devo pescare il costo e associarlo al dettaglio
                 if (x.CodCost == null)
                 {
+                    var xxxx = costs.ToList();
+
                     var cost = costs.Where(pp => pp.CodProductPartPrintableArticle == item.CodProductPartPrintableArticle).FirstOrDefault();
                     //da non usare MAIIII                    x.TaskCost = cost;
                     x.CodCost = cost.CodCost;

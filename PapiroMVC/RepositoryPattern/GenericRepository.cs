@@ -60,6 +60,8 @@ namespace Services
                 _entities.Database.Connection.Open();
             }
             _entities.Configuration.ProxyCreationEnabled = false;
+            _entities.Configuration.AutoDetectChangesEnabled = false;
+            _entities.Configuration.ValidateOnSaveEnabled = false;
         }
 
         private C _entities;
@@ -68,11 +70,18 @@ namespace Services
         {
             get
             {
+                var inizio = DateTime.Now;
+
                 if (_entities == null)
                 {
                     _entities = new C();
                     _entities.Configuration.ProxyCreationEnabled = false;
+                    _entities.Configuration.AutoDetectChangesEnabled = false;
+                    _entities.Configuration.ValidateOnSaveEnabled = false;
                 }
+
+                var tempo = DateTime.Now.Subtract(inizio);
+                Console.Write(tempo);
 
                 return _entities;
             }
@@ -112,6 +121,7 @@ namespace Services
 
         public virtual void Save()
         {
+            Context.Configuration.AutoDetectChangesEnabled = false;
             Context.Configuration.ValidateOnSaveEnabled = false;
             this.Context.SaveChanges();
         }

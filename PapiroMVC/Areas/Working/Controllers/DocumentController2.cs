@@ -14,6 +14,7 @@ using Microsoft.Office.Interop.Word;
 using Novacode;
 using System.IO;
 using System.Reflection;
+using PapiroMVC.ServiceLayer;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -150,7 +151,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         public CostDetail EditCostAutomatically(string id, Guid guid)
         {
-
             CostDetail cv = costDetailRepository.GetSingle(id);
             Cost cost = documentRepository.GetCost(id);
 
@@ -217,34 +217,16 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var inizio = DateTime.Now;
 
-            //set guid!!!
-            Guid guid = Guid.NewGuid();
-            //all costs to process
+            var idRet = documentRepository.GetCostsByCodDocumentProduct(id).FirstOrDefault().DocumentProduct.CodProduct;
 
-            var costsProd = documentRepository.GetCostsByCodDocumentProduct(id).ToList();
-            var idRet = costsProd.FirstOrDefault().DocumentProduct.CodProduct;
+            PapiroService p = new PapiroService();
+            p.DocumentRepository = documentRepository;//new DocumentRepository();
+            p.CostDetailRepository = costDetailRepository;
+            p.TaskExecutorRepository = taskExecutorRepository;
+            p.ArticleRepository = articleRepository;
+            p.CurrentDatabase = CurrentDatabase;
 
-            //process all cost in DocumentProduct
-            foreach (var codCost in costsProd.Select(x => x.CodCost))
-            {
-                //if cost is just Processed in the same session (this session, identify by guid)
-                //is not processed again
-                if (!costDetailRepository.IsJustSaved(codCost, guid))
-                {
-                    //if costs has to be processed, EditCostAutomatically is called
-                    var cv = EditCostAutomatically(codCost, guid);
-
-                    documentRepository.SetDbName(CurrentDatabase);
-                    costDetailRepository.SetDbName(CurrentDatabase);
-
-
-                    SaveCostDetailAutomatically(cv);
-                }
-                else
-                {
-                    Console.WriteLine("");
-                }
-            }
+            p.EditOrCreateAllCost(id);
 
             var fine = DateTime.Now;
 

@@ -38,6 +38,8 @@ namespace PapiroMVC.Models
                 gain.SmallerFormat = Part.Format;
             }
 
+            //posso spostare questa assegnazione quando modifico la quantità del
+            //DocumentProduct
             gain.Quantity = this.CostDetail.TaskCost.DocumentProduct.Quantity ?? 0;
             gain.DCut = (Part.IsDCut ?? false) ? Part.DCut : 0;
 

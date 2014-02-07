@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Threading;
 
 namespace PapiroMVC.Models
-{    
+{
     [MetadataType(typeof(DocumentProduct_MetaData))]
     public partial class DocumentProduct : IDataErrorInfo, ICloneable, IDeleteRelated
     {
@@ -16,22 +16,22 @@ namespace PapiroMVC.Models
             double total = 0;
             foreach (var item in Costs)
             {
-                total += !(item.ForceZero??false)?Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture):0;
+                total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
             }
             TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
-            UnitPrice = ((total / Quantity??0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));        
+            UnitPrice = ((total / Quantity ?? 0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));
         }
 
         #region Proprietà aggiuntive
 
- 
+
         protected List<Cost> costProductParts;
         public List<Cost> CostsPerView
         {
             get
             {
                 if (costProductParts == null)
-                { 
+                {
                     costProductParts = this.Costs.ToList();
                 }
 
@@ -39,7 +39,7 @@ namespace PapiroMVC.Models
 
             }
 
-            set 
+            set
             {
                 costProductParts = value;
                 Costs = costProductParts;
@@ -74,7 +74,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -155,5 +155,83 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+        public void InitCost()
+        {
+            Cost cost;
+
+            this.CodProduct = Product.CodProduct;
+            this.ProductName = Product.ProductName;
+
+            //for each ProductTask / ProductPartTask / ProductPartsPrintableArticle in Product
+            //adding new cost
+
+            //ProductTask
+            //only code 
+            //                            foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
+            foreach (var productTask in Product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
+            {
+                cost = new Cost();
+                cost.DocumentProduct = this;
+                cost.CodDocumentProduct = this.CodDocumentProduct;
+
+                
+                cost.CodProductTask = productTask.CodProductTask;
+                cost.Description = "***Lavorazione del prodotto";
+
+                if (productTask.CodOptionTypeOfTask.Contains("_NO"))
+                {
+                    cost.Hidden = true;
+                    cost.ForceZero = true;
+                }
+                this.Costs.Add(cost);
+            }
+
+            //ProductPartTask & ProductPartsPrintableArticle
+            foreach (var productPart in Product.ProductParts)
+            {
+                foreach (var productPartsPrintableArticle in productPart.ProductPartPrintableArticles)
+                {
+                    cost = new Cost();
+                    cost.DocumentProduct = this;
+                    cost.CodDocumentProduct = this.CodDocumentProduct;
+
+                    cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;                    
+                    cost.ProductPartsPrintableArticle = productPartsPrintableArticle;
+                    cost.ProductPartsPrintableArticle.ProductPart = productPart;
+
+                    cost.Description = productPartsPrintableArticle.ToString();
+
+                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+
+                    this.Costs.Add(cost);
+                }
+
+                foreach (var productPartTask in productPart.ProductPartTasks)
+                {
+                    cost = new Cost();
+                    cost.DocumentProduct = this;
+                    cost.CodDocumentProduct = this.CodDocumentProduct;
+
+                    cost.CodProductPartTask = productPartTask.CodProductPartTask;
+                    cost.ProductPartTask = productPartTask;
+                    cost.ProductPartTask.ProductPart = productPart;
+
+                    cost.Description = productPartTask.ToString();
+                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+
+                    if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        cost.Hidden = true;
+                        cost.ForceZero = true;
+                    }
+
+                    this.Costs.Add(cost);
+
+                }
+            }
+
+
+        }
     }
 }

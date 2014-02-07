@@ -105,10 +105,10 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateProduct(ProductViewModel b)
+        public ActionResult CreateProduct(ProductViewModel pv)
         {
-            var qts = b.Quantities;
-            var product = b.Product;
+            var qts = pv.Quantities;
+            var product = pv.Product;
             foreach (var item in product.ProductParts)
             {
                 if (item.Format == "0x0" && item.FormatPersonalized != String.Empty)
@@ -138,6 +138,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                 try
                 {
                     product.CodProduct = productRepository.GetNewCode(product);
+
+                    //save the product
                     productRepository.Add(product);
                     productRepository.Save();
 
@@ -155,81 +157,37 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     var document = documentRepository.GetSingle((string)Session["CodDocument"]);
 
-                    DocumentProduct documentProduct;
-                    Cost cost;
-
+                    DocumentProduct dp;                    
                     DocumentProduct firstDocumentProduct = null;
 
                     foreach (var qtsitem in qts)
                     {
                         if (qtsitem != 0)
                         {
-                            documentProduct = new DocumentProduct();
+                            dp = new DocumentProduct();
                             //use first document product to lead each tecnical choice
                             if (firstDocumentProduct == null)
                             {
-                                firstDocumentProduct = documentProduct;
-                            }
-                            documentProduct.CodProduct = product.CodProduct;
-                            documentProduct.ProductName = product.ProductName;
-                            documentProduct.Quantity = qtsitem;
-                            document.DocumentProducts.Add(documentProduct);
-
-                            //for each ProductTask / ProductPartTask / ProductPartsPrintableArticle in Product
-                            //adding new cost
-
-                            //ProductTask
-                            //only code 
-                            //                            foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
-                            foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
-                            {
-                                cost = new Cost();
-                                cost.CodProductTask = productTask.CodProductTask;
-                                cost.Description = "***Lavorazione del prodotto";
-
-                                if (productTask.CodOptionTypeOfTask.Contains("_NO"))
-                                {
-                                    cost.Hidden = true;
-                                    cost.ForceZero = true;
-                                }
-                                documentProduct.Costs.Add(cost);
+                                firstDocumentProduct = dp;
                             }
 
-                            //ProductPartTask & ProductPartsPrintableArticle
-                            foreach (var productPart in product.ProductParts)
-                            {
-                                foreach (var productPartsPrintableArticle in productPart.ProductPartPrintableArticles)
-                                {
-                                    cost = new Cost();
-                                    cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;
-                                    cost.Description = productPartsPrintableArticle.ToString();
 
-                                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
-                                    documentProduct.Costs.Add(cost);
-                                }
+                            dp.Document = null;
+                            dp.CodProduct = pv.Product.CodProduct;
+                            dp.Product = pv.Product;
 
-                                foreach (var productPartTask in productPart.ProductPartTasks)
-                                {
-                                    cost = new Cost();
-                                    cost.CodProductPartTask = productPartTask.CodProductPartTask;
-                                    cost.Description = productPartTask.ToString();
-                                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+                            dp.Quantity = qtsitem;
+                           
 
-                                    if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
-                                    {
-                                        cost.Hidden = true;
-                                        cost.ForceZero = true;
-                                    }
+                            dp.InitCost();
+                            document.DocumentProducts.Add(dp);
 
-                                    documentProduct.Costs.Add(cost);
+                            documentRepository.Edit(document);
+                            documentRepository.Save();
 
-                                }
-                            }
                         }
                     }
-                    documentRepository.Edit(document);
-                    documentRepository.Save();
 
                     //OK questo funziona ma riporta alla lista dei costi
                     //TODO: Sending singlaR notification to client to reload basket product
@@ -281,78 +239,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";
-            return PartialView("_EditAndCreateProduct", b);
+            return PartialView("_EditAndCreateProduct", pv);
         }
-
-        private Product InitProduct(string id)
-        {
-            Product product;
-            product = new ProductSingleSheet();
-
-            if (id == "Buste" ||
-                id == "Volantini" ||
-                id == "Pieghevoli" ||
-                id == "CartaIntestata" ||
-                id == "Locandine" ||
-                id == "FogliMacchina")
-            {
-                product = new ProductSingleSheet();
-            }
-
-            if (
-                id == "BigliettiVisita" ||
-                id == "EtichetteCartellini" ||
-                id == "CartolineInviti" ||
-                id == "CartolinePostali" ||
-                id == "AltriFormati")
-            {
-                product = new ProductSingleSheet();
-                product.ShowDCut = true;
-                product.DCut = 0.5;
-            }
-
-            if (id == "PuntoMetallico" ||
-                id == "SpiraleMetallica" ||
-                id == "BrossuraFresata" ||
-                id == "BrossuraCucitaFilo" ||
-                id == "RivistePostalizzazione" ||
-                id == "SchedeNonRilegate")
-            {
-                product = new ProductBookSheet();
-            }
-
-
-            if (
-                id == "Fotoquadri" ||
-                id == "SuppRigidi" ||
-                id == "Poster")
-            {
-                product = new ProductRigid();
-                product.ShowDCut = true;
-                product.DCut = 2;
-            }
-
-            if (
-                id == "PVC" ||
-                id == "Manifesti" ||
-                id == "Striscioni")
-            {
-                product = new ProductRigid();
-            }
-
-
-            product.CodMenuProduct = id;
-            product.ProductTaskName = prodTskNameRepository.GetAllById(id);
-            product.FormatsName = formatsRepository.GetAllById(id);
-
-            product.SystemTaskList = typeOfTaskRepository.GetAll();
-            product.InitProduct();
-
-            return product;
-
-        }
-
-
 
     }
 }
