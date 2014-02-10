@@ -41,8 +41,11 @@ namespace PapiroMVC.Model
             //foreign key
             dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
 
-            // 0 = ... // 1 = ... // 2 = ...
+            // 0 = Estimate // 1 = ... // 2 = ...
             dbS.AddColumnToTable("documents", "SelectorDocument", SchemaDb.Int, "0");
+
+            // 0 = Ecommerce Estimate
+            dbS.AddColumnToTable("documents", "SelectorEstimate", SchemaDb.Int, "0");
 
             //Index
             dbS.AddIndex("documents", "DocumentName");

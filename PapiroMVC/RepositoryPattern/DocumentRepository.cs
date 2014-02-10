@@ -12,8 +12,25 @@ namespace Services
 {
     public class DocumentRepository : GenericRepository<dbEntities, Document>, IDocumentRepository
     {
-
         private Dictionary<string, Document> cacheDoc;
+
+        public Document GetEstimateEcommerce(string codCustomerSupplier)
+        {
+            var estEcom = Context.Documents.OfType<EstimateEcommerce>().SingleOrDefault(x => x.CodCustomer == codCustomerSupplier);
+            if (estEcom == null)
+            {
+                estEcom = new EstimateEcommerce();
+                estEcom.CodCustomer = codCustomerSupplier;
+                estEcom.CodDocument = GetNewCode(estEcom);
+                estEcom.TimeStampTable = DateTime.Now;
+                Add(estEcom);
+                Save();
+            }
+
+
+            return estEcom;
+        }
+
 
         protected Dictionary<string, Document> CacheDoc
         {
@@ -115,7 +132,7 @@ namespace Services
 
             try
             {
-                ret= CacheDocPro[codDocumentProduct].AsQueryable<Cost>();
+                ret = CacheDocPro[codDocumentProduct].AsQueryable<Cost>();
             }
             catch (Exception)
             {
@@ -134,7 +151,7 @@ namespace Services
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
             //con un colpo solo!!!
-           // var csCode = (from COD in this.GetAll() select COD.CodDocument).Max();
+            // var csCode = (from COD in this.GetAll() select COD.CodDocument).Max();
 
             var csCode = Context.Database.SqlQuery<string>("SELECT MAX(CodDocument) AS CodDocument FROM Documents").FirstOrDefault<string>();
             return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
@@ -171,12 +188,11 @@ namespace Services
 
         private void DocumentProductCodeRigen(Document c)
         {
-            c.EstimateNumber = c.EstimateNumber.PadLeft(6, '0');
-            c.TimeStampTable = DateTime.Now;
+            c.EstimateNumber = c.EstimateNumber == null ? (0).ToString().PadLeft(6, '0') : c.EstimateNumber.PadLeft(6, '0');
 
             //prodotti in documento
-            var ppart = c.DocumentProducts.ToList();
-            foreach (var item in c.DocumentProducts.OrderBy(y => y.CodDocumentProduct))
+            var ppart = c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
+            foreach (var item in c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
             {
                 item.CodDocumentProduct = c.CodDocument + "-" + ppart.IndexOf(item).ToString();
                 item.CodDocument = c.CodDocument;
@@ -272,10 +288,13 @@ namespace Services
 
         public override void Edit(Document entity)
         {
+            //we can have some DocumentProduct added and some just saved so...
+            var dps = Context.DocumentProducts.Where(x => x.CodDocument == entity.CodDocument).ToList();
+            entity.DocumentProducts = dps.Union(entity.DocumentProducts, new DocumentProductComparer()).ToList();
 
             DocumentProductCodeRigen(entity);
 
-            foreach (var item in entity.DocumentProducts)
+            foreach (var item in entity.DocumentProducts)            
             {
                 var fromBD2 = Context.DocumentProducts.SingleOrDefault(p => p.CodDocumentProduct == item.CodDocumentProduct);
                 if (fromBD2 != null)

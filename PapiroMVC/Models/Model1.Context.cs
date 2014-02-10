@@ -51,6 +51,5 @@ namespace PapiroMVC.Models
         public DbSet<ProductPartPrinting> ProductPartPrinting { get; set; }
         public DbSet<ProductPartPrintingGain> ProductPartPrintingGain { get; set; }
         public DbSet<Makeready> Makereadies { get; set; }
-        public DbSet<LastCode> LastCodes { get; set; }
     }
 }

@@ -174,6 +174,7 @@
           <Property Name="SelectorDocument" Type="int" />
           <Property Name="EstimateNumber" Type="char" MaxLength="20" />
           <Property Name="EstimateNumberSerie" Type="char" MaxLength="20" />
+          <Property Name="SelectorEstimate" Type="int" />
         </EntityType>
         <EntityType Name="makereadies">
           <Key>
@@ -2588,6 +2589,7 @@
           <Property Type="String" Name="CostPerMq" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Estimate" BaseType="dbModel.Document" />
+        <EntityType Name="EstimateEcommerce" BaseType="dbModel.Document" />
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3396,6 +3398,12 @@
                 <Condition ColumnName="Selector" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.EstimateEcommerce)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
+                <Condition ColumnName="SelectorEstimate" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductPartsToProductTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.productpartstoproducttask)">
@@ -4078,6 +4086,8 @@
         <InheritanceConnector EntityType="dbModel.PrintedRigidArticleCostDetail" />
         <EntityTypeShape EntityType="dbModel.Estimate" Width="1.5" PointX="7" PointY="50.75" />
         <InheritanceConnector EntityType="dbModel.Estimate" />
+        <EntityTypeShape EntityType="dbModel.EstimateEcommerce" Width="1.5" PointX="7.25" PointY="53.375" />
+        <InheritanceConnector EntityType="dbModel.EstimateEcommerce" />
         </Diagram>
     </Diagrams>
   </Designer>

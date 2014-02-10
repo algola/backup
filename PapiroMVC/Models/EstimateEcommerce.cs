@@ -12,10 +12,7 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LastCode
+    public partial class EstimateEcommerce : Document
     {
-        public System.DateTime TimeStampTable { get; set; }
-        public string CodLastCode { get; set; }
-        public string Value { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PapiroMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
@@ -7,6 +8,73 @@ using System.Web;
 
 namespace Services
 {
+
+    /// <summary>
+    /// Returns -1 instead of 1 if y is IsNullOrEmpty when x is Not.
+    /// </summary>
+    public class EmptyStringsAreLast : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            if (String.IsNullOrEmpty(y) && !String.IsNullOrEmpty(x))
+            {
+                return -1;
+            }
+            else if (!String.IsNullOrEmpty(y) && String.IsNullOrEmpty(x))
+            {
+                return 1;
+            }
+            else
+            {
+                return String.Compare(x, y);
+            }
+        }
+    }
+
+    /// <summary>
+    /// use for union
+    /// </summary>
+    class DocumentProductComparer : IEqualityComparer<DocumentProduct>
+    {
+        public bool Equals(DocumentProduct p1, DocumentProduct p2)
+        {
+            if (p1.CodDocumentProduct == null && p1.CodDocumentProduct == null)
+            {
+                return false;
+            }
+            else 
+            {
+                return p1.CodDocumentProduct == p2.CodDocumentProduct;
+               
+            }
+        }
+
+        public int GetHashCode(DocumentProduct p)
+        {
+            return (p.CodDocumentProduct == null) ? 0 : p.CodDocumentProduct.GetHashCode();
+        }
+    }
+
+    class ProductPartComparer : IEqualityComparer<ProductPart>
+    {
+        public bool Equals(ProductPart p1, ProductPart p2)
+        {
+            if (p1.CodProductPart == null && p1.CodProductPart == null)
+            {
+                return false;
+            }
+            else
+            {
+                return p1.CodProductPart == p2.CodProductPart;
+
+            }
+        }
+
+        public int GetHashCode(ProductPart p)
+        {
+            return (p.CodProductPart == null) ? 0 : p.CodProductPart.GetHashCode();
+        }
+    }
 
     public class SemiNumericComparer : IComparer<string>
     {

@@ -312,7 +312,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
     <Compile Include="Areas\Working\Models\Products\FactoryPattern\ProductCreator.cs" />
-    <Compile Include="Models\LastCode.cs">
+    <Compile Include="Models\EstimateEcommerce.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Services Layer\PapiroService.cs" />

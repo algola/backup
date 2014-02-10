@@ -70,6 +70,9 @@ namespace Services
 
         public override void Edit(Product entity)
         {
+            //we can have some DocumentProduct added and some just saved so...
+            var part = Context.ProductParts.Where(x => x.CodProduct == entity.CodProduct).ToList();
+            entity.ProductParts = part.Union(entity.ProductParts, new ProductPartComparer()).ToList();
 
             ProductPartCodeRigen(entity);
 

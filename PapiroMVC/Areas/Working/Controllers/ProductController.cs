@@ -10,6 +10,7 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
+using PapiroMVC.ServiceLayer;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -113,8 +114,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         public ActionResult CreateProduct(string id)
         {
+            var p = new PapiroService();
             var inizio = DateTime.Now;
-            var c = Creator.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
+            var c = p.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
 
             var d = new ProductViewModel();
             d.Product = c;
