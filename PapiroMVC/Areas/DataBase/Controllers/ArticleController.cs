@@ -18,8 +18,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
 
-        protected dbEntities db;
-
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
@@ -55,14 +53,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(new RigidPrintableArticleAutoChanges());
         }
 
-        //
-        // GET: /Article/Details/5
-
-        public ActionResult Details(string id)
-        {
-            Article article = db.articles.Find(id);
-            return View(article);
-        }
 
         [AuthorizeUser]
         [HttpGet]

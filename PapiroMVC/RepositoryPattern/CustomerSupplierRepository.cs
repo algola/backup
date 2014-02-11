@@ -27,7 +27,7 @@ namespace Services
         {
             foreach (var item in entity.CustomerSupplierBases)
             {
-                Context.Entry(item).State = System.Data.EntityState.Modified;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
             }
 
             base.Edit(entity);

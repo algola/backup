@@ -92,7 +92,7 @@ namespace Services
                         if (y!=null)
                         {
                             //optItem.Copy(y);
-                            //this.Context.Entry(entity).State = System.Data.EntityState.Modified;
+                            //this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
                             y.TimeStampTable = DateTime.Now;
                         }
                         else

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using SchemaManagemet;
-using System.Data.Objects;
+﻿using SchemaManagemet;
 using System.Data.Entity;
 
 namespace PapiroMVC.Model

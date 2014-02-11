@@ -1,10 +1,8 @@
 ﻿using PapiroMVC.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace Services
 {
@@ -26,8 +24,13 @@ namespace Services
             }
             else
             {
+                x = (x.Contains("-")) ? x.Substring(x.LastIndexOf('-') + 1, x.Length - x.LastIndexOf('-') - 1).PadLeft(6, '0') : x;
+                y = (y.Contains("-")) ? y.Substring(y.LastIndexOf('-') + 1, y.Length - y.LastIndexOf('-') - 1).PadLeft(6, '0') : y;
+
                 return String.Compare(x, y);
+
             }
+
         }
     }
 
@@ -42,10 +45,10 @@ namespace Services
             {
                 return false;
             }
-            else 
+            else
             {
                 return p1.CodDocumentProduct == p2.CodDocumentProduct;
-               
+
             }
         }
 
@@ -184,7 +187,7 @@ namespace Services
 
         public virtual void Edit(T entity)
         {
-            this.Context.Entry(entity).State = System.Data.EntityState.Modified;
+            this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
         }
 
         public virtual void Save()

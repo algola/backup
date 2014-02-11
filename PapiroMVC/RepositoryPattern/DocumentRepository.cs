@@ -7,6 +7,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Web;
 using System.Data.Common;
+using System.Data.Entity;
 
 namespace Services
 {
@@ -247,43 +248,38 @@ namespace Services
         {
 
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
-            .Where(x => x.State == System.Data.EntityState.Modified
-            || x.State == System.Data.EntityState.Added)
+            .Where(x => x.State == System.Data.Entity.EntityState.Modified
+            || x.State == System.Data.Entity.EntityState.Added)
             .Select(x => x.Entity).ToList();
 
 
             foreach (var item in modOrAdded.OfType<Product>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPart>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductTask>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPartTask>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPartsPrintableArticle>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<CostDetail>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<TypeOfTask>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<OptionTypeOfTask>())
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
-            try
-            {
+           
                 base.Save();
-            }
-            catch (OptimisticConcurrencyException)
-            {
-                Context.SaveChanges();
-            }
+
         }
 
         public override void Edit(Document entity)

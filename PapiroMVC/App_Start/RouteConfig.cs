@@ -15,12 +15,6 @@ namespace PapiroMVC
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
             // TRANSLATION ROUTING 
             CultureInfo cultureEN = CultureInfo.GetCultureInfo("en-US");
             CultureInfo cultureIT = CultureInfo.GetCultureInfo("it-IT");

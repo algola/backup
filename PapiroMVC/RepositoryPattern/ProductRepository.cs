@@ -40,8 +40,8 @@ namespace Services
         {
             //we want to save anly product and related-closed class
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
-                .Where(x => x.State == System.Data.EntityState.Modified
-                || x.State == System.Data.EntityState.Added)
+                .Where(x => x.State == System.Data.Entity.EntityState.Modified
+                || x.State == System.Data.Entity.EntityState.Added)
                 .Select(x => x.Entity).ToList();
 
             var notAll = modOrAdded.Except(modOrAdded.OfType<Product>())
@@ -52,19 +52,10 @@ namespace Services
 
             foreach (var item in notAll)
             {
-                Context.Entry(item).State = System.Data.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
             }
 
-
-
-            try
-            {
                 base.Save();
-            }
-            catch (OptimisticConcurrencyException)
-            {
-                Context.SaveChanges();
-            }
         }
 
 
@@ -78,22 +69,22 @@ namespace Services
 
             foreach (var item in entity.ProductParts)
             {
-                Context.Entry(item).State = System.Data.EntityState.Modified;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
 
                 foreach (var item2 in item.ProductPartPrintableArticles)
                 {
-                    Context.Entry(item2).State = System.Data.EntityState.Modified;
+                    Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 foreach (var item2 in item.ProductPartTasks)
                 {
-                    Context.Entry(item2).State = System.Data.EntityState.Modified;
+                    Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;
                 }
             }
 
             foreach (var item in entity.ProductTasks)
             {
-                Context.Entry(item).State = System.Data.EntityState.Modified;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
             }
 
             base.Edit(entity);

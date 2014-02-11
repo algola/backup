@@ -37,6 +37,8 @@ namespace PapiroMVC
 
             ModelMetadataProviders.Current = new CustomModelMetadataProvider();
 
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

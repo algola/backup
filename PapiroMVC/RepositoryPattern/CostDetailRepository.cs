@@ -90,7 +90,7 @@ namespace Services
                         }
                         catch (SystemException e)
                         {
-                            Context.Entry(mkr).State = System.Data.EntityState.Added;
+                            Context.Entry(mkr).State = System.Data.Entity.EntityState.Added;
                         }
                     }
 
@@ -137,8 +137,8 @@ namespace Services
         {
 
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
-                .Where(x => x.State == System.Data.EntityState.Modified
-                || x.State == System.Data.EntityState.Added)
+                .Where(x => x.State == System.Data.Entity.EntityState.Modified
+                || x.State == System.Data.Entity.EntityState.Added)
                 .Select(x => x.Entity).ToList();
 
             var notAll = modOrAdded.Except(modOrAdded.OfType<CostDetail>())
@@ -148,7 +148,7 @@ namespace Services
 
             foreach (var item in notAll)
             {
-                Context.Entry(item).State = System.Data.EntityState.Modified;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
             }
 
             base.Save();

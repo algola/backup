@@ -10,7 +10,7 @@ namespace Services
     {
         public void AddEstimatedOn(TaskEstimatedOn item)
         {
-            if (Context.Entry(item).State != System.Data.EntityState.Added)
+            if (Context.Entry(item).State != System.Data.Entity.EntityState.Added)
             {
                 var tskEst = item;
                 var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
@@ -73,23 +73,23 @@ namespace Services
             foreach (var item in entity.SetTaskExecutorEstimatedOn)
             {
                 item.TimeStampTable = DateTime.Now;
-                //Context.Entry(item).State = System.Data.EntityState.Modified;
+                //Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
                 foreach (var item2 in item.steps)
                 {
                     item2.TimeStampTable = DateTime.Now;
                     Console.WriteLine(Context.Entry(item2).State);
                     switch (Context.Entry(item2).State)
                     {
-                        case System.Data.EntityState.Added:
+                        case System.Data.Entity.EntityState.Added:
                             break;
-                        case System.Data.EntityState.Deleted:
+                        case System.Data.Entity.EntityState.Deleted:
                             break;
-                        case System.Data.EntityState.Detached:
+                        case System.Data.Entity.EntityState.Detached:
                             break;
-                        case System.Data.EntityState.Modified:
+                        case System.Data.Entity.EntityState.Modified:
                             break;
-                        case System.Data.EntityState.Unchanged:
-                            Context.Entry(item2).State = System.Data.EntityState.Modified;                    
+                        case System.Data.Entity.EntityState.Unchanged:
+                            Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;                    
                             break;
                         default:
                             break;
