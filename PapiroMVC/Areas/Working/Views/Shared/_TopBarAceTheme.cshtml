@@ -4,7 +4,7 @@
 @{
     string strings = "~/Views/Shared/Strings";
 
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "AppTitle"); 
+    ViewBag.Title = Html.T(strings, "AppTitle"); 
 }
 
 <div class="navbar-container navbar-inner" id="navbar-container">

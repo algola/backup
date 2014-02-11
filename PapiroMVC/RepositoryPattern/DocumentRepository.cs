@@ -208,6 +208,8 @@ namespace Services
                 }
             }
 
+            c.TimeStampTable = DateTime.Now;
+
         }
 
         public void SaveOnSession(Document entity)
@@ -254,28 +256,28 @@ namespace Services
 
 
             foreach (var item in modOrAdded.OfType<Product>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<ProductPart>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<ProductTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<ProductPartTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<ProductPartsPrintableArticle>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<CostDetail>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<TypeOfTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
             foreach (var item in modOrAdded.OfType<OptionTypeOfTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
            
                 base.Save();

@@ -22,13 +22,16 @@ namespace Services
             {
                 return 1;
             }
+            else if (String.IsNullOrEmpty(y) && String.IsNullOrEmpty(x))
+            {
+                return String.Compare(x, y);
+            }
             else
             {
                 x = (x.Contains("-")) ? x.Substring(x.LastIndexOf('-') + 1, x.Length - x.LastIndexOf('-') - 1).PadLeft(6, '0') : x;
                 y = (y.Contains("-")) ? y.Substring(y.LastIndexOf('-') + 1, y.Length - y.LastIndexOf('-') - 1).PadLeft(6, '0') : y;
 
                 return String.Compare(x, y);
-
             }
 
         }
@@ -145,7 +148,9 @@ namespace Services
 
                 if (_entities == null)
                 {
+
                     _entities = new C();
+
                     _entities.Configuration.ProxyCreationEnabled = false;
                     _entities.Configuration.AutoDetectChangesEnabled = false;
                     _entities.Configuration.ValidateOnSaveEnabled = false;
