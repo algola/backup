@@ -1,0 +1,51 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "DigitalSheetGridCaption");
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleDigital");
+
+}
+
+<div id='digitalSheet'>
+    @Html.Partial("_ListDigitalSheetAndRoll")
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
+@section breadcrumb {
+
+}
+
+@section title{
+    @ViewBag.Title
+}
+
+@section description{
+    @ViewBag.Desc
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+}
+
+
+<script>
+    $(function () {        
+        document.getElementById("taskexecutorSlidebar").className = "active open";
+        document.getElementById("digitalSlidebar").className = "active";
+    });
+</script>

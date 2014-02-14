@@ -1,0 +1,86 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleDigitalSheetAndRollIndex");
+}
+
+<h2>@ViewBag.Title</h2>
+<br />
+
+@(Html.jqGrid("DigitalSheeteGrid")
+    .setData("")
+    .setDataType(DataType.json)
+    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "DigitalSheetGridCaption"))
+    .setMultiSelect(true)
+        // columns
+    .addColumn(new Column("Id")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+        .setWidth(60)
+        .setCustomFormatter("editRow")
+        .setSortable(false))
+    .addColumn(new Column("CodExecutor")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "CodExecutorCaption"))
+        .setWidth(60)
+        .setSortable(true))
+    .addColumn(new Column("TaskExecutorName")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "TaskExecutorNameCaption"))        
+        .setWidth(100)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("FormatMax")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "FormatMaxCaption"))
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("BWSide1")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide1"))
+        .setFormatter(Formatters.checkbox)
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("BWSide2")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "BWSide2"))
+        .setFormatter(Formatters.checkbox)
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("ColorSide1")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide1"))
+        .setFormatter(Formatters.checkbox)
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+    .addColumn(new Column("ColorSide2")
+        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "ColorSide2"))
+        .setFormatter(Formatters.checkbox)
+        .setWidth(45)
+        .setSortable(true)
+        .setSearch(true))
+
+    .setUrl(Url.Action("DigitalSheetList", "TaskExecutor"))
+
+    .setHeight(300)
+    .setRowNum(20)
+    .setRowList(new int[] { 10, 20, 50, 100 })
+    .setPager("CustomGridAccountPager")
+    .setPrint(true)
+    .setLoadText("")
+    .setAutoWidth(true)
+    .setSearchToolbar(true)
+    .setViewRecords(true)
+
+    // error handler
+    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+
+    // render the html
+    .Render()
+)
+
+<br />
+<button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new {Area="Database"})');">            
+     <i class="icon-plus"></i>            
+     @HttpContext.GetLocalResourceObject(strings, "CreateDigitalSheet")
+                </button>

@@ -1,0 +1,69 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    //Prendo il titolo dal menù
+    ViewBag.Title = Html.T(strings, "ListEstimate");
+}
+
+<div class="alert alert-block alert-success">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+
+    <i class="icon-ok green"></i>
+    @Html.T(strings, "AlertWorkingArea")
+</div>
+
+<p>
+    In questa area puoi creare facilmente preventivi di stampa Litho/Offset a rotolo e a foglio, preventivi di stampa Digitali a rotolo e a foglio, e preventivi per stampa su supporti rigidi.
+</p>
+<div class="vspace"></div>
+
+
+<h3 class="row-fluid header smaller lighter blue">
+    <span class="span12">
+       @* <i class="icon-th-large"></i> *@
+       @Html.T(strings, "QuickOperation")
+    </span><!--/span-->
+</h3>
+
+<div id="well no-padding-left no-padding-rigth">
+    @Html.Partial("_NewProductCommand", new NewProductCommand())
+</div>
+
+@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
+
+
+@section title{
+    @Html.T(strings, "Documents")
+}
+
+@section description{
+    @Html.T(strings, "DocumentsDesc")
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
+}
+
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}
