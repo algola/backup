@@ -1297,7 +1297,8 @@
     <Compile Include="Routing\TranslatedAreaRegistrationContextExtensions.cs" />
     <Compile Include="Routing\TranslatedRoute.cs" />
     <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
-    <Compile Include="Services Layer\PapiroService.cs" />
+    <Compile Include="ServicesLayer\PapiroService.cs" />
+    <Compile Include="ServicesLayer\UserManagement\UserManagement.cs" />
     <Compile Include="Validation\AutorizeUserAttrbute.cs" />
     <Compile Include="Validation\Base\ContingentValidationAttribute.cs" />
     <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
