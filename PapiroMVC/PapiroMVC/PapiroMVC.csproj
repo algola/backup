@@ -1416,6 +1416,7 @@
     <Content Include="Content\acetheme\assets\css\select2.png" />
     <Content Include="Content\acetheme\assets\css\select2x2.png" />
     <Content Include="Content\acetheme\assets\css\ui.jqgrid.css" />
+    <Content Include="Content\acetheme\assets\css\ui.jqgrid_.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-ie.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-responsive.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-skins.css" />

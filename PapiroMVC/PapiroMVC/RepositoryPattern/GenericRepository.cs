@@ -116,7 +116,7 @@ namespace Services
         }
     }
 
-    public abstract class GenericRepository<C, T> : IGenericRepository<T>
+    public abstract class GenericRepository<C, T> : IGenericRepository<T>, IDisposable
         where T : class
         where C : DbContext, new()
     {
@@ -165,6 +165,26 @@ namespace Services
             set
             {
                 _entities = value;
+            }
+        }
+
+        public virtual void Dispose()
+        {
+
+            Dispose(true);
+            GC.SuppressFinalize(this);
+
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_entities != null)
+                {
+                    _entities.Dispose();
+                    _entities = null;
+                }
             }
         }
 

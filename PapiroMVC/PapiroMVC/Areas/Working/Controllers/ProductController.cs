@@ -66,6 +66,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository = _documentRepository;
             articleRepository = _articleRepository;
 
+            this.Disposables.Add(typeOfTaskRepository);
+            this.Disposables.Add(documentRepository);
+            this.Disposables.Add(productRepository);
+            this.Disposables.Add(formatsRepository);
+            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(prodTskNameRepository);
+            this.Disposables.Add(menu);
         }
 
         public ActionResult LoadMenuProduct()

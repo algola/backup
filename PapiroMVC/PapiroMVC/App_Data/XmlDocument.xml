@@ -148,6 +148,11 @@
             </summary>
             <param name="kernel">The kernel.</param>
         </member>
+        <member name="T:PapiroMVC.Controllers.ControllerAlgolaBase">
+            <summary>
+            this is the controller base Algola
+            </summary>
+        </member>
         <member name="M:PapiroMVC.Controllers.ControllerAlgolaBase.Initialize(System.Web.Routing.RequestContext)">
             <summary>
             This override reads autenticated user and sets right database and user
@@ -161,6 +166,17 @@
             object has some circular reference that prevents it to be serialized to Json.
             </summary>
             <returns></returns>
+        </member>
+        <member name="F:PapiroMVC.Controllers.ControllerAlgolaBase.disposables">
+            <summary>
+            I want to track each disposable object and dispose them when controller will be dispose
+            </summary>
+        </member>
+        <member name="M:PapiroMVC.Controllers.ControllerAlgolaBase.Dispose(System.Boolean)">
+            <summary>
+            Dispose each object that expone IDisposable Interface
+            </summary>
+            <param name="disposing"></param>
         </member>
         <member name="P:PapiroMVC.Controllers.ControllerAlgolaBase.CurrentDatabase">
             <summary>

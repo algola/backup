@@ -11,10 +11,11 @@ using System.Web.Security;
 
 namespace PapiroMVC.Controllers
 {
-
+    /// <summary>
+    /// this is the controller base Algola
+    /// </summary>
     public class ControllerAlgolaBase : AsyncController
     {
-
         protected string RenderRazorViewToString(string viewName, object model)
         {
             ViewData.Model = model;
@@ -102,7 +103,6 @@ namespace PapiroMVC.Controllers
         {
             base.ExecuteCore();
         }
-
 
         public void UpdateDatabase(string dbName)
         {
@@ -246,6 +246,42 @@ namespace PapiroMVC.Controllers
             }
             return null;
         }
+
+        /// <summary>
+        /// I want to track each disposable object and dispose them when controller will be dispose
+        /// </summary>
+        private IList<IDisposable> disposables;
+
+        public IList<IDisposable> Disposables
+        {
+            get
+            {
+                disposables = disposables == null ? new List<IDisposable>() : disposables;
+                return disposables;
+            }
+            set
+            {
+                disposables = value;
+            }
+        }
+
+        /// <summary>
+        /// Dispose each object that expone IDisposable Interface
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposables != null)
+            {
+                foreach (var disp in disposables)
+                {
+                    disp.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
     }
 
 }

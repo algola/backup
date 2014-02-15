@@ -6,7 +6,7 @@ using PapiroMVC.Models;
 
 namespace Services
 {
-    public interface IFormatsNameRepository
+    public interface IFormatsNameRepository : IDisposable
     {
         ProductFormatName[] GetAllById(string id);
     }

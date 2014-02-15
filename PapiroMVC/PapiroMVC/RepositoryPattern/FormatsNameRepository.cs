@@ -212,6 +212,10 @@ namespace Services
 
             return ret;
         }
+
+        public void Dispose()
+        { }
+
     }
 }
 

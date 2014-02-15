@@ -6,7 +6,7 @@ using PapiroMVC.Models;
 
 namespace Services
 {
-    public interface IProductTaskNameRepository
+    public interface IProductTaskNameRepository : IDisposable
     {
         String[] GetAllById(string id);
     }

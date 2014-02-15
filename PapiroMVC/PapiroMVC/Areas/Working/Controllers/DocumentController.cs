@@ -74,6 +74,17 @@ namespace PapiroMVC.Areas.Working.Controllers
             customerSupplierRepository = _customerSupplierRepository;
             menu = _menuProduct;
             costDetailRepository = _costDetailRepository;
+
+            this.Disposables.Add(typeOfTaskRepository);
+            this.Disposables.Add(documentRepository);
+            this.Disposables.Add(productRepository);
+            this.Disposables.Add(taskExecutorRepository);
+            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(menu);
+            this.Disposables.Add(costDetailRepository);
+
+        
         }
 
         //
