@@ -6492,6 +6492,11 @@
             use for union
             </summary>
         </member>
+        <member name="T:Services.CostComparer">
+            <summary>
+            use for union
+            </summary>
+        </member>
         <member name="M:PapiroMVC.Models.Extensions.GetArticlesByProductPartPrintableArticle(System.Linq.IQueryable{PapiroMVC.Models.Article},PapiroMVC.Models.ProductPartsPrintableArticle)">
             <summary>
             restituisce l'articolo

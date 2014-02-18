@@ -61,6 +61,30 @@ namespace Services
         }
     }
 
+
+    /// <summary>
+    /// use for union
+    /// </summary>
+    class CostComparer : IEqualityComparer<Cost>
+    {
+        public bool Equals(Cost p1, Cost p2)
+        {
+            if (p1.CodCost == null && p1.CodCost == null)
+            {
+                return false;
+            }
+            else
+            {
+                return p1.CodCost == p2.CodCost;
+            }
+        }
+
+        public int GetHashCode(Cost p)
+        {
+            return (p.CodCost == null) ? 0 : p.CodCost.GetHashCode();
+        }
+    }
+
     class ProductPartComparer : IEqualityComparer<ProductPart>
     {
         public bool Equals(ProductPart p1, ProductPart p2)

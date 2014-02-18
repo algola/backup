@@ -286,9 +286,22 @@ namespace Services
 
         public override void Edit(Document entity)
         {
-            //we can have some DocumentProduct added and some just saved so...
-            var dps = Context.DocumentProducts.Where(x => x.CodDocument == entity.CodDocument).ToList();
-            entity.DocumentProducts = entity.DocumentProducts.Union(dps, new DocumentProductComparer()).ToList();
+            //we can have some DocumentProduct added and some Just Stored so...
+            var dpJustStored = Context.DocumentProducts.Where(x => x.CodDocument == entity.CodDocument).ToList();
+            entity.DocumentProducts = entity.DocumentProducts.Union(dpJustStored, new DocumentProductComparer()).ToList();
+
+            //we can have some Cost added and dome Just Stored so...
+            foreach (var item in entity.DocumentProducts)
+            {
+                //perform only if CodDocumentProduct is not null
+                if (item.CodDocumentProduct != null)
+                {
+                    var costJustStored = Context.Costs.Where(x => x.CodDocumentProduct == item.CodDocumentProduct).ToList();
+                    item.Costs = item.Costs.Union(costJustStored, new CostComparer()).ToList();
+
+                }
+                
+            }
 
             DocumentProductCodeRigen(entity);
 

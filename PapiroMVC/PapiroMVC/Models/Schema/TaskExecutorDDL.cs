@@ -28,7 +28,6 @@ namespace PapiroMVC.Model
             //universal code used for supplier's item
             dbS.AddColumnToTable("taskexecutors", "UniversalCodPapiro", SchemaDb.String, "50");
 
-
             dbS.AddColumnToTable("taskexecutors", "FormatMin", SchemaDb.String, "9");
             dbS.AddColumnToTable("taskexecutors", "FormatMax", SchemaDb.String, "9");
             dbS.AddColumnToTable("taskexecutors", "WeightMin", SchemaDb.IntUS, "0");
@@ -46,7 +45,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "WashUpTime", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutors", "ChangePlateTime", SchemaDb.Time, "0");
 
-            // 0 = Litho // 1 = Digital 
+            // 0 = Litho // 1 = Digital // 2 = Flexo
             dbS.AddColumnToTable("taskexecutors", "SelectorLithoDigital", SchemaDb.Int, "0");
 
             // 0 = Binding  

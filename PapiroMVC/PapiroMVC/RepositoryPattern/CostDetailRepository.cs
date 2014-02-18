@@ -205,11 +205,9 @@ namespace Services
 
         public override CostDetail GetSingle(string Cod)
         {
-
             try
             {
                 return Cache[Cod];
-
             }
             catch (Exception)
             {

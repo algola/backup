@@ -1179,12 +1179,12 @@
     <Compile Include="Models\RollPrintableArticleStandardCost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Schema Database\ArticlesDDL.cs" />
-    <Compile Include="Models\Schema Database\CustomerSupplierDDL.cs" />
-    <Compile Include="Models\Schema Database\DatabaseDDL.cs" />
-    <Compile Include="Models\Schema Database\GridColumnsPerUserDDL.cs" />
-    <Compile Include="Models\Schema Database\TaskExecutorDDL.cs" />
-    <Compile Include="Models\Schema Database\UserDDL.cs" />
+    <Compile Include="Models\Schema Database_\ArticlesDDL.cs" />
+    <Compile Include="Models\Schema Database_\CustomerSupplierDDL.cs" />
+    <Compile Include="Models\Schema Database_\DatabaseDDL.cs" />
+    <Compile Include="Models\Schema Database_\GridColumnsPerUserDDL.cs" />
+    <Compile Include="Models\Schema Database_\TaskExecutorDDL.cs" />
+    <Compile Include="Models\Schema Database_\UserDDL.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
@@ -1416,7 +1416,6 @@
     <Content Include="Content\acetheme\assets\css\select2.png" />
     <Content Include="Content\acetheme\assets\css\select2x2.png" />
     <Content Include="Content\acetheme\assets\css\ui.jqgrid.css" />
-    <Content Include="Content\acetheme\assets\css\ui.jqgrid_.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-ie.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-responsive.css" />
     <Content Include="Content\acetheme\assets\css\uncompressed\ace-skins.css" />
