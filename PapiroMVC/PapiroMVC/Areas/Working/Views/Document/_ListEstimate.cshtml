@@ -6,59 +6,121 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
 }
 
-@(Html.jqGrid("estimateGrid")
+<table id="estimateGrid">
+    <tr>
+        <td />
+    </tr>
+</table>
+<div id="estimateGridAccountPager"></div>
 
-    .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
-    .setCaption("")
+<script type="text/javascript">
 
-    .setMultiSelect(true)
+    $(function () {
 
-        // columns
-    .addColumn(new Column("Id")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
-        .setWidth(25)
-        .setCustomFormatter("editEstimate")
-        .setSortable(false))
-    .addColumn(new Column("Customer")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Customer"))
-        .setWidth(50)
-        .setSortable(true))
-    .addColumn(new Column("EstimateNumber")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "EstimateNumber"))
-        .setWidth(15)
-        .setSortable(true)
-        .setFirstSortOrder(SortOrder.desc)
-        .setAlign(Align.right))
-    .addColumn(new Column("DocumentName")
-        .setLabel((string)HttpContext.GetLocalResourceObject(strings, "DocumentName"))
-        .setWidth(100)
-        .setSearch(true)
-        .setSortable(false))
+        var gidProductDocument = $("#estimateGrid").jqGrid({
+            url: '@Url.Action("EstimateList", "Document")',
+            datatype: 'json',
+            colModel: [
+                { name: 'Id', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 25, sortable: false, formatter: editEstimate },
+                { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(strings, "Customer")', width: 50, sortable: true },
+                { name: 'EstimateNumber', label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumber")', width: 15, sortable: true, align: 'right', firstsortorder: 'desc'  },
+                { name: 'DocumentName', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentName")', width: 100, search: true, sortable: true },
+                { name: 'ToHide', label: '', width: 4}
 
-        .setUrl(Url.Action("EstimateList", "Document"))
+            ],
 
-    .setHeight(300)
-    .setRowNum(10)
-    .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("estimateGridAccountPager")
-    .setPrint(true)
-    .setLoadText("")
-    .setAutoWidth(true)
-    .setSearchToolbar(true)
+            multiselect: true,
 
-    // error handler
-    .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+            pager: '#estimateGridAccountPager',
 
-    // render the html
-    .Render()
-)
-<br />
+            height: 300,
+            rowNum: 10,
+            rowList: [15, 20, 50, 100],
+            viewrecords: true,
+            autowidth: true,
+            searchtooblar: true,
+            print: true,
+            loadtext: '',
+            shrinkToFit:false
 
-<div>
+        });
 
-    <button class="btn btn-danger" type="button" id="delete">
-        <i class="icon-trash bigger-125"></i>
+        gidProductDocument.jqGrid('navGrid', '#estimateGridAccountPager', { edit: false, add: false, del: false, search: false });
+
+        gidProductDocument.jqGrid('hideCol', { width: 100 });
+
+        var myGrid = $("#estimateGrid"),
+            width = myGrid.jqGrid('getGridParam', 'width'); // get current width
+        myGrid.jqGrid('setGridWidth', width, true);
+        gidProductDocument.jqGrid('hideCol', ["ToHide"]);
+
+        
+    });
+
+
+    </script>
+
+@*        @(Html.jqGrid("estimateGrid")
+
+        .setCaption((string)HttpContext.GetLocalResourceObject(strings, "TitleIndex"))
+        .setCaption("")
+
+        .setMultiSelect(true)
+
+            // columns
+        .addColumn(new Column("Id")
+            .setLabel((string)HttpContext.GetLocalResourceObject(strings, "OperationsCaption"))
+            .setWidth(25)
+            .setCustomFormatter("editEstimate")
+            .setSortable(false))
+        .addColumn(new Column("Customer")
+            .setLabel((string)HttpContext.GetLocalResourceObject(strings, "Customer"))
+            .setWidth(50)
+            .setSortable(true))
+        .addColumn(new Column("EstimateNumber")
+            .setLabel((string)HttpContext.GetLocalResourceObject(strings, "EstimateNumber"))
+            .setWidth(15)
+            .setSortable(true)
+            .setFirstSortOrder(SortOrder.desc)
+            .setAlign(Align.right))
+        .addColumn(new Column("DocumentName")
+            .setLabel((string)HttpContext.GetLocalResourceObject(strings, "DocumentName"))
+            .setWidth(100)
+            .setSearch(true)
+            .setSortable(false))
+
+            .setUrl(Url.Action("EstimateList", "Document"))
+
+        .setHeight(300)
+        .setRowNum(10)
+        .setRowList(new int[] { 10, 20, 50, 100 })
+        .setPager("estimateGridAccountPager")
+        .setPrint(true)
+        .setLoadText("")
+        .setAutoWidth(true)
+        .setSearchToolbar(true)
+
+        // error handler
+        .onLoadError((string)HttpContext.GetLocalResourceObject(strings, "ErrorLoading"))
+
+        // render the html
+        .Render()
+    ) *@
+        <br />
+
+        <div>
+
+            <button class="btn btn-danger" type="button" id="delete">
+                <i class="icon-trash bigger-125"></i>
         @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
+                <span class="badge badge-transparent">
+                    <i class="light-red icon-asterisk"></i>
+                </span>
+            </button>
+
+            <button class="btn btn-danger" type="button" id="griglia" onclick="ridimensiona();">
+                <i class="icon-trash bigger-125"></i>
+        prova ridimensione
         <span class="badge badge-transparent">
             <i class="light-red icon-asterisk"></i>
         </span>
@@ -66,8 +128,10 @@
 
 </div>
 
+
+
 <div id="dialog-confirm" class="hide">
 
-    @Html.T(strings,"DeleteMessageEstimate")
+        @Html.T(strings,"DeleteMessageEstimate")
 
 </div>
