@@ -11,107 +11,110 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    @(Html.jqGrid("ArticleGrid")
+    <table id="ArticleGrid"></table>
+    <div id="CustomGridAccountPager"></div>
 
-  //  .setShrinkToFit(false)
+@*   @(Html.jqGrid("ArticleGrid")
 
-    .setCaption(Html.T(strings, "SheetPrintableArticleGridCaption"))
-        .setCaption("")
+      //  .setShrinkToFit(false)
 
-    .setMultiSelect(true)
-            // columns
-    .addColumn(new Column("Id")
-        .setLabel(Html.T(strings, "OperationsCaption"))
-        .setWidth(@Html.T(strings, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(@Html.T(strings, "OperationsCaptionWidth")))
-        .setCustomFormatter("editArticle")
-        .setSortable(false))
-    .addColumn(new Column("CodArticle")
-        .setLabel(Html.T(strings, "CodArticleCaption"))
-        .setWidth(80)
-        .setSortable(true))
+        .setCaption(Html.T(strings, "SheetPrintableArticleGridCaption"))
+            .setCaption("")
 
-    .addColumn(new Column("TypeOfMaterial")
-        .setLabel(Html.T(strings, "TypeOfMaterialCaption"))
-        .setWidth(100)
-        .setSortable(true)
-        .setSearch(true))
+        .setMultiSelect(true)
+                // columns
+        .addColumn(new Column("Id")
+            .setLabel(Html.T(strings, "OperationsCaption"))
+            .setWidth(@Html.T(strings, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(@Html.T(strings, "OperationsCaptionWidth")))
+            .setCustomFormatter("editArticle")
+            .setSortable(false))
+        .addColumn(new Column("CodArticle")
+            .setLabel(Html.T(strings, "CodArticleCaption"))
+            .setWidth(80)
+            .setSortable(true))
 
-    .addColumn(new Column("NameOfMaterial")
-        .setLabel(Html.T(strings, "NameOfMaterialCaption"))
-        .setWidth(100)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("TypeOfMaterial")
+            .setLabel(Html.T(strings, "TypeOfMaterialCaption"))
+            .setWidth(100)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("Color")
-        .setLabel(Html.T(strings, "ColorCaption"))
-        .setWidth(100)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("NameOfMaterial")
+            .setLabel(Html.T(strings, "NameOfMaterialCaption"))
+            .setWidth(100)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("Weight")
-        .setLabel(Html.T(strings, "WeightCaption"))
-        .setWidth(50)
-        .setAlign(Align.right)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("Color")
+            .setLabel(Html.T(strings, "ColorCaption"))
+            .setWidth(100)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("Format")
-        .setLabel(Html.T(strings, "FormatCaption"))
-        .setWidth(50)
-        .setAlign(Align.center)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("Weight")
+            .setLabel(Html.T(strings, "WeightCaption"))
+            .setWidth(50)
+            .setAlign(Align.right)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("SheetPerPacked")
-        .setLabel(Html.T(strings, "SheetPerPackedCaption"))
-        .setWidth(50)
-        .setAlign(Align.right)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("Format")
+            .setLabel(Html.T(strings, "FormatCaption"))
+            .setWidth(50)
+            .setAlign(Align.center)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("SheetPerPallet")
-        .setLabel(Html.T(strings, "SheetPerPalletCaption"))
-        .setWidth(50)
-        .setAlign(Align.right)
-        .setSortable(true)
-        .setSearch(true))
+        .addColumn(new Column("SheetPerPacked")
+            .setLabel(Html.T(strings, "SheetPerPackedCaption"))
+            .setWidth(50)
+            .setAlign(Align.right)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("SupplierName")
-        .setLabel(Html.T(strings, "SupplierNameCaption"))
-        .setSearch(true)
-        .setWidth(150))
+        .addColumn(new Column("SheetPerPallet")
+            .setLabel(Html.T(strings, "SheetPerPalletCaption"))
+            .setWidth(50)
+            .setAlign(Align.right)
+            .setSortable(true)
+            .setSearch(true))
 
-    .addColumn(new Column("CostPerKg")
-        .setLabel(Html.T(strings, "CostPerKgCaption"))
-        .setSearch(true)
-        .setWidth(45)
-        .setAlign(Align.right))
+        .addColumn(new Column("SupplierName")
+            .setLabel(Html.T(strings, "SupplierNameCaption"))
+            .setSearch(true)
+            .setWidth(150))
 
-    .addColumn(new Column("CostPerSheet")
-        .setLabel(Html.T(strings, "CostPerSheetCaption"))
-        .setTitle(false)
-        .setSearch(true)
-        .setWidth(45)
-        .setAlign(Align.right))
+        .addColumn(new Column("CostPerKg")
+            .setLabel(Html.T(strings, "CostPerKgCaption"))
+            .setSearch(true)
+            .setWidth(45)
+            .setAlign(Align.right))
 
-    .setUrl(Url.Action("SheetPrintableArticleList", "Article"))
+        .addColumn(new Column("CostPerSheet")
+            .setLabel(Html.T(strings, "CostPerSheetCaption"))
+            .setTitle(false)
+            .setSearch(true)
+            .setWidth(45)
+            .setAlign(Align.right))
 
-    .setHeight(300)
-    .setRowNum(20)
-    .setRowList(new int[] { 10, 20, 50, 100 })
-    .setPager("CustomGridAccountPager")
-    .setPrint(true)
-    .setLoadText("")
-    .setAutoWidth(true)
-    .setSearchToolbar(true)
-    .setViewRecords(true)
+        .setUrl(Url.Action("SheetPrintableArticleList", "Article"))
 
-    // error handler
-    .onLoadError(Html.T(strings, "ErrorLoading"))
+        .setHeight(300)
+        .setRowNum(20)
+        .setRowList(new int[] { 10, 20, 50, 100 })
+        .setPager("CustomGridAccountPager")
+        .setPrint(true)
+        .setLoadText("")
+        .setAutoWidth(true)
+        .setSearchToolbar(true)
+        .setViewRecords(true)
 
-    // render the html
-    .Render()
-)
+        // error handler
+        .onLoadError(Html.T(strings, "ErrorLoading"))
+
+        // render the html
+        .Render()
+    ) *@ 
     <br />
 
 
@@ -149,10 +152,125 @@
 </div>
 *@
 
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var grid_selector = "#ArticleGrid";
+        var pager_selector = "#CustomGridAccountPager";
+
+        jQuery(grid_selector).jqGrid({
+            //direction: "rtl",
+            url: '@Url.Action("SheetPrintableArticleList", "Article")',
+            datatype: 'json',
+
+
+            colModel: [
+                { name: 'Id', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: '@(Html.T(strings, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(Html.T(strings, "OperationsCaptionWidth")))', title: false, sortable: false, formatter: editArticle },
+                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(strings, "CodArticleCaption")', width: 80, search: true, sortable: true },
+                { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption")', width: 100, title: false, search: true, sortable: true },
+                { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption")', width: 100, title: false, search: true, sortable: true },
+                { name: 'Color', label: '@HttpContext.GetLocalResourceObject(strings, "ColorCaption")', width: 100, title: false, search: true, sortable: true },
+                { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(strings, "WeightCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
+                { name: 'Format', label: '@HttpContext.GetLocalResourceObject(strings, "FormatCaption")', align: 'center', width: 50, title: false, search: true, sortable: true },
+                { name: 'SheetPerPacked', label: '@HttpContext.GetLocalResourceObject(strings, "SheetPerPackedCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
+                { name: 'SheetPerPallet', label: '@HttpContext.GetLocalResourceObject(strings, "SheetPerPalletCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
+                { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
+                { name: 'CostPerKg', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerKgCaption")', width: 45, title: false, search: true, align: 'right' },
+                { name: 'CostPerSheet', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerSheetCaption")', width: 45, title: false, search: true, align: 'right' }
+            ],
+
+            loadtext: '',
+            viewrecords: true,
+            autowidth: true,
+            print: true,
+            height: 300,
+            viewrecords: true,
+            rowNum: 20,
+            rowList: [10, 20, 50, 100],
+            pager: pager_selector,
+            multiselect: true,
+
+            loaderror: '@(Html.T(strings, "ErrorLoading"))',
+
+
+            loadComplete: function () {
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            }
+
+        });
+
+        jQuery(grid_selector).jqGrid('filterToolbar', { stringResult: true });
+
+
+        //unlike navButtons icons, action icons in rows seem to be hard-coded
+        //you can change them like this in here if you want
+        function updateActionIcons(table) {
+            /**
+            var replacement =
+            {
+                'ui-icon-pencil' : 'icon-pencil blue',
+                'ui-icon-trash' : 'icon-trash red',
+                'ui-icon-disk' : 'icon-ok green',
+                'ui-icon-cancel' : 'icon-remove red'
+            };
+            $(table).find('.ui-pg-div span.ui-icon').each(function(){
+                var icon = $(this);
+                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+                if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+            })
+            */
+        }
+
+        //replace icons with FontAwesome icons like above
+        function updatePagerIcons(table) {
+            var replacement =
+            {
+                'ui-icon-seek-first': 'icon-double-angle-left bigger-140',
+                'ui-icon-seek-prev': 'icon-angle-left bigger-140',
+                'ui-icon-seek-next': 'icon-angle-right bigger-140',
+                'ui-icon-seek-end': 'icon-double-angle-right bigger-140'
+            };
+            $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
+                var icon = $(this);
+                var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
+            })
+        }
+
+        function enableTooltips(table) {
+            $('.navtable .ui-pg-button').tooltip({ container: 'body' });
+            $(table).find('.ui-pg-div').tooltip({ container: 'body' });
+        }
+
+        //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+
+
+    });
+
+
+</script>
+
 <script type="text/javascript">
 
     $(window).bind('resize', function () {
-        $("#ArticleGrid").setGridWidth($("#body-container").width());
+
+        var myGrid = $("#ArticleGrid");
+        var width = $("#body-container").width();
+        try {
+            myGrid.jqGrid('setGridWidth', width, true);
+
+        } catch (e) {
+
+        }
+
     }).trigger('resize');
+
+
 
 </script>
