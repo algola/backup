@@ -84,7 +84,7 @@ namespace PapiroMVC.ServiceLayer
             product.ProductTaskName = prodTskNameRepository.GetAllById(id);
             product.FormatsName = formatsRepository.GetAllById(id);
 
-            product.SystemTaskList = typeOfTaskRepository.GetAll();
+            product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             product.InitProduct();
 
             return product;

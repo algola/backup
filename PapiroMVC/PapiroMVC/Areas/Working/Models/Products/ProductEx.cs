@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(Product))]
     [MetadataType(typeof(Product_MetaData))]
     public abstract partial class Product
     {
@@ -16,8 +19,10 @@ namespace PapiroMVC.Models
         public bool ShowDCut { get; set; }
         public Nullable<double> DCut { get; set; }
 
-        //list of all TypeOfTask in the system
-        public IQueryable<TypeOfTask> SystemTaskList { get; set; }
+        /// <summary>
+        /// list of all TypeOfTask in the system
+        /// </summary>
+        public List<TypeOfTask> SystemTaskList { get; set; }
 
         protected List<ProductPart> productParts;
         public List<ProductPart> ProductPartsPerView

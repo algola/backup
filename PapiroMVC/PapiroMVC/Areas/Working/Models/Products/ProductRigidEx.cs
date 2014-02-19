@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(ProductRigid))]
     [MetadataType(typeof(ProductRigid_MetaData))]
     public partial class ProductRigid : Product, IDataErrorInfo, ICloneable, IDeleteRelated
     {

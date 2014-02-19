@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(ProductPartSingleSheet))]
     [MetadataType(typeof(ProductPartSingleSheet_MetaData))]
     public partial class ProductPartSingleSheet : ProductPart, ICloneable, IDeleteRelated
     {

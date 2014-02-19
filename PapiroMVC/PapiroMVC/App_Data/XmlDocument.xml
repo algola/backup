@@ -1117,6 +1117,11 @@
             update cost quantity and so other stuff
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Product.SystemTaskList">
+            <summary>
+            list of all TypeOfTask in the system
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Product.ProductTaskName">
             <summary>
             list of Task in product (definition of product)

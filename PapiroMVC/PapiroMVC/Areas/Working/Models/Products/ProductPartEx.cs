@@ -5,9 +5,12 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PapiroMVC.Models.Resources.Products;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(ProductPart))]
     [MetadataType(typeof(ProductPart_MetaData))]
     public partial class ProductPart
     {

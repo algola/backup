@@ -6,10 +6,13 @@ using System.ComponentModel;
 
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
     [Serializable]
+    [KnownType(typeof(TypeOfTask))]
+
    // [MetadataType(typeof(Step_MetaData))]
     public partial class TypeOfTask
     {       

@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(ProductBlockSheet))]
     [MetadataType(typeof(ProductBlockSheet_MetaData))]
-    public partial class ProductBlockSheet :Product , IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class ProductBlockSheet : Product, IDataErrorInfo, ICloneable, IDeleteRelated
     {
         public ProductBlockSheet()
         {
@@ -51,7 +54,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get
@@ -85,7 +88,7 @@ namespace PapiroMVC.Models
             //All properties of object
             //and pointer of sons
             to.Format = this.Format;
-           
+
 
         }
 

@@ -48,7 +48,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var prod = productRepository.GetSingle(id);
             prod.FormatsName = formatsRepository.GetAllById(prod.CodMenuProduct);
-            prod.SystemTaskList = typeOfTaskRepository.GetAll();
+            prod.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             prod.InitPageTask();
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
@@ -61,7 +61,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var prod = productRepository.GetSingle(id);
             prod.FormatsName = formatsRepository.GetAllById(prod.CodMenuProduct);
-            prod.SystemTaskList = typeOfTaskRepository.GetAll();
+            prod.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             prod.InitPageTask();
             return View(prod);
         }
@@ -73,7 +73,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
 
             c.FormatsName = formatsRepository.GetAllById(c.CodMenuProduct);
-            c.SystemTaskList = typeOfTaskRepository.GetAll();
+            c.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             c.InitPageTask();
 
             var taskList = this.typeOfTaskRepository.GetAll();
@@ -215,7 +215,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli
             product.FormatsName = formatsRepository.GetAllById(product.CodMenuProduct);
-            product.SystemTaskList = typeOfTaskRepository.GetAll();
+            product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
 
             //reload option object for productTask and productPartTask
             var taskList = this.typeOfTaskRepository.GetAll();

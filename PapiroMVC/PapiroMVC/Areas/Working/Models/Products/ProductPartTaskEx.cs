@@ -7,9 +7,12 @@ using System.ComponentModel.DataAnnotations;
 using PapiroMVC.Models.Resources.Products;
 using PapiroMVC.Views.Shared.App_LocalResources;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+    [Serializable]
+    [KnownType(typeof(ProductPartTask))]
     [MetadataType(typeof(ProductPartTask_MetaData))]
     public partial class ProductPartTask : IDataErrorInfo, ICloneable, IDeleteRelated
     {
