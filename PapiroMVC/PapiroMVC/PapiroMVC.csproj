@@ -1749,6 +1749,7 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jqgridHelper.js" />
     <Content Include="Scripts\autocomplete.js" />
     <Content Include="Content\acetheme\assets\css\less\ace-nav.less" />
     <Content Include="Content\acetheme\assets\css\less\ace.less" />
