@@ -13,5 +13,6 @@ namespace Services
         TaskEstimatedOn GetSingleEstimatedOn(string cod);
         void AddEstimatedOn(TaskEstimatedOn tskEst);
         Step GetSingleStep(int cod);
+        void EditSingleStep(Step entity);
     }
 }

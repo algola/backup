@@ -1,4 +1,5 @@
 ﻿@model PapiroMVC.Models.Document
+@using PapiroMVC.Validation
 @using Mvc.HtmlHelpers
 
 
@@ -9,33 +10,202 @@
 }
 
 @*jqgrid*@
-<table id="documentProduct">
-    <tr>
-        <td />
-    </tr>
-</table>
-<div id="pagerDocumentProduct"></div>
+<div id="containerbox">
+    <!-- Main Page -->
+
+    <table id="listDocumentProduct"><tr><td /></tr></table>
+    <div id="pager"></div>
+</div>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 
 <script type="text/javascript">
+    //<![CDATA[
+    /*global $ */
+    /*jslint devel: true, browser: true, plusplus: true */
+    //$.jgrid.formatter.integer.thousandsSeparator = ',';
+    //$.jgrid.formatter.number.thousandsSeparator = ',';
+    //$.jgrid.formatter.currency.thousandsSeparator = ',';
+    $(document).ready(function () {
+        'use strict';
+        var // myData = [],
+            $grid = $("#listDocumentProduct"),
 
-    $(function () {
+            numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
+            numberTemplate = {
+                formatter: 'number', align: 'right', sorttype: 'number',
+                searchoptions: { sopt: numberSearchOptions }
+            },
+            myDefaultSearch = 'cn',
+            getColumnIndex = function (grid, columnIndex) {
+                var cm = grid.jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+                for (i = 0; i < l; i++) {
+                    if ((cm[i].index || cm[i].name) === columnIndex) {
+                        return i; // return the colModel index
+                    }
+                }
+                return -1;
+            },
+            refreshSerchingToolbar = function ($grid, myDefaultSearch) {
+                var postData = $grid.jqGrid('getGridParam', 'postData'), filters, i, l,
+                    rules, rule, iCol, cm = $grid.jqGrid('getGridParam', 'colModel'),
+                    cmi, control, tagName;
 
-        var lastSelPD = -1;
+                for (i = 0, l = cm.length; i < l; i++) {
+                    control = $("#gs_" + $.jgrid.jqID(cm[i].name));
+                    if (control.length > 0) {
+                        tagName = control[0].tagName.toUpperCase();
+                        if (tagName === "SELECT") { // && cmi.stype === "select"
+                            control.find("option[value='']")
+                                .attr('selected', 'selected');
+                        } else if (tagName === "INPUT") {
+                            control.val('');
+                        }
+                    }
+                }
 
-        var gidProductDocument = $("#documentProduct").jqGrid({
+                if (typeof (postData.filters) === "string" &&
+                        typeof ($grid[0].ftoolbar) === "boolean" && $grid[0].ftoolbar) {
+
+                    filters = $.parseJSON(postData.filters);
+                    if (filters && filters.groupOp === "AND" && typeof (filters.groups) === "undefined") {
+                        // only in case of advance searching without grouping we import filters in the
+                        // searching toolbar
+                        rules = filters.rules;
+                        for (i = 0, l = rules.length; i < l; i++) {
+                            rule = rules[i];
+                            iCol = getColumnIndex($grid, rule.field);
+                            if (iCol >= 0) {
+                                cmi = cm[iCol];
+                                control = $("#gs_" + $.jgrid.jqID(cmi.name));
+                                if (control.length > 0 &&
+                                        (((typeof (cmi.searchoptions) === "undefined" ||
+                                        typeof (cmi.searchoptions.sopt) === "undefined")
+                                        && rule.op === myDefaultSearch) ||
+                                          (typeof (cmi.searchoptions) === "object" &&
+                                              $.isArray(cmi.searchoptions.sopt) &&
+                                              cmi.searchoptions.sopt.length > 0 &&
+                                              cmi.searchoptions.sopt[0] === rule.op))) {
+                                    tagName = control[0].tagName.toUpperCase();
+                                    if (tagName === "SELECT") { // && cmi.stype === "select"
+                                        control.find("option[value='" + $.jgrid.jqID(rule.data) + "']")
+                                            .attr('selected', 'selected');
+                                    } else if (tagName === "INPUT") {
+                                        control.val(rule.data);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+        cm = [
+            { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct },
+            { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 600, align: 'left', editable: false }
+        ],
+
+        cm2 = [
+                    { name: 'CodDocumentProduct', label: 'CodDocumentProduct', key: true, width: 10, editable: false, hidden: true },
+                    { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProduct")', width: 80, align: 'left', editable: false, hidden: true },
+                    { name: "Quantity", label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', index: "Quantity", width: 90, align: "right" },
+                    { name: "UnitPrice", label: '@HttpContext.GetLocalResourceObject(strings, "UnitPrice")', index: "UnitPrice", width: 80, align: "right" },
+                    { name: "TotalAmount", label: '@HttpContext.GetLocalResourceObject(strings, "TotalAmount")', index: "TotalAmount", width: 80, align: "right" }
+        ],
+        saveObjectInLocalStorage = function (storageItemName, object) {
+            if (typeof window.localStorage !== 'undefined') {
+                window.localStorage.setItem(storageItemName, JSON.stringify(object));
+            }
+        },
+            removeObjectFromLocalStorage = function (storageItemName) {
+                if (typeof window.localStorage !== 'undefined') {
+                    window.localStorage.removeItem(storageItemName);
+                }
+            },
+            getObjectFromLocalStorage = function (storageItemName) {
+                if (typeof window.localStorage !== 'undefined') {
+                    return JSON.parse(window.localStorage.getItem(storageItemName));
+                }
+            },
+            myColumnStateName = 'ListDocumentProduct.colState',
+            saveColumnState = function (perm) {
+                var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
+                    postData = this.jqGrid('getGridParam', 'postData'),
+                    columnsState = {
+                        search: this.jqGrid('getGridParam', 'search'),
+                        page: this.jqGrid('getGridParam', 'page'),
+                        sortname: this.jqGrid('getGridParam', 'sortname'),
+                        sortorder: this.jqGrid('getGridParam', 'sortorder'),
+                        permutation: perm,
+                        colStates: {}
+                    },
+                    colStates = columnsState.colStates;
+
+                if (typeof (postData.filters) !== 'undefined') {
+                    columnsState.filters = postData.filters;
+                }
+
+                for (i = 0; i < l; i++) {
+                    colItem = colModel[i];
+                    cmName = colItem.name;
+                    if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                        colStates[cmName] = {
+                            width: colItem.width,
+                            hidden: colItem.hidden
+                        };
+                    }
+                }
+                saveObjectInLocalStorage(myColumnStateName, columnsState);
+            },
+            myColumnsState,
+            isColState,
+            restoreColumnState = function (colModel) {
+                var colItem, i, l = colModel.length, colStates, cmName,
+                    columnsState = getObjectFromLocalStorage(myColumnStateName);
+
+                if (columnsState) {
+                    colStates = columnsState.colStates;
+                    for (i = 0; i < l; i++) {
+                        colItem = colModel[i];
+                        cmName = colItem.name;
+                        if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                            colModel[i] = $.extend(true, {}, colModel[i], colStates[cmName]);
+                        }
+                    }
+                }
+                return columnsState;
+            },
+            firstLoad = true;
+
+        myColumnsState = restoreColumnState(cm);
+        isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
+
+        $grid.jqGrid({
             url: '@url',
             datatype: 'json',
-            colModel: [
-                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct },
-                    { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 200, align: 'left', editable: false }
-                ],
-
-            pager: '#pagerDocumentProduct',
-
-            rowNum: 15,
-            rowList: [15, 20, 50],
+            colModel: cm,
+            loadtext: '',
             viewrecords: true,
             autowidth: true,
+            shrinkToFit: false,
+
+            print: true,
+            rowNum: 15,
+
+            rowList: [10, 20, 50],
+            gridview: true,
+            multiselect: true,
+            pager: '#pager',
+            page: isColState ? myColumnsState.page : 1,
+            search: isColState ? myColumnsState.search : false,
+            postData: isColState ? { filters: myColumnsState.filters } : {},
+            sortname: isColState ? myColumnsState.sortname : 'invdate',
+            sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            ignoreCase: true,
+            //shrinkToFit: false,
+            //viewrecords: true,
+            caption: '',
+            height: 300,
 
             onSelectRow: function (id) {
                 if (id && id !== lastSelPD) {
@@ -57,36 +227,113 @@
                 jQuery("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table>");
                 jQuery("#" + subgrid_table_id).jqGrid({
                     url: '@subUrl&CodProduct=' + row_id,
-                        datatype: 'json',
-                        colModel: [
-                        { name: 'CodDocumentProduct', label: 'CodDocumentProduct', key: true, width: 10, editable: false, hidden: true },
-                        { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProduct")', width: 80, align: 'left', editable: false, hidden: true },
-                        { name: "Quantity", label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', index: "Quantity", width: 90, align: "right" },
-                        { name: "UnitPrice", label: '@HttpContext.GetLocalResourceObject(strings, "UnitPrice")', index: "UnitPrice", width: 80, align: "right" },
-                        { name: "TotalAmount", label: '@HttpContext.GetLocalResourceObject(strings, "TotalAmount")', index: "TotalAmount", width: 80, align: "right" }],
-                        height: '100%',
-                        rowNum: 10,
-                        sortname: 'Quantity',
-                        sortorder: "asc"
-                    });
+                    datatype: 'json',
+                    colModel: cm2,
+                    height: '120%',
+                    rowNum: 10,
+                    sortname: 'Quantity',
+                    sortorder: "asc",
+                    width: 265,
+                    autowidth: false,
+                    shrinkToFit: false
+                });
+            },
+
+            loaderror: '@(Html.T(strings, "ErrorLoading"))',
+            loadComplete: function () {
+
+                var $this = $(this);
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+
+
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (isColState) {
+                        $this.jqGrid("remapColumns", myColumnsState.permutation, true);
+
+
+                    }
+                    if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                        // create toolbar if needed
+                        $this.jqGrid('filterToolbar',
+                            { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
+                    }
                 }
-
+                refreshSerchingToolbar($this, myDefaultSearch);
+                saveColumnState.call($this, this.p.remapColumns);
+            },
+            resizeStop: function () {
+                saveColumnState.call($grid, $grid[0].p.remapColumns);
+            }
         });
-
-        gidProductDocument.jqGrid('navGrid', '#pagerdocumentProduct', { edit: false, add: false, del: false, search: false });
-
+        $.extend($.jgrid.search, {
+            multipleSearch: true,
+            multipleGroup: true,
+            recreateFilter: true,
+            closeOnEscape: true,
+            closeAfterSearch: true,
+            overlay: 0
+        });
+        $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-calculator",
+            title: "choose columns",
+            onClickButton: function () {
+                $(this).jqGrid('columnChooser', {
+                    done: function (perm) {
+                        if (perm) {
+                            this.jqGrid("remapColumns", perm, true);
+                            saveColumnState.call(this, perm);
+                        }
+                    }
+                });
+            }
+        });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-closethick",
+            title: "clear saved grid's settings",
+            onClickButton: function () {
+                removeObjectFromLocalStorage(myColumnStateName);
+                window.location.reload();
+            }
+        });
     });
-
-        function editProduct(cellvalue, options, rowobject) {
-            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
-
-            return link.replace("-1", cellvalue);
-        }
-
-        function reloadCostPerMqStep() {
-            $("#documentProduct").trigger("reloadGrid");
-        }
-
+    //]]>
 </script>
 
+<script type="text/javascript">
 
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+
+        var myGrid = $("#listDocumentProduct");
+        var width = $("#body-container").width();
+        try {
+            myGrid.jqGrid('setGridWidth', width, true);
+
+        } catch (e) {
+
+        }
+
+    }).trigger('resize');
+
+
+    function editProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+
+        return link.replace("-1", cellvalue);
+    }
+
+    function reloadCostPerMqStep() {
+        $("#listDocumentProduct").trigger("reloadGrid");
+    }
+
+</script>

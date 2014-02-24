@@ -16,7 +16,7 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    <table id="list"><tr><td /></tr></table>
+    <table id="listRigidPrintableArticle"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -41,7 +41,7 @@
 
 
 <script type="text/javascript">
-     //<![CDATA[
+    //<![CDATA[
     /*global $ */
     /*jslint devel: true, browser: true, plusplus: true */
     //$.jgrid.formatter.integer.thousandsSeparator = ',';
@@ -50,7 +50,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#list"),
+            $grid = $("#listRigidPrintableArticle"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -147,7 +147,7 @@
                     return JSON.parse(window.localStorage.getItem(storageItemName));
                 }
             },
-            myColumnStateName = 'ColumnChooserAndLocalStorage1.colState',
+            myColumnStateName = 'ListRigidPrintableArticle.colState',
             saveColumnState = function (perm) {
                 var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                     postData = this.jqGrid('getGridParam', 'postData'),
@@ -206,7 +206,8 @@
             colModel: cm,
             loadtext: '',
             viewrecords: true,
-            //autowidth: true,
+            autowidth: true,
+            shrinkToFit: false,
             print: true,
             rowNum: 20,
 
@@ -236,73 +237,70 @@
                     enableTooltips(table);
                 }, 0);
 
-         
 
-        if (firstLoad) {
-            firstLoad = false;
-            if (isColState) {
-                $this.jqGrid("remapColumns", myColumnsState.permutation, true);
 
-                var width = $("#body-container").width();
-                $this.jqGrid('setGridWidth', width, true);
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (isColState) {
+                        $this.jqGrid("remapColumns", myColumnsState.permutation, true);
 
-            }
-            if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
-                // create toolbar if needed
-                $this.jqGrid('filterToolbar',
-                    { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
-            }
-        }
-        refreshSerchingToolbar($this, myDefaultSearch);
-        saveColumnState.call($this, this.p.remapColumns);
-    },
-        resizeStop: function () {
-            saveColumnState.call($grid, $grid[0].p.remapColumns);
-        }
-    });
-    $.extend($.jgrid.search, {
-        multipleSearch: true,
-        multipleGroup: true,
-        recreateFilter: true,
-        closeOnEscape: true,
-        closeAfterSearch: true,
-        overlay: 0
-    });
-    $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
-    $grid.jqGrid('navButtonAdd', '#pager', {
-        caption: "",
-        buttonicon: "ui-icon-calculator",
-        title: "choose columns",
-        onClickButton: function () {
-            $(this).jqGrid('columnChooser', {
-                done: function (perm) {
-                    if (perm) {
-                        this.jqGrid("remapColumns", perm, true);
-                        saveColumnState.call(this, perm);
+                    }
+                    if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                        // create toolbar if needed
+                        $this.jqGrid('filterToolbar',
+                            { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
                     }
                 }
-            });
-        }
-    });
-    $grid.jqGrid('navButtonAdd', '#pager', {
-        caption: "",
-        buttonicon: "ui-icon-closethick",
-        title: "clear saved grid's settings",
-        onClickButton: function () {
-            removeObjectFromLocalStorage(myColumnStateName);
-            window.location.reload();
-        }
-    });
+                refreshSerchingToolbar($this, myDefaultSearch);
+                saveColumnState.call($this, this.p.remapColumns);
+            },
+            resizeStop: function () {
+                saveColumnState.call($grid, $grid[0].p.remapColumns);
+            }
+        });
+        $.extend($.jgrid.search, {
+            multipleSearch: true,
+            multipleGroup: true,
+            recreateFilter: true,
+            closeOnEscape: true,
+            closeAfterSearch: true,
+            overlay: 0
+        });
+        $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-calculator",
+            title: "choose columns",
+            onClickButton: function () {
+                $(this).jqGrid('columnChooser', {
+                    done: function (perm) {
+                        if (perm) {
+                            this.jqGrid("remapColumns", perm, true);
+                            saveColumnState.call(this, perm);
+                        }
+                    }
+                });
+            }
+        });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-closethick",
+            title: "clear saved grid's settings",
+            onClickButton: function () {
+                removeObjectFromLocalStorage(myColumnStateName);
+                window.location.reload();
+            }
+        });
     });
     //]]>
-    </script>
+</script>
 
 <script type="text/javascript">
 
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#list");
+        var myGrid = $("#listRigidPrintableArticle");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);

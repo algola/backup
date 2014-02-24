@@ -10,7 +10,7 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    <table id="list"><tr><td /></tr></table>
+    <table id="listPrePostPress"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -37,7 +37,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#list"),
+            $grid = $("#listPrePostPress"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -138,7 +138,7 @@
                     return JSON.parse(window.localStorage.getItem(storageItemName));
                 }
             },
-            myColumnStateName = 'ColumnChooserAndLocalStorage1.colState',
+            myColumnStateName = 'ListPlotter.colState',
             saveColumnState = function (perm) {
                 var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                     postData = this.jqGrid('getGridParam', 'postData'),
@@ -198,7 +198,8 @@
 
             loadtext: '',
             viewrecords: true,
-            //autowidth: true,
+            autowidth: true,
+            shrinkToFit: false,
             print: true,
             rowNum: 15,
 
@@ -233,9 +234,7 @@
                     if (isColState) {
                         $this.jqGrid("remapColumns", myColumnsState.permutation, true);
 
-                        var width = $("#body-container").width();
-                        $this.jqGrid('setGridWidth', width, true);
-
+                        
                     }
                     if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
                         // create toolbar if needed
@@ -292,7 +291,7 @@
                 //resize jqgrid after windows resize
                 $(window).bind('resize', function () {
 
-                    var myGrid = $("#list");
+                    var myGrid = $("#listPrePostPress");
                     var width = $("#body-container").width();
                     try {
                         myGrid.jqGrid('setGridWidth', width, true);

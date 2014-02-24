@@ -45,7 +45,7 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    <table id="list"><tr><td /></tr></table>
+    <table id="listBase"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -76,7 +76,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#list"),
+            $grid = $("#listBase"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -176,7 +176,7 @@
                return JSON.parse(window.localStorage.getItem(storageItemName));
            }
        },
-       myColumnStateName = 'ColumnChooserAndLocalStorage1.colState',
+       myColumnStateName = 'ListBase.colState',
        saveColumnState = function (perm) {
            var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                postData = this.jqGrid('getGridParam', 'postData'),
@@ -236,11 +236,12 @@
 
             loadtext: '',
             viewrecords: true,
-            //autowidth: true,
+            autowidth: true,
+            shrinkToFit:false,
             print: true,
             rowNum: 10,
 
-            caption: '@Html.T(strings, "TitleIndexBase")+ " " + @Html.DisplayFor(o => o.BusinessName)',
+            caption: '@(Html.T(strings, "TitleIndexBase") + " " + Html.DisplayFor(o => o.BusinessName))',
             rowList: [15, 20, 50, 100],
             gridview: true,
             multiselect: true,
@@ -271,9 +272,6 @@
                     firstLoad = false;
                     if (isColState) {
                         $this.jqGrid("remapColumns", myColumnsState.permutation, true);
-
-                        var width = $("#body-container").width();
-                        $this.jqGrid('setGridWidth', width, true);
 
                     }
                     if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
@@ -331,7 +329,7 @@
         //resize jqgrid after windows resize
         $(window).bind('resize', function () {
 
-            var myGrid = $("#list");
+            var myGrid = $("#listBase");
             var width = $("#body-container").width();
             try {
                 myGrid.jqGrid('setGridWidth', width, true);

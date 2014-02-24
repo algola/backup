@@ -11,7 +11,7 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    <table id="list"><tr><td /></tr></table>
+    <table id="listSheetPrintableArticle"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -43,7 +43,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#list"),
+            $grid = $("#listSheetPrintableArticle"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -125,8 +125,9 @@
             { name: 'SheetPerPallet', label: '@HttpContext.GetLocalResourceObject(strings, "SheetPerPalletCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
             { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
             { name: 'CostPerKg', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerKgCaption")', width: 45, title: false, search: true, align: 'right' },
-            { name: 'CostPerSheet', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerSheetCaption")', width: 45, title: false, search: true, align: 'right' }
-            ],
+            { name: 'CostPerSheet', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerSheetCaption")', width: 45, title: false, search: true, align: 'right' },
+//            { name: 'toHide', width: 20, }
+    ],
             saveObjectInLocalStorage = function (storageItemName, object) {
                 if (typeof window.localStorage !== 'undefined') {
                     window.localStorage.setItem(storageItemName, JSON.stringify(object));
@@ -142,7 +143,7 @@
                     return JSON.parse(window.localStorage.getItem(storageItemName));
                 }
             },
-            myColumnStateName = 'ColumnChooserAndLocalStorage1.colState',
+            myColumnStateName = 'ListSheetPrintableArticle.colState',
             saveColumnState = function (perm) {
                 var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                     postData = this.jqGrid('getGridParam', 'postData'),
@@ -170,6 +171,7 @@
                         };
                     }
                 }
+
                 saveObjectInLocalStorage(myColumnStateName, columnsState);
             },
             myColumnsState,
@@ -202,11 +204,12 @@
 
             loadtext: '',
             viewrecords: true,
-            //autowidth: true,
+            autowidth: true,
+            shrinkToFit: false,
             print: true,
-            rowNum: 20,
+            rowNum: 10,
 
-            rowList: [10, 20, 50, 100],
+           // rowList: [11],
             gridview: true,
             multiselect: true,
             pager: '#pager',
@@ -216,7 +219,6 @@
             sortname: isColState ? myColumnsState.sortname : 'invdate',
             sortorder: isColState ? myColumnsState.sortorder : 'desc',
             ignoreCase: true,
-            //shrinkToFit: false,
             //viewrecords: true,
             caption: '',
             height: 300,
@@ -231,14 +233,11 @@
                     updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
-                
+
                 if (firstLoad) {
                     firstLoad = false;
                     if (isColState) {
                         $this.jqGrid("remapColumns", myColumnsState.permutation, true);
-
-                        var width = $("#body-container").width();
-                        $this.jqGrid('setGridWidth', width, true);
 
                     }
                     if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
@@ -252,7 +251,7 @@
             },
             resizeStop: function () {
                 saveColumnState.call($grid, $grid[0].p.remapColumns);
-            }
+            },
         });
         $.extend($.jgrid.search, {
             multipleSearch: true,
@@ -289,6 +288,7 @@
         });
     });
     //]]>
+
 </script>
 
 
@@ -297,7 +297,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#list");
+        var myGrid = $("#listSheetPrintableArticle");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
@@ -307,5 +307,7 @@
         }
 
     }).trigger('resize');
+
+   
 
 </script>

@@ -29,7 +29,7 @@
             @Html.AlgolaEditorFor(model => model.StartingCost2)
 
             @Html.AlgolaEditorFor(model => model.CostForfait)
-@*            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet) *@
+            @*            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet) *@
 
         </fieldset>
         <fieldset>
@@ -49,7 +49,7 @@
             </div>
 
         </fieldset>
-        
+
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
                 <i class="icon-undo bigger-125"></i>
@@ -95,4 +95,5 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }

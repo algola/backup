@@ -5,37 +5,37 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    
-//    ViewBag.Title =  (string)Html.T(strings, "PrinterTitle");
+
+    //    ViewBag.Title =  (string)Html.T(strings, "PrinterTitle");
     ViewBag.Title = Model.TaskExecutorName;
-    
-    ViewBag.Desc = (string)Html.T(strings, "NoCostSelected");       
+
+    ViewBag.Desc = (string)Html.T(strings, "NoCostSelected");
 }
 
 @using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
 {
     @Html.ValidationSummary(true)
-    
-       
-        @Html.HiddenFor(model => model.CodTaskExecutor)
 
-        if (((string)ViewBag.TypeCost).Contains("Time"))
-        {
-         <div>
-            <div class="editor-field" style="float:left" >
+
+    @Html.HiddenFor(model => model.CodTaskExecutor)
+
+    if (((string)ViewBag.TypeCost).Contains("Time"))
+    {
+        <div>
+            <div class="editor-field" style="float:left">
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnTime)
             </div>
             <div class="editor-label">
                 @Html.T(strings, "OnTimeNewCostCaption")
             </div>
         </div>
-    <br />
-        }
+        <br />
+    }
 
-        if (((string)ViewBag.TypeCost).Contains("Mq"))
-        {
-         <div>
-            <div class="editor-field" style="float:left" >
+    if (((string)ViewBag.TypeCost).Contains("Mq"))
+    {
+        <div>
+            <div class="editor-field" style="float:left">
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnMq)
             </div>
             <div class="editor-label">
@@ -43,36 +43,36 @@
             </div>
         </div>
 
-    <br />
-        }
+        <br />
+    }
 
-        if (((string)ViewBag.TypeCost).Contains("Run"))
-        {
+    if (((string)ViewBag.TypeCost).Contains("Run"))
+    {
 
-         <div>
-            <div class="editor-field" style="float:left" >
+        <div>
+            <div class="editor-field" style="float:left">
                 @Html.RadioButtonFor(model => model.TypeTaskExecutorEstimatedOn, TaskEstimatedOn.EstimatedOnType.OnRun)
             </div>
             <div class="editor-label">
                 @Html.T(strings, "OnRunNewCostCaption")
             </div>
         </div>
-    <br />
-        }
         <br />
+    }
+    <br />
     <p>
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">            
-                    <i class="icon-arrow-left"></i>
-                     @HttpContext.GetLocalResourceObject(strings, "Cancel")
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
+            <i class="icon-arrow-left"></i>
+            @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
-            
+
         <button class="default btn btn-primary" type="submit">
             <i class="icon-save"></i>
             @HttpContext.GetLocalResourceObject(strings, "Save")
-        </button> 
+        </button>
 
     </p>
-    }
+}
 
 <script type="text/javascript">
 
@@ -106,6 +106,7 @@
 
 @section specificPluginScript {
     <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }
 
 @section ScriptS{

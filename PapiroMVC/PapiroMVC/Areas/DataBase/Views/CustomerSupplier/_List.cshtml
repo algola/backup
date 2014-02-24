@@ -138,7 +138,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
                return JSON.parse(window.localStorage.getItem(storageItemName));
            }
        },
-       myColumnStateName = 'ColumnChooserAndLocalStorage1.colState',
+       myColumnStateName = 'List.colState',
        saveColumnState = function (perm) {
            var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                postData = this.jqGrid('getGridParam', 'postData'),
@@ -161,7 +161,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
                cmName = colItem.name;
                if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
                    colStates[cmName] = {
-                       width: colItem.width,
+                       width: colItem.width + 1,
                        hidden: colItem.hidden
                    };
                }
@@ -200,123 +200,120 @@ saveObjectInLocalStorage = function (storageItemName, object) {
 
             loadtext: '',
             viewrecords: true,
-            //autowidth: true,
+            
             print: true,
             rowNum: 10,
 
-            caption: '@Html.T(strings, "TitleIndexBase")',
-        rowList: [15, 20, 50, 100],
-        gridview: true,
-        multiselect: true,
-        pager: '#pager',
-        page: isColState ? myColumnsState.page : 1,
-        search: isColState ? myColumnsState.search : false,
-        postData: isColState ? { filters: myColumnsState.filters } : {},
-        sortname: isColState ? myColumnsState.sortname : 'invdate',
-        sortorder: isColState ? myColumnsState.sortorder : 'desc',
-        ignoreCase: true,
-        //shrinkToFit: false,
-        //viewrecords: true,
-        height: 300,
-        loaderror: '@(Html.T(strings, "ErrorLoading"))',
-        loadComplete: function () {
+            caption: '',
+            rowList: [15, 20, 50, 100],
+            gridview: true,
+            multiselect: true,
+            pager: '#pager',
+            page: isColState ? myColumnsState.page : 1,
+            search: isColState ? myColumnsState.search : false,
+            postData: isColState ? { filters: myColumnsState.filters } : {},
+            sortname: isColState ? myColumnsState.sortname : 'invdate',
+            sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            ignoreCase: true,
+            autowidth: true,
+            shrinkToFit: false,
+            //viewrecords: true,
+            height: 300,
+            loaderror: '@(Html.T(strings, "ErrorLoading"))',
+            loadComplete: function () {
 
-            var $this = $(this);
+                var $this = $(this);
 
-            var table = this;
-            setTimeout(function () {
-                updateActionIcons(table);
-                updatePagerIcons(table);
-                enableTooltips(table);
-            }, 0);
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
 
 
-            if (firstLoad) {
-                firstLoad = false;
-                if (isColState) {
-                    $this.jqGrid("remapColumns", myColumnsState.permutation, true);
-
-                    var width = $("#body-container").width();
-                    $this.jqGrid('setGridWidth', width, true);
-
-                }
-                if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
-                    // create toolbar if needed
-                    $this.jqGrid('filterToolbar',
-                        { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
-                }
-            }
-            refreshSerchingToolbar($this, myDefaultSearch);
-            saveColumnState.call($this, this.p.remapColumns);
-        },
-        resizeStop: function () {
-            saveColumnState.call($grid, $grid[0].p.remapColumns);
-        }
-    });
-    $.extend($.jgrid.search, {
-        multipleSearch: true,
-        multipleGroup: true,
-        recreateFilter: true,
-        closeOnEscape: true,
-        closeAfterSearch: true,
-        overlay: 0
-    });
-    $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
-    $grid.jqGrid('navButtonAdd', '#pager', {
-        caption: "",
-        buttonicon: "ui-icon-calculator",
-        title: "choose columns",
-        onClickButton: function () {
-            $(this).jqGrid('columnChooser', {
-                done: function (perm) {
-                    if (perm) {
-                        this.jqGrid("remapColumns", perm, true);
-                        saveColumnState.call(this, perm);
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (isColState) {
+                        $this.jqGrid("remapColumns", myColumnsState.permutation, true);
+                    }
+                    if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                        // create toolbar if needed
+                        $this.jqGrid('filterToolbar',
+                            { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
                     }
                 }
-            });
-        }
-    });
-    $grid.jqGrid('navButtonAdd', '#pager', {
-        caption: "",
-        buttonicon: "ui-icon-closethick",
-        title: "clear saved grid's settings",
-        onClickButton: function () {
-            removeObjectFromLocalStorage(myColumnStateName);
-            window.location.reload();
-        }
-    });
+                refreshSerchingToolbar($this, myDefaultSearch);
+                saveColumnState.call($this, this.p.remapColumns);
+            },
+            resizeStop: function () {
+                saveColumnState.call($grid, $grid[0].p.remapColumns);
+            }
+        });
+        $.extend($.jgrid.search, {
+            multipleSearch: true,
+            multipleGroup: true,
+            recreateFilter: true,
+            closeOnEscape: true,
+            closeAfterSearch: true,
+            overlay: 0
+        });
+        $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-calculator",
+            title: "choose columns",
+            onClickButton: function () {
+                $(this).jqGrid('columnChooser', {
+                    done: function (perm) {
+                        if (perm) {
+                            this.jqGrid("remapColumns", perm, true);
+                            saveColumnState.call(this, perm);
+                        }
+                    }
+                });
+            }
+        });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-closethick",
+            title: "clear saved grid's settings",
+            onClickButton: function () {
+                removeObjectFromLocalStorage(myColumnStateName);
+                window.location.reload();
+            }
+        });
 
 
-    function editCustomerSupplier(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        function editCustomerSupplier(cellvalue, options, rowobject) {
+            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1" }, new { @class = "tbutton smalledit" })';
 
-        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
+            var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
             "IndexBase",
             "CustomerSupplier",
             (object)new { id = -1 },
             new { @class = "tbutton smallbase" })';
 
-        return link.replace("-1", cellvalue) + " | " +
-                link2.replace("-1", cellvalue);
-    }
+            return link.replace("-1", cellvalue) + " | " +
+                    link2.replace("-1", cellvalue);
+        }
 
-    function typeOfCustomerSupplier(cellvalue, options, rowobject) {
+        function typeOfCustomerSupplier(cellvalue, options, rowobject) {
 
-        var link = "type";
+            var link = "type";
 
-        //following string has to be located in view and in validation (metadata)
-        var customer = '@HttpContext.GetLocalResourceObject(strings, "CustomerType")';
-        var supplier = '@HttpContext.GetLocalResourceObject(strings, "SupplierType")';
+            //following string has to be located in view and in validation (metadata)
+            var customer = '@HttpContext.GetLocalResourceObject(strings, "CustomerType")';
+            var supplier = '@HttpContext.GetLocalResourceObject(strings, "SupplierType")';
 
-        if (cellvalue == "Customer")
-            return link.replace("type", customer);
+            if (cellvalue == "Customer")
+                return link.replace("type", customer);
 
-        if (cellvalue == "Supplier")
-            return link.replace("type", supplier);
+            if (cellvalue == "Supplier")
+                return link.replace("type", supplier);
 
-        return link;
-    }
+            return link;
+        }
 
 
     });

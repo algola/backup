@@ -16,7 +16,12 @@ namespace Services
                 var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
                 Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
             }
-        
+
+        }
+
+        public void EditSingleStep(Step entity)
+        {
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
         }
 
         /// <summary>
@@ -34,10 +39,11 @@ namespace Services
         {
             c.TimeStampTable = DateTime.Now;
             int i = 0;
-            foreach (var item in c.SetTaskExecutorEstimatedOn.OrderBy(x=>x.CodTaskEstimatedOn))
-            {
 
-                item.CodTaskEstimatedOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString()+ (i++).ToString();
+            foreach (var item in c.SetTaskExecutorEstimatedOn.OrderBy(x => x.CodTaskEstimatedOn, new EmptyStringsAreLast()))
+            {
+                item.CodTaskExecutor = c.CodTaskExecutor;
+                item.CodTaskEstimatedOn = c.CodTaskExecutor + item.TypeOfEstimatedOn.ToString() + (i++).ToString();
                 foreach (var step in item.steps)
                 {
                     item.TimeStampTable = DateTime.Now;
@@ -73,35 +79,67 @@ namespace Services
             foreach (var item in entity.SetTaskExecutorEstimatedOn)
             {
                 item.TimeStampTable = DateTime.Now;
-                //Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                var fromBD2 = Context.taskexecutorestimatedon.SingleOrDefault(p => p.CodTaskEstimatedOn == item.CodTaskEstimatedOn);
+                if (fromBD2 != null)
+                {
+                    Context.Entry(fromBD2).CurrentValues.SetValues(item);
+                }
+                else
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                }
+
                 foreach (var item2 in item.steps)
                 {
                     item2.TimeStampTable = DateTime.Now;
-                    Console.WriteLine(Context.Entry(item2).State);
-                    switch (Context.Entry(item2).State)
+                    var fromBD3 = Context.steps.SingleOrDefault(p => p.IdStep == item2.IdStep);
+                    if (fromBD3 != null)
                     {
-                        case System.Data.Entity.EntityState.Added:
-                            break;
-                        case System.Data.Entity.EntityState.Deleted:
-                            break;
-                        case System.Data.Entity.EntityState.Detached:
-                            break;
-                        case System.Data.Entity.EntityState.Modified:
-                            break;
-                        case System.Data.Entity.EntityState.Unchanged:
-                            Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;                    
-                            break;
-                        default:
-                            break;
+                        Context.Entry(fromBD3).CurrentValues.SetValues(item2);
+                    }
+                    else
+                    {
+                        Context.Entry(item2).State = System.Data.Entity.EntityState.Added;
                     }
                 }
+
             }
-            base.Edit(entity);
+
+            /*
+                        entity.TimeStampTable = DateTime.Now;
+                        foreach (var item in entity.SetTaskExecutorEstimatedOn)
+                        {
+                            item.TimeStampTable = DateTime.Now;
+                            //Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                            foreach (var item2 in item.steps)
+                            {
+                                item2.TimeStampTable = DateTime.Now;
+                                Console.WriteLine(Context.Entry(item2).State);
+                                switch (Context.Entry(item2).State)
+                                {
+                                    case System.Data.Entity.EntityState.Added:
+                                        break;
+                                    case System.Data.Entity.EntityState.Deleted:
+                                        break;
+                                    case System.Data.Entity.EntityState.Detached:
+                                        break;
+                                    case System.Data.Entity.EntityState.Modified:
+                                        break;
+                                    case System.Data.Entity.EntityState.Unchanged:
+                                        Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+                        base.Edit(entity);
+             */
         }
 
         public TaskEstimatedOn GetSingleEstimatedOn(string cod)
         {
-            return (this.Context.taskexecutorestimatedon.Include("steps").Include("taskexecutors").First(x => x.CodTaskEstimatedOn == cod));           
+            return (this.Context.taskexecutorestimatedon.Include("steps").Include("taskexecutors").First(x => x.CodTaskEstimatedOn == cod));
         }
 
         public Step GetSingleStep(int cod)
@@ -112,6 +150,10 @@ namespace Services
         public TaskExecutor GetSingle(string codTaskExecutor)
         {
             var query = this.GetAll().FirstOrDefault(x => x.CodTaskExecutor == codTaskExecutor);
+            if (query != null)
+            {
+                query.SetTaskExecutorEstimatedOn = this.Context.taskexecutorestimatedon.Include("steps").Where(x => x.CodTaskExecutor == codTaskExecutor).ToList();
+            }
             return query;
         }
     }

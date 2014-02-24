@@ -47,7 +47,7 @@
                 @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
             </div>
 
-        </fieldset> 
+        </fieldset>
 
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
@@ -94,4 +94,5 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }

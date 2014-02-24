@@ -48,7 +48,7 @@
                 @Html.Partial("_ListDeficitForWeightStep", Model)
             </div>
         </fieldset>
-        
+
         <fieldset>
             <legend>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</legend>
 
@@ -56,7 +56,7 @@
             @*deprecated           @Html.AlgolaEditorFor(model => model.CostPerHourStarting) *@
             @Html.AlgolaEditorFor(model => model.CostForfait)
             @*deprecated            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
-*@
+            *@
         </fieldset>
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
@@ -103,4 +103,5 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }

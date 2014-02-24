@@ -35,7 +35,7 @@
 
             @Html.AlgolaEditorFor(model => model.CostForfaitBW)
             @*            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
-*@
+            *@
         </fieldset>
         <fieldset>
             <legend>@HttpContext.GetLocalResourceObject(strings, "CostPerUnitLabel")</legend>
@@ -68,7 +68,7 @@
 
             <br />
         </fieldset>
-        
+
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
                 <i class="icon-undo bigger-125"></i>
@@ -113,4 +113,5 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }

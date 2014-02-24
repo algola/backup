@@ -25,6 +25,7 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }
 
 <div class="row-fluid">
@@ -52,37 +53,37 @@
             {
                 if (i == 0)
                 {
-                <li class="active">
-                    <a data-toggle="tab" href="#frame@((i + 1).ToString())">
-                        <i class="blue icon-stackexchange bigger-110"></i>
+                    <li class="active">
+                        <a data-toggle="tab" href="#frame@((i + 1).ToString())">
+                            <i class="blue icon-stackexchange bigger-110"></i>
 
-                        @if (Model[i].Quantity != null)
-                        {
-                            @Model[i].Quantity.ToString()
-                        }
-                        else
-                        {
-                            @Html.Label("****Quantità non impostata");
-                        }
-                    </a>
-                </li>
+                            @if (Model[i].Quantity != null)
+                            {
+                                @Model[i].Quantity.ToString()
+                            }
+                            else
+                            {
+                                @Html.Label("****Quantità non impostata");
+                            }
+                        </a>
+                    </li>
                 }
                 else
                 {
-                <li>
-                    <a data-toggle="tab" href="#frame@((i + 1).ToString())">
-                        <i class="blue icon-stackexchange bigger-110"></i>
+                    <li>
+                        <a data-toggle="tab" href="#frame@((i + 1).ToString())">
+                            <i class="blue icon-stackexchange bigger-110"></i>
 
-                        @if (Model[i].Quantity != null)
-                        {
-                            @Model[i].Quantity.ToString()
-                        }
-                        else
-                        {
-                            @Html.Label("****Quantità non impostata");
-                        }
-                    </a>
-                </li>
+                            @if (Model[i].Quantity != null)
+                            {
+                                @Model[i].Quantity.ToString()
+                            }
+                            else
+                            {
+                                @Html.Label("****Quantità non impostata");
+                            }
+                        </a>
+                    </li>
                 }
             }
 
@@ -101,19 +102,19 @@
 
                 if (i == 0)
                 {
-                <div class="tab-pane in active" id="frame@((i + 1).ToString())">
-                    @*griglia dei costi di questa quantità*@
-                    @Html.Partial("_Costs", Model[i])
-                    @Html.EditorFor(model => model[i])
-                </div>
+                    <div class="tab-pane in active" id="frame@((i + 1).ToString())">
+                        @*griglia dei costi di questa quantità*@
+                        @Html.Partial("_Costs", Model[i])
+                        @Html.EditorFor(model => model[i])
+                    </div>
                 }
                 else
                 {
-                <div class="tab-pane" id="frame@((i + 1).ToString())">
-                    @*griglia dei costi di questa quantità*@
-                    @Html.Partial("_Costs", Model[i])
-                    @Html.EditorFor(model => model[i])
-                </div>
+                    <div class="tab-pane" id="frame@((i + 1).ToString())">
+                        @*griglia dei costi di questa quantità*@
+                        @Html.Partial("_Costs", Model[i])
+                        @Html.EditorFor(model => model[i])
+                    </div>
                 }
             }
 

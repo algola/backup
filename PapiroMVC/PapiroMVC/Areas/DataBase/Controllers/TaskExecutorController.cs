@@ -1455,6 +1455,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.AvarageRunPerHour = c.AvarageRunPerHour;
+
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
                         }
                         else
                         {
@@ -1497,6 +1501,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.DeficitRate = c.DeficitRate;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
                         }
                         else
                         {
@@ -1542,6 +1550,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.DeficitRate = c.DeficitRate;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
                         }
                         else
                         {
@@ -1587,6 +1599,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.CostPerUnit = c.CostPerUnit;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
                         }
                         else
                         {
@@ -1632,6 +1648,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.CostPerUnit = c.CostPerUnit;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
                         }
                         else
                         {
@@ -1677,6 +1697,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.CostPerUnit = c.CostPerUnit;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
                         }
                         else
                         {

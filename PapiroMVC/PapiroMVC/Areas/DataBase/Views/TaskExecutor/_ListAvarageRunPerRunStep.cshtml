@@ -33,10 +33,21 @@
                 pager: '#pagerAvarageRunPerRunStep',
                 
                 rowNum: 15,
-                rowList: [15, 20, 50],
+                //rowList: [15, 20, 50],
                 viewrecords: true,
                 autowidth: false,
+                width: 375,
+                shrinkToFit: false,
 
+                loadComplete: function () {
+
+                    var table = this;
+                    setTimeout(function () {
+                        updateActionIcons(table);
+                        updatePagerIcons(table);
+                        enableTooltips(table);
+                    }, 0);
+                },
                 onSelectRow: function (id) {
                     if (id && id !== lastSel) {
                         myGrid.jqGrid('restoreRow', lastSel);

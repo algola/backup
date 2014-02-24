@@ -36,6 +36,17 @@
                 rowList: [15, 20, 50],
                 viewrecords: true,
                 autowidth: false,
+                width: 375,
+                shrinkToFit: false,
+                loadComplete: function () {
+
+                    var table = this;
+                    setTimeout(function () {
+                        updateActionIcons(table);
+                        updatePagerIcons(table);
+                        enableTooltips(table);
+                    }, 0);
+                },
 
                 onSelectRow: function (id) {
                     if (id && id !== lastSel) {
@@ -58,6 +69,7 @@
                     //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
                     return;
                 }
+
 
             });
 

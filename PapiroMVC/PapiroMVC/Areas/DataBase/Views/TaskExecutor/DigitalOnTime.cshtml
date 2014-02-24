@@ -13,7 +13,7 @@
     @using (Ajax.BeginForm("DigitalOnTime", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
-        
+
         <fieldset>
             <legend>@HttpContext.GetLocalResourceObject(strings, "StartingLabel")</legend>
 
@@ -48,7 +48,7 @@
                 @Html.Partial("_ListDeficitForWeightStep", Model)
             </div>
         </fieldset>
-        
+
         <fieldset>
             <legend>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</legend>
 
@@ -60,8 +60,8 @@
 
             @Html.AlgolaEditorFor(model => model.CostForfait)
             @*
-            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
-*@
+                @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
+            *@
         </fieldset>
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
@@ -108,4 +108,5 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }
