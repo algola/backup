@@ -1,0 +1,21 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.DocumentProduct
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+  
+}
+
+<div class="space-10"></div>
+    
+<div class="form-horizontal"> 
+    @Html.HiddenFor(model => model.CodDocumentProduct)
+    @Html.HiddenFor(model => model.CodDocument)
+    @Html.HiddenFor(model => model.ProductName)
+    @Html.HiddenFor(model => model.CodProduct)
+    @Html.HiddenFor(model => model.Quantity)
+
+    @Html.AlgolaEditorFor(model => model.TotalAmount)
+    @Html.AlgolaEditorFor(model => model.UnitPrice)
+
+</div>

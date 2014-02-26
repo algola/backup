@@ -1,0 +1,2713 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{25030C7B-252C-4EE2-BA81-7A72190CBE03}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PapiroMVC</RootNamespace>
+    <AssemblyName>PapiroMVC</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Braintree-2.28.1">
+      <HintPath>..\packages\Braintree.2.28.1\lib\Braintree-2.28.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DocX">
+      <HintPath>..\packages\DocX.1.0.0.13\lib\net40\DocX.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\MySql.Data.6.8.3\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="mysql.data.entity.EF6, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.Entities.6.8.3.0\lib\net45\mysql.data.entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\MySql.Web.6.8.3\lib\net45\MySql.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.1.1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.1.1\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.1.1\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.1.1\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.1.1\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.1.1\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.2\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.1.1\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="WebActivator, Version=1.5.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Resources\TypeOfTaskAndCodTypeOfTask\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AlphaNumericCodeManagement\AlphaNumericCodeManagement.cs" />
+    <Compile Include="App_GlobalResources\ecommercestampa.com1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ecommercestampa.com.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="App_GlobalResources\gestionestampa.com1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>gestionestampa.com.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Controllers\AccountController.cs" />
+    <Compile Include="Areas\Account\Extension\GeneratePassword.cs" />
+    <Compile Include="Areas\Account\Models\AccountModels.cs" />
+    <Compile Include="Areas\Account\Models\Account\AccountEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\AccountModels_biccio.cs" />
+    <Compile Include="Areas\Account\Models\Account\ProfileEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\Proflile_MetaData.cs" />
+    <Compile Include="Areas\Account\ViewModels\ProfileViewModel.cs" />
+    <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex.cs" />
+    <Compile Include="Areas\DataBase\Controllers\ArticleController_Ex_AutoComplete.cs" />
+    <Compile Include="Areas\DataBase\Controllers\CustomerSupplierBaseController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController_Ex.cs" />
+    <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController_Ex_AutoComplete.cs" />
+    <Compile Include="Areas\DataBase\Controllers\HomeDbController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex_Auto_Complete.cs" />
+    <Compile Include="Areas\DataBase\DataBaseAreaRegistration.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\PrintableEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RigidPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleCuttedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\RollPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleCuttedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePakedCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\SheetPrintableArticlePalletCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierBaseEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx.cs" />
+    <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\MenuProduct\NewProductCommand_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingCostPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnRunEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEstimatedOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepBWEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitForWeightStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitForWeightStepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnRunEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnRunEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalWebEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\DigitalWebEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterOnMqEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterOnMqEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterRollEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterSheetEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrePostPressEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrePostPressEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnRunEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnRunEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnTimeEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnUnitEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges_Metadata.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD_Metadata.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard_Metadata.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierIndex.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierViewModel.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\PrePostPressViewModel.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
+    <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
+    <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
+    <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageAreaRegistration.cs" />
+    <Compile Include="Areas\HelpPage\HelpPageConfigurationExtensions.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\CollectionModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ComplexTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\DictionaryModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\EnumValueDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\IModelDocumentationProvider.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\KeyValuePairModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelDescriptionGenerator.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameAttribute.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ModelNameHelper.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterAnnotation.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\ParameterDescription.cs" />
+    <Compile Include="Areas\HelpPage\ModelDescriptions\SimpleTypeModelDescription.cs" />
+    <Compile Include="Areas\HelpPage\Models\HelpPageApiModel.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\HelpPageSampleKey.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ImageSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\InvalidSample.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\ObjectGenerator.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
+    <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
+    <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Areas\RouteDebugger\Components\ActionSelectSimulator.cs" />
+    <Compile Include="Areas\RouteDebugger\Components\DictionaryExtensions.cs" />
+    <Compile Include="Areas\RouteDebugger\Components\HttpParameterBindingExtensions.cs" />
+    <Compile Include="Areas\RouteDebugger\Components\TypeHelper.cs" />
+    <Compile Include="Areas\RouteDebugger\Controllers\RouteDebuggerController.cs" />
+    <Compile Include="Areas\RouteDebugger\InspectActionInvoker.cs" />
+    <Compile Include="Areas\RouteDebugger\InspectActionSelector.cs" />
+    <Compile Include="Areas\RouteDebugger\InspectControllerSelector.cs" />
+    <Compile Include="Areas\RouteDebugger\InspectHandler.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\ActionSelectionInfo.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\ActionSelectionLog.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\ControllerSelectionInfo.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\HttpParameterDescriptionInfo.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\InspectData.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\RouteDataInfo.cs" />
+    <Compile Include="Areas\RouteDebugger\Models\RouteInfo.cs" />
+    <Compile Include="Areas\RouteDebugger\RequestHelper.cs" />
+    <Compile Include="Areas\RouteDebugger\RouteDebuggerAreaRegistration.cs" />
+    <Compile Include="Areas\RouteDebugger\RouteDebuggerConfig.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController2.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController_Ex.cs" />
+    <Compile Include="Areas\Working\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Working\Controllers\ProductController2.cs" />
+    <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
+    <Compile Include="Areas\Working\Models\Cost\CostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\CostDetail_Ex2.cs" />
+    <Compile Include="Areas\Working\Models\Cost\ICostDetailCreator.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRigidArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRollArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedSheetArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Copy of ProductPartPrintingSheetGainSingle.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\Makeready.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSinglePlotter.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSingleSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingCostDetail_Ex2.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingRollCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingSheetCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartBookSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartCoverSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingRoll.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingRollGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingRollGainSingle.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheet.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartRigidPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleRollPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
+    <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\CostEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentProductEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\EstimateEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\FactoryPattern\ProductCreator.cs" />
+    <Compile Include="Areas\Working\Models\Products\FormatNameEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBlockSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBlockSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductCommand.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductRigidEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductTaskEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\ViewModels\DocumentProductViewModel.cs" />
+    <Compile Include="Areas\Working\ViewModels\ProductViewModel.cs" />
+    <Compile Include="Areas\Working\ViewModels\ProductViewModel_MetaData.cs" />
+    <Compile Include="Areas\Working\WorkingAreaRegistration.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Models\Article.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AvarageRunPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingAvarageRunPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingCostPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingEstimatedOnRun.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingEstimatedOnTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BindingTsk.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Cost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerMqStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerRunStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerRunStepBW.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerSupplier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerSupplierBase.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeficitForWeightStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeficitOnCostForWeightStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Digital.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalOnRun.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalOnTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DigitalSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Document.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Estimate.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EstimateEcommerce.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IDeleteRelated.cs" />
+    <Compile Include="Models\Litho.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LithoRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LithoSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Makeready.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingBookSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingSinglePlotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MakereadyPrintingSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MenuProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1 - Copy.Designer.cs">
+      <DependentUpon>Model1 - Copy.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\NoPrintable.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ObjectPrintableArticleStandardCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OptionTypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Plotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterOnMq.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PlotterSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrePostPress.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Printable.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedRigidArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedRollArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintedSheetArticleCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrinterMachine.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingRollCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PrintingSheetCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductBlockSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductBookSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPart.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartBlockSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartBookSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartBookSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartCoverSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartCoverSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingRollGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingRollGainSingle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGain.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGainBook.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintingSheetGainSingle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRigid.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRigidArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRigidPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartRollPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSheetArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSinglePlotter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSingleRollPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSingleSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartsPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\productpartstoproducttask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductRigid.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Profile.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Account\AccountVuoto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountVuoto.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Account\Registration.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Registration.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Account\Registration.en-us.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Registration.en-us.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Account\ResChangePasswordModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResChangePasswordModel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Account\ResLoginModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLoginModel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ArticlesVuoto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ArticlesVuoto.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResArticleCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResArticleCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResObjectPrintableArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResObjectPrintableArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResObjectPrintableArticleCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResObjectPrintableArticleCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResPrintable.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPrintable.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRigidPrintableArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResRigidPrintableArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRigidPrintableArticleCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResRigidPrintableArticleCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResRollPrintableArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticleCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResRollPrintableArticleCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResRollPrintableArticleCuttedCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResRollPrintableArticleCuttedCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResSheetPrintableArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticleCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResSheetPrintableArticleCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResSheetPrintableArticleCuttedCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResSheetPrintableArticleCuttedCost.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\CustomerSupplier\CustomerSupplierVuoto1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerSupplierVuoto.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCustomer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomerSupplier.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCustomerSupplier.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\CustomerSupplier\ResCustomerSupplierBase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCustomerSupplierBase.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\CustomerSupplier\ResSupplier.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResSupplier.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResCost.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCost.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocumentProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDocumentProduct.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocuments.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDocuments.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\Document\ResDocumentsVuoto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDocumentsVuoto.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\MenuProduct\ResMenuProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResMenuProduct.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResNewMenuProductCommand.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResNewMenuProductCommand.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProduct.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProduct.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductBlockSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductBlockSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductBookSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductBookSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPart.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPart.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartBlockSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartBlockSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartBookSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartBookSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartCoverSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartCoverSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartSheetArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartSheetArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartSingleSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartSingleSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartsPrintableArticle.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartsPrintableArticle.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartTask.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductPartTask.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductSingleSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductSingleSheet.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductTask.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductTask.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductVuoto.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductVuoto.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\Task.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResAvarageRunPerRunStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingAvarageRunPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingAvarageRunPerRunStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingCostPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingCostPerRunStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnRun.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingEstimatedOnRun.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnTime.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResBindingEstimatedOnTime.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResCostPerMqStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCostPerMqStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResCostPerRunStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResCostPerRunStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDeficitCostForWeightStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDeficitCostForWeightStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDeficitForWeightStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDeficitForWeightStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigital.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigital.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigitalSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigitalSheet.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResDigitalWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResDigitalWeb.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLitho.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLitho.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLithoSheet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLithoSheet.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResLithoWeb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLithoWeb.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResOptionTypeOfTask.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPlotter.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPlotter.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPlotterOnMq.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPlotterOnMq.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPrePostPress.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPrePostPress.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResPrinterMachine.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResPrinterMachine.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResStep.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResStep.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOn.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOn.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnTime.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOnTime.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnUnit.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskEstimatedOnUnit.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskExecutor.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResTaskExecutor.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResArticleViewModelAutoChanges.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\ViewModels\ResProductViewModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResProductViewModel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RigidPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RigidPrintableArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RigidPrintableArticleStandardCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollPrintableArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollPrintableArticleCuttedCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollPrintableArticleStandardCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Schema Database_\ArticlesDDL.cs" />
+    <Compile Include="Models\Schema Database_\CustomerSupplierDDL.cs" />
+    <Compile Include="Models\Schema Database_\DatabaseDDL.cs" />
+    <Compile Include="Models\Schema Database_\GridColumnsPerUserDDL.cs" />
+    <Compile Include="Models\Schema Database_\TaskExecutorDDL.cs" />
+    <Compile Include="Models\Schema Database_\UserDDL.cs" />
+    <Compile Include="Models\Schema\ArticlesDDL.cs" />
+    <Compile Include="Models\Schema\CostDetailDDL.cs" />
+    <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
+    <Compile Include="Models\Schema\DatabaseDDL.cs" />
+    <Compile Include="Models\Schema\DocumentsDDL.cs" />
+    <Compile Include="Models\Schema\IDDL.cs" />
+    <Compile Include="Models\Schema\MenuProductDDL.cs" />
+    <Compile Include="Models\Schema\ProductsDDL.cs" />
+    <Compile Include="Models\Schema\ProfilesDDL.cs" />
+    <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
+    <Compile Include="Models\SheetPrintableArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SheetPrintableArticleCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SheetPrintableArticleCuttedCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SheetPrintableArticlePakedCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SheetPrintableArticlePalletCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Step.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Supplier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskEstimatedOn.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskEstimatedOnMq.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskEstimatedOnRun.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskEstimatedOnTime.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskEstimatedOnUnit.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskExecutor.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskExecutorTypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfBase.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TypeOfTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPattern\ArticleRepository.cs" />
+    <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
+    <Compile Include="RepositoryPattern\CustomerSupplierBaseRepository.cs" />
+    <Compile Include="RepositoryPattern\CustomerSupplierRepository.cs" />
+    <Compile Include="RepositoryPattern\DocumentRepository.cs" />
+    <Compile Include="RepositoryPattern\FormatsNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IArticleRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ICostDetailRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ICustomerSubblierBasesRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ICustomerSupplierRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IDocumentRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IFormatsNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IMenuProductRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProductRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProductTaskNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IProfileRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITaskRepositoryRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITypeOfBaseRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITypeOfTaskRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericRepository.cs" />
+    <Compile Include="RepositoryPattern\IQueryableExtension\IQueryableArticles.cs" />
+    <Compile Include="RepositoryPattern\MenuProductRepository.cs" />
+    <Compile Include="RepositoryPattern\ProductRepository.cs" />
+    <Compile Include="RepositoryPattern\ProductTaskNameRepository.cs" />
+    <Compile Include="RepositoryPattern\ProfileRepository.cs" />
+    <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
+    <Compile Include="RepositoryPattern\TASK\ACCOPPIATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\FORO.cs" />
+    <Compile Include="RepositoryPattern\TASK\FUSTELLATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\INTERCALATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\PIEGA.cs" />
+    <Compile Include="RepositoryPattern\TASK\PLASTIFICATURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_BROSSURA.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_PM.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILEGATURA_SPIRALE.cs" />
+    <Compile Include="RepositoryPattern\TASK\RILIEVO_A_SECCO.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPARIGIDO.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA_DIGITALE.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSET.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSETeDIGITALE.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSET_ROTOLO.cs" />
+    <Compile Include="RepositoryPattern\TASK\TAGLIO.cs" />
+    <Compile Include="RepositoryPattern\TASK\VERNICIATURA.cs" />
+    <Compile Include="RepositoryPattern\TypeOfBaseRepository.cs" />
+    <Compile Include="RepositoryPattern\TypeOfTaskRepository.cs" />
+    <Compile Include="Routing\DictionaryRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\IRouteValueTranslationProvider.cs" />
+    <Compile Include="Routing\RouteValueTranslation.cs" />
+    <Compile Include="Routing\TranslatedAreaRegistrationContextExtensions.cs" />
+    <Compile Include="Routing\TranslatedRoute.cs" />
+    <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
+    <Compile Include="Services Layer\PapiroService.cs" />
+    <Compile Include="Validation\AutorizeUserAttrbute.cs" />
+    <Compile Include="Validation\Base\ContingentValidationAttribute.cs" />
+    <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
+    <Compile Include="Validation\Class1.cs" />
+    <Compile Include="Validation\CreditCardAttribute.cs" />
+    <Compile Include="Validation\DecimalModelBinder.cs" />
+    <Compile Include="Validation\DisplayLocalizedAttribute.cs" />
+    <Compile Include="Validation\Error\CustomHandleErrorAttribute.cs" />
+    <Compile Include="Validation\Error\NoSupplierException.cs" />
+    <Compile Include="Validation\Error\NoTaskEstimatedOnException.cs" />
+    <Compile Include="Validation\Error\NoTaskExecutorException.cs" />
+    <Compile Include="Validation\Error\NotFoundException.cs" />
+    <Compile Include="Validation\Error\ProductPartPrintingSheetGainSingle.cs" />
+    <Compile Include="Validation\Error\ZeroGainException.cs" />
+    <Compile Include="Validation\HtmlHelperExtension.cs" />
+    <Compile Include="Validation\HttpParamActionAttribute.cs" />
+    <Compile Include="Validation\MoneyAttribute.cs" />
+    <Compile Include="Validation\MustBeAttribute.cs" />
+    <Compile Include="Validation\ObjectCopier.cs" />
+    <Compile Include="Validation\ProductModelBinder.cs" />
+    <Compile Include="Validation\ProductPartModelBinder.cs" />
+    <Compile Include="Validation\ProductPartsPrintableArticleModelBinder.cs" />
+    <Compile Include="Validation\ProductPartTaskModelBinder.cs" />
+    <Compile Include="Validation\ProductViewModelModelBinder.cs" />
+    <Compile Include="Validation\Registration.Designer.cs" />
+    <Compile Include="Validation\Registration.en-us.Designer.cs" />
+    <Compile Include="Validation\RegularExpressionLocalizedAttribute.cs" />
+    <Compile Include="Validation\RequiredIf.cs" />
+    <Compile Include="Validation\Strings.Designer.cs" />
+    <Compile Include="Validation\Strings.en-us.Designer.cs" />
+    <Compile Include="Validation\TaskEstimatedOnBinder.cs" />
+    <Compile Include="Validation\Utilities\AjaxValidator.cs" />
+    <Compile Include="Validation\Utilities\Operator.cs" />
+    <Compile Include="Validation\Utilities\OperatorMetadata.cs" />
+    <Compile Include="Validation\Utilities\Register.cs" />
+    <Compile Include="Validation\XorFieldRequiredAttribute.cs" />
+    <Compile Include="Views\Shared\App_LocalResources\Cuts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cuts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\App_LocalResources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeOfTaskAndCodTypeOfTask.resx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\XmlDocument.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Areas\RouteDebugger\Content\rdstyle.css" />
+    <Content Include="Areas\RouteDebugger\Scripts\detect.js" />
+    <Content Include="Content\acetheme\assets\avatars\avatar.png" />
+    <Content Include="Content\acetheme\assets\avatars\avatar1.png" />
+    <Content Include="Content\acetheme\assets\avatars\avatar2.png" />
+    <Content Include="Content\acetheme\assets\avatars\avatar3.png" />
+    <Content Include="Content\acetheme\assets\avatars\avatar4.png" />
+    <Content Include="Content\acetheme\assets\avatars\avatar5.png" />
+    <Content Include="Content\acetheme\assets\avatars\profile-pic.jpg" />
+    <Content Include="Content\acetheme\assets\avatars\user.jpg" />
+    <Content Include="Content\acetheme\assets\css\ace-fonts.css" />
+    <Content Include="Content\acetheme\assets\css\ace-ie.min.css" />
+    <Content Include="Content\acetheme\assets\css\ace-responsive.min.css" />
+    <Content Include="Content\acetheme\assets\css\ace-rtl.min.css" />
+    <Content Include="Content\acetheme\assets\css\ace-skins.min.css" />
+    <Content Include="Content\acetheme\assets\css\ace.min.css" />
+    <Content Include="Content\acetheme\assets\css\bootstrap-editable.css" />
+    <Content Include="Content\acetheme\assets\css\bootstrap-responsive.min.css" />
+    <Content Include="Content\acetheme\assets\css\bootstrap-timepicker.css" />
+    <Content Include="Content\acetheme\assets\css\bootstrap.min.css" />
+    <Content Include="Content\acetheme\assets\css\chosen-sprite%402x.png" />
+    <Content Include="Content\acetheme\assets\css\chosen-sprite.png" />
+    <Content Include="Content\acetheme\assets\css\chosen.css" />
+    <Content Include="Content\acetheme\assets\css\chosen.min.css" />
+    <Content Include="Content\acetheme\assets\css\colorbox.css" />
+    <Content Include="Content\acetheme\assets\css\colorpicker.css" />
+    <Content Include="Content\acetheme\assets\css\datepicker.css" />
+    <Content Include="Content\acetheme\assets\css\daterangepicker.css" />
+    <Content Include="Content\acetheme\assets\css\dropzone.css" />
+    <Content Include="Content\acetheme\assets\css\font-awesome-ie7.min.css" />
+    <Content Include="Content\acetheme\assets\css\font-awesome.min.css" />
+    <Content Include="Content\acetheme\assets\css\fullcalendar.css" />
+    <Content Include="Content\acetheme\assets\css\fullcalendar.print.css" />
+    <Content Include="Content\acetheme\assets\css\images\border.png" />
+    <Content Include="Content\acetheme\assets\css\images\border1.png" />
+    <Content Include="Content\acetheme\assets\css\images\border2.png" />
+    <Content Include="Content\acetheme\assets\css\images\controls.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderBottomCenter.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderBottomLeft.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderBottomRight.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderMiddleLeft.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderMiddleRight.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderTopCenter.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderTopLeft.png" />
+    <Content Include="Content\acetheme\assets\css\images\ie6\borderTopRight.png" />
+    <Content Include="Content\acetheme\assets\css\images\loading.gif" />
+    <Content Include="Content\acetheme\assets\css\images\loading_background.png" />
+    <Content Include="Content\acetheme\assets\css\images\overlay.png" />
+    <Content Include="Content\acetheme\assets\css\img\alpha.png" />
+    <Content Include="Content\acetheme\assets\css\img\hue.png" />
+    <Content Include="Content\acetheme\assets\css\img\saturation.png" />
+    <Content Include="Content\acetheme\assets\css\jquery-ui-1.10.3.custom.min.css" />
+    <Content Include="Content\acetheme\assets\css\jquery-ui-1.10.3.full.min.css" />
+    <Content Include="Content\acetheme\assets\css\jquery.gritter.css" />
+    <Content Include="Content\acetheme\assets\css\prettify.css" />
+    <Content Include="Content\acetheme\assets\css\select2-spinner.gif" />
+    <Content Include="Content\acetheme\assets\css\select2.css" />
+    <Content Include="Content\acetheme\assets\css\select2.png" />
+    <Content Include="Content\acetheme\assets\css\select2x2.png" />
+    <Content Include="Content\acetheme\assets\css\ui.jqgrid.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\ace-ie.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\ace-responsive.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\ace-skins.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\ace.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\bootstrap-responsive.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\bootstrap.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\chosen.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\font-awesome-ie7.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\font-awesome.css" />
+    <Content Include="Content\acetheme\assets\css\uncompressed\jquery-ui-1.10.3.custom.css" />
+    <Content Include="Content\acetheme\assets\font\fontawesome-webfont.svg" />
+    <Content Include="Content\acetheme\assets\images\back_disabled.png" />
+    <Content Include="Content\acetheme\assets\images\back_enabled.png" />
+    <Content Include="Content\acetheme\assets\images\back_enabled_hover.png" />
+    <Content Include="Content\acetheme\assets\images\forward_disabled.png" />
+    <Content Include="Content\acetheme\assets\images\forward_enabled.png" />
+    <Content Include="Content\acetheme\assets\images\forward_enabled_hover.png" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-1.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-2.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-3.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-4.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-5.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\image-6.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-1.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-2.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-3.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-4.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-5.jpg" />
+    <Content Include="Content\acetheme\assets\images\gallery\thumb-6.jpg" />
+    <Content Include="Content\acetheme\assets\images\sort_asc.png" />
+    <Content Include="Content\acetheme\assets\images\sort_asc_disabled.png" />
+    <Content Include="Content\acetheme\assets\images\sort_both.png" />
+    <Content Include="Content\acetheme\assets\images\sort_desc.png" />
+    <Content Include="Content\acetheme\assets\images\sort_desc_disabled.png" />
+    <Content Include="Content\acetheme\assets\images\spritemap%402x.png" />
+    <Content Include="Content\acetheme\assets\images\spritemap.png" />
+    <Content Include="Content\acetheme\assets\img\clear.png" />
+    <Content Include="Content\acetheme\assets\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\acetheme\assets\img\glyphicons-halflings.png" />
+    <Content Include="Content\acetheme\assets\img\loading.gif" />
+    <Content Include="Content\acetheme\assets\js\ace-elements.min.js" />
+    <Content Include="Content\acetheme\assets\js\ace-extra.min.js" />
+    <Content Include="Content\acetheme\assets\js\ace.min.js" />
+    <Content Include="Content\acetheme\assets\js\additional-methods.min.js" />
+    <Content Include="Content\acetheme\assets\js\bootbox.min.js" />
+    <Content Include="Content\acetheme\assets\js\bootstrap-colorpicker.min.js" />
+    <Content Include="Content\acetheme\assets\js\bootstrap-tag.min.js" />
+    <Content Include="Content\acetheme\assets\js\bootstrap-wysiwyg.min.js" />
+    <Content Include="Content\acetheme\assets\js\bootstrap.min.js" />
+    <Content Include="Content\acetheme\assets\js\chosen.jquery.min.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\bootstrap-datepicker.min.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\bootstrap-timepicker.min.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\daterangepicker.min.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.bg.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.ca.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.cs.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.da.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.de.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.el.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.es.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.fi.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.fr.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.he.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.hr.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.hu.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.id.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.is.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.it.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.ja.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.kr.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.lt.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.lv.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.ms.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.nb.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.nl.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.pl.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.pt-BR.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.pt.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.ro.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.rs-latin.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.rs.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.sk.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.sl.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.sv.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.sw.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.th.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.tr.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.uk.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\locales\bootstrap-datepicker.zh-TW.js" />
+    <Content Include="Content\acetheme\assets\js\date-time\moment.min.js" />
+    <Content Include="Content\acetheme\assets\js\dropzone.min.js" />
+    <Content Include="Content\acetheme\assets\js\excanvas.min.js" />
+    <Content Include="Content\acetheme\assets\js\flot\jquery.flot.min.js" />
+    <Content Include="Content\acetheme\assets\js\flot\jquery.flot.pie.min.js" />
+    <Content Include="Content\acetheme\assets\js\flot\jquery.flot.resize.min.js" />
+    <Content Include="Content\acetheme\assets\js\fuelux\data\fuelux.tree-sampledata.js" />
+    <Content Include="Content\acetheme\assets\js\fuelux\fuelux.spinner.min.js" />
+    <Content Include="Content\acetheme\assets\js\fuelux\fuelux.tree.min.js" />
+    <Content Include="Content\acetheme\assets\js\fuelux\fuelux.wizard.min.js" />
+    <Content Include="Content\acetheme\assets\js\fullcalendar.min.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ar.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-bg.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-bg1251.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-cat.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-cn.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-cs.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-da.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-de.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-dk.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-el.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-en.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-es.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-fa.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-fi.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-fr.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-gl.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-he.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-hr.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-hr1250.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-hu.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-id.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-is.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-it.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ja.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-kr.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-lt.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-mne.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-nl.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-no.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-pl.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-pt-br.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-pt.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ro.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ru.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-sk.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-sr.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-sv.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-th.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-tr.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-tw.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ua.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-vi.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\jquery.jqGrid.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery-1.10.2.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery-2.0.3.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery-ui-1.10.3.custom.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery-ui-1.10.3.full.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.autosize-min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.colorbox-min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.dataTables.bootstrap.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.dataTables.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.easy-pie-chart.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.gritter.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.hotkeys.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.inputlimiter.1.3.1.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.knob.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.maskedinput.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.mobile.custom.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.nestable.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.slimscroll.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.sparkline.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.ui.touch-punch.min.js" />
+    <Content Include="Content\acetheme\assets\js\jquery.validate.min.js" />
+    <Content Include="Content\acetheme\assets\js\markdown\bootstrap-markdown.min.js" />
+    <Content Include="Content\acetheme\assets\js\markdown\markdown.min.js" />
+    <Content Include="Content\acetheme\assets\js\markdown\to-markdown.min.js" />
+    <Content Include="Content\acetheme\assets\js\prettify.js" />
+    <Content Include="Content\acetheme\assets\js\select2.min.js" />
+    <Content Include="Content\acetheme\assets\js\spin.min.js" />
+    <Content Include="Content\acetheme\assets\js\typeahead-bs2.min.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\ace-elements.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\ace-extra.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\ace.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\additional-methods.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\bootbox.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\bootstrap-colorpicker.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\bootstrap-tag.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\bootstrap-wysiwyg.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\bootstrap.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\chosen.jquery.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\bootstrap-datepicker.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\bootstrap-timepicker.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\daterangepicker.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.bg.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.ca.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.cs.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.da.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.de.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.el.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.es.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.fi.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.fr.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.he.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.hr.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.hu.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.id.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.is.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.it.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.ja.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.kr.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.lt.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.lv.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.ms.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.nb.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.nl.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.pl.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.pt-BR.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.pt.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.ro.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.rs-latin.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.rs.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.sk.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.sl.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.sv.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.sw.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.th.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.tr.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.uk.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\locales\bootstrap-datepicker.zh-TW.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\date-time\moment.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\excanvas.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\flot\jquery.flot.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\flot\jquery.flot.pie.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\flot\jquery.flot.resize.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\fuelux\data\fuelux.tree-sampledata.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\fuelux\fuelux.spinner.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\fuelux\fuelux.tree.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\fuelux\fuelux.wizard.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\fullcalendar.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery-1.10.2.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery-2.0.3.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery-ui-1.10.3.custom.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.autosize.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.colorbox.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.dataTables.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.easy-pie-chart.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.gritter.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.hotkeys.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.inputlimiter.1.3.1.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.knob.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.maskedinput.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.mobile.custom.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.slimscroll.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.sparkline.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.ui.touch-punch.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\jquery.validate.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\markdown\bootstrap-markdown.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\markdown\markdown.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\markdown\to-markdown.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\select2.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\spin.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\x-editable\ace-editable.js" />
+    <Content Include="Content\acetheme\assets\js\uncompressed\x-editable\bootstrap-editable.js" />
+    <Content Include="Content\acetheme\assets\js\x-editable\ace-editable.min.js" />
+    <Content Include="Content\acetheme\assets\js\x-editable\bootstrap-editable.min.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
+    <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
+    <Content Include="Content\ProductImage\AltriFormati.png" />
+    <Content Include="Content\ProductImage\BigliettiVisita.png" />
+    <Content Include="Content\ProductImage\BrossuraCucitaFilo.png" />
+    <Content Include="Content\ProductImage\BrossuraFresata.png" />
+    <Content Include="Content\ProductImage\Buste.png" />
+    <Content Include="Content\ProductImage\CartaIntestata.png" />
+    <Content Include="Content\ProductImage\CartolineInviti.png" />
+    <Content Include="Content\ProductImage\CartolinePostali.png" />
+    <Content Include="Content\ProductImage\EtichetteCartellini.png" />
+    <Content Include="Content\ProductImage\FogliMacchina.png" />
+    <Content Include="Content\ProductImage\Fotoquadri.png" />
+    <Content Include="Content\ProductImage\Locandine.png" />
+    <Content Include="Content\ProductImage\Manifesti.png" />
+    <Content Include="Content\ProductImage\NotExist.png" />
+    <Content Include="Content\ProductImage\Pieghevoli.png" />
+    <Content Include="Content\ProductImage\Poster.png" />
+    <Content Include="Content\ProductImage\PuntoMetallico.png" />
+    <Content Include="Content\ProductImage\PVC.png" />
+    <Content Include="Content\ProductImage\RivistePostalizzazione.png" />
+    <Content Include="Content\ProductImage\SchedeNonRilegate.png" />
+    <Content Include="Content\ProductImage\SpiraleMetallica.png" />
+    <Content Include="Content\ProductImage\Striscioni.png" />
+    <Content Include="Content\ProductImage\SuppRigidi.png" />
+    <Content Include="Content\ProductImage\Volantini.png" />
+    <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.menu.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.spinner.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\jquery.ui.tooltip.css" />
+    <Content Include="Content\themes\base\minified\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.menu.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.spinner.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="favicon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\jqgridHelper.js" />
+    <Content Include="Scripts\autocomplete.js" />
+    <Content Include="Content\acetheme\assets\css\less\ace-nav.less" />
+    <Content Include="Content\acetheme\assets\css\less\ace.less" />
+    <Content Include="Content\acetheme\assets\css\less\basic.less" />
+    <Content Include="Content\acetheme\assets\css\less\bootstrap\variables.less" />
+    <Content Include="Content\acetheme\assets\css\less\breadcrumbs.less" />
+    <Content Include="Content\acetheme\assets\css\less\buttons.less" />
+    <Content Include="Content\acetheme\assets\css\less\dropdown.less" />
+    <Content Include="Content\acetheme\assets\css\less\ext\bootstrap-tag.less" />
+    <Content Include="Content\acetheme\assets\css\less\form-checkbox.less" />
+    <Content Include="Content\acetheme\assets\css\less\form-file.less" />
+    <Content Include="Content\acetheme\assets\css\less\form.less" />
+    <Content Include="Content\acetheme\assets\css\less\gallery.less" />
+    <Content Include="Content\acetheme\assets\css\less\general.less" />
+    <Content Include="Content\acetheme\assets\css\less\icon-animated.less" />
+    <Content Include="Content\acetheme\assets\css\less\infobox.less" />
+    <Content Include="Content\acetheme\assets\css\less\items.less" />
+    <Content Include="Content\acetheme\assets\css\less\label-badge.less" />
+    <Content Include="Content\acetheme\assets\css\less\mixins-css3.less" />
+    <Content Include="Content\acetheme\assets\css\less\mixins.less" />
+    <Content Include="Content\acetheme\assets\css\less\other.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.error.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.inbox.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.invoice.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.login.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.pricing.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.profile.less" />
+    <Content Include="Content\acetheme\assets\css\less\page.timeline.less" />
+    <Content Include="Content\acetheme\assets\css\less\progressbar.less" />
+    <Content Include="Content\acetheme\assets\css\less\rtl.less" />
+    <Content Include="Content\acetheme\assets\css\less\searchbox.less" />
+    <Content Include="Content\acetheme\assets\css\less\sidebar-min.less" />
+    <Content Include="Content\acetheme\assets\css\less\sidebar.less" />
+    <Content Include="Content\acetheme\assets\css\less\tab-accordion.less" />
+    <Content Include="Content\acetheme\assets\css\less\tables.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-calendar.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-chosen.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-colorbox.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-dropzone.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-editable.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-fuelux.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-gritter.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-jqgrid.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-jquery-ui.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-nestable.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-select2.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-slider.less" />
+    <Content Include="Content\acetheme\assets\css\less\thirdparty-wysiwyg.less" />
+    <Content Include="Content\acetheme\assets\css\less\tooltip-popover.less" />
+    <Content Include="Content\acetheme\assets\css\less\utility.less" />
+    <Content Include="Content\acetheme\assets\css\less\variables.less" />
+    <Content Include="Content\acetheme\assets\css\less\widget.less" />
+    <Content Include="Content\acetheme\assets\font\cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff" />
+    <Content Include="Content\acetheme\assets\font\DXI1ORHCpsQm3Vp6mXoaTXhCUOGz7vYGh680lGh-uXM.woff" />
+    <Content Include="Content\acetheme\assets\font\fontawesome-webfont.eot" />
+    <Content Include="Content\acetheme\assets\font\fontawesome-webfont.ttf" />
+    <Content Include="Content\acetheme\assets\font\fontawesome-webfont.woff" />
+    <Content Include="Content\acetheme\assets\font\FontAwesome.otf" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model2.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model2.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model2.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <None Include="Models\Model1.ttOriginale">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model11.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Models\Model2.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model2.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model2.edmx.diagram">
+      <DependentUpon>Model2.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\Account\Views\Account\ChangePassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Areas\Account\Views\Account\Confirmation.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfile.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfileSuccess.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EmailSent.cshtml" />
+    <Content Include="Areas\Account\Views\Account\Login.cshtml" />
+    <Content Include="Areas\Account\Views\Account\Pending.cshtml" />
+    <Content Include="Areas\Account\Views\Account\PendingAmm.cshtml" />
+    <Content Include="Areas\Account\Views\Account\RecoveryPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\Register.cshtml" />
+    <Content Include="Areas\Account\Views\Account\ResultPending.cshtml" />
+    <Content Include="Areas\Account\Views\Account\Verify.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_ChangePassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_EditProfile.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Login.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_LoginInvite.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_RecoveryPassword.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Register.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_footer.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_MsgProcessOk.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\Account\Views\Web.config" />
+    <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\WizardRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\WizardSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_DataProcessedCorrectly.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListCommonScript.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListRigidPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListSheetPrintableArticle_provaButtonMetro.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RigidPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RigidPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleCuttedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleCuttedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePakedCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePalletCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_WizardRollPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_WizardSheetPrintableArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateCustomer.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\CreateSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditCustomer.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\EditSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\IndexBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_Base.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateCustomer.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateSupplier.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_List.cshtml" />
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\_ListBase.cshtml" />
+    <Content Include="Areas\DataBase\Views\HomeDb\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\Copy of _footer.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\EditorTemplates\TaskEstimatedOnRun.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePlotterSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreatePrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\DigitalOnRun.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\DigitalOnTime.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPlotterSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditTaskEstimatedOn.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexDigitalSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexLithoSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\PlotterOnMq.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOn.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnMq.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnRun.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskEstimatedOnTime.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\TaskExecutorNewCost.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateDigitalRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateDigitalSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateLithoSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotterRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePlotterSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreatePrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateRigid.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListAvarageRunPerRunStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCommonScript.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerMqStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStepBW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerRunStepNEW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitForWeightStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitForWeightStepNEW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitOnCostForWeightStep.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDeficitOnCostForWeightStepNEW.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListDigitalSheetOLD.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListLithoSheetAndRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListPlotter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListPrePostPress.cshtml" />
+    <Content Include="Areas\DataBase\Views\Web.config" />
+    <Content Include="Areas\DataBase\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\RouteDebugger\Index.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\RouteDebugger\Views\Web.config" />
+    <Content Include="Areas\RouteDebugger\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Working\Views\Document\CreateDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditDocumentProducts.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditEstimate.cshtml" />
+    <Content Include="Areas\Working\Views\Document\Index.cshtml" />
+    <Content Include="Areas\Working\Views\Document\ListEstimate.cshtml" />
+    <Content Include="Areas\Working\Views\Document\PrintedCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\PrintingCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_CommonScriptDraw.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_Costs.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_CostsCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_DigitalSheetCostViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_EditAndCreateDocument.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListDocumentProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListEstimate.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_LithoSheetCostViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_NewProductCommand.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingSheetCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartBookSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartCoverSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartRigidPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartSingleSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Product\CreateProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\DisplayProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\EditProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_CommonScriptProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_EditAndCreateProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListCommonScript.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\OptionTypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartCoverSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartRigidArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\TypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\Document.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentProductViewModel.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\OptionTypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartBookSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartCoverSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartRigidArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSheetArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductRigid.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSingleSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\TypeOfTask.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_footer.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_MenuCurrentEstimate.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_MenuNewEstimate.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_MenuNewProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\Working\Views\Single.cshtml" />
+    <Content Include="Areas\Working\Views\Web.config" />
+    <Content Include="Areas\Working\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\HelpPage\Views\Web.config" />
+    <Content Include="Areas\HelpPage\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\ResourceModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Index.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\TextSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\SimpleTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Samples.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\Parameters.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ModelDescriptionLink.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\KeyValuePairModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\InvalidSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ImageSample.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\EnumTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\DictionaryModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ComplexTypeModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
+    <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <EntityDeploy Include="Models\Model1 - Copy.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1 - Copy.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </None>
+    <None Include="Properties\PublishProfiles\new.pubxml" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\i18n\grid.locale-ar.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg.js" />
+    <Content Include="Scripts\i18n\grid.locale-bg1251.js" />
+    <Content Include="Scripts\i18n\grid.locale-cat.js" />
+    <Content Include="Scripts\i18n\grid.locale-cn.js" />
+    <Content Include="Scripts\i18n\grid.locale-cs.js" />
+    <Content Include="Scripts\i18n\grid.locale-da.js" />
+    <Content Include="Scripts\i18n\grid.locale-de.js" />
+    <Content Include="Scripts\i18n\grid.locale-dk.js" />
+    <Content Include="Scripts\i18n\grid.locale-el.js" />
+    <Content Include="Scripts\i18n\grid.locale-en.js" />
+    <Content Include="Scripts\i18n\grid.locale-es.js" />
+    <Content Include="Scripts\i18n\grid.locale-fa.js" />
+    <Content Include="Scripts\i18n\grid.locale-fi.js" />
+    <Content Include="Scripts\i18n\grid.locale-fr.js" />
+    <Content Include="Scripts\i18n\grid.locale-gl.js" />
+    <Content Include="Scripts\i18n\grid.locale-he.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr.js" />
+    <Content Include="Scripts\i18n\grid.locale-hr1250.js" />
+    <Content Include="Scripts\i18n\grid.locale-hu.js" />
+    <Content Include="Scripts\i18n\grid.locale-id.js" />
+    <Content Include="Scripts\i18n\grid.locale-is.js" />
+    <Content Include="Scripts\i18n\grid.locale-it.js" />
+    <Content Include="Scripts\i18n\grid.locale-ja.js" />
+    <Content Include="Scripts\i18n\grid.locale-kr.js" />
+    <Content Include="Scripts\i18n\grid.locale-lt.js" />
+    <Content Include="Scripts\i18n\grid.locale-mne.js" />
+    <Content Include="Scripts\i18n\grid.locale-nl.js" />
+    <Content Include="Scripts\i18n\grid.locale-no.js" />
+    <Content Include="Scripts\i18n\grid.locale-pl.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt-br.js" />
+    <Content Include="Scripts\i18n\grid.locale-pt.js" />
+    <Content Include="Scripts\i18n\grid.locale-ro.js" />
+    <Content Include="Scripts\i18n\grid.locale-ru.js" />
+    <Content Include="Scripts\i18n\grid.locale-sk.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr-latin.js" />
+    <Content Include="Scripts\i18n\grid.locale-sr.js" />
+    <Content Include="Scripts\i18n\grid.locale-sv.js" />
+    <Content Include="Scripts\i18n\grid.locale-th.js" />
+    <Content Include="Scripts\i18n\grid.locale-tr.js" />
+    <Content Include="Scripts\i18n\grid.locale-tw.js" />
+    <Content Include="Scripts\i18n\grid.locale-ua.js" />
+    <Content Include="Scripts\i18n\grid.locale-vi.js" />
+    <Content Include="Scripts\jquery-2.1.0.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery.jqGrid.js" />
+    <Content Include="Scripts\jquery.jqGrid.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.7.1.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Shared\price-tag-icon-614x460.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Adv.cshtml" />
+    <Content Include="Views\Home\algolino.docx" />
+    <Content Include="Views\Home\ECommerce.cshtml" />
+    <Content Include="Views\Home\estimate.docx" />
+    <Content Include="Views\Home\EstimateTemplate.docx" />
+    <Content Include="Views\Home\Payment.cshtml" />
+    <Content Include="Views\Home\PaymentResult.cshtml" />
+    <Content Include="Views\Home\_Price.cshtml" />
+    <Content Include="Views\Order\Order.cshtml" />
+    <Content Include="Views\Order\SelectCustomerOrder.cshtml" />
+    <Content Include="Views\Order\_DisplayCustomer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\ErrorCust.cshtml" />
+    <Content Include="Views\Shared\Error_.cshtml" />
+    <Content Include="Views\Shared\NoTaskEstimatedOnException.cshtml" />
+    <Content Include="Views\Shared\NoTaskExecutorException.cshtml" />
+    <Content Include="Views\Shared\NotFoundResException.cshtml" />
+    <Content Include="Views\Shared\NotImplementedException.cshtml" />
+    <Content Include="Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Views\Shared\_loading.cshtml" />
+    <Content Include="Views\Shared\_Menu.cshtml" />
+    <Content Include="Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\App_LocalResources\Cuts.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cuts.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\App_LocalResources\ecommercestampa.com.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\App_LocalResources\gestionestampa.com.resx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Views\Shared\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TypeOfTaskAndCodTypeOfTask.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Account\Views\Account\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\ArticleStrings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\HomeDb\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\CustomerSupplierStrings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\ArticleStrings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_GlobalResources\ecommercestampa.com.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>ecommercestampa.com1.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_GlobalResources\gestionestampa.com.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>gestionestampa.com1.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="Models\Resources\Account\AccountVuoto.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountVuoto.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\Registration.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registration.en-us.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\Registration.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Registration.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\ResChangePasswordModel.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResChangePasswordModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Account\ResLoginModel.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLoginModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ArticlesVuoto.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ArticlesVuoto.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResArticleCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticleCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResObjectPrintableArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResObjectPrintableArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResObjectPrintableArticleCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResObjectPrintableArticleCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResPrintable.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrintable.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRigidPrintableArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRigidPrintableArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRigidPrintableArticleCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRigidPrintableArticleCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticleCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticleCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResRollPrintableArticleCuttedCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollPrintableArticleCuttedCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticleCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticleCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResSheetPrintableArticleCuttedCost.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSheetPrintableArticleCuttedCost.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\CustomerSupplierVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerSupplierVuoto1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomer.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomerSupplier.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomerSupplier.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResCustomerSupplierBase.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCustomerSupplierBase.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\CustomerSupplier\ResSupplier.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResSupplier.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCost.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocumentProduct.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocumentProduct.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocuments.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocuments.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResDocumentsVuoto.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDocumentsVuoto.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\MenuProduct\ResMenuProduct.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResMenuProduct.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResNewMenuProductCommand.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResNewMenuProductCommand.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProduct.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProduct.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductBlockSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductBlockSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductBookSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductBookSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPart.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPart.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartBlockSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartBlockSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartBookSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartBookSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartCoverSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartCoverSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartSheetArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartSheetArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartSingleSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartSingleSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartsPrintableArticle.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartsPrintableArticle.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartTask.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartTask.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductSingleSheet.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductSingleSheet.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductTask.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductTask.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductVuoto.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductVuoto.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\Task.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResAvarageRunPerRunStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingAvarageRunPerRunStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingAvarageRunPerRunStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingCostPerRunStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingCostPerRunStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnRun.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingEstimatedOnRun.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResBindingEstimatedOnTime.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResBindingEstimatedOnTime.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerMqStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostPerMqStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerRunStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostPerRunStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDeficitCostForWeightStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDeficitCostForWeightStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDeficitForWeightStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDeficitForWeightStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigital.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigital.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigitalSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigitalSheet.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResDigitalWeb.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResDigitalWeb.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLitho.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLitho.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoSheet.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLithoSheet.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoWeb.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLithoWeb.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResOptionTypeOfTask.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResOptionTypeOfTask.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPlotter.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPlotter.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPlotterOnMq.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPlotterOnMq.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPrePostPress.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrePostPress.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResPrinterMachine.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResPrinterMachine.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOn.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOn.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnTime.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOnTime.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskEstimatedOnUnit.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskEstimatedOnUnit.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskExecutor.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskExecutor.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResArticleViewModelAutoChanges.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\ViewModels\ResProductViewModel.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductViewModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Validation\Registration.en-us.resx" />
+    <EmbeddedResource Include="Validation\Registration.resx" />
+    <EmbeddedResource Include="Validation\Strings.en-us.resx" />
+    <EmbeddedResource Include="Validation\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mvc.HtmlHelper.jqGrid\Mvc.HtmlHelper.jqGrid.csproj">
+      <Project>{6e40cc48-8edf-4608-9bd3-d43a9b649409}</Project>
+      <Name>Mvc.HtmlHelper.jqGrid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SchemaManagement\SchemaManagemet\SchemaManagemet.csproj">
+      <Project>{4f756f7e-1a8e-4bc9-bfac-62b4ee18ea55}</Project>
+      <Name>SchemaManagemet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49450</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:49450/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
