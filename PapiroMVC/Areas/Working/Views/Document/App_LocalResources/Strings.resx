@@ -123,6 +123,9 @@
   <data name="Assigned" xml:space="preserve">
     <value>Valido</value>
   </data>
+  <data name="BuyingFormat" xml:space="preserve">
+    <value>F.to acquisto supporto stampa</value>
+  </data>
   <data name="CodCost" xml:space="preserve">
     <value>Codice</value>
   </data>
@@ -177,6 +180,9 @@
   <data name="DocumentsDesc" xml:space="preserve">
     <value>elenco dei documenti</value>
   </data>
+  <data name="Drafting" xml:space="preserve">
+    <value>Montaggio</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
@@ -224,6 +230,9 @@
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>In questa area puoi creare facilmente preventivi di stampa Litho/Offset a rotolo e a foglio, preventivi di stampa Digitali a rotolo e a foglio, e preventivi per stampa su supporti rigidi.</value>
   </data>
   <data name="NewEstimate" xml:space="preserve">
     <value>Nuovo Preventivo</value>

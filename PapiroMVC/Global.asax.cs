@@ -51,10 +51,17 @@ namespace PapiroMVC
 
             ModelMetadataProviders.Current = new CustomModelMetadataProvider();
 
-
             ViewEngines.Engines.Clear();
-            ViewEngines.Engines.Add(new RazorViewEngine()); 
+            ViewEngines.Engines.Add(new RazorViewEngine());
 
+            //json formatter
+            var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
+
+            json.SerializerSettings.DateFormatHandling
+                = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+
+            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented; 
         }
     }
 }

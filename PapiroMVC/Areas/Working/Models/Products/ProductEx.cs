@@ -246,7 +246,30 @@ namespace PapiroMVC.Models
                 this.ProductName = this.ToString();
             }
         }
+
+        public virtual void ProductUpdateTimeStamp()
+        {
+            this.TimeStampTable = DateTime.Now;
+
+            foreach (var item in this.ProductParts)
+            {
+                item.TimeStampTable = DateTime.Now;
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.TimeStampTable = DateTime.Now;
+                }
+                foreach (var item2 in item.ProductPartPrintableArticles)
+                {
+                    item2.TimeStampTable = DateTime.Now;
+                }
+
+            }
+
+            //task del prodotto
+            foreach (var item in this.ProductTasks)
+            {
+                item.TimeStampTable = DateTime.Now;
+            }
+        }
     }
-
-
 }

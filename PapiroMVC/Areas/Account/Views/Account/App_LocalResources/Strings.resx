@@ -295,4 +295,25 @@
   <data name="EmailNotFound" xml:space="preserve">
     <value>Mail errata oppure non inserita nel sistema</value>
   </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="CardNumber" xml:space="preserve">
+    <value>Numero carta di credito</value>
+  </data>
+  <data name="CVV" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="Expiration" xml:space="preserve">
+    <value>Scadenza (MM/AAAA)</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Sei già registrato? Usa il link qui sotto per accedere al sistema, altrimenti registrati gratuitamente per iniziare.</value>
+  </data>
+  <data name="Payments" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profilo</value>
+  </data>
 </root>

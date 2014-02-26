@@ -123,6 +123,39 @@
   <data name="Home" xml:space="preserve">
     <value>home page</value>
   </data>
+  <data name="Message1" xml:space="preserve">
+    <value>Benvenuto nell'</value>
+  </data>
+  <data name="Message1_I" xml:space="preserve">
+    <value>anagrafica</value>
+  </data>
+  <data name="Message1_II" xml:space="preserve">
+    <value>della tua azienda. Usa il menu a fianco per entrare nelle sezioni delle varie anagrafiche.</value>
+  </data>
+  <data name="Message2" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="Message2_I" xml:space="preserve">
+    <value>Anagrafica</value>
+  </data>
+  <data name="Message2_II" xml:space="preserve">
+    <value>puoi aggiungere macchine da stampa Litho/Offset a rotolo e a foglio, macchine da stampa Digitali a rotolo e a foglio, macchine da stampa per supporti rigidi.</value>
+  </data>
+  <data name="Message3" xml:space="preserve">
+    <value>Per imparare a compilare correttamente le anagrafiche e i listini prezzi consulta il forum</value>
+  </data>
+  <data name="Message3_I" xml:space="preserve">
+    <value>PapiroStar</value>
+  </data>
+  <data name="Message3_II" xml:space="preserve">
+    <value>oppure contatta un nosto consulente.</value>
+  </data>
+  <data name="Message3_III" xml:space="preserve">
+    <value>La compilazione corretta dell'anagrafica del centro stampa e/o della tipografia assicura un uso performante del software</value>
+  </data>
+  <data name="Message3_IIII" xml:space="preserve">
+    <value>PapiroStar</value>
+  </data>
   <data name="MetaTitle" xml:space="preserve">
     <value>Gestionale per preventivi e commesse per stampa digitale e offset. Gratuito. Intuitivo e facile da configurare e usare.</value>
   </data>
