@@ -1156,16 +1156,30 @@
             <param name="CodTaskExecutor"></param>
             <returns></returns>
         </member>
-        <member name="T:PapiroMVC.Controllers.ValuesController">
+        <member name="T:PapiroMVC.Controllers.ProductApiController">
             <summary>
             help a
             </summary>
         </member>
-        <member name="M:PapiroMVC.Controllers.ValuesController.GetEmpty(System.String)">
+        <member name="M:PapiroMVC.Controllers.ProductApiController.GetEmptyRigid(System.String)">
             <summary>
             get empty product initialized by id
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Controllers.ProductApiController.GetPriceRigid(PapiroMVC.Models.WebApi.ProductRigidApi)">
+            <summary>
+            get back product with its prices, discounted by date
+            </summary>
+            <param name="prod"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Controllers.ProductApiController.GetMaterialRigid">
+            <summary>
+            return Rigid Material
+            </summary>
+            <param name="prod"></param>
             <returns></returns>
         </member>
         <member name="M:PapiroMVC.Validation.CultureHelper.GetImplementedCulture(System.String)">
@@ -6481,6 +6495,16 @@
               Looks up a localized string similar to Questo campo è richiesto per completare l&apos;operazione.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.WebApi.ProductApi.Prices">
+            <summary>
+            list of price disocunted by date
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.WebApi.ProductApi.Id">
+            <summary>
+            id of the product type
+            </summary>
+        </member>
         <member name="M:Services.CustomerSupplierRepository.GetNewCode(PapiroMVC.Models.CustomerSupplier)">
             <summary>
             Take next code in string numerical order.
@@ -6548,6 +6572,13 @@
             Uptate cost in Cost from CostDetail
             </summary>
             <param name="id"></param>
+        </member>
+        <member name="M:PapiroMVC.ServiceLayer.Projection.MakeProjection(PapiroMVC.Models.ProductRigid,PapiroMVC.Models.WebApi.ProductRigidApi)">
+            <summary>
+            
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
         </member>
         <member name="M:PapiroMVC.Validation.HtmlHelperExtension.AlgolaNoDescEditorFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
             <summary>

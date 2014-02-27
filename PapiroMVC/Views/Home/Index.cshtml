@@ -2,7 +2,9 @@
 
 @{
     string strings = "~/Views/Home/Strings";
-    var uri = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "empty", id = "SuppRigidi" });
+    var uri = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/empty", id = "SuppRigidi" });
+    var uri2 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/productprice" });
+    var uri3 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/materials" });
 }
 
 @Html.Action("MetaGenerator", new
@@ -123,19 +125,73 @@
     </script>
 *@
 
+@*
 <script>
     var uri = '@uri';
+    $.ajax({
+        url: "@uri",
+        dataType: "json",
+        async: false,
+        contentType: "application/json",
+        type: "GET",
+        //data: data,
+        success: function (data) {
 
-    $(document).ready(function () {
-        // Send an AJAX request
-        $.getJSON(uri)
-            .done(function (data) {
-                // On success, 'data' contains a list of products.
-               // alert("ok");
-            })
-            .fail(function () {
-             //   alert("error");
+            alert(data);
+            $.ajax({
+                url: "@uri2",
+                dataType: "json",
+                data: data,
+                type: "POST",
+                //data: data,
+                success: function (responseData) {
+                    alert("Ok");
+                },
+                error: function (request, status, error) {
+                    alert("Errore di comunicazione con il server POST");
+                }
             });
-    });
 
-</script>
+        },
+        error: function (request, status, error) {
+            alert("Errore di comunicazione con il server GET");
+
+        }
+    });</script>
+*@
+
+@*
+    <script>
+        var uri = '@uri';
+        $.ajax({
+            url: "@uri",
+            dataType: "json",
+            async: false,
+            contentType: "application/json",
+            type: "GET",
+            //data: data,
+            success: function (data) {
+
+                alert(data);
+                $.ajax({
+                    url: "@uri2",
+                    dataType: "json",
+                    data: data,
+                    type: "POST",
+                    //data: data,
+                    success: function (responseData) {
+                        alert("Ok");
+                    },
+                    error: function (request, status, error) {
+                        alert("Errore di comunicazione con il server POST");
+                    }
+                });
+
+            },
+            error: function (request, status, error) {
+                alert("Errore di comunicazione con il server GET");
+            }
+        });
+    </script>
+
+*@

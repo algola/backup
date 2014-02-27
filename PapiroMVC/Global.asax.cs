@@ -50,6 +50,7 @@ namespace PapiroMVC
             ModelBinders.Binders.Add(typeof(ProductPartTask), new ProductPartTaskModelBinder());
 
             ModelMetadataProviders.Current = new CustomModelMetadataProvider();
+            ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
@@ -58,10 +59,11 @@ namespace PapiroMVC
             var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize;
 
-            json.SerializerSettings.DateFormatHandling
-                = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+            json.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
 
-            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented; 
+            json.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+
+         //   json.SerializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Objects;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PapiroMVC.Models;
+using PapiroMVC.Models.WebApi;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -287,6 +288,30 @@ namespace PapiroMVC.ServiceLayer
             DocumentRepository.Save();
 
 
+        }
+
+
+
+
+
+        public List<PrintableArticleApi> GetRigidList(IArticleRepository articleRepository)
+        {
+            articleRepository.SetDbName(CurrentDatabase);
+            var x= articleRepository.GetAll().OfType<RigidPrintableArticle>().ToList();
+
+            List<PrintableArticleApi> list = new List<PrintableArticleApi>();
+            PrintableArticleApi b;
+
+            AutoMapper.Mapper.CreateMap<RigidPrintableArticle, PrintableArticleApi>();
+
+            foreach (var item in x)
+            {
+                b = new PrintableArticleApi();
+                b = AutoMapper.Mapper.Map<RigidPrintableArticle, PrintableArticleApi>(item);
+                list.Add(b);
+            }
+
+            return list;
         }
 
     }

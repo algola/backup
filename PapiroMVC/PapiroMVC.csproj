@@ -44,6 +44,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.0-ci1005\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4">
+      <HintPath>..\packages\AutoMapper.3.2.0-ci1005\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Braintree-2.28.1">
       <HintPath>..\packages\Braintree.2.28.1\lib\Braintree-2.28.1.dll</HintPath>
     </Reference>
@@ -471,7 +477,7 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1184,12 +1190,6 @@
     <Compile Include="Models\RollPrintableArticleStandardCost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Schema Database_\ArticlesDDL.cs" />
-    <Compile Include="Models\Schema Database_\CustomerSupplierDDL.cs" />
-    <Compile Include="Models\Schema Database_\DatabaseDDL.cs" />
-    <Compile Include="Models\Schema Database_\GridColumnsPerUserDDL.cs" />
-    <Compile Include="Models\Schema Database_\TaskExecutorDDL.cs" />
-    <Compile Include="Models\Schema Database_\UserDDL.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
@@ -1248,6 +1248,10 @@
     <Compile Include="Models\TypeOfTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WebApi\Price.cs" />
+    <Compile Include="Models\WebApi\PrintableArticleApi.cs" />
+    <Compile Include="Models\WebApi\ProductApi.cs" />
+    <Compile Include="Models\WebApi\RigidProductApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryPattern\ArticleRepository.cs" />
     <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
@@ -1302,7 +1306,8 @@
     <Compile Include="Routing\TranslatedAreaRegistrationContextExtensions.cs" />
     <Compile Include="Routing\TranslatedRoute.cs" />
     <Compile Include="Routing\TranslatedRouteCollectionExtensions.cs" />
-    <Compile Include="Services Layer\PapiroService.cs" />
+    <Compile Include="ServiceLayer\PapiroService.cs" />
+    <Compile Include="ServiceLayer\Proiection.cs" />
     <Compile Include="Validation\AutorizeUserAttrbute.cs" />
     <Compile Include="Validation\Base\ContingentValidationAttribute.cs" />
     <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
@@ -2694,7 +2699,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49450</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49450/</IISUrl>
+          <IISUrl>http://localhost:49451/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
@@ -2704,6 +2709,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\AutoMapper.3.2.0-ci1005\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.0-ci1005\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

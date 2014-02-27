@@ -11,7 +11,7 @@ namespace PapiroMVC.Validation
 
     public class ProductModelBinder : DefaultModelBinder
     {
-
+        //MVC
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
             var typeValue = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".TypeOfProduct");
@@ -26,5 +26,6 @@ namespace PapiroMVC.Validation
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
             return model;
         }
-    }
+
+        }
 }
