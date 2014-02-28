@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace PapiroMVC.Validation
 {
 
-    public class CustomModelMetadataProvider : DataAnnotationsModelMetadataProvider
+    public class ToolTipCustomModelMetadataProvider : DataAnnotationsModelMetadataProvider
     {
         protected override ModelMetadata CreateMetadata(
                                  IEnumerable<Attribute> attributes,

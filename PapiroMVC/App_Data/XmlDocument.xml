@@ -1175,6 +1175,13 @@
             <param name="prod"></param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Controllers.ProductApiController.GetPriceRigidBind(PapiroMVC.Models.WebApi.ProductApi)">
+            <summary>
+            get back product with its prices, discounted by date
+            </summary>
+            <param name="prod"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Controllers.ProductApiController.GetMaterialRigid">
             <summary>
             return Rigid Material

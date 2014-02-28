@@ -49,7 +49,8 @@ namespace PapiroMVC
             ModelBinders.Binders.Add(typeof(ProductPartsPrintableArticle), new ProductPartsPrintableArticleModelBinder());
             ModelBinders.Binders.Add(typeof(ProductPartTask), new ProductPartTaskModelBinder());
 
-            ModelMetadataProviders.Current = new CustomModelMetadataProvider();
+            //ToolTip
+            ModelMetadataProviders.Current = new ToolTipCustomModelMetadataProvider();
             ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
 
             ViewEngines.Engines.Clear();

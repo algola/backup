@@ -1,8 +1,11 @@
-﻿using PapiroMVC.Validation;
+﻿using PapiroMVC.Models.WebApi;
+using PapiroMVC.Validation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ModelBinding;
+using System.Web.Http.ModelBinding.Binders;
 
 namespace PapiroMVC
 {
@@ -22,5 +25,6 @@ namespace PapiroMVC
             );
 
         }
+
     }
 }

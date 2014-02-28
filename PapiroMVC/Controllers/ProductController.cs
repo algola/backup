@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ModelBinding;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Controllers
 {
@@ -24,6 +25,11 @@ namespace PapiroMVC.Controllers
         public ProductApiController(IArticleRepository _articleRepository)
         {
             articleRepository = _articleRepository;
+        }
+
+        public ProductApiController()
+        {
+
         }
         
         /// <summary>
@@ -85,6 +91,40 @@ namespace PapiroMVC.Controllers
             }
         }
 
+
+
+        /// <summary>
+        /// get back product with its prices, discounted by date
+        /// </summary>
+        /// <param name="prod"></param>
+        /// <returns></returns>
+        [Route("api/rigid/productprice2")]
+        [HttpPost]
+        public HttpResponseMessage GetPriceRigidBind([ModelBinder(typeof(ProductApiModelBinder))]ProductApi prod)
+        {
+            try
+            {
+                PapiroService papiro = new PapiroService();
+                //Initialize new product
+                PapiroMVC.Models.ProductRigid prodIntero = (ProductRigid)papiro.InitProduct(prod.Id, new ProductTaskNameRepository(), new FormatsNameRepository(), new TypeOfTaskRepository());
+
+                Projection.ResolveProjection((ProductRigidApi)prod, prodIntero);
+
+                //generazione dei prezzi a caso
+                prod.Prices.Clear();
+                prod.Prices.Add(new Price { Date = DateTime.Today.AddDays(2), UnitPrice = "0.087" });
+                prod.Prices.Add(new Price { Date = DateTime.Today.AddDays(4), UnitPrice = "0.059" });
+                prod.Prices.Add(new Price { Date = DateTime.Today.AddDays(9), UnitPrice = "0.024" });
+
+                return Request.CreateResponse<ProductRigidApi>(HttpStatusCode.OK, (ProductRigidApi)prod);
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        
 
         /// <summary>
         /// return Rigid Material
