@@ -27,6 +27,10 @@ namespace PapiroMVC.Areas.CustomerSupplier.Controllers
             typeOfBaseRepository = _typeOfBaseDataRep;
             customerSupplierRepository = _clisupDataRep;
             customerSupplierBaseRepository = _clisupBaseDataRep;
+
+            this.Disposables.Add(typeOfBaseRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(customerSupplierBaseRepository);
         }
     }
 }

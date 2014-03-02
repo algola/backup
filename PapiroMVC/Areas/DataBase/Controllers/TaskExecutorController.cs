@@ -32,6 +32,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             taskExecutorRepository = _tskExDataRep;
             typeOfTaskRepository = _typeOfTask;
+
+            this.Disposables.Add(taskExecutorRepository);
+            this.Disposables.Add(typeOfTaskRepository);
         }
 
         public ActionResult IndexLithoSheetAndRoll()

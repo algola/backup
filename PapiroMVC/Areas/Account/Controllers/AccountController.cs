@@ -165,6 +165,18 @@ namespace PapiroMVC.Areas.Account.Controllers
             trTo = _trTo;
             ttrFrom = _ttrFrom;
             ttrTo = _ttrTo;
+
+            this.Disposables.Add(profMenuRep);
+            this.Disposables.Add(profDataRep);
+            this.Disposables.Add(crFrom);
+            this.Disposables.Add(crTo);
+            this.Disposables.Add(arFrom);
+            this.Disposables.Add(arTo);
+            this.Disposables.Add(trFrom);
+            this.Disposables.Add(trTo);
+            this.Disposables.Add(ttrFrom);
+            this.Disposables.Add(ttrTo);
+
         }
 
         //

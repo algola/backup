@@ -23,10 +23,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public CustomerSupplierController(ICustomerSupplierRepository _customerSupplierRepository, ICustomerSupplierBaseRepository _clisupBaseDataRep, ICustomerSupplierRepository _clisupDataRep, ITypeOfBaseRepository _typeOfBaseDataRep)       
         { 
-            this.customerSupplierRepository = _customerSupplierRepository;
+            customerSupplierRepository = _customerSupplierRepository;
             typeOfBaseRepository = _typeOfBaseDataRep;
             customerSupplierRepository = _clisupDataRep;
             customerSupplierBaseRepository = _clisupBaseDataRep;
+
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(typeOfBaseRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(customerSupplierBaseRepository);
         }
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)

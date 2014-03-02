@@ -61,9 +61,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             IFormatsNameRepository _formatsName,
             IProductRepository _productRepository,
             ITaskExecutorRepository _taskExecutorRepository,
-           IArticleRepository _articleRepository,
-         ICustomerSupplierRepository _customerSupplierRepository,
-                        IMenuProductRepository _menuProduct,
+            IArticleRepository _articleRepository,
+            ICustomerSupplierRepository _customerSupplierRepository,
+            IMenuProductRepository _menuProduct,
             ICostDetailRepository _costDetailRepository)
         {
             typeOfTaskRepository = _typeOfTaskRepository;

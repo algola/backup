@@ -33,20 +33,17 @@
 </div>
 
 <p>
-    @Html.T(strings,"Message")
+    @Html.T(strings, "Message")
 </p>
 <div class="vspace"></div>
 
-@*
-    <h3 class="row-fluid header smaller lighter blue">
-        <span class="span12">
-            @Html.T(strings, "QuickOperation")
-        </span><!--/span-->
-    </h3>
 
-    <div id="well no-padding-left no-padding-rigth">
-        @Html.Partial("_NewProductCommand", new NewProductCommand())
-    </div> *@
+
+<div id="well no-padding-left no-padding-rigth">
+    <span class="span12">
+        <!--/span--> @Html.Partial("_NewProductCommand", new NewProductCommand())
+    </span>
+</div>
 
 
 
@@ -68,7 +65,7 @@
                         <div class="widget-main pagination-centered">
 
                             <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png"
-                                 alt="@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)"/>
+                                 alt="@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)" />
                         </div>
                         <div>
 

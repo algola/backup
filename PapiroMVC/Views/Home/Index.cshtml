@@ -3,7 +3,7 @@
 @{
     string strings = "~/Views/Home/Strings";
     var uri = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/empty", id = "SuppRigidi" });
-    var uri2 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/productprice2" });
+    var uri2 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/productprice" });
     var uri3 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/materials" });
 }
 
@@ -110,7 +110,7 @@
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
 <script type="text/javascript">stLight.options({ publisher: "b7885f9a-6e87-4b09-b610-1c9cf6e7e4f1", doNotHash: true, doNotCopy: true, hashAddressBar: false });</script>
 
-
+@*
     <script>
         $.ajax({
             url: "@uri",
@@ -142,3 +142,5 @@
             }
         });
     </script>
+
+*@

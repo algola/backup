@@ -29,6 +29,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             articleRepository = _articleDataRep;
             customerSupplierRepository = _dataRepCS;
+
+            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(articleRepository);
         }
 
         //
@@ -155,7 +158,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                   
+
                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
 
                     c.Article.ArticleName = c.Article.ToString();

@@ -116,30 +116,29 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// Uptate cost in Cost from CostDetail
         /// </summary>
         /// <param name="id"></param>
-        private void UpdateCost(string id)
+        private CostDetail UpdateCost(string id)
         {
-            var inizio = DateTime.Now;
+            //  var inizio = DateTime.Now;
 
             CostDetail cv = costDetailRepository.GetSingle(id);
             cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
             cv.TaskCost.Update();
-            foreach (var item in cv.Computes)
+
+            var computes = cv.Computes.ToList();
+            for (int i = 0; i < computes.Count; i++)
             {
-                UpdateCost(item.CodCost);
+                UpdateCost(computes[i].CodCost);
             }
 
             //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
+            costDetailRepository.Edit(cv);
+            costDetailRepository.Save();
 
-            cv.TaskCost.DocumentProduct.UpdateCost();
+            //var tempo = DateTime.Now.Subtract(inizio);
+            //Console.WriteLine(tempo);
 
-            documentRepository.Edit(cv.TaskCost.DocumentProduct.Document);
-            documentRepository.Save();
-
-            var tempo = DateTime.Now.Subtract(inizio);
-
-            Console.WriteLine(tempo);
-
+            return cv;
         }
 
 
@@ -242,7 +241,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditCost(string id)
         {
-            var cv = EditCostAutomatically(id,new Guid());
+            var cv = EditCostAutomatically(id, new Guid());
             Console.WriteLine(cv.GainForRun);
 
             Session["CodCost"] = id;
@@ -272,7 +271,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-        public void SaveCostDetailAutomatically(CostDetail cv)
+        public void SaveCostDetailAutomaticallyOLD(CostDetail cv)
         {
             //try
             //{
@@ -284,17 +283,21 @@ namespace PapiroMVC.Areas.Working.Controllers
                 //if it is a printing... we have to 
                 case CostDetail.CostDetailType.PrintingSheetCostDetail:
 
-                    if (cv.Computes.Count == 0)
+                    //if (cv.Computes.Count == 0)
                     {
                         var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
                         List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
                         foreach (var item in x)
                         {
-                            item.ComputedBy = cv;
-                            item.InitCostDetail(null, articleRepository.GetAll());
-                            //item.UpdateCost();
-                            //item.GetCostFromList(articleRepository.GetAll());
-                            costDetailRepository.Add(item);
+                            //only if it is not just in list
+                            if (!(cv.Computes.Select(y=>y.CodCost).ToList().Contains(item.ComputedBy.CodCost)))
+                            {
+                                item.ComputedBy = cv;
+                                item.InitCostDetail(null, articleRepository.GetAll());
+                                //item.UpdateCost();
+                                //item.GetCostFromList(articleRepository.GetAll());
+                                costDetailRepository.Add(item);                                
+                            }
                         }
                     }
 
@@ -316,6 +319,17 @@ namespace PapiroMVC.Areas.Working.Controllers
                     break;
             }
 
+            //reload saved cost
+            var dp = documentRepository.GetDocumentProductByCodProduct(cv.TaskCost.DocumentProduct.CodProduct).Where(x => x.CodDocumentProduct == cv.TaskCost.CodDocumentProduct).FirstOrDefault();
+
+            if (dp != null)
+            {
+                dp.UpdateCost();
+            }
+
+            documentRepository.Edit(dp.Document);
+            documentRepository.Save();
+
         }
 
 
@@ -325,7 +339,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             CostDetail cv = (CostDetail)Session["CostDetail"];
 
-            SaveCostDetailAutomatically(cv);
+            PapiroService p = new PapiroService();
+            p.DocumentRepository = documentRepository;//new DocumentRepository();
+            p.CostDetailRepository = costDetailRepository;
+            p.TaskExecutorRepository = taskExecutorRepository;
+            p.ArticleRepository = articleRepository;
+            p.CurrentDatabase = CurrentDatabase;
+            p.SaveCostDetailAutomatically(cv);
 
             var idRet = (string)Session["codProduct"];
 

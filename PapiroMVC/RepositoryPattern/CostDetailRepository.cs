@@ -36,6 +36,7 @@ namespace Services
 
         public override void Add(CostDetail entity)
         {
+            bool inCache = false;
             CostDetailCostCodeRigen(entity);
 
             var costDetail = Context.CostDetail.Where(x => x.CodCost == entity.CodCost);
@@ -49,12 +50,20 @@ namespace Services
                 base.Add(entity);
             }
 
-            Cache[entity.CodCostDetail] = entity;
+            if (inCache)
+            {
+                Cache[entity.CodCostDetail] = entity;
+            }
+            else
+            {
+                Cache.Remove(entity.CodCostDetail);
+            }
         }
 
 
         public override void Edit(CostDetail entity)
         {
+            bool inCache = false;
             var fromBD = Context.CostDetail.Single(p => p.CodCostDetail == entity.CodCostDetail);
             Context.Entry(fromBD).CurrentValues.SetValues(entity);
 
@@ -123,7 +132,15 @@ namespace Services
                 }
             }
 
-            Cache[entity.CodCostDetail] = entity;
+            if (inCache)
+            {
+                Cache[entity.CodCostDetail] = entity;    
+            }
+            else
+            {
+                Cache.Remove(entity.CodCostDetail);    
+            }
+            
 
         }
 

@@ -355,6 +355,7 @@ namespace Services
 
         }
 
+        
         public new Document GetSingle(string codDocument)
         {
             try
@@ -378,7 +379,8 @@ namespace Services
             {
                 var query = Context.DocumentProducts.Include("Costs")
                     .Include("Costs.CostDetails")
-                    .Include("Product").Where(x => x.CodProduct == codProduct);
+                    .Include("Product")
+                    .Include("Document").Where(x => x.CodProduct == codProduct);
                 return query;
             }
 

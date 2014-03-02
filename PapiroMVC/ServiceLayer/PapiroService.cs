@@ -8,7 +8,7 @@ using System.Web;
 
 namespace PapiroMVC.ServiceLayer
 {
-    public class PapiroService
+    public partial class PapiroService
     {
         public IDocumentRepository DocumentRepository { get; set; }
         public ICostDetailRepository CostDetailRepository { get; set; }
@@ -205,10 +205,8 @@ namespace PapiroMVC.ServiceLayer
 
         public void SaveCostDetailAutomatically(CostDetail cv)
         {
-            //try
-            //{
+
             var pPart = cv.ProductPart;
-            //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
 
             switch (cv.TypeOfCostDetail)
             {
@@ -289,8 +287,6 @@ namespace PapiroMVC.ServiceLayer
 
 
         }
-
-
 
 
 
