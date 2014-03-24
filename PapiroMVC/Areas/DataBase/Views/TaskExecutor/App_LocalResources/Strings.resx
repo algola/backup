@@ -360,4 +360,31 @@
   <data name="PrintCaption" xml:space="preserve">
     <value>Stampa</value>
   </data>
+  <data name="CreateFlexo" xml:space="preserve">
+    <value>Nuova Flexo</value>
+  </data>
+  <data name="CreateFlexoTitle" xml:space="preserve">
+    <value>Nuova Flexo</value>
+  </data>
+  <data name="EditingFlexoTitle" xml:space="preserve">
+    <value>Modifica della macchina flexo</value>
+  </data>
+  <data name="FlexoType" xml:space="preserve">
+    <value>Flexo</value>
+  </data>
+  <data name="TitleFlexoIndex" xml:space="preserve">
+    <value>Macchine da stampa flexografiche</value>
+  </data>
+  <data name="CylinderMessage" xml:space="preserve">
+    <value>L'anagrafica dei cilindri stampa può essere accessibile solo in modifica e non in creazione. Salvare e riaprire la macchina da stampa.</value>
+  </data>
+  <data name="CylinderSection" xml:space="preserve">
+    <value>Cilindri stampa Z</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="Z" xml:space="preserve">
+    <value>Z</value>
+  </data>
 </root>

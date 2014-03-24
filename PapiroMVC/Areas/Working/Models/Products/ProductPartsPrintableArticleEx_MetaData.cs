@@ -37,10 +37,15 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPartsPrintableArticle), "NameOfMaterialToolTip")]
         public string NameOfMaterial { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ResProductPartsPrintableArticle), ErrorMessageResourceName = "RequiredField")]
+        //[Required(ErrorMessageResourceType = typeof(ResProductPartsPrintableArticle), ErrorMessageResourceName = "RequiredField")]
         [DisplayNameLocalized(typeof(ResProductPartsPrintableArticle), "Color")]
         [Tooltip(typeof(ResProductPartsPrintableArticle), "ColorToolTip")]
         public string Color { get; set; }
+
+        //[Required(ErrorMessageResourceType = typeof(ResProductPartsPrintableArticle), ErrorMessageResourceName = "RequiredField")]
+        [DisplayNameLocalized(typeof(ResProductPartsPrintableArticle), "Adhesive")]
+        [Tooltip(typeof(ResProductPartsPrintableArticle), "AdhesiveToolTip")]
+        public string Adhesive { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ResProductPartsPrintableArticle), ErrorMessageResourceName = "RequiredField")]
         [DisplayNameLocalized(typeof(ResProductPartsPrintableArticle), "Weight")]

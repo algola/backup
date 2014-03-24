@@ -86,6 +86,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparts", "DCut", SchemaDb.Double, "0");
             dbS.AddColumnToTable("productparts", "IsDCut", SchemaDb.Bool, "0");
 
+            dbS.AddColumnToTable("productparts", "DCut1", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productparts", "DCut2", SchemaDb.Double, "0");
+
+            //0 or Null --> Free //1 = SideOnSide //2 = !SideOnSide
+            dbS.AddColumnToTable("productparts", "SideOnSide", SchemaDb.Int, "0");
+
             //ProductPartBlockSheet
 
             //---------------------------------------------------------------------------------------------
@@ -104,6 +110,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartsprintablearticle", "NameOfMaterial", SchemaDb.String, "200");
 
             dbS.AddColumnToTable("productpartsprintablearticle", "Color", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productpartsprintablearticle", "Adhesive", SchemaDb.String, "100");
             dbS.AddColumnToTable("productpartsprintablearticle", "Weight", SchemaDb.IntUS, "0");
 
             // 0 = ProductPartSheetArticle //  etc... 

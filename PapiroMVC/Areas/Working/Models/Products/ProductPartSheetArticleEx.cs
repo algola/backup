@@ -20,6 +20,7 @@ namespace PapiroMVC.Models
             var cont = (sel.Where(c => c.NameOfMaterial == this.NameOfMaterial &&
                 c.TypeOfMaterial == this.TypeOfMaterial &&
                 c.Weight == this.Weight &&
+                c.Adhesive == this.Adhesive &&
                 c.Color == this.Color).Count());
 
             return (cont > 0);

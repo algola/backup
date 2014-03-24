@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdhesiveCaption" xml:space="preserve">
+    <value>Adesivo</value>
+  </data>
   <data name="ArticleCaption" xml:space="preserve">
     <value>Articolo</value>
+  </data>
+  <data name="ArticleNameCaption" xml:space="preserve">
+    <value>Descrizione</value>
   </data>
   <data name="Articles" xml:space="preserve">
     <value>Materiali</value>
@@ -149,6 +155,9 @@
   </data>
   <data name="CostPerSheetCaption" xml:space="preserve">
     <value>Costo al Foglio</value>
+  </data>
+  <data name="CreateNoPrintable" xml:space="preserve">
+    <value>Nuovo Consumabile</value>
   </data>
   <data name="CreateRigidPrintableArticle" xml:space="preserve">
     <value>Nuovo materiale Rigido</value>

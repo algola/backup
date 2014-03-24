@@ -19,6 +19,10 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "icon-male", "menu-text")
         </li>
 
+        <li id="noPrintableSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, "icon-", "menu-text")
+        </li>
+
         <li id="databaseSlidebar">
             <a href="#" class="dropdown-toggle">
                 <i class="icon-file-text-alt"></i>
@@ -55,6 +59,9 @@
 
                 <li id="lithoSlidebar">
                     @Html.ActionLinkImage(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>
+                <li id="flexoSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "FlexoMenu"), "IndexFlexo", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
                 </li>
                 <li id="digitalSlidebar">
                     @Html.ActionLinkImage(@Html.T(strings, "DigitalSheetMenu"), "IndexDigitalSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")

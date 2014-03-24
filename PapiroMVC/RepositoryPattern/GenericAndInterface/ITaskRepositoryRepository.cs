@@ -14,5 +14,10 @@ namespace Services
         void AddEstimatedOn(TaskEstimatedOn tskEst);
         Step GetSingleStep(int cod);
         void EditSingleStep(Step entity);
+        void EditSingleCylinder(TaskExecutorCylinder entity);
+        void AddSingleCylinder(TaskExecutorCylinder entity);
+        void DeleteSingleCylinder(TaskExecutorCylinder entity);
+        TaskExecutorCylinder GetSingleTaskExecutorCylindern(string cod);
+
     }
 }

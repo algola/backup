@@ -10,7 +10,6 @@ namespace PapiroMVC.Models
     /// </summary>
     public partial class ProductPartSheetPrinting : ProductPartPrinting
     {
-
         public override void Update()
         {
             var gain = (ProductPartPrintingSheetGain)GainPartOnPrinting;
@@ -42,6 +41,9 @@ namespace PapiroMVC.Models
             //DocumentProduct
             gain.Quantity = this.CostDetail.TaskCost.DocumentProduct.Quantity ?? 0;
             gain.DCut = (Part.IsDCut ?? false) ? Part.DCut : 0;
+
+            gain.DCut1 = (Part.IsDCut ?? false) ? Part.DCut1 : 0;
+            gain.DCut2 = (Part.IsDCut ?? false) ? Part.DCut2 : 0;
 
             GainPartOnPrinting = gain;
         }

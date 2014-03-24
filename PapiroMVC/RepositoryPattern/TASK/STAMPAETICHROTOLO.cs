@@ -6,62 +6,62 @@ using PapiroMVC.Models;
 
 namespace Services
 {
-    public class STAMPAOFFaROTOLO : TypeOfTask
+    public class STAMPAETICHROTOLO : TypeOfTask
     {
 
         OptionTypeOfTask optTk;
 
-        public STAMPAOFFaROTOLO()
+        public STAMPAETICHROTOLO()
         {
-            CodTypeOfTask = "STAMPAOFFaROTOLO";
+            CodTypeOfTask = "STAMPAETICHROTOLO";
             TaskName = "Stampa";
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_1";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_1";
             optTk.OptionName = "Stampa a 1 colore";
             optTk.IdexOf = 0;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_2";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_2";
             optTk.OptionName = "Stampa a 2 colori";
             optTk.IdexOf = 1;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_3";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_3";
             optTk.OptionName = "Stampa a 3 colori";
             optTk.IdexOf = 2;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_4";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_4";
             optTk.OptionName = "Stampa a 4 colori";
             optTk.IdexOf = 3;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_5";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_5";
             optTk.OptionName = "Stampa a 5 colori";
             optTk.IdexOf = 4;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_6";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_6";
             optTk.OptionName = "Stampa a 6 colori";
             optTk.IdexOf = 5;
             this.OptionTypeOfTasks.Add(optTk);        
 
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "STAMPAOFFaROTOLO";
-            optTk.CodOptionTypeOfTask = "STAMPAOFFaROTOLO_NO";
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NO";
             optTk.OptionName = "NO stampa";
             optTk.IdexOf = 6;
             this.OptionTypeOfTasks.Add(optTk);

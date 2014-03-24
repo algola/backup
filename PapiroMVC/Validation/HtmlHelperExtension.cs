@@ -264,7 +264,7 @@ namespace PapiroMVC.Validation
         /// <returns></returns>
         public static IHtmlString AlgolaEditorFor<TModel, TProperty>(
                 this HtmlHelper<TModel> html,
-                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null)
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null, int txtLength = 12)
         {
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
 

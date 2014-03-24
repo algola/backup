@@ -23,6 +23,7 @@ namespace PapiroMVC.Models
             this.SetTaskExecutorEstimatedOn = new HashSet<TaskEstimatedOn>();
             this.TypeOfTasks = new HashSet<TaskExecutorTypeOfTask>();
             this.costdetails = new HashSet<CostDetail>();
+            this.TaskExecutorCylinders = new HashSet<TaskExecutorCylinder>();
         }
     
     	
@@ -76,5 +77,7 @@ namespace PapiroMVC.Models
         public virtual TypeOfTask typeoftask_ { get; set; }
     	[DataMember]
         public virtual ICollection<CostDetail> costdetails { get; set; }
+    	[DataMember]
+        public virtual ICollection<TaskExecutorCylinder> TaskExecutorCylinders { get; set; }
     }
 }

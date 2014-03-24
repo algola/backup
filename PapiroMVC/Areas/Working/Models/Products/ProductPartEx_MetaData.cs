@@ -45,10 +45,21 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "DCutToolTip")]
         public Nullable<double> DCut { get; set; }
 
+        [DisplayNameLocalized(typeof(ResProductPart), "DCut1")]
+        [Tooltip(typeof(ResProductPart), "DCut1ToolTip")]
+        public Nullable<double> DCut1 { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPart), "DCut2")]
+        [Tooltip(typeof(ResProductPart), "DCut2ToolTip")]
+        public Nullable<double> DCut2 { get; set; }
+
         [DisplayNameLocalized(typeof(ResProductPart), "IsDCut")]
         [Tooltip(typeof(ResProductPart), "IsDCutToolTip")]
         public Nullable<bool> IsDCut { get; set; }
 
+        [DisplayNameLocalized(typeof(ResProductPart), "SideOnSide")]
+        [Tooltip(typeof(ResProductPart), "SideOnSidetToolTip")]
+        public Nullable<int> SideOnSide { get; set; }
 
     }
 }

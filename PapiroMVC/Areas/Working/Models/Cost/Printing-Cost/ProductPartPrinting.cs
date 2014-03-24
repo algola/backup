@@ -17,7 +17,9 @@ namespace PapiroMVC.Models
             ProductPartCoverSheetPrinting = 1,
             ProductPartBookSheetPrinting = 2,
             ProductPartSingleRollPrinting = 3,
-            ProductPartRigidPrinting = 5
+            ProductPartRigidPrinting = 5,
+
+            ProductPartSingleLabelRollPrinting = 6
         }
 
         public ProductPartPrintingType TypeOfProductPartPrinting
@@ -26,14 +28,15 @@ namespace PapiroMVC.Models
             set;
         }
 
-    //    public virtual ProductPartPrintingGain GainPartOnPrinting { get; set; }
+        //    public virtual ProductPartPrintingGain GainPartOnPrinting { get; set; }
 
         public virtual void Update()
         {
-            
+
         }
 
-        public ProductPartPrintingGain GainPartOnPrinting 
+
+        public ProductPartPrintingGain GainPartOnPrinting
         {
             get
             {
@@ -46,7 +49,7 @@ namespace PapiroMVC.Models
             }
         }
 
-        public virtual double CalculatedStarts 
+        public virtual double CalculatedStarts
         {
             get
             {
@@ -54,11 +57,11 @@ namespace PapiroMVC.Models
             }
         }
 
-        public virtual double CalculatedGain 
+        public virtual double CalculatedGain
         {
             get
             {
-                return  (double)GainPartOnPrinting.Makereadies.Average(x => x.CalculatedGain ?? 1);
+                return (double)GainPartOnPrinting.Makereadies.Average(x => x.CalculatedGain ?? 1);
             }
         }
 
@@ -72,8 +75,51 @@ namespace PapiroMVC.Models
                     format = Part.Format;
                 }
 
-                return format.GetSide1() * format.GetSide2() / 10000 * ( Part.SubjectNumber ?? 1);
+                return format.GetSide1() * format.GetSide2() / 10000 * (Part.SubjectNumber ?? 1);
             }
         }
+
+        public virtual double CalculatedMqPrintingFormat
+        {
+            get
+            {
+                string format = PrintingFormat;
+                return format.GetSide1() * format.GetSide2() / 10000;
+            }
+        }
+
+        public virtual int CalculatedSide1Gain
+        {
+            get
+            {
+                return GainPartOnPrinting.Makereadies.FirstOrDefault().ShapeOnSide1 ?? 0;
+            }
+        }
+
+        public virtual int CalculatedSide2Gain
+        {
+            get
+            {
+                return GainPartOnPrinting.Makereadies.FirstOrDefault().ShapeOnSide2 ?? 0;
+            }
+        }
+
+        public virtual double CalculatedDCut1
+        {
+            get
+            {
+                return GainPartOnPrinting.DCut1 ?? 0;
+            }
+        }
+
+        public virtual double CalculatedDCut2
+        {
+            get
+            {
+                return GainPartOnPrinting.DCut2 ?? 0;
+            }
+        }
+
+
     }
 }

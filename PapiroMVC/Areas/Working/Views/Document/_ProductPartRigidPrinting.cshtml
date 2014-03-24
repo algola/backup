@@ -9,6 +9,9 @@
 
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     var dCut = Model.GainPartOnPrinting.DCut ?? 0;
+
+    var dCut1 = Model.GainPartOnPrinting.DCut1 ?? 0;
+    var dCut2 = Model.GainPartOnPrinting.DCut2 ?? 0;
 }
 
 @*
@@ -56,8 +59,10 @@
         var gain2 = parseInt('@g.ShapeOnSide2');
 
         var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut1 = '@dCut1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut2 = '@dCut2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-        drawPrintingOnShort(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut);
+        drawPrintingOnShort(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut1, dCut2);
 
     }
 

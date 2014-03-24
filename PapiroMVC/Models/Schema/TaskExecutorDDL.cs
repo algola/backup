@@ -63,8 +63,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "ProofSheetSecondsStart", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "ProductionWaste", SchemaDb.Double, "0");
 
-            //roll
+            //roll meter
             dbS.AddColumnToTable("taskexecutors", "PaperFirstStartLenght", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "FlexoWidth", SchemaDb.Double, "0");
 
             //digital
             dbS.AddColumnToTable("taskexecutors", "BWSide1", SchemaDb.Bool, "0");
@@ -73,7 +74,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "ColorSide2", SchemaDb.Bool, "0");
 
             //plotter                
-            dbS.AddColumnToTable("taskexecutors", "Width", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "Width", SchemaDb.Double, "0");
             dbS.AddColumnToTable("taskexecutors", "ColorJet", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "WhiteUV", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "ColorUV", SchemaDb.Bool, "0");
@@ -91,6 +92,18 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnMq", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnTimeBinding", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "IsEstimatedOnRunBinding", SchemaDb.Bool, "0");
+
+            dbS.ChangeColumnToDouble("taskexecutors", "Width");
+
+
+            dbS.AddTable("taskexecutorcylinders");
+            dbS.AddColumnToTable("taskexecutorcylinders", "CodTaskExecutor", SchemaDb.String, "50");
+            dbS.AddColumnToTable("taskexecutorcylinders", "CodTaskExecutorCylinder", SchemaDb.StringPK, "50");
+            dbS.AddForeignKey("taskexecutorcylinders", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
+
+            dbS.AddColumnToTable("taskexecutorcylinders", "Z", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskexecutorcylinders", "Quantity", SchemaDb.Int, "0");
+
 
             dbS.AddTable("taskexecutorestimatedon");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskExecutor", SchemaDb.String, "50");

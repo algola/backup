@@ -30,6 +30,9 @@ namespace PapiroMVC.Models
             part.ShowDCut = ShowDCut;
             part.IsDCut = false;
 
+            part.DCut1 = DCut1;
+            part.DCut2 = DCut2;
+
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
             ProductPartTask partTask;

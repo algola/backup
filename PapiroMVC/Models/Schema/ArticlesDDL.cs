@@ -28,6 +28,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "CodSupplierMaker", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "SupplierMaker", SchemaDb.String, "50");
 
+            dbS.AddColumnToTable("articles", "NoUseInEstimateCalculation", SchemaDb.Bool, "0");
+
             dbS.AddForeignKey("articles", "CodSupplierMaker", "CustomerSuppliers", "CodCustomerSupplier");
 
 
@@ -41,6 +43,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "NameOfMaterial", SchemaDb.String, "200");
             
             dbS.AddColumnToTable("articles", "Color", SchemaDb.String, "100");
+
+            dbS.AddColumnToTable("articles", "Adhesive", SchemaDb.String, "100");
+            
             dbS.AddColumnToTable("articles", "Weight", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("articles", "Hand", SchemaDb.Double, "0");
 
@@ -69,6 +74,15 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("articles", "Selector", SchemaDb.Int, "0");
 
+            //NoPrintableType
+            // 0 = Cylinders
+            dbS.AddColumnToTable("articles", "NoPrintableType", SchemaDb.Int, "0");
+
+            //cylinders
+            // 0 = Print // 1 = Die 
+            dbS.AddColumnToTable("articles", "SelectorCylinders", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("articles", "Z", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articles", "Number", SchemaDb.Int, "0");
 
             //Index
             dbS.AddIndex("articles", "ArticleName");

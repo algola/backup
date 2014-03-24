@@ -15,19 +15,52 @@ namespace PapiroMVC.Models
             TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartSingleSheetPrinting;
         }
 
+
         public override void Update()
         {
             if (GainPartOnPrinting == null)
             {
-                GainPartOnPrinting = new ProductPartPrintingSheetGainSingle();            
+                GainPartOnPrinting = new ProductPartPrintingSheetGainSingle();
             }
 
             base.Update();
 
-            ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleSheet)Part).SubjectNumber ?? 1;
+            switch (Part.TypeOfProductPart)
+            {
+                case ProductPart.ProductPartType.ProductPartSingleSheet:
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleSheet)Part).SubjectNumber ?? 1;
+                    break;
+                case ProductPart.ProductPartType.ProductPartCoverSheet:
+                    break;
+                case ProductPart.ProductPartType.ProductPartBookSheet:
+                    break;
+                case ProductPart.ProductPartType.ProductPartBlockSheet:
+                    break;
+                case ProductPart.ProductPartType.ProductPartSinglePlotter:
+                    break;
+                case ProductPart.ProductPartType.ProductPartRigid:
+                    break;
+                case ProductPart.ProductPartType.ProductPartSingleLabelRoll:
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleLabelRoll)Part).SubjectNumber ?? 1;
+
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).AutoDCut = true;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).GiraVerso = true;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = 1;
+
+                    break;
+                default:
+                    break;
+            }
 
             ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
             GainPartOnPrinting.CalculateGain();
+
+            if (((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).AutoDCut)
+            {
+                this.Part.DCut1 = GainPartOnPrinting.DCut1;
+                this.Part.DCut2 = GainPartOnPrinting.DCut2;                
+            }
+
         }
     }
 

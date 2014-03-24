@@ -47,6 +47,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<long> Weight { get; set; }
+    	
+    	[DataMember] 		
+        public string Adhesive { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

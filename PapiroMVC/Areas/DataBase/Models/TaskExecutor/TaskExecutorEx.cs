@@ -18,7 +18,7 @@ namespace PapiroMVC.Models
         /// </summary>
         /// <param name="codTypeOfTask"></param>
         /// <returns></returns>
-        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor>tskExec, string codTypeOfTask)
+        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExec, string codTypeOfTask)
         {
             if (codTypeOfTask == "STAMPARIGIDO")
             {
@@ -36,6 +36,11 @@ namespace PapiroMVC.Models
                 var tskExec2 = tskExec.OfType<DigitalSheet>();
 
                 tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
+            }
+
+            if (codTypeOfTask == "STAMPAETICHROTOLO")
+            {
+                tskExec = tskExec.OfType<Flexo>();
             }
 
             return tskExec;
@@ -62,7 +67,7 @@ namespace PapiroMVC.Models
                         case TaskEstimatedOn.EstimatedOnType.OnTime:
                             break;
                         case TaskEstimatedOn.EstimatedOnType.OnMq:
-                            ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                            ret = CostDetail.QuantityType.MqWorkTypeOfQuantity;
                             break;
                         case TaskEstimatedOn.EstimatedOnType.BindingOnTime:
                             break;
@@ -71,7 +76,7 @@ namespace PapiroMVC.Models
                         case TaskEstimatedOn.EstimatedOnType.DigitalOnTime:
                             break;
                         case TaskEstimatedOn.EstimatedOnType.PlotterOnMq:
-                            ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                            ret = CostDetail.QuantityType.MqWorkTypeOfQuantity;
                             break;
                         default:
                             break;
@@ -92,7 +97,8 @@ namespace PapiroMVC.Models
             PlotterSheet = 4,
             PlotterRoll = 5,
             PrePostPress = 6,
-            Binding = 7
+            Binding = 7,
+            Flexo = 8
         }
 
         public string[] CodTypeOfTaskList { get; set; }

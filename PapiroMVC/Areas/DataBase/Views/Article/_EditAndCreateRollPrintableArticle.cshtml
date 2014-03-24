@@ -23,9 +23,13 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
         @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorAutoComplete", "Article")
-        @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
 
+        @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
+        
+        @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)        
+        
         @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
 
         @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
@@ -59,7 +63,7 @@
             }
 
         </p>
-    
+
     }
 
 </div>

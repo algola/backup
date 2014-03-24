@@ -69,7 +69,6 @@ namespace PapiroMVC.Models
                 widths = value;
             }
         }
-
         public List<double> Weights
         {
             get
@@ -95,6 +94,7 @@ namespace PapiroMVC.Models
                 weights = value;
             }
         }
+
     }
 
     [MetadataType(typeof(SheetPrintableArticleViewModelWizard_Metadata))]

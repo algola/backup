@@ -38,7 +38,7 @@
         </div>
     }
     else
-    {          
+    {
         @Html.LabelFor(model => model.Format, new { @class = "col-sm-3 control-label no-padding-right" })
 
         <div class="controls col-sm-9">
@@ -46,12 +46,12 @@
             @Html.DropDownListFor((model => model.Format),
             new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"))
         </div>
-        
+
     }
 </div>
 
 
-<div id ="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
 
     @Html.AlgolaEditorFor(model => model.FormatPersonalized)
 
@@ -61,11 +61,16 @@
 {
     @Html.EditorFor(model => model.IsDCut);
     @Html.HiddenFor(model => model.DCut);
+    @Html.EditorFor(model => model.DCut1);
+    @Html.EditorFor(model => model.DCut2);
 }
 else
 {
     @Html.HiddenFor(model => model.IsDCut);
     @Html.HiddenFor(model => model.DCut);
+    @Html.HiddenFor(model => model.DCut1);
+    @Html.HiddenFor(model => model.DCut2);
+
 }
 
 <!-- artilce -->
@@ -73,7 +78,7 @@ else
 {
     ViewBag.IndexPartArticle = i;
 
-    @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])           
+    @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])
 }
 
 @Html.HiddenFor(model => model.IsSelected)
@@ -90,7 +95,7 @@ else
 <!-- task -->
 @for (int i = 0; i < Model.ProductPartTasksPerView.Count; i++)
 {
-    @Html.EditorFor(model => model.ProductPartTasksPerView[i])           
+    @Html.EditorFor(model => model.ProductPartTasksPerView[i])
 }
 
 @Model.ProductPartTasks.First().ToString()

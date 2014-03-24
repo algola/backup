@@ -42,5 +42,11 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string SupplierMaker { get; set; }
+    	
+    	[DataMember] 		
+        public string Adhesive { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> NoUseInEstimateCalculation { get; set; }
     }
 }

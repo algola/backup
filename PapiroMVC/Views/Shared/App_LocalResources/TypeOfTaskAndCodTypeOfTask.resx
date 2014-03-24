@@ -312,25 +312,25 @@
   <data name="CodSTAMPAOFF" xml:space="preserve">
     <value>Stampa offset</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO" xml:space="preserve">
+  <data name="CodSTAMPAETICHROTOLO" xml:space="preserve">
     <value>Stampa</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_1" xml:space="preserve">
-    <value>stampa a 1 colore</value>
+  <data name="CodSTAMPAETICHROTOLO_1" xml:space="preserve">
+    <value>1 colore</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_2" xml:space="preserve">
-    <value>stampa a 2 colori</value>
+  <data name="CodSTAMPAETICHROTOLO_2" xml:space="preserve">
+    <value>2 colori</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_3" xml:space="preserve">
-    <value>stampa a 3 colori</value>
+  <data name="CodSTAMPAETICHROTOLO_3" xml:space="preserve">
+    <value>3 colori</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_4" xml:space="preserve">
-    <value>stampa a 4 colori</value>
+  <data name="CodSTAMPAETICHROTOLO_4" xml:space="preserve">
+    <value>4 colori</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_5" xml:space="preserve">
-    <value>stampa a 5 colori</value>
+  <data name="CodSTAMPAETICHROTOLO_5" xml:space="preserve">
+    <value>5 colori</value>
   </data>
-  <data name="CodSTAMPAOFFaROTOLO_NO" xml:space="preserve">
+  <data name="CodSTAMPAETICHROTOLO_NO" xml:space="preserve">
     <value />
   </data>
   <data name="CodSTAMPAOFFeDIGITALE" xml:space="preserve">
@@ -398,5 +398,8 @@
   </data>
   <data name="CodSTAMPARIGIDO" xml:space="preserve">
     <value>Stampa Materiale Rigido</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_6" xml:space="preserve">
+    <value>6 colori</value>
   </data>
 </root>

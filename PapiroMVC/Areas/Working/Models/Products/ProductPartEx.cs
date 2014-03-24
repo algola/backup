@@ -74,6 +74,8 @@ namespace PapiroMVC.Models
             ProductPartSinglePlotter = 4,
 
             ProductPartRigid = 5,
+
+            ProductPartSingleLabelRoll = 6
         }
 
         public ProductPartType TypeOfProductPart

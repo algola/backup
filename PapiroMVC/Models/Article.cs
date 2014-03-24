@@ -44,6 +44,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> Selector { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> NoPrintableType { get; set; }
     
     	[DataMember]
         public virtual ICollection<ArticleCost> ArticleCosts { get; set; }

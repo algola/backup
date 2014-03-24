@@ -50,6 +50,9 @@ namespace PapiroMVC.ServiceLayer
                 product = new ProductSingleSheet();
                 product.ShowDCut = true;
                 product.DCut = 0.5;
+                product.DCut1 = 0.5;
+                product.DCut2 = 0.5;
+
             }
 
             if (id == "PuntoMetallico" ||
@@ -70,7 +73,10 @@ namespace PapiroMVC.ServiceLayer
             {
                 product = new ProductRigid();
                 product.ShowDCut = true;
-                product.DCut = 2;
+                product.DCut = 0;
+                product.DCut1 = 20;
+                product.DCut2 = 1;
+
             }
 
             if (
@@ -80,6 +86,17 @@ namespace PapiroMVC.ServiceLayer
             {
                 product = new ProductRigid();
             }
+
+
+            if (
+                id == "EtichetteRotolo" ||
+                id == "EtichettaControRotolo" ||
+                id == "EtichettaControColloRotolo")
+            {
+                product = new ProductSingleLabelRoll();
+            }
+
+
 
             product.CodMenuProduct = id;
             product.ProductTaskName = prodTskNameRepository.GetAllById(id);
@@ -163,10 +180,14 @@ namespace PapiroMVC.ServiceLayer
                 }
 
                 cv = cost.MakeCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
-                //guid ensures that costdetail is handled only one time when cost are all processed sistematically
-                cv.Guid = guid.ToString("N");
-                //update 
-                cv.Update();
+
+                if (cv != null)
+                {
+                    //guid ensures that costdetail is handled only one time when cost are all processed sistematically
+                    cv.Guid = guid.ToString("N");
+                    //update 
+                    cv.Update();
+                }
             }
             else
             {
@@ -205,55 +226,60 @@ namespace PapiroMVC.ServiceLayer
 
         public void SaveCostDetailAutomatically(CostDetail cv)
         {
-
-            var pPart = cv.ProductPart;
-
-            switch (cv.TypeOfCostDetail)
+            if (cv != null)
             {
-                //if it is a printing... we have to 
-                case CostDetail.CostDetailType.PrintingSheetCostDetail:
 
-                    if (cv.Computes.Count == 0)
-                    {
-                        var costs = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
 
-                        var temp = costs.ToList();
+                var pPart = cv.ProductPart;
 
-                        List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(ArticleRepository.GetAll(), costs);
-                        foreach (var item in x)
+                switch (cv.TypeOfCostDetail)
+                {
+                    //if it is a printing... we have to 
+
+                    case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+                    case CostDetail.CostDetailType.PrintingSheetCostDetail:
+
+                        if (cv.Computes.Count == 0)
                         {
-                            item.ComputedBy = cv;
-                            item.InitCostDetail(null, ArticleRepository.GetAll());
-                            //item.UpdateCost();
-                            //item.GetCostFromList(articleRepository.GetAll());
-                            CostDetailRepository.Add(item);
+                            var costs = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+
+                            var temp = costs.ToList();
+
+                            List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(ArticleRepository.GetAll(), costs);
+                            foreach (var item in x)
+                            {
+                                item.ComputedBy = cv;
+                                item.InitCostDetail(null, ArticleRepository.GetAll());
+                                //item.UpdateCost();
+                                //item.GetCostFromList(articleRepository.GetAll());
+                                CostDetailRepository.Add(item);
+                            }
                         }
-                    }
 
-                    CostDetailRepository.Add(cv);
-                    CostDetailRepository.Save();
-                    //aggiorna il costo rigenerando prima i coefficienti
+                        CostDetailRepository.Add(cv);
+                        CostDetailRepository.Save();
+                        //aggiorna il costo rigenerando prima i coefficienti
 
-                    var inizio = DateTime.Now;
+                        var inizio = DateTime.Now;
 
-                    UpdateCost(cv.CodCost);
+                        UpdateCost(cv.CodCost);
 
-                    var tempo = DateTime.Now.Subtract(inizio);
+                        var tempo = DateTime.Now.Subtract(inizio);
 
-                    Console.Write(tempo);
+                        Console.Write(tempo);
 
-                    break;
-                case CostDetail.CostDetailType.PrintingRollCostDetail:
-                    break;
+                        break;
+                    case CostDetail.CostDetailType.PrintingRollCostDetail:
+                        break;
 
-                case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                    break;
-                case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                    break;
-                default:
-                    break;
+                    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+                        break;
+                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
 
         /// <summary>
@@ -293,7 +319,7 @@ namespace PapiroMVC.ServiceLayer
         public List<PrintableArticleApi> GetRigidList(IArticleRepository articleRepository)
         {
             articleRepository.SetDbName(CurrentDatabase);
-            var x= articleRepository.GetAll().OfType<RigidPrintableArticle>().ToList();
+            var x = articleRepository.GetAll().OfType<RigidPrintableArticle>().ToList();
 
             List<PrintableArticleApi> list = new List<PrintableArticleApi>();
             PrintableArticleApi b;

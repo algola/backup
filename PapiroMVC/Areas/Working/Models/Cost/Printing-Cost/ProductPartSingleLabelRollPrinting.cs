@@ -8,11 +8,11 @@ namespace PapiroMVC.Models
 
     //each type has a specific view with particular property
     //ie: single sheet has a max gain and so other
-    public partial class ProductPartSingleRollPrinting : ProductPartRollPrinting
+    public partial class ProductPartSingleLabelRollPrinting : ProductPartRollPrinting
     {
-        public ProductPartSingleRollPrinting()
+        public ProductPartSingleLabelRollPrinting()
         {
-            TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartSingleRollPrinting;
+            TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartSingleLabelRollPrinting;
         }
 
         public override void Update()
@@ -24,7 +24,7 @@ namespace PapiroMVC.Models
 
             base.Update();
 
-            ((ProductPartPrintingRollGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSinglePlotter)Part).SubjectNumber ?? 1;
+            ((ProductPartPrintingRollGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleLabelRoll)Part).SubjectNumber ?? 1;
 
             GainPartOnPrinting.CalculateGain();
         }

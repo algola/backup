@@ -26,5 +26,6 @@ namespace PapiroMVC.Models
     {
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "Width")]
         public string Widths { get; set; }
+
     }
 }

@@ -10,6 +10,9 @@
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     var dCut = Model.GainPartOnPrinting.DCut ?? 0;
 
+    var dCut1 = Model.GainPartOnPrinting.DCut1 ?? 0;
+    var dCut2 = Model.GainPartOnPrinting.DCut2 ?? 0;
+
 }
 
 
@@ -24,7 +27,6 @@
 
         var side1 = '@Model.PrintingFormat.GetSide1()';
         var side2 = '@Model.PrintingFormat.GetSide2()';
-
 
         side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
         side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
@@ -55,8 +57,10 @@
         var gain2 = parseInt('@g.ShapeOnSide2');
 
         var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut1 = '@dCut1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut2 = '@dCut2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut);
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut1, dCut2);
 
     }
 

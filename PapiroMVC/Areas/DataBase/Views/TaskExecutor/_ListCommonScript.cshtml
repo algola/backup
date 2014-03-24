@@ -10,12 +10,12 @@
 
         var link = "type";
 
-
         //following string has to be located in view and in validation (metadata)
         var sheet = '@HttpContext.GetLocalResourceObject(strings, "SheetType")';
         var roll = '@HttpContext.GetLocalResourceObject(strings, "RollType")';
         var plotterRoll = '@HttpContext.GetLocalResourceObject(strings, "PlotterRollType")';
         var plotterSheet = '@HttpContext.GetLocalResourceObject(strings, "PlotterSheetType")';
+        var flexo = '@HttpContext.GetLocalResourceObject(strings, "FlexoType")';
 
             if (cellvalue == "LithoSheet")
                 return link.replace("type", sheet);
@@ -34,6 +34,9 @@
 
             if (cellvalue == "PlotterSheet")
                 return link.replace("type", plotterSheet);
+
+            if (cellvalue == "Flexo")
+                return link.replace("type", flexo);
 
             return link;
         }
@@ -90,7 +93,7 @@
 
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class=""})';
 
-        var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
+    @* var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
                  "Edit", 
                  new {id= "-1"}, 
                  new AjaxOptions { HttpMethod = "GET", 
@@ -99,7 +102,7 @@
                  OnBegin="showProcessingMsg();",
                  OnComplete = "hideProcessingMsg();"
                  },
-                 new {@class=""})'
+                 new {@class=""})' *@
 
         
 

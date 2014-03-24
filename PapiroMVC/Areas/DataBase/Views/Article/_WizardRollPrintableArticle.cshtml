@@ -5,74 +5,73 @@
     string strings = "~/Areas/DataBase/Views/Article/Strings";
 }
 
-<div id="status"> @Scripts.Render("~/bundles/jqueryval")
+<div id="status">
+    @Scripts.Render("~/bundles/autocomplete")
 
-    
-@using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess="OnSuccess" })) {
-    @Html.ValidationSummary(true)
+    @using (Ajax.BeginForm(new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }))
+    {
+        @Html.ValidationSummary(true)
 
-    <fieldset>
+        <fieldset>
             <legend>
-                   @ViewBag.Title
-                            </legend>
+                @ViewBag.Title
+            </legend>
 
-        @Html.HiddenFor(model => model.Article.ArticleName)
+            @Html.HiddenFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.TypeOfMaterial,"TypeOfMaterialAutoComplete","Article")
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.NameOfMaterial,"NameOfMaterialAutoComplete","Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Color,"ColorAutoComplete","Article")
+            @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorAutoComplete", "Article")
 
-
-        @Html.LabelFor(model => model.Weights)
-        @Html.AutocompleteFor(model => model.Weights[0],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[1],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[2],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[3],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[4],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[5],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[6],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[7],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[8],"WeightAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Weights[9],"WeightAutoComplete","Article")
-
-        @Html.LabelFor(model => model.Widths)
-        @Html.AutocompleteFor(model => model.Widths[0],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[1],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[2],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[3],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[4],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[5],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[6],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[7],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[8],"WidthAutoComplete","Article")
-        @Html.AutocompleteFor(model => model.Widths[9],"WidthAutoComplete","Article")
-
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.Hand,"HandAutoComplete","Article")
-        
-        @Html.AlgolaAutocompleteFor(model =>  model.Article.MqForafait,"MqForafaitAutoComplete","Article")
-
-        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker,"SupplierBusinessNameAutoComplete","CustomerSupplier")
-        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy,"SupplierBusinessNameAutoComplete","CustomerSupplier")
-
-    </fieldset>
-    <br />
-    <p>
-
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new {Area="Database"})');">            
-             <i class="icon-arrow-left"></i>      
-             @HttpContext.GetLocalResourceObject(strings, "Cancel")
-                </button>
-             <button class="default btn btn-primary" type="submit">
-                 <i class="icon-save"></i>    
-                 @HttpContext.GetLocalResourceObject(strings, "Save")
-             </button>    
-    </p>
-}
+            @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+            @Html.LabelFor(model => model.Weights)
+            @Html.AutocompleteFor(model => model.Weights[0], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[1], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[2], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[3], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[4], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[5], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[6], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[7], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[8], "WeightAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Weights[9], "WeightAutoComplete", "Article")
 
-    </div>
+            @Html.LabelFor(model => model.Widths)
+            @Html.AutocompleteFor(model => model.Widths[0], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[1], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[2], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[3], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[4], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[5], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[6], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[7], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[8], "WidthAutoComplete", "Article")
+            @Html.AutocompleteFor(model => model.Widths[9], "WidthAutoComplete", "Article")
+
+            @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
+
+            @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
+
+            @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+            @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+
+        </fieldset>
+        <br />
+        <p>
+
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new {Area="Database"})');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+            <button class="default btn btn-primary" type="submit">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+        </p>
+    }
+
+
+</div>

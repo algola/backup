@@ -135,7 +135,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+ //               try
                 {
                     product.CodProduct = productRepository.GetNewCode(product);
 
@@ -170,9 +170,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                             {
                                 firstDocumentProduct = dp;
                             }
-
-
-
                             dp.Document = null;
                             dp.CodProduct = pv.Product.CodProduct;
                             dp.Product = pv.Product;
@@ -191,7 +188,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     //OK questo funziona ma riporta alla lista dei costi
                     //TODO: Sending singlaR notification to client to reload basket product
-                    //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
+                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
 
                     if (firstDocumentProduct.Costs.FirstOrDefault() != null)
                     {
@@ -207,10 +204,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
 
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
-                }
+//                catch (Exception ex)
+                //{
+                //    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                //}
             }
 
             //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli

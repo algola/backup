@@ -190,4 +190,43 @@ namespace PapiroMVC.Models
         }
     }
 
+
+    public class NoPrintableViewModel : ArticleViewModel
+    {
+
+        public NoPrintableViewModel()
+        {
+            Console.Write("");
+        }
+        NoPrintable article;
+        public NoPrintable Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new NoPrintable();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+            //        article.ArticleCosts.Add(new NoPrintableStandardCost());
+                }
+                return article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+        }
+
+        //public NoPrintableStandardCost NoPrintableStandardCost
+        //{
+        //    get
+        //    {
+        //        return (NoPrintableStandardCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableStandardCost);
+        //    }
+        //}
+    }
+
 }

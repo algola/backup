@@ -9,7 +9,6 @@
 
 <div id="containerbox">
     <!-- Main Page -->
-
     @*filters check************************************************@
     <div id="checkFilterMessage" class="alert alert-block alert-error" hidden="hidden">
         <button type="button" class="close" data-dismiss="alert">
@@ -17,7 +16,7 @@
         </button>
 
         <i class="icon-ok red"></i>
-       @Html.T(strings, "FilterCheckMessage")
+        @Html.T(strings, "FilterCheckMessage")
     </div>
     @*filters check************************************************@
 
@@ -127,8 +126,10 @@
             { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption")', resizable: true, title: false, search: true, sortable: true },
             { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption")', width: 100, title: false, search: true, sortable: true },
             { name: 'Color', label: '@HttpContext.GetLocalResourceObject(strings, "ColorCaption")', width: 100, title: false, search: true, sortable: true },
+            { name: 'Adhesive', label: '@HttpContext.GetLocalResourceObject(strings, "AdhesiveCaption")', width: 100, title: false, search: true, sortable: true },
             { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(strings, "WeightCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
             { name: 'Format', label: '@HttpContext.GetLocalResourceObject(strings, "FormatCaption")', align: 'center', width: 50, title: false, search: true, sortable: true },
+            { name: 'NoUseInEstimateCalculation', label: '@HttpContext.GetLocalResourceObject(strings, "NoUseInEstimateCalculationCaption")', align: 'center', width: 45, title: false, search: true, sortable: true, formatter: "checkbox", formatoptions: { disabled: true } },
             { name: 'SheetPerPacked', label: '@HttpContext.GetLocalResourceObject(strings, "SheetPerPackedCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
             { name: 'SheetPerPallet', label: '@HttpContext.GetLocalResourceObject(strings, "SheetPerPalletCaption")', align: 'right', width: 50, title: false, search: true, sortable: true },
             { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
@@ -336,7 +337,7 @@
             ((filters != undefined))) {
             $("#checkFilterMessage").show();
         }
-        
+
 
     });
     //filters check************************************************

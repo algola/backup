@@ -28,10 +28,10 @@ namespace PapiroMVC.Models
                         ret = CostDetail.QuantityType.WeigthTypeOfQuantity;
                         break;
                     case ArticleType.RollPrintableArticle:
-                        ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                        ret = CostDetail.QuantityType.MqWorkTypeOfQuantity;
                         break;
                     case ArticleType.RigidPrintableArticle:
-                        ret = CostDetail.QuantityType.MqTypeOfQuantity;
+                        ret = CostDetail.QuantityType.MqWorkTypeOfQuantity;
                         break;
                     case ArticleType.ObjectPrintableArticle:
                         break;
@@ -49,7 +49,9 @@ namespace PapiroMVC.Models
             SheetPrintableArticle = 0,
             RollPrintableArticle = 1,
             RigidPrintableArticle = 2,
-            ObjectPrintableArticle = 3
+            ObjectPrintableArticle = 3,
+
+            NoProntable = 4
         }
 
         public ArticleType TypeOfArticle

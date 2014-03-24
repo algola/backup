@@ -47,6 +47,15 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> IsDCut { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> DCut1 { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> DCut2 { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> ForceSideOnSide { get; set; }
     
     	[DataMember]
         public virtual ProductPartPrinting ProductPartPrinting___ { get; set; }

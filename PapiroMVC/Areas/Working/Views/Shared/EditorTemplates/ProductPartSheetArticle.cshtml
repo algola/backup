@@ -20,6 +20,8 @@
 @Html.AlgolaEditorFor(model => model.TypeOfMaterial)
 @Html.AlgolaEditorFor(model => model.NameOfMaterial)
 @Html.AlgolaEditorFor(model => model.Color)
+@Html.AlgolaEditorFor(model => model.Adhesive)
+
 @Html.AlgolaEditorFor(model => model.Weight)
 
 @Html.HiddenFor(model => model.TypeOfProductPartsPrintableArticle)
@@ -55,6 +57,7 @@
                     { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
+                    { name: 'Adhesive', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "AdhesiveCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 80, align: 'left', editable: false, hidden: false }
             ],
 
@@ -141,6 +144,12 @@
                                 celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
 
                                 $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+
+                            var myGrid = $('#gridArticle@(suffx)'),
+                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                                celValueAdhesive = myGrid.jqGrid('getCell', lastSel@(suffx), 'Adhesive');
+
+                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Adhesive').val(celValueAdhesive);
 
                             var myGrid = $('#gridArticle@(suffx)'),
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),

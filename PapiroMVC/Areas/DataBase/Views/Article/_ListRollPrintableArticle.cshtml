@@ -137,8 +137,10 @@
                 { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "TypeOfMaterialCaption")', width: 100, title: false, search: true, sortable: true },
                 { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(strings, "NameOfMaterialCaption")', width: 100, title: false, search: true, sortable: true },
                 { name: 'Color', label: '@HttpContext.GetLocalResourceObject(strings, "ColorCaption")', width: 100, title: false, search: true, sortable: true },
+                { name: 'Adhesive', label: '@HttpContext.GetLocalResourceObject(strings, "AdhesiveCaption")', width: 100, title: false, search: true, sortable: true },
                 { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(strings, "WeightCaption")', align: 'right', width: 45, title: false, search: true, sortable: true },
                 { name: 'Width', label: '@HttpContext.GetLocalResourceObject(strings, "WidthCaption")', align: 'right', width: 45, title: false, search: true, sortable: true },
+                { name: 'NoUseInEstimateCalculation', label: '@HttpContext.GetLocalResourceObject(strings, "NoUseInEstimateCalculationCaption")', align: 'center', width: 45, title: false, search: true, sortable: true, formatter: "checkbox", formatoptions: { disabled: true }},
                 { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
                 { name: 'CostPerMq', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMqCaption")', width: 45, title: false, search: true, align: 'right' },
                 { name: 'CostPerMl', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption")', width: 45, title: false, search: true, align: 'right' }
@@ -334,7 +336,6 @@
     $(window).load(function () {
         var myGrid = $("#listRollPrintableArticle");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
-
 
         if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
             ((filters != undefined))) {

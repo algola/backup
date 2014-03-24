@@ -19,14 +19,18 @@ namespace PapiroMVC.Models
         public enum QuantityType : int
         {
             RunTypeOfQuantity = 0,
-            MqTypeOfQuantity = 1,
+            MqWorkTypeOfQuantity = 1,
             WeigthTypeOfQuantity = 2, //quantità e prezzo al kg
+            MqSheetTypeOfQuantity = 3,
+
         }
 
         public enum CostDetailType : int
         {
             PrintingSheetCostDetail = 0,  //digital and litho sheet and rigid
             PrintingRollCostDetail = 1,  //digital and litho sheet and plotter
+
+            PrintingLabelRollCostDetail = 2, // label roll
 
             PrintedSheetArticleCostDetail = 10,
             PrintedRollArticleCostDetail = 11,
@@ -130,12 +134,16 @@ namespace PapiroMVC.Models
                 case QuantityType.RunTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);
                     break;
-                case QuantityType.MqTypeOfQuantity:
+                case QuantityType.MqWorkTypeOfQuantity:
                     //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
                     ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
                     break;
                 case QuantityType.WeigthTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+                case QuantityType.MqSheetTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
                     break;
                 default:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);

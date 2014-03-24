@@ -186,6 +186,9 @@
   <data name="CodMenuProductBigliettiVisita" xml:space="preserve">
     <value>Biglietti da visita</value>
   </data>
+  <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
+    <value>Etichette in bobina</value>
+  </data>
   <data name="CodMenuProductBuste" xml:space="preserve">
     <value>Buste</value>
   </data>
@@ -256,7 +259,7 @@
     <value>Spirale Metallica</value>
   </data>
   <data name="RigidPrintableArticleMenu" xml:space="preserve">
-    <value>Materiali Stampabili a Rigidi</value>
+    <value>Materiali Stampabili Rigidi</value>
   </data>
   <data name="AppName" xml:space="preserve">
     <value>PapiroStar</value>
@@ -314,5 +317,14 @@
   </data>
   <data name="ECommerce" xml:space="preserve">
     <value>e-Commerce</value>
+  </data>
+  <data name="FlexoMenu" xml:space="preserve">
+    <value>Stampa Flexo</value>
+  </data>
+  <data name="CodCatRotoli" xml:space="preserve">
+    <value>Rotoli</value>
+  </data>
+  <data name="NoPrintableMenu" xml:space="preserve">
+    <value>Consumabili</value>
   </data>
 </root>

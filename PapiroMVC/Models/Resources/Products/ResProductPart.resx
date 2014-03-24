@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BuyingFormat" xml:space="preserve">
+    <value>Formato acquisto</value>
+  </data>
+  <data name="BuyingFormatToolTip" xml:space="preserve">
+    <value>Formato acquisto del materiale</value>
+  </data>
   <data name="CodProduct" xml:space="preserve">
     <value>Codice del prodotto</value>
   </data>
@@ -137,6 +143,18 @@
   </data>
   <data name="DCut" xml:space="preserve">
     <value>Spaziatura cm</value>
+  </data>
+  <data name="DCut1" xml:space="preserve">
+    <value>Int.spazio cm</value>
+  </data>
+  <data name="DCut1ToolTip" xml:space="preserve">
+    <value>Questo spazio viene lasciato tra una posa e un'altra, lungo il primo lato</value>
+  </data>
+  <data name="DCut2" xml:space="preserve">
+    <value>Int.spazio cm</value>
+  </data>
+  <data name="DCut2ToolTip" xml:space="preserve">
+    <value>Questo spazio viene lasciato tra una posa e un'altra, lungo il secondo lato</value>
   </data>
   <data name="DCutToolTip" xml:space="preserve">
     <value>Questo spazio viene lasciato tra una posa e un'altra</value>
@@ -164,6 +182,12 @@
   </data>
   <data name="IsDCutToolTip" xml:space="preserve">
     <value>Impostare quando le pose sono spaziate una con l'altra</value>
+  </data>
+  <data name="PrintingFormat" xml:space="preserve">
+    <value>Formato di stampa</value>
+  </data>
+  <data name="PrintingFormatToolTip" xml:space="preserve">
+    <value>Formato di stampa su cui è posto il lavoro</value>
   </data>
   <data name="PrintingType" xml:space="preserve">
     <value>Tipo di Stampa</value>
@@ -203,6 +227,12 @@
   </data>
   <data name="ServicesNumberToolTip" xml:space="preserve">
     <value>Numero Servizi</value>
+  </data>
+  <data name="SideOnSIde" xml:space="preserve">
+    <value>Verso</value>
+  </data>
+  <data name="SideOnSideToolTip" xml:space="preserve">
+    <value>Verso delle pose sul materiale</value>
   </data>
   <data name="SubjectNumber" xml:space="preserve">
     <value>Numero Soggetti</value>

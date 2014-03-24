@@ -41,8 +41,28 @@ namespace PapiroMVC.Models
             base.UpdateCoeff();
             //voglio calcolare il prezzo al Ml e il prezzo al Mq!!!!
             GetCostFromList(_articles);
-
         }
+
+        public override double UnitCost(double qta)
+        {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
+            return (Convert.ToDouble(CostPerMq));
+        }
+
+        public override double Quantity(double qta)
+        {
+            var ret = base.Quantity(qta);
+            //questo dovrebbe far ottenere il costo!!!!!!
+            var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
+            var article = (RollPrintableArticle)extract.FirstOrDefault();
+
+            return ret;
+        }
+
 
     }
 }

@@ -10,6 +10,9 @@
     MakereadyPrintingBookSheet g = (MakereadyPrintingBookSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
     var dCut = Model.GainPartOnPrinting.DCut ?? 0;
 
+    var dCut1 = Model.GainPartOnPrinting.DCut1 ?? 0;
+    var dCut2 = Model.GainPartOnPrinting.DCut2 ?? 0;
+
 }
 
 @*
@@ -61,7 +64,7 @@ MAX SHAPE: @Model.GainPartOnPrinting.MaxShape
 
         var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut);
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut1, dCut2);
 
     }
 

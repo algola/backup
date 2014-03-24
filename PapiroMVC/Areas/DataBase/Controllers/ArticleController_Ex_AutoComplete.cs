@@ -14,7 +14,7 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
-    {    
+    {
         /// <summary>
         /// AutoComplete
         /// </summary>
@@ -36,6 +36,36 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                  value = art.TypeOfMaterial
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// AutoComplete
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult AdhesiveAutoComplete(string term)
+        {
+            Printable[] adhesives = articleRepository.GetAll().OfType<Printable>().ToArray();
+
+            if (adhesives != null)
+            {
+                var filteredItems = adhesives.Where(
+                item => item.Adhesive!=null && item.Adhesive.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+                );
+
+                var projection = from art in filteredItems
+                                 select new
+                                 {
+                                     id = art.Adhesive,
+                                     label = art.Adhesive,
+                                     value = art.Adhesive
+                                 };
+                return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
         }
 
         /// <summary>
@@ -103,7 +133,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        
+
 
         /// <summary>
         /// AutoComplete
@@ -143,7 +173,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             item => item.Color.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 
-            var projection = from art in filteredItems                             
+            var projection = from art in filteredItems
                              select new
                              {
                                  id = art.Color,
@@ -207,7 +237,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
-                /// <summary>
+        /// <summary>
         /// AutoComplete
         /// </summary>
         /// <param name="term"></param>

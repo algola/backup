@@ -8,6 +8,18 @@ namespace PapiroMVC.Models
 {
     public partial class PrintingCostDetail : CostDetail
     {
+
+        /// <summary>
+        /// get the partialview name
+        /// </summary>
+        public virtual string PartialViewName
+        {
+            get
+            {
+                return "_" + TypeOfCostDetail.ToString();
+            }
+        }
+
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
             base.InitCostDetail(tskExec, articles);

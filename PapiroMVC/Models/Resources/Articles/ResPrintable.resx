@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Adhesive" xml:space="preserve">
+    <value>Tipo di adesivo</value>
+  </data>
+  <data name="AdhesiveToolTip" xml:space="preserve">
+    <value>Il tipo di adesivo</value>
+  </data>
   <data name="Color" xml:space="preserve">
     <value>Colore</value>
   </data>
@@ -137,6 +143,12 @@
   </data>
   <data name="NoBv" xml:space="preserve">
     <value>no b/v</value>
+  </data>
+  <data name="NoUseInEstimateCalculation" xml:space="preserve">
+    <value>Non usare in preventivo</value>
+  </data>
+  <data name="NoUseInEstimateCalculationCaption" xml:space="preserve">
+    <value>usando questa opzione si esclude questo tipo di materiale (solitamente per il formato) dal calcolo ottimizzato del preventivo</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>

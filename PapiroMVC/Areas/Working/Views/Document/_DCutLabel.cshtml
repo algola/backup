@@ -1,0 +1,14 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.PrintingLabelRollCostDetail
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+<div>
+    <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Int.Spazio Banda</h6>
+    @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
+
+    <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Int.Spazio Passo</h6>
+    @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
+</div>

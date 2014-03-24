@@ -24,9 +24,9 @@ namespace Services
         {
             Console.WriteLine(Context.Database.Connection.ConnectionString);
 
-            var c = Context.TypeOfTasks.Include("OptionTypeOfTasks");
+            var typeOfTasks = Context.TypeOfTasks.Include("OptionTypeOfTasks");
 
-            foreach (var item in c)
+            foreach (var item in typeOfTasks)
             {
                 var lstOptToDel = item.OptionTypeOfTasks.Where(x=>x.CodOptionTypeOfTask.Contains("-")).ToArray();
 
@@ -57,13 +57,16 @@ namespace Services
             tbCode[14] = new STAMPAOFF() { CodCategoryOfTask = "STAMPA" };
             tbCode[15] = new STAMPAOFFeDIGITALE() { CodCategoryOfTask = "STAMPA" };
             tbCode[16] = new STAMPADIGITALE() { CodCategoryOfTask = "STAMPA" };
-            tbCode[17] = new STAMPAOFFaROTOLO() { CodCategoryOfTask = "STAMPA" };
-
-
+            tbCode[17] = new STAMPAETICHROTOLO() { CodCategoryOfTask = "STAMPAETICHROTOLO" };
 
             foreach (var item in tbCode)
             {
-                var trv = c.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
+
+                if (item.CodTypeOfTask == "STAMPAETICHROTOLO")
+                {
+                    Console.WriteLine("ciao");
+                }
+                var trv = typeOfTasks.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
 
                 if (trv == null)
                 {
@@ -99,6 +102,7 @@ namespace Services
                         {
                             optItem.TimeStampTable = DateTime.Now;
                             trv.OptionTypeOfTasks.Add(optItem);
+                            Context.Entry(optItem).State = System.Data.Entity.EntityState.Added;
                         }
                     }
                 }

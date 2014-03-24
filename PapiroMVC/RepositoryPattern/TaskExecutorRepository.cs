@@ -19,6 +19,34 @@ namespace Services
 
         }
 
+        /// <summary>
+        /// Confirm cylinder modify
+        /// </summary>
+        /// <param name="entity"></param>
+        public void EditSingleCylinder(TaskExecutorCylinder entity)
+        {
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+        }
+
+        /// <summary>
+        /// Delete cyl
+        /// </summary>
+        /// <param name="entity"></param>
+        public void DeleteSingleCylinder(TaskExecutorCylinder entity)
+        {
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+        }
+
+
+        /// <summary>
+        /// Confirm cylinder modify
+        /// </summary>
+        /// <param name="entity"></param>
+        public void AddSingleCylinder(TaskExecutorCylinder entity)
+        {
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+        }
+
         public void EditSingleStep(Step entity)
         {
             Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
@@ -68,7 +96,7 @@ namespace Services
 
         public override IQueryable<TaskExecutor> GetAll()
         {
-            return Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps");
+            return Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders");
         }
 
         public override void Edit(TaskExecutor entity)
@@ -132,9 +160,20 @@ namespace Services
                                         break;
                                 }
                             }
-                        }
-                        base.Edit(entity);
-             */
+                        }*/
+
+
+            entity.TimeStampTable = DateTime.Now;
+            var fromBD = Context.taskexecutors.SingleOrDefault(p => p.CodTaskExecutor == entity.CodTaskExecutor);
+            if (fromBD != null)
+            {
+                Context.Entry(fromBD).CurrentValues.SetValues(entity);
+            }
+        }
+
+        public TaskExecutorCylinder GetSingleTaskExecutorCylindern(string cod)
+        {
+            return this.Context.TaskExecutorCylinders.FirstOrDefault(x=>x.CodTaskExecutorCylinder == cod);
         }
 
         public TaskEstimatedOn GetSingleEstimatedOn(string cod)
@@ -153,6 +192,9 @@ namespace Services
             if (query != null)
             {
                 query.SetTaskExecutorEstimatedOn = this.Context.taskexecutorestimatedon.Include("steps").Where(x => x.CodTaskExecutor == codTaskExecutor).ToList();
+
+
+                // query.TaskExecutorCylinders = this.Context
             }
             return query;
         }

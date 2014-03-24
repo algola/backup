@@ -7,6 +7,7 @@ namespace PapiroMVC.Models
 {
     public partial class Makeready
     {
-
+        double Side1ISpace { get; set; }
+        double Side2ISpace { get; set; }
     }
 }

@@ -11,7 +11,7 @@
     if (err.Key != null)
     {
         ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
-    }       
+    }
 
 }
 
@@ -26,10 +26,10 @@
     OnSuccess = "OnSuccess"
 }, new { @class = "form-horizontal" }))
     {
-  
+
         @Html.ValidationSummary(true)
 
-        @Html.HiddenFor(model => model.Article.TimeStampTable)        
+        @Html.HiddenFor(model => model.Article.TimeStampTable)
         @Html.HiddenFor(model => model.Article.CodArticle)
         @Html.HiddenFor(model => model.Article.ArticleName)
 
@@ -37,9 +37,12 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
         @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorComplete", "Article")
+        @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
+
         @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
-        
         @Html.AlgolaAutocompleteFor(model => model.Article.Format, "FormatAutoComplete", "Article")
+        
+        @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation) 
 
         @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.SheetPerPacked, "SheetPerPackedAutoComplete", "Article")
@@ -49,8 +52,8 @@
         @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
         @Html.AlgolaAutocompleteFor(model => model.Article.UnitOfMeasure, "UnitOfMeasuerAutoComplete", "Article")
-               
-       
+
+
         <div id='_SheetPrintableArticlePakedCost'>
             @Html.Partial("_SheetPrintableArticlePakedCost", Model)
         </div>
@@ -60,11 +63,11 @@
         </div>
 
         <!--
-    <div id='_SheetPrintableArticleCuttedCost'>
-        Html.Partial("_SheetPrintableArticleCuttedCost", Model)
-    </div>
-        --> 
-        <br />      
+        <div id='_SheetPrintableArticleCuttedCost'>
+            Html.Partial("_SheetPrintableArticleCuttedCost", Model)
+        </div>
+            -->
+        <br />
         <p>
 
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexSheetPrintableArticle", "Article", new { Area = "Database" })');">
@@ -79,7 +82,7 @@
 
             @if (ViewBag.ActionMethod != "CreateSheetPrintableArticle")
             {
-                <input class="btn" type="submit" name="CreateSheetPrintableArticle"  value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                <input class="btn" type="submit" name="CreateSheetPrintableArticle" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
             }
         </p>
     }

@@ -39,12 +39,12 @@ namespace PapiroMVC.Models
                     for (int i = 0; i < x.Count &&
                         !SheetCut.IsValid(tsk.FormatMax, tsk.FormatMin, PrintingFormat);
                         i++,
-                        PrintingFormat = x[k].GetCuttetFormat(BuyingFormat)) ;
+                        PrintingFormat = x[k].GetCuttedFormat(BuyingFormat)) ;
                 }
 
                 foreach (var item in x)
                 {
-                    item.CutName = item.GetCuttetFormat(BuyingFormat);
+                    item.CutName = item.GetCuttedFormat(BuyingFormat);
                 }
 
                 //Controllo del formato se è presente nell'elenco dei formati
@@ -58,7 +58,7 @@ namespace PapiroMVC.Models
                     {
                         var toAdd = new Cut("manual", 0, 0);
                         toAdd.ManualFormat = PrintingFormat;
-                        toAdd.CutName = toAdd.GetCuttetFormat(BuyingFormat);
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
                         x.Add(toAdd);
                     }
                 }
@@ -166,6 +166,7 @@ namespace PapiroMVC.Models
                     var formatList = articles.OfType<SheetPrintableArticle>()
                                 .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
                                     x.Color == item.Color &&
+                                    x.Adhesive == item.Adhesive &&
                                     x.NameOfMaterial == item.NameOfMaterial)
                                         .Select(x => x.Format);
 
@@ -178,6 +179,7 @@ namespace PapiroMVC.Models
                     var formatList = articles.OfType<RigidPrintableArticle>()
                                 .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
                                     x.Color == item.Color &&
+                                    x.Adhesive == item.Adhesive &&
                                     x.NameOfMaterial == item.NameOfMaterial)
                                         .Select(x => x.Format);
 

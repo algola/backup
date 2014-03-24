@@ -210,6 +210,13 @@
             <param name="term"></param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.AdhesiveAutoComplete(System.String)">
+            <summary>
+            AutoComplete
+            </summary>
+            <param name="term"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.FormatAutoComplete(System.String)">
             <summary>
             AutoComplete
@@ -309,6 +316,13 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.DeletingTaskExecutorCylinder(System.String)">
+            <summary>
+            deleting one step and responding with error or ok message
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="P:PapiroMVC.Models.Article.TypeOfQuantity">
             <summary>
             return the type of quantity to display 
@@ -320,6 +334,17 @@
             </summary>
             <param name="codTypeOfTask"></param>
             <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Models.Flexo.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:PapiroMVC.Models.Flexo.CheckZeroCylinder">
+            <summary>
+            Check if Cylinder 0 are in list
+            so view has row to insert a new cylinder Z
+            </summary>
         </member>
         <member name="T:PapiroMVC.Models.ObjectPrintableArticleViewModel">
             <summary>
@@ -1015,7 +1040,7 @@
             <param name="codCost"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatInPrintingSheetCostDetail(System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatInPrintingCostDetail(System.String)">
             <summary>
             This Action modifies buyingFormat and Update Cost.
             Is needed  Session["CostDetail"]
@@ -1023,14 +1048,14 @@
             <param name="buyingFormat"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeProductPartFormatFormatInPrintingSheetCostDetail(System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeProductPartFormatFormatInPrintingCostDetail(System.String,System.String,System.String)">
             <summary>
             This Action modifies ProductPart format and Update Cost
             </summary>
             <param name="format"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePrintingFormatInPrintingSheetCostDetail(System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePrintingFormatInPrintingCostDetail(System.String)">
             <summary>
             Action modifies PrintingFormat and Update Cost
             </summary>
@@ -1077,9 +1102,19 @@
             
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.PrintingCostDetail.PartialViewName">
+            <summary>
+            get the partialview name
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.PrintingRollCostDetail.BuyingWidths">
             <summary>
             Elenco dei possibili larghezze di acquisto 
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.PrintingLabelRollCostDetail.BuyingFormats">
+            <summary>
+            Elenco dei possibili formati di acquisto 
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.PrintingSheetCostDetail.BuyingFormats">
@@ -1108,6 +1143,16 @@
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Cut.CutName">
+            <summary>
+            it is exposed on views
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.CutForLabel.Valid">
+            <summary>
+            this cut fits in taskexecutor
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.CutForLabel.CutName">
             <summary>
             it is exposed on views
             </summary>
@@ -1535,6 +1580,144 @@
               Looks up a localized string similar to specificare un nome utente.
             </summary>
         </member>
+        <member name="T:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCut">
+            <summary>
+              Looks up a localized string similar to Interspazio.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCut1">
+            <summary>
+              Looks up a localized string similar to Int.spazio cm banda.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCut1ToolTip">
+            <summary>
+              Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra, nel verso di banda.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCut2">
+            <summary>
+              Looks up a localized string similar to Int.spazio cm passo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCut2ToolTip">
+            <summary>
+              Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra, nel verso di passo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.DCutToolTip">
+            <summary>
+              Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra.
+            </summary>
+        </member>
+        <member name="T:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.CurrencyValidation">
+            <summary>
+              Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.CurrencyValidationError">
+            <summary>
+              Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.Quantity">
+            <summary>
+              Looks up a localized string similar to Quantità.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.QuantityToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità di cilindri.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.RequiredField">
+            <summary>
+              Looks up a localized string similar to richiesto per completare l&apos;operazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.Z">
+            <summary>
+              Looks up a localized string similar to Z.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResTaskExecutorCylinder.ZToolTip">
+            <summary>
+              Looks up a localized string similar to Dimensione del cilindro.
+            </summary>
+        </member>
+        <member name="T:PapiroMVC.Models.Resources.Articles.ResCylinder">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.CurrencyValidation">
+            <summary>
+              Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.CurrencyValidationError">
+            <summary>
+              Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.RequiredField">
+            <summary>
+              Looks up a localized string similar to richiesto per completare l&apos;operazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.Z">
+            <summary>
+              Looks up a localized string similar to Z.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResCylinder.ZToolTip">
+            <summary>
+              Looks up a localized string similar to Dimensione Z.
+            </summary>
+        </member>
         <member name="T:PapiroMVC.Models.Resources.Articles.ArticlesVuoto">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -1756,6 +1939,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.Adhesive">
+            <summary>
+              Looks up a localized string similar to Tipo di adesivo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.AdhesiveToolTip">
+            <summary>
+              Looks up a localized string similar to Il tipo di adesivo.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.Color">
             <summary>
               Looks up a localized string similar to Colore.
@@ -1789,6 +1982,16 @@
         <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.NoBv">
             <summary>
               Looks up a localized string similar to no b/v.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.NoUseInEstimateCalculation">
+            <summary>
+              Looks up a localized string similar to Non usare in preventivo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.NoUseInEstimateCalculationCaption">
+            <summary>
+              Looks up a localized string similar to usando questa opzione si esclude questo tipo di materiale (solitamente per il formato) dal calcolo ottimizzato del preventivo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResPrintable.RequiredField">
@@ -3091,6 +3294,11 @@
               Looks up a localized string similar to Etichette e cartellini.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteRotolo">
+            <summary>
+              Looks up a localized string similar to Etichette in bobina.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductFogliMacchina">
             <summary>
               Looks up a localized string similar to Fogli macchina.
@@ -3319,6 +3527,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.BuyingFormat">
+            <summary>
+              Looks up a localized string similar to Formato acquisto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.BuyingFormatToolTip">
+            <summary>
+              Looks up a localized string similar to Formato acquisto del materiale.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.CodProduct">
             <summary>
               Looks up a localized string similar to Codice del prodotto.
@@ -3352,6 +3570,26 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCut">
             <summary>
               Looks up a localized string similar to Spaziatura cm.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCut1">
+            <summary>
+              Looks up a localized string similar to Int.spazio cm.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCut1ToolTip">
+            <summary>
+              Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra, lungo il primo lato.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCut2">
+            <summary>
+              Looks up a localized string similar to Int.spazio cm.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCut2ToolTip">
+            <summary>
+              Looks up a localized string similar to Questo spazio viene lasciato tra una posa e un&apos;altra, lungo il secondo lato.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.DCutToolTip">
@@ -3397,6 +3635,16 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.IsDCutToolTip">
             <summary>
               Looks up a localized string similar to Impostare quando le pose sono spaziate una con l&apos;altra.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.PrintingFormat">
+            <summary>
+              Looks up a localized string similar to Formato di stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.PrintingFormatToolTip">
+            <summary>
+              Looks up a localized string similar to Formato di stampa su cui è posto il lavoro.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.PrintingType">
@@ -3462,6 +3710,16 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.ServicesNumberToolTip">
             <summary>
               Looks up a localized string similar to Numero Servizi.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.SideOnSIde">
+            <summary>
+              Looks up a localized string similar to Verso.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.SideOnSideToolTip">
+            <summary>
+              Looks up a localized string similar to Verso delle pose sul materiale.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.SubjectNumber">
@@ -3728,6 +3986,16 @@
             <summary>
               Overrides the current thread's CurrentUICulture property for all
               resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartsPrintableArticle.Adhesive">
+            <summary>
+              Looks up a localized string similar to Tipo di adesivo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartsPrintableArticle.AdhesiveToolTip">
+            <summary>
+              Looks up a localized string similar to tipo di adesivo specifico.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartsPrintableArticle.Color">
@@ -4051,6 +4319,41 @@
               Looks up a localized string similar to .
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_1">
+            <summary>
+              Looks up a localized string similar to stampa a 1 colore.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_2">
+            <summary>
+              Looks up a localized string similar to stampa a 2 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_3">
+            <summary>
+              Looks up a localized string similar to stampa a 3 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_4">
+            <summary>
+              Looks up a localized string similar to stampa a 4 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_5">
+            <summary>
+              Looks up a localized string similar to stampa a 5 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_6">
+            <summary>
+              Looks up a localized string similar to stampa a 6 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFF_FR_BN">
             <summary>
               Looks up a localized string similar to stampa fronte retro in bianco e nero.
@@ -4074,31 +4377,6 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFF_NO">
             <summary>
               Looks up a localized string similar to .
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_1">
-            <summary>
-              Looks up a localized string similar to stampa a 1 colore.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_2">
-            <summary>
-              Looks up a localized string similar to stampa a 2 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_3">
-            <summary>
-              Looks up a localized string similar to stampa a 3 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_4">
-            <summary>
-              Looks up a localized string similar to stampa a 4 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_5">
-            <summary>
-              Looks up a localized string similar to stampa a 5 colori.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFaROTOLO_NO">
@@ -5284,6 +5562,67 @@
               Looks up a localized string similar to richiesto per completare l&apos;operazione.
             </summary>
         </member>
+        <member name="T:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.CurrencyValidation">
+            <summary>
+              Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.CurrencyValidationError">
+            <summary>
+              Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperFirstStartLenght">
+            <summary>
+              Looks up a localized string similar to Scarto (mt).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperFirstStartLenghtToolTip">
+            <summary>
+              Looks up a localized string similar to Indica i metri di scarto in avviamento.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PrintingUnit">
+            <summary>
+              Looks up a localized string similar to Cilindri stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PrintingUnitToolTip">
+            <summary>
+              Looks up a localized string similar to Castelli di stampa della macchina da stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.RequiredField">
+            <summary>
+              Looks up a localized string similar to richiesto per completare l&apos;operazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.Width">
+            <summary>
+              Looks up a localized string similar to Larghezza (cm).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.WidthToolTip">
+            <summary>
+              Looks up a localized string similar to Larghezza massima della bobina.
+            </summary>
+        </member>
         <member name="T:PapiroMVC.Models.Resources.TaskExecutor.ResLithoWeb">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -6366,6 +6705,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResArticleViewModelAutoChanges.Adhesive">
+            <summary>
+              Looks up a localized string similar to Tipo Adesivo.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResArticleViewModelAutoChanges.AutoChangesValidation">
             <summary>
               Looks up a localized string similar to (^(\b|\+|\-|)(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})*(\b|\%|)?$)|(^$).
@@ -6543,6 +6887,24 @@
             <param name="a"></param>
             <returns></returns>
         </member>
+        <member name="M:Services.TaskExecutorRepository.EditSingleCylinder(PapiroMVC.Models.TaskExecutorCylinder)">
+            <summary>
+            Confirm cylinder modify
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Services.TaskExecutorRepository.DeleteSingleCylinder(PapiroMVC.Models.TaskExecutorCylinder)">
+            <summary>
+            Delete cyl
+            </summary>
+            <param name="entity"></param>
+        </member>
+        <member name="M:Services.TaskExecutorRepository.AddSingleCylinder(PapiroMVC.Models.TaskExecutorCylinder)">
+            <summary>
+            Confirm cylinder modify
+            </summary>
+            <param name="entity"></param>
+        </member>
         <member name="M:Services.TaskExecutorRepository.GetNewCode(PapiroMVC.Models.TaskExecutor)">
             <summary>
             Take next code in string numerical order.
@@ -6609,7 +6971,7 @@
             <param name="expression"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Validation.HtmlHelperExtension.AlgolaEditorFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object)">
+        <member name="M:PapiroMVC.Validation.HtmlHelperExtension.AlgolaEditorFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object,System.Int32)">
             <summary>
             HtmlHelper Extension
             This Method create automaticaly HTML with LabelFor + EditFor + Validation Message + Title displaing ToolTip Attribute
@@ -7210,6 +7572,11 @@
               Looks up a localized string similar to Grande Formato.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodCatRotoli">
+            <summary>
+              Looks up a localized string similar to Rotoli.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductAltriFormati">
             <summary>
               Looks up a localized string similar to Altri formati.
@@ -7253,6 +7620,11 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductEtichetteCartellini">
             <summary>
               Looks up a localized string similar to Etichette e cartellini.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductEtichetteRotolo">
+            <summary>
+              Looks up a localized string similar to Etichette in bobina.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductFogliMacchina">
@@ -7400,6 +7772,11 @@
               Looks up a localized string similar to Preventivi.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.FlexoMenu">
+            <summary>
+              Looks up a localized string similar to Stampa Flexo.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ItalianMenu">
             <summary>
               Looks up a localized string similar to Italiano.
@@ -7423,6 +7800,11 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.LogOffMenu">
             <summary>
               Looks up a localized string similar to Esci.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.NoPrintableMenu">
+            <summary>
+              Looks up a localized string similar to Consumabili.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.OrderMenu">
@@ -7462,7 +7844,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.RigidPrintableArticleMenu">
             <summary>
-              Looks up a localized string similar to Materiali Stampabili a Rigidi.
+              Looks up a localized string similar to Materiali Stampabili Rigidi.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.RollPrintableArticleMenu">
@@ -7791,6 +8173,46 @@
               Looks up a localized string similar to .
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO">
+            <summary>
+              Looks up a localized string similar to Stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_1">
+            <summary>
+              Looks up a localized string similar to 1 colore.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_2">
+            <summary>
+              Looks up a localized string similar to 2 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_3">
+            <summary>
+              Looks up a localized string similar to 3 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_4">
+            <summary>
+              Looks up a localized string similar to 4 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_5">
+            <summary>
+              Looks up a localized string similar to 5 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_6">
+            <summary>
+              Looks up a localized string similar to 6 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAETICHROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFF">
             <summary>
               Looks up a localized string similar to Stampa offset.
@@ -7817,41 +8239,6 @@
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFF_NO">
-            <summary>
-              Looks up a localized string similar to .
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO">
-            <summary>
-              Looks up a localized string similar to Stampa.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_1">
-            <summary>
-              Looks up a localized string similar to stampa a 1 colore.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_2">
-            <summary>
-              Looks up a localized string similar to stampa a 2 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_3">
-            <summary>
-              Looks up a localized string similar to stampa a 3 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_4">
-            <summary>
-              Looks up a localized string similar to stampa a 4 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_5">
-            <summary>
-              Looks up a localized string similar to stampa a 5 colori.
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAOFFaROTOLO_NO">
             <summary>
               Looks up a localized string similar to .
             </summary>

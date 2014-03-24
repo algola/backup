@@ -128,6 +128,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartprintinggain", "DCut", SchemaDb.Double, "0");
             dbS.AddColumnToTable("productpartprintinggain", "IsDCut", SchemaDb.Bool, "0");
 
+            dbS.AddColumnToTable("productpartprintinggain", "DCut1", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productpartprintinggain", "DCut2", SchemaDb.Double, "0");
+
+            //0-Null = Auto 1=Force SideOnSide 2=ForceSideNotSide
+            dbS.AddColumnToTable("productpartprintinggain", "ForceSideOnSide", SchemaDb.Int, "0");
+
             // 0 = Sheet // 1 = Plotter 
             dbS.AddColumnToTable("productpartprintinggain", "Selector", SchemaDb.Int, "0");
 

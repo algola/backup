@@ -41,7 +41,7 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color;
+            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color; //ADES +this.Adhesive;
         }
 
     }

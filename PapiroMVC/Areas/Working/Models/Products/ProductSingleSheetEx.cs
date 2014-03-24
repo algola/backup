@@ -27,6 +27,10 @@ namespace PapiroMVC.Models
             var part = new ProductPartSingleSheet();
 
             part.DCut = DCut;
+
+            part.DCut1 = DCut1;
+            part.DCut2 = DCut2;
+            
             part.ShowDCut = ShowDCut;
             part.IsDCut = false;
 

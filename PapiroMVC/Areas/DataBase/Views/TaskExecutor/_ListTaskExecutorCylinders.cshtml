@@ -1,0 +1,105 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskExecutor
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    string url = Url.Action("TaskExecutorCylinderList", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutor = Model.CodTaskExecutor });
+    string editUrl = Url.Action("EditTaskExecutorCylinder", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorZ = Model.CodTaskExecutor });
+}
+
+<table id="gridTaskExecutorCylinder"><tr><td /></tr></table>
+<div id="pagerTaskExecutorCylinder"></div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        var lastSel = -1;
+
+        var myGrid = $("#gridTaskExecutorCylinder").jqGrid({
+            url: '@url',
+            editUrl: '@editUrl',
+            datatype: 'json',
+            colModel: [
+                { name: 'CodTaskExecutorCylinder', label: 'CodTaskExecutorCylinder', key: true, width: 80, editable: true, hidden: true },
+                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delTaskExecutorCylinder },
+                { name: 'CodTaskExecutor', width: 60, align: 'right', editable: true, hidden: true },
+                { name: 'Z', label: '@HttpContext.GetLocalResourceObject(strings, "Z")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 80, align: 'right', editable: true, formatter: insFmatter }],
+
+            pager: '#pagerTaskExecutorCylinder',
+
+            rowNum: 15,
+            //rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
+            width: 375,
+            shrinkToFit: false,
+
+            
+            loadComplete: function () {
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            },
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    myGrid.jqGrid('restoreRow', lastSel);
+                    lastSel = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid.jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridTaskExecutorCylinder").trigger("reloadGrid");
+                    },
+                    url: '@editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            },
+
+            beforeSelectRow: function (rowid, e) {
+                var iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]);
+
+                //alert(this.p.colModel[iCol].name);
+                if (this.p.colModel[iCol].name === 'cfgName') {
+                    alert("GO!!!");
+                    return false;
+                }
+            }
+            
+        });
+
+        myGrid.jqGrid('navGrid', '#pagerTaskExecutorCylinder', { edit: false, add: false, del: false, search: false });
+
+    });
+
+    function insFmatter(cellvalue, options, rowobject) {
+        if (cellvalue == 999)
+            return '';
+        else
+            return cellvalue;
+    }
+
+    function delTaskExecutorCylinder(cellvalue, options, rowobject) {
+        var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingTaskExecutorCylinder", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadTaskExecutorCylinder" }, new {@class="tbutton smalldelete"})';
+        return link.replace("-1", cellvalue)
+    }
+
+    function reloadTaskExecutorCylinder() {
+        $("#gridTaskExecutorCylinder").trigger("reloadGrid");
+    }
+
+</script>

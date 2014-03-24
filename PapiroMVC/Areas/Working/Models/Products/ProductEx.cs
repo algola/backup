@@ -20,6 +20,9 @@ namespace PapiroMVC.Models
         public bool ShowDCut { get; set; }
         public Nullable<double> DCut { get; set; }
 
+        public Nullable<double> DCut1 { get; set; }
+        public Nullable<double> DCut2 { get; set; }
+
         /// <summary>
         /// list of all TypeOfTask in the system
         /// </summary>
@@ -157,7 +160,9 @@ namespace PapiroMVC.Models
             ProductSingleSheet = 0,
             ProductBlockSheet = 1,
             ProductBookSheet = 2,
-            ProductRigid = 3
+            ProductRigid = 3,
+
+            ProductSingleLabelRoll = 4,
         }
 
         [DataMember]

@@ -40,6 +40,31 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
+        public ActionResult GetPrintingLabelHints()
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
+            var prodPart = prod.ProductParts.SingleOrDefault(x => x.CodProductPart == cv.CodProductPart);
+
+            if (cv.TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
+            {
+                var x = (PrintingLabelRollCostDetail)cv;
+                var lst = x.BuyingFormats;
+
+                foreach (var item in lst)
+                {
+                    x.BuyingFormat = item;
+                    x.PrintingFormat = item;
+
+
+                }
+
+            }
+
+
+            return null;
+        }
 
         /// <summary>
         /// This Action modifies buyingFormat and Update Cost.
@@ -48,15 +73,32 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="buyingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeBuyingFormatInPrintingSheetCostDetail(string buyingFormat)
+        public ActionResult ChangeBuyingFormatInPrintingCostDetail(string buyingFormat)
         {
-            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
-            cv.BuyingFormat = buyingFormat;
+
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            switch (cv.TypeOfCostDetail)
+            {
+                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+                    ((PrintingLabelRollCostDetail)cv).BuyingFormat = buyingFormat;
+                    break;
+                case CostDetail.CostDetailType.PrintingSheetCostDetail:
+                    ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
+                    break;
+                case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    break;
+                default:
+                    break;
+            }
+
             cv.PrintingFormat = buyingFormat;
             cv.Update();
             Session["CostDetail"] = cv;
-            return PartialView("_PrintingSheetCostDetail", cv);
+            return PartialView(cv.PartialViewName, cv);
         }
+
+
 
         /// <summary>
         /// This Action modifies ProductPart format and Update Cost
@@ -64,9 +106,9 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeProductPartFormatFormatInPrintingSheetCostDetail(string format)
+        public ActionResult ChangeProductPartFormatFormatInPrintingCostDetail(string format, string dCut1, string dCut2)
         {
-            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
             var inizio = DateTime.Now;
 
@@ -76,12 +118,31 @@ namespace PapiroMVC.Areas.Working.Controllers
                 var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
                 var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
 
+                try
+                {
+                    prodPart.DCut1 = dCut1 == "" ? 0 : Convert.ToDouble(dCut1);
+                    prodPart.DCut2 = dCut2 == "" ? 0 : Convert.ToDouble(dCut2);
+                }
+                catch (Exception)
+                {
+
+                }
+
+                if (prodPart.DCut1 != null && prodPart.DCut1 != 0
+                    || prodPart.DCut2 != null && prodPart.DCut2 != 0)
+                {
+                    prodPart.IsDCut = true;
+                }
+
                 prodPart.Format = format;
+
                 if (TryValidateModel(prodPart))
                 {
                     productRepository.Edit(prod);
-                    productRepository.Save();
+                    productRepository.Save();                        
 
+                    cv.ProductPart.DCut1 = Convert.ToDouble(dCut1 == "" ? "0" : dCut1);
+                    cv.ProductPart.DCut2 = Convert.ToDouble(dCut2 == "" ? "0" : dCut2);
                     cv.ProductPart.Format = format;
                     cv.ProductPart.UpdateOpenedFormat();
                 }
@@ -94,7 +155,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             var tempo = DateTime.Now.Subtract(inizio);
             Console.WriteLine(tempo.TotalSeconds);
 
-            return PartialView("_PrintingSheetCostDetail", cv);
+            return PartialView(cv.PartialViewName, cv);
         }
 
         /// <summary>
@@ -103,13 +164,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="PrintingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePrintingFormatInPrintingSheetCostDetail(string PrintingFormat)
+        public ActionResult ChangePrintingFormatInPrintingCostDetail(string PrintingFormat)
         {
-            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             cv.PrintingFormat = PrintingFormat;
             cv.Update();
             Session["CostDetail"] = cv;
-            return PartialView("_PrintingSheetCostDetail", cv);
+            return PartialView(cv.PartialViewName, cv);
         }
 
         /// <summary>
@@ -251,10 +312,13 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             switch (cv.TypeOfCostDetail)
             {
-                case CostDetail.CostDetailType.PrintingSheetCostDetail:
+
+                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+                    ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
+                case CostDetail.CostDetailType.PrintingSheetCostDetail:
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
@@ -263,6 +327,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
                     viewName = "PrintedCostDetail";
                     break;
+
                 default:
                     break;
             }
@@ -290,13 +355,13 @@ namespace PapiroMVC.Areas.Working.Controllers
                         foreach (var item in x)
                         {
                             //only if it is not just in list
-                            if (!(cv.Computes.Select(y=>y.CodCost).ToList().Contains(item.ComputedBy.CodCost)))
+                            if (!(cv.Computes.Select(y => y.CodCost).ToList().Contains(item.ComputedBy.CodCost)))
                             {
                                 item.ComputedBy = cv;
                                 item.InitCostDetail(null, articleRepository.GetAll());
                                 //item.UpdateCost();
                                 //item.GetCostFromList(articleRepository.GetAll());
-                                costDetailRepository.Add(item);                                
+                                costDetailRepository.Add(item);
                             }
                         }
                     }

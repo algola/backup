@@ -34,6 +34,8 @@
     </div>
 
     @Html.AlgolaEditorFor(y => y.ProductPart.Format, new { id = "ddPartFormat" })
+    @Html.AlgolaEditorFor(y => y.ProductPart.DCut1, new { id = "ddPartDCut1" })
+    @Html.AlgolaEditorFor(y => y.ProductPart.DCut2, new { id = "ddPartDCut2" })
 
     <canvas id="printingSingleSheet" width="300" height="170"></canvas>
     <div id="partialPrinting">
@@ -69,11 +71,13 @@
 
             //data are collected into
             var dataToPass = {
-                format: $("#ProductPart_Format").val()
+                format: $("#ProductPart_Format").val(),
+                dCut1: $("#ProductPart_DCut1").val(),
+                dCut2: $("#ProductPart_DCut2").val()
             };
 
             $.ajax({
-                url: '@(Url.Action("ChangeProductPartFormatFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangeProductPartFormatFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
@@ -104,7 +108,7 @@
             };
 
             $.ajax({
-                url: '@(Url.Action("ChangeBuyingFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangeBuyingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
@@ -136,7 +140,7 @@
         };
 
         $.ajax({
-            url: '@(Url.Action("ChangePrintingFormatInPrintingSheetCostDetail", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangePrintingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',
@@ -225,6 +229,9 @@
 
         var c_canvas = document.getElementById("buyingSheet");
         var context = c_canvas.getContext("2d");
+
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
         zoomGlo = 64 / side1 * 2.5;
         var zoom = 2.5;

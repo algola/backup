@@ -10,6 +10,7 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
+using System.Globalization;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -78,7 +79,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         private IQueryable<Litho> LithoList(GridSettings gridSettings)
         {
             //common serarch and order
-            var q = this.TaskExecutorList(gridSettings).OfType<Litho>();
+            var qqqq = this.TaskExecutorList(gridSettings).OfType<LithoSheet>();
+            var qq = this.TaskExecutorList(gridSettings).OfType<LithoRoll>();
+
+            var q = qq.Union((IQueryable<Litho>)qqqq);
 
             //use it in filter
             string printingUnitFilter = string.Empty;
@@ -319,6 +323,60 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.SheetwiseAfterPrintingUnit.ToString()
 
                         }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult FlexoList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
+
+            var q = this.TaskExecutorList(gridSettings).OfType<Flexo>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutor,
+                        cell = new string[] 
+                        {                                
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
+                            a.CodTaskExecutor,
+                            a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
+                            a.TaskExecutorName,
+                            a.PrintingUnit.ToString(),
+//                            (a.Width??Convert.ToDouble(0)).ToString(CultureInfo.InvariantCulture.NumberFormat)
+                        }
+
                     }
                 ).ToArray()
             };
@@ -581,6 +639,58 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
                             a.AvarageRunPerHour.ToString()
+                         }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult TaskExecutorCylinderList(string codTaskExecutor, GridSettings gridSettings)
+        {
+
+            //read all
+            var z = taskExecutorRepository.GetSingle(codTaskExecutor);
+
+            ((Flexo)z).CheckZeroCylinder();
+
+            var z2 = z.TaskExecutorCylinders;
+            
+            var q = z2.OrderBy(x => x.Z).AsQueryable();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutorCylinder,
+                        cell = new string[] 
+                        {       
+                            a.CodTaskExecutorCylinder,
+                            a.CodTaskExecutorCylinder,
+                            a.CodTaskExecutor,
+                            a.Z.ToString(),
+                            a.Quantity.ToString()
                          }
                     }
                 ).ToArray()
@@ -947,11 +1057,41 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 message = "Ok"
             });
 
+        }
+
+
+            /// <summary>
+        /// deleting one step and responding with error or ok message
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult DeletingTaskExecutorCylinder(string id)
+        {
+            try
+            {
+                var x=taskExecutorRepository.GetSingleTaskExecutorCylindern(id);
+                taskExecutorRepository.DeleteSingleCylinder(x);
+                taskExecutorRepository.Save();
+            }
+            catch (Exception e)
+            {
+                //error
+                HttpContext.Response.StatusCode = 500;
+                HttpContext.Response.Clear();
+
+                return Json(new
+                {
+                    message = e.Message
+                });
+            }
+
+            return Json(new
+            {
+                message = "Ok"
+            });
 
         }
     }
-
-
 
 
 }

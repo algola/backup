@@ -231,7 +231,9 @@
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\NoPrintableEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\PrintableEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\NoPrintableEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\PrintableEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\RidigPrintableArticleStandardCostEx_MetaData.cs" />
@@ -303,8 +305,10 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx.cs" />
-    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoWebEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlexoEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlexoEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoRollEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\OptionTypeOfTaskEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PlotterEx.cs" />
@@ -321,7 +325,9 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskexEcutorCylinderEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskexEcutorCylinderEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnMqEx_MetaData.cs" />
@@ -405,14 +411,15 @@
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRigidArticleCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRollArticleCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedSheetArticleCostDetail.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Copy of ProductPartPrintingSheetGainSingle.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingHint.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainSingle.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\Makeready.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingBookSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSinglePlotter.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\Makeready\MakereadyPrintingSingleSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingCostDetail.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingCostDetail_Ex2.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingRollCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingLabelRollCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingSheetCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartBookSheetPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartCoverSheetPrinting.cs" />
@@ -425,7 +432,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartRigidPrinting.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleRollPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleLabelRollPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
@@ -452,19 +459,25 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleLabelRollEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSingleLabelRollEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductRigidEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleSheetEx_MetaData.cs" />
@@ -563,6 +576,9 @@
     <Compile Include="Models\EstimateEcommerce.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Flexo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IDeleteRelated.cs" />
     <Compile Include="Models\Litho.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -587,11 +603,6 @@
     </Compile>
     <Compile Include="Models\MenuProduct.cs">
       <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1 - Copy.Designer.cs">
-      <DependentUpon>Model1 - Copy.edmx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Models\Model1.cs">
       <AutoGen>True</AutoGen>
@@ -674,6 +685,9 @@
     <Compile Include="Models\PrintingCostDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PrintingLabelRollCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PrintingRollCostDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -705,6 +719,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartCoverSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartLabelRollArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartPrinting.cs">
@@ -746,6 +763,9 @@
     <Compile Include="Models\ProductPartSheetPrinting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartSingleLabelRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartSinglePlotter.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -768,6 +788,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductRigid.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductSingleLabelRoll.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductSingleSheet.cs">
@@ -803,6 +826,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResLoginModel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartSingleLabelRoll.Designer.cs">
+      <DependentUpon>ResProductPartSingleLabelRoll.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResTaskexEcutorCylinder.Designer.cs">
+      <DependentUpon>ResTaskexEcutorCylinder.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\Articles\ResCylinder.Designer.cs">
+      <DependentUpon>ResCylinder.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Models\Resources\Articles\ArticlesVuoto.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1093,6 +1131,12 @@
       <DependentUpon>ResLithoSheet.resx</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResFlexo.Designer.cs">
+      <DependentUpon>ResFlexo.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\TaskExecutor\ResLithoWeb.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1239,6 +1283,9 @@
     <Compile Include="Models\TaskExecutor.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TaskExecutorCylinder.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TaskExecutorTypeOfTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -1295,7 +1342,7 @@
     <Compile Include="RepositoryPattern\TASK\STAMPA_DIGITALE.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSET.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSETeDIGITALE.cs" />
-    <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSET_ROTOLO.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPAETICHROTOLO.cs" />
     <Compile Include="RepositoryPattern\TASK\TAGLIO.cs" />
     <Compile Include="RepositoryPattern\TASK\VERNICIATURA.cs" />
     <Compile Include="RepositoryPattern\TypeOfBaseRepository.cs" />
@@ -1704,6 +1751,7 @@
     <Content Include="Content\ProductImage\CartolineInviti.png" />
     <Content Include="Content\ProductImage\CartolinePostali.png" />
     <Content Include="Content\ProductImage\EtichetteCartellini.png" />
+    <Content Include="Content\ProductImage\EtichetteRotolo.png" />
     <Content Include="Content\ProductImage\FogliMacchina.png" />
     <Content Include="Content\ProductImage\Fotoquadri.png" />
     <Content Include="Content\ProductImage\Locandine.png" />
@@ -1861,10 +1909,11 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
     </Content>
-    <None Include="Models\Model1.ttOriginale">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Model11.cs</LastGenOutput>
-    </None>
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexFlexo.cshtml" />
     <EntityDeploy Include="Models\Model2.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model2.Designer.cs</LastGenOutput>
@@ -2110,10 +2159,18 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <EntityDeploy Include="Models\Model1 - Copy.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1 - Copy.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListTaskExecutorCylinders.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\DisplayTemplates\ProductPartLabelRollArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSingleLabelRoll.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartLabelRollArticle.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSingleLabelRoll.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingLabelRollCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_DCutLabel.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateNoPrintable.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListNoPrintable.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateNoPrintable.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditNoPrintable.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexNoPrintable.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2244,11 +2301,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TypeOfTaskAndCodTypeOfTask.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -2288,6 +2347,7 @@
     </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\CustomerSupplierStrings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2338,6 +2398,21 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLoginModel.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartSingleLabelRoll.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartSingleLabelRoll.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskexEcutorCylinder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResTaskexEcutorCylinder.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResCylinder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCylinder.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Articles\ArticlesVuoto.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2453,6 +2528,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResMenuProduct.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResNewMenuProductCommand.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2463,6 +2539,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResProduct.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductBlockSheet.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2593,6 +2670,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResDigitalWeb.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLitho.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2602,6 +2680,11 @@
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoSheet.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLithoSheet.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResFlexo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResFlexo.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResLithoWeb.resx">

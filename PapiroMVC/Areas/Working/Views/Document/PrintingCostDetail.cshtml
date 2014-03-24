@@ -44,6 +44,9 @@
         case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
             Html.RenderPartial("_PrintingSheetCostDetail", Model);
             break;
+        case PapiroMVC.Models.CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+            Html.RenderPartial("_PrintingLabelRollCostDetail", Model);
+            break;
 
     @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
             break;

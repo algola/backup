@@ -56,6 +56,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(new RigidPrintableArticleAutoChanges());
         }
 
+        public ActionResult IndexNoPrintable()
+        {
+            return View();
+           // return View(new NoPrintableAutoChanges());
+        }
+
 
         [AuthorizeUser]
         [HttpGet]
@@ -149,6 +155,47 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View(new RigidPrintableArticleViewModel());
         }
 
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateNoPrintable()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateNoPrintable";
+            return View(new NoPrintableViewModel());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateNoPrintable(NoPrintableViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                    c.Article.ArticleName = c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexNoPrintable") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateNoPrintable";
+            return PartialView("_EditAndCreateNoPrintable", c);
+
+        }
+
         [HttpParamAction]
         [AuthorizeUser]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -178,7 +225,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_EditAndCreateRigidPrintableArticle", c);
 
         }
-
 
         [HttpGet]
         public ActionResult WizardRollPrintableArticle()
@@ -236,7 +282,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             }
                     }
 
-
                     return Json(new { redirectUrl = Url.Action("IndexRollPrintableArticle") });
                 }
                 catch (Exception ex)
@@ -279,7 +324,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
                                     c.Article.ArticleName = c.Article.ToString();
 
-
                                     a = c.Article.Clone();
 
                                     articleRepository.Add(a);
@@ -288,7 +332,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                 }
                             }
                     }
-
 
                     return Json(new { redirectUrl = Url.Action("IndexSheetPrintableArticle") });
                 }
@@ -318,28 +361,25 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             switch (article.TypeOfArticle)
             {
                 case Article.ArticleType.SheetPrintableArticle:
-                    {
                         ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
                         break;
-                    }
 
                 case Article.ArticleType.RollPrintableArticle:
-                    {
                         ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
                         break;
-                    }
 
                 case Article.ArticleType.RigidPrintableArticle:
-                    {
                         ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
                         break;
-                    }
 
                 case Article.ArticleType.ObjectPrintableArticle:
-                    {
                         ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
                         break;
-                    }
+
+                case Article.ArticleType.NoProntable:
+                        ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
+                        break;
+
             }
 
             return ret;
@@ -391,6 +431,20 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View("EditRigidPrintableArticle", viewModel);
         }
 
+        public ActionResult EditNoPrintable(string id)
+        {
+            NoPrintableViewModel viewModel = new NoPrintableViewModel();
+            viewModel.Article = (NoPrintable)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditNoPrintable";
+            return View("EditNoPrintable", viewModel);
+        }
 
         #endregion
 
@@ -489,6 +543,57 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //multi submit
             ViewBag.ActionMethod = "EditRigidPrintableArticle";
             return PartialView("_EditAndCreateRigidPrintableArticle", c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditNoPrintable(NoPrintableViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+
+                    //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems2 = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems2.Count() == 0) throw new Exception();
+
+                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexNoPrintable") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditNoPrintable";
+            return PartialView("_EditAndCreateNoPrintable", c);
         }
 
 

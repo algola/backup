@@ -188,7 +188,8 @@ namespace PapiroMVC.Models
 
             if (codTypeOfTask == "STAMPA" ||
                 codTypeOfTask == "STAMPARIGIDO" ||
-                codTypeOfTask == "STAMPAOFFeDIGITALE")
+                codTypeOfTask == "STAMPAOFFeDIGITALE" ||
+                codTypeOfTask == "STAMPAETICHROTOLO")
             {
                 String codParte = String.Empty;
 
@@ -199,7 +200,6 @@ namespace PapiroMVC.Models
                  */
 
                 tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-
 
                 if (tskExec.Count() > 0)
                 {
@@ -222,6 +222,8 @@ namespace PapiroMVC.Models
                                 (((PrintingSheetCostDetail)cv).PrintingFormat == "" || ((PrintingSheetCostDetail)cv).PrintingFormat == null) ?
                                 ((PrintingSheetCostDetail)cv).BuyingFormat
                                 : ((PrintingSheetCostDetail)cv).PrintingFormat;
+
+
 
                             if (cv.TaskExecutors.FirstOrDefault() != null)
                             {
@@ -286,6 +288,34 @@ namespace PapiroMVC.Models
 
                             break;
 
+
+                        case TaskExecutor.ExecutorType.Flexo:
+                            cv = new PrintingLabelRollCostDetail();
+
+                            cv.TaskCost = this;
+                            cv.InitCostDetail(tskExec, articles);
+
+
+                            ((PrintingLabelRollCostDetail)cv).BuyingFormat =
+                                 (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
+                                 (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
+                                 : ((PrintingLabelRollCostDetail)cv).BuyingFormat;
+
+                            //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
+                            ((PrintingLabelRollCostDetail)cv).PrintingFormat =
+                                (((PrintingLabelRollCostDetail)cv).PrintingFormat == "" || ((PrintingLabelRollCostDetail)cv).PrintingFormat == null) ?
+                                ((PrintingLabelRollCostDetail)cv).BuyingFormat
+                                : ((PrintingLabelRollCostDetail)cv).PrintingFormat;
+
+
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
+
+                            break;
+
                         case TaskExecutor.ExecutorType.PrePostPress:
                             break;
                         case TaskExecutor.ExecutorType.Binding:
@@ -300,16 +330,19 @@ namespace PapiroMVC.Models
                     var e = new NoTaskExecutorException();
                     e.Data.Add("CodTypeOfTask", codTypeOfTask);
                     throw e;
+
                 }
+
+
+
+                cv.ProductPart = productPart;
+
+                cv.TaskCost = this;
+                cv.CodCost = this.CodCost;
+                cv.CodCostDetail = this.CodCost;
             }
 
             #endregion
-
-            cv.ProductPart = productPart;
-
-            cv.TaskCost = this;
-            cv.CodCost = this.CodCost;
-            cv.CodCostDetail = this.CodCost;
 
             return cv;
         }
@@ -500,15 +533,15 @@ namespace PapiroMVC.Models
             #endregion
 
             else
-            { 
-            
+            {
+
             }
 
             cv.Update();
 
-          //  this.CostDetails.Add(cv);
+            //  this.CostDetails.Add(cv);
             return cv;
         }
-        
+
     }
 }
