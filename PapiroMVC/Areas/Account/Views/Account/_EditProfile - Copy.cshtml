@@ -19,7 +19,45 @@
 
         @*Html.AntiForgeryToken();*@
         @Html.ValidationSummary(true)
-        @Html.HiddenFor(m => m.Profile.Name)
+
+        <div class="span12">
+            <!--PAGE CONTENT BEGINS-->
+
+            <div class="tabbable">
+                <ul class="nav nav-tabs padding-18 tab-size-bigger" id="myTab">
+                    <li class="active">
+                        <a data-toggle="tab" href="#faq-tab-1">
+                            <i class="blue icon-question-sign bigger-120"></i>
+                            @Html.T(strings, "Profile")
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#faq-tab-2">
+                            <i class="green icon-user bigger-120"></i>
+                            @Html.T(strings, "Account")
+                        </a>
+                    </li>
+
+                    <li class="">
+                        <a data-toggle="tab" href="#faq-tab-3">
+                            <i class="orange icon-credit-card bigger-120"></i>
+                            @Html.T(strings, "Payments")
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="tab-content no-border padding-24">
+                    <div id="faq-tab-1" class="tab-pane fade active in">
+                        <h4 class="blue">
+                            <i class="icon-ok bigger-110"></i>
+                            @Html.T(strings, "MyCompany")
+                        </h4>
+
+                        <div class="space-8"></div>
+
+                        @Html.HiddenFor(m => m.Profile.Name)
 
                         @Html.AlgolaEditorFor(m => m.Profile.CompanyName)
                         @Html.AlgolaEditorFor(m => m.Profile.VatNumber)
@@ -28,6 +66,41 @@
                         @Html.HiddenFor(m => m.Profile.Culture)
                         @Html.HiddenFor(m => m.Profile.Refeere)
                         @Html.AlgolaEditorFor(m => m.Profile.Phone)
+
+                    </div>
+
+                    <div id="faq-tab-2" class="tab-pane fade">
+                        <h4 class="blue">
+                            <i class="green icon-user bigger-110"></i>
+                            @Html.T(strings, "Modules")
+                        </h4>
+
+                        <div class="space-8"></div>
+                        @foreach (var m in Model.Profile.Modules)
+                        {
+                            <div id="div@(m.CodModuleName)" class="span3">
+                                @*visualizzazione dei moduli*@
+                                @Html.Partial("_Module", m)
+                            </div>
+                        }
+                    </div>
+
+
+                    <div id="faq-tab-3" class="tab-pane fade">
+                        <h4 class="blue">
+                            <i class="green icon-user bigger-110"></i>
+                            @Html.T(strings, "Modules")
+                        </h4>
+
+                        <div class="space-8"></div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!--PAGE CONTENT ENDS-->
+        </div>
 
 
         <p>

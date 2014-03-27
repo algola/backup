@@ -1,0 +1,277 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Module
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    //    string strings2 = "~/Views/Shared/Strings";
+
+}
+
+
+<div id="div@(Model.CodModuleName)">
+
+
+    <div class="span3 ">
+        <div class="widget-box pricing-box">
+            <div class="widget-header header-color-dark">
+                <h5 class="bigger lighter">@Html.T(strings, "CodModule" + Model.CodModule)</h5>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <ul class="list-unstyled spaced1">
+                        <li>
+                            <i class="icon-ok green"></i>
+                            10 GB Disk Space
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            200 GB Bandwidth
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            100 Email Accounts
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            10 MySQL Databases
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            $10 Ad Credit
+                        </li>
+
+                        <li>
+                            <i class="icon-remove red"></i>
+                            Free Domain
+                        </li>
+                    </ul>
+
+                    <hr>
+                    <div class="price">
+                        €@(Model.MontlyPrice)
+                        <small>/month</small>
+                    </div>
+                </div>
+
+                <div>
+
+                    @switch (Model.Status)
+                    {
+
+                        //In prova
+                        case 0:
+
+                            <p>
+                                In prova dal: @(Model.ActivationDate)
+                            </p>
+                            <a href="#" id="btnBuy@(Model.CodModuleName)" class="btn btn-block btn-inverse">
+                                <i class="icon-shopping-cart bigger-110"></i>
+                                <span>Acquista</span>
+                            </a>
+                            break;
+
+                        //Attivo
+                        case 1:
+                        <p>
+                            Acquistato il: @(Model.ActivationDate)
+                        </p>
+                        <p>
+                            Scadenza il: @(Model.ExpirationDate)
+                        </p>
+                        <a href="#" id="btnBuy@(Model.CodModuleName)" class="btn btn-block btn-inverse">
+                            <i class="icon-shopping-cart bigger-110"></i>
+                            <span>Rinnova</span>
+                        </a>
+                            break;
+
+                        //Disattivo
+                        case 2:
+                        <p>
+                            Disponibile in prova dal: @(Model.ExpirationDate)
+                        </p>
+                        <a href="#" id="btnBuy@(Model.CodModuleName)" class="btn btn-block btn-inverse">
+                            <i class="icon-shopping-cart bigger-110"></i>
+                            <span>Acquista</span>
+                        </a>
+                            break;
+
+                        //Disattivato e provabile
+                        case 3:
+                        <a href="#" id="btnBuy@(Model.CodModuleName)" class="btn btn-block btn-inverse">
+                            <i class="icon-shopping-cart bigger-110"></i>
+                            <span>Acquista</span>
+                        </a>
+                        <a href="#" id="btnTry@(Model.CodModuleName)" class="btn btn-block btn-inverse">
+                            <i class="icon-shopping-cart bigger-110"></i>
+                            <span>Prova</span>
+                        </a>
+                            break;
+                        default:
+                            break;
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="dmBuy@(Model.CodModuleName)" class="hide">
+
+
+        <form id="form@(Model.CodModuleName)">
+
+            <select id="select@(Model.CodModuleName)" name="months">
+                <option value="1">1 Mese - @(Convert.ToDouble(Model.MontlyPrice) * 2) </option>
+                <option value="3">3 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1.7)</option>
+                <option value="6">6 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1.5)</option>
+                <option value="12">9 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1)</option>
+            </select>
+
+        </form>
+    </div>
+
+    <div id="dmTry@(Model.CodModuleName)" class="hide">
+        <p>
+            CIAO
+        </p>
+    </div>
+
+</div>
+
+<script>
+
+    $(document).ready(
+
+        function () {
+
+            $("#btnBuy@(Model.CodModuleName)").on('click', function (e) {
+                e.preventDefault();
+
+                var dialog = $("#dmBuy@(Model.CodModuleName)").dialog({
+                    width: '250',
+                    height: '200',
+
+                    modal: true,
+                    title: '@Html.T(strings, "BuyTitle")',
+                    title_html: true,
+                    buttons: [
+                        {
+                            text: '@Html.T(strings, "Cancel")',
+                            "class": "btn btn-mini",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                {
+                    text: '@Html.T(strings, "BuyButton")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        //Fare post a BuyModule
+                        //var datastring = $("#form@(Model.CodModuleName)").serialize();
+
+                        var monthsSelect = "";
+                        $("#select@(Model.CodModuleName) option:selected").each(function () {
+                            monthsSelect += $(this)[0].value;
+                        });
+
+                        //data are collected into
+                        var dataToPass = {
+                            codModuleName: "@(Model.CodModuleName)",
+                            months: monthsSelect,
+                            totalPrice: 10
+                        };
+
+                        //at firt time save estimate or
+                        $.ajax({
+                            type: "POST",
+                            // dataType: "json",
+                            url: "@(Url.Action("BuyModule", "Account", new { Area = "Account" }))",
+                            data: JSON.stringify(dataToPass),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                $("#div@(Model.CodModuleName)").html(data);
+                                return;
+                            },
+                            error: function (xhr) {
+                                alert("error");
+                                //$('#status').html(xhr);
+                            }
+                        });
+
+                        $(this).dialog("close");
+
+                    }
+                }
+                    ]
+                });
+
+            });
+
+            $("#btnTry@(Model.CodModuleName)").on('click', function (e) {
+                e.preventDefault();
+
+                var dialog = $("#dmTry@(Model.CodModuleName)").dialog({
+                    width: '250',
+                    height: '150',
+                    modal: true,
+                    title: '@Html.T(strings, "TryTitle")',
+                    title_html: true,
+                    buttons: [
+                        {
+                            text: '@Html.T(strings, "Cancel")',
+                            "class": "btn btn-mini",
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        },
+                {
+                    text: '@Html.T(strings, "TryButton")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+
+                        //var datastring = $("#form@(Model.CodModuleName)").serialize();
+                        //data are collected into
+                        var dataToPass = {
+                            codModuleName: "@(Model.CodModuleName)",
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            // dataType: "json",
+                            url: "@(Url.Action("TryModule", "Account", new { Area = "Account" }))",
+                            data: JSON.stringify(dataToPass),
+                            contentType: 'application/json; charset=utf-8',
+                            success: function (data) {
+                                $("#div@(Model.CodModuleName)").html(data);
+                                return;
+                            },
+                            error: function (xhr) {
+                                alert("error");
+                                //$('#status').html(xhr);
+                            }
+                        });
+
+                        $(this).dialog("close");
+
+                    }
+                }
+                    ]
+                });
+
+                /**
+                dialog.data( "uiDialog" )._title = function(title) {
+                    title.html( this.options.title );
+                };
+                **/
+            });
+
+        });
+
+</script>

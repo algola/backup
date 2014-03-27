@@ -1,0 +1,353 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.Module
+
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    //    string strings2 = "~/Views/Shared/Strings";
+
+    Guid guid = Guid.NewGuid();
+
+    var colorHeader = "";
+    var colorTextHeader = "";
+
+    var isValuable = false;
+
+    switch (Model.Status)
+    {
+        case 0: //Prova
+            colorTextHeader = "dark";
+            break;
+        case 1://Attivo
+            colorTextHeader = "dark";
+            break;
+        case 2://Disattivo
+            colorTextHeader = "dark";
+            break;
+        case 3: //Disattivo e provabile
+            isValuable = true;
+            colorTextHeader = "dark";
+            break;
+        default:
+            break;
+    }
+}
+
+<div>
+    <div class="">
+        <div class="widget-box pricing-box">
+            <div class="widget-header header-color-@(colorHeader)">
+                <h5 class="bigger @(colorTextHeader)">
+                    @switch (Model.Status)
+                    {
+                        case 0: <i class="icon-ok green icon-2x"></i>
+                            break;
+                        case 1: <i class="icon-ok green icon-2x"></i>
+                            break;
+                        case 2: <i class="icon-remove red icon-2x"></i>
+                            break;
+                        case 3: <i class="icon-remove orange2 icon-2x"></i>
+                            break;
+                        default:
+                            break;
+                    }@Html.T(strings, "CodModule" + Model.CodModule)
+                </h5>
+            </div>
+
+            <div class="widget-body">
+                <div class="widget-main">
+                    <ul class="list-unstyled spaced3">
+                        <li>
+                            <i class="icon-ok green"></i>
+                            10 GB Disk Space
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            200 GB Bandwidth
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            100 Email Accounts
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            10 MySQL Databases
+                        </li>
+
+                        <li>
+                            <i class="icon-ok green"></i>
+                            $10 Ad Credit
+                        </li>
+
+                        <li>
+                            <i class="icon-remove red"></i>
+                            Free Domain
+                        </li>
+                    </ul>
+
+                    <hr>
+                    <div class="price">
+                        €@(Model.MontlyPrice)
+                        <small>/month</small>
+                    </div>
+                </div>
+
+                <div>
+
+                    @switch (Model.Status)
+                    {
+                        //In prova
+                        case 0:
+                            <div class="center">
+                                <span class="label label-success arrowed-in arrowed-in-right">
+                                    <i class="icon-ok-sign bigger-120"></i> In prova dal: @((Model.ActivationDate ?? DateTime.Now).ToShortDateString())
+                                </span>
+                            </div>
+                            <div class="center">
+                                <span class="label label-warning arrowed-in arrowed-in-right">
+                                    <i class="icon-warning-sign bigger-120"></i> Scade il: @((Model.ExpirationDate ?? DateTime.Now).ToShortDateString())
+                                </span>
+                            </div>
+                            break;
+
+                        //Attivo
+                        case 1:
+                        <div class="center">
+                            <span class="label label-success arrowed-in arrowed-in-right">
+                                <i class="icon-ok-sign bigger-120"></i> Acquistato il: @((Model.ActivationDate ?? DateTime.Now).ToShortDateString())
+                            </span>
+                        </div>
+                        <div class="center">
+                            <span class="label label-warning arrowed-in arrowed-in-right">
+                                <i class="icon-warning-sign bigger-120"></i> Scade il: @((Model.ExpirationDate ?? DateTime.Now).ToShortDateString())
+                            </span>
+                        </div>
+                            break;
+
+                        //Disattivo
+                        case 2:
+                        <div class="center">
+                            <span class="label label-important arrowed-in arrowed-in-right">
+                                <i class="icon-warning-sign bigger-120"></i> Disattivo dal: @((Model.ExpirationDate ?? DateTime.Now).ToShortDateString())
+                            </span>
+                        </div>
+                        <div class="center">
+                            <span class="label label-warning arrowed-in arrowed-in-right">
+                                <i class=" icon-info-sign bigger-120"></i> Valutabile dal: @((Model.ExpirationDate ?? DateTime.Now).ToShortDateString())
+                            </span>
+                        </div>
+                            break;
+
+                        //Disattivato e provabile
+                        case 3:
+                        <div class="center">
+                            <span class="label label-important arrowed-in arrowed-in-right">
+                                <i class="icon-warning-sign bigger-120"></i> Disattivo dal: @((Model.ExpirationDate ?? DateTime.Now).ToShortDateString())
+                            </span>
+                        </div>
+                        <div class="center">
+                            <span class="label label-success arrowed-in arrowed-in-right">
+                                <i class=" icon-info-sign bigger-120"></i> Valutabile
+                            </span>
+                        </div>
+                            break;
+                        default:
+                            break;
+                    }
+                    <div class="space-10"></div>
+
+                    <div class="center">
+                        <a href="#" id="btnBuy@(Model.CodModuleName)" class="btn btn-app btn-primary btn-mini">
+                            <i class="icon-shopping-cart bigger-110"></i>
+                            <span>Acquista</span>
+                        </a>
+                        @if (Model.Status == 3)
+                        {
+                            <a href="#" id="btnTry@(isValuable?Model.CodModuleName:"")" class="btn btn-app btn-success btn-mini">
+                                <i class=" icon-unlock bigger-110"></i>
+                                <span>Prova</span>
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="#" id="btnTry@(isValuable?Model.CodModuleName:"")" class="btn disabled btn-app btn-mini">
+                                <i class=" icon-lock bigger-110"></i>
+                                <span>Prova</span>
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dmBuy@(Model.CodModuleName)" class="hide">
+        <form id="form@(Model.CodModuleName)">
+
+            <select id="select@(Model.CodModuleName)@(guid)" name="months">
+                <option value="1">1 Mese - @(Convert.ToDouble(Model.MontlyPrice) * 2) </option>
+                <option value="3">3 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1.7)</option>
+                <option value="6">6 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1.5)</option>
+                <option value="12">12 Mesi - @(Convert.ToDouble(Model.MontlyPrice) * 1)</option>
+            </select>
+
+        </form>
+    </div>
+
+    <div id="dmTry@(Model.CodModuleName)" class="hide">
+        <p>
+            CIAO
+        </p>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(
+
+        function () {
+            setupPage@(Model.CodModuleName)();
+        });
+
+    function setupPage@(Model.CodModuleName)() {
+
+        $("#btnBuy@(Model.CodModuleName)").on('click', function (e) {
+            e.preventDefault();
+
+            var dialog = $("#dmBuy@(Model.CodModuleName)").dialog({
+                width: '250',
+                height: '200',
+
+                modal: true,
+                title: '@Html.T(strings, "BuyTitle")',
+                title_html: true,
+                buttons: [
+                    {
+                        text: '@Html.T(strings, "Cancel")',
+                        "class": "btn btn-mini",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+            {
+                text: '@Html.T(strings, "BuyButton")',
+                "class": "btn btn-primary btn-mini",
+                click: function () {
+
+                    //Fare post a BuyModule
+                    //var datastring = $("#form@(Model.CodModuleName)").serialize();
+
+                    var monthsSelect = "";
+                    @*$("#select@(Model.CodModuleName) option:selected").each(function () {
+                        monthsSelect += $(this)[0].value;
+                    });*@
+
+                    monthsSelect = $("#select@(Model.CodModuleName)@(guid)").val();
+                    alert(monthsSelect);
+
+
+                    //data are collected into
+                    var dataToPass = {
+                        codModuleName: "@(Model.CodModuleName)",
+                        months: monthsSelect,
+                        totalPrice: 10
+                    };
+
+                    //at firt time save estimate or
+                    $.ajax({
+                        type: "POST",
+                        // dataType: "json",
+                        url: "@(Url.Action("BuyModule", "Account", new { Area = "Account" }))",
+                        data: JSON.stringify(dataToPass),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $("#div@(Model.CodModuleName)").html(data);
+                            setupPage@(Model.CodModuleName)();
+
+                            return;
+                        },
+                        error: function (xhr) {
+                            alert("error");
+                            //$('#status').html(xhr);
+
+                        },
+                        complete: function (xhr, textStatus) {
+                            //      setupPage@(Model.CodModuleName)();
+                        }
+                    });
+
+                    $(this).dialog("close");
+
+
+                }
+            }
+                ]
+            });
+
+        });
+
+        $("#btnTry@(Model.CodModuleName)").on('click', function (e) {
+            e.preventDefault();
+
+            var dialog = $("#dmTry@(Model.CodModuleName)").dialog({
+                width: '250',
+                height: '150',
+                modal: true,
+                title: '@Html.T(strings, "TryTitle")',
+                title_html: true,
+                buttons: [
+                    {
+                        text: '@Html.T(strings, "Cancel")',
+                        "class": "btn btn-mini",
+                        click: function () {
+                            $(this).dialog("close");
+                        }
+                    },
+            {
+                text: '@Html.T(strings, "TryButton")',
+                "class": "btn btn-primary btn-mini",
+                click: function () {
+
+
+                    //var datastring = $("#form@(Model.CodModuleName)").serialize();
+                    //data are collected into
+                    var dataToPass = {
+                        codModuleName: "@(Model.CodModuleName)",
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        // dataType: "json",
+                        url: "@(Url.Action("TryModule", "Account", new { Area = "Account" }))",
+                        data: JSON.stringify(dataToPass),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $("#div@(Model.CodModuleName)").html(data);
+                            setupPage@(Model.CodModuleName)();
+                            return;
+                        },
+                        error: function (xhr) {
+                            alert("error");
+                            //$('#status').html(xhr);
+                        }
+                    });
+
+                    $(this).dialog("close");
+
+                }
+            }
+                ]
+            });
+
+            /**
+            dialog.data( "uiDialog" )._title = function(title) {
+                title.html( this.options.title );
+            };
+            **/
+        });
+    }
+
+
+</script>

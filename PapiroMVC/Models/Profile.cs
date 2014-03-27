@@ -14,6 +14,12 @@ namespace PapiroMVC.Models
     
     public partial class Profile
     {
+        public Profile()
+        {
+            this.Orders = new HashSet<Order>();
+            this.Modules = new HashSet<Module>();
+        }
+    
         public string Name { get; set; }
         public string CompanyName { get; set; }
         public string Base { get; set; }
@@ -28,5 +34,8 @@ namespace PapiroMVC.Models
         public string ExpiredM { get; set; }
         public string ExpiredY { get; set; }
         public string BrianTreeCustomerId { get; set; }
+    
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Module> Modules { get; set; }
     }
 }

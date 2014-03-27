@@ -188,7 +188,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     //OK questo funziona ma riporta alla lista dei costi
                     //TODO: Sending singlaR notification to client to reload basket product
-                    return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
+                    //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = document.DocumentProducts.LastOrDefault().CodProduct }) });
 
                     if (firstDocumentProduct.Costs.FirstOrDefault() != null)
                     {

@@ -203,69 +203,69 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-        /// <summary>
-        /// Action load Cost and generates related CosteDetail if it doesn't exist
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="guid"></param>
-        /// <returns></returns>
-        public CostDetail EditCostAutomatically(string id, Guid guid)
-        {
-            CostDetail cv = costDetailRepository.GetSingle(id);
-            Cost cost = documentRepository.GetCost(id);
+        ///// <summary>
+        ///// Action load Cost and generates related CosteDetail if it doesn't exist
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <param name="guid"></param>
+        ///// <returns></returns>
+        //public CostDetail EditCostAutomatically(string id, Guid guid)
+        //{
+        //    CostDetail cv = costDetailRepository.GetSingle(id);
+        //    Cost cost = documentRepository.GetCost(id);
 
-            //spostare questa logica nella classe 
-            if (cv == null)
-            {
-                if (cost.CodProductPartPrintableArticle != null)
-                {
-                    var codDP = cost.CodDocumentProduct;
-                    var productPartPrintableArticle = cost.ProductPartsPrintableArticle;
-                    var productPart = cost.ProductPartsPrintableArticle.ProductPart;
-                    var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+        //    //spostare questa logica nella classe 
+        //    if (cv == null)
+        //    {
+        //        if (cost.CodProductPartPrintableArticle != null)
+        //        {
+        //            var codDP = cost.CodDocumentProduct;
+        //            var productPartPrintableArticle = cost.ProductPartsPrintableArticle;
+        //            var productPart = cost.ProductPartsPrintableArticle.ProductPart;
+        //            var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
 
-                    cost = documentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
-                }
+        //            cost = documentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
+        //        }
 
-                cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-                //guid ensures that costdetail is handled only one time when cost are all processed sistematically
-                cv.Guid = guid.ToString("N");
-                //update 
-                cv.Update();
-            }
-            else
-            {
-                //se è un materiale devo aprire per ora la messa in macchina
-                cv.Guid = guid.ToString("N");
-                switch (cv.TypeOfCostDetail)
-                {
-                    case CostDetail.CostDetailType.PrintingSheetCostDetail:
-                        break;
-                    case CostDetail.CostDetailType.PrintingRollCostDetail:
+        //        cv = cost.MakeCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+        //        //guid ensures that costdetail is handled only one time when cost are all processed sistematically
+        //        cv.Guid = guid.ToString("N");
+        //        //update 
+        //        cv.Update();
+        //    }
+        //    else
+        //    {
+        //        //se è un materiale devo aprire per ora la messa in macchina
+        //        cv.Guid = guid.ToString("N");
+        //        switch (cv.TypeOfCostDetail)
+        //        {
+        //            case CostDetail.CostDetailType.PrintingSheetCostDetail:
+        //                break;
+        //            case CostDetail.CostDetailType.PrintingRollCostDetail:
 
-                        break;
-                    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                        id = cv.ComputedBy.CodCostDetail;
-                        cv = costDetailRepository.GetSingle(id);
-                        cost = documentRepository.GetCost(id);
-                        break;
-                    case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
-                        id = cv.ComputedBy.CodCostDetail;
-                        cv = costDetailRepository.GetSingle(id);
-                        cost = documentRepository.GetCost(id);
-                        break;
-                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                        break;
-                    default:
-                        break;
-                }
+        //                break;
+        //            case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+        //                id = cv.ComputedBy.CodCostDetail;
+        //                cv = costDetailRepository.GetSingle(id);
+        //                cost = documentRepository.GetCost(id);
+        //                break;
+        //            case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
+        //                id = cv.ComputedBy.CodCostDetail;
+        //                cv = costDetailRepository.GetSingle(id);
+        //                cost = documentRepository.GetCost(id);
+        //                break;
+        //            case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+        //                break;
+        //            default:
+        //                break;
+        //        }
 
-                Console.WriteLine("");
-                cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-            }
+        //        Console.WriteLine("");
+        //        cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+        //    }
 
-            return cv;
-        }
+        //    return cv;
+        //}
 
         /// <summary>
         /// Action EditOrCreate all Cost in DocumentProduct
@@ -302,11 +302,21 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditCost(string id)
         {
-            var cv = EditCostAutomatically(id, new Guid());
+            PapiroService p = new PapiroService();
+            p.DocumentRepository = documentRepository;//new DocumentRepository();
+            p.CostDetailRepository = costDetailRepository;
+            p.TaskExecutorRepository = taskExecutorRepository;
+            p.ArticleRepository = articleRepository;
+            p.CurrentDatabase = CurrentDatabase;
+
+            var cv = p.EditCostAutomatically(id, new Guid());
             Console.WriteLine(cv.GainForRun);
 
             Session["CodCost"] = id;
             Session["CostDetail"] = cv;
+
+
+            Console.Write(cv.Error);
 
             var viewName = String.Empty;
 
@@ -314,7 +324,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
 
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-                    ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+                   ((PrintingLabelRollCostDetail) cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:

@@ -25,7 +25,7 @@ namespace PapiroMVC.Models
         {
             AutoDCut = false;
             GiraVerso = false;
-//            ForceSideOnSide = 0;
+            //            ForceSideOnSide = 0;
         }
 
         public override void CalculateGain()
@@ -87,7 +87,8 @@ namespace PapiroMVC.Models
                     )));
 
                 //doppio taglio calcolato su SideOnSide 1
-                double dCut1_1Res = ((LargerFormat.GetSide1() - minusSide1) - (SmallerFormat.GetSide1() * (gain1_1))) / ((gain1_1-1)==0?1:(gain1_1-1));
+                double dCut1_1Res = ((LargerFormat.GetSide1() - minusSide1) - (SmallerFormat.GetSide1() * (gain1_1))) / ((gain1_1 - 1) == 0 ? 1 : (gain1_1 - 1));
+
 
                 int gain1_1ddp = (int)decimal.Truncate((decimal)(((
                     LargerFormat.GetSide1() - ddpminusSide1 + dCut1) / (SmallerFormat.GetSide1() + dCut1)
@@ -98,7 +99,7 @@ namespace PapiroMVC.Models
                     )));
 
                 //doppio taglio calcolato su SideOnSide 2
-                double dCut2_2Res = ((LargerFormat.GetSide2()- minusSide2) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
+                double dCut2_2Res = ((LargerFormat.GetSide2() - minusSide2) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
 
                 //TODO: controllare la pinza e doppia pinza!!!!!
                 int gain2_2Perf = (gain2_2 % 2) == 0 ? gain2_2 : gain2_2 - 1;
@@ -140,8 +141,31 @@ namespace PapiroMVC.Models
 
                         if (AutoDCut)
                         {
-                            DCut1 = Math.Truncate(dCut1_1Res*100)/100;
-                            DCut2 = Math.Truncate(dCut2_2Res * 100) / 100;
+                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
+
+                            var tempDCut2 = Math.Round(dCut2_2Res * 10000) / 10000;
+                            var tempDCut1 = Math.Round(dCut1_1Res * 10000) / 10000;
+
+                            DCut2 = Math.Truncate(tempDCut2 * 100) / 100;
+                            DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
+
+                            if (tempDCut1 > minusSide1 / 2)
+                            {
+                                //ingombro
+                                var ingo = (SmallerFormat.GetSide1() + dCut1_1Res) * (gain1_1);
+                                var restoIngo = (LargerFormat.GetSide1() - ingo);
+
+                                if (((LargerFormat.GetSide1() - (SmallerFormat.GetSide1() + tempDCut1) * (gain1_1)) <= minusSide1))
+                                {
+                                    tempDCut1 = minusSide1 / 2;
+                                    DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
+                                }
+                            }
+
+                            if (gain1_1 == 1)
+                            {
+                                DCut1 = 0;
+                            }
                         }
 
                     }

@@ -38,6 +38,8 @@
     </div>
 </div>
 
+@if (Model.Error == 0 || Model.Error == null)
+{
 <div id="partial">
     @{switch (Model.TypeOfCostDetail)
     {
@@ -59,6 +61,8 @@
     }}
 
 </div>
+    
+}
 
 <p>
     <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditDocumentProducts", "Document", new { Area = "Working", id=Model.TaskCost.DocumentProduct.CodProduct})');">

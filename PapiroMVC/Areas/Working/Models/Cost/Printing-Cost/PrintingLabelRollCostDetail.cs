@@ -8,7 +8,7 @@ namespace PapiroMVC.Models
 {
     public partial class PrintingLabelRollCostDetail : PrintingCostDetail
     {
-        
+
         public List<Cut> Cuts
         {
             get
@@ -84,7 +84,7 @@ namespace PapiroMVC.Models
         public List<String> BuyingFormats { get; set; }
 
         //il tipo è ingannevole... in realtà serve per proporre un'associazione tra nome e formato immediata
-        public List<ProductFormatName> BuyingFormatsName 
+        public List<ProductFormatName> BuyingFormatsName
         {
             get
             {
@@ -94,8 +94,8 @@ namespace PapiroMVC.Models
                 {
                     foreach (var bF in BuyingFormats)
                     {
-                        lst.Add(new ProductFormatName { FormatName = "h" + bF.GetSide1() + " z" + (bF.GetSide2() / 2.54 * 8).ToString(), CodFormat= bF });
-                    } 
+                        lst.Add(new ProductFormatName { FormatName = "h" + bF.GetSide1() + " z" + (bF.GetSide2() / 2.54 * 8).ToString(), CodFormat = bF });
+                    }
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace PapiroMVC.Models
 
                 return lst;
             }
-        
+
         }
 
         //every changes fire this update
@@ -142,21 +142,28 @@ namespace PapiroMVC.Models
             //i formati di stampa devono essere condizionati anche dal formato del lavoro da stampare
             //dalla pinza e dalla contropinza e laterale!!!!
 
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 1;
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 1;
-
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).CalculateGain();
-
-            //devo anche rifare la messa in macchina della parte!!!
-            if (this.ProductPartPrinting != null)
+            if (BuyingFormats.Count == 0)
             {
-                this.ProductPartPrinting.Part = this.ProductPart;
-                this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
-                
-                this.ProductPartPrinting.Update();
+                Error = 3;
+            }
+            else
+            {
+                ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
+                ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
+                ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 1;
+                ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 1;
 
+                ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).CalculateGain();
+
+                //devo anche rifare la messa in macchina della parte!!!
+                if (this.ProductPartPrinting != null)
+                {
+                    this.ProductPartPrinting.Part = this.ProductPart;
+                    this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
+
+                    this.ProductPartPrinting.Update();
+
+                }
             }
         }
 
@@ -183,7 +190,7 @@ namespace PapiroMVC.Models
                 ppP.Update();
 
                 if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
-                    ppP.CalculatedDCut1 >= ppP.CalculatedDCut2)
+                    ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2)||ppP.CalculatedSide1Gain==1))
                 {
                     pHint.Add(new PrintingHint
                     {
@@ -233,6 +240,13 @@ namespace PapiroMVC.Models
 
             PrintingHints = pHint;
             BuyingFormats = pHint.Select(x => x.BuyingFormat).ToList();
+
+            if (BuyingFormats.Count == 0)
+            {
+                //no format
+                Error = 3;
+            }
+
         }
 
 
@@ -385,13 +399,13 @@ namespace PapiroMVC.Models
 
                 int gain1_1 = 1;
                 while (
-                    
+
                     Math.Ceiling(
                     (gain1_1 * SmallerFormat.GetSide1() +
                     (gain1_1 - 1) * dCut2_2Res +
-                    minusSide1)*100
-                    )/100
-                    
+                    minusSide1) * 100
+                    ) / 100
+
                     <= maxSide1)
                 {
                     res.Add(Math.Ceiling(

@@ -13,6 +13,8 @@ using PapiroMVC.Controllers;
 using System.Threading.Tasks;
 using Braintree;
 using Ninject;
+using Braintree.Exceptions;
+using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.Account.Controllers
 {
@@ -50,8 +52,31 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         public ActionResult Pending()
         {
-            return View("PendingAmm");
+           // return View("PendingAmm");
+            return View();
         }
+
+        [HttpPost]
+        public ActionResult BuyModule(String codModuleName, int months, double totalPrice)
+        {
+            //Acquisto
+            var m = profDataRep.GetSingleModule(codModuleName);
+            m.ChangeAcquired(months);
+            profDataRep.SaveModule(m);
+            return PartialView("_Module", m);
+        }
+
+
+        [HttpPost]
+        public ActionResult TryModule(String codModuleName)
+        {
+            //Prova
+            var m = profDataRep.GetSingleModule(codModuleName);
+            m.ChangeInValuating();
+            profDataRep.SaveModule(m);
+            return PartialView("_Module", m);
+        }
+
 
         [HttpPost]
         public ActionResult Pending(FormCollection collection)
@@ -205,7 +230,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             TempData["errorMessage"] = false;
             if (ModelState.IsValid)
             {
-                var xx=Membership.GetUser(model.UserName);
+                var xx = Membership.GetUser(model.UserName);
                 var yy = xx.IsApproved;
 
                 if (Membership.ValidateUser(model.UserName, model.Password))
@@ -243,6 +268,8 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         private void longJob(LoginModel model)
         {
+
+            profDataRep.SyncroModules(model.UserName);
             //base.UpdateDatabase(model.UserName);
 
             //you can also set the parameter here
@@ -342,8 +369,8 @@ namespace PapiroMVC.Areas.Account.Controllers
                 MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName,
                     model.Password, model.Email,
-                    passwordQuestion: null,
-                    passwordAnswer: null,
+                    passwordQuestion: "aa",
+                    passwordAnswer: "aa",
                     isApproved: false,
                     providerUserKey: null,
                     status: out createStatus);
@@ -387,30 +414,21 @@ namespace PapiroMVC.Areas.Account.Controllers
         public ActionResult EditProfile()
         {
 
-            //TODOCHRIS
-            //non dovrai passare alla View(profile) un oggetto di tipo profile... ma dovrai creare un oggetto nuovo (new) di tipo
-            //ViewModel 
-            //assegnare alla proprietà Profile il profDataRep etc...
-            //e alla prorpietà MenuProducts il getAll() dal repository del MenuProduct
-
-            //ricolrdati che devi fare il ToList() del getall perchè vogliamo una lista nel ViewModel
-
-            var menuP = profMenuRep.GetAll().ToList();
             var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
             // return View(profile);
 
             var temp = new ProfileViewModel();
             temp.Profile = profile;
-            temp.MenuProducts = menuP;
-
+            ViewBag.ActionMethod = "EditProfile";
             return View(temp);
-
+            
         }
 
         //
         // POST: /Account/EditProfile
 
         [HttpPost]
+        [HttpParamAction]
         public ActionResult EditProfile(ProfileViewModel model)
         {
             if (ModelState.IsValid)
@@ -420,24 +438,37 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Edit(model.Profile);
                     profDataRep.Save();
 
-                    //            //TODOCHRIS il viewmodel model ha una proprietà che è la lista dei menuproduct
-                    //            //la scorri e per ciascun menu-prodotto in lista: 
-                    //            //lo cerchi nel repository mediante la chiave primaria e il risultato lo assegni ad una variabile temp
+                    //Ricerca di un cliente nella banca dati di Brain Tree 27/03/2014
+                    try
+                    {
+                        Braintree.Customer result = Constants.Gateway.Customer.Find(model.Profile.Name);
+                    }
+                    catch (NotFoundException) //Il cliente non viene trovato
+                    {
+                       
+                        //Inserimento del cliente nella banca dati
+                        var c = new CustomerRequest
+                        {
+                            Id = model.Profile.Name,
+                            Company = model.Profile.CompanyName,
+                            Email = model.Profile.Refeere,
+                            Phone = model.Profile.Phone,
+                        };
+                       
+                        Result<Braintree.Customer> result = Constants.Gateway.Customer.Create(c);
 
-                    //            foreach (var item in model.MenuProducts)
-                    //            {
-                    //                var temp=profMenuRep.GetSingle(item.CodMenuProduct);
-                    //                temp.Hidden = item.Hidden;
-                    //                profMenuRep.Edit(temp);
-                    //            }
-                    //            profMenuRep.Save();
+                        bool success = result.IsSuccess();
+                        // true
+                        if (!success)
+                        {
+                            throw new Exception();
+                        }
 
-
-                    //            aggiorni la prorpietà "Hidden" di temp con quelle dell'elemento corrente nel ciclo.
-                    //            applichi il metodo Edit del repository dei menu-prodotti al temp
-
-                    //            al termine del ciclo applichi il metodo Save del repository (più o meno come sopra per il profilo!!!!)
-
+                        string customerId = result.Target.Id;
+                        throw;
+                    }
+                   
+                   
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
 
@@ -556,7 +587,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
                     try
                     {
-                        var client = new SmtpClient();
+                        var client = new SmtpClient("Smtp.gmail.com");
                         client.EnableSsl = true;
                         client.UseDefaultCredentials = false;
                         client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@");

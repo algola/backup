@@ -316,4 +316,25 @@
   <data name="Profile" xml:space="preserve">
     <value>Profilo</value>
   </data>
+  <data name="CodModuleLabel" xml:space="preserve">
+    <value>Etichette</value>
+  </data>
+  <data name="CodModuleSmallFormat" xml:space="preserve">
+    <value>Piccolo formato</value>
+  </data>
+  <data name="CodModuleWIdeFormat" xml:space="preserve">
+    <value>Grande formato</value>
+  </data>
+  <data name="BuyButton" xml:space="preserve">
+    <value>Acquista ora</value>
+  </data>
+  <data name="BuyTitle" xml:space="preserve">
+    <value>Acquista</value>
+  </data>
+  <data name="TryButton" xml:space="preserve">
+    <value>Attiva</value>
+  </data>
+  <data name="TryTitle" xml:space="preserve">
+    <value>Prova</value>
+  </data>
 </root>

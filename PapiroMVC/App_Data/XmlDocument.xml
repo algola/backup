@@ -1293,6 +1293,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.ActivationDate">
+            <summary>
+              Looks up a localized string similar to Attivato il.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.ActivationDateToolTip">
+            <summary>
+              Looks up a localized string similar to Data di attivazione del modulo.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.Base">
             <summary>
               Looks up a localized string similar to Indirizzo.
@@ -1303,9 +1313,99 @@
               Looks up a localized string similar to Ridigitare la password.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Description">
+            <summary>
+              Looks up a localized string similar to Descrizione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DescriptionToolTip">
+            <summary>
+              Looks up a localized string similar to Descrizione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Discount">
+            <summary>
+              Looks up a localized string similar to Sconto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DiscountOrder">
+            <summary>
+              Looks up a localized string similar to Sconto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DiscountOrderRows">
+            <summary>
+              Looks up a localized string similar to Sconto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DiscountOrderRowsToolTip">
+            <summary>
+              Looks up a localized string similar to Sconto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DiscountOrderToolTip">
+            <summary>
+              Looks up a localized string similar to Sconto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.DiscountToolTip">
+            <summary>
+              Looks up a localized string similar to Sconto .
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.Email">
             <summary>
               Looks up a localized string similar to Email.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.ExpirationDate">
+            <summary>
+              Looks up a localized string similar to Scadenza.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.ExpirationDateToolTip">
+            <summary>
+              Looks up a localized string similar to Data di scadenza modulo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Months">
+            <summary>
+              Looks up a localized string similar to Mesi.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.MonthsToolTip">
+            <summary>
+              Looks up a localized string similar to Mesi.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.MontlyPrice">
+            <summary>
+              Looks up a localized string similar to Prezzo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.MontlyPriceOrderRows">
+            <summary>
+              Looks up a localized string similar to Prezzo mensile.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.MontlyPriceOrderRowsToolTip">
+            <summary>
+              Looks up a localized string similar to Prezzo mensile.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.MontlyPriceToolTip">
+            <summary>
+              Looks up a localized string similar to Prezzo mensile del modulo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.OrderDate">
+            <summary>
+              Looks up a localized string similar to Data ordine.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.OrderDateToolTip">
+            <summary>
+              Looks up a localized string similar to Data ordine.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.OrganizationName">
@@ -1331,6 +1431,16 @@
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.Phone">
             <summary>
               Looks up a localized string similar to Numero di telefono.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Price">
+            <summary>
+              Looks up a localized string similar to Prezzo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.PriceToolTip">
+            <summary>
+              Looks up a localized string similar to Prezzo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.RecoveryBody1">
@@ -1433,9 +1543,49 @@
               Looks up a localized string similar to Inserire una password.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Status">
+            <summary>
+              Looks up a localized string similar to Stat ordine.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.StatusModule">
+            <summary>
+              Looks up a localized string similar to Stato.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.StatusModuleToolTip">
+            <summary>
+              Looks up a localized string similar to Stato modulo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.StatusToolTip">
+            <summary>
+              Looks up a localized string similar to Stato ordine.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.TaxCode">
             <summary>
               Looks up a localized string similar to Codice Fiscale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.Total">
+            <summary>
+              Looks up a localized string similar to Totale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.TotalOrderRows">
+            <summary>
+              Looks up a localized string similar to Totale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.TotalOrderRowsToolTip">
+            <summary>
+              Looks up a localized string similar to Totale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.TotalToolTip">
+            <summary>
+              Looks up a localized string similar to Totale.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.UserName">

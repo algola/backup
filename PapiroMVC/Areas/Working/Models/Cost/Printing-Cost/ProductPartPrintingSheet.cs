@@ -29,7 +29,7 @@ namespace PapiroMVC.Models
                 gain.Laterale = 0;
             }
 
-            gain.LargerFormat = PrintingFormat;
+            gain.LargerFormat = PrintingFormat;            
             gain.SmallerFormat = Part.FormatOpened;
 
             if (gain.SmallerFormat == "" || gain.SmallerFormat == null)

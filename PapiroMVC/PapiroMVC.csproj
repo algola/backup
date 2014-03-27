@@ -206,7 +206,13 @@
     <Compile Include="Areas\Account\Models\AccountModels.cs" />
     <Compile Include="Areas\Account\Models\Account\AccountEx.cs" />
     <Compile Include="Areas\Account\Models\Account\AccountModels_biccio.cs" />
+    <Compile Include="Areas\Account\Models\Account\ModuleEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\OrderRowsEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\Module_MetaData.cs" />
+    <Compile Include="Areas\Account\Models\Account\OrdersEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\Orders_MetaData.cs" />
     <Compile Include="Areas\Account\Models\Account\ProfileEx.cs" />
+    <Compile Include="Areas\Account\Models\Account\OrderRows_MetaData.cs" />
     <Compile Include="Areas\Account\Models\Account\Proflile_MetaData.cs" />
     <Compile Include="Areas\Account\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Areas\DataBase\Controllers\ArticleController.cs" />
@@ -634,6 +640,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model2.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Module.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NoPrintable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -648,6 +657,12 @@
     </Compile>
     <Compile Include="Models\OptionTypeOfTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderRow.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Plotter.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -2171,6 +2186,9 @@
     <Content Include="Areas\DataBase\Views\Article\CreateNoPrintable.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditNoPrintable.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\IndexNoPrintable.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Module.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_Module - Copy.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_EditProfile - Copy.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2785,7 +2803,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49450</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49451/</IISUrl>
+          <IISUrl>http://localhost:49452/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

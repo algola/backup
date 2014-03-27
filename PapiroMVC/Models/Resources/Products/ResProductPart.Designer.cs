@@ -196,6 +196,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to F.to etichetta.
+        /// </summary>
+        public static string FormatLabel {
+            get {
+                return ResourceManager.GetString("FormatLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to F.to dell&apos;etichetta da stampare.
+        /// </summary>
+        public static string FormatLabelToolTip {
+            get {
+                return ResourceManager.GetString("FormatLabelToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Formato personalizzato.
         /// </summary>
         public static string FormatPersonalized {

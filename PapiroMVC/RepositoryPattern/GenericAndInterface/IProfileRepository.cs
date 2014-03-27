@@ -8,6 +8,11 @@ namespace Services
 {
     public interface IProfileRepository : IGenericRepository<Profile>
     {
-        new Profile GetSingle(string name);
+         Profile GetSingle(string name);
+         void SyncroModules(string codProfile);
+         Module GetSingleModule(string codModuleName);
+         void SaveModule(Module m);
+
     }
 }
+

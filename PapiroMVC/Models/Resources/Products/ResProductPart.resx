@@ -162,6 +162,12 @@
   <data name="Format" xml:space="preserve">
     <value>F.to chiuso lavoro</value>
   </data>
+  <data name="FormatLabel" xml:space="preserve">
+    <value>F.to etichetta</value>
+  </data>
+  <data name="FormatLabelToolTip" xml:space="preserve">
+    <value>F.to dell'etichetta da stampare</value>
+  </data>
   <data name="FormatPersonalized" xml:space="preserve">
     <value>Formato personalizzato</value>
   </data>

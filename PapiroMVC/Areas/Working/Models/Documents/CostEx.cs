@@ -150,7 +150,6 @@ namespace PapiroMVC.Models
 
 
 
-
         public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
             CostDetail cv = null;
@@ -296,6 +295,11 @@ namespace PapiroMVC.Models
                             cv.InitCostDetail(tskExec, articles);
 
 
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
                             ((PrintingLabelRollCostDetail)cv).BuyingFormat =
                                  (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
                                  (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
@@ -313,6 +317,9 @@ namespace PapiroMVC.Models
                                 cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
                             }
 
+                            cv.ProductPart = productPart;
+
+                            ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
 
                             break;
 
@@ -334,8 +341,8 @@ namespace PapiroMVC.Models
                 }
 
 
-
                 cv.ProductPart = productPart;
+
 
                 cv.TaskCost = this;
                 cv.CodCost = this.CodCost;
