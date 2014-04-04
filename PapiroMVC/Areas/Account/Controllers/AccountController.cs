@@ -785,8 +785,8 @@ namespace PapiroMVC.Areas.Account.Controllers
         [AllowAnonymous]
         public ActionResult Verify(string ID)
         {
-            try
-            {
+            //try
+            //{
                 MembershipUser user = Membership.GetUser(providerUserKey: ID);
                 if (!user.IsApproved)
                 {
@@ -858,12 +858,12 @@ namespace PapiroMVC.Areas.Account.Controllers
                     FormsAuthentication.SignOut();
                     TempData["message"] = "JustActivated";
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                TempData["message"] = "Error";
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //    TempData["message"] = "Error";
+            //}
             return View();
         }
 

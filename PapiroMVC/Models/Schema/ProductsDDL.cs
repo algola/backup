@@ -2,8 +2,8 @@
 using System.Data.Entity;
 
 namespace PapiroMVC.Model
-{    
-    class ProductsDDL :IDDL
+{
+    class ProductsDDL : IDDL
     {
         SchemaDb dbS;
 
@@ -14,7 +14,7 @@ namespace PapiroMVC.Model
         }
 
         public void UpdateSchema(DbContext ctx)
-        {            
+        {
             dbS.Ctx = ctx;
 
             //First Table
@@ -31,6 +31,8 @@ namespace PapiroMVC.Model
 
             ////foreign key
             //dbS.AddForeignKey("products", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
+            //Index
+            dbS.AddIndex("products", "ProductName");
 
             // 0 = ProductSingleSheet // 1 = ProductBookSheet // 2 = ProductBlockSheet
             dbS.AddColumnToTable("products", "SelectorProduct", SchemaDb.Int, "0");
@@ -46,10 +48,7 @@ namespace PapiroMVC.Model
             //0..1 part of ProductPartCoverSheet
             //n parts of ProductPartBlockSheet
 
-            //Index
-            dbS.AddIndex("products", "ProductName");
 
-            //---------------------------------------------------------------------------------------------
 
             //Second Table
             dbS.AddTable("productparts");

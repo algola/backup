@@ -27,12 +27,12 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateLithoSheet")
     </button>
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoRoll", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoRoll", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateLithoRoll")
     </button>
@@ -245,8 +245,8 @@
 
                     var table = this;
                     setTimeout(function () {
-                        updateActionicons(table);
-                        updatePagericons(table);
+                        updateActionIcons(table);
+                        updatePagerIcons(table);
                         enableTooltips(table);
                     }, 0);
 

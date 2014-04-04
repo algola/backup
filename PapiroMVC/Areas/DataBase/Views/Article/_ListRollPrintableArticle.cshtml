@@ -34,12 +34,12 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateRollPrintableArticle")
     </button>
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "WizardRollPrintableArticle")
     </button>
@@ -245,8 +245,8 @@
 
                 var table = this;
                 setTimeout(function () {
-                    updateActionicons(table);
-                    updatePagericons(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
 

@@ -27,12 +27,12 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateDigitalSheet")
     </button>
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalRoll", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalRoll", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateDigitalRoll")
     </button>
@@ -244,8 +244,8 @@
 
                 var table = this;
                 setTimeout(function () {
-                    updateActionicons(table);
-                    updatePagericons(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
 

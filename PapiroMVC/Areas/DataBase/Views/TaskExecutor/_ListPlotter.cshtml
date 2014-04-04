@@ -27,12 +27,12 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterSheet", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterSheet", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreatePlotterSheet")
     </button>
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterRoll", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterRoll", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreatePlotterRoll")
     </button>
@@ -240,8 +240,8 @@
 
                 var table = this;
                 setTimeout(function () {
-                    updateActionicons(table);
-                    updatePagericons(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
 

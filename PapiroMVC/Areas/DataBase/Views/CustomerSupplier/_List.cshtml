@@ -27,12 +27,12 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateCustomer")
     </button>
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSupplier", "CustomerSupplier", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSupplier", "CustomerSupplier", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateSupplier")
     </button>
@@ -236,8 +236,8 @@ saveObjectInLocalStorage = function (storageItemName, object) {
 
                 var table = this;
                 setTimeout(function () {
-                    updateActionicons(table);
-                    updatePagericons(table);
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
                     enableTooltips(table);
                 }, 0);
 

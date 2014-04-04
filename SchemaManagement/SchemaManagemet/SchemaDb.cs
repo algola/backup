@@ -47,10 +47,16 @@ namespace SchemaManagemet
         /// <param name="name"></param>
         public void AddTable(string name)
         {
-            var sql = "CALL AddTable('param1','param2');";
-            sql = sql.Replace("param2", name);
-            sql = sql.Replace("param1", DatabaseName);
-            Ctx.Database.ExecuteSqlCommand(sql);
+            using (var dbTrans = Ctx.Database.BeginTransaction())
+            {
+                var sql = "CALL AddTable('param1','param2');";
+                sql = sql.Replace("param2", name);
+                sql = sql.Replace("param1", DatabaseName);
+                Ctx.Database.ExecuteSqlCommand(sql);
+
+                dbTrans.Commit();
+            }
+            
         }
 
         /// <summary>
