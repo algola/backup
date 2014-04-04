@@ -78,7 +78,7 @@ var defaults = {
 	
 	// jquery-ui theming
 	theme: false,
-	buttonIcons: {
+	buttonicons: {
 		prev: 'circle-triangle-w',
 		next: 'circle-triangle-e'
 	},
@@ -105,7 +105,7 @@ var rtlDefaults = {
 		prevYear: "<span class='fc-text-arrow'>&raquo;</span>",
 		nextYear: "<span class='fc-text-arrow'>&laquo;</span>"
 	},
-	buttonIcons: {
+	buttonicons: {
 		prev: 'circle-triangle-e',
 		next: 'circle-triangle-w'
 	}
@@ -790,7 +790,7 @@ function Header(calendar, options) {
 							};
 						}
 						if (buttonClick) {
-							var icon = options.theme ? smartProperty(options.buttonIcons, buttonName) : null; // why are we using smartProperty here?
+							var icon = options.theme ? smartProperty(options.buttonicons, buttonName) : null; // why are we using smartProperty here?
 							var text = smartProperty(options.buttonText, buttonName); // why are we using smartProperty here?
 							var button = $(
 								"<span class='fc-button fc-button-" + buttonName + " " + tm + "-state-default'>" +

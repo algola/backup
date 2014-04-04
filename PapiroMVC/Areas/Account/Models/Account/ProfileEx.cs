@@ -9,6 +9,9 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(Profile_MetaData))]
     public partial class Profile 
     {
+
+        public bool CardIsValid { get; set; }
+
         public override string ToString()
         {
             return "";

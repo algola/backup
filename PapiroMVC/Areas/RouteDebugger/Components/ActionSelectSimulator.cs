@@ -119,7 +119,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         }
 
         /// <summary>
-        /// This is a copy of the private ApiControllerActionSelector.FindActionsForVerb. It doesn't use the cache
+        /// This is a copy of the private ApicontrollerActionSelector.FindActionsForVerb. It doesn't use the cache
         /// but copies the contents of the FindActionsForVerbWorker method.
         /// </summary>
         private ReflectedHttpActionDescriptor[] FindActionsForVerb(HttpMethod verb)
@@ -138,7 +138,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         }
 
         /// <summary>
-        /// This is an exact copy from ApiControllerActionSelector.
+        /// This is an exact copy from ApicontrollerActionSelector.
         /// </summary>
         private IEnumerable<ReflectedHttpActionDescriptor> FindActionUsingRouteAndQueryParameters(
             HttpControllerContext controllerContext,
@@ -191,7 +191,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         }
 
         /// <summary>
-        /// This is an exact copy from ApiControllerActionSelector.
+        /// This is an exact copy from ApicontrollerActionSelector.
         /// </summary>
         private static bool IsValidActionMethod(MethodInfo methodInfo)
         {
@@ -201,9 +201,9 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
                 return false;
             }
 
-            if (methodInfo.GetBaseDefinition().DeclaringType.IsAssignableFrom(TypeHelper.ApiControllerType))
+            if (methodInfo.GetBaseDefinition().DeclaringType.IsAssignableFrom(TypeHelper.ApicontrollerType))
             {
-                // is a method on Object, IHttpController, ApiController
+                // is a method on Object, IHttpController, Apicontroller
                 return false;
             }
 
@@ -211,7 +211,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         }
 
         /// <summary>
-        /// This is an exact copy from ApiControllerActionSelector.
+        /// This is an exact copy from ApicontrollerActionSelector.
         /// </summary>
         private static bool IsSubset(string[] actionParameters, HashSet<string> routeAndQueryParameters)
         {
@@ -227,7 +227,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         }
 
         /// <summary>
-        /// Replace the private method from ApiControllerActionSelector.
+        /// Replace the private method from ApicontrollerActionSelector.
         /// 
         /// The IActionMethodSelector interface used in the method is internal so we must make a copy. 
         /// CacheAttrsIActionMethodSelector is also internal.

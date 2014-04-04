@@ -57,7 +57,7 @@
                 <p>
                     <div class="well no-padding-left no-padding-rigth">
                         <div class="controls col-sm-9">
-                            <a href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+                            <a class="dialogRef" href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
                         </div>
                         @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
                         @Html.HiddenFor(model => model.CodDocument)

@@ -29,7 +29,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("profile", "TaxCode", SchemaDb.String, "50");
             dbS.AddColumnToTable("profile", "test", SchemaDb.String, "50");
 
-            dbS.AddColumnToTable("profile", "BrianTreeCustomerId", SchemaDb.String, "255");
+            //dbS.AddColumnToTable("profile", "BrianTreeCustomerId", SchemaDb.String, "255");
+            dbS.AddColumnToTable("profile", "BrainTreeToken", SchemaDb.String, "255");
 
 
             //---------------------------------------------------------------------------------------------

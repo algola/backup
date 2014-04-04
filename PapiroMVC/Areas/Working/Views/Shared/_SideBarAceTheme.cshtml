@@ -24,11 +24,11 @@
     <ul class="nav nav-list">
 
         <li id="homeSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
         <li id="estimatesSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks", "menu-text")
         </li>
 
         @Html.Action("MenuNewEstimate", "Document", new { area = "Working" })

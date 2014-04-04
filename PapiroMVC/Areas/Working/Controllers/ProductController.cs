@@ -15,6 +15,7 @@ using PapiroMVC.ServiceLayer;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
+    [AuthorizeUser]
     public partial class ProductController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         protected IProductTaskNameRepository prodTskNameRepository;
@@ -26,6 +27,22 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IArticleRepository articleRepository;
 
         protected dbEntities db;
+
+
+        #region Module Property of Validation and Control
+        /// <summary>
+        /// 
+        /// </summary>
+        public IMenuProductRepository MenuProductRepository
+        {
+            get { return menu; }
+        }
+        public MembershipUser MembershipUser
+        {
+            get { return Membership.GetUser(CurrentUser); }
+        }
+        #endregion
+
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
@@ -116,6 +133,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpParamAction]
         [HttpGet]
 
+        [AuthorizeModule]
         public ActionResult CreateProduct(string id)
         {
             var p = new PapiroService();

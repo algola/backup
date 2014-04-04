@@ -52,8 +52,8 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         public ActionResult Pending()
         {
-           // return View("PendingAmm");
-            return View();
+            return View("PendingAmm");
+            //return View();
         }
 
         [HttpPost]
@@ -63,6 +63,8 @@ namespace PapiroMVC.Areas.Account.Controllers
             var m = profDataRep.GetSingleModule(codModuleName);
             m.ChangeAcquired(months);
             profDataRep.SaveModule(m);
+
+            this.CheckModuleRole(profDataRep.GetSingle(CurrentUser.UserName));
             return PartialView("_Module", m);
         }
 
@@ -74,6 +76,8 @@ namespace PapiroMVC.Areas.Account.Controllers
             var m = profDataRep.GetSingleModule(codModuleName);
             m.ChangeInValuating();
             profDataRep.SaveModule(m);
+            this.CheckModuleRole(profDataRep.GetSingle(CurrentUser.UserName));
+
             return PartialView("_Module", m);
         }
 
@@ -158,7 +162,7 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             message.Bcc.Add(new MailAddress("a.degola@algola.com"));
 
-            var client = new SmtpClient();
+            var client = new SmtpClient("smtp.gmail.com");
             client.EnableSsl = true;
             client.Credentials = new System.Net.NetworkCredential("papirosoftware@gmail.com", "Ele875147@");
             client.Port = 587;
@@ -233,9 +237,16 @@ namespace PapiroMVC.Areas.Account.Controllers
                 var xx = Membership.GetUser(model.UserName);
                 var yy = xx.IsApproved;
 
+
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     //   base.UpdateDatabase(model.UserName);
+
+
+                    profDataRep.SyncroModules(model.UserName);
+                    var prof = profDataRep.GetSingle(model.UserName);
+                    this.CheckModuleRole(prof);
+
 
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
@@ -269,7 +280,7 @@ namespace PapiroMVC.Areas.Account.Controllers
         private void longJob(LoginModel model)
         {
 
-            profDataRep.SyncroModules(model.UserName);
+
             //base.UpdateDatabase(model.UserName);
 
             //you can also set the parameter here
@@ -363,8 +374,6 @@ namespace PapiroMVC.Areas.Account.Controllers
             if (ModelState.IsValid)
             {
 
-
-
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName,
@@ -392,6 +401,14 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Add(nProf);
                     profDataRep.Save();
 
+                    //Sincronizzazione dei moduli
+                    profDataRep.SyncroModules(nProf.Name);
+
+
+                    this.CheckModuleRole(nProf);
+                    //Carta di credito
+                    this.SearchOrCreateBTCustomer(nProf);
+
                     this.SendConfirmationEmail(model.UserName);
                     //                    return RedirectToAction("Confirmation", "Account");
                     return Json(new { redirectUrl = Url.Action("Confirmation") });
@@ -408,24 +425,177 @@ namespace PapiroMVC.Areas.Account.Controllers
         }
 
 
+        [HttpPost]
+        [HttpParamAction]
+        public ActionResult SaveCc(FormCollection collection)
+        {
+
+
+            var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
+            Braintree.Customer customer = this.SearchOrCreateBTCustomer(profile);
+
+
+            var request = new Braintree.CreditCardRequest
+            {
+                CustomerId = collection["Profile.Name"],
+                Number = collection["number"],
+                ExpirationMonth = collection["month"],
+                ExpirationYear = collection["year"],
+                CVV = collection["cvv"],
+                Options = new CreditCardOptionsRequest
+                {
+                    MakeDefault = true,
+                    VerifyCard = true,
+                }
+            };
+
+            Result<Braintree.CreditCard> result;
+
+            try
+            {
+                //Provo ad aggiornare la carta
+                CreditCard creditCard = Constants.Gateway.CreditCard.Find(profile.BrainTreeToken);
+                result = Constants.Gateway.CreditCard.Update
+                (profile.BrainTreeToken, request);
+            }
+            catch (NotFoundException)
+            {
+                result = Constants.Gateway.CreditCard.Create(request);
+            }
+
+            switch (result.Message)
+            {
+                default:
+                    break;
+            }
+
+            customer = this.SearchOrCreateBTCustomer(profile);
+            try
+            {
+                string token = customer.CreditCards[0].Token;
+                profile.BrainTreeToken = token;
+            }
+            catch (IndexOutOfRangeException)
+            {
+
+                profile.BrainTreeToken = null;
+            }
+
+            profDataRep.Edit(profile);
+            profDataRep.Save();
+
+
+            return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
+
+        }
         //
         // GET: /Account/EditProfile
 
-        public ActionResult EditProfile()
+        public ActionResult EditProfile(String view)
         {
-
             var profile = profDataRep.GetSingle(this.CurrentUser.ToString());
             // return View(profile);
+            ViewBag.StatusCc = "";
+            if (profile.BrainTreeToken != null)
+            {
+                ViewBag.StatusCc = "ok";
+            }
+
+
+            try
+            {
+                CreditCard creditCard = Constants.Gateway.CreditCard.Find(profile.BrainTreeToken ?? "");
+                profile.CardIsValid = true;
+            }
+            catch (NotFoundException)
+            {
+                profile.CardIsValid = false;
+            }
 
             var temp = new ProfileViewModel();
             temp.Profile = profile;
             ViewBag.ActionMethod = "EditProfile";
-            return View(temp);
-            
+
+            return View(view, temp);
+
         }
 
         //
         // POST: /Account/EditProfile
+
+
+        //questo metodo sinconizza le role dell'utente con i moduli attivi/disattivi
+        protected void CheckModuleRole(Profile nProf)
+        {
+
+            //per ciascun modulo in prova aggiungo l'utente nel gruppo
+            nProf = profDataRep.GetSingle(nProf.Name);
+            //carico il membership
+            MembershipUser user = Membership.GetUser(nProf.Name);
+
+            foreach (var m in nProf.Modules)
+            {
+                if (!Roles.RoleExists(m.CodModule))
+                    Roles.CreateRole(m.CodModule);
+
+                if (m.IsValid)
+                {
+                    try
+                    {
+                        Roles.AddUserToRole(user.UserName, m.CodModule);
+                    }
+                    catch (Exception)
+                    { }
+
+                }
+                else
+                {
+                    try
+                    {
+                        Roles.RemoveUserFromRole(user.UserName, m.CodModule);
+                    }
+                    catch (Exception)
+                    { }
+                }
+                Membership.UpdateUser(user);
+            }
+        }
+
+        protected Braintree.Customer SearchOrCreateBTCustomer(Profile profile)
+        {
+            MembershipUser user = Membership.GetUser(profile.Name);
+
+            //Inserimento del cliente nella banca dati
+            var c = new CustomerRequest
+            {
+                Id = profile.Name,
+                Company = profile.CompanyName,
+                Email = user.Email,
+                Phone = profile.Phone,
+            };
+
+            Braintree.Customer customer;
+            Result<Braintree.Customer> customerResult;
+            //Se la carta non è stata trovata ci sono 2 possibilità:
+            //1. Non esiste il cliente in Braintree
+            //2. Non esiste la carta
+            try
+            {
+                //Cerco il cliente
+                customer = Constants.Gateway.Customer.Find(profile.Name);
+                customerResult = Constants.Gateway.Customer.Update(profile.Name, c);
+            }
+            catch (NotFoundException)
+            {
+                customerResult = Constants.Gateway.Customer.Create(c);
+                //Cerco il cliente
+                customer = Constants.Gateway.Customer.Find(profile.Name);
+            }
+
+            return customer;
+
+        }
+
 
         [HttpPost]
         [HttpParamAction]
@@ -438,37 +608,8 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Edit(model.Profile);
                     profDataRep.Save();
 
-                    //Ricerca di un cliente nella banca dati di Brain Tree 27/03/2014
-                    try
-                    {
-                        Braintree.Customer result = Constants.Gateway.Customer.Find(model.Profile.Name);
-                    }
-                    catch (NotFoundException) //Il cliente non viene trovato
-                    {
-                       
-                        //Inserimento del cliente nella banca dati
-                        var c = new CustomerRequest
-                        {
-                            Id = model.Profile.Name,
-                            Company = model.Profile.CompanyName,
-                            Email = model.Profile.Refeere,
-                            Phone = model.Profile.Phone,
-                        };
-                       
-                        Result<Braintree.Customer> result = Constants.Gateway.Customer.Create(c);
+                    this.SearchOrCreateBTCustomer(model.Profile);
 
-                        bool success = result.IsSuccess();
-                        // true
-                        if (!success)
-                        {
-                            throw new Exception();
-                        }
-
-                        string customerId = result.Target.Id;
-                        throw;
-                    }
-                   
-                   
                     return Json(new { redirectUrl = Url.Action("EditProfileSuccess") });
                 }
 

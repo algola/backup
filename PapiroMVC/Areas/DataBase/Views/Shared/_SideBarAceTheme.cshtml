@@ -12,20 +12,20 @@
 
     <ul class="nav nav-list">
         <li id="homeSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
         <li id="customerSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "icon-male", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "fa fa-fw fa-lg fa-male", "menu-text")
         </li>
 
         <li id="noPrintableSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, "icon-", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
         </li>
 
         <li id="databaseSlidebar">
             <a href="#" class="dropdown-toggle">
-                <i class="icon-file-text-alt"></i>
+                <i class="fa fa-fw fa-lg fa-file-text-o"></i>
                 <span class="menu-text">@Html.T(strings, "PrintableArticleMenu") </span>
 
                 <b class="arrow icon-angle-down"></b>
@@ -49,7 +49,7 @@
 
         <li id="taskexecutorSlidebar">
             <a href="#" class="dropdown-toggle">
-                <i class=" icon-cogs"></i>
+                <i class="fa fa-fw fa-lg fa-crosshairs"></i>
                 <span class="menu-text">@Html.T(strings, "TaskExecutorMenu") </span>
 
                 <b class="arrow icon-angle-down"></b>
@@ -87,4 +87,5 @@
         try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
     </script>
 </div>
+
 

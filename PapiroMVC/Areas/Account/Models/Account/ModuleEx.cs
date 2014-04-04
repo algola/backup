@@ -25,7 +25,8 @@ namespace PapiroMVC.Models
 
         public void CheckStatus()
         {
-            if (ExpirationDate >= DateTime.Today)
+            int result = DateTime.Compare(ExpirationDate??DateTime.Today, DateTime.Today);
+            if (result < 0)
             {
                 switch (Status)
                 {
@@ -49,9 +50,9 @@ namespace PapiroMVC.Models
             }
 
         }
+
         public void ChangeAcquired(int months)
         {
-
             int diff;
             switch (Status)
             {
@@ -84,8 +85,19 @@ namespace PapiroMVC.Models
         public void ChangeInValuating()
         {
             Status = 0;
-            ExpirationDate = DateTime.Today.AddMonths(3);
+            ExpirationDate = DateTime.Today.AddMonths(1);
             ActivationDate = DateTime.Today;
         }
+
+
+        public bool IsValid
+        {
+            get
+            {
+                CheckStatus();
+                return (Status == 0 || Status == 1);
+            }
+        }
+
     }
 }

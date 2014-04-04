@@ -5,16 +5,16 @@ using PapiroMVC.Areas.RouteDebugger.Components;
 namespace PapiroMVC.Areas.RouteDebugger
 {
     /// <summary>
-    /// This class replaces ApiControllerActionSelector (it's hooked up in RouteDebuggerConfig.cs). 
-    /// It uses  _innerSelector to call into ApiControllerActionSelector methods and it calls ActionSelectSimulator methods.
-    /// Private members of ApiControllerActionSelector cannot be called with a delegate, so a copy of the private members of
-    /// ApiControllerActionSelector are contained in the class ActionSelectSimulator.
+    /// This class replaces ApicontrollerActionSelector (it's hooked up in RouteDebuggerConfig.cs). 
+    /// It uses  _innerSelector to call into ApicontrollerActionSelector methods and it calls ActionSelectSimulator methods.
+    /// Private members of ApicontrollerActionSelector cannot be called with a delegate, so a copy of the private members of
+    /// ApicontrollerActionSelector are contained in the class ActionSelectSimulator.
     ///
     /// See http://www.asp.net/web-api/overview/web-api-routing-and-actions/routing-and-action-selection for more info.   
     /// 
     ///  The SelectAction method examines the request header. If an inspection header is found, it runs the 
     ///  action selection simulator, saves the inspection data in the request property, then uses the delegate
-    ///  to run the ApiControllerActionSelector.SelectAction method.
+    ///  to run the ApicontrollerActionSelector.SelectAction method.
     /// </summary>
     public class InspectActionSelector : IHttpActionSelector
     {

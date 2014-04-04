@@ -40,7 +40,7 @@ var bootbox = window.bootbox || (function(document, $) {
         }
     };
 
-    that.setIcons = function(icons) {
+    that.seticons = function(icons) {
         _icons = icons;
         if (typeof _icons !== 'object' || _icons === null) {
             _icons = {};

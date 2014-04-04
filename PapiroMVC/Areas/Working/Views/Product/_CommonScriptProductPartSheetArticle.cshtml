@@ -74,6 +74,8 @@
     }
 
     $("#staticDialog@(suffx)").on('click', function (e) {
+
+        hideProcessingMsg();
         e.preventDefault();
 
         reloadArticle@(suffx)();

@@ -15,14 +15,8 @@
           <Property Name="CodModule" Type="char" MaxLength="50" />
           <Property Name="ActivationDate" Type="date" />
           <Property Name="ExpirationDate" Type="date" />
-          <Property Name="AutoRenewal" Type="bit" />
           <Property Name="MontlyPrice" Type="char" MaxLength="50" />
           <Property Name="Discount" Type="double" />
-          <Property Name="Enabled" Type="bit" />
-          <Property Name="IsEnabled" Type="bit" />
-          <Property Name="FreeMonths" Type="int" />
-          <Property Name="IsValuation" Type="bit" />
-          <Property Name="IsValuable" Type="bit" />
           <Property Name="Status" Type="int" />
         </EntityType>
         <EntityType Name="orderRows">
@@ -70,6 +64,7 @@
           <Property Name="ExpiredM" Type="char" MaxLength="2" />
           <Property Name="ExpiredY" Type="char" MaxLength="4" />
           <Property Name="BrianTreeCustomerId" Type="char" MaxLength="255" />
+          <Property Name="BrainTreeToken" Type="char" MaxLength="255" />
         </EntityType>
         <Association Name="FK_modules_Name">
           <End Role="profile" Type="Self.profile" Multiplicity="0..1">
@@ -195,6 +190,7 @@
           <Property Type="String" Name="BrianTreeCustomerId" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Orders" Relationship="profilesModel.FK_orders_Name" FromRole="Profile" ToRole="order" />
           <NavigationProperty Name="Modules" Relationship="profilesModel.FK_modules_Name1" FromRole="Profile" ToRole="module1" />
+          <Property Name="BrainTreeToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderRow">
           <Key>
@@ -308,6 +304,7 @@
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="profilesModel.Profile">
               <MappingFragment StoreEntitySet="profile">
+                <ScalarProperty Name="BrainTreeToken" ColumnName="BrainTreeToken" />
                 <ScalarProperty Name="BrianTreeCustomerId" ColumnName="BrianTreeCustomerId" />
                 <ScalarProperty Name="ExpiredY" ColumnName="ExpiredY" />
                 <ScalarProperty Name="ExpiredM" ColumnName="ExpiredM" />

@@ -9,5 +9,6 @@ namespace PapiroMVC.Models
     {
         public Profile Profile { get; set; }
         public List<MenuProduct> MenuProducts { get; set; }
+         
     }
 }

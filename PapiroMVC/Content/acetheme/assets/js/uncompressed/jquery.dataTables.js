@@ -1232,7 +1232,7 @@
 					$(nTh).contents().appendTo(nDiv);
 					
 					var nSpan = document.createElement('span');
-					nSpan.className = oSettings.oClasses.sSortIcon;
+					nSpan.className = oSettings.oClasses.sSorticon;
 					nDiv.appendChild( nSpan );
 					nTh.appendChild( nDiv );
 				}
@@ -4280,7 +4280,7 @@
 					if ( oSettings.bJUI )
 					{
 						/* jQuery UI uses extra markup */
-						var jqSpan = $("span."+oClasses.sSortIcon,  oSettings.aoColumns[i].nTh);
+						var jqSpan = $("span."+oClasses.sSorticon,  oSettings.aoColumns[i].nTh);
 						jqSpan.removeClass(oClasses.sSortJUIAsc +" "+ oClasses.sSortJUIDesc +" "+ 
 							oClasses.sSortJUI +" "+ oClasses.sSortJUIAscAllowed +" "+ oClasses.sSortJUIDescAllowed );
 						
@@ -5468,8 +5468,8 @@
 			);
 			if ( oSettings.bJUI )
 			{
-				$('th span.'+oSettings.oClasses.sSortIcon
-					+ ', td span.'+oSettings.oClasses.sSortIcon, oSettings.nTHead).remove();
+				$('th span.'+oSettings.oClasses.sSorticon
+					+ ', td span.'+oSettings.oClasses.sSorticon, oSettings.nTHead).remove();
 		
 				$('th, td', oSettings.nTHead).each( function () {
 					var jqWrapper = $('div.'+oSettings.oClasses.sSortJUIWrapper, this);
@@ -11475,7 +11475,7 @@
 		"sSortJUIAscAllowed": "",
 		"sSortJUIDescAllowed": "",
 		"sSortJUIWrapper": "",
-		"sSortIcon": "",
+		"sSorticon": "",
 		
 		/* Scrolling */
 		"sScrollWrapper": "dataTables_scroll",
@@ -11525,7 +11525,7 @@
 		"sSortJUIAscAllowed": "css_right ui-icon ui-icon-carat-1-n",
 		"sSortJUIDescAllowed": "css_right ui-icon ui-icon-carat-1-s",
 		"sSortJUIWrapper": "DataTables_sort_wrapper",
-		"sSortIcon": "DataTables_sort_icon",
+		"sSorticon": "DataTables_sort_icon",
 		
 		/* Scrolling */
 		"sScrollHead": "dataTables_scrollHead ui-state-default",

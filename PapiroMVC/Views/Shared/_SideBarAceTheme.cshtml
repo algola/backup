@@ -13,33 +13,33 @@
     <ul class="nav nav-list">
 
         <li id="homeSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
         @if (Request.IsAuthenticated)
         {      
 
             <li id="databaseSlidebar">
-                @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, " icon-cogs", "menu-text")
+                @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
             </li>
 
             <li id="documentSlidebar">
-                @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "  icon-folder-open-alt", "menu-text")
+                @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-pencil-square-o", "menu-text")
             </li>
 
         }
 
 
         <li id="aboutSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "About"), "About", "Home", new { area = "" }, "icon-info", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "About"), "About", "Home", new { area = "" }, "fa fa-fw fa-lg fa-info", "menu-text")
         </li>
 
         <li id="advSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "Adv"), "Adv", "Home", new { area = "" }, "icon-home", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "Adv"), "Adv", "Home", new { area = "" }, "fa fa-fw fa-lg fa-lightbulb-o", "menu-text")
         </li>
 
         <li id="ecommerceSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "ECommerce"), "ECommerce", "Home", new { area = "" }, "icon-group", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "ECommerce"), "ECommerce", "Home", new { area = "" }, "fa fa-fw fa-lg fa-shopping-cart", "menu-text")
         </li>
 
 

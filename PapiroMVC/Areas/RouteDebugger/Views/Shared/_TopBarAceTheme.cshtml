@@ -4,7 +4,7 @@
 @{
     string strings = "~/Views/Shared/Strings";
 
-    ViewBag.Title = @Html.T(strings, "AppTitle"); 
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "AppTitle"); 
 }
 
 <div class="navbar-container navbar-inner" id="navbar-container">
@@ -41,17 +41,25 @@
 
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "EditProfileMenu"), "EditProfile", "Account", new { @class = "username", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "icon-cog")
+                            @Html.ActionLinkImage(Html.T(strings, "EditProfileMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfile", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-user")
                         </li>
 
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "ChangePasswordMenu"), "ChangePassword", "Account", new { @class = "username", title = "Change password", area = "Account" }, "icon-user")
+                            @Html.ActionLinkImage(Html.T(strings, "EditProfileModuleMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileModule", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-wrench")
+                        </li>
+
+                        <li>
+                            @Html.ActionLinkImage(Html.T(strings, "EditProfileCcMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileCc", title = Html.T(strings, "EditProfileCcMenu"), area = "Account" }, "fa fa-fw fa-lg fa-credit-card")
+                        </li>
+
+                        <li>
+                            @Html.ActionLinkImage(Html.T(strings, "ChangePasswordMenu"), "ChangePassword", "Account", new { @class = "username", title = "Change password", area = "Account" }, "fa fa-fw fa-lg fa-shield")
                         </li>
 
                         @if (User.Identity.Name == "db")
                         {
                             <li>
-                                @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "icon-group")
+                                @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "fa fa-fw fa-lg fa-group")
                             </li>
                             
                         }
@@ -59,7 +67,7 @@
                         <li class="divider"></li>
 
                         <li>
-                            @Html.ActionLinkImage(@Html.T(strings, "LogOffMenu"), "LogOff", "Account", new { area = "Account" }, "icon-off")
+                            @Html.ActionLinkImage(@Html.T(strings, "LogOffMenu"), "LogOff", "Account", new { area = "Account" }, "fa fa-fw fa-lg fa-power-off")
                         </li>
                     </ul>
                 </li>
@@ -80,10 +88,10 @@
 
                     <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "icon-key")
+                            @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "fa fa-fw fa-lg fa-sign-in")
                         </li>
                         <li>
-                            @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "icon-group")
+                            @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "fa fa-fw fa-lg fa-group")
                         </li>
                     </ul>
                 </li>

@@ -31,7 +31,7 @@
             <br>
         </div>
         <div class="space-10"></div>    
-        @Html.ActionLinkButton(Html.T(strings, "PendingBack"), "Pending", "Account", new { area = "Account" }, "icon-remove bigger-125", "btn btn-warning")
+        @Html.ActionLinkButton(Html.T(strings, "PendingBack"), "Pending", "Account", new { area = "Account" }, "fa fa-fw fa-lg fa-arrow-left bigger-125", "btn btn-warning")
         
     }
     else
@@ -51,7 +51,7 @@
         </div>
 
         <div class="space-10"></div>    
-        @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", new { area = "" }, "icon-home bigger-125", "btn btn-primary")
+        @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home bigger-125", "btn btn-primary")
 
     }
 

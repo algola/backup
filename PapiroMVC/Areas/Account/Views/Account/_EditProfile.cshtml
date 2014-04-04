@@ -16,18 +16,18 @@
     @using (Ajax.BeginForm("Action", "Account", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal", Area = "Account" }))
     {
 
-
         @*Html.AntiForgeryToken();*@
         @Html.ValidationSummary(true)
         @Html.HiddenFor(m => m.Profile.Name)
 
-                        @Html.AlgolaEditorFor(m => m.Profile.CompanyName)
-                        @Html.AlgolaEditorFor(m => m.Profile.VatNumber)
-                        @Html.AlgolaEditorFor(m => m.Profile.TaxCode)
-                        @Html.AlgolaEditorFor(m => m.Profile.Base)
-                        @Html.HiddenFor(m => m.Profile.Culture)
-                        @Html.HiddenFor(m => m.Profile.Refeere)
-                        @Html.AlgolaEditorFor(m => m.Profile.Phone)
+        @Html.AlgolaEditorFor(m => m.Profile.CompanyName)
+        @Html.AlgolaEditorFor(m => m.Profile.VatNumber)
+        @Html.AlgolaEditorFor(m => m.Profile.TaxCode)
+        @Html.AlgolaEditorFor(m => m.Profile.Base)
+        @Html.HiddenFor(m => m.Profile.Culture)
+        @Html.HiddenFor(m => m.Profile.Refeere)
+        @Html.AlgolaEditorFor(m => m.Profile.Phone)
+        @Html.HiddenFor(m => m.Profile.BrainTreeToken)
 
 
         <p>
@@ -43,7 +43,6 @@
             </button>
 
         </p>
-
 
     }
 </div>

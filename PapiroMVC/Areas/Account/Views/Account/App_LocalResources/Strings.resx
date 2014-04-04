@@ -337,4 +337,76 @@
   <data name="TryTitle" xml:space="preserve">
     <value>Prova</value>
   </data>
+  <data name="Assessable" xml:space="preserve">
+    <value>Valutabile</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Acquista</value>
+  </data>
+  <data name="CodModuleLabel_Desc1" xml:space="preserve">
+    <value>Rotative</value>
+  </data>
+  <data name="CodModuleLabel_Desc2" xml:space="preserve">
+    <value>Semirotative</value>
+  </data>
+  <data name="CodModuleLabel_Desc3" xml:space="preserve">
+    <value>Archivio Z</value>
+  </data>
+  <data name="CodModuleLabel_Desc4" xml:space="preserve">
+    <value>Calcolo automatico</value>
+  </data>
+  <data name="CodModuleLabel_Desc5" xml:space="preserve">
+    <value>Nobilitazione</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc1" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc2" xml:space="preserve">
+    <value>Digitale</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc3" xml:space="preserve">
+    <value>Calcolo automatico</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc4" xml:space="preserve">
+    <value>Varianti</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc5" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="EvaluatedFrom" xml:space="preserve">
+    <value>Valutabile dal</value>
+  </data>
+  <data name="ExpiresOn" xml:space="preserve">
+    <value>Scade il</value>
+  </data>
+  <data name="FreeActivation" xml:space="preserve">
+    <value>Attivazione gratuita</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>A partire da</value>
+  </data>
+  <data name="InactiveSince" xml:space="preserve">
+    <value>Disattivato dal</value>
+  </data>
+  <data name="InTestFrom" xml:space="preserve">
+    <value>In prova dal</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Mese</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Mesi</value>
+  </data>
+  <data name="PurchasedOn" xml:space="preserve">
+    <value>Acquistato il</value>
+  </data>
+  <data name="Try" xml:space="preserve">
+    <value>Prova</value>
+  </data>
+  <data name="CcNotValid" xml:space="preserve">
+    <value>Carta non inserita, o non valida. Procedere nell'immisione di una nuova carta.</value>
+  </data>
+  <data name="CcValid" xml:space="preserve">
+    <value>La carta di credito inserita risulta regolare. Per inserirne una nuova compilare il modulo sottostante e premere Salva, altrimenti Annulla.</value>
+  </data>
 </root>

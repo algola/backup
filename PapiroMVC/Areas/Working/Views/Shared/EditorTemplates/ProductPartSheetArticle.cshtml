@@ -9,7 +9,7 @@
 }
 
 <div class="controls col-sm-9">
-    <a href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+    <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
 </div>
 
 @Html.HiddenFor(model => model.IsSelected)
@@ -104,6 +104,7 @@
     $("#staticDialog@(suffx)").on('click', function (e) {
         e.preventDefault();
 
+        hideProcessingMsg();
         loadGrid@(suffx)();
 
         var dialog = $("#dialog-message@(suffx)").dialog({

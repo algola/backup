@@ -157,7 +157,7 @@ namespace PapiroMVC.Models
 
                                 if (((LargerFormat.GetSide1() - (SmallerFormat.GetSide1() + tempDCut1) * (gain1_1)) <= minusSide1))
                                 {
-                                    tempDCut1 = minusSide1 / 2;
+                                    tempDCut1 = Math.Max(tempDCut2, minusSide1 / 2);
                                     DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
                                 }
                             }

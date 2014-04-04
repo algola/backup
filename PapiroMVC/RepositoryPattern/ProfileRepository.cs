@@ -39,7 +39,7 @@ namespace Services
             var modules = GetModules();
             foreach (var item in modules)
             {
-                var result = p.Modules.SingleOrDefault(x => x.CodModuleName == item+codProfile);
+                var result = p.Modules.SingleOrDefault(x => x.CodModuleName.ToUpper() == item.ToUpper()+codProfile.ToUpper());
                 if (result == null)
                 {
                     var newMod = new Module();

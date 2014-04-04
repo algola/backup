@@ -86,21 +86,21 @@ jQuery(function() {
 			if(index == 0)index = filename.lastIndexOf("/") + 1;
 			filename = filename.substr(index);
 			
-			var fileIcon = 'icon-file';
+			var fileicon = 'icon-file';
 			if((/\.(jpe?g|png|gif|svg|bmp|tiff?)$/i).test(filename)) {
-				fileIcon = 'icon-picture';
+				fileicon = 'icon-picture';
 			}
-			else if((/\.(mpe?g|flv|mov|avi|swf|mp4|mkv|webm|wmv|3gp)$/i).test(filename)) fileIcon = 'icon-film';
-			else if((/\.(mp3|ogg|wav|wma|amr|aac)$/i).test(filename)) fileIcon = 'icon-music';
+			else if((/\.(mpe?g|flv|mov|avi|swf|mp4|mkv|webm|wmv|3gp)$/i).test(filename)) fileicon = 'icon-film';
+			else if((/\.(mp3|ogg|wav|wma|amr|aac)$/i).test(filename)) fileicon = 'icon-music';
 
 
-			if(!this.well_style) this.$label.find('span').attr({'data-title':filename}).find('[class*="icon-"]').attr('class', fileIcon);
+			if(!this.well_style) this.$label.find('span').attr({'data-title':filename}).find('[class*="icon-"]').attr('class', fileicon);
 			else {
-				this.$label.append('<span data-title="'+filename+'"><i class="'+fileIcon+'"></i></span>');
+				this.$label.append('<span data-title="'+filename+'"><i class="'+fileicon+'"></i></span>');
 				var type = $.trim(files[i].type);
 				var can_preview = hasFileReader && this.settings.thumbnail 
 						&&
-						( (type.length > 0 && type.match('image')) || (type.length == 0 && fileIcon == 'icon-picture') )//the second one is for Android's default browser which gives an empty text for file.type
+						( (type.length > 0 && type.match('image')) || (type.length == 0 && fileicon == 'icon-picture') )//the second one is for Android's default browser which gives an empty text for file.type
 				if(can_preview) {
 					var self = this;
 					$.when(preview_image.call(this, files[i])).fail(function(result){

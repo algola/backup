@@ -16,9 +16,9 @@
 }
 
 <li id="newEstimateSlidebar">
-    @Html.ActionLinkImageSpan(Html.T(strings, "CreateEstimateMenu"), "CreateEstimate", "Document", new { area = "Working" }, "icon-dashboard", "menu-text")
+    @Html.ActionLinkImageSpan(Html.T(strings, "CreateEstimateMenu"), "CreateEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-eur", "menu-text")
 </li>
 
 <li id="documentSlidebar">
-    @Html.ActionLinkImageSpan(Html.T(strings, "CurrentEstimateMenu"), "EditEstimate", "Document", new { area = "Working", id=Model }, "icon-dashboard", "menu-text")
+    @Html.ActionLinkImageSpan(Html.T(strings, "CurrentEstimateMenu"), "EditEstimate", "Document", new { area = "Working", id = Model }, "fa fa-fw fa-lg fa-share-square-o", "menu-text")
 </li>

@@ -34,6 +34,7 @@ namespace PapiroMVC.Models
         public string ExpiredM { get; set; }
         public string ExpiredY { get; set; }
         public string BrianTreeCustomerId { get; set; }
+        public string BrainTreeToken { get; set; }
     
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Module> Modules { get; set; }

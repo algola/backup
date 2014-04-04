@@ -327,4 +327,10 @@
   <data name="NoPrintableMenu" xml:space="preserve">
     <value>Consumabili</value>
   </data>
+  <data name="EditProfileCcMenu" xml:space="preserve">
+    <value>Carte</value>
+  </data>
+  <data name="EditProfileModuleMenu" xml:space="preserve">
+    <value>Moduli</value>
+  </data>
 </root>

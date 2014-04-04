@@ -848,28 +848,28 @@
         </member>
         <member name="M:PapiroMVC.Areas.RouteDebugger.Components.ActionSelectSimulator.FindActionsForVerb(System.Net.Http.HttpMethod)">
             <summary>
-            This is a copy of the private ApiControllerActionSelector.FindActionsForVerb. It doesn't use the cache
+            This is a copy of the private ApicontrollerActionSelector.FindActionsForVerb. It doesn't use the cache
             but copies the contents of the FindActionsForVerbWorker method.
             </summary>
         </member>
         <member name="M:PapiroMVC.Areas.RouteDebugger.Components.ActionSelectSimulator.FindActionUsingRouteAndQueryParameters(System.Web.Http.Controllers.HttpControllerContext,System.Collections.Generic.IEnumerable{System.Web.Http.Controllers.ReflectedHttpActionDescriptor},System.Boolean)">
             <summary>
-            This is an exact copy from ApiControllerActionSelector.
+            This is an exact copy from ApicontrollerActionSelector.
             </summary>
         </member>
         <member name="M:PapiroMVC.Areas.RouteDebugger.Components.ActionSelectSimulator.IsValidActionMethod(System.Reflection.MethodInfo)">
             <summary>
-            This is an exact copy from ApiControllerActionSelector.
+            This is an exact copy from ApicontrollerActionSelector.
             </summary>
         </member>
         <member name="M:PapiroMVC.Areas.RouteDebugger.Components.ActionSelectSimulator.IsSubset(System.String[],System.Collections.Generic.HashSet{System.String})">
             <summary>
-            This is an exact copy from ApiControllerActionSelector.
+            This is an exact copy from ApicontrollerActionSelector.
             </summary>
         </member>
         <member name="M:PapiroMVC.Areas.RouteDebugger.Components.ActionSelectSimulator.RunSelectionFilters(System.Web.Http.Controllers.HttpControllerContext,System.Collections.Generic.IEnumerable{System.Web.Http.Controllers.HttpActionDescriptor})">
             <summary>
-            Replace the private method from ApiControllerActionSelector.
+            Replace the private method from ApicontrollerActionSelector.
             
             The IActionMethodSelector interface used in the method is internal so we must make a copy. 
             CacheAttrsIActionMethodSelector is also internal.
@@ -923,16 +923,16 @@
         </member>
         <member name="T:PapiroMVC.Areas.RouteDebugger.InspectActionSelector">
              <summary>
-             This class replaces ApiControllerActionSelector (it's hooked up in RouteDebuggerConfig.cs). 
-             It uses  _innerSelector to call into ApiControllerActionSelector methods and it calls ActionSelectSimulator methods.
-             Private members of ApiControllerActionSelector cannot be called with a delegate, so a copy of the private members of
-             ApiControllerActionSelector are contained in the class ActionSelectSimulator.
+             This class replaces ApicontrollerActionSelector (it's hooked up in RouteDebuggerConfig.cs). 
+             It uses  _innerSelector to call into ApicontrollerActionSelector methods and it calls ActionSelectSimulator methods.
+             Private members of ApicontrollerActionSelector cannot be called with a delegate, so a copy of the private members of
+             ApicontrollerActionSelector are contained in the class ActionSelectSimulator.
             
              See http://www.asp.net/web-api/overview/web-api-routing-and-actions/routing-and-action-selection for more info.   
              
               The SelectAction method examines the request header. If an inspection header is found, it runs the 
               action selection simulator, saves the inspection data in the request property, then uses the delegate
-              to run the ApiControllerActionSelector.SelectAction method.
+              to run the ApicontrollerActionSelector.SelectAction method.
              </summary>
         </member>
         <member name="T:PapiroMVC.Areas.RouteDebugger.InspectControllerSelector">
@@ -1068,14 +1068,6 @@
             </summary>
             <param name="id"></param>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.EditCostAutomatically(System.String,System.Guid)">
-            <summary>
-            Action load Cost and generates related CosteDetail if it doesn't exist
-            </summary>
-            <param name="id"></param>
-            <param name="guid"></param>
-            <returns></returns>
-        </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.EditAndCreateAllCost(System.String)">
             <summary>
             Action EditOrCreate all Cost in DocumentProduct
@@ -1096,6 +1088,11 @@
             </summary>
             <param name="id">rapresents the id of type of product</param>
             <returns></returns>
+        </member>
+        <member name="P:PapiroMVC.Areas.Working.Controllers.ProductController.MenuProductRepository">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:PapiroMVC.Models.PrintingCostDetail.UpdateCoeff">
             <summary>
@@ -3750,6 +3747,16 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.Format">
             <summary>
               Looks up a localized string similar to F.to chiuso lavoro.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.FormatLabel">
+            <summary>
+              Looks up a localized string similar to F.to etichetta.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.FormatLabelToolTip">
+            <summary>
+              Looks up a localized string similar to F.to dell&apos;etichetta da stampare.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.FormatPersonalized">
@@ -7907,9 +7914,19 @@
               Looks up a localized string similar to e-Commerce.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.EditProfileCcMenu">
+            <summary>
+              Looks up a localized string similar to Carte.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.EditProfileMenu">
             <summary>
               Looks up a localized string similar to Profilo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.EditProfileModuleMenu">
+            <summary>
+              Looks up a localized string similar to Moduli.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.EnglishMenu">

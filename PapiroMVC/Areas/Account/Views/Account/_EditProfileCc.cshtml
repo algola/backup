@@ -1,0 +1,111 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProfileViewModel
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    //    string strings2 = "~/Views/Shared/Strings";
+
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }
+}
+
+@if (Model.Profile.CardIsValid)
+{
+
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-ok green"></i>
+        @Html.T(strings, "CcValid")
+    </div>
+}
+else
+{
+    <div class="alert alert-block alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-remove red"></i>
+        @Html.T(strings, "CcNotValid")
+    </div>
+}
+
+
+
+<div class="alert alert-block alert-info">
+    <button type="button" class="close" data-dismiss="alert">
+        <i class="icon-remove"></i>
+    </button>
+
+    <i class="fa fa-exclamation-circle"></i>
+    @Html.T(strings, "Pending4")
+</div>
+
+@using (Html.BeginForm("SaveCc", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "braintree-payment-form" }))
+{
+    @Html.HiddenFor(m => m.Profile.Name)
+
+    <div class="well no-padding-right no-padding-left">
+        <div class="control-group">
+            <label class="col-sm-3 control-label"> @Html.T(strings, "CardNumber") </label>
+            <div class="col-sm-9 controls">
+                <input type="text" class="col-xs-10 col-sm-5" autocomplete="off" data-encrypted-name="number">
+            </div>
+
+        </div>
+        <div class="control-group">
+            <label class="col-sm-3 control-label"> @Html.T(strings, "CVV") </label>
+            <div class="col-sm-9 controls">
+                <input type="text" class="col-xs-1 span1 col-sm-5" autocomplete="off" data-encrypted-name="cvv">
+            </div>
+
+        </div>
+
+        <div class="control-group">
+            <label class="col-sm-3 control-label"> @Html.T(strings, "Expiration") </label>
+            <div class="col-sm-9 controls">
+                <input type="text" class="col-xs-1 span1 col-sm-5" autocomplete="off" data-encrypted-name="month" />
+                /
+                <input type="text" class="col-xs-1 span1 col-sm-5" autocomplete="off" data-encrypted-name="year" />
+            </div>
+
+        </div>
+    </div>
+
+    <p>
+        @Html.ActionLinkButton(Html.T(strings, "Cancel"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-arrow-left bigger-125", "btn btn-warning")
+
+        <button class="btn btn-primary" type="submit">
+            <i class="icon-save bigger-125"></i>
+            @Html.T(strings, "Save")
+        </button>
+    </p>
+
+
+}
+
+
+<script src="https://js.braintreegateway.com/v1/braintree.js"></script>
+<script>
+
+    var ajax_submit = function (e) {
+
+        form = $('#braintree-payment-form');
+        e.preventDefault();
+
+        $("#submit").attr("disabled", "disabled");
+        $.post(form.attr('action'),
+            form.serialize(),
+            function (data) {
+                OnSuccess(data);
+            });
+    }
+
+    var braintree = Braintree.create("MIIBCgKCAQEAzXjSG4ufnkVJSyNKRZlM8yY4GDQDGq4UVOVPdsMQb4Rp8idazki3AbyhKxft0s9jT77xVztia0ry2sPBP4vSBu5qjGPIEgZnNnJVhQ9JNySkJvs3vThIMfy108vmX2kVv1xGUIoSKNp0R/+B/CZLgVyGvHL8qvxwx8ztXWI2Yqn2PALOffMnUCs11aFkEuMGzcGTAkHJuW6GV0vWEe6oPZ9O/SbVZ2zpNPj1Hwwh50Dmr6+bLsJ3u4AMGr9y97O3gj5Ra2Y2q83uB8biNG15zycF6/XhkM6N56HD9sCsoLZp74HYTB9SSMe62A4cBnx7dcK9aVLOU9icxgYMauGwuQIDAQAB");
+    braintree.onSubmitEncryptForm('braintree-payment-form', ajax_submit);
+</script>

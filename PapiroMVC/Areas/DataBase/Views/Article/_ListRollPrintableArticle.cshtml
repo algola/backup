@@ -34,7 +34,7 @@
     <br />
 
 
-    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatRollPrintableArticle", "Article", new { Area = "Database" })');">
+    <button class="btn btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateRollPrintableArticle")
     </button>
@@ -245,8 +245,8 @@
 
                 var table = this;
                 setTimeout(function () {
-                    updateActionIcons(table);
-                    updatePagerIcons(table);
+                    updateActionicons(table);
+                    updatePagericons(table);
                     enableTooltips(table);
                 }, 0);
 

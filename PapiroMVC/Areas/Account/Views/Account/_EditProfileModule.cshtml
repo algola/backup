@@ -1,0 +1,22 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProfileViewModel
+@{
+    string strings = "~/Areas/Account/Views/Account/Strings";
+    //    string strings2 = "~/Views/Shared/Strings";
+
+    var err = ViewData.ModelState.FirstOrDefault(x => x.Key == "PersError");
+    if (err.Key != null)
+    {
+        ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
+    }
+}
+
+@foreach (var m in Model.Profile.Modules)
+{
+    <div id="div@(m.CodModuleName)" class="span3">
+        @*visualizzazione dei moduli*@
+        @Html.Partial("_Module", m)
+    </div>
+}
+
+

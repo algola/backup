@@ -466,11 +466,29 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carte.
+        /// </summary>
+        public static string EditProfileCcMenu {
+            get {
+                return ResourceManager.GetString("EditProfileCcMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profilo.
         /// </summary>
         public static string EditProfileMenu {
             get {
                 return ResourceManager.GetString("EditProfileMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moduli.
+        /// </summary>
+        public static string EditProfileModuleMenu {
+            get {
+                return ResourceManager.GetString("EditProfileModuleMenu", resourceCulture);
             }
         }
         

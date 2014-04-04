@@ -18,7 +18,7 @@ namespace PapiroMVC.Areas.RouteDebugger.Components
         private static readonly Type TaskGenericType = typeof(Task<>);
 
         internal static readonly Type HttpControllerType = typeof(IHttpController);
-        internal static readonly Type ApiControllerType = typeof(ApiController);
+        internal static readonly Type ApicontrollerType = typeof(ApiController);
 
         internal static Type GetTaskInnerTypeOrNull(Type type)
         {

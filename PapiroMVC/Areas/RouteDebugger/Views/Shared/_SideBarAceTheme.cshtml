@@ -12,11 +12,11 @@
 
     <ul class="nav nav-list">
         <li id="homeSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "icon-home", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
         <li id="customerSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "icon-male", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "fa fa-fw fa-lg fa-male", "menu-text")
         </li>
 
         <li id="databaseSlidebar">
@@ -29,15 +29,15 @@
 
             <ul class="submenu">
                 <li id="sheetSlidebar">
-                    @Html.ActionLinkImage(Html.T(strings, "SheetPrintableArticleMenu"), "IndexSheetPrintableArticle", "Article", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(Html.T(strings, "SheetPrintableArticleMenu"), "IndexSheetPrintableArticle", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
 
                 <li id="rollSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "RollPrintableArticleMenu"), "IndexRollPrintableArticle", "Article", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "RollPrintableArticleMenu"), "IndexRollPrintableArticle", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
 
                 <li id="rigidSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "RigidPrintableArticleMenu"), "IndexRigidPrintableArticle", "Article", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "RigidPrintableArticleMenu"), "IndexRigidPrintableArticle", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
             </ul>
         </li>
@@ -54,16 +54,16 @@
             <ul class="submenu">
 
                 <li id="lithoSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
                 <li id="digitalSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "DigitalSheetMenu"), "IndexDigitalSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "DigitalSheetMenu"), "IndexDigitalSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
                 <li id="plotterSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "PlotterMenu"), "IndexPlotter", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "PlotterMenu"), "IndexPlotter", "TaskExecutor", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
                 <li id="prepostSlidebar">
-                    @Html.ActionLinkImage(@Html.T(strings, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, "fa fa-fw fa-lg fa-double-angle-right")
                 </li>
 
             </ul>

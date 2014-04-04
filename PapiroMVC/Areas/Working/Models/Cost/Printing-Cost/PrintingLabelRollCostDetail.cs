@@ -190,7 +190,7 @@ namespace PapiroMVC.Models
                 ppP.Update();
 
                 if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
-                    ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2)||ppP.CalculatedSide1Gain==1))
+                    ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
                 {
                     pHint.Add(new PrintingHint
                     {
@@ -275,6 +275,7 @@ namespace PapiroMVC.Models
                            .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
                                x.Color == item.Color &&
                                x.Adhesive == item.Adhesive &&
+                               x.Weight == item.Weight &&
                                x.NameOfMaterial == item.NameOfMaterial)
                                    .Select(x => x.Width).ToList();
             }
@@ -291,7 +292,7 @@ namespace PapiroMVC.Models
 
             foreach (var item in tskCurrent.TaskExecutorCylinders)
             {
-                zList.Add((item.Z / 8 * 2.54).ToString());
+                zList.Add((Convert.ToDouble(item.Z) / 8 * 2.54).ToString());
             }
 
             //combino i width con gli Z

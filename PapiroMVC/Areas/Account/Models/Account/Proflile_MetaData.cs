@@ -37,6 +37,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(PapiroMVC.Models.Resources.Account.Registration), "Culture")]
         public string Culture { get; set; }
 
-
+      
     }
 }

@@ -328,7 +328,7 @@ a .icon-spin {
     transform: rotate(359deg);
   }
 }
-/* Icon rotations and mirroring */
+/* icon rotations and mirroring */
 .icon-rotate-90:before {
   -webkit-transform: rotate(90deg);
   -moz-transform: rotate(90deg);

@@ -2013,9 +2013,12 @@
     <Content Include="Areas\DataBase\Views\Shared\Copy of _footer.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\EditorTemplates\TaskEstimatedOnRun.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_breadcrumb.cshtml" />
-    <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_LayoutAceThemeCopiaCancellare.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_MsgProcessOk.cshtml" />
-    <Content Include="Areas\DataBase\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_SideBarAceTheme.cshtml">
+      <SubType>
+      </SubType>
+    </Content>
     <Content Include="Areas\DataBase\Views\Shared\_TopBarAceTheme.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateDigitalSheet.cshtml" />
@@ -2188,7 +2191,11 @@
     <Content Include="Areas\DataBase\Views\Article\IndexNoPrintable.cshtml" />
     <Content Include="Areas\Account\Views\Account\_Module.cshtml" />
     <Content Include="Areas\Account\Views\Account\_Module - Copy.cshtml" />
-    <Content Include="Areas\Account\Views\Account\_EditProfile - Copy.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_EditProfileModule.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfileModule.cshtml" />
+    <Content Include="Areas\Account\Views\Account\_EditProfileCc.cshtml" />
+    <Content Include="Areas\Account\Views\Account\EditProfileCc.cshtml" />
+    <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2256,6 +2263,7 @@
     <Content Include="Scripts\modernizr-2.7.1.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\spin.js" />
     <Content Include="Views\Shared\price-tag-icon-614x460.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

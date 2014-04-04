@@ -30,6 +30,8 @@
             if (event.which == 13) {
                 event.preventDefault();
 
+                showProcessingMsg();
+
                 var datastring = $("#newProductForm").serialize();
 
                 //at firt time save estimate or
@@ -52,6 +54,7 @@
                         return;
                     },
                     error: function (xhr) {
+                        hideProcessingMsg();
                         alert('error');
                         $('#status2').html(xhr);
                     }
