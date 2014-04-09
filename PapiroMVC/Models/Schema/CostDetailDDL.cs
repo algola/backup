@@ -46,6 +46,10 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("costdetails", "Starts", SchemaDb.Double, "0");
 
+            //cambi di rotolo... (per le etichette in rotolo)
+            //devo calcolare quante volte devo cambiare il rotolo (mtTotali / mt a rotolo)
+            dbS.AddColumnToTable("costdetails", "RollChanges", SchemaDb.Double, "0");
+
             //calcolo battute di stampa
             dbS.AddColumnToTable("costdetails", "GainForRun", SchemaDb.Double, "0");
             //calcolo delle battute del materiale

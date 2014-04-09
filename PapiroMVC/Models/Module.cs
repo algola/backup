@@ -17,6 +17,7 @@ namespace PapiroMVC.Models
         public Module()
         {
             this.OrderRows = new HashSet<OrderRow>();
+            this.orderrows = new HashSet<orderrow1>();
         }
     
         public System.DateTime TimeStampTable { get; set; }
@@ -31,5 +32,6 @@ namespace PapiroMVC.Models
     
         public virtual Profile Profile { get; set; }
         public virtual ICollection<OrderRow> OrderRows { get; set; }
+        public virtual ICollection<orderrow1> orderrows { get; set; }
     }
 }

@@ -235,7 +235,6 @@ namespace PapiroMVC.Areas.Account.Controllers
             if (ModelState.IsValid)
             {
                 var xx = Membership.GetUser(model.UserName);
-                var yy = xx.IsApproved;
 
 
                 if (Membership.ValidateUser(model.UserName, model.Password))

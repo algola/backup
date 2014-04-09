@@ -103,6 +103,7 @@
           <Property Name="CodComputedBy" Type="char" MaxLength="50" />
           <Property Name="Error" Type="int" />
           <Property Name="Guid" Type="char" MaxLength="32" />
+          <Property Name="RollChanges" Type="double" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -524,6 +525,7 @@
           <Property Name="IsEstimatedOnRunBinding" Type="bit" />
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="FlexoWidth" Type="double" />
+          <Property Name="PaperSecondStartLenght" Type="uint" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -2386,6 +2388,7 @@
           <Property Type="Double" Name="GainForWeigthRunForPrintableArticle" />
           <Property Name="Error" Type="Int32" />
           <Property Name="Guid" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="RollChanges" Type="Double" />
         </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -2666,6 +2669,7 @@
           <Property Name="PaperFirstStartLenght" Type="Int64" />
           <Property Name="Width2" Type="Double" />
           <Property Name="FlexoWidth" Type="Double" />
+          <Property Name="PaperSecondStartLenght" Type="Int64" />
         </EntityType>
         <EntityType Name="TaskExecutorCylinder">
           <Key>
@@ -2820,6 +2824,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Flexo)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="PaperSecondStartLenght" ColumnName="PaperSecondStartLenght" />
                 <ScalarProperty Name="FlexoWidth" ColumnName="FlexoWidth" />
                 <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
                 <ScalarProperty Name="Width2" ColumnName="Width" />
@@ -3560,6 +3565,7 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="RollChanges" ColumnName="RollChanges" />
                 <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="Error" ColumnName="Error" />
                 <ScalarProperty Name="GainForWeigthRunForPrintableArticle" ColumnName="GainForWeigthRunForPrintableArticle" />

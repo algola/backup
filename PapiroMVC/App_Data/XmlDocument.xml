@@ -1129,6 +1129,11 @@
             Get PrintingFormat and calculating gain on this Format based on specifit type
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.ProductPartPrinting.CalculatedMl">
+            <summary>
+            Ml in stampa del formato di stampa
+            </summary>
+        </member>
         <member name="T:PapiroMVC.Models.ProductPartRollPrinting">
             <summary>
             Get PrintingFormat and calculating gain on this Format based on specifit type
@@ -5753,6 +5758,16 @@
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperFirstStartLenghtToolTip">
             <summary>
               Looks up a localized string similar to Indica i metri di scarto in avviamento.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperSecondStartLenght">
+            <summary>
+              Looks up a localized string similar to Scarto succ. (mt).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperSecondStartLenghtToolTip">
+            <summary>
+              Looks up a localized string similar to Indica i metri di scarto in avviamento, per il cambio rotolo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PrintingUnit">

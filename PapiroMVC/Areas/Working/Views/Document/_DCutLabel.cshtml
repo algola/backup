@@ -6,9 +6,16 @@
 }
 
 <div>
-    <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Int.Spazio Banda</h6>
-    @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
+    <div class="row-fluid">
+        <div class="span3">
+            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Int.Spazio Banda</h6>
+            @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
 
-    <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Int.Spazio Passo</h6>
-    @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
+        </div>
+        <div class="span3">
+            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Int.Spazio Passo</h6>
+            @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
+        </div>
+    </div>
+
 </div>

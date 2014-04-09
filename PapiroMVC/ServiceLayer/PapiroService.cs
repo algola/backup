@@ -223,12 +223,10 @@ namespace PapiroMVC.ServiceLayer
             return cv;
         }
 
-
         public void SaveCostDetailAutomatically(CostDetail cv)
         {
             if (cv != null)
             {
-
 
                 var pPart = cv.ProductPart;
 
@@ -304,13 +302,14 @@ namespace PapiroMVC.ServiceLayer
                 UpdateCost(item.CodCost);
             }
 
-            //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
+            CostDetailRepository.Edit(cv);
+            CostDetailRepository.Save();
 
+            //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
             cv.TaskCost.DocumentProduct.UpdateCost();
 
             DocumentRepository.Edit(cv.TaskCost.DocumentProduct.Document);
             DocumentRepository.Save();
-
 
         }
 

@@ -9,11 +9,41 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductPart))]
     [MetadataType(typeof(ProductPart_MetaData))]
     public partial class ProductPart
     {
+
+        //formato in mm
+        public String Formatmm
+        {
+            get
+            {
+                if (Format == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return (Format.GetSide1() / 10).ToString() + "x" + (Format.GetSide2() / 10).ToString();
+                }
+            }
+
+            set
+            {
+                try
+                {
+                    Format = (value.GetSide1() * 10).ToString() + "x" + (value.GetSide2() * 10).ToString();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+            }
+        }
+
 
         public virtual void UpdateOpenedFormat()
         {

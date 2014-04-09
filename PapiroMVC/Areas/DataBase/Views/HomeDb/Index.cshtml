@@ -2,6 +2,8 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/HomeDb/Strings";
+    string stringsMenu = "~/Views/Shared/Strings";
+
     ViewBag.MetaTitle = Html.T(strings, "MetaTitle");
 }
 
@@ -15,7 +17,7 @@
 </div>
 
 <p>
-    @Html.T(strings, "Message2") <b>@Html.T(strings, "Message2_I")</b> @Html.T(strings, "Message2_II") 
+    @Html.T(strings, "Message2") <b>@Html.T(strings, "Message2_I")</b> @Html.T(strings, "Message2_II")
 </p>
 <div class="vspace"></div>
 <p>
@@ -23,9 +25,66 @@
     @Html.T(strings, "Message3_III") <b>@Html.T(strings, "Message3_I")</b>.
 </p>
 
+<div class="widget-box pricing-box">
+    <div class="widget-header header-color-green">
+        <h5 class="bigger red">
+            Clienti/Fornitori
+        </h5>
+    </div>
 
-@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
+    <div class="widget-body">
+        <div class="widget-main">
+            <ul class="unstyled spaced3">
+                @for (int k = 1; k < 6; k++)
+                {
+                <li>
+                    <i class="icon-ok green"></i>
+                    prova etc...
+                </li>
+                }
+            </ul>
 
+            <hr>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="widget-box pricing-box">
+    <div class="widget-header header-color-green">
+        <h5 class="bigger red">
+            Clienti/Fornitori
+        </h5>
+    </div>
+
+    <div class="widget-body">
+        <div class="widget-main">
+            <ul class="unstyled spaced3">
+                @for (int k = 1; k < 6; k++)
+                {
+                    <li>
+                        <i class="icon-ok green"></i>
+                        prova etc...
+                    </li>
+                }
+            </ul>
+
+            <hr>
+
+            <div class="align-right">
+                @Html.ActionLink(Html.T(stringsMenu, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, null)
+
+        </div>
+
+    </div>
+</div>
+
+
+
+@*@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
+*@
 @section title{
     @Html.T(strings, "DataBase")
 }

@@ -309,6 +309,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             p.ArticleRepository = articleRepository;
             p.CurrentDatabase = CurrentDatabase;
 
+
             var cv = p.EditCostAutomatically(id, new Guid());
             Console.WriteLine(cv.GainForRun);
 

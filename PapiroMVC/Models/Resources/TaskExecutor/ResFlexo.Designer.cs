@@ -97,6 +97,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scarto succ. (mt).
+        /// </summary>
+        public static string PaperSecondStartLenght {
+            get {
+                return ResourceManager.GetString("PaperSecondStartLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indica i metri di scarto in avviamento, per il cambio rotolo.
+        /// </summary>
+        public static string PaperSecondStartLenghtToolTip {
+            get {
+                return ResourceManager.GetString("PaperSecondStartLenghtToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cilindri stampa.
         /// </summary>
         public static string PrintingUnit {

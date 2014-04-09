@@ -30,6 +30,7 @@ namespace PapiroMVC.Models
         [DataMember]
         public List<TypeOfTask> SystemTaskList { get; set; }
 
+
         protected List<ProductPart> productParts;
         public List<ProductPart> ProductPartsPerView
         {

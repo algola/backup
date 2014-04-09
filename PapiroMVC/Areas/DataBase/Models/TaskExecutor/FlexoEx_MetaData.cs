@@ -18,6 +18,10 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResFlexo), "PaperFirstStartLenghtToolTip")]
         public Nullable<long> PaperFirstStartLenght { get; set; }
 
+        [DisplayNameLocalized(typeof(ResFlexo), "PaperSecondStartLenght")]
+        [Tooltip(typeof(ResFlexo), "PaperSecondStartLenghtToolTip")]
+        public Nullable<long> PaperSecondStartLenght { get; set; }
+
         [DisplayNameLocalized(typeof(ResFlexo), "Width")]
         [Tooltip(typeof(ResFlexo), "WidthToolTip")]
         public Nullable<double> FlexoWidth { get; set; }

@@ -104,8 +104,9 @@
                 { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editCost, search: false },
                     { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true, search: false },
                     { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 350, align: 'right', editable: true, search: false },
-                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false, search: false },
+                    { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
                     { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: false, search: false },
+                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false, search: false },
                     { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false, search: false }],
 
                     saveObjectInLocalStorage = function (storageItemName, object) {

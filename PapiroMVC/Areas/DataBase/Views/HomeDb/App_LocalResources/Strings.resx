@@ -22,7 +22,7 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="icon1" type="System.Drawing.icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
@@ -117,11 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Consumable" xml:space="preserve">
+    <value>Consumabili</value>
+  </data>
+  <data name="ConsumableDescription" xml:space="preserve">
+    <value>Configura i listini e le anagrafiche dei consumabili come l'inchiostro, le lastre, i clichè.</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Clienti &amp; Fornitori</value>
+  </data>
+  <data name="CustomerDescription" xml:space="preserve">
+    <value>Clienti e fornitori sotto controllo</value>
+  </data>
   <data name="DataBase" xml:space="preserve">
     <value>Anagrafica</value>
   </data>
+  <data name="GoCarousel" xml:space="preserve">
+    <value>Entra</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>home page</value>
+  </data>
+  <data name="Machine" xml:space="preserve">
+    <value>Macchine &amp; Lavorazioni</value>
+  </data>
+  <data name="MachineDescription" xml:space="preserve">
+    <value>Configura le macchine da stampa e le lavorazioni di pre e post stampa, con i propri listi.</value>
   </data>
   <data name="Message1" xml:space="preserve">
     <value>Benvenuto nell'</value>
@@ -158,5 +179,11 @@
   </data>
   <data name="MetaTitle" xml:space="preserve">
     <value>Gestionale per preventivi e commesse per stampa digitale e offset. Gratuito. Intuitivo e facile da configurare e usare.</value>
+  </data>
+  <data name="Printing" xml:space="preserve">
+    <value>Supporti di stampa</value>
+  </data>
+  <data name="PrintingDescription" xml:space="preserve">
+    <value>Gestisci in piena libertà le anagrafiche dei materiali stampabili. A foglio, rotolo, etc...</value>
   </data>
 </root>

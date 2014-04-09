@@ -4,7 +4,7 @@
 @{
     string strings = "~/Views/Shared/Strings";
 
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "AppTitle"); 
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "AppTitle");
 }
 
 <div class="navbar-container navbar-inner" id="navbar-container">
@@ -15,10 +15,10 @@
             </small>
             @*            @Html.T(strings, "AppName")*@
             <b>P</b>apiro<b>S</b>tar
-                        @if (!Request.IsAuthenticated)
-                        {
-                            @Html.T(strings, "Demo");
-                        }
+            @if (!Request.IsAuthenticated)
+            {
+                @Html.T(strings, "Demo");
+            }
 
         </a>
         <!--/.brand-->
@@ -27,7 +27,7 @@
     <div class="navbar-header pull-right" role="navigation" style="margin-right: 20px">
         <ul class="nav ace-nav">
             @if (Request.IsAuthenticated)
-            {   
+            {
                 <li class="light-blue" style="float: right">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="User's Photo" />
@@ -61,7 +61,7 @@
                             <li>
                                 @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "fa fa-fw fa-lg fa-group")
                             </li>
-                            
+
                         }
 
                         <li class="divider"></li>
@@ -74,7 +74,7 @@
             }
             else
             {
-                //se non si è loggati propongo la possibilità di loggarsi o registrarsi                            
+                //se non si è loggati propongo la possibilità di loggarsi o registrarsi
                 <li class="light-blue" style="float: right">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                         <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="User's Photo" />

@@ -16,12 +16,12 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
+        <li id="databaseSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+        </li>
+
         @if (Request.IsAuthenticated)
         {      
-
-            <li id="databaseSlidebar">
-                @Html.ActionLinkImageSpan(Html.T(strings, "DataBaseMenu"), "Index", "HomeDb", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
-            </li>
 
             <li id="documentSlidebar">
                 @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-pencil-square-o", "menu-text")

@@ -13,6 +13,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
+    [AuthorizeUser]
     public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         private readonly IArticleRepository articleRepository;

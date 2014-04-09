@@ -22,6 +22,7 @@ namespace PapiroMVC.Models
             MqWorkTypeOfQuantity = 1,
             WeigthTypeOfQuantity = 2, //quantità e prezzo al kg
             MqSheetTypeOfQuantity = 3,
+            RunLengthMlTypeOfQuantity = 4, //ml di stampa
 
         }
 

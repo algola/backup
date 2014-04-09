@@ -643,6 +643,9 @@
     <Compile Include="Models\Module.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\News.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NoPrintable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -662,6 +665,9 @@
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderRow.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\orderrow1.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Plotter.cs">
@@ -1755,6 +1761,14 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Carousel\ConsumabiliColore.jpg" />
+    <Content Include="Content\Carousel\ConsumabiliRotolo.jpg" />
+    <Content Include="Content\Carousel\CustomerCoppia.jpg" />
+    <Content Include="Content\Carousel\CustomerMani.jpg" />
+    <Content Include="Content\Carousel\StampabiliDesign.jpg" />
+    <Content Include="Content\Carousel\StampabiliRotoli.jpg" />
+    <Content Include="Content\Carousel\StampaDigitale.jpg" />
+    <Content Include="Content\Carousel\StampaOffset.jpg" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\ProductImage\AltriFormati.png" />
@@ -1849,6 +1863,10 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\helper-plugins\jquery.ba-throttle-debounce.min.js" />
+    <Content Include="Scripts\helper-plugins\jquery.mousewheel.min.js" />
+    <Content Include="Scripts\helper-plugins\jquery.touchSwipe.min.js" />
+    <Content Include="Scripts\helper-plugins\jquery.transit.min.js" />
     <Content Include="Scripts\jqgridHelper.js" />
     <Content Include="Scripts\autocomplete.js" />
     <Content Include="Content\acetheme\assets\css\less\ace-nav.less" />
@@ -2009,7 +2027,7 @@
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_EditAndCreateSupplier.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_List.cshtml" />
     <Content Include="Areas\DataBase\Views\CustomerSupplier\_ListBase.cshtml" />
-    <Content Include="Areas\DataBase\Views\HomeDb\Index.cshtml" />
+    <Content Include="Areas\DataBase\Views\HomeDb\Index_provaCarousel.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\Copy of _footer.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\EditorTemplates\TaskEstimatedOnRun.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_breadcrumb.cshtml" />
@@ -2196,6 +2214,7 @@
     <Content Include="Areas\Account\Views\Account\_EditProfileCc.cshtml" />
     <Content Include="Areas\Account\Views\Account\EditProfileCc.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\DataBase\Views\HomeDb\Index.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2252,6 +2271,8 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <Content Include="Scripts\jquery.carouFredSel-6.2.1-packed.js" />
+    <Content Include="Scripts\jquery.carouFredSel-6.2.1.js" />
     <Content Include="Scripts\jquery.jqGrid.js" />
     <Content Include="Scripts\jquery.jqGrid.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />

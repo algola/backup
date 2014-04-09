@@ -141,13 +141,14 @@ namespace PapiroMVC.Models
 
                         if (AutoDCut)
                         {
-                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
+//                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
+                            dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Truncate(dCut1_1Res*10)+1)/10 : dCut1_1Res;
 
                             var tempDCut2 = Math.Round(dCut2_2Res * 10000) / 10000;
                             var tempDCut1 = Math.Round(dCut1_1Res * 10000) / 10000;
 
-                            DCut2 = Math.Truncate(tempDCut2 * 100) / 100;
-                            DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
+                            DCut2 = Math.Truncate(tempDCut2 * 1000) / 1000;
+                            DCut1 = Math.Truncate(tempDCut1 * 1000) / 1000;
 
                             if (tempDCut1 > minusSide1 / 2)
                             {

@@ -45,8 +45,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                             a.CodCost,
                             a.CodDocumentProduct,
                             a.Description,
-                            a.UnitCost,
+                            (a.CostDetails.FirstOrDefault().TypeOfQuantity??0).ToString(),
                             a.Quantity.ToString(),
+                            a.UnitCost,
                             a.TotalCost
                         }
                     }

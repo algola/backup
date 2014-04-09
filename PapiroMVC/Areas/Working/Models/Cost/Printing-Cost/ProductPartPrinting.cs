@@ -79,6 +79,17 @@ namespace PapiroMVC.Models
             }
         }
 
+        /// <summary>
+        /// Ml in stampa del formato di stampa
+        /// </summary>
+        public virtual double CalculatedMl
+        {
+            get
+            {
+                return PrintingFormat.GetSide2() / 100;
+            }
+        }
+
         public virtual double CalculatedMqPrintingFormat
         {
             get

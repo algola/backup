@@ -7,5 +7,39 @@
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditCost", new {id= "-1"},new {@class=""})';
         return link.replace("-1", cellvalue);
     }
-</script>
 
+    function umFormatter(cellvalue, options, rowobject) {
+
+
+        var link = "type";
+        //RunTypeOfQuantity = 0,
+        //MqWorkTypeOfQuantity = 1,
+        //WeigthTypeOfQuantity = 2, //quantità e prezzo al kg
+        //MqSheetTypeOfQuantity = 3,
+        //RunLengthMlTypeOfQuantity = 4, //ml di stampa
+
+        var fg = '@HttpContext.GetLocalResourceObject(strings, "UmFg")';
+        var mq = '@HttpContext.GetLocalResourceObject(strings, "UmMq")';
+        var nr = '@HttpContext.GetLocalResourceObject(strings, "UmNr")';
+        var ml = '@HttpContext.GetLocalResourceObject(strings, "UmMl")';
+
+        if (cellvalue == "0")
+            return link.replace("type", fg);
+
+        if (cellvalue == "1")
+            return link.replace("type", mq);
+
+        if (cellvalue == "2")
+            return link.replace("type", nr);
+
+        if (cellvalue == "3")
+            return link.replace("type", mq);
+
+        if (cellvalue == "4")
+            return link.replace("type", ml);
+
+
+        return link;
+
+    }
+</script>

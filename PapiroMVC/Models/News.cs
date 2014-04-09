@@ -11,24 +11,12 @@ namespace PapiroMVC.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Runtime.Serialization;
     
-    
-    	
-    [DataContract] 
-    public partial class Flexo : Litho
+    public partial class News
     {
-    	
-    	[DataMember] 		
-        public Nullable<long> PaperFirstStartLenght { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<double> Width2 { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<double> FlexoWidth { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<long> PaperSecondStartLenght { get; set; }
+        public int CodNew { get; set; }
+        public Nullable<System.DateTime> DateNew { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
     }
 }

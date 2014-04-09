@@ -65,6 +65,7 @@ namespace PapiroMVC.Model
 
             //roll meter
             dbS.AddColumnToTable("taskexecutors", "PaperFirstStartLenght", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "PaperSecondStartLenght", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "FlexoWidth", SchemaDb.Double, "0");
 
             //digital

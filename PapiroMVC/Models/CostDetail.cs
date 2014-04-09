@@ -72,6 +72,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string Guid { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> RollChanges { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

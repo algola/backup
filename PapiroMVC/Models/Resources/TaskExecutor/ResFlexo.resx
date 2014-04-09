@@ -129,6 +129,12 @@
   <data name="PaperFirstStartLenghtToolTip" xml:space="preserve">
     <value>Indica i metri di scarto in avviamento</value>
   </data>
+  <data name="PaperSecondStartLenght" xml:space="preserve">
+    <value>Scarto succ. (mt)</value>
+  </data>
+  <data name="PaperSecondStartLenghtToolTip" xml:space="preserve">
+    <value>Indica i metri di scarto in avviamento, per il cambio rotolo</value>
+  </data>
   <data name="PrintingUnit" xml:space="preserve">
     <value>Cilindri stampa</value>
   </data>

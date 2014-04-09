@@ -8,7 +8,6 @@ namespace PapiroMVC.Models
 {
     public partial class PrintingLabelRollCostDetail : PrintingCostDetail
     {
-
         public List<Cut> Cuts
         {
             get
@@ -162,7 +161,6 @@ namespace PapiroMVC.Models
                     this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
 
                     this.ProductPartPrinting.Update();
-
                 }
             }
         }
@@ -247,6 +245,45 @@ namespace PapiroMVC.Models
                 Error = 3;
             }
 
+        }
+
+
+        public override void UpdateCoeff()
+        {
+            base.UpdateCoeff();
+
+
+            //calcolo dei cambi rotolo!!!!
+            RollChanges = 0;
+
+        }
+
+        public override double Quantity(double qta)
+        {
+            double ret;
+
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            {
+                case QuantityType.RunTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+                case QuantityType.MqWorkTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
+                    break;
+                case QuantityType.WeigthTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+                case QuantityType.MqSheetTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
+                    break;
+                default:
+                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+            }
+
+            return ret;
         }
 
 
