@@ -176,7 +176,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                             dp.Quantity = qtsitem;
                            
-
                             dp.InitCost();
                             document.DocumentProducts.Add(dp);
 

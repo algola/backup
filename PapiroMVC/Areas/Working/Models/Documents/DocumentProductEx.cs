@@ -175,7 +175,6 @@ namespace PapiroMVC.Models
                 cost.DocumentProduct = this;
                 cost.CodDocumentProduct = this.CodDocumentProduct;
 
-                
                 cost.CodProductTask = productTask.CodProductTask;
                 cost.Description = "***Lavorazione del prodotto";
 
@@ -190,23 +189,25 @@ namespace PapiroMVC.Models
             //ProductPartTask & ProductPartsPrintableArticle
             foreach (var productPart in Product.ProductParts)
             {
+                #region ProductPartPrintableArticle
                 foreach (var productPartsPrintableArticle in productPart.ProductPartPrintableArticles)
                 {
                     cost = new Cost();
                     cost.DocumentProduct = this;
                     cost.CodDocumentProduct = this.CodDocumentProduct;
 
-                    cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;                    
+                    cost.CodProductPartPrintableArticle = productPartsPrintableArticle.CodProductPartPrintableArticle;
                     cost.ProductPartsPrintableArticle = productPartsPrintableArticle;
                     cost.ProductPartsPrintableArticle.ProductPart = productPart;
 
                     cost.Description = productPartsPrintableArticle.ToString();
-
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
                     this.Costs.Add(cost);
                 }
+                #endregion
 
+                #region ProductPartTask
                 foreach (var productPartTask in productPart.ProductPartTasks)
                 {
                     cost = new Cost();
@@ -228,7 +229,29 @@ namespace PapiroMVC.Models
 
                     this.Costs.Add(cost);
 
+                    //#region impianti
+                    //cost = new Cost();
+                    //cost.DocumentProduct = this;
+                    //cost.CodDocumentProduct = this.CodDocumentProduct;
+
+                    //cost.CodProductPartTask = productPartTask.CodProductPartTask;
+                    //cost.ProductPartTask = productPartTask;
+                    //cost.ProductPartTask.ProductPart = productPart;
+
+                    //cost.Description = "impianti " + productPartTask.ToString();
+                    //cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+
+                    //if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                    //{
+                    //    cost.Hidden = true;
+                    //    cost.ForceZero = true;
+                    //}
+
+                    //this.Costs.Add(cost);
+
+                    //#endregion
                 }
+                #endregion
             }
 
 
