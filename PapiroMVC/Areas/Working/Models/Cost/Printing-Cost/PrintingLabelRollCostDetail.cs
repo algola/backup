@@ -82,6 +82,7 @@ namespace PapiroMVC.Models
         /// </summary>
         public List<String> BuyingFormats { get; set; }
 
+
         //il tipo è ingannevole... in realtà serve per proporre un'associazione tra nome e formato immediata
         public List<ProductFormatName> BuyingFormatsName
         {
@@ -112,6 +113,7 @@ namespace PapiroMVC.Models
         //every changes fire this update
         public override void Update()
         {
+
             if (ProductPartPrinting == null)
             {
                 switch (ProductPart.TypeOfProductPart)
@@ -163,6 +165,9 @@ namespace PapiroMVC.Models
                     this.ProductPartPrinting.Update();
                 }
             }
+
+            this.UpdateCoeff();
+
         }
 
 
@@ -185,18 +190,22 @@ namespace PapiroMVC.Models
 
                 ppP.Part = this.ProductPart;
                 ppP.PrintingFormat = buyingFormat;
+                ppP.AutoCutParameter = true;
                 ppP.Update();
 
                 if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
                     ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
                 {
+                    //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
                     pHint.Add(new PrintingHint
                     {
                         Format = ppP.Part.Format,
                         DCut1 = ppP.CalculatedDCut1,
                         DCut2 = ppP.CalculatedDCut2,
                         BuyingFormat = buyingFormat,
-                        PrintingFormat = buyingFormat
+                        PrintingFormat = buyingFormat,
+                        Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+
                     });
                 }
             }
@@ -215,7 +224,6 @@ namespace PapiroMVC.Models
             }
 
             //bande di carta calcolate semplicemente con la resa, dati gli z validi e il maxWidth della macchina Flexo
-
             foreach (var item in zValids)
             {
                 double dCut1 = 0;
@@ -231,7 +239,8 @@ namespace PapiroMVC.Models
                         DCut1 = ppP.CalculatedDCut1,
                         DCut2 = ppP.CalculatedDCut2,
                         BuyingFormat = ppP.PrintingFormat,
-                        PrintingFormat = ppP.PrintingFormat
+                        PrintingFormat = ppP.PrintingFormat,
+                        Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString()
                     });
                 }
             }
@@ -244,17 +253,26 @@ namespace PapiroMVC.Models
                 //no format
                 Error = 3;
             }
-
         }
-
 
         public override void UpdateCoeff()
         {
             base.UpdateCoeff();
 
 
-            //calcolo dei cambi rotolo!!!!
-            RollChanges = 0;
+            //calcoli per mt lineari!!!!!!!!
+            var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
+            var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
+
+            var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
+            //mul with cm GetSide2 Printing Format
+            var mtRuns = runs * PrintingFormat.GetSide2() / 10;
+
+            //i 2000 dovrebbero essere rapportati alla carta!!!
+            RollChanges = Math.Truncate((mtRuns + paperFirstStartLenght ?? 0) / 2000);
+
+            var mtWaste = paperFirstStartLenght ?? 0 + (RollChanges * paperSecondStartLenght ?? 0);
+
 
         }
 
@@ -264,28 +282,28 @@ namespace PapiroMVC.Models
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
-                case QuantityType.RunTypeOfQuantity:
-                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
-                    break;
                 case QuantityType.MqWorkTypeOfQuantity:
-                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
-                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
+                    ret = Math.Ceiling( base.Quantity(qta));
                     break;
-                case QuantityType.WeigthTypeOfQuantity:
-                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                case QuantityType.RunLengthMlTypeOfQuantity:
+                    //calcoli per mt lineari!!!!!!!!
+                    var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
+                    var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
+                    
+                    var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
+                    var mtRuns = runs * PrintingFormat.GetSide2() / 10;
+                    var mtWaste = paperFirstStartLenght??0 + (RollChanges * paperSecondStartLenght??0);
+
+                    ret = Math.Ceiling(mtRuns + mtWaste);
                     break;
-                case QuantityType.MqSheetTypeOfQuantity:
-                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
-                    ret = Math.Truncate(1000 * qta * (this.GainForMqRun ?? 0)) / 1000;
-                    break;
+
                 default:
-                    ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    ret = base.Quantity(qta);
                     break;
             }
 
             return ret;
         }
-
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
@@ -432,8 +450,12 @@ namespace PapiroMVC.Models
                     (z - minusSide2) / (SmallerFormat.GetSide2())
                     )));
 
-                //doppio taglio calcolato su SideOnSide 2
-                double dCut2_2Res = ((z) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
+                //doppio taglio calcolato su SideOnSide 2 0,257 --> 0,3
+                double dCut2_2Res = Math.Ceiling(
+                    (Math.Truncate(((z) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2) * 1000) / 1000)
+                    * 10
+                    ) / 10;
+
 
                 int gain1_1 = 1;
                 while (
@@ -441,8 +463,8 @@ namespace PapiroMVC.Models
                     Math.Ceiling(
                     (gain1_1 * SmallerFormat.GetSide1() +
                     (gain1_1 - 1) * dCut2_2Res +
-                    minusSide1) * 100
-                    ) / 100
+                    minusSide1) * 10
+                    ) / 10
 
                     <= maxSide1)
                 {

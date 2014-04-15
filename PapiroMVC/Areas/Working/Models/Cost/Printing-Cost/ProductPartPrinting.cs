@@ -28,6 +28,9 @@ namespace PapiroMVC.Models
             set;
         }
 
+
+        public bool AutoCutParameter { get; set; }
+
         //    public virtual ProductPartPrintingGain GainPartOnPrinting { get; set; }
 
         public virtual void Update()
@@ -53,7 +56,14 @@ namespace PapiroMVC.Models
         {
             get
             {
-                return GainPartOnPrinting.Makereadies.Count;
+                if (GainPartOnPrinting != null)
+                {
+                    return GainPartOnPrinting.Makereadies.Count;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
@@ -61,7 +71,14 @@ namespace PapiroMVC.Models
         {
             get
             {
-                return (double)GainPartOnPrinting.Makereadies.Average(x => x.CalculatedGain ?? 1);
+                if (GainPartOnPrinting !=null)
+                {
+                    return (double)GainPartOnPrinting.Makereadies.Average(x => x.CalculatedGain ?? 1);
+                }
+                else
+                {
+                    return 1;
+                }
             }
         }
 

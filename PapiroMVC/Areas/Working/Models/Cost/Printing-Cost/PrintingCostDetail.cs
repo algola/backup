@@ -9,6 +9,18 @@ namespace PapiroMVC.Models
     public partial class PrintingCostDetail : CostDetail
     {
 
+        //some coeff depend on Quntity... so when quantity changes... we want to recalulate
+        double quantity;
+        public double QuantityProp
+        {
+            get
+            {
+                quantity = this.TaskCost.DocumentProduct.Quantity ?? 0;
+                return quantity;
+            }
+        }
+
+
         /// <summary>
         /// get the partialview name
         /// </summary>
@@ -76,15 +88,15 @@ namespace PapiroMVC.Models
                 Starts = (int)Math.Ceiling(startsToPrint * makereadies);
                 //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
                 GainForRun = (startsToPrint * makereadies / gain);
-                
+
                 //questo valore serve per moltiplicarlo per ottenere le battute del materiale necessario
                 GainForRunForPrintableArticle = (makereadies / gain);
 
                 //moltiplicato per ottenere i mq di produzione
                 GainForMqRun = (startsToPrint * ProductPartPrinting.CalculatedMq);
-                GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMq);
+                GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMqPrintingFormat / gain);
 
-                RollChanges = 0;            
+                RollChanges = 0;
             }
 
 

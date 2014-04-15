@@ -28,15 +28,19 @@
         </li>
 
         <li id="estimatesSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks", "menu-text")
+            @Html.ActionLinkImageSpan(Html.T(strings, "CreateEstimateMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-eur", "menu-text")
         </li>
 
-        @Html.Action("MenuNewEstimate", "Document", new { area = "Working" })
-@*        @Html.Action("MenuCurrentEstimate", "Document", new { area = "Working" }) *@
+        <li id="estimatesSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks", "menu-text")
+        </li>
+        
+   @*     @Html.Action("MenuNewEstimate", "Document", new { area = "Working" })*@
+        
 
-        @Html.Action("MenuNewProduct", "Document", new { area = "Working" })
+            @* @Html.Action("MenuNewProduct", "Document", new { area = "Working" })*@
 
-    </ul>
+</ul>
     <!-- /.nav-list -->
 
     <div class="sidebar-collapse" id="sidebar-collapse">

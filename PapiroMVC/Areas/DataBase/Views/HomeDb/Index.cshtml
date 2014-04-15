@@ -1,5 +1,6 @@
 ﻿@using PapiroMVC.Validation
 
+
 @{
     string strings = "~/Areas/DataBase/Views/HomeDb/Strings";
     string stringsMenu = "~/Views/Shared/Strings";
@@ -7,83 +8,213 @@
     ViewBag.MetaTitle = Html.T(strings, "MetaTitle");
 }
 
-<div class="alert alert-block alert-success">
-    <button type="button" class="close" data-dismiss="alert">
-        <i class="icon-remove"></i>
-    </button>
 
-    <i class="icon-ok green"></i>
-    @Html.T(strings, "Message1") <b>@Html.T(strings, "Message1_I")</b> @Html.T(strings, "Message1_II")
-</div>
+@Html.Action("MetaGenerator", new
+{
+    area = "",
+    page = ("db" + Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
 
-<p>
-    @Html.T(strings, "Message2") <b>@Html.T(strings, "Message2_I")</b> @Html.T(strings, "Message2_II")
-</p>
-<div class="vspace"></div>
-<p>
-    @Html.T(strings, "Message3") <b>@Html.T(strings, "Message3_I")</b> @Html.T(strings, "Message3_II")
-    @Html.T(strings, "Message3_III") <b>@Html.T(strings, "Message3_I")</b>.
-</p>
+})
+@("db" + Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
+@*
+    <div class="widget-box pricing-box">
 
-<div class="widget-box pricing-box">
-    <div class="widget-header header-color-green">
-        <h5 class="bigger red">
-            Clienti/Fornitori
-        </h5>
-    </div>
-
-    <div class="widget-body">
-        <div class="widget-main">
-            <ul class="unstyled spaced3">
-                @for (int k = 1; k < 6; k++)
-                {
-                <li>
-                    <i class="icon-ok green"></i>
-                    prova etc...
-                </li>
-                }
-            </ul>
-
-            <hr>
+        <div class="widget-header header-color-green2">
+            <h5 class="bigger white">
+                @Html.T(strings, "Customer")
+            </h5>
         </div>
 
-    </div>
-</div>
+        <div class="widget-body" style="background: url(~/../../Content/Carousel/Clienti.png)">
+            <div class="widget-main">
+                <ul class="unstyled spaced3">
 
-
-
-<div class="widget-box pricing-box">
-    <div class="widget-header header-color-green">
-        <h5 class="bigger red">
-            Clienti/Fornitori
-        </h5>
-    </div>
-
-    <div class="widget-body">
-        <div class="widget-main">
-            <ul class="unstyled spaced3">
-                @for (int k = 1; k < 6; k++)
-                {
                     <li>
                         <i class="icon-ok green"></i>
-                        prova etc...
+                        @Html.T(strings, "CustomerDescription")
                     </li>
-                }
-            </ul>
+                </ul>
 
-            <hr>
+                <hr />
+                <div class="align-right">
+                    @Html.ActionLink(Html.T(stringsMenu, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, null)
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <div class="align-right">
-                @Html.ActionLink(Html.T(stringsMenu, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, null)
-
+    <div class="widget-box pricing-box">
+        <div class="widget-header header-color-blue2">
+            <h5 class="bigger white">
+                @Html.T(strings, "Consumable")
+            </h5>
         </div>
 
+        <div class="widget-body" style="background: url(~/../../Content/Carousel/Consumabili.JPG) center no-repeat">
+            <div class="widget-main">
+                <ul class="unstyled spaced3">
+                    <li>
+                        <i class="icon-ok green"></i>
+                        @Html.T(strings, "ConsumableDescription")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                    </li>
+
+                </ul>
+
+                <hr>
+
+                <div class="align-right">
+                    @Html.ActionLink(Html.T(stringsMenu, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, null)
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="widget-box pricing-box">
+        <div class="widget-header header-color-orange">
+            <h5 class="bigger white">
+                @Html.T(strings, "Printing")
+            </h5>
+        </div>
+
+        <div class="widget-body" style="background: url(~/../../Content/Carousel/Stampabili.JPG) center no-repeat">
+            <div class="widget-main">
+                <ul class="unstyled spaced3">
+
+                    <li>
+                        <i class="icon-ok green"></i>
+                        @Html.T(strings, "PrintingDescription")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                    </li>
+
+                </ul>
+
+                <hr>
+                <div class="align-right">
+                    @Html.ActionLink(Html.T(stringsMenu, "SheetPrintableArticleMenu"), "IndexSheetPrintableArticle", "Article", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "RollPrintableArticleMenu"), "IndexRollPrintableArticle", "Article", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "RigidPrintableArticleMenu"), "IndexRigidPrintableArticle", "Article", new { area = "DataBase" }, null)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget-box pricing-box">
+        <div class="widget-header header-color-red3">
+            <h5 class="bigger white">
+                @Html.T(strings, "Machine")
+            </h5>
+        </div>
+
+        <div class="widget-body" style="background: url(~/../../Content/Carousel/Macchine.JPG) center no-repeat">
+            <div class="widget-main">
+                <ul class="unstyled spaced3">
+
+                    <li>
+                        <i class="icon-ok green"></i>
+                        @Html.T(strings, "MachineDescription")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                        <br />
+                        @Html.T(strings, "Prova")
+                    </li>
+
+                </ul>
+
+                <hr>
+
+                <div class="align-right">
+                    @Html.ActionLink(Html.T(stringsMenu, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "FlexoMenu"), "IndexFlexo", "TaskExecutor", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "DigitalSheetMenu"), "IndexDigitalSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "PlotterMenu"), "IndexPlotter", "TaskExecutor", new { area = "DataBase" }, null)
+                    -
+                    @Html.ActionLink(Html.T(stringsMenu, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, null)
+
+                </div>
+            </div>
+        </div>
+     </div>
+*@
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="../../Content/Carousel/Consumabili.JPG" />
+            <div class="carousel-caption white">
+                <h3>Consumabili</h3>
+                <p>Scegli con facilità i materiali da utilizzare per realizzare i tuoi prodotti al meglio.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="../../Content/Carousel/Stampabili.JPG" />
+            <div class="carousel-caption white">
+                <h3>Materiali di stampa</h3>
+                <p>Gestione completa dei materiali di stampa della tipografia, centro stampa, etichettificio.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="../../Content/Carousel/Macchine.JPG" />
+            <div class="carousel-caption white">
+                <h3>Macchine & Lavorazioni</h3>
+                <p>Configura in maniera intuitiva e veloce tutte le caratteristiche delle macchine e delle lavorazioni.</p>
+            </div>
+        </div>
+    </div>
+
 </div>
 
+<!-- Controls -->
+<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+</a>
+<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+</a>
 
+@*
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
 
-@*@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
+        <i class="icon-ok green"></i>
+        @Html.T(strings, "Message1") <b>@Html.T(strings, "Message1_I")</b> @Html.T(strings, "Message1_II")
+    </div>
+
+    <p>
+        @Html.T(strings, "Message2") <b>@Html.T(strings, "Message2_I")</b> @Html.T(strings, "Message2_II")
+    </p>
+    <div class="vspace"></div>
+    <p>
+        @Html.T(strings, "Message3") <b>@Html.T(strings, "Message3_I")</b> @Html.T(strings, "Message3_II")
+        @Html.T(strings, "Message3_III") <b>@Html.T(strings, "Message3_I")</b>.
+    </p>
 *@
 @section title{
     @Html.T(strings, "DataBase")
@@ -96,3 +227,20 @@
 @section breadcrumb {
 
 }
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+<script>
+    $(function () {
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    });
+
+</script>

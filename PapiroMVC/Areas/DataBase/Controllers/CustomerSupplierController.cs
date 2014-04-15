@@ -11,7 +11,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
-
+    [AuthorizeUser]
     public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         

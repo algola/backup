@@ -77,7 +77,7 @@
             };
 
             $.ajax({
-                url: '@(Url.Action("ChangeProductPartFormatFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangePPartFormat", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
@@ -108,7 +108,7 @@
             };
 
             $.ajax({
-                url: '@(Url.Action("ChangeBuyingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangeBuyingFormat", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
@@ -140,7 +140,7 @@
         };
 
         $.ajax({
-            url: '@(Url.Action("ChangePrintingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangePrintingFormat", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',

@@ -135,6 +135,15 @@
   <data name="AdvTitle" xml:space="preserve">
     <value>Annunci macchine da stampa, digitali e offset, usate e nuove</value>
   </data>
+  <data name="dbIndexDescription" xml:space="preserve">
+    <value>Gestionale per tipografie, litografie e stampa digitale, gestione commesse e magazzino</value>
+  </data>
+  <data name="dbIndexKeyword" xml:space="preserve">
+    <value>stampa, digitale, offset, magazzino, preventivi, preventivazione, spesa, gratis</value>
+  </data>
+  <data name="dbIndexTitle" xml:space="preserve">
+    <value>Anagrafica gestionale per la stampa digitale e stampa offset</value>
+  </data>
   <data name="ECommerceDescription" xml:space="preserve">
     <value>e-commerce per la stampa digitale e offset online, rapido, semplice e comodo, sia per l'Azienda Grafica che lo gestisce tramite un pannello di controllo, che per il Cliente, che acquista in pochi click.</value>
   </data>

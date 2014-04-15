@@ -57,6 +57,12 @@ namespace PapiroMVC.Models
             get
             {
                 CostDetail.QuantityType ret = CostDetail.QuantityType.RunTypeOfQuantity;
+
+                if (TypeOfExecutor == ExecutorType.Flexo)
+                {
+                    ret = CostDetail.QuantityType.RunLengthMlTypeOfQuantity;
+                }
+
                 var estimatedOn = this.SetTaskExecutorEstimatedOn.FirstOrDefault();
                 if (estimatedOn != null)
                 {

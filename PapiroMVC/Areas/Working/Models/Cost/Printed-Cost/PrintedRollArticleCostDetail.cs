@@ -55,12 +55,38 @@ namespace PapiroMVC.Models
 
         public override double Quantity(double qta)
         {
-            var ret = base.Quantity(qta);
+            double ret;
+
+            //var ret = base.Quantity(qta);
             //questo dovrebbe far ottenere il costo!!!!!!
             var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
             var article = (RollPrintableArticle)extract.FirstOrDefault();
 
+            double mqMat = 0;
+
+            if ((QuantityType)(ComputedBy.TypeOfQuantity??0) == QuantityType.RunLengthMlTypeOfQuantity)
+            {
+                //prendo i ml li moltiplico per la banca
+                mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()/100;
+            }
+            else
+            {
+                //prendo i ml li moltiplico per la banca
+                mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 10000;
+            }
+
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            {
+                case QuantityType.MqWorkTypeOfQuantity:
+                    ret = Math.Ceiling(mqMat);
+                    break;
+                default:
+                    ret = base.Quantity(qta);
+                    break;
+            }
+
             return ret;
+
         }
 
 

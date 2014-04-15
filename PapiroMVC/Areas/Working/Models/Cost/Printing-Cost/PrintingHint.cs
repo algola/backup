@@ -15,6 +15,8 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
 
+        public string Description { get; set; }
+
         [DisplayNameLocalized(typeof(ResProductPart), "DCut1")]
         [Tooltip(typeof(ResProductPart), "DCut1ToolTip")]
         public Nullable<double> DCut1 { get; set; }
@@ -34,7 +36,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResProductPart), "PrintingFormat")]
         [Tooltip(typeof(ResProductPart), "PrintingFormatToolTip")]
         public string PrintingFormat { get; set; }
-
 
     }
 }

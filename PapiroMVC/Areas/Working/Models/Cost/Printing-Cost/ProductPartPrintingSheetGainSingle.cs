@@ -142,7 +142,7 @@ namespace PapiroMVC.Models
                         if (AutoDCut)
                         {
 //                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
-                            dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Truncate(dCut1_1Res*10)+1)/10 : dCut1_1Res;
+                            dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Ceiling(dCut2_2Res*10))/10 : dCut1_1Res;
 
                             var tempDCut2 = Math.Round(dCut2_2Res * 10000) / 10000;
                             var tempDCut1 = Math.Round(dCut1_1Res * 10000) / 10000;
@@ -150,18 +150,18 @@ namespace PapiroMVC.Models
                             DCut2 = Math.Truncate(tempDCut2 * 1000) / 1000;
                             DCut1 = Math.Truncate(tempDCut1 * 1000) / 1000;
 
-                            if (tempDCut1 > minusSide1 / 2)
-                            {
-                                //ingombro
-                                var ingo = (SmallerFormat.GetSide1() + dCut1_1Res) * (gain1_1);
-                                var restoIngo = (LargerFormat.GetSide1() - ingo);
+                            //if (tempDCut1 > minusSide1 / 2)
+                            //{
+                            //    //ingombro
+                            //    var ingo = (SmallerFormat.GetSide1() + dCut1_1Res) * (gain1_1);
+                            //    var restoIngo = (LargerFormat.GetSide1() - ingo);
 
-                                if (((LargerFormat.GetSide1() - (SmallerFormat.GetSide1() + tempDCut1) * (gain1_1)) <= minusSide1))
-                                {
-                                    tempDCut1 = Math.Max(tempDCut2, minusSide1 / 2);
-                                    DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
-                                }
-                            }
+                            //    if (((LargerFormat.GetSide1() - (SmallerFormat.GetSide1() + tempDCut1) * (gain1_1)) < minusSide1))
+                            //    {
+                            //        tempDCut1 = Math.Max(tempDCut2, minusSide1 / 2);
+                            //        DCut1 = Math.Truncate(tempDCut1 * 100) / 100;
+                            //    }
+                            //}
 
                             if (gain1_1 == 1)
                             {

@@ -43,7 +43,7 @@ namespace PapiroMVC.Models
                 case ProductPart.ProductPartType.ProductPartSingleLabelRoll:
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleLabelRoll)Part).SubjectNumber ?? 1;
 
-                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).AutoDCut = true;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).AutoDCut = AutoCutParameter;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).GiraVerso = true;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = 1;
 
@@ -55,11 +55,11 @@ namespace PapiroMVC.Models
             ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
             GainPartOnPrinting.CalculateGain();
 
-            if (((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).AutoDCut)
-            {
-                this.Part.DCut1 = GainPartOnPrinting.DCut1;
-                this.Part.DCut2 = GainPartOnPrinting.DCut2;                
-            }
+            //if (((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).AutoDCut)
+            //{
+            //    this.Part.DCut1 = GainPartOnPrinting.DCut1;
+            //    this.Part.DCut2 = GainPartOnPrinting.DCut2;                
+            //}
 
         }
     }

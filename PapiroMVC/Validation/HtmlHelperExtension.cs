@@ -293,7 +293,21 @@ namespace PapiroMVC.Validation
 
             var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttribute);
             {
-                attrs.Add("class", "col-xs-10 col-sm-5");
+                string value;
+
+                if (attrs.ContainsKey("class"))
+                {
+                    value = (string)attrs["class"];
+                    value += " col-xs-10 col-sm-5";
+                    attrs["class"] = value;
+                    Console.WriteLine(value);
+                }
+                else
+                {
+                    attrs.Add("class", "col-xs-10 col-sm-5");
+                }
+
+
                 attrs.Add("placeholder", "Username");
             }
             htmlAttribute = attrs;
@@ -310,6 +324,7 @@ namespace PapiroMVC.Validation
 
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("controls col-sm-9");
+
             editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
 
 

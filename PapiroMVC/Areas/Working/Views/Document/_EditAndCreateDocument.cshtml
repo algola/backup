@@ -19,76 +19,88 @@
 
 }
 
-<div id="status">
+<div id="status" class="no-padding">
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal", @id = "documentForm" }))
     {
         <div class="row-fluid">
 
-            <div class="btn-group">
-                <button class="btn btn-small btn-info">@Html.T(strings, "Menu")</button>
+            @*
+                <div class="btn-group">
+                    <button class="btn btn-small btn-info">@Html.T(strings, "Menu")</button>
 
-                <button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle">
-                    <span class="caret"></span>
-                </button>
+                            <button data-toggle="dropdown" class="btn btn-small btn-info dropdown-toggle">
+                                <span class="caret"></span>
+                            </button>
 
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#" onclick="save();">@Html.T(strings, "Save")</a>
-                    </li>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="#" onclick="save();">@Html.T(strings, "Save")</a>
+                                </li>
 
-                    <li>
-                        <a href="#" onclick="estimateOpenxml();">@Html.T(strings, "Print")</a>
-                    </li>
+                                <li>
+                                    <a href="#" onclick="estimateOpenxml();">@Html.T(strings, "Print")</a>
+                                </li>
 
-                    <li class="divider"></li>
+                                <li class="divider"></li>
 
-                    <li>
-                        <a href="#">No link</a>
-                    </li>
-                </ul>
-            </div>
+                                <li>
+                                    <a href="#">No link</a>
+                                </li>
+                            </ul>
+                        </div>
+
+            *@
+
+        </div>
 
 
-            <div class="span12">
+        <div class="span12">
+            <div class="span6">
 
                 @Html.ValidationSummary(true)
 
-                <p>
-                    <div class="well no-padding-left no-padding-rigth">
-                        <div class="controls col-sm-9">
-                            <a class="dialogRef" href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
-                        </div>
-                        @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
-                        @Html.HiddenFor(model => model.CodDocument)
-                        @Html.AlgolaEditorFor(model => model.DateDocument)
-                        @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
-                        @Html.HiddenFor(model => model.Notes)
+                <div class="well no-padding">
+                    <div class="controls col-sm-9">
+                        <a class="dialogRef" href="javascript:void(0)" id="staticDialog">@Html.T(stringsGrid, "DialogTitle")</a>
+                    </div>
+                    @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
+                    @Html.HiddenFor(model => model.CodDocument)
+                    @Html.AlgolaEditorFor(model => model.DateDocument)
+                    @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
+                    @Html.HiddenFor(model => model.Notes)
 
-                        @Html.AlgolaEditorFor(model => model.EstimateNumber)
-                        @Html.HiddenFor(model => model.TimeStampTable)
+                    @Html.AlgolaEditorFor(model => model.EstimateNumber)
+                    @Html.HiddenFor(model => model.TimeStampTable)
 
-                        @Html.HiddenFor(model => model.CodCustomer)
+                    @Html.HiddenFor(model => model.CodCustomer)
 
-                        @Scripts.Render("~/bundles/autocomplete")
+                    @Scripts.Render("~/bundles/autocomplete")
+                </div>
+
+                @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
+                {
+                    <div id="well no-padding-left no-padding-rigth">
+                        <span class="span12">
+                            <!--/span--> @Html.Partial("_NewProductCommand", new NewProductCommand())
+                        </span>
                     </div>
 
-                    @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
-                    {
-                        <div id="status2">
+                    @*
+                        <div id="status2" class="nopadding well" >
                             @Html.AlgolaAutocompleteFor(model => model.NewProductCommand.NewProduct, "NewProductAutoComplete", "Document")
                         </div>
-                    }
+                    *@                    }
 
-                </p>
             </div>
 
+                <div id="_listDocumentProduct" class="span5 well">
+                        @Html.Partial("_ListDocumentProduct", Model)
+                </div>
 
+                <div class="span1"></div>
         </div>
 
-        <div id="_listDocumentProduct">
-            @Html.Partial("_ListDocumentProduct", Model)
-        </div>
 
 
         <div id="dialog-message" class="hide">

@@ -1761,14 +1761,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Carousel\ConsumabiliColore.jpg" />
-    <Content Include="Content\Carousel\ConsumabiliRotolo.jpg" />
-    <Content Include="Content\Carousel\CustomerCoppia.jpg" />
-    <Content Include="Content\Carousel\CustomerMani.jpg" />
-    <Content Include="Content\Carousel\StampabiliDesign.jpg" />
-    <Content Include="Content\Carousel\StampabiliRotoli.jpg" />
-    <Content Include="Content\Carousel\StampaDigitale.jpg" />
-    <Content Include="Content\Carousel\StampaOffset.jpg" />
+    <Content Include="Content\Carousel\Macchine.JPG" />
+    <Content Include="Content\Carousel\Stampabili.JPG" />
+    <Content Include="Content\Carousel\Consumabili.JPG" />
+    <Content Include="Content\Carousel\Clienti.png" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\ProductImage\AltriFormati.png" />
@@ -1863,6 +1859,7 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap-carousel.js" />
     <Content Include="Scripts\helper-plugins\jquery.ba-throttle-debounce.min.js" />
     <Content Include="Scripts\helper-plugins\jquery.mousewheel.min.js" />
     <Content Include="Scripts\helper-plugins\jquery.touchSwipe.min.js" />
@@ -2215,10 +2212,12 @@
     <Content Include="Areas\Account\Views\Account\EditProfileCc.cshtml" />
     <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
     <Content Include="Areas\DataBase\Views\HomeDb\Index.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingLabelRollCostDetailResult.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </None>
+    <None Include="Properties\PublishProfiles\gestionestampa.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />

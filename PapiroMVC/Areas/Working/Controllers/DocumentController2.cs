@@ -73,7 +73,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="buyingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeBuyingFormatInPrintingCostDetail(string buyingFormat)
+        public ActionResult ChangeBuyingFormat(string buyingFormat)
         {
 
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
@@ -98,7 +98,12 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView(cv.PartialViewName, cv);
         }
 
-
+        [HttpGet]
+        public ActionResult GetPrintingLabelRollCostDetailResult()
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            return PartialView(cv.PartialViewName + "Result", cv);
+        }
 
         /// <summary>
         /// This Action modifies ProductPart format and Update Cost
@@ -106,7 +111,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeProductPartFormatFormatInPrintingCostDetail(string format, string dCut1, string dCut2)
+        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2)
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
@@ -116,12 +121,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 //catch ProductPart from repository and save it with canges
                 var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
+
                 var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
 
                 try
                 {
                     prodPart.DCut1 = dCut1 == "" ? 0 : Convert.ToDouble(dCut1);
                     prodPart.DCut2 = dCut2 == "" ? 0 : Convert.ToDouble(dCut2);
+                    prodPart.IsDCut = true;
                 }
                 catch (Exception)
                 {
@@ -139,12 +146,23 @@ namespace PapiroMVC.Areas.Working.Controllers
                 if (TryValidateModel(prodPart))
                 {
                     productRepository.Edit(prod);
-                    productRepository.Save();                        
+                    productRepository.Save();
+
+                    cv.ProductPart.IsDCut = true;
 
                     cv.ProductPart.DCut1 = Convert.ToDouble(dCut1 == "" ? "0" : dCut1);
                     cv.ProductPart.DCut2 = Convert.ToDouble(dCut2 == "" ? "0" : dCut2);
                     cv.ProductPart.Format = format;
                     cv.ProductPart.UpdateOpenedFormat();
+                }
+                else
+                {
+                    var errors = ModelState
+                        .Where(x => x.Value.Errors.Count > 0)
+                        .Select(x => new { x.Key, x.Value.Errors })
+                        .ToArray();
+
+                    Console.WriteLine(errors);
                 }
 
             }
@@ -164,7 +182,50 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="PrintingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePrintingFormatInPrintingCostDetail(string PrintingFormat)
+        public ActionResult ChangePrintingFormatAndPPartFormat(string PrintingFormat, string format, string dCut1, string dCut2)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            cv.PrintingFormat = PrintingFormat;
+            Session["CostDetail"] = cv;
+            return ChangePPartFormat(format, dCut1, dCut2);
+        }
+
+        /// <summary>
+        /// Action modifies BuyingFormat and Update Cost
+        /// </summary>
+        /// <param name="BuyingFormat"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangeBuyingFormatAndPPartFormat(string buyingFormat, string format, string dCut1, string dCut2)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            switch (cv.TypeOfCostDetail)
+            {
+                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+                    ((PrintingLabelRollCostDetail)cv).BuyingFormat = buyingFormat;
+                    break;
+                case CostDetail.CostDetailType.PrintingSheetCostDetail:
+                    ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
+                    break;
+                case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    break;
+                default:
+                    break;
+            }
+
+            cv.PrintingFormat = buyingFormat;
+            Session["CostDetail"] = cv;
+            return ChangePPartFormat(format, dCut1, dCut2);
+        }
+
+        /// <summary>
+        /// Action modifies PrintingFormat and Update Cost
+        /// </summary>
+        /// <param name="PrintingFormat"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangePrintingFormat(string PrintingFormat)
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             cv.PrintingFormat = PrintingFormat;
@@ -325,7 +386,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
 
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-                   ((PrintingLabelRollCostDetail) cv).FuzzyAlgo();
+                    ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
@@ -333,10 +394,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                    viewName = "PrintedCostDetail";
+                    viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                    viewName = "PrintedCostDetail";
+                    viewName = "PrintingCostDetail";
                     break;
 
                 default:

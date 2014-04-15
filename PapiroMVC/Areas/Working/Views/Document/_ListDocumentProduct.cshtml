@@ -13,7 +13,7 @@
 <div id="containerbox">
     <!-- Main Page -->
 
-    <table id="listDocumentProduct"><tr><td /></tr></table>
+    <table id="listDocumentProduct" style="background-color:white"><tr><td /></tr></table>
     <div id="pager"></div>
 </div>
 
@@ -101,8 +101,8 @@
             },
 
         cm = [
-            { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editProduct, search: false },
-            { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 600, align: 'left', editable: false, search: false }
+            { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 60, align: 'right', editable: false, hidden: false, formatter: editProduct, search: false },
+            { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 200, align: 'left', editable: false, search: false }
         ],
 
         cm2 = [
@@ -195,7 +195,7 @@
             rowList: [10, 20, 50],
             gridview: true,
             multiselect: true,
-            pager: '#pager',
+            //  pager: '#pager',
             page: isColState ? myColumnsState.page : 1,
             search: isColState ? myColumnsState.search : false,
             postData: isColState ? { filters: myColumnsState.filters } : {},
@@ -305,6 +305,9 @@
                 window.location.reload();
             }
         });
+
+        $grid.filterToolbar(); //adds the search toolbar
+        $grid[0].toggleToolbar();
     });
     //]]>
 </script>
@@ -314,7 +317,6 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#listDocumentProduct");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);

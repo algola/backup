@@ -96,6 +96,21 @@
               Looks up a localized string similar to Annunci macchine da stampa, digitali e offset, usate e nuove.
             </summary>
         </member>
+        <member name="P:Resources.gestionestampa.com.dbIndexDescription">
+            <summary>
+              Looks up a localized string similar to Gestionale per tipografie, litografie e stampa digitale, gestione commesse e magazzino.
+            </summary>
+        </member>
+        <member name="P:Resources.gestionestampa.com.dbIndexKeyword">
+            <summary>
+              Looks up a localized string similar to stampa, digitale, offset, magazzino, preventivi, preventivazione, spesa, gratis.
+            </summary>
+        </member>
+        <member name="P:Resources.gestionestampa.com.dbIndexTitle">
+            <summary>
+              Looks up a localized string similar to Anagrafica gestionale per la stampa digitale e stampa offset.
+            </summary>
+        </member>
         <member name="P:Resources.gestionestampa.com.ECommerceDescription">
             <summary>
               Looks up a localized string similar to e-commerce per la stampa digitale e offset online, rapido, semplice e comodo, sia per l&apos;Azienda Grafica che lo gestisce tramite un pannello di controllo, che per il Cliente, che acquista in pochi click..
@@ -1040,7 +1055,7 @@
             <param name="codCost"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatInPrintingCostDetail(System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormat(System.String)">
             <summary>
             This Action modifies buyingFormat and Update Cost.
             Is needed  Session["CostDetail"]
@@ -1048,14 +1063,28 @@
             <param name="buyingFormat"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeProductPartFormatFormatInPrintingCostDetail(System.String,System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePPartFormat(System.String,System.String,System.String)">
             <summary>
             This Action modifies ProductPart format and Update Cost
             </summary>
             <param name="format"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePrintingFormatInPrintingCostDetail(System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePrintingFormatAndPPartFormat(System.String,System.String,System.String,System.String)">
+            <summary>
+            Action modifies PrintingFormat and Update Cost
+            </summary>
+            <param name="PrintingFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatAndPPartFormat(System.String,System.String,System.String,System.String)">
+            <summary>
+            Action modifies BuyingFormat and Update Cost
+            </summary>
+            <param name="BuyingFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePrintingFormat(System.String)">
             <summary>
             Action modifies PrintingFormat and Update Cost
             </summary>

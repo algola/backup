@@ -186,4 +186,7 @@
   <data name="PrintingDescription" xml:space="preserve">
     <value>Gestisci in piena libertà le anagrafiche dei materiali stampabili. A foglio, rotolo, etc...</value>
   </data>
+  <data name="Prova" xml:space="preserve">
+    <value>Prova</value>
+  </data>
 </root>

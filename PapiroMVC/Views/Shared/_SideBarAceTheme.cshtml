@@ -21,14 +21,27 @@
         </li>
 
         @if (Request.IsAuthenticated)
-        {      
-
+        {
             <li id="documentSlidebar">
-                @Html.ActionLinkImageSpan(Html.T(strings, "DocumentMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-pencil-square-o", "menu-text")
+                <a href="#" class="dropdown-toggle">
+                    <i class="fa fa-fw fa-lg fa-pencil-square-o"></i>
+                    <span class="menu-text">@Html.T(strings, "DocumentMenu") </span>
+
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+
+                <ul class="submenu">
+                    <li id="sheetSlidebar">
+                        @Html.ActionLinkImage(Html.T(strings, "CreateEstimateMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-eur")
+                    </li>
+
+                    <li id="rollSlidebar">
+                        @Html.ActionLinkImage(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks")
+                    </li>
+                </ul>
             </li>
 
         }
-
 
         <li id="aboutSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "About"), "About", "Home", new { area = "" }, "fa fa-fw fa-lg fa-info", "menu-text")

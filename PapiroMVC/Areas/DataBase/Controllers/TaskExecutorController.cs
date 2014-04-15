@@ -13,6 +13,7 @@ using PapiroMVC.Validation;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
+    [AuthorizeUser]
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
 
@@ -1155,8 +1156,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     var maxCyl = flexoEx.TaskExecutorCylinders.Max(x => x.Z);
                     var minCyl = flexoEx.TaskExecutorCylinders.Where(y => y.Z != 0).Min(x => x.Z);
 
-                    c.FormatMax = c.FlexoWidth + "x" + maxCyl / 8 * 2.54;
-                    c.FormatMin = 0 + "x" + minCyl / 8 * 2.54;
+                    c.FormatMax = c.FlexoWidth + "x" + ((double)maxCyl / 8) * 2.54;
+                    c.FormatMin = 0 + "x" + ((double)minCyl / 8) * 2.54;
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();

@@ -70,7 +70,7 @@ else
 
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
 
-    @Html.AlgolaEditorFor(model => model.FormatPersonalized)
+    @Html.AlgolaEditorFor(model => model.FormatPersonalized, new { @class = "personal" })
 
 </div>
 
@@ -110,6 +110,7 @@ else
         if (singleValues == '0x0') {
             $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv').hide();
             $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv').show();
+            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__FormatPersonalized').focus();
         }
     });
 

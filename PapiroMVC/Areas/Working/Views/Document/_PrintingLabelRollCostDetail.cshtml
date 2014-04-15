@@ -9,27 +9,28 @@
     var x = Model.Cuts;
 
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
+
+
 }
 
 <div id="sheetCostDetail">
- @*   <h3 class="header smaller lighter green">@Html.T(strings, "BuyingFormat")</h3> *@
+    @*   <h3 class="header smaller lighter green">@Html.T(strings, "BuyingFormat")</h3> *@
     <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
 
-     <div class="control-group">
-         <div class="controls col-sm-9">
 
-             @Html.DropDownListFor((y => y.BuyingFormat),
+    <div class="control-group" hidden="hidden">
+        <div class="controls col-sm-9">
+
+            @Html.DropDownListFor((y => y.BuyingFormat),
             new SelectList(Model.BuyingFormatsName, "CodFormat", "FormatName"), new { id = "ddBuyingFormat" })
 
-         </div>
-         <div>
-             <canvas id="buyingSheet" width="0" height="0"></canvas>
-         </div>
-     </div>
+        </div>
+        <canvas id="buyingSheet" width="0" height="0"></canvas>
+    </div>
 
     @* <div class="space"></div>
-    <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
-*@
+        <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
+    *@
 
     <div class="control-group" hidden="hidden">
         <div class="controls col-sm-9">
@@ -38,7 +39,6 @@
         </div>
     </div>
 
-    @Html.AlgolaEditorFor(y => y.ProductPart.Format, new { id = "ddPartFormat" })
     @Html.Partial("_DCutLabel", Model)
 
     <canvas id="printingSingleSheet" width="300" height="170"></canvas>
@@ -65,29 +65,59 @@
         }
     </div>
 
+
+    <table class="table" id="htmlTable">
+        <thead>
+            <tr>
+                <th>Format</th>
+                <th>Int.s Banda</th>
+                <th>Int.s Passo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.PrintingHints)
+            {
+            <tr>
+                <td class="padding-2 no-padding-bottom">@i.Description</td>
+                <td class="padding-2 no-padding-bottom">@i.BuyingFormat</td>
+                <td class="padding-2 no-padding-bottom">@i.DCut1</td>
+                <td class="padding-2 no-padding-bottom">@i.DCut2</td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+
+    <div id="results">
+        @Html.Partial("_PrintingLabelRollCostDetailResult", Model)
+    </div>
+
 </div>
 
 <script type="text/javascript">
 
-    $("#ProductPart_Format").keypress(function (event) {
+    $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2").keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
 
             //data are collected into
             var dataToPass = {
-                format: $("#ProductPart_Format").val(),
-                dCut1: $("#ProductPart_DCut1").val(),
-                dCut2: $("#ProductPart_DCut2").val()
+                format: $("#ddPartFormat").val(),
+                dCut1: $("#ddPartDCut1").val(),
+                dCut2: $("#ddPartDCut2").val()
             };
 
+
             $.ajax({
-                url: '@(Url.Action("ChangeProductPartFormatFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangePPartFormat", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
                     reloadFormat();
+                    initAndPosition();
+
                 },
                 error: function () {
                     alert("error");
@@ -98,34 +128,54 @@
     });
 
 
+    $("#ddBuyingFormat").change(function () {
 
-        $("#ddBuyingFormat").change(function () {
-
-            var buyingFormat = "";
-            $("#ddBuyingFormat option:selected").each(function () {
-                buyingFormat += $(this)[0].value;
-            });
-
-            //data are collected into
-            var dataToPass = {
-                buyingFormat: buyingFormat,
-            };
-
-            $.ajax({
-                url: '@(Url.Action("ChangeBuyingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
-                type: 'POST',
-                data: JSON.stringify(dataToPass),
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $('#sheetCostDetail').html(data);
-                    reloadFormat();
-                },
-                error: function () {
-                    alert("error");
-                },
-
-            });
+        var buyingFormat = "";
+        $("#ddBuyingFormat option:selected").each(function () {
+            buyingFormat += $(this)[0].value;
         });
+
+        //data are collected into
+        var dataToPass = {
+            buyingFormat: buyingFormat,
+            format: $("#ddPartFormat").val(),
+            dCut1: $("#ddPartDCut1").val(),
+            dCut2: $("#ddPartDCut2").val()
+        };
+
+        $.ajax({
+            url: '@(Url.Action("ChangeBuyingFormatAndPPartFormat", "Document", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#sheetCostDetail').html(data);
+                reloadFormat();
+                initAndPosition();
+
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    });
+
+    function getPrintingLabelRollCostDetailResult() {
+
+        $.ajax({
+            url: '@(Url.Action("getPrintingLabelRollCostDetailResult", "Document", new { area = "Working" }))',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#results').html(data);
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    }
 
 </script>
 
@@ -144,13 +194,14 @@
         };
 
         $.ajax({
-            url: '@(Url.Action("ChangePrintingFormatInPrintingCostDetail", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangePrintingFormat", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
                 reloadFormat();
+                initAndPosition();
             },
             error: function () {
                 alert("error");
@@ -274,5 +325,56 @@
     //this event is fired only the first time
     $(document).ready(function () {
         reloadFormat(); //draw buying and printing
+        initAndPosition();
     });
+
+
+    function initAndPosition() {
+
+        //elimino il contenuto
+        $('#printingHintTable').html('');
+        var myDiv1Para = $('#htmlTable').remove();
+        //sposto la tabella a dx
+        myDiv1Para.appendTo('#printingHintTable');
+
+        $('#htmlTable td:nth-child(2)').toggle();
+        $('#ddBuyingFormat').toggle();
+
+
+        $('tr').not(':first').on('click', function () {
+            $(".highlight").removeClass("highlight");
+            $(this).addClass("highlight");
+
+            var pFormat = $(this).closest('tr').find('td:eq(1)').text();
+            var dCut1 = $(this).closest('tr').find('td:eq(2)').text();
+            var dCut2 = $(this).closest('tr').find('td:eq(3)').text();
+
+            $('#ddBuyingFormat').val(pFormat);
+            $('#ddPartDCut1').val(dCut1);
+            $('#ddPartDCut2').val(dCut2);
+
+            //submit with dropdown change event
+            $('#ddBuyingFormat').trigger('change');
+
+        });
+
+        var searchText = '@(Model.BuyingFormat)';
+
+        $("tr").removeClass("highlight");
+
+        $("#htmlTable tr").filter(function () {
+            return $("td:eq(" + '1' + ")", this).text().indexOf(searchText) !== -1;
+        }).closest("tr").addClass("highlight");
+
+
+        //ributto i risultati nella pagina
+        getPrintingLabelRollCostDetailResult();
+    }
+
 </script>
+
+<style>
+    .highlight {
+        background-color: #2ba6cb;
+    }
+</style>

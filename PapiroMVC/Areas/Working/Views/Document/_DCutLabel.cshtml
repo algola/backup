@@ -5,8 +5,14 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
 }
 
-<div>
+<div class="well">
     <div class="row-fluid">
+
+        <div class="span3">
+            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">F.to Etichetta</h6>
+            @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "input-mini", id = "ddPartFormat" })
+        </div>
+
         <div class="span3">
             <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Int.Spazio Banda</h6>
             @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
@@ -19,3 +25,5 @@
     </div>
 
 </div>
+
+<style></style>

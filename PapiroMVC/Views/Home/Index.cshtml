@@ -10,7 +10,7 @@
 @Html.Action("MetaGenerator", new
 {
     area = "",
-    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
+    page = (Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
 })
 
 @section title{
