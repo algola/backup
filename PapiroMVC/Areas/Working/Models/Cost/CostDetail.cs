@@ -35,7 +35,11 @@ namespace PapiroMVC.Models
 
             PrintedSheetArticleCostDetail = 10,
             PrintedRollArticleCostDetail = 11,
-            PrintedRigidArticleCostDetail = 12
+            PrintedRigidArticleCostDetail = 12,
+
+
+            ImplantCostDetail = 100
+
         }
 
         public CostDetailType TypeOfCostDetail

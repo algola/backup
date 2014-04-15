@@ -45,8 +45,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                             a.CodCost,
                             a.CodDocumentProduct,
                             a.Description,
-                            (a.CostDetails.FirstOrDefault().TypeOfQuantity??0).ToString(),
-                            a.Quantity.ToString(),
+                            (a.CostDetails.FirstOrDefault()!=null?a.CostDetails.FirstOrDefault().TypeOfQuantity??0:0).ToString(),
+                            (a.Quantity??0).ToString(),                            
                             a.UnitCost,
                             a.TotalCost
                         }
@@ -257,7 +257,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 var name = (string)HttpContext.GetLocalResourceObject(strings, "CodMenuProduct" + item.CodMenuProduct);
                 item.Name = name;
 
-                if (name=="")
+                if (name == "")
                 {
                     Console.WriteLine();
                 }

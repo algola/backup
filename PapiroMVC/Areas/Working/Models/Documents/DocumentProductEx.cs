@@ -229,27 +229,27 @@ namespace PapiroMVC.Models
 
                     this.Costs.Add(cost);
 
-                    //#region impianti
-                    //cost = new Cost();
-                    //cost.DocumentProduct = this;
-                    //cost.CodDocumentProduct = this.CodDocumentProduct;
+                    #region impianti
+                    cost = new Cost();
+                    cost.DocumentProduct = this;
+                    cost.CodDocumentProduct = this.CodDocumentProduct;
 
-                    //cost.CodProductPartTask = productPartTask.CodProductPartTask;
-                    //cost.ProductPartTask = productPartTask;
-                    //cost.ProductPartTask.ProductPart = productPart;
+                    cost.CodProductPartImplantTask = productPartTask.CodProductPartTask;
+                    cost.ProductPartImplantTask = productPartTask;
+                    cost.ProductPartImplantTask.ProductPart = productPart;
 
-                    //cost.Description = "impianti " + productPartTask.ToString();
-                    //cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+                    cost.Description = "impianti " + productPartTask.ToString();
+                    cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
-                    //if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
-                    //{
-                    //    cost.Hidden = true;
-                    //    cost.ForceZero = true;
-                    //}
+                    if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        cost.Hidden = true;
+                        cost.ForceZero = true;
+                    }
 
-                    //this.Costs.Add(cost);
+                    this.Costs.Add(cost);
 
-                    //#endregion
+                    #endregion
                 }
                 #endregion
             }

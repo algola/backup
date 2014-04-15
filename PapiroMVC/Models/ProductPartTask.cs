@@ -21,6 +21,7 @@ namespace PapiroMVC.Models
         public ProductPartTask()
         {
             this.Costs = new HashSet<Cost>();
+            this.ImplantCosts = new HashSet<Cost>();
         }
     
     	
@@ -48,5 +49,7 @@ namespace PapiroMVC.Models
         public virtual OptionTypeOfTask OptionTypeOfTask { get; set; }
     	[DataMember]
         public virtual ICollection<Cost> Costs { get; set; }
+    	[DataMember]
+        public virtual ICollection<Cost> ImplantCosts { get; set; }
     }
 }

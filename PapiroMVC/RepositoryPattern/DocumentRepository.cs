@@ -97,6 +97,23 @@ namespace Services
                     }
                 }
 
+                cost.ProductPartImplantTask = Context.ProductPartTasks.SingleOrDefault(x => x.CodProductPartTask == cost.CodProductPartImplantTask);
+                if (cost.ProductPartImplantTask != null)
+                {
+                    cost.ProductPartImplantTask.OptionTypeOfTask = Context.OptionTypeOfTasks.SingleOrDefault(y => y.CodOptionTypeOfTask == cost.ProductPartImplantTask.CodOptionTypeOfTask);
+
+                    var ppTask = cost.ProductPartImplantTask;
+                    ppTask.ProductPart = Context.ProductParts.SingleOrDefault(h => h.CodProductPart == ppTask.CodProductPart);
+
+                    //ppTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Where(pp => pp.CodProductPart == ppTask.ProductPart.CodProductPart).ToList();
+
+                    //foreach (var item in ppTask.ProductPart.ProductPartPrintableArticles)
+                    //{
+                    //    item.Costs = Context.Costs.Where(nn => nn.CodProductPartPrintableArticle == item.CodProductPartPrintableArticle).ToList();
+                    //}
+                }
+
+
             }
 
             cost.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == cost.CodProductPartPrintableArticle);

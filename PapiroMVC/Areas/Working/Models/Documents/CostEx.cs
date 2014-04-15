@@ -170,6 +170,19 @@ namespace PapiroMVC.Models
 
             #endregion
 
+            #region Impianto
+            if (this.CodProductPartImplantTask != null)
+            {
+                productPart = this.ProductPartImplantTask.ProductPart;
+                var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+
+                //il tipo di materiale dipende dalla stampa o dal tipo di prodotto?               
+                //productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
+            }
+
+
+            #endregion
+
             #region Lavorazione
             //E' una lavorazione!!!!
             String codTypeOfTask = String.Empty;

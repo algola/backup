@@ -121,6 +121,7 @@
           <Property Name="TotalCost" Type="char" MaxLength="20" />
           <Property Name="ForceZero" Type="bit" />
           <Property Name="Hidden" Type="bit" />
+          <Property Name="CodProductPartImplantTask" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -651,6 +652,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_costs_CodProductPartImplantTask">
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="costs" Type="Self.costs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparttasks">
+              <PropertyRef Name="CodProductPartTask" />
+            </Principal>
+            <Dependent Role="costs">
+              <PropertyRef Name="CodProductPartImplantTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_costs_CodProductPartPrintableArticle">
           <End Role="productpartsprintablearticle" Type="Self.productpartsprintablearticle" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1112,6 +1127,10 @@
             <End Role="documentproducts" EntitySet="documentproducts" />
             <End Role="costs" EntitySet="costs" />
           </AssociationSet>
+          <AssociationSet Name="FK_costs_CodProductPartImplantTask" Association="Self.FK_costs_CodProductPartImplantTask">
+            <End Role="productparttasks" EntitySet="productparttasks" />
+            <End Role="costs" EntitySet="costs" />
+          </AssociationSet>
           <AssociationSet Name="FK_costs_CodProductPartPrintableArticle" Association="Self.FK_costs_CodProductPartPrintableArticle">
             <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
             <End Role="costs" EntitySet="costs" />
@@ -1418,6 +1437,10 @@
           <AssociationSet Name="FK_taskexecutorcylinders_CodTaskExecutor" Association="dbModel.FK_taskexecutorcylinders_CodTaskExecutor">
             <End Role="TaskExecutor" EntitySet="taskexecutors" />
             <End Role="taskexecutorcylinder" EntitySet="TaskExecutorCylinders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_costs_CodProductPartImplantTask" Association="dbModel.FK_costs_CodProductPartImplantTask">
+            <End Role="ProductPartTask" EntitySet="ProductPartTasks" />
+            <End Role="Cost" EntitySet="Costs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
@@ -1906,6 +1929,7 @@
           <Property Type="Boolean" Name="Hidden" />
           <Property Type="Int32" Name="IndexOf" />
           <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="ProductPartTask" ToRole="cost" />
+          <NavigationProperty Name="ImplantCosts" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="ProductPartTask" ToRole="Cost" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -2189,6 +2213,8 @@
           <NavigationProperty Name="CostDetails" Relationship="dbModel.FK_costdetails_CodCost" FromRole="Cost" ToRole="costdetail" />
           <Property Name="ForceZero" Type="Boolean" />
           <Property Name="Hidden" Type="Boolean" />
+          <Property Name="CodProductPartImplantTask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductPartImplantTask" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="Cost" ToRole="ProductPartTask" />
         </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -2702,6 +2728,21 @@
         <EntityType Name="PrintingLabelRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
           <Property Name="BuyingFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <Association Name="FK_costs_CodProductPartImplantTask">
+          <End Type="dbModel.ProductPartTask" Role="ProductPartTask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Cost" Role="Cost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartTask">
+              <PropertyRef Name="CodProductPartTask" />
+            </Principal>
+            <Dependent Role="Cost">
+              <PropertyRef Name="CodProductPartImplantTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ImplantCostDetail" BaseType="dbModel.CostDetail" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3494,6 +3535,7 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="CodProductPartImplantTask" ColumnName="CodProductPartImplantTask" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
                 <ScalarProperty Name="ForceZero" ColumnName="ForceZero" />
                 <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
@@ -3641,6 +3683,12 @@
                 <ScalarProperty Name="BuyingFormat" ColumnName="BuyingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <Condition ColumnName="SelectorPrinting" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ImplantCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="Selector" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4273,6 +4321,9 @@
         <InheritanceConnector EntityType="dbModel.ProductPartRigidArticle" />
         <EntityTypeShape EntityType="dbModel.PrintingLabelRollCostDetail" Width="1.5" PointX="50.5" PointY="28.75" />
         <InheritanceConnector EntityType="dbModel.PrintingLabelRollCostDetail" />
+        <AssociationConnector Association="dbModel.FK_costs_CodProductPartImplantTask" />
+        <EntityTypeShape EntityType="dbModel.ImplantCostDetail" Width="1.5" PointX="40.375" PointY="26.75" />
+        <InheritanceConnector EntityType="dbModel.ImplantCostDetail" />
       </Diagram>
     </Diagrams>
   </Designer>

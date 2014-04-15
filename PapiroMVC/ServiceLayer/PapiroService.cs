@@ -179,6 +179,17 @@ namespace PapiroMVC.ServiceLayer
                     cost = DocumentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
                 }
 
+                //if it is a implant cost!!! (ci pensarà la lavorazione stampa a creare l'impianto!!!!!
+                if (cost.CodProductPartImplantTask != null)
+                {
+                    var codDP = cost.CodDocumentProduct;
+
+                    var productPart = cost.ProductPartImplantTask.ProductPart;
+                    var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+
+                    cost = DocumentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
+                }
+
                 cv = cost.MakeCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
 
                 if (cv != null)

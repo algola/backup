@@ -59,6 +59,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> Hidden { get; set; }
+    	
+    	[DataMember] 		
+        public string CodProductPartImplantTask { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }
@@ -70,5 +73,7 @@ namespace PapiroMVC.Models
         public virtual ProductTask ProductTask { get; set; }
     	[DataMember]
         public virtual ICollection<CostDetail> CostDetails { get; set; }
+    	[DataMember]
+        public virtual ProductPartTask ProductPartImplantTask { get; set; }
     }
 }
