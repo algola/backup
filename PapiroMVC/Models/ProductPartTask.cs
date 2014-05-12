@@ -42,6 +42,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> IndexOf { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> ImplantHidden { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

@@ -19,7 +19,9 @@ namespace PapiroMVC.Models
             ProductPartSingleRollPrinting = 3,
             ProductPartRigidPrinting = 5,
 
-            ProductPartSingleLabelRollPrinting = 6
+            ProductPartSingleLabelRollPrinting = 6,
+            ProductPartSoftPrinting = 7,
+
         }
 
         public ProductPartPrintingType TypeOfProductPartPrinting
@@ -71,7 +73,7 @@ namespace PapiroMVC.Models
         {
             get
             {
-                if (GainPartOnPrinting !=null)
+                if (GainPartOnPrinting != null)
                 {
                     return (double)GainPartOnPrinting.Makereadies.Average(x => x.CalculatedGain ?? 1);
                 }

@@ -31,16 +31,21 @@ namespace PapiroMVC.Models
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public Nullable<System.TimeSpan> TimeForfait { get; set; }
-        [DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "CostPerHourRunning")]
-        [Tooltip(typeof(ResTaskEstimatedOnTime), "CostPerHourRunningToolTip")]
-        [RegularExpressionLocalized(typeof(ResTaskEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
-        public Nullable<double> CostPerHourRunning { get; set; }
-        [DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "CostPerHourStarting")]
-        [Tooltip(typeof(ResTaskEstimatedOnTime), "CostPerHourStartingToolTip")]
-        [RegularExpressionLocalized(typeof(ResTaskEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
-        public Nullable<double> CostPerHourStarting { get; set; }
+        ////////[DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "CostPerHourRunning")]
+        ////////[Tooltip(typeof(ResTaskEstimatedOnTime), "CostPerHourRunningToolTip")]
+        ////////[RegularExpressionLocalized(typeof(ResTaskEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
+        ////////public string CostPerHourRunning { get; set; }
+        ////////[DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "CostPerHourStarting")]
+        ////////[Tooltip(typeof(ResTaskEstimatedOnTime), "CostPerHourStartingToolTip")]
+        ////////[RegularExpressionLocalized(typeof(ResTaskEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
+        ////////public string CostPerHourStarting { get; set; }
         [DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "UseDifferentDeficitForWeightStep")]
         [Tooltip(typeof(ResTaskEstimatedOnTime), "UseDifferentDeficitForWeightStepToolTip")]
         public Nullable<bool> UseDifferentDeficitForWeightStep { get; set; }
+        [DisplayNameLocalized(typeof(ResTaskEstimatedOnTime), "StartingTimePerColor")]
+        [Tooltip(typeof(ResTaskEstimatedOnTime), "StartingTimePerColorToolTip")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public Nullable<System.TimeSpan> StartingTimePerColor { get; set; }
     }
 }

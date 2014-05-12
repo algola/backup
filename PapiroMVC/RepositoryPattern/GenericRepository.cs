@@ -1,4 +1,5 @@
-﻿using PapiroMVC.Models;
+﻿using InteractivePreGeneratedViews;
+using PapiroMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -178,6 +179,8 @@ namespace Services
                     _entities.Configuration.ProxyCreationEnabled = false;
                     _entities.Configuration.AutoDetectChangesEnabled = false;
                     _entities.Configuration.ValidateOnSaveEnabled = false;
+
+  
                 }
 
                 var tempo = DateTime.Now.Subtract(inizio);

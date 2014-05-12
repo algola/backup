@@ -25,6 +25,11 @@ namespace PapiroMVC.Models
                 tskExec = tskExec.OfType<PlotterSheet>();
             }
 
+            if (codTypeOfTask == "STAMPAMORBIDO")
+            {
+                tskExec = tskExec.OfType<PlotterRoll>();
+            }
+
             if (codTypeOfTask == "STAMPAOFF")
             {
                 tskExec = tskExec.OfType<LithoSheet>();
@@ -48,6 +53,17 @@ namespace PapiroMVC.Models
         }
 
         public virtual double Starts(string codOptionTypeOfTask)
+        {
+            throw new Exception("Not implemented");
+        }
+
+
+        public virtual void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual double Implants(string codOptionTypeOfTask)
         {
             throw new Exception("Not implemented");
         }
@@ -89,6 +105,15 @@ namespace PapiroMVC.Models
                     }
                 }
 
+                return ret;
+            }
+        }
+
+        public virtual CostDetail.QuantityType TypeOfImplantQuantity
+        {
+            get
+            {
+                CostDetail.QuantityType ret = CostDetail.QuantityType.NOTypeOfQuantity;
                 return ret;
             }
         }

@@ -18,6 +18,15 @@ namespace PapiroMVC.Models
             return 1;
         }
 
+        public override CostDetail.QuantityType TypeOfImplantQuantity
+        {
+            get
+            {
+                CostDetail.QuantityType ret = CostDetail.QuantityType.NOTypeOfQuantity;
+                return ret;
+            }
+        }
+
         #region Added Properties
 
         #endregion

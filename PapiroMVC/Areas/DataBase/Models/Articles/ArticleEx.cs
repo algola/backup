@@ -51,7 +51,7 @@ namespace PapiroMVC.Models
             RigidPrintableArticle = 2,
             ObjectPrintableArticle = 3,
 
-            NoProntable = 4
+            NoPrintable = 4
         }
 
         public ArticleType TypeOfArticle

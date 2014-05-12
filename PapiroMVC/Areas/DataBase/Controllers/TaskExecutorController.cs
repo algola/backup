@@ -74,7 +74,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaskEstimatedOnTime(TaskEstimatedOnTime c, string returnUrl)
+        public ActionResult TaskEstimatedOnTime(RollEstimatedOnTime c, string returnUrl)
         {
             TempData["TaskExecutorIndex"] = returnUrl;
 
@@ -82,9 +82,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
+                   // c.CostPerHourRunning = "10";
                     taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
+                    this.CurrentDatabase = "castello";
+
+                    var r=taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
+
+                    Console.Write(r);
                     return Json(new { redirectUrl = Url.Action(returnUrl) });
 
                 }
@@ -285,6 +291,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 case TaskExecutor.ExecutorType.Binding:
                     TempData["TaskExecutorIndex"] = "IndexBinding";
                     break;
+                case TaskExecutor.ExecutorType.Flexo:
+                    TempData["TaskExecutorIndex"] = "IndexFlexo";
+                    break;
                 default:
                     break;
             }
@@ -337,9 +346,24 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 case TaskEstimatedOn.EstimatedOnType.OnRun:
                     ViewBag.ActionMethod = "TaskEstimatedOnRun";
+                    if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo ||
+                        taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll)
+                    {
+                        ViewBag.ActionMethod = "RollEstimatedOnRun";
+                    }
                     break;
+
+                case TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime:
+                    ViewBag.ActionMethod = "RollEstimatedOnTime";
+                    break;
+
                 case TaskEstimatedOn.EstimatedOnType.OnTime:
                     ViewBag.ActionMethod = "TaskEstimatedOnTime";
+                    if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo ||
+                        taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll)
+                    {
+                        ViewBag.ActionMethod = "RollEstimatedOnTime";
+                    }
                     break;
                 case TaskEstimatedOn.EstimatedOnType.OnMq:
                     ViewBag.ActionMethod = "TaskEstimatedOnMq";
@@ -417,8 +441,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
 
-            if (taskExecutor.CodTypeOfTask != "STAMPA" &&
-                taskExecutor.CodTypeOfTask != "STAMPARIGIDO")
+            if (!taskExecutor.CodTypeOfTask.StartsWith("STAMPA"))
             {
                 var optionTypeOfTaskList = typeOfTaskRepository.GetSingle(taskExecutor.CodTypeOfTask).OptionTypeOfTasks;
 
@@ -507,8 +530,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         }
                         else
                         {
-                            tskEst = new TaskEstimatedOnTime();
-                            retView = "TaskEstimatedOnTime";
+                            if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo ||
+                                taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalRoll)
+                            {
+                                tskEst = new RollEstimatedOnTime();
+                                retView = "RollEstimatedOnTime";
+                            }
+                            else
+                            {
+                                tskEst = new TaskEstimatedOnTime();
+                                retView = "TaskEstimatedOnTime";
+                            }
                         }
                         break;
                     case TaskEstimatedOn.EstimatedOnType.OnMq:
@@ -767,7 +799,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             x.FormatMax = "0x0";
             x.FormatMin = "0x0";
-            x.CodTypeOfTask = "STAMPA";
+            x.CodTypeOfTask = "STAMPAMORBIDO";
             return View(x);
         }
 
@@ -1170,6 +1202,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
 
             //If we come here, something went wrong. Return it back.      
+
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             ViewBag.ActionMethod = "EditFlexo";
             return PartialView("_EditAndCreateFlexo", c);
@@ -1884,6 +1920,55 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditCostPerRunStep";
             //            return View("EditCostPerRunStep", c);
+        }
+
+        [HttpPost]
+        public void EditCostPerColorStep(string codTaskExecutorOn, CostPerColorStep c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    {
+                        var taskEstimatedOn = taskExecutorRepository.GetSingleEstimatedOn(codTaskExecutorOn);
+                        var taskExecutor = taskExecutorRepository.GetSingle(taskEstimatedOn.CodTaskExecutor);
+
+                        //look for to=0 from=0
+                        var chkStep = taskEstimatedOn.steps.OfType<CostPerColorStep>().FirstOrDefault(x => x.IdStep == c.IdStep);
+
+                        c.TimeStampTable = DateTime.Now;
+
+                        if (chkStep != null)
+                        {
+                            chkStep.FromUnit = c.FromUnit;
+                            chkStep.ToUnit = c.ToUnit;
+                            chkStep.CostPerUnit = c.CostPerUnit;
+                            //new line!!!
+                            taskExecutorRepository.EditSingleStep(chkStep);
+                            taskExecutorRepository.Save();
+
+                        }
+                        else
+                        {
+                            taskEstimatedOn.steps.Add(c);
+                        }
+
+                        GenEmptyStep(taskExecutor);
+
+                        taskExecutorRepository.Edit(taskExecutor);
+                        taskExecutorRepository.Save();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditCostPerColorStep";
+            //            return View("EditCostPerColorStep", c);
         }
 
         [HttpPost]

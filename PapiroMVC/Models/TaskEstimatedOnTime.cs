@@ -35,12 +35,15 @@ namespace PapiroMVC.Models
         public Nullable<System.TimeSpan> TimeForfait { get; set; }
     	
     	[DataMember] 		
+        public Nullable<bool> UseDifferentDeficitForWeightStep { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.TimeSpan> StartingTimePerColor { get; set; }
+    	
+    	[DataMember] 		
         public string CostPerHourRunning { get; set; }
     	
     	[DataMember] 		
         public string CostPerHourStarting { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<bool> UseDifferentDeficitForWeightStep { get; set; }
     }
 }

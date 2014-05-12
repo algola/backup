@@ -15,14 +15,15 @@ namespace PapiroMVC.Models
 
         protected IQueryable<Article> _articles;
 
-        public virtual void GetCostFromList(IQueryable<Article> articles)
+        public virtual void GetCostFromList()
         {
-            throw new NotImplementedException();
+
+            //throw new NotImplementedException();
         }
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-            _articles = articles;
+            //_articles = articles;
         }
 
         public override void CostDetailCostCodeRigen()
@@ -35,21 +36,39 @@ namespace PapiroMVC.Models
             base.UpdateCoeff();
 
             Error = ComputedBy.Error;
-
             Starts = 1;
-            //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!!
-            GainForRun = (double)(this.ComputedBy.GainForRunForPrintableArticle / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1));
-            GainForMqRun = (double)(this.ComputedBy.GainForMqRunForPrintableArticle);
 
-            if (_articles == null)
-            {
-                throw (new NullReferenceException());
-            }
+            //GainForRun is number of Implants (clichè)           
+            GainForRun = this.ComputedBy.Implants; //gli avviamenti mi danno il numero di impianti
 
-            GetCostFromList(_articles);
+            //GainForMqRun is mq in printing format
+            GainForMqRun = (double)(this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()
+                * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 10000);
 
+            TypeOfQuantity = (int)ComputedBy.TaskexEcutorSelected.TypeOfImplantQuantity;
         }
 
+        public override double Quantity(double qta)
+        {
+            if (this.ComputedBy.TypeOfQuantity == (int)CostDetail.QuantityType.NumberTypeOfQuantity)
+            {
+                return Math.Ceiling((GainForRun ?? 0)*100)/100;
+            }
+
+            //colori * mq f.to stampa
+            if (TypeOfQuantity == (int)CostDetail.QuantityType.MqSheetTypeOfQuantity)
+            {
+                  var x= (GainForRun ?? 0) * (GainForMqRun ?? 0);
+                  return Math.Ceiling(x * 100) / 100;
+            }
+
+            return 0;
+        }
+
+        public override double UnitCost(double qta)
+        {
+           return  Convert.ToDouble(ComputedBy.TaskexEcutorSelected.CostImplant);
+        }
 
     }
 }

@@ -22,13 +22,18 @@ namespace PapiroMVC.Models
             this.TypeOfExecutor = TaskExecutor.ExecutorType.Flexo;
         }
 
-
-        public override double Starts(string codOptionTypeOfTask)
+        public override CostDetail.QuantityType TypeOfImplantQuantity
         {
-            double cToPrintF = 0;
-            double cToPrintR = 0;
-            double cToPrintT = 0;
+            get
+            {
+                CostDetail.QuantityType ret = CostDetail.QuantityType.MqSheetTypeOfQuantity;
+                return ret;
+            }
+        }
 
+
+        public override void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
+        {
             switch (codOptionTypeOfTask)
             {
                 //4 colori offset fronte e retro
@@ -58,22 +63,50 @@ namespace PapiroMVC.Models
                     break;
 
                 case "STAMPAETICHROTOLO_6":
-                    cToPrintF = 1;
+                    cToPrintF = 6;
                     cToPrintR = 0;
                     break;
 
                 default:
                     cToPrintF = 0;
                     cToPrintR = 0;
-                    throw new Exception();
                     break;
             }
 
             cToPrintT = cToPrintF + cToPrintR;
 
-            return Math.Ceiling(cToPrintT / (double)this.PrintingUnit);
         }
 
+        /// <summary>
+        /// get printing color (task vs machine)
+        /// </summary>
+        /// <param name="codOptionTypeOfTask"></param>
+        /// <returns></returns>
+        public override double Starts(string codOptionTypeOfTask)
+        {
+            double cToPrintF = 0;
+            double cToPrintR = 0;
+            double cToPrintT = 0;
+
+            GetColorFR(codOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
+
+            //Starts is used with printerFormat to have
+            return Math.Ceiling(cToPrintT / this.PrintingUnit ?? 1);
+        }
+
+
+        //get number of impants by type of task!! ex: 2 colors --> 2 implants
+        public override double Implants(string codOptionTypeOfTask)
+        {
+            double cToPrintF = 0;
+            double cToPrintR = 0;
+            double cToPrintT = 0;
+
+            GetColorFR(codOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
+
+            //Starts is used with printerFormat to have
+            return Math.Ceiling(cToPrintT);
+        }
 
         public int CurrentZ
         { get; set; }
@@ -85,9 +118,9 @@ namespace PapiroMVC.Models
         public void CheckZeroCylinder()
         {
             var x = this.TaskExecutorCylinders.FirstOrDefault(y => y.Z == 0);
-            if (x==null)
+            if (x == null)
             {
-                this.TaskExecutorCylinders.Add(new TaskExecutorCylinder { Z=999, Quantity=0 });
+                this.TaskExecutorCylinders.Add(new TaskExecutorCylinder { Z = 999, Quantity = 0 });
             }
         }
 

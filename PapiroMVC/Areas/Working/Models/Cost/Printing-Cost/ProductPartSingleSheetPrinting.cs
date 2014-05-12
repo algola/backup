@@ -30,6 +30,9 @@ namespace PapiroMVC.Models
                 case ProductPart.ProductPartType.ProductPartSingleSheet:
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleSheet)Part).SubjectNumber ?? 1;
                     break;
+                case ProductPart.ProductPartType.ProductPartSoft:
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSoft)Part).SubjectNumber ?? 1;
+                    break;
                 case ProductPart.ProductPartType.ProductPartCoverSheet:
                     break;
                 case ProductPart.ProductPartType.ProductPartBookSheet:

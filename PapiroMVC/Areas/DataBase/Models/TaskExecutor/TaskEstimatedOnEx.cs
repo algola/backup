@@ -24,7 +24,8 @@ namespace PapiroMVC.Models
             BindingOnRun,
             DigitalOnTime,
             DigitalOnRun,
-            PlotterOnMq
+            PlotterOnMq,
+            RollEstimatedOnTime,
         }
 
         public EstimatedOnType TypeOfEstimatedOn
@@ -34,6 +35,12 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+        //usato per i rotoli
+        public virtual double GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int makereadis, double running)
+        {
+            throw new NotImplementedException();
+        }
 
         public virtual double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
         {

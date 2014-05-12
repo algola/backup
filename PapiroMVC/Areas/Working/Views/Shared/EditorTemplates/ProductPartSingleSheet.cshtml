@@ -33,12 +33,10 @@
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
-        <div class="controls col-sm-9">
-            @Html.AlgolaEditorFor(model => model.Format)
-        </div>
+        @Html.AlgolaEditorFor(model => model.Format)
     }
     else
-    {          
+    {
         @Html.LabelFor(model => model.Format, new { @class = "col-sm-3 control-label no-padding-right" })
 
         <div class="controls col-sm-9">
@@ -46,32 +44,33 @@
             @Html.DropDownListFor((model => model.Format),
             new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"))
         </div>
-        
+
     }
 </div>
 
 @if (Model.ShowDCut)
 {
-    @Html.EditorFor(model=>model.IsDCut);    
+    @Html.EditorFor(model => model.IsDCut);
     @Html.HiddenFor(model => model.DCut);
-                                        
-    @Html.HiddenFor(model => model.DCut1);                                       
-    @Html.HiddenFor(model => model.DCut2);   
- 
-}else
-{ 
-    @Html.HiddenFor(model => model.IsDCut);    
+
+    @Html.HiddenFor(model => model.DCut1);
+    @Html.HiddenFor(model => model.DCut2);
+
+}
+else
+{
+    @Html.HiddenFor(model => model.IsDCut);
     @Html.HiddenFor(model => model.DCut);
-                                        
-    @Html.HiddenFor(model => model.DCut1);   
-    @Html.HiddenFor(model => model.DCut2);   
+
+    @Html.HiddenFor(model => model.DCut1);
+    @Html.HiddenFor(model => model.DCut2);
 
 }
 
 @Html.HiddenFor(model => model.ShowDCut)
 
 
-<div id ="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
 
     @Html.AlgolaEditorFor(model => model.FormatPersonalized)
 
@@ -82,7 +81,7 @@
 {
     ViewBag.IndexPartArticle = i;
 
-    @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])           
+    @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])
 }
 
 @Html.HiddenFor(model => model.IsSelected)
@@ -100,7 +99,7 @@
 <!-- task -->
 @for (int i = 0; i < Model.ProductPartTasksPerView.Count; i++)
 {
-    @Html.EditorFor(model => model.ProductPartTasksPerView[i])           
+    @Html.EditorFor(model => model.ProductPartTasksPerView[i])
 }
 
 @Model.ProductPartTasks.First().ToString()

@@ -228,6 +228,9 @@
   <data name="LeavingPageMsg" xml:space="preserve">
     <value>Alcune modifiche devono ancora essere salvate</value>
   </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Blk</value>
+  </data>
   <data name="Menu" xml:space="preserve">
     <value>Menu</value>
   </data>

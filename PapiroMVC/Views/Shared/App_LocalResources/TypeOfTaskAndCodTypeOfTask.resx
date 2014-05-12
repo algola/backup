@@ -402,4 +402,16 @@
   <data name="CodSTAMPAETICHROTOLO_6" xml:space="preserve">
     <value>6 colori</value>
   </data>
+  <data name="CodSTAMPAMORBIDO_ALTA" xml:space="preserve">
+    <value>Stampa UV alta qualità</value>
+  </data>
+  <data name="CodSTAMPAMORBIDO_BASSA" xml:space="preserve">
+    <value>Stampa UV bassa qualità</value>
+  </data>
+  <data name="CodSTAMPAMORBIDO_MEDIA" xml:space="preserve">
+    <value>Stampa UV media qualità</value>
+  </data>
+  <data name="CodSTAMPAMORBIDO_NO" xml:space="preserve">
+    <value />
+  </data>
 </root>

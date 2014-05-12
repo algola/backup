@@ -15,7 +15,7 @@ namespace Services
         void SaveOnSession(Document a);
         IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);
         Cost GetCost(string codCost);
-
+        void EditCost(Cost c);
         
 
         Document GetEstimateEcommerce(string codCustomerSupplier);

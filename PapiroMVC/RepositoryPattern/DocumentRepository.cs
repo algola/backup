@@ -67,10 +67,16 @@ namespace Services
             }
         }
 
+        public void EditCost(Cost c)
+        {
+            this.Context.Entry(c).State = System.Data.Entity.EntityState.Modified;
+        }
+
         public Cost GetCost(string codCost)
         {
             var inizio = DateTime.Now;
             var cost = Context.Costs.SingleOrDefault(x => x.CodCost == codCost);
+            cost.DocumentProduct = Context.DocumentProducts.SingleOrDefault(x => x.CodDocumentProduct == cost.CodDocumentProduct);
 
             if (cost != null)
             {
@@ -105,12 +111,12 @@ namespace Services
                     var ppTask = cost.ProductPartImplantTask;
                     ppTask.ProductPart = Context.ProductParts.SingleOrDefault(h => h.CodProductPart == ppTask.CodProductPart);
 
-                    //ppTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Where(pp => pp.CodProductPart == ppTask.ProductPart.CodProductPart).ToList();
+                    ppTask.ProductPart.ProductPartTasks = Context.ProductPartTasks.Where(pp => pp.CodProductPart == ppTask.ProductPart.CodProductPart).ToList();
 
-                    //foreach (var item in ppTask.ProductPart.ProductPartPrintableArticles)
-                    //{
-                    //    item.Costs = Context.Costs.Where(nn => nn.CodProductPartPrintableArticle == item.CodProductPartPrintableArticle).ToList();
-                    //}
+                    foreach (var item in ppTask.ProductPart.ProductPartTasks)
+                    {
+                        item.Costs = Context.Costs.Where(nn => nn.CodProductPartTask == item.CodProductPartTask).ToList();
+                    }
                 }
 
 
@@ -296,8 +302,8 @@ namespace Services
             foreach (var item in modOrAdded.OfType<OptionTypeOfTask>())
                 Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
 
-           
-                base.Save();
+
+            base.Save();
 
         }
 
@@ -317,12 +323,12 @@ namespace Services
                     item.Costs = item.Costs.Union(costJustStored, new CostComparer()).ToList();
 
                 }
-                
+
             }
 
             DocumentProductCodeRigen(entity);
 
-            foreach (var item in entity.DocumentProducts)            
+            foreach (var item in entity.DocumentProducts)
             {
                 var fromBD2 = Context.DocumentProducts.SingleOrDefault(p => p.CodDocumentProduct == item.CodDocumentProduct);
                 if (fromBD2 != null)
@@ -372,7 +378,7 @@ namespace Services
 
         }
 
-        
+
         public new Document GetSingle(string codDocument)
         {
             try

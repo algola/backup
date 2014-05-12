@@ -97,7 +97,11 @@ namespace PapiroMVC.Models
                         this.ProductPartPrinting = new ProductPartSingleSheetPrinting();
                         break;
                     case ProductPart.ProductPartType.ProductPartRigid:
+                        this.HideBuyingInView = true;
                         this.ProductPartPrinting = new ProductPartRigidPrinting();
+                        break;
+                    case ProductPart.ProductPartType.ProductPartSoft:
+                        this.ProductPartPrinting = new ProductPartSoftPrinting();
                         break;
                     default:
                         throw new Exception();
@@ -193,9 +197,9 @@ namespace PapiroMVC.Models
             #endregion
         }
 
-        public override List<PrintedArticleCostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        public override List<CostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
         {
-            List<PrintedArticleCostDetail> lst = new List<PrintedArticleCostDetail>();
+            List<CostDetail> lst = new List<CostDetail>();
 
             foreach (var item in this.ProductPart.ProductPartPrintableArticles)
             {

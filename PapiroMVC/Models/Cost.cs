@@ -62,6 +62,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodProductPartImplantTask { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Locked { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }

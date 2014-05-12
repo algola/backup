@@ -168,6 +168,12 @@
   <data name="StartingTime2ToolTip" xml:space="preserve">
     <value>Indica il tempo in hh:mm degli avviamenti successivi al primo</value>
   </data>
+  <data name="StartingTimePerColor" xml:space="preserve">
+    <value>Tempo (hh:mm) per colore</value>
+  </data>
+  <data name="StartingTimePerColorToolTip" xml:space="preserve">
+    <value>Indica il tempo in hh:mm relativo all'avviamento a colore</value>
+  </data>
   <data name="TimeForfait" xml:space="preserve">
     <value>Tempo minimale</value>
   </data>

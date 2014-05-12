@@ -23,7 +23,8 @@ namespace PapiroMVC.Models
             DeficitForWeight,
             DeficitOnCostForWeight,
             BindingAvarageRunPerRunStep,
-            BindingCostPerRunStep
+            BindingCostPerRunStep,
+            CostPerColor
         }
 
         public StepType TypeOfStep

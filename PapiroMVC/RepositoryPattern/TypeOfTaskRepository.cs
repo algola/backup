@@ -37,7 +37,7 @@ namespace Services
 
             }          
 
-            var tbCode = new TypeOfTask[18];
+            var tbCode = new TypeOfTask[19];
 
             tbCode[0] = new PIEGA() {CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -52,12 +52,13 @@ namespace Services
             tbCode[10] = new INTERCALATURA() { CodCategoryOfTask = "PREPOST" };
             tbCode[11] = new FORO() { CodCategoryOfTask = "PREPOST" };
             tbCode[12] = new RILIEVO_A_SECCO() { CodCategoryOfTask = "PREPOST" };
-
             tbCode[13] = new STAMPARIGIDO() { CodCategoryOfTask = "STAMPARIGIDO" };
             tbCode[14] = new STAMPAOFF() { CodCategoryOfTask = "STAMPA" };
             tbCode[15] = new STAMPAOFFeDIGITALE() { CodCategoryOfTask = "STAMPA" };
             tbCode[16] = new STAMPADIGITALE() { CodCategoryOfTask = "STAMPA" };
             tbCode[17] = new STAMPAETICHROTOLO() { CodCategoryOfTask = "STAMPAETICHROTOLO" };
+
+            tbCode[18] = new STAMPAMORBIDO() { CodCategoryOfTask = "STAMPAMORBIDO" };
 
             foreach (var item in tbCode)
             {

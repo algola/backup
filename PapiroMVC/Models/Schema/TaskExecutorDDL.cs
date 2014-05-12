@@ -96,6 +96,12 @@ namespace PapiroMVC.Model
 
             dbS.ChangeColumnToDouble("taskexecutors", "Width");
 
+            //implant cost yes/no
+            dbS.AddColumnToTable("taskexecutors", "HasImplant", SchemaDb.Bool, "0");
+
+            //costo degli impianti stampa
+            dbS.AddColumnToTable("taskexecutors", "CostImplant", SchemaDb.String, "20");
+
 
             dbS.AddTable("taskexecutorcylinders");
             dbS.AddColumnToTable("taskexecutorcylinders", "CodTaskExecutor", SchemaDb.String, "50");
@@ -104,7 +110,6 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("taskexecutorcylinders", "Z", SchemaDb.Int, "0");
             dbS.AddColumnToTable("taskexecutorcylinders", "Quantity", SchemaDb.Int, "0");
-
 
             dbS.AddTable("taskexecutorestimatedon");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodTaskExecutor", SchemaDb.String, "50");
@@ -123,9 +128,15 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "CodOptionTypeOfTask", SchemaDb.String, "50");  
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime1", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime2", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimePerColor", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "TimeForfait", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunning", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStarting", SchemaDb.String, "20");
+
+            dbS.ChangeColumnToString("taskexecutorestimatedon", "CostPerHourRunning");
+            dbS.ChangeColumnToString("taskexecutorestimatedon", "CostPerHourStarting");
+
+
             dbS.AddForeignKey("taskexecutorestimatedon", "CodOptionTypeOfTask", "optiontypeoftask", "CodOptionTypeOfTask");
 
 
@@ -146,8 +157,6 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostWhite", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostCutting", SchemaDb.String, "20");
-
-
 
             //BindingEstimatedOnTime
             dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHour4", SchemaDb.IntUS, "0");

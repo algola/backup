@@ -11,6 +11,7 @@ using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using PapiroMVC.ServiceLayer;
+using System.Threading.Tasks;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -25,6 +26,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IDocumentRepository documentRepository;
         private readonly ITypeOfTaskRepository typeOfTaskRepository;
         private readonly IArticleRepository articleRepository;
+        private readonly ICostDetailRepository costDetailRepository;
+        private readonly ITaskExecutorRepository taskExecuteRepository;
 
         protected dbEntities db;
 
@@ -52,6 +55,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             productRepository.SetDbName(CurrentDatabase);
             typeOfTaskRepository.SetDbName(CurrentDatabase);
             articleRepository.SetDbName(CurrentDatabase);
+            costDetailRepository.SetDbName(CurrentDatabase);
+            taskExecuteRepository.SetDbName(CurrentDatabase);
 
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
@@ -71,7 +76,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             IProductTaskNameRepository _productTaskName,
             IFormatsNameRepository _formatsName,
             IDocumentRepository _documentRepository,
-                     IArticleRepository _articleRepository
+            IArticleRepository _articleRepository,
+            ICostDetailRepository _costDetailRepository,
+            ITaskExecutorRepository _taskExecuteRepository
 
             )
         {
@@ -82,6 +89,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             productRepository = _productRepository;
             documentRepository = _documentRepository;
             articleRepository = _articleRepository;
+            costDetailRepository = _costDetailRepository;
+            taskExecuteRepository = _taskExecuteRepository;
 
             this.Disposables.Add(typeOfTaskRepository);
             this.Disposables.Add(documentRepository);
@@ -89,6 +98,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(formatsRepository);
             this.Disposables.Add(articleRepository);
             this.Disposables.Add(prodTskNameRepository);
+            this.Disposables.Add(costDetailRepository);
+            this.Disposables.Add(taskExecuteRepository);
+
             this.Disposables.Add(menu);
         }
 
@@ -100,13 +112,88 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
+        public ActionResult WarmUp()
+        {
+
+            //var inizio = DateTime.Now;
+
+            //IDocumentRepository docRep = documentRepository;
+            //IProductRepository prodRep = productRepository;
+
+            //PapiroService p = new PapiroService();
+            //p.DocumentRepository = docRep;
+            //p.CostDetailRepository = costDetailRepository;
+            //p.TaskExecutorRepository = taskExecuteRepository;
+            //p.ArticleRepository = articleRepository;
+
+            //Document doc = docRep.GetEstimateEcommerce("000001");
+            //doc.EstimateNumber = "0";
+
+            ////work with product
+            //Product prod = p.InitProduct("EtichetteRotolo", new ProductTaskNameRepository(), new FormatsNameRepository(), new TypeOfTaskRepository());
+
+            ////------passaggio del prodotto inizializzato all'ecommerce o alla view
+            //prod.CodProduct = prodRep.GetNewCode(prod);
+            //prod.ProductParts.FirstOrDefault().Format = "5x5";
+            //prod.ProductParts.FirstOrDefault().SubjectNumber = 1;
+
+            //var art = prod.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault();
+
+            //#region Printable Article
+
+            //IArticleRepository artRep = new ArticleRepository();
+            //var artFormList = artRep.GetAll().OfType<RigidPrintableArticle>().FirstOrDefault();
+
+            //art.TypeOfMaterial = artFormList.TypeOfMaterial;
+            //art.NameOfMaterial = artFormList.NameOfMaterial;
+            //art.Weight = artFormList.Weight;
+            //art.Color = artFormList.Color;
+            //#endregion
+
+            ////------ritorno del prodotto modificato!!!!
+
+            ////rigenero
+            //prodRep.Add(prod);
+            //prodRep.Save();
+
+            //#region ViewModel
+            //ProductViewModel pv = new ProductViewModel();
+            //pv.Product = prod;
+            ////            prod.ProductCodeRigen();
+
+            //pv.Quantities.Add(1000);
+            //#endregion
+
+            //DocumentProduct dp = new DocumentProduct();
+            //dp.Document = null;
+            //dp.CodProduct = pv.Product.CodProduct;
+            //dp.Product = pv.Product;
+            //dp.Quantity = pv.Quantities.FirstOrDefault();
+
+            //dp.InitCost();
+
+            //doc.DocumentProducts.Add(dp);
+
+            //docRep.Edit(doc);
+            //docRep.Save();
+
+            //var step = DateTime.Now;
+
+            //p.EditOrCreateAllCost(dp.CodDocumentProduct);
+
+            //var fine = DateTime.Now.Subtract(inizio).TotalSeconds;
+
+
+            return null;
+
+        }
+
         //
         // GET: /Working/Product/
         public ActionResult Index()
         {
             return View();
         }
-
 
         //
         // POST: /Working/Product/Create
@@ -132,10 +219,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         [HttpParamAction]
         [HttpGet]
-
         [AuthorizeModule]
-        public ActionResult CreateProduct(string id)
+        [AsyncTimeout(2000)]
+        [HandleError(ExceptionType = typeof(TimeoutException), View = "TimedOut")]
+
+        public async Task<ActionResult> CreateProduct(string id)
         {
+
             var p = new PapiroService();
             var inizio = DateTime.Now;
             var c = p.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);

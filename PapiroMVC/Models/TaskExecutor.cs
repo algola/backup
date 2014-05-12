@@ -68,6 +68,12 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string UniversalCodPapiro { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> HasImplant { get; set; }
+    	
+    	[DataMember] 		
+        public string CostImplant { get; set; }
     
     	[DataMember]
         public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }

@@ -174,5 +174,26 @@ namespace SchemaManagemet
                 Console.WriteLine(e.Message);
             }
         }
+
+        /// <summary>
+        /// Change column to Double
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        public void ChangeColumnToString(string tableName, string columnName)
+        {
+            var sql = "CALL ChangeColumnToString('param0','param1','param2');";
+            sql = sql.Replace("param0", DatabaseName);
+            sql = sql.Replace("param1", tableName);
+            sql = sql.Replace("param2", columnName);
+            try
+            {
+                Ctx.Database.ExecuteSqlCommand(sql);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
     }
 }

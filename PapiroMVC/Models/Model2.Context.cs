@@ -30,7 +30,6 @@ namespace PapiroMVC.Models
         public DbSet<OrderRow> OrderRows { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<orderrow1> orderrow1 { get; set; }
         public DbSet<News> News { get; set; }
     }
 }

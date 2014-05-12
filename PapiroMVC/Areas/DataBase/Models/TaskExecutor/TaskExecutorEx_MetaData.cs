@@ -62,6 +62,9 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResTaskExecutor), "LateraleToolTip")]
         public Nullable<double> Laterale { get; set; }
 
+        public Nullable<bool> HasImplant { get; set; }
+
+       
         //[DisplayNameLocalized(typeof(ResTaskExecutor), "IsEstimatedOnTime")]
         //[Tooltip(typeof(ResTaskExecutor), "IsEstimatedOnTimeToolTip")]
         //public Nullable<bool> IsEstimatedOnTime { get; set; }

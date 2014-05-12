@@ -138,6 +138,12 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("articlecost", "SelectorArticleRigidPrintableCost", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articlecost", "SelectorArticleObjectPrintableCost", SchemaDb.Int, "0");
+
+            //solo per i NoPrintableCost
+            //0 costo unitario, 1 costo al kg, 2 costo al mq
+            dbS.AddColumnToTable("articlecost", "TypeOfCost", SchemaDb.Int, "0");
+
+
         }
     }
 }

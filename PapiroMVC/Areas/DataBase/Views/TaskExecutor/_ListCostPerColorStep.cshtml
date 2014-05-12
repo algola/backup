@@ -1,0 +1,94 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskEstimatedOn
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    string url = Url.Action("CostPerColorStepList", new { controller ="TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn});
+    string editUrl = Url.Action("EditCostPerColorStep", new { controller = "TaskExecutor", area = "DataBase", codTaskExecutorOn = Model.CodTaskEstimatedOn });
+}
+
+<table id="gridCostPerColorStep"><tr><td/></tr></table> 
+<div id="pagerCostPerColorStep"></div> 
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            var lastSel = -1;
+
+            var myGrid = $("#gridCostPerColorStep").jqGrid({
+                url: '@url',
+                editUrl: '@editUrl',
+                datatype: 'json',
+                colModel: [
+                    { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
+                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepCostPerColorStep },
+                    { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
+                    { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromColorCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                    { name: 'CostPerUnit', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerHourCaption")', width: 100, align: 'right', editable: true }],
+
+                pager: '#pagerCostPerColorStep',
+                
+                rowNum: 15,
+                rowList: [15, 20, 50],
+                viewrecords: true,
+                autowidth: false,
+                width: 375,
+                shrinkToFit: false,
+                loadComplete: function () {
+
+                    var table = this;
+                    setTimeout(function () {
+                        updateActionIcons(table);
+                        updatePagerIcons(table);
+                        enableTooltips(table);
+                    }, 0);
+                },
+
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        myGrid.jqGrid('restoreRow', lastSel);
+                        lastSel = id;
+                    }
+                },
+
+                ondblClickRow: function (id, ri, ci) {
+                    myGrid.jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function(){
+                            $("#gridCostPerColorStep").trigger("reloadGrid");
+                        },
+                        url: '@editUrl'
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                    return;
+                }
+
+            });
+
+            myGrid.jqGrid('navGrid', '#pagerCostPerColorStep', { edit: false, add: false, del: false, search: false });
+
+        });
+
+        function insFmatter(cellvalue, options, rowobject) {
+            if (cellvalue == 9999999999)
+                return '';
+            else
+                return cellvalue;
+        }
+
+        function delStepCostPerColorStep(cellvalue, options, rowobject) {
+            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadCostPerColorStep" },new {@class="tbutton smalldelete"})';
+            return link.replace("-1", cellvalue) 
+        }
+
+        function reloadCostPerColorStep() {
+            $("#gridCostPerColorStep").trigger("reloadGrid");
+        }
+
+    </script>

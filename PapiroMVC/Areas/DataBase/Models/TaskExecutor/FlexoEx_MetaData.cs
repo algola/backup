@@ -26,5 +26,11 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResFlexo), "WidthToolTip")]
         public Nullable<double> FlexoWidth { get; set; }
 
+
+        [RegularExpressionLocalized(typeof(ResFlexo), "CurrencyValidation", "CurrencyValidationError")]
+        [DisplayNameLocalized(typeof(ResFlexo), "CostImplant")]
+        [Tooltip(typeof(ResFlexo), "CostImplantToolTip")]
+        public string CostImplant { get; set; }
+
     }
 }

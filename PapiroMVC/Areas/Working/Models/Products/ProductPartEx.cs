@@ -104,8 +104,8 @@ namespace PapiroMVC.Models
             ProductPartSinglePlotter = 4,
 
             ProductPartRigid = 5,
-
-            ProductPartSingleLabelRoll = 6
+            ProductPartSingleLabelRoll = 6,
+            ProductPartSoft = 7,
         }
 
         public ProductPartType TypeOfProductPart
@@ -155,7 +155,10 @@ namespace PapiroMVC.Models
             var pTasks = String.Empty;
             foreach (var item in this.ProductPartTasks)
             {
-                pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
+                if (!item.CodOptionTypeOfTask.Contains("_NO"))
+                {
+                    pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";                    
+                }
             }
 
             return ptArt + pTasks;

@@ -9,6 +9,8 @@
     ViewBag.Title = Html.T(strings, "EditCost");
 
     string url = Url.Action("Costs", "Document", new { codDocumentProduct = Model.TaskCost.CodDocumentProduct });
+    string editUrl = Url.Action("EditCostManual", new { controller = "Document", area = "Working" });
+
 }
 
 @section title{
@@ -56,10 +58,11 @@
                     case PapiroMVC.Models.CostDetail.CostDetailType.PrintingLabelRollCostDetail:
                         Html.RenderPartial("_PrintingLabelRollCostDetail", Model);
                         break;
+                    case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
+                        Html.RenderPartial("_PrintingRollCostDetail", Model);
+                        break;
 
-                        @*          case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
-                                break;
-                            case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+                        @*                            case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
                                 break;
                             case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
                                 break;
@@ -115,9 +118,9 @@
     @*    </div> *@
 
 
-    <div class="span6 no-padding" ></div>
+    <div class="span6 no-padding"></div>
     @*div usato per spostare a dx la tabella delle hint*@
-    <div id="printingHintTable" class="span5 no-padding well" ></div>
+    <div id="printingHintTable" class="span5 no-padding well"></div>
     <div class="span1"></div>
 
 </div>
@@ -171,17 +174,19 @@
 
 </script>
 
+
 <script type="text/javascript">
 
     $(function () {
 
 
         //mostra e nascondi costi
-        $("#divCostGrid@(Model.TaskCost.CodDocumentProduct)").collapse('toggle');
+        //        $("#divCostGrid@(Model.TaskCost.CodDocumentProduct)").collapse('toggle');
 
 
         $(".toggle-btn").click(function () {
             $("#divCostGrid@(Model.TaskCost.CodDocumentProduct)").collapse('toggle');
+
         });
 
         //////
@@ -193,11 +198,12 @@
             datatype: 'json',
             colModel: [
                 { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: true },
-                    { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true },
-                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 70, align: 'right', editable: true },
+                    { name: 'CodCost', width: 60, align: 'right', editable: false, hidden: true },
+                    { name: 'Locked', label: '@HttpContext.GetLocalResourceObject(strings, "Locked")', width: 30, align: 'center', editable: false, search: false, formatter: blkFormatter },
+                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 70, align: 'right', editable: false },
                     { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
-                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: false },
-                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false },
+                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: true },
+                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: true },
                     { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false }],
 
             pager: '#pagercostGrid@(Model.TaskCost.CodDocumentProduct)',
@@ -207,6 +213,46 @@
             viewrecords: true,
             autowidth: true,
             width: 650,
+
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    $("#costGrid@(Model.TaskCost.CodDocumentProduct)").jqGrid('restoreRow', lastSel);
+                    lastSel = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+
+                if (ci === 3) {
+
+                    var link = '@Url.Action("EditCostTroggleLock", "Document", new { Area = "Working", id = "type" })'.replace("type", id);
+
+                    var jqxhr = $.get(link, function () {
+                        $("#costGrid@(Model.TaskCost.CodDocumentProduct)").trigger("reloadGrid");
+                    })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+
+
+                } else {
+                    $("#costGrid@(Model.TaskCost.CodDocumentProduct)").jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function () {
+                            $("#costGrid@(Model.TaskCost.CodDocumentProduct)").trigger("reloadGrid");
+                        },
+                        url: '@editUrl'
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                }
+                return;
+            },
 
         });
 

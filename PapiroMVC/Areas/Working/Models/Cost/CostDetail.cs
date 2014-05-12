@@ -24,6 +24,10 @@ namespace PapiroMVC.Models
             MqSheetTypeOfQuantity = 3,
             RunLengthMlTypeOfQuantity = 4, //ml di stampa
 
+            NumberTypeOfQuantity = 5, //numero generico
+
+
+            NOTypeOfQuantity = 10, //numero generico
         }
 
         public enum CostDetailType : int
@@ -160,8 +164,9 @@ namespace PapiroMVC.Models
 
         public virtual double UnitCost(double qta)
         {
+            return 0;
             //in questo metodo voglio calcolare il prezzo unitario
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
     }

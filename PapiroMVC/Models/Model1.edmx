@@ -32,6 +32,7 @@
           <Property Name="Ml" Type="int" />
           <Property Name="SelectorArticleRigidPrintableCost" Type="int" />
           <Property Name="SelectorArticleObjectPrintableCost" Type="int" />
+          <Property Name="TypeOfCost" Type="int" />
         </EntityType>
         <EntityType Name="articles">
           <Key>
@@ -104,6 +105,8 @@
           <Property Name="Error" Type="int" />
           <Property Name="Guid" Type="char" MaxLength="32" />
           <Property Name="RollChanges" Type="double" />
+          <Property Name="Implants" Type="double" />
+          <Property Name="HideBuyingInView" Type="bit" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -122,6 +125,7 @@
           <Property Name="ForceZero" Type="bit" />
           <Property Name="Hidden" Type="bit" />
           <Property Name="CodProductPartImplantTask" Type="char" MaxLength="50" />
+          <Property Name="Locked" Type="bit" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -318,6 +322,7 @@
           <Property Name="Hidden" Type="bit" />
           <Property Name="IndexOf" Type="int" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
+          <Property Name="ImplantHidden" Type="bit" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -342,6 +347,7 @@
           <Property Name="CodProduct" Type="char" MaxLength="50" />
           <Property Name="ProductTaskName" Type="char" MaxLength="100" />
           <Property Name="SelectorProductTask" Type="int" />
+          <Property Name="ImplantHidden" Type="bit" />
         </EntityType>
         <EntityType Name="steps">
           <Key>
@@ -415,8 +421,6 @@
           <Property Name="StartingTime1" Type="time" Precision="0" />
           <Property Name="StartingTime2" Type="time" Precision="0" />
           <Property Name="TimeForfait" Type="time" Precision="0" />
-          <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
-          <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
           <Property Name="SelectorTimeRunDigital" Type="int" />
           <Property Name="CostPerHourRunningBW" Type="char" MaxLength="20" />
           <Property Name="CostPerHourStartingBW" Type="char" MaxLength="20" />
@@ -475,6 +479,9 @@
           <Property Name="StartingCost32" Type="char" MaxLength="20" />
           <Property Name="BindingCost" Type="char" MaxLength="20" />
           <Property Name="BindingStartingCost" Type="char" MaxLength="20" />
+          <Property Name="StartingTimePerColor" Type="time" Precision="0" />
+          <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
+          <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
@@ -527,6 +534,8 @@
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="FlexoWidth" Type="double" />
           <Property Name="PaperSecondStartLenght" Type="uint" />
+          <Property Name="HasImplant" Type="bit" />
+          <Property Name="CostImplant" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -1466,6 +1475,8 @@
           <NavigationProperty Name="costdetails" Relationship="dbModel.FK_costdetails_CodTaskExecutorSelected" FromRole="TaskExecutor" ToRole="costdetail" />
           <Property Type="String" Name="UniversalCodPapiro" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="TaskExecutorCylinders" Relationship="dbModel.FK_taskexecutorcylinders_CodTaskExecutor" FromRole="TaskExecutor" ToRole="taskexecutorcylinder" />
+          <Property Name="HasImplant" Type="Boolean" />
+          <Property Name="CostImplant" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
@@ -1531,9 +1542,10 @@
           <Property Type="Time" Name="StartingTime1" Precision="0" />
           <Property Type="Time" Name="StartingTime2" Precision="0" />
           <Property Type="Time" Name="TimeForfait" Precision="0" />
-          <Property Type="String" Name="CostPerHourRunning" />
-          <Property Type="String" Name="CostPerHourStarting" />
           <Property Type="Boolean" Name="UseDifferentDeficitForWeightStep" />
+          <Property Name="StartingTimePerColor" Type="Time" />
+          <Property Name="CostPerHourRunning" Type="String" />
+          <Property Name="CostPerHourStarting" Type="String" />
         </EntityType>
         <EntityType Name="TaskEstimatedOnUnit" BaseType="dbModel.TaskEstimatedOn" Abstract="true">
           <Property Type="String" Name="CostPerUnit" />
@@ -1600,6 +1612,7 @@
           <Property Type="String" Name="CodArticleCost" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="CodArticle" MaxLength="50" Unicode="false" FixedLength="true" />
           <NavigationProperty Name="Articles" Relationship="dbModel.FK_ArticleCost_CodArticle" FromRole="articlecost" ToRole="articles" />
+          <Property Name="TypeOfCost" Type="Int32" />
         </EntityType>
         <EntityType Name="Article" Abstract="true">
           <Key>
@@ -1930,6 +1943,7 @@
           <Property Type="Int32" Name="IndexOf" />
           <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="ProductPartTask" ToRole="cost" />
           <NavigationProperty Name="ImplantCosts" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="ProductPartTask" ToRole="Cost" />
+          <Property Name="ImplantHidden" Type="Boolean" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -1959,6 +1973,7 @@
           <Property Type="Int32" Name="IndexOf" />
           <NavigationProperty Name="costs" Relationship="dbModel.FK_costs_CodProductTask" FromRole="ProductTask" ToRole="cost" />
           <NavigationProperty Name="productpartstoproducttasks" Relationship="dbModel.FK_productpartstoproducttask_CodProductTask" FromRole="ProductTask" ToRole="productpartstoproducttask" />
+          <Property Name="ImplantHidden" Type="Boolean" />
         </EntityType>
         <Association Name="FK_productparts_CodProduct">
           <End Type="dbModel.Product" Role="product" Multiplicity="0..1">
@@ -2215,6 +2230,7 @@
           <Property Name="Hidden" Type="Boolean" />
           <Property Name="CodProductPartImplantTask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductPartImplantTask" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="Cost" ToRole="ProductPartTask" />
+          <Property Name="Locked" Type="Boolean" />
         </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -2415,6 +2431,7 @@
           <Property Name="Error" Type="Int32" />
           <Property Name="Guid" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="RollChanges" Type="Double" />
+          <Property Name="Implants" Type="Double" />
         </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -2460,6 +2477,7 @@
         </Association>
         <EntityType Name="PrintingCostDetail" BaseType="dbModel.CostDetail" >
           <Property Type="String" Name="PrintingFormat" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HideBuyingInView" Type="Boolean" />
         </EntityType>
         <EntityType Name="PrintingSheetCostDetail" BaseType="dbModel.PrintingCostDetail" >
           <Property Type="String" Name="BuyingFormat" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -2469,7 +2487,7 @@
           <Property Type="Int32" Name="CostTakenFrom" />
         </EntityType>
         <EntityType Name="PrintingRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
-          <Property Type="Double" Name="BuyingWidth" />
+          <Property Name="BuyingFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductPartSinglePlotter" BaseType="dbModel.ProductPart">
           <Property Type="Boolean" Name="RawCut" />
@@ -2743,6 +2761,18 @@
           </ReferentialConstraint>
         </Association>
         <EntityType Name="ImplantCostDetail" BaseType="dbModel.CostDetail" />
+        <EntityType Name="NoPrintableArticleCostStandard" BaseType="dbModel.ArticleCost" >
+          <Property Name="CostPerUnit" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="ProductSoft" BaseType="dbModel.Product" >
+          <Property Name="Format" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductPartSoft" BaseType="dbModel.ProductPart" />
+        <EntityType Name="ProductPartSoftPrinting" BaseType="dbModel.ProductPartRollPrinting" />
+        <EntityType Name="RollEstimatedOnTime" BaseType="dbModel.TaskEstimatedOnTime" />
+        <EntityType Name="CostPerColorStep" BaseType="dbModel.Step" >
+          <Property Name="CostPerUnit" Type="String" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2752,6 +2782,8 @@
           <EntitySetMapping Name="taskexecutors">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CostImplant" ColumnName="CostImplant" />
+                <ScalarProperty Name="HasImplant" ColumnName="HasImplant" />
                 <ScalarProperty Name="UniversalCodPapiro" ColumnName="UniversalCodPapiro" />
                 <ScalarProperty Name="CodTypeOfTask" ColumnName="CodTypeOfTask" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
@@ -2889,10 +2921,11 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
-                <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
-                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
                 <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
+                <ScalarProperty Name="StartingTimePerColor" ColumnName="StartingTimePerColor" />
+                <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <ScalarProperty Name="TimeForfait" ColumnName="TimeForfait" />
                 <ScalarProperty Name="StartingTime2" ColumnName="StartingTime2" />
                 <ScalarProperty Name="StartingTime1" ColumnName="StartingTime1" />
@@ -3004,6 +3037,12 @@
                 <Condition ColumnName="SelectorMqRun" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RollEstimatedOnTime)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <Condition ColumnName="SelectorTimeRunDigital" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="steps">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Step)">
@@ -3101,10 +3140,18 @@
                 <Condition ColumnName="Selector" Value="7" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostPerColorStep)">
+              <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <ScalarProperty Name="IdStep" ColumnName="IdStep" />
+                <Condition ColumnName="Selector" Value="8" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="articlecost">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ArticleCost)">
               <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="TypeOfCost" ColumnName="TypeOfCost" />
                 <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
@@ -3188,6 +3235,13 @@
               <MappingFragment StoreEntitySet="articlecost">
                 <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
                 <Condition ColumnName="SelectorArticleRigidPrintableCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.NoPrintableArticleCostStandard)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="SelectorArticleCost" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3385,6 +3439,12 @@
                 <Condition ColumnName="SelectorProductPart" Value="6" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSoft)">
+              <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
+                <Condition ColumnName="SelectorProductPart" Value="7" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductPartsPrintableArticles">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartsPrintableArticle)">
@@ -3422,6 +3482,7 @@
           <EntitySetMapping Name="ProductPartTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartTask)">
               <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
@@ -3473,10 +3534,18 @@
                 <Condition ColumnName="SelectorProduct" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductSoft)">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="CodProduct" ColumnName="CodProduct" />
+                <Condition ColumnName="SelectorProduct" Value="5" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductTasks">
             <EntityTypeMapping TypeName="dbModel.ProductTask">
               <MappingFragment StoreEntitySet="producttasks">
+                <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
                 <ScalarProperty Name="CodOptionTypeOfTask" ColumnName="CodOptionTypeOfTask" />
@@ -3535,6 +3604,7 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="Locked" ColumnName="Locked" />
                 <ScalarProperty Name="CodProductPartImplantTask" ColumnName="CodProductPartImplantTask" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
                 <ScalarProperty Name="ForceZero" ColumnName="ForceZero" />
@@ -3607,6 +3677,7 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Implants" ColumnName="Implants" />
                 <ScalarProperty Name="RollChanges" ColumnName="RollChanges" />
                 <ScalarProperty Name="Guid" ColumnName="Guid" />
                 <ScalarProperty Name="Error" ColumnName="Error" />
@@ -3643,7 +3714,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingRollCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
-                <ScalarProperty Name="BuyingWidth" ColumnName="BuyingWidth" />
+                <ScalarProperty Name="BuyingFormat" ColumnName="BuyingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <Condition ColumnName="SelectorPrinting" Value="1" />
               </MappingFragment>
@@ -3673,6 +3744,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="HideBuyingInView" ColumnName="HideBuyingInView" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />
                 <Condition ColumnName="Selector" Value="0" />
@@ -3742,6 +3814,12 @@
               <MappingFragment StoreEntitySet="productpartprinting">
                 <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
                 <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSoftPrinting)">
+              <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
+                <Condition ColumnName="SelectorPlotter" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4324,6 +4402,18 @@
         <AssociationConnector Association="dbModel.FK_costs_CodProductPartImplantTask" />
         <EntityTypeShape EntityType="dbModel.ImplantCostDetail" Width="1.5" PointX="40.375" PointY="26.75" />
         <InheritanceConnector EntityType="dbModel.ImplantCostDetail" />
+        <EntityTypeShape EntityType="dbModel.NoPrintableArticleCostStandard" Width="1.5" PointX="28.625" PointY="4.375" />
+        <InheritanceConnector EntityType="dbModel.NoPrintableArticleCostStandard" />
+        <EntityTypeShape EntityType="dbModel.ProductSoft" Width="1.5" PointX="14.875" PointY="42.125" />
+        <InheritanceConnector EntityType="dbModel.ProductSoft" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSoft" Width="1.5" PointX="16" PointY="35.5" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSoft" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSoftPrinting" Width="1.5" PointX="55" PointY="26.125" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSoftPrinting" />
+        <EntityTypeShape EntityType="dbModel.RollEstimatedOnTime" Width="1.5" PointX="8.375" PointY="21" />
+        <InheritanceConnector EntityType="dbModel.RollEstimatedOnTime" />
+        <EntityTypeShape EntityType="dbModel.CostPerColorStep" Width="1.5" PointX="28.125" PointY="14" />
+        <InheritanceConnector EntityType="dbModel.CostPerColorStep" />
       </Diagram>
     </Diagrams>
   </Designer>

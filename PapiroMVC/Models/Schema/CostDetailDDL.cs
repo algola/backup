@@ -43,8 +43,11 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
 
-
+            //avviamenti
             dbS.AddColumnToTable("costdetails", "Starts", SchemaDb.Double, "0");
+
+            //impianti (numero di Impanti)
+            dbS.AddColumnToTable("costdetails", "Implants", SchemaDb.Double, "0");
 
             //cambi di rotolo... (per le etichette in rotolo)
             //devo calcolare quante volte devo cambiare il rotolo (mtTotali / mt a rotolo)
@@ -72,6 +75,7 @@ namespace PapiroMVC.Model
 
 
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("costdetails", "HideBuyingInView", SchemaDb.Bool, "0");
 
             #region Printable Article
             dbS.AddColumnToTable("costdetails", "SelectorPrintedArticle", SchemaDb.Int, "0");

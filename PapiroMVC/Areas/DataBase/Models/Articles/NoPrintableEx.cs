@@ -14,7 +14,7 @@ namespace PapiroMVC.Models
     {
         public NoPrintable()
         {
-            TypeOfArticle = ArticleType.NoProntable;
+            TypeOfArticle = ArticleType.NoPrintable;
         }
 
         #region Added Properties

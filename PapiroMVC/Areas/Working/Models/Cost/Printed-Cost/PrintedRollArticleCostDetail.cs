@@ -66,13 +66,16 @@ namespace PapiroMVC.Models
 
             if ((QuantityType)(ComputedBy.TypeOfQuantity??0) == QuantityType.RunLengthMlTypeOfQuantity)
             {
-                //prendo i ml li moltiplico per la banca
+                //prendo i ml li moltiplico per la banda
                 mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()/100;
             }
             else
             {
-                //prendo i ml li moltiplico per la banca
-                mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 10000;
+                //devo ottenere i mq totali di materiale stampato ed uso un trucco... voglio il numero di fogli... lo moltiplico per la resa del materiale e per i mq
+                var lastTypeOfQuantity = ComputedBy.TypeOfQuantity;
+                ComputedBy.TypeOfQuantity = 0;
+                mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle??1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
+                ComputedBy.TypeOfQuantity = lastTypeOfQuantity;
             }
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))

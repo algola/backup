@@ -208,7 +208,7 @@ namespace PapiroMVC.Models
                     article = new NoPrintable();
                     SupplierMaker = "";
                     SupplyerBuy = "";
-            //        article.ArticleCosts.Add(new NoPrintableStandardCost());
+                    article.ArticleCosts.Add(new NoPrintableArticleCostStandard());
                 }
                 return article;
             }
@@ -220,13 +220,13 @@ namespace PapiroMVC.Models
             }
         }
 
-        //public NoPrintableStandardCost NoPrintableStandardCost
-        //{
-        //    get
-        //    {
-        //        return (NoPrintableStandardCost)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableStandardCost);
-        //    }
-        //}
+        public NoPrintableArticleCostStandard NoPrintableArticleCostStandard
+        {
+            get
+            {
+                return (NoPrintableArticleCostStandard)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostStandard);
+            }
+        }
     }
 
 }

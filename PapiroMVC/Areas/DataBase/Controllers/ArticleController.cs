@@ -377,7 +377,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
                         break;
 
-                case Article.ArticleType.NoProntable:
+                case Article.ArticleType.NoPrintable:
                         ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
                         break;
 

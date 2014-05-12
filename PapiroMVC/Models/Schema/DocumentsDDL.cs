@@ -108,6 +108,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costs", "ForceZero", SchemaDb.Bool, "0");
             //Hide
             dbS.AddColumnToTable("costs", "Hidden", SchemaDb.Bool, "0");
+            //Locked
+            dbS.AddColumnToTable("costs", "Locked", SchemaDb.Bool, "0");
 
 
         }

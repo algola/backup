@@ -29,7 +29,7 @@
         if (cellvalue == "1")
             return link.replace("type", mq);
 
-        if (cellvalue == "2")
+        if (cellvalue == "2" || cellvalue == "5")
             return link.replace("type", nr);
 
         if (cellvalue == "3")
@@ -42,4 +42,19 @@
         return link;
 
     }
+
+    function blkFormatter(cellvalue, options, rowobject) {
+
+        var link = '<i class="icon"></i>';
+
+        if (cellvalue == "False")
+            return link.replace("icon", "icon-unlock");
+
+        if (cellvalue == "True")
+            return link.replace("icon", "icon-lock");
+
+        return link;
+
+    }
+
 </script>

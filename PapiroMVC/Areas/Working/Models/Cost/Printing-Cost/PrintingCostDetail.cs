@@ -42,9 +42,39 @@ namespace PapiroMVC.Models
             base.CostDetailCostCodeRigen();
         }
 
-        public virtual List<PrintedArticleCostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        public virtual List<CostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
         {
             return null;
+        }
+
+        public virtual List<CostDetail> GetRelatedImplantCostDetail(string codProductPartTask, IQueryable<Cost> costs)
+        {
+            List<CostDetail> lst = new List<CostDetail>();
+
+            var x = new ImplantCostDetail();
+
+            x.ComputedBy = this;
+            x.ProductPart = this.ProductPart;
+
+            //devo pescare il costo e associarlo al dettaglio
+            if (x.CodCost == null)
+            {
+                var xxxx = costs.ToList();
+
+                var cost = costs.Where(pp => pp.CodProductPartImplantTask == codProductPartTask).FirstOrDefault();
+                //da non usare MAIIII                    x.TaskCost = cost;
+                x.CodCost = cost.CodCost;
+                x.CodCostDetail = cost.CodCost;
+
+                x.CostDetailCostCodeRigen();
+            }
+
+            //GUID
+            x.Guid = this.Guid;
+            this.Computes.Add(x);
+            lst.Add(x);
+
+            return lst;
         }
 
         /// <summary>

@@ -8,10 +8,12 @@ using Services;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Areas.DataBase.ViewModels;
 using PapiroMVC.Validation;
+using PapiroMVC.Validation.Error;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     [AuthorizeUser]
+    [CustomHandleError(View="Error")]
     public partial class CustomerSupplierController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         

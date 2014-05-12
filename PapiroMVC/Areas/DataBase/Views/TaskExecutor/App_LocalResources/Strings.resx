@@ -22,7 +22,7 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="icon1" type="System.Drawing.icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
@@ -386,5 +386,17 @@
   </data>
   <data name="Z" xml:space="preserve">
     <value>Z</value>
+  </data>
+  <data name="ImplantSectionMq" xml:space="preserve">
+    <value>Impianti costo/mq</value>
+  </data>
+  <data name="StartingRollLabel" xml:space="preserve">
+    <value>Avviamento</value>
+  </data>
+  <data name="CostPerHourCaption" xml:space="preserve">
+    <value>Costo/h</value>
+  </data>
+  <data name="FromColorCaption" xml:space="preserve">
+    <value>Colori</value>
   </data>
 </root>

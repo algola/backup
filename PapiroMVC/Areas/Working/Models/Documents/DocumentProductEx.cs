@@ -220,6 +220,10 @@ namespace PapiroMVC.Models
 
                     cost.Description = productPartTask.ToString();
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+                    if (cost.Description != "")
+                    {
+                        cost.Description = char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
+                    }
 
                     if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
                     {
@@ -238,13 +242,23 @@ namespace PapiroMVC.Models
                     cost.ProductPartImplantTask = productPartTask;
                     cost.ProductPartImplantTask.ProductPart = productPart;
 
-                    cost.Description = "impianti " + productPartTask.ToString();
+                    String str = productPartTask.ToString();
+                    str = str != "" ? str.Substring(0, str.IndexOf(" ")) : "";
+
+                    cost.Description = "impianti " + str;
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
+                    cost.Description = char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
 
                     if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
                     {
                         cost.Hidden = true;
                         cost.ForceZero = true;
+                    }
+
+                    if (productPartTask.ImplantHidden == false)
+                    {
+                        cost.Hidden = false;
+                        cost.ForceZero = false;
                     }
 
                     this.Costs.Add(cost);

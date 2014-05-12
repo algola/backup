@@ -176,6 +176,27 @@ namespace Services
                     break;
                 case Article.ArticleType.ObjectPrintableArticle:
                     break;
+                case Article.ArticleType.NoPrintable:
+                    #region Standard
+                    try
+                    {
+                        var CostStandard = ((NoPrintableArticleCostStandard)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostStandard));
+
+                        CostStandard.CostPerUnit = CostStandard.CostPerUnit == null ?
+                            null : Convert.ToDouble(CostStandard.CostPerUnit,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        CostStandard.CodArticle = c.CodArticle;
+                        CostStandard.CodArticleCost = c.CodArticle + "_STC";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
+                    break;
                 default:
                     break;
             }

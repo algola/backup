@@ -33,9 +33,7 @@
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
-        <div class="controls col-sm-9">
-            @Html.AlgolaEditorFor(model => model.Format)
-        </div>
+        @Html.AlgolaEditorFor(model => model.Format)
     }
     else
     {
@@ -59,10 +57,23 @@
 
 @if (Model.ShowDCut)
 {
-    @Html.EditorFor(model => model.IsDCut);
-    @Html.HiddenFor(model => model.DCut);
-    @Html.EditorFor(model => model.DCut1);
-    @Html.EditorFor(model => model.DCut2);
+    @Html.HiddenFor(model => model.DCut)
+    @Html.EditorFor(model => model.IsDCut)
+
+
+    <div class="control-group">
+        <label class="col-sm-3 control-label no-padding-right">int.Spazio</label>
+        <div class="controls col-sm-9">
+            @Html.TextBoxFor(y => y.DCut1, new { @class = "text-box single-line input-mini", disabled = (Model.IsDCut ?? false) ? "" : "disabled" })
+        </div>
+        <br />
+        <label class="col-sm-3 control-label no-padding-right">int.Spazio</label>
+        <div class="controls col-sm-9">
+            @Html.TextBoxFor(y => y.DCut2, new { @class = "text-box single-line input-mini", disabled = (Model.IsDCut ?? false) ? "" : "disabled" })
+        </div>
+
+    </div>
+
 }
 else
 {
@@ -110,6 +121,12 @@ else
             $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv').hide();
             $('#ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv').show();
         }
+    });
+
+
+    $("#Product_ProductPartsPerView_@(ViewBag.IndexPart)__IsDCut").click(function () {
+        $("#Product_ProductPartsPerView_@(ViewBag.IndexPart)__DCut1").attr('disabled', !this.checked)
+        $("#Product_ProductPartsPerView_@(ViewBag.IndexPart)__DCut2").attr('disabled', !this.checked)
     });
 
 </script>

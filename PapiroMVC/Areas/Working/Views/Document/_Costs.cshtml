@@ -6,6 +6,8 @@
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
     string url = Url.Action("Costs", "Document", new { codDocumentProduct = Model.CodDocumentProduct });
+    string editUrl = Url.Action("EditCostManual", new { controller = "Document", area = "Working" });
+
 }
 
 <table id="costGrid@(Model.CodDocumentProduct)">
@@ -99,14 +101,15 @@
                 }
             },
 
-            
+
             cm = [
                 { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editCost, search: false },
                     { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true, search: false },
-                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 350, align: 'right', editable: true, search: false },
+                    { name: 'Locked', label: '@HttpContext.GetLocalResourceObject(strings, "Locked")', width: 30, align: 'center', editable: false, search: false, formatter: blkFormatter },
+                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 350, align: 'right', editable: false, search: false },
                     { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
-                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: false, search: false },
-                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: false, search: false },
+                    { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: true, search: false },
+                    { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: true, search: false },
                     { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false, search: false }],
 
                     saveObjectInLocalStorage = function (storageItemName, object) {
@@ -203,13 +206,46 @@
             caption: '',
             height: 250,
 
-
             onSelectRow: function (id) {
-                if (id && id !== lastSelPD) {
-                    gidProductDocument.jqGrid('restoreRow', lastSelPD);
-                    lastSelPD = id;
+                if (id && id !== lastSel) {
+                    $("#costGrid@(Model.CodDocumentProduct)").jqGrid('restoreRow', lastSel);
+                    lastSel = id;
                 }
             },
+
+            ondblClickRow: function (id, ri, ci) {
+
+                if (ci === 3) {
+
+                    var link = '@Url.Action("EditCostTroggleLock", "Document", new { Area = "Working", id = "type" })'.replace("type", id);
+
+                    var jqxhr = $.get(link, function () {
+                        $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
+                    })
+                    .done(function () {
+
+                    })
+                    .fail(function () {
+
+                    });
+
+
+                } else {
+                    $("#costGrid@(Model.CodDocumentProduct)").jqGrid('editRow', id, {
+                        keys: true,
+                        oneditfunc: function () {
+                            //...
+                        },
+                        aftersavefunc: function () {
+                            $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
+                        },
+                        url: '@editUrl'
+                    });
+                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                }
+                return;
+            },
+
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
 
@@ -276,23 +312,23 @@
         });
     });
     //]]>
-    </script>
+</script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 
-        //resize jqgrid after windows resize
-        $(window).bind('resize', function () {
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
 
-            var myGrid = $("#listDocumentProduct");
-            var width = $("#body-container").width();
-            try {
-                myGrid.jqGrid('setGridWidth', width, true);
+        var myGrid = $("#listDocumentProduct");
+        var width = $("#body-container").width();
+        try {
+            myGrid.jqGrid('setGridWidth', width, true);
 
-            } catch (e) {
+        } catch (e) {
 
-            }
+        }
 
-        }).trigger('resize');
+    }).trigger('resize');
 
-        </script>    
-     
+</script>
+

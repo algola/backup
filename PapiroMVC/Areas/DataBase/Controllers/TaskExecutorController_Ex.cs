@@ -367,7 +367,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         {                                
                             a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
-                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
@@ -834,6 +834,50 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult CostPerColorStepList(string codTaskExecutorOn, GridSettings gridSettings)
+        {
+            var q = StepsList(codTaskExecutorOn, gridSettings).OfType<CostPerColorStep>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.IdStep,
+                        cell = new string[] 
+                        {       
+                            a.IdStep.ToString(),
+                            a.IdStep.ToString(),
+                            a.CodTaskEstimatedOn.ToString(),
+                            a.FromUnit.ToString(),
+                     //       a.ToUnit.ToString(),
+                            a.CostPerUnit
+                         }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult CostPerRunStepListBW(string codTaskExecutorOn, GridSettings gridSettings)
         {
@@ -976,6 +1020,20 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 if (newStep == null)
                 {
                     newStep = new CostPerRunStep();
+                    newStep.FromUnit = 9999999999;
+                    newStep.ToUnit = 9999999999;
+                    newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;
+                    newStep.TimeStampTable = DateTime.Now;
+                    tskEst.steps.Add(newStep);
+                }
+
+
+                //look for to=0 from=0
+                newStep = tskEst.steps.OfType<CostPerColorStep>().FirstOrDefault(x => x.FromUnit == 9999999999 && x.ToUnit == 9999999999);
+
+                if (newStep == null)
+                {
+                    newStep = new CostPerColorStep();
                     newStep.FromUnit = 9999999999;
                     newStep.ToUnit = 9999999999;
                     newStep.CodTaskEstimatedOn = tskEst.CodTaskEstimatedOn;

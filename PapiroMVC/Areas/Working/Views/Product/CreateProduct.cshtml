@@ -62,5 +62,6 @@
         document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
     });
 
+    $.get( '@Url.Action("WarmUp","Product",new { @area="Working" })' );
 
 </script>

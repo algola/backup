@@ -15,6 +15,7 @@ using Novacode;
 using System.IO;
 using System.Reflection;
 using PapiroMVC.ServiceLayer;
+using System.Threading;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -87,6 +88,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    ((PrintingRollCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 default:
                     break;
@@ -209,6 +211,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    ((PrintingRollCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 default:
                     break;
@@ -370,13 +373,16 @@ namespace PapiroMVC.Areas.Working.Controllers
             p.ArticleRepository = articleRepository;
             p.CurrentDatabase = CurrentDatabase;
 
-
             var cv = p.EditCostAutomatically(id, new Guid());
-            Console.WriteLine(cv.GainForRun);
+            //Console.WriteLine(cv.GainForRun);
+
+            if (cv==null)
+            {
+                return View("NotImplementedCostDetail");
+            }
 
             Session["CodCost"] = id;
             Session["CostDetail"] = cv;
-
 
             Console.Write(cv.Error);
 
@@ -384,12 +390,14 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             switch (cv.TypeOfCostDetail)
             {
-
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
                     ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
+                    ((PrintingRollCostDetail)cv).FuzzyAlgo();
+                    viewName = "PrintingCostDetail";
+                    break;
                 case CostDetail.CostDetailType.PrintingSheetCostDetail:
                     viewName = "PrintingCostDetail";
                     break;
@@ -408,66 +416,148 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-        public void SaveCostDetailAutomaticallyOLD(CostDetail cv)
+        [HttpGet]
+        public ActionResult EditCostTroggleLock(string id)
         {
-            //try
-            //{
-            var pPart = cv.ProductPart;
-            //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
 
-            switch (cv.TypeOfCostDetail)
-            {
-                //if it is a printing... we have to 
-                case CostDetail.CostDetailType.PrintingSheetCostDetail:
+            var cost = documentRepository.GetCost(id);
+            cost.Locked = !(cost.Locked??false);
 
-                    //if (cv.Computes.Count == 0)
-                    {
-                        var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
-                        List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
-                        foreach (var item in x)
-                        {
-                            //only if it is not just in list
-                            if (!(cv.Computes.Select(y => y.CodCost).ToList().Contains(item.ComputedBy.CodCost)))
-                            {
-                                item.ComputedBy = cv;
-                                item.InitCostDetail(null, articleRepository.GetAll());
-                                //item.UpdateCost();
-                                //item.GetCostFromList(articleRepository.GetAll());
-                                costDetailRepository.Add(item);
-                            }
-                        }
-                    }
-
-                    costDetailRepository.Add(cv);
-                    costDetailRepository.Save();
-
-                    //aggiorna il costo rigenerando prima i coefficienti
-                    UpdateCost(cv.CodCost);
-
-                    break;
-                case CostDetail.CostDetailType.PrintingRollCostDetail:
-                    break;
-
-                case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                    break;
-                case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
-                    break;
-                default:
-                    break;
-            }
-
-            //reload saved cost
-            var dp = documentRepository.GetDocumentProductByCodProduct(cv.TaskCost.DocumentProduct.CodProduct).Where(x => x.CodDocumentProduct == cv.TaskCost.CodDocumentProduct).FirstOrDefault();
-
-            if (dp != null)
-            {
-                dp.UpdateCost();
-            }
-
-            documentRepository.Edit(dp.Document);
+            documentRepository.EditCost(cost);
             documentRepository.Save();
 
+            Console.Write(id);
+            return null;
         }
+
+        [HttpPost]
+        public ActionResult EditCostManual(string id, string quantity, string unitCost)
+        {
+
+            var qta = Convert.ToDouble(quantity);
+            var uCost = Convert.ToDouble(unitCost, Thread.CurrentThread.CurrentUICulture);
+
+            var cost = documentRepository.GetCost(id);
+            cost.Quantity = qta;
+            cost.UnitCost = uCost.ToString("#,0.000", Thread.CurrentThread.CurrentUICulture); ;
+
+            var tot = uCost * qta;
+
+            cost.TotalCost = (tot).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+
+            //blocco il costo
+            cost.Locked = true;
+
+            documentRepository.EditCost(cost);
+            documentRepository.Save();
+
+            Console.Write(id);
+            return null;
+            //PapiroService p = new PapiroService();
+            //p.DocumentRepository = documentRepository;//new DocumentRepository();
+            //p.CostDetailRepository = costDetailRepository;
+            //p.TaskExecutorRepository = taskExecutorRepository;
+            //p.ArticleRepository = articleRepository;
+            //p.CurrentDatabase = CurrentDatabase;
+
+
+            //var cv = p.EditCostAutomatically(id, new Guid());
+            //Console.WriteLine(cv.GainForRun);
+
+            //Session["CodCost"] = id;
+            //Session["CostDetail"] = cv;
+
+
+            //Console.Write(cv.Error);
+
+            //var viewName = String.Empty;
+
+            //switch (cv.TypeOfCostDetail)
+            //{
+
+            //    case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+            //        ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+            //        viewName = "PrintingCostDetail";
+            //        break;
+            //    case CostDetail.CostDetailType.PrintingRollCostDetail:
+            //    case CostDetail.CostDetailType.PrintingSheetCostDetail:
+            //        viewName = "PrintingCostDetail";
+            //        break;
+            //    case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+            //        viewName = "PrintingCostDetail";
+            //        break;
+            //    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+            //        viewName = "PrintingCostDetail";
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+
+            //return View(viewName, cv);
+        }
+
+        //public void SaveCostDetailAutomaticallyOLD(CostDetail cv)
+        //{
+        //    //try
+        //    //{
+        //    var pPart = cv.ProductPart;
+        //    //                var prod = productRepository.GetSingle(pPart.Product.CodProduct);
+
+        //    switch (cv.TypeOfCostDetail)
+        //    {
+        //        //if it is a printing... we have to 
+        //        case CostDetail.CostDetailType.PrintingSheetCostDetail:
+
+        //            //if (cv.Computes.Count == 0)
+        //            {
+        //                var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+        //                List<CostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
+
+        //                foreach (var item in x)
+        //                {
+        //                    //only if it is not just in list
+        //                    if (!(cv.Computes.Select(y => y.CodCost).ToList().Contains(item.ComputedBy.CodCost)))
+        //                    {
+        //                        item.ComputedBy = cv;
+        //                        item.InitCostDetail(null, articleRepository.GetAll());
+        //                        //item.UpdateCost();
+        //                        //item.GetCostFromList(articleRepository.GetAll());
+        //                        costDetailRepository.Add(item);
+        //                    }
+        //                }
+        //            }
+
+        //            costDetailRepository.Add(cv);
+        //            costDetailRepository.Save();
+
+        //            //aggiorna il costo rigenerando prima i coefficienti
+        //            UpdateCost(cv.CodCost);
+
+        //            break;
+        //        case CostDetail.CostDetailType.PrintingRollCostDetail:
+        //            break;
+
+        //        case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
+        //            break;
+        //        case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+        //            break;
+        //        default:
+        //            break;
+        //    }
+
+        //    //reload saved cost
+        //    var dp = documentRepository.GetDocumentProductByCodProduct(cv.TaskCost.DocumentProduct.CodProduct).Where(x => x.CodDocumentProduct == cv.TaskCost.CodDocumentProduct).FirstOrDefault();
+
+        //    if (dp != null)
+        //    {
+        //        dp.UpdateCost();
+        //    }
+
+        //    documentRepository.Edit(dp.Document);
+        //    documentRepository.Save();
+
+        //}
 
 
         [HttpParamAction]

@@ -130,7 +130,7 @@ namespace UnitTestPapiroMVC
             #region ViewModel
             ProductViewModel pv = new ProductViewModel();
             pv.Product = prod;
-//            prod.ProductCodeRigen();
+            //            prod.ProductCodeRigen();
 
             pv.Quantities.Add(1000);
             #endregion
@@ -142,7 +142,7 @@ namespace UnitTestPapiroMVC
             dp.Quantity = pv.Quantities.FirstOrDefault();
 
             dp.InitCost();
-            
+
             doc.DocumentProducts.Add(dp);
 
             docRep.Edit(doc);
@@ -157,5 +157,27 @@ namespace UnitTestPapiroMVC
             Assert.IsTrue(fine < 4);
         }
 
+        [TestMethod]
+        public void CloneObject()
+        {
+
+
+            IDocumentRepository docRep = new DocumentRepository();
+            IProductRepository prodRep = new ProductRepository();
+
+            PapiroService p = new PapiroService();
+            p.DocumentRepository = docRep;
+            p.CostDetailRepository = new CostDetailRepository();
+            p.TaskExecutorRepository = new TaskExecutorRepository();
+            p.ArticleRepository = new ArticleRepository();
+
+            Document doc = docRep.GetEstimateEcommerce("000001");
+            doc.EstimateNumber = "0";
+
+            //work with product
+            Product prod = doc.DocumentProducts.First().Product;
+
+            Console.WriteLine(prod.ProductName);
+        }
     }
 }

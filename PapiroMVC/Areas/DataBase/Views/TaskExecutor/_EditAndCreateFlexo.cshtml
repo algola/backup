@@ -46,7 +46,7 @@
         @Html.AlgolaEditorFor(model => model.FlexoWidth)
         @Html.AlgolaEditorFor(model => model.Laterale)
 
-        @Html.HiddenFor(model => model.FormatMin)
+        @Html.AlgolaEditorFor(model => model.FormatMin)
         @Html.HiddenFor(model => model.FormatMax)
 
         @Html.AlgolaEditorFor(model => model.WeightMin)
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        
+
         if (ViewBag.ActionMethod != "CreateFlexo")
         {
             <div id="_listTaskExecutorCylinder">
@@ -121,6 +121,11 @@
 
         @Html.AlgolaAutocompleteFor(model => model.PaperFirstStartLenght, "PaperFirstStartLenght", "TaskExecutor")
         @Html.AlgolaAutocompleteFor(model => model.PaperSecondStartLenght, "PaperSecondStartLenght", "TaskExecutor")
+
+
+        <h3>@Html.T(strings, "ImplantSectionMq")</h3>
+        @Html.AlgolaEditorFor(model => model.CostImplant)
+
 
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexLithoSheetAndRoll", "TaskExecutor", new { Area = "Database" })');">

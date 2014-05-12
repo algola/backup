@@ -27,6 +27,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodArticle { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> TypeOfCost { get; set; }
     
     	[DataMember]
         public virtual Article Articles { get; set; }

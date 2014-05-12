@@ -75,6 +75,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<double> RollChanges { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> Implants { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

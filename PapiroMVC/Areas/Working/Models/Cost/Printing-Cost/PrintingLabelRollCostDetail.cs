@@ -266,12 +266,15 @@ namespace PapiroMVC.Models
 
             var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
             //mul with cm GetSide2 Printing Format
-            var mtRuns = runs * PrintingFormat.GetSide2() / 10;
+            var mtRuns = runs * PrintingFormat.GetSide2() / 100;
 
             //i 2000 dovrebbero essere rapportati alla carta!!!
             RollChanges = Math.Truncate((mtRuns + paperFirstStartLenght ?? 0) / 2000);
 
-            var mtWaste = paperFirstStartLenght ?? 0 + (RollChanges * paperSecondStartLenght ?? 0);
+            //calcolo di quanti impianti sono necessari!!!!
+            Implants = TaskexEcutorSelected.Implants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+
+            var mtWaste = (paperFirstStartLenght ?? 0) + (RollChanges * paperSecondStartLenght ?? 0);
 
 
         }
@@ -283,16 +286,16 @@ namespace PapiroMVC.Models
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
                 case QuantityType.MqWorkTypeOfQuantity:
-                    ret = Math.Ceiling( base.Quantity(qta));
+                    ret = Math.Ceiling(base.Quantity(qta));
                     break;
                 case QuantityType.RunLengthMlTypeOfQuantity:
                     //calcoli per mt lineari!!!!!!!!
                     var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
                     var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
-                    
+
                     var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
-                    var mtRuns = runs * PrintingFormat.GetSide2() / 10;
-                    var mtWaste = paperFirstStartLenght??0 + (RollChanges * paperSecondStartLenght??0);
+                    var mtRuns = runs * PrintingFormat.GetSide2() / 100;
+                    var mtWaste = (paperFirstStartLenght ?? 0) + (RollChanges * paperSecondStartLenght ?? 0);
 
                     ret = Math.Ceiling(mtRuns + mtWaste);
                     break;
@@ -369,10 +372,41 @@ namespace PapiroMVC.Models
         }
 
 
-        public override List<PrintedArticleCostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        public override List<CostDetail> GetRelatedImplantCostDetail(string codProductPartTask, IQueryable<Cost> costs)
         {
-            List<PrintedArticleCostDetail> lst = new List<PrintedArticleCostDetail>();
+            List<CostDetail> lst = new List<CostDetail>();
 
+            var x = new ImplantCostDetail();
+
+            x.ComputedBy = this;
+            x.ProductPart = this.ProductPart;
+
+            //devo pescare il costo e associarlo al dettaglio
+            if (x.CodCost == null)
+            {
+                var xxxx = costs.ToList();
+
+                var cost = costs.Where(pp => pp.CodProductPartImplantTask == codProductPartTask).FirstOrDefault();
+                //da non usare MAIIII                    x.TaskCost = cost;
+                x.CodCost = cost.CodCost;
+                x.CodCostDetail = cost.CodCost;
+
+                x.CostDetailCostCodeRigen();
+            }
+
+            //GUID
+            x.Guid = this.Guid;
+            this.Computes.Add(x);
+            lst.Add(x);
+
+            return lst;
+        }
+
+        public override List<CostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        {
+            List<CostDetail> lst = new List<CostDetail>();
+
+            //per ciascun materiale stampabile...
             foreach (var item in this.ProductPart.ProductPartPrintableArticles)
             {
 
@@ -399,7 +433,6 @@ namespace PapiroMVC.Models
                         break;
                 }
 
-
                 x.ComputedBy = this;
                 x.ProductPart = this.ProductPart;
 
@@ -421,8 +454,10 @@ namespace PapiroMVC.Models
                 x.Guid = this.Guid;
                 this.Computes.Add(x);
                 lst.Add(x);
-
             }
+
+
+
 
             return lst;
         }
@@ -485,5 +520,48 @@ namespace PapiroMVC.Models
             }
             return res;
         }
+
+
+        public override double UnitCost(double qta)
+        {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
+            //devo usare gli avvimaneti, la tiratura totale e i mq
+            //passarli ad un metodo della macchina corrente e mi restituisce il costo totale che dividerò per
+            //la quantità!!!!
+
+            double total = 0;
+            try
+            {
+                try
+                {
+                    double cToPrintF = 0;
+                    double cToPrintR = 0;
+                    double cToPrintT = 0;
+
+                    TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT); 
+                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
+                }
+                catch (NotImplementedException)
+                {
+                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
+                }
+                Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
+            }
+            catch (NullReferenceException)
+            {
+                total = 0;
+                Error = 2;
+            }
+
+            return (total) / Quantity(qta);
+
+        }
+
     }
+
+
 }

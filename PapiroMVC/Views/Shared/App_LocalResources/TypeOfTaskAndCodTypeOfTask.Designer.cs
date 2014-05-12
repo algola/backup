@@ -628,6 +628,42 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa UV alta qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_ALTA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_ALTA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa UV bassa qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_BASSA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_BASSA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa UV media qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_MEDIA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_MEDIA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa offset.
         /// </summary>
         public static string CodSTAMPAOFF {

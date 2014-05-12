@@ -11,7 +11,7 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ArticleCost_MetaData))]
     public abstract partial class ArticleCost
     {
-        #region Proprietà aggiuntive       
+        #region Proprietà aggiuntive
         public enum ArticleCostType : int
         {
             SheetPrintableArticlePakedCost = 0,
@@ -20,7 +20,8 @@ namespace PapiroMVC.Models
             RollPrintableArticleStandardCost = 3,
             RollPrintableArticleCuttedCost = 4,
             RigidPrintableArticleStandardCost = 5,
-            ObjectPrintableArticleStandardCost = 6
+            ObjectPrintableArticleStandardCost = 6,
+            NoPrintableArticleCostStandard = 7
         }
 
         public ArticleCostType TypeOfArticleCost

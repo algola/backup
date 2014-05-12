@@ -21,5 +21,8 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string PrintingFormat { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> HideBuyingInView { get; set; }
     }
 }

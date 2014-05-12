@@ -124,7 +124,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Fustellatura in linea.
         /// </summary>
         public static string CodFUSTELLATURA_NO {
             get {
@@ -133,7 +133,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fustellati e staccati.
+        ///   Looks up a localized string similar to Fustellatura.
         /// </summary>
         public static string CodFUSTELLATURA_NO_STACCO {
             get {
@@ -142,7 +142,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fuestellati ma non staccati.
+        ///   Looks up a localized string similar to Fustellatura con stacco.
         /// </summary>
         public static string CodFUSTELLATURA_STACCO {
             get {
@@ -570,6 +570,42 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string CodSTAMPAETICHROTOLO_NO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa UV alta qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_ALTA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_ALTA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa UV bassa qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_BASSA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_BASSA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa UV media qualità.
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_MEDIA {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_MEDIA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CodSTAMPAMORBIDO_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAMORBIDO_NO", resourceCulture);
             }
         }
         

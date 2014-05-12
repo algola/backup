@@ -39,7 +39,17 @@ namespace PapiroMVC.Models
             ProductPartTask partTask;
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAETICHROTOLO_NO");
             partTask.Hidden = false;
+            partTask.ImplantHidden = false;
             partTask.IndexOf = 1;
+
+            //partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "VERNICIATURA_NO");
+            //partTask.Hidden = false;
+            //partTask.IndexOf = 2;
+
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
+            partTask.Hidden = true;
+            partTask.ImplantHidden = false;
+            partTask.IndexOf = 2;
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
@@ -53,13 +63,17 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAETICHROTOLO" };
+            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA" };
 
             foreach (var item in codTypeOfTasks)
             {
                 pt = new ProductPartTask();
                 //default selection
                 pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
+
+                //if (item == "FUSTELLATURA")
+                //    pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
+
                 pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
                 pt.Hidden = true;
                 tsksInPart.Add(pt);

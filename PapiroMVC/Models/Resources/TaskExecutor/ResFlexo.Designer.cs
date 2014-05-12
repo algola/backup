@@ -61,6 +61,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Costo impanto / mq.
+        /// </summary>
+        public static string CostImplant {
+            get {
+                return ResourceManager.GetString("CostImplant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to indicare un costo di impnto al mq.
+        /// </summary>
+        public static string CostImplantToolTip {
+            get {
+                return ResourceManager.GetString("CostImplantToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
         /// </summary>
         public static string CurrencyValidation {

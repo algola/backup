@@ -49,7 +49,7 @@ namespace PapiroMVC.ServiceLayer
             {
                 product = new ProductSingleSheet();
                 product.ShowDCut = true;
-                product.DCut = 0.5;
+                //                product.DCut = 0.5;
                 product.DCut1 = 0.5;
                 product.DCut2 = 0.5;
 
@@ -68,13 +68,12 @@ namespace PapiroMVC.ServiceLayer
 
             if (
                 id == "Fotoquadri" ||
-                id == "SuppRigidi" ||
-                id == "Poster")
+                id == "SuppRigidi")
             {
                 product = new ProductRigid();
                 product.ShowDCut = true;
                 product.DCut = 0;
-                product.DCut1 = 20;
+                product.DCut1 = 1;
                 product.DCut2 = 1;
 
             }
@@ -82,9 +81,10 @@ namespace PapiroMVC.ServiceLayer
             if (
                 id == "PVC" ||
                 id == "Manifesti" ||
-                id == "Striscioni")
+                id == "Striscioni" ||
+                id == "Poster")
             {
-                product = new ProductRigid();
+                product = new ProductSoft();
             }
 
 
@@ -95,7 +95,6 @@ namespace PapiroMVC.ServiceLayer
             {
                 product = new ProductSingleLabelRoll();
             }
-
 
 
             product.CodMenuProduct = id;
@@ -180,12 +179,14 @@ namespace PapiroMVC.ServiceLayer
                 }
 
                 //if it is a implant cost!!! (ci pensarà la lavorazione stampa a creare l'impianto!!!!!
-                if (cost.CodProductPartImplantTask != null)
+                if ( cost.CodProductPartImplantTask != null)
                 {
                     var codDP = cost.CodDocumentProduct;
 
                     var productPart = cost.ProductPartImplantTask.ProductPart;
-                    var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+                    //cerco la lavorazione che ha come CodProductPartTask == cost.CodProductPartImplantTask
+                 //OLD   var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+                    var task = productPart.ProductPartTasks.FirstOrDefault(x => x.CodProductPartTask == cost.CodProductPartImplantTask);
 
                     cost = DocumentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
                 }
@@ -212,16 +213,12 @@ namespace PapiroMVC.ServiceLayer
 
                         break;
                     case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:
-                        id = cv.ComputedBy.CodCostDetail;
-                        cv = CostDetailRepository.GetSingle(id);
-                        cost = DocumentRepository.GetCost(id);
-                        break;
                     case CostDetail.CostDetailType.PrintedRigidArticleCostDetail:
+                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
+                    case CostDetail.CostDetailType.ImplantCostDetail:
                         id = cv.ComputedBy.CodCostDetail;
                         cv = CostDetailRepository.GetSingle(id);
                         cost = DocumentRepository.GetCost(id);
-                        break;
-                    case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
                         break;
                     default:
                         break;
@@ -247,6 +244,7 @@ namespace PapiroMVC.ServiceLayer
 
                     case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
+                    case CostDetail.CostDetailType.PrintingRollCostDetail:
 
                         if (cv.Computes.Count == 0)
                         {
@@ -254,7 +252,9 @@ namespace PapiroMVC.ServiceLayer
 
                             var temp = costs.ToList();
 
-                            List<PrintedArticleCostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(ArticleRepository.GetAll(), costs);
+                            List<CostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(ArticleRepository.GetAll(), costs).Union(
+                                ((PrintingCostDetail)cv).GetRelatedImplantCostDetail(cv.TaskCost.CodProductPartTask, costs)).ToList();
+
                             foreach (var item in x)
                             {
                                 item.ComputedBy = cv;
@@ -277,8 +277,6 @@ namespace PapiroMVC.ServiceLayer
 
                         Console.Write(tempo);
 
-                        break;
-                    case CostDetail.CostDetailType.PrintingRollCostDetail:
                         break;
 
                     case CostDetail.CostDetailType.PrintedSheetArticleCostDetail:

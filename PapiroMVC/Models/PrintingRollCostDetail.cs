@@ -20,6 +20,6 @@ namespace PapiroMVC.Models
     {
     	
     	[DataMember] 		
-        public Nullable<double> BuyingWidth { get; set; }
+        public string BuyingFormat { get; set; }
     }
 }

@@ -58,11 +58,14 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.0-beta1\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.0-beta1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="InteractivePreGeneratedViews">
+      <HintPath>..\packages\EFInteractiveViews.1.0.0\lib\InteractivePreGeneratedViews.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Word, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -235,7 +238,9 @@
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\NoPrintableArticleStandardCostEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\NoPrintableArticleStandardCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleStandardCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\NoPrintableEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\PrintableEx.cs" />
@@ -291,7 +296,9 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerMqStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepBWEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerColorStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerColorStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\CostPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\DeficitCostForWeightStepEx_MetaData.cs" />
@@ -331,6 +338,8 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\RollEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\RollEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskexEcutorCylinderEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskEstimatedOnEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskexEcutorCylinderEx_MetaData.cs" />
@@ -438,6 +447,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheet.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGain.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSoftPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartRigidPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleLabelRollPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
@@ -470,7 +480,9 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSheetArticleEx_MetaData.cs" />
@@ -482,6 +494,8 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSoftEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductSoftEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductRigidEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx_MetaData.cs" />
@@ -530,6 +544,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostPerColorStep.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CostPerMqStep.cs">
@@ -653,6 +670,9 @@
     <Compile Include="Models\NoPrintable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NoPrintableArticleCostStandard.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ObjectPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -669,9 +689,6 @@
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderRow.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\orderrow1.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Plotter.cs">
@@ -803,6 +820,12 @@
     <Compile Include="Models\ProductPartSingleSheetPrinting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartSoft.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSoftPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartsPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -819,6 +842,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductSingleSheet.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductSoft.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductTask.cs">
@@ -852,10 +878,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResLoginModel.resx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Resources\Articles\ResNoPrintableArticleCost.Designer.cs">
+      <DependentUpon>ResNoPrintableArticleCost.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\Products\ResProductPartSingleLabelRoll.Designer.cs">
       <DependentUpon>ResProductPartSingleLabelRoll.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResCostPerColorStep.Designer.cs">
+      <DependentUpon>ResCostPerColorStep.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\Resources\TaskExecutor\ResRollEstimatedOnTime.Designer.cs">
+      <DependentUpon>ResRollEstimatedOnTime.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Models\Resources\TaskExecutor\ResTaskexEcutorCylinder.Designer.cs">
       <DependentUpon>ResTaskexEcutorCylinder.resx</DependentUpon>
@@ -1051,6 +1094,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResProductPartTask.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Models\Resources\Products\ResProductSingleSheet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1226,7 +1270,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResTaskExecutor.resx</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1245,6 +1289,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RigidPrintableArticleStandardCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RollEstimatedOnTime.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RollPrintableArticle.cs">
@@ -1363,6 +1410,7 @@
     <Compile Include="RepositoryPattern\TASK\RILEGATURA_SPIRALE.cs" />
     <Compile Include="RepositoryPattern\TASK\RILIEVO_A_SECCO.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPAMORBIDO.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPARIGIDO.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA_DIGITALE.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA_OFFSET.cs" />
@@ -2217,6 +2265,14 @@
     <Content Include="Areas\DataBase\Views\Shared\_LayoutAceTheme.cshtml" />
     <Content Include="Areas\DataBase\Views\HomeDb\Index.cshtml" />
     <Content Include="Areas\Working\Views\Document\_PrintingLabelRollCostDetailResult.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_NoPrintableArticleCostStandard.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_DCutSheet.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSoft.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSoft.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingRollCostDetail.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\RollEstimatedOnTime.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerColorStep.cshtml" />
+    <Content Include="Areas\Working\Views\Document\NotImplementedCostDetail.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2394,6 +2450,7 @@
     </Content>
     <Content Include="Areas\DataBase\Views\TaskExecutor\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\CustomerSupplierStrings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2404,6 +2461,7 @@
     </Content>
     <Content Include="Areas\Working\Views\Document\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Working\Views\Product\App_LocalResources\ArticleStrings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2449,10 +2507,25 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLoginModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Articles\ResNoPrintableArticleCost.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResNoPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductPartSingleLabelRoll.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResProductPartSingleLabelRoll.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerColorStep.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostPerColorStep.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\TaskExecutor\ResRollEstimatedOnTime.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResRollEstimatedOnTime.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskexEcutorCylinder.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2637,9 +2710,10 @@
       <LastGenOutput>ResProductPartsPrintableArticle.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductPartTask.resx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResProductPartTask.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductSingleSheet.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2790,7 +2864,7 @@
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResTaskExecutor.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResTaskExecutor.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2846,6 +2920,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="..\packages\AutoMapper.3.2.0-ci1005\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.0-ci1005\tools\AutoMapper.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

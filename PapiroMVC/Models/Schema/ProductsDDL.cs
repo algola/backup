@@ -124,6 +124,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("producttasks", "CodProductTask", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("producttasks", "CodOptionTypeOfTask", SchemaDb.String, "50");
             dbS.AddColumnToTable("producttasks", "Hidden", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("producttasks", "ImplantHidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("producttasks", "IndexOf", SchemaDb.Int, "0");
 
             //foreign key
@@ -145,6 +146,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparttasks", "CodProductPartTask", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("productparttasks", "CodOptionTypeOfTask", SchemaDb.String, "50");
             dbS.AddColumnToTable("productparttasks", "Hidden", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("productparttasks", "ImplantHidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("productparttasks", "IndexOf", SchemaDb.Int, "0");
 
             //foreign key

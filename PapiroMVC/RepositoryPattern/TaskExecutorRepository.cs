@@ -12,9 +12,10 @@ namespace Services
         {
             if (Context.Entry(item).State != System.Data.Entity.EntityState.Added)
             {
-                var tskEst = item;
-                var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
-                Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
+                //var tskEst = item;
+                //var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
+                //Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
+                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
             }
 
         }

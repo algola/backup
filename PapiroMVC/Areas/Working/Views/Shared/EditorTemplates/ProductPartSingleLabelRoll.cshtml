@@ -33,9 +33,7 @@
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
-        <div class="controls col-sm-9">
-            @Html.AlgolaEditorFor(model => model.Format)
-        </div>
+        @Html.AlgolaEditorFor(model => model.Format)
     }
     else
     {

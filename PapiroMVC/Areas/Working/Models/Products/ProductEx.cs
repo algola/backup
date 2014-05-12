@@ -164,6 +164,7 @@ namespace PapiroMVC.Models
             ProductRigid = 3,
 
             ProductSingleLabelRoll = 4,
+            ProductSoft = 5,
         }
 
         [DataMember]

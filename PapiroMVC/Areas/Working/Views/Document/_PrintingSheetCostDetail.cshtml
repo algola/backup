@@ -13,29 +13,29 @@
 }
 
 <div id="sheetCostDetail">
-    <h3 class="header smaller lighter green">@Html.T(strings, "BuyingFormat")</h3>
+    <h3 class="header smaller lighter green ">@Html.T(strings, "BuyingFormat")</h3>
 
     <div class="control-group">
         <div class="controls col-sm-9">
             @Html.DropDownListFor(y => y.BuyingFormat,
                 new SelectList(Model.BuyingFormats), new { id = "ddBuyingFormat" })
         </div>
-        <canvas id="buyingSheet" width="300" height="170"></canvas>
+        <div class="no-padding" hidden="@((Model.HideBuyingInView??false)?"hidden":"")">
+            <canvas id="buyingSheet" width="300" height="170" hidden="@((Model.HideBuyingInView??false)?"hidden":"")"></canvas>
+        </div>
     </div>
 
     <div class="space"></div>
     <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
 
-    <div class="control-group">
+    <div class="control-group" hidden="@((Model.HideBuyingInView??false)?"hidden":"")">
         <div class="controls col-sm-9">
             @Html.DropDownListFor(y => y.PrintingFormat,
                 new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat" })
         </div>
     </div>
 
-    @Html.AlgolaEditorFor(y => y.ProductPart.Format, new { id = "ddPartFormat" })
-    @Html.AlgolaEditorFor(y => y.ProductPart.DCut1, new { id = "ddPartDCut1" })
-    @Html.AlgolaEditorFor(y => y.ProductPart.DCut2, new { id = "ddPartDCut2" })
+    @Html.Partial("_DCutSheet", Model)
 
     <canvas id="printingSingleSheet" width="300" height="170"></canvas>
     <div id="partialPrinting">
@@ -65,15 +65,15 @@
 
 <script type="text/javascript">
 
-    $("#ProductPart_Format").keypress(function (event) {
+    $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2").keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
 
             //data are collected into
             var dataToPass = {
-                format: $("#ProductPart_Format").val(),
-                dCut1: $("#ProductPart_DCut1").val(),
-                dCut2: $("#ProductPart_DCut2").val()
+                format: $("#ddPartFormat").val(),
+                dCut1: $("#ddPartDCut1").val(),
+                dCut2: $("#ddPartDCut2").val()
             };
 
             $.ajax({
@@ -95,33 +95,33 @@
 
 
 
-        $("#ddBuyingFormat").change(function () {
+    $("#ddBuyingFormat").change(function () {
 
-            var buyingFormat = "";
-            $("#ddBuyingFormat option:selected").each(function () {
-                buyingFormat += $(this)[0].value;
-            });
-
-            //data are collected into
-            var dataToPass = {
-                buyingFormat: buyingFormat,
-            };
-
-            $.ajax({
-                url: '@(Url.Action("ChangeBuyingFormat", "Document", new { area = "Working" }))',
-                type: 'POST',
-                data: JSON.stringify(dataToPass),
-                contentType: 'application/json; charset=utf-8',
-                success: function (data) {
-                    $('#sheetCostDetail').html(data);
-                    reloadFormat();
-                },
-                error: function () {
-                    alert("error");
-                },
-
-            });
+        var buyingFormat = "";
+        $("#ddBuyingFormat option:selected").each(function () {
+            buyingFormat += $(this)[0].value;
         });
+
+        //data are collected into
+        var dataToPass = {
+            buyingFormat: buyingFormat,
+        };
+
+        $.ajax({
+            url: '@(Url.Action("ChangeBuyingFormat", "Document", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#sheetCostDetail').html(data);
+                reloadFormat();
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    });
 
 </script>
 
