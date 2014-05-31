@@ -20,6 +20,12 @@ namespace PapiroMVC.Models
         /// <returns></returns>
         public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExec, string codTypeOfTask)
         {
+
+            if (codTypeOfTask == "TAVOLOCONTROLLO")
+            {
+                tskExec = tskExec.OfType<ControlTableRoll>();
+            }
+
             if (codTypeOfTask == "STAMPARIGIDO")
             {
                 tskExec = tskExec.OfType<PlotterSheet>();
@@ -129,7 +135,11 @@ namespace PapiroMVC.Models
             PlotterRoll = 5,
             PrePostPress = 6,
             Binding = 7,
-            Flexo = 8
+            Flexo = 8,
+            SemiRoll = 8,
+
+            ControlTableRoll = 9
+
         }
 
         public string[] CodTypeOfTaskList { get; set; }

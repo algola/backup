@@ -45,6 +45,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> ImplantHidden { get; set; }
+    	
+    	[DataMember] 		
+        public string CodItemGraph { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

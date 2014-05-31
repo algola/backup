@@ -9,8 +9,41 @@ namespace PapiroMVC.Models
     /// <summary>
     /// Get PrintingFormat and calculating gain on this Format based on specifit type
     /// </summary>
-    public partial class ProductPartPrinting
+    public partial class ProductPartPrinting : ICloneable
     {
+        public object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            ProductPartPrinting copyOfObject = (ProductPartPrinting)Activator.CreateInstance(kindOfObject);
+            this.Copy(copyOfObject);
+
+            return copyOfObject;
+        }
+
+
+        public virtual void Copy(ProductPartPrinting to)
+        {
+            to.TimeStampTable = this.TimeStampTable;
+            to.CodProductPartPrinting = null;
+            to.PrintingFormat = this.PrintingFormat;
+
+            to.CodProductPart = this.CodProductPart;
+            //to.Part = this.Part;
+
+            CostDetail = null;
+
+            var x = (ProductPartPrintingGain)GainPartOnPrinting.Clone();
+            x.ProductPartPrinting = to;
+            x.CodProductPartPrinting = "";
+            to.GainPartOnPrinting = x;
+
+        }
+
+
+
         public enum ProductPartPrintingType : int
         {
             ProductPartSingleSheetPrinting = 0,
@@ -30,6 +63,8 @@ namespace PapiroMVC.Models
             set;
         }
 
+        public int MaxGain1 { get; set; }
+        public int MaxGain2 { get; set; }
 
         public bool AutoCutParameter { get; set; }
 
@@ -39,7 +74,6 @@ namespace PapiroMVC.Models
         {
 
         }
-
 
         public ProductPartPrintingGain GainPartOnPrinting
         {
@@ -113,6 +147,7 @@ namespace PapiroMVC.Models
         {
             get
             {
+                Console.WriteLine(Part);
                 string format = PrintingFormat;
                 return format.GetSide1() * format.GetSide2() / 10000;
             }

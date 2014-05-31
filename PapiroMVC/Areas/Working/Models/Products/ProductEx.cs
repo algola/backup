@@ -31,6 +31,29 @@ namespace PapiroMVC.Models
         public List<TypeOfTask> SystemTaskList { get; set; }
 
 
+        protected List<ProductGraphLink> productGraphLinks;
+        public List<ProductGraphLink> ProductGraphLinksPerView
+        {
+            get
+            {
+                if (productGraphLinks == null)
+                {
+                    productGraphLinks = this.ProductGraphLinks.ToList();
+                }
+
+                return productGraphLinks;
+
+            }
+
+            set
+            {
+                productGraphLinks = value;
+                ProductGraphLinks = productGraphLinks;
+            }
+
+        }
+
+
         protected List<ProductPart> productParts;
         public List<ProductPart> ProductPartsPerView
         {
@@ -252,6 +275,17 @@ namespace PapiroMVC.Models
             {
                 this.ProductName = this.ToString();
             }
+
+            //task del prodotto
+          //  var gr = this.ProductGraphLinks.OrderBy(pp => pp.CodItemGraphLink).ToList();
+            foreach (var item in this.ProductGraphLinks)
+            {
+                item.CodProductGraph = this.CodProduct + "-" + item.CodItemGraph + "-" + item.CodItemGraphLink;
+                item.CodProduct = this.CodProduct;
+                item.TimeStampTable = DateTime.Now;
+            }
+
+
         }
 
         public virtual void ProductUpdateTimeStamp()

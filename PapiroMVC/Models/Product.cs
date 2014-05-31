@@ -23,6 +23,7 @@ namespace PapiroMVC.Models
             this.ProductParts = new HashSet<ProductPart>();
             this.ProductTasks = new HashSet<ProductTask>();
             this.documentproducts = new HashSet<DocumentProduct>();
+            this.ProductGraphLinks = new HashSet<ProductGraphLink>();
         }
     
     	
@@ -44,5 +45,7 @@ namespace PapiroMVC.Models
         public virtual ICollection<ProductTask> ProductTasks { get; set; }
     	[DataMember]
         public virtual ICollection<DocumentProduct> documentproducts { get; set; }
+    	[DataMember]
+        public virtual ICollection<ProductGraphLink> ProductGraphLinks { get; set; }
     }
 }

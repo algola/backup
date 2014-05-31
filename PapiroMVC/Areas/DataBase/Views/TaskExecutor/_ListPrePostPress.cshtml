@@ -4,12 +4,11 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("PrePostPressList", new { controller ="TaskExecutor", area = "DataBase" });
+    string url = Url.Action("PrePostPressList", new { controller = "TaskExecutor", area = "DataBase" });
 }
 
 <div id="containerbox">
     <!-- Main Page -->
-
     @*filters check************************************************@
     <div id="checkFilterMessage" class="alert alert-block alert-error" hidden="hidden">
         <button type="button" class="close" data-dismiss="alert">
@@ -24,16 +23,23 @@
     <table id="listPrePostPress"><tr><td /></tr></table>
     <div id="pager"></div>
 
-
     <br />
 
+    <div class="btn-group">
+        <ul class="dropdown-menu">
+            <li>
+                <a href="#" onclick="Javascript:window.location.replace('@Url.Action("CreateControlTableRoll", "TaskExecutor", new { Area = "Database" })');">Tavolo di Controllo Bobina</a>
+            </li>
+        </ul>
+        <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle">
+            <i class="icon-plus"></i>
+            @Html.T(strings, "CeatePrePostPress")
+        </button>
 
-    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database" })');">
-        <i class="icon-plus"></i>
-        @Html.T(strings, "CreateDigitalSheet")
-    </button>
+    </div>
 
-</div> 
+
+</div>
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 
@@ -121,14 +127,12 @@
 
   //  var lastSel = -1;
 
-
-
                 cm = [
-                    { name: 'Error', label: '', width: 45, align: 'center', hidden:true, editable: false },
+                    { name: 'Error', label: '', width: 45, align: 'center', hidden: true, editable: false },
                     { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', key: true, width: 60, editable: false, hidden: false, formatter: editRow },
-                    { name: 'CodExecutor', label:'@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false  },
+                    { name: 'CodExecutor', label: '@Html.T(strings, "CodExecutorCaption")', width: 60, align: 'left', editable: false, hidden: false },
                     { name: 'TaskExecutorName', label: '@Html.T(strings, "TaskExecutorNameCaption")', width: 100, align: 'left', editable: false, hidden: false },
-                    { name: 'FormatMax', label: '@Html.T(strings, "FormatMaxCaption")', width: 45, align: 'left', editable: false, hidden: false },
+                    { name: 'TypeOfTaskExecutor', label: '@Html.T(strings, "TypeOfTaskExecutor")', width: 60, editable: false, hidden: false, formatter: typeOfTaskExecutor },
 
                 ],
 
@@ -245,7 +249,7 @@
                     if (isColState) {
                         $this.jqGrid("remapColumns", myColumnsState.permutation, true);
 
-                        
+
                     }
                     if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
                         // create toolbar if needed
@@ -303,35 +307,35 @@
         });
     });
     //]]>
-            </script>
+</script>
 
-            <script type="text/javascript">
+<script type="text/javascript">
 
-                //resize jqgrid after windows resize
-                $(window).bind('resize', function () {
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
 
-                    var myGrid = $("#listPrePostPress");
-                    var width = $("#body-container").width();
-                    try {
-                        myGrid.jqGrid('setGridWidth', width, true);
+        var myGrid = $("#listPrePostPress");
+        var width = $("#body-container").width();
+        try {
+            myGrid.jqGrid('setGridWidth', width, true);
 
-                    } catch (e) {
+        } catch (e) {
 
-                    }
+        }
 
-                }).trigger('resize');
-                //filters check************************************************
-                $(window).load(function () {
-                    var myGrid = $("#listPrePostPress");
-                    var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
+    }).trigger('resize');
+    //filters check************************************************
+    $(window).load(function () {
+        var myGrid = $("#listPrePostPress");
+        var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
-                    if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
-                        ((filters != undefined))) {
-                        $("#checkFilterMessage").show();
-                    }
+        if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
+            ((filters != undefined))) {
+            $("#checkFilterMessage").show();
+        }
 
 
-                });
-                //filters check************************************************
+    });
+    //filters check************************************************
 </script>
 

@@ -89,7 +89,6 @@ namespace PapiroMVC.Models
             //and pointer of sons
             to.Format = this.Format;
 
-
         }
 
         public object Clone()

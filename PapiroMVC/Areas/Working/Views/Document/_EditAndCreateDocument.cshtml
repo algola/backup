@@ -78,27 +78,22 @@
                     @Scripts.Render("~/bundles/autocomplete")
                 </div>
 
-                @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
-                {
-                    <div id="well no-padding-left no-padding-rigth">
-                        <span class="span12">
-                            <!--/span--> @Html.Partial("_NewProductCommand", new NewProductCommand())
-                        </span>
-                    </div>
-
-                    @*
-                        <div id="status2" class="nopadding well" >
-                            @Html.AlgolaAutocompleteFor(model => model.NewProductCommand.NewProduct, "NewProductAutoComplete", "Document")
-                        </div>
-                    *@                    }
 
             </div>
 
-                <div id="_listDocumentProduct" class="span5 well">
-                        @Html.Partial("_ListDocumentProduct", Model)
-                </div>
+            <div id="_listDocumentProduct" class="span5 well">
 
-                <div class="span1"></div>
+                @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
+                {
+                    <div id="status2" class="nopadding well">
+                        @Html.AlgolaAutocompleteFor(model => model.NewProductCommand.NewProduct, "NewProductAutoComplete", "Document")
+                    </div>
+                }
+
+                @Html.Partial("_ListDocumentProduct", Model)
+            </div>
+
+            <div class="span1"></div>
         </div>
 
 

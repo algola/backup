@@ -8,6 +8,20 @@ namespace PapiroMVC.Models
 {
     public partial class PrintingRollCostDetail : PrintingCostDetail
     {
+
+
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            PrintingRollCostDetail to2 = (PrintingRollCostDetail)to;
+
+            to2.BuyingFormat = this.BuyingFormat;
+
+            to = to2;
+
+        }
+
         public List<Cut> Cuts
         {
             get

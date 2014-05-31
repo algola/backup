@@ -179,13 +179,13 @@ namespace PapiroMVC.ServiceLayer
                 }
 
                 //if it is a implant cost!!! (ci pensarà la lavorazione stampa a creare l'impianto!!!!!
-                if ( cost.CodProductPartImplantTask != null)
+                if (cost.CodProductPartImplantTask != null)
                 {
                     var codDP = cost.CodDocumentProduct;
 
                     var productPart = cost.ProductPartImplantTask.ProductPart;
                     //cerco la lavorazione che ha come CodProductPartTask == cost.CodProductPartImplantTask
-                 //OLD   var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+                    //OLD   var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
                     var task = productPart.ProductPartTasks.FirstOrDefault(x => x.CodProductPartTask == cost.CodProductPartImplantTask);
 
                     cost = DocumentRepository.GetCost(task.Costs.FirstOrDefault(x => x.CodDocumentProduct == codDP).CodCost);
@@ -195,6 +195,25 @@ namespace PapiroMVC.ServiceLayer
 
                 if (cv != null)
                 {
+
+                    //TEMPORANEOOOOOOOOO
+                    //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
+                    if (cv.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                    {
+                        cv.CodPartPrintingCostDetail = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y => y.CodItemGraph == "ST").Select(z => z.CodCost);
+
+                        if (cv.CodPartPrintingCostDetail != null)
+                        {
+                            foreach (var item in cv.CodPartPrintingCostDetail)
+                            {
+                                var cv2 = CostDetailRepository.GetSingle(item);
+                                cv.Printeres.Add(cv2);
+                                cv2.InitCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
+                            }
+                        }
+
+                    }
+
                     //guid ensures that costdetail is handled only one time when cost are all processed sistematically
                     cv.Guid = guid.ToString("N");
                     //update 
@@ -258,13 +277,14 @@ namespace PapiroMVC.ServiceLayer
                             foreach (var item in x)
                             {
                                 item.ComputedBy = cv;
-                                item.InitCostDetail(null, ArticleRepository.GetAll());
+                                item.InitCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
                                 //item.UpdateCost();
                                 //item.GetCostFromList(articleRepository.GetAll());
                                 CostDetailRepository.Add(item);
                             }
                         }
 
+                        //cv.TaskCost = null;
                         CostDetailRepository.Add(cv);
                         CostDetailRepository.Save();
                         //aggiorna il costo rigenerando prima i coefficienti
@@ -276,6 +296,39 @@ namespace PapiroMVC.ServiceLayer
                         var tempo = DateTime.Now.Subtract(inizio);
 
                         Console.Write(tempo);
+
+                        break;
+
+                    case CostDetail.CostDetailType.PrePostPressCostDetail:
+
+                        //if (cv.TaskCost.costs.Count == 0)
+                        //{
+                        //    var costs = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
+                        //    var temp = costs.ToList();
+
+                        //    //List<CostDetail> x = ((PrePostPressCostDetail)cv).GetRelatedPrintedCostDetail(ArticleRepository.GetAll(), costs).Union(
+                        //    //    ((PrePostPressCostDetail)cv).GetRelatedImplantCostDetail(cv.TaskCost.CodProductPartTask, costs)).ToList();
+
+                        //    //foreach (var item in x)
+                        //    //{
+                        //    //    item.ComputedBy = cv;
+                        //    //    item.InitCostDetail(null, ArticleRepository.GetAll());
+                        //    //    //item.UpdateCost();
+                        //    //    //item.GetCostFromList(articleRepository.GetAll());
+                        //    //    CostDetailRepository.Add(item);
+                        //    //}
+
+                        //    //qui voglio salvarmi la relazione tra questo costo e la stampa!!! 
+
+                        //    Console.WriteLine(cv.CodProductPart);
+
+                        //}
+
+                        CostDetailRepository.Add(cv);
+                        CostDetailRepository.Save();
+                        //aggiorna il costo rigenerando prima i coefficienti
+
+                        UpdateCost(cv.CodCost);
 
                         break;
 
@@ -298,28 +351,68 @@ namespace PapiroMVC.ServiceLayer
 
             CostDetail cv = CostDetailRepository.GetSingle(id);
 
-            var inizio = DateTime.Now;
-
-            cv.InitCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
-
-            var tempo = DateTime.Now.Subtract(inizio);
-            Console.WriteLine(tempo);
-
-            cv.TaskCost.Update();
-            foreach (var item in cv.Computes)
+            if (cv != null)
             {
-                UpdateCost(item.CodCost);
+
+                //TEMPORANEOOOOOOOOO
+                //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
+                if (cv.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                {
+                    cv.CodPartPrintingCostDetail = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y => y.CodItemGraph == "ST").Select(z => z.CodCost);
+
+                    var items = cv.CodPartPrintingCostDetail.ToList();
+                    if (items != null)
+                    {
+                        foreach (var item in items)
+                        {
+                            var cv2 = CostDetailRepository.GetSingle(item);
+                            cv.Printeres.Add(cv2);
+                            cv2.InitCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
+                        }
+                    }
+
+                }
+
+                var inizio = DateTime.Now;
+
+                cv.InitCostDetail(TaskExecutorRepository.GetAll(), ArticleRepository.GetAll());
+
+                var tempo = DateTime.Now.Subtract(inizio);
+                Console.WriteLine(tempo);
+
+                cv.TaskCost.Update();
+                foreach (var item in cv.Computes)
+                {
+                    UpdateCost(item.CodCost);
+                }
+
+                var stClass = new PrintingCostDetail();
+                if (cv.GetType().IsSubclassOf(stClass.GetType()))
+                {
+                    //se è una stampa devo aggiorare anche i pre e post press
+                    var cdPrePostList = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y => y.CodItemGraph != "ST" && y.CodItemGraph != "" && y.CodItemGraph != null).Select(z => z.CodCost).ToList();
+
+                    if (cdPrePostList != null)
+                    {
+                        foreach (var item in cdPrePostList)
+                        {
+                            UpdateCost(item);
+                        }
+                    }
+
+                }
+
+                CostDetailRepository.Edit(cv);
+                CostDetailRepository.Save();
+
+                //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
+                cv.TaskCost.DocumentProduct.UpdateCost();
+
+                DocumentRepository.Edit(cv.TaskCost.DocumentProduct.Document);
+                DocumentRepository.Save();
+
+
             }
-
-            CostDetailRepository.Edit(cv);
-            CostDetailRepository.Save();
-
-            //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
-            cv.TaskCost.DocumentProduct.UpdateCost();
-
-            DocumentRepository.Edit(cv.TaskCost.DocumentProduct.Document);
-            DocumentRepository.Save();
-
         }
 
 

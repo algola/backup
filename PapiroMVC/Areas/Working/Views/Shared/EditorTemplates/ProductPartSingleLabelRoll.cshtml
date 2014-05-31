@@ -72,6 +72,14 @@ else
 
 </div>
 
+<hr />
+
+    @Html.AlgolaEditorFor(model => model.LabelsPerRoll)
+    @Html.HiddenFor(model => model.SoulDiameter)
+    @Html.HiddenFor(model => model.MaxDiameter)
+
+<hr />
+
 <!-- artilce -->
 @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
 {

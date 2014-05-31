@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using PapiroMVC.Models;
 using PapiroMVC.DbCodeManagement;
+using System;
 
 namespace Services
 {
@@ -38,5 +39,12 @@ namespace Services
             var query = Context.customersuppliers.Include("customersupplierbases").Include("customersupplierbases.typeofbase").FirstOrDefault(x => x.CodCustomerSupplier == codCustomerSupplier);
             return query;
         }
+
+        public override void Add(CustomerSupplier entity)
+        {
+            entity.TimeStampTable = DateTime.Now;
+            base.Add(entity);
+        }
+
     }
 }

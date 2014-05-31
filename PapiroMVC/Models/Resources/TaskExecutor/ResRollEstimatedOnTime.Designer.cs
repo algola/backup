@@ -268,7 +268,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usa tirature orarie differenti per scaglioni di copie.
+        ///   Looks up a localized string similar to Usa scaglioni di metri/sec.
         /// </summary>
         public static string UseDifferentRunPerHour {
             get {
@@ -277,7 +277,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Indica che è possibile usare differenti medie orarie per scaglioni di copie.
+        ///   Looks up a localized string similar to Indica che è possibile usare differenti medie per scaglioni .
         /// </summary>
         public static string UseDifferentRunPerHourToolTip {
             get {

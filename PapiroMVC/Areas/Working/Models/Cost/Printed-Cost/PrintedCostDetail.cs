@@ -7,6 +7,19 @@ namespace PapiroMVC.Models
 {
     public partial class PrintedArticleCostDetail : CostDetail
     {
+
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            PrintedArticleCostDetail to2 = (PrintedArticleCostDetail)to;
+
+            to2.CostPerUnit = this.CostPerUnit;
+            to2.CostTakenFrom = this.CostTakenFrom;
+
+            to = to2;
+        }
+
         protected IQueryable<Article> _articles;
 
         public virtual void GetCostFromList(IQueryable<Article> articles)
@@ -16,11 +29,13 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
+            base.InitCostDetail(tskExec, articles);
             _articles = articles;
         }
 
         public override void CostDetailCostCodeRigen()
         {
+            base.CostDetailCostCodeRigen();
             this.TimeStampTable = DateTime.Now;
         }
 

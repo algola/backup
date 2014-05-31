@@ -5,18 +5,81 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
+using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
+
+    [Serializable]
     [MetadataType(typeof(DocumentProduct_MetaData))]
-    public partial class DocumentProduct : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class DocumentProduct : ICloneable
     {
+        public object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            DocumentProduct copyOfObject = (DocumentProduct)Activator.CreateInstance(kindOfObject);
+            this.Copy(copyOfObject);
+
+            return copyOfObject;
+        }
+
+        public virtual void Copy(DocumentProduct to)
+        {
+
+            to.TimeStampTable = this.TimeStampTable;
+            to.CodDocumentProduct = this.CodDocumentProduct;
+            to.CodDocument = this.CodDocument;
+            to.ProductName = this.ProductName;
+            to.CodProduct = this.CodProduct;
+            to.Quantity = this.Quantity;
+            to.UnitPrice = this.UnitPrice;
+            to.TotalAmount = this.TotalAmount;
+
+            to.Document = this.Document;
+            to.Product = this.Product;
+
+            List<CostDetail> cds = new List<CostDetail>();
+            foreach (var cost in Costs)
+            {
+                var c = (Cost)cost.Clone();
+                to.Costs.Add(c);
+
+                foreach (var cd in c.CostDetails)
+                {
+                    cds.Add(cd);
+                }
+            }
+
+
+            //foreach (var cd in cds)
+            //{
+            //    if (cd.CodComputedBy != "" && cd.CodComputedBy != null)
+            //    {
+            //        var c1 = cds.FirstOrDefault(x => x.CodCostDetail == cd.CodComputedBy);
+            //        if (c1.Computes == null)
+            //            c1.Computes = new HashSet<CostDetail>();
+            //        c1.Computes.Add(cd);
+            //        cd.ComputedBy=c1;
+            //    }
+            //}
+
+            //CostDetail has two propery-> computed by and computes
+            //         virtual ICollection<Cost> Costs 
+
+        }
+
         public void UpdateCost()
         {
             double total = 0;
             foreach (var item in Costs)
             {
-                total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
+                if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
+                {
+                    total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
+                }
             }
             TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
             UnitPrice = ((total / Quantity ?? 0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));
@@ -59,102 +122,102 @@ namespace PapiroMVC.Models
             set;
         }
 
-        #region Error Handle
+        //#region Error Handle
 
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""
-               };
+        //private static readonly string[] proprietaDaValidare =
+        //       {
+        //           //Specify validation property
+        //               ""
+        //       };
 
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
+        //public string Error
+        //{
+        //    get
+        //    {
+        //        return null;
+        //    }
+        //}
 
-        public virtual string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                return result;
-            }
-        }
+        //public virtual string this[string proprieta]
+        //{
+        //    get
+        //    {
+        //        string result = null;
+        //        return result;
+        //    }
+        //}
 
-        //Check validation of entity
-        public virtual bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret;
-            }
-        }
+        ////Check validation of entity
+        //public virtual bool IsValid
+        //{
+        //    get
+        //    {
+        //        bool ret = true;
+        //        foreach (string prop in proprietaDaValidare)
+        //        {
+        //            if (this[prop] != null)
+        //                ret = false;
+        //        }
+        //        return ret;
+        //    }
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Handle copy for modify
+        //#region Handle copy for modify
 
-        public virtual void Copy(DocumentProduct to)
-        {
-            //All properties of object
-            //and pointer of sons
-            to.CodDocument = this.CodDocument;
-            to.CodDocumentProduct = this.CodDocumentProduct;
-            to.CodProduct = this.CodProduct;
-            to.Costs = this.Costs;
-            to.Document = this.Document;
-            to.Product = this.Product;
-            to.ProductName = this.ProductName;
-            to.Quantity = this.Quantity;
-            to.TimeStampTable = this.TimeStampTable;
+        //public virtual void Copy(DocumentProduct to)
+        //{
+        //    //All properties of object
+        //    //and pointer of sons
+        //    to.CodDocument = this.CodDocument;
+        //    to.CodDocumentProduct = this.CodDocumentProduct;
+        //    to.CodProduct = this.CodProduct;
+        //    to.Costs = this.Costs;
+        //    to.Document = this.Document;
+        //    to.Product = this.Product;
+        //    to.ProductName = this.ProductName;
+        //    to.Quantity = this.Quantity;
+        //    to.TimeStampTable = this.TimeStampTable;
 
-        }
+        //}
 
-        public object Clone()
-        {
-            //creo una copia dell'oggetto da utilizzare per le modifiche
-            var kindOfObject = this.GetType();
+        //public object Clone()
+        //{
+        //    //creo una copia dell'oggetto da utilizzare per le modifiche
+        //    var kindOfObject = this.GetType();
 
-            //istanzio una copia che sarà gestita dall'invio
-            DocumentProduct copyOfObject = (DocumentProduct)Activator.CreateInstance(kindOfObject);
-            //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
-            this.Copy(copyOfObject);
+        //    //istanzio una copia che sarà gestita dall'invio
+        //    DocumentProduct copyOfObject = (DocumentProduct)Activator.CreateInstance(kindOfObject);
+        //    //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
+        //    this.Copy(copyOfObject);
 
-            //CREATE DUPLICATION OF ANY FIRST GENERATION OF CHILD
-            //Example
-            //DocumentProduct partCopy = (DocumentProduct)Activator.CreateInstance(copyOfObject.Prodotto.GetType());
-            ////l'oggetto partCopy sarà una copia del contenuto dell'oggetto originale
-            //this.Prodotto.Copia(partCopy);
+        //    //CREATE DUPLICATION OF ANY FIRST GENERATION OF CHILD
+        //    //Example
+        //    //DocumentProduct partCopy = (DocumentProduct)Activator.CreateInstance(copyOfObject.Prodotto.GetType());
+        //    ////l'oggetto partCopy sarà una copia del contenuto dell'oggetto originale
+        //    //this.Prodotto.Copia(partCopy);
 
-            //sulla copia del prodotto in producto assegno la copia del suo prodotto
-            //Example
-            //copiaProdottoInProducto.Prodotto = null;
-            //copiaProdotto.ProdottoInProducto = null;
-            //copiaProdottoInProducto.Prodotto = copiaProdotto;
-            //copiaProdotto.ProdottoInProducto.Add(copiaProdottoInProducto);
-            //END COPY OF CHILD
+        //    //sulla copia del prodotto in producto assegno la copia del suo prodotto
+        //    //Example
+        //    //copiaProdottoInProducto.Prodotto = null;
+        //    //copiaProdotto.ProdottoInProducto = null;
+        //    //copiaProdottoInProducto.Prodotto = copiaProdotto;
+        //    //copiaProdotto.ProdottoInProducto.Add(copiaProdottoInProducto);
+        //    //END COPY OF CHILD
 
-            return copyOfObject;
-        }
+        //    return copyOfObject;
+        //}
 
-        public void ChildsNull()
-        {
-            //Set all chied to null 
+        //public void ChildsNull()
+        //{
+        //    //Set all chied to null 
 
-            //Example
-            //this.Prodotto = null;
-        }
+        //    //Example
+        //    //this.Prodotto = null;
+        //}
 
-        #endregion
+        //#endregion
 
         public void InitCost()
         {
@@ -172,6 +235,8 @@ namespace PapiroMVC.Models
             foreach (var productTask in Product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
             {
                 cost = new Cost();
+                cost.CodItemGraph = productTask.CodItemGraph;
+
                 cost.DocumentProduct = this;
                 cost.CodDocumentProduct = this.CodDocumentProduct;
 
@@ -211,6 +276,8 @@ namespace PapiroMVC.Models
                 foreach (var productPartTask in productPart.ProductPartTasks)
                 {
                     cost = new Cost();
+                    cost.CodItemGraph = productPartTask.CodItemGraph;
+
                     cost.DocumentProduct = this;
                     cost.CodDocumentProduct = this.CodDocumentProduct;
 
@@ -235,6 +302,9 @@ namespace PapiroMVC.Models
 
                     #region impianti
                     cost = new Cost();
+                    //cost
+                    cost.TypeOfCalcolous = 1;
+
                     cost.DocumentProduct = this;
                     cost.CodDocumentProduct = this.CodDocumentProduct;
 
@@ -255,11 +325,8 @@ namespace PapiroMVC.Models
                         cost.ForceZero = true;
                     }
 
-                    if (productPartTask.ImplantHidden == false)
-                    {
-                        cost.Hidden = false;
-                        cost.ForceZero = false;
-                    }
+                    cost.Hidden = productPartTask.ImplantHidden;
+                    cost.ForceZero = productPartTask.ImplantHidden;
 
                     this.Costs.Add(cost);
 

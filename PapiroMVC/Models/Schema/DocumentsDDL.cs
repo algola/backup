@@ -17,7 +17,7 @@ namespace PapiroMVC.Model
         {            
             dbS.Ctx = ctx;
 
-            //First Table
+            //First Tablef
             dbS.AddTable("documents");
             dbS.AddColumnToTable("documents", "CodDocument", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("documents", "DocumentName", SchemaDb.String, "100");
@@ -77,6 +77,9 @@ namespace PapiroMVC.Model
             dbS.AddTable("costs");
             dbS.AddColumnToTable("costs", "CodCost", SchemaDb.StringPK, "50");
 
+            dbS.AddColumnToTable("costs", "CodItemGraph", SchemaDb.String, "20");
+
+
             //foreign key for keep all product cost of single product and single quantity
             dbS.AddColumnToTable("costs", "CodDocumentProduct", SchemaDb.String, "50");
             dbS.AddForeignKey("costs", "CodDocumentProduct", "documentproducts", "CodDocumentProduct");
@@ -103,6 +106,16 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costs", "Quantity", SchemaDb.Double, "0");
             dbS.AddColumnToTable("costs", "UnitCost", SchemaDb.String, "20");
             dbS.AddColumnToTable("costs", "TotalCost", SchemaDb.String, "20");
+
+            dbS.AddColumnToTable("costs", "Markup", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costs", "GranTotalCost", SchemaDb.String, "20");
+
+            //0 or null = Included
+            //1 Aux Cost
+            //2 Not Included
+            dbS.AddColumnToTable("costs", "TypeOfCalcolous", SchemaDb.Int, "0");
+
+
 
             //force to zero
             dbS.AddColumnToTable("costs", "ForceZero", SchemaDb.Bool, "0");

@@ -24,6 +24,18 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResProductPartSingleLabelRoll), "DCut2")]
         [Tooltip(typeof(ResProductPartSingleLabelRoll), "DCut2ToolTip")]
         public Nullable<double> DCut2 { get; set; }
-        
+
+        [DisplayNameLocalized(typeof(ResProductPartSingleLabelRoll), "LabelsPerRoll")]
+        [Tooltip(typeof(ResProductPartSingleLabelRoll), "LabelsPerRollToolTip")]
+        public Nullable<int> LabelsPerRoll { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPartSingleLabelRoll), "SoulDiameter")]
+        [Tooltip(typeof(ResProductPartSingleLabelRoll), "SoulDiameterToolTip")]
+        public Nullable<double> SoulDiameter { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPartSingleLabelRoll), "MaxDiameter")]
+        [Tooltip(typeof(ResProductPartSingleLabelRoll), "MaxDiameterToolTip")]
+        public Nullable<double> MaxDiameter { get; set; }
+
     }
 }

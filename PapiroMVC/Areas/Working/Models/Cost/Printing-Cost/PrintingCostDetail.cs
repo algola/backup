@@ -6,8 +6,22 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class PrintingCostDetail : CostDetail
+    public partial class PrintingCostDetail : CostDetail, ICloneable
     {
+
+
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            PrintingCostDetail to2 = (PrintingCostDetail)to;
+
+            to2.PrintingFormat = this.PrintingFormat;
+            to2.HideBuyingInView = this.HideBuyingInView;
+
+            to = to2;
+
+        }
 
         //some coeff depend on Quntity... so when quantity changes... we want to recalulate
         double quantity;

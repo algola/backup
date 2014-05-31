@@ -34,7 +34,7 @@
     <script src="~/Content/acetheme/assets/js/flot/jquery.flot.pie.min.js"></script>
     <script src="~/Content/acetheme/assets/js/flot/jquery.flot.resize.min.js"></script>
 
-
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
 
     <script type="text/javascript">
         jQuery(function ($) {
@@ -133,8 +133,6 @@
     </script>
 
 
-
-
 }
 
 <div class="row-fluid">
@@ -163,7 +161,8 @@
                 if (i == 0)
                 {
                     <li class="active">
-                        <a data-toggle="tab" href="#frame@((i + 1).ToString())">
+
+                        <a data-toggle="tab" href="#frame@((i + 1).ToString())" onclick="resize@(Model[i].CodDocumentProduct.Replace("-", "_"))();">
                             <i class="blue icon-stackexchange bigger-110"></i>
 
                             @if (Model[i].Quantity != null)
@@ -174,24 +173,25 @@
                             {
                                 @Html.Label("****Quantità non impostata");
                             }
+
                         </a>
                     </li>
                 }
                 else
                 {
                     <li>
-                        <a data-toggle="tab" href="#frame@((i + 1).ToString())">
-                            <i class="blue icon-stackexchange bigger-110"></i>
+                        <a data-toggle="tab" href="#frame@((i + 1).ToString())" onclick="resize@(Model[i].CodDocumentProduct.Replace("-", "_"))();">
+    <i class="blue icon-stackexchange bigger-110"></i>
 
-                            @if (Model[i].Quantity != null)
-                            {
-                                @Model[i].Quantity.ToString()
-                            }
-                            else
-                            {
-                                @Html.Label("****Quantità non impostata");
-                            }
-                        </a>
+    @if (Model[i].Quantity != null)
+    {
+        @Model[i].Quantity.ToString()
+    }
+    else
+    {
+        @Html.Label("****Quantità non impostata");
+    }
+                    </a>
                     </li>
                 }
             }
@@ -214,7 +214,16 @@
                     <div class="tab-pane in active" id="frame@((i + 1).ToString())">
                         @*griglia dei costi di questa quantità*@
                         @Html.Partial("_Costs", Model[i])
-                        @Html.EditorFor(model => model[i])
+                        <div id="documentProduct@(Model[i].CodDocumentProduct)">
+                            @Html.EditorFor(model => model[i])
+                            @*
+                                <div class="control-group" id="dlgQta@(Model[i].CodDocumentProduct)" hidden="hidden">
+                                    <div class="controls">
+                                        <input type="text" id="copyQta@(Model[i].CodDocumentProduct)" placeholder="Nuova Quantità">
+                                    </div>
+                                </div>
+                            *@
+                        </div>
                     </div>
                 }
                 else
@@ -222,7 +231,13 @@
                     <div class="tab-pane" id="frame@((i + 1).ToString())">
                         @*griglia dei costi di questa quantità*@
                         @Html.Partial("_Costs", Model[i])
-                        @Html.EditorFor(model => model[i])
+
+                        <div id="documentProduct@(Model[i].CodDocumentProduct)">
+
+
+                            @*                            @Html.Partial("_DocumentProduct", Model[i])*@
+                            @Html.EditorFor(model => model[i])
+                        </div>
                     </div>
                 }
             }
@@ -255,3 +270,4 @@
     });
 
 </script>
+

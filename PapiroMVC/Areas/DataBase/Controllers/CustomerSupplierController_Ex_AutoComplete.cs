@@ -57,7 +57,30 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+        /// <summary>
+        /// Get Autocomplete Customer
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult CustomerBusinessNameAutoComplete(string term)
+        {
+            PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().OfType<Customer>().ToArray();
 
+
+            var filteredItems = customerSuppliers.Where(
+            item => item.BusinessName !=null && item.BusinessName !="" && item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from custSupp in filteredItems
+                             select new
+                             {
+                                 id = custSupp.CodCustomerSupplier,
+                                 label = custSupp.BusinessName,
+                                 value = custSupp.BusinessName
+                             };
+            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+
+        }
 
         /// <summary>
         /// AutoComplete

@@ -33,40 +33,6 @@ namespace Services
         }
 
 
-        protected Dictionary<string, Document> CacheDoc
-        {
-            get
-            {
-                if (cacheDoc == null)
-                {
-                    cacheDoc = new Dictionary<string, Document>();
-                }
-                return cacheDoc;
-            }
-            set
-            {
-                cacheDoc = value;
-            }
-        }
-
-        private Dictionary<string, List<Cost>> cacheDocPro;
-
-        protected Dictionary<string, List<Cost>> CacheDocPro
-        {
-            get
-            {
-                if (cacheDocPro == null)
-                {
-                    cacheDocPro = new Dictionary<string, List<Cost>>();
-                }
-                return cacheDocPro;
-            }
-            set
-            {
-                cacheDocPro = value;
-            }
-        }
-
         public void EditCost(Cost c)
         {
             this.Context.Entry(c).State = System.Data.Entity.EntityState.Modified;
@@ -154,15 +120,7 @@ namespace Services
             IQueryable<Cost> ret;
             bool passatoDaDb = false;
 
-            try
-            {
-                ret = CacheDocPro[codDocumentProduct].AsQueryable<Cost>();
-            }
-            catch (Exception)
-            {
-                passatoDaDb = true;
-                ret = Context.Costs.Include("CostDetails").Include("DocumentProduct").Include("DocumentProduct.Document").Where(x => x.CodDocumentProduct == codDocumentProduct);
-            }
+            ret = Context.Costs.Include("CostDetails").Include("DocumentProduct").Include("DocumentProduct.Document").Where(x => x.CodDocumentProduct == codDocumentProduct);
 
 
             var tempo = DateTime.Now.Subtract(inizio);
@@ -212,26 +170,27 @@ namespace Services
 
         private void DocumentProductCodeRigen(Document c)
         {
-            c.EstimateNumber = c.EstimateNumber == null ? (0).ToString().PadLeft(6, '0') : c.EstimateNumber.PadLeft(6, '0');
+            c.DocumentProductsCodeRigen();
+            //c.EstimateNumber = c.EstimateNumber == null ? (0).ToString().PadLeft(6, '0') : c.EstimateNumber.PadLeft(6, '0');
 
-            //prodotti in documento
-            var ppart = c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
-            foreach (var item in c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
-            {
-                item.CodDocumentProduct = c.CodDocument + "-" + ppart.IndexOf(item).ToString();
-                item.CodDocument = c.CodDocument;
-                item.TimeStampTable = DateTime.Now;
+            ////prodotti in documento
+            //var ppart = c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
+            //foreach (var item in c.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
+            //{
+            //    item.CodDocumentProduct = c.CodDocument + "-" + ppart.IndexOf(item).ToString();
+            //    item.CodDocument = c.CodDocument;
+            //    item.TimeStampTable = DateTime.Now;
 
-                var costl = item.Costs.OrderBy(x => x.CodCost).ToList();
-                foreach (var itemCost in item.Costs.OrderBy(x => x.CodCost))
-                {
-                    itemCost.TimeStampTable = DateTime.Now;
-                    itemCost.CodDocumentProduct = item.CodDocumentProduct;
-                    itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();
-                }
-            }
+            //    var costl = item.Costs.OrderBy(x => x.CodCost).ToList();
+            //    foreach (var itemCost in item.Costs.OrderBy(x => x.CodCost))
+            //    {
+            //        itemCost.TimeStampTable = DateTime.Now;
+            //        itemCost.CodDocumentProduct = item.CodDocumentProduct;
+            //        itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();
+            //    }
+            //}
 
-            c.TimeStampTable = DateTime.Now;
+            //c.TimeStampTable = DateTime.Now;
 
         }
 
@@ -252,14 +211,6 @@ namespace Services
             DocumentProductCodeRigen(entity);
             base.Add(entity);
 
-            //Save in cache
-            CacheDoc[entity.CodDocument] = entity;
-
-            foreach (var item in entity.DocumentProducts)
-            {
-                CacheDocPro[item.CodDocumentProduct] = item.Costs.ToList();
-            }
-            //end save in cache
 
         }
 
@@ -269,46 +220,58 @@ namespace Services
             return Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs");
         }
 
-        public override void Save()
+        private void ResetStatus()
         {
 
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
-            .Where(x => x.State == System.Data.Entity.EntityState.Modified
-            || x.State == System.Data.Entity.EntityState.Added)
-            .Select(x => x.Entity).ToList();
+    .Where(x => x.State == System.Data.Entity.EntityState.Modified
+    || x.State == System.Data.Entity.EntityState.Added)
+    .Select(x => x.Entity).ToList();
 
+
+            foreach (var item in modOrAdded.OfType<CustomerSupplier>())
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<Product>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPart>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPartTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<ProductPartsPrintableArticle>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<CostDetail>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<TypeOfTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
             foreach (var item in modOrAdded.OfType<OptionTypeOfTask>())
-                Context.Entry(item).State = System.Data.Entity.EntityState.Detached;
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
+            foreach (var item in modOrAdded.OfType<ProductGraphLink>())
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
+        }
+
+        public override void Save()
+        {
+
+            ResetStatus();
             base.Save();
 
         }
 
         public override void Edit(Document entity)
         {
+
             //we can have some DocumentProduct added and some Just Stored so...
             var dpJustStored = Context.DocumentProducts.Where(x => x.CodDocument == entity.CodDocument).ToList();
             entity.DocumentProducts = entity.DocumentProducts.Union(dpJustStored, new DocumentProductComparer()).ToList();
@@ -317,7 +280,7 @@ namespace Services
             foreach (var item in entity.DocumentProducts)
             {
                 //perform only if CodDocumentProduct is not null
-                if (item.CodDocumentProduct != null)
+                if (item.CodDocumentProduct != null && item.CodDocumentProduct != "")
                 {
                     var costJustStored = Context.Costs.Where(x => x.CodDocumentProduct == item.CodDocumentProduct).ToList();
                     item.Costs = item.Costs.Union(costJustStored, new CostComparer()).ToList();
@@ -334,6 +297,7 @@ namespace Services
                 if (fromBD2 != null)
                 {
                     Context.Entry(fromBD2).CurrentValues.SetValues(item);
+                    Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
                 }
                 else
                 {
@@ -353,43 +317,36 @@ namespace Services
                     if (fromBD3 != null)
                     {
                         Context.Entry(fromBD3).CurrentValues.SetValues(cost);
+                        Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
                     }
                     else
                     {
                         Context.Entry(item).State = System.Data.Entity.EntityState.Added;
                     }
 
-                }
 
+                    if (item2.CostDetails.FirstOrDefault()!=null)
+                        EditAdd(item2.CostDetails.FirstOrDefault());
+
+                }
             }
 
             var doc = entity;
             var fromBD = Context.Documents.Single(p => p.CodDocument == doc.CodDocument);
             Context.Entry(fromBD).CurrentValues.SetValues(doc);
-
-            //Save in cache
-            CacheDoc[entity.CodDocument] = entity;
-
-            foreach (var item in entity.DocumentProducts)
-            {
-                CacheDocPro[item.CodDocumentProduct] = item.Costs.ToList();
-            }
-            //end save in cache
-
+            Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
         }
 
 
+        public void Edit(Document entity, bool deep)
+        { 
+        
+        }
+
         public new Document GetSingle(string codDocument)
         {
-            try
-            {
-                return CacheDoc[codDocument];
-            }
-            catch (Exception)
-            {
-                var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
-                return query;
-            }
+            var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
+            return query;
         }
 
         public IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct)
@@ -412,5 +369,137 @@ namespace Services
         {
             base.SetDbName(name);
         }
+
+
+        protected void EditAdd(CostDetail entity)
+        {
+            
+            var fromBD = Context.CostDetail.SingleOrDefault(p => p.CodCostDetail == entity.CodCostDetail);
+            if (fromBD != null)
+            {
+                Context.Entry(fromBD).CurrentValues.SetValues(entity);
+                Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
+            }
+            else
+            {
+                Context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+            }
+
+            if (entity.Computes != null)
+            {
+                foreach (var item in entity.Computes)
+                {
+                    item.CodComputedBy = entity.CodCostDetail;
+                    var fromBDComp = Context.CostDetail.SingleOrDefault(p => p.CodCostDetail == item.CodCostDetail);
+                    if (fromBDComp != null)
+                    {
+                        Context.Entry(fromBDComp).CurrentValues.SetValues(item);
+                        Context.Entry(fromBDComp).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                    }
+                }
+            }
+
+            if (entity.ProductPartPrinting != null)
+            {
+                var prdPartPrt = entity.ProductPartPrinting;
+                var fromBD2 = Context.ProductPartPrinting.SingleOrDefault(p => p.CodProductPartPrinting == prdPartPrt.CodProductPartPrinting);
+
+                if (fromBD2 != null)
+                {
+                    Context.Entry(fromBD2).CurrentValues.SetValues(prdPartPrt);
+                    Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    Context.Entry(prdPartPrt).State = System.Data.Entity.EntityState.Added;
+                }
+
+                if (prdPartPrt.GainPartOnPrinting != null)
+                {
+                    var prdPartPrtGain = prdPartPrt.GainPartOnPrinting;
+                    var fromBD3 = Context.ProductPartPrintingGain.SingleOrDefault(p => p.CodProductPartPrintingGain == prdPartPrtGain.CodProductPartPrintingGain);
+
+                    if (fromBD3 != null)
+                    {
+                        Context.Entry(fromBD3).CurrentValues.SetValues(prdPartPrtGain);
+                        Context.Entry(fromBD3).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        Context.Entry(prdPartPrtGain).State = System.Data.Entity.EntityState.Added;
+                    }
+
+                    //devo comportarmi in 2 diversi modi a seconda del fatto che le makereadies siano maggiori nel db o in memoria dopo le modifiche
+
+                    //caso in cui le makereadies in memoria sono > di quelle del db
+                    foreach (var mkr in prdPartPrtGain.Makereadies)
+                    {
+                        try
+                        {
+                            var fromBD4 = Context.Makereadies.SingleOrDefault(p => p.CodMakeready == mkr.CodMakeready);
+                            Context.Entry(fromBD4).CurrentValues.SetValues(mkr);
+                        }
+                        catch (SystemException e)
+                        {
+                            Context.Entry(mkr).State = System.Data.Entity.EntityState.Added;
+                        }
+                    }
+
+                    var isEccesso = Context.Makereadies.Where(x => x.CodProductPartPrintingGain == prdPartPrtGain.CodProductPartPrinting);
+
+                    //caso in cui nel db ho dell'eccesso
+                    foreach (var mkr in isEccesso)
+                    {
+                        if (prdPartPrtGain.Makereadies.Where(x => x.CodMakeready == mkr.CodMakeready).Count() == 0)
+                        {
+                            Context.Makereadies.Remove(mkr);
+                            Console.WriteLine("");
+                        }
+                    }
+
+                }
+
+            }
+
+            if (entity.GainPrintingOnBuying != null)
+            {
+                var prtGain = entity.GainPrintingOnBuying;
+                var fromBD3 = Context.ProductPartPrintingGain.SingleOrDefault(p => p.CodProductPartPrintingGainBuying == prtGain.CodProductPartPrintingGainBuying);
+
+                if (fromBD3 != null)
+                {
+                    Context.Entry(fromBD3).CurrentValues.SetValues(prtGain);
+                    Context.Entry(fromBD3).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    Context.Entry(prtGain).State = System.Data.Entity.EntityState.Added;
+                }
+
+                foreach (var mkr in prtGain.Makereadies)
+                {
+                    var fromBD4 = Context.Makereadies.SingleOrDefault(p => p.CodMakeready == mkr.CodMakeready);
+
+                    if (fromBD4 != null)
+                    {
+                        Context.Entry(fromBD4).CurrentValues.SetValues(mkr);
+                    }
+                    else
+                    {
+                        Context.Entry(mkr).State = System.Data.Entity.EntityState.Added;
+                    }
+
+
+                }
+            }
+
+
+        }
+
+
     }
 }

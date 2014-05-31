@@ -345,4 +345,7 @@
   <data name="PlotterSheetType" xml:space="preserve">
     <value>Rigido</value>
   </data>
+  <data name="ControlTableRollType" xml:space="preserve">
+    <value>Tavolo di controllo bobine</value>
+  </data>
 </root>

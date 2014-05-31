@@ -49,6 +49,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "Weight", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("articles", "Hand", SchemaDb.Double, "0");
 
+
+            dbS.AddColumnToTable("articles", "SuppOfMaterial", SchemaDb.String, "100");
+            dbS.AddColumnToTable("articles", "SuppWeight", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("articles", "SuppHand", SchemaDb.Double, "0");
+
+
             // 0 = Sheet // 1 = Roll // 2 = Wide 
             dbS.AddColumnToTable("articles", "SelectorSheetRollWide", SchemaDb.Int, "0");
 

@@ -34,22 +34,31 @@ namespace PapiroMVC.Models
             var totalA = (totalTimeA.TotalMinutes) / 60 * Convert.ToDouble(costA, Thread.CurrentThread.CurrentUICulture);
 
 
+            var avrR = AvarageRunPerHour;
+
+            var stepR = this.steps.OfType<AvarageRunPerRunStep>().Where(x => x.FromUnit <= running && x.ToUnit >= running).FirstOrDefault();
+
+            if (stepR != null)
+            {
+                //leggo il costo differente per ciascun colore
+                avrR = stepR.AvarageRunPerHour == null ? avrR : stepR.AvarageRunPerHour;
+            }
+
             TimeSpan totalTimeR = TimeSpan.Zero;
-            if (AvarageRunPerHour == null)
+            if (avrR == null)
             {
                 totalTimeR = TimeSpan.Zero;
             }
             else
             {
-                //minuti
-                var tot = (running / AvarageRunPerHour);
-                var hour = (double)Math.Truncate((decimal)tot / 60);
-                var min = (double)Math.Truncate((decimal)((tot - hour) * 60));
-                totalTimeR += TimeSpan.FromHours(hour) + TimeSpan.FromMinutes(min);
+                //minuti //nella flexo AvarageRunPerHour = m/sec
+                var tot = (running / avrR ?? 1);
+                totalTimeR += TimeSpan.FromMinutes(tot);
             }
 
             //leggo il costo differente per ciascun colore
             var costH = CostPerHourRunning;
+
             var step = this.steps.OfType<CostPerColorStep>().Where(x => x.FromUnit == colors).FirstOrDefault();
 
             if (step != null)

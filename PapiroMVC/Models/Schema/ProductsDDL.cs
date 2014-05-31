@@ -48,8 +48,6 @@ namespace PapiroMVC.Model
             //0..1 part of ProductPartCoverSheet
             //n parts of ProductPartBlockSheet
 
-
-
             //Second Table
             dbS.AddTable("productparts");
             dbS.AddColumnToTable("productparts", "CodProductPart", SchemaDb.StringPK, "50");
@@ -63,6 +61,15 @@ namespace PapiroMVC.Model
             //taken from list
             dbS.AddColumnToTable("productparts", "PrintingType", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparts", "Format", SchemaDb.String, "20");
+
+
+            //only per label
+            dbS.AddColumnToTable("productparts", "LabelsPerRoll", SchemaDb.Int, "0");
+            //mm
+            dbS.AddColumnToTable("productparts", "SoulDiameter", SchemaDb.Double, "0");
+            //mm
+            dbS.AddColumnToTable("productparts", "MaxDiameter", SchemaDb.Double, "0");
+
 
             dbS.AddColumnToTable("productparts", "CodProductPart_", SchemaDb.String, "50");
 
@@ -127,6 +134,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("producttasks", "ImplantHidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("producttasks", "IndexOf", SchemaDb.Int, "0");
 
+            dbS.AddColumnToTable("producttasks", "CodItemGraph", SchemaDb.String, "20");
+            
+
             //foreign key
             dbS.AddColumnToTable("producttasks", "CodProduct", SchemaDb.String, "50");
             dbS.AddForeignKey("producttasks", "CodProduct", "products", "CodProduct");
@@ -149,6 +159,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparttasks", "ImplantHidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("productparttasks", "IndexOf", SchemaDb.Int, "0");
 
+            dbS.AddColumnToTable("productparttasks", "CodItemGraph", SchemaDb.String, "20");
+
             //foreign key
             dbS.AddColumnToTable("productparttasks", "CodProductPart", SchemaDb.String, "50");
             dbS.AddForeignKey("productparttasks", "CodProductPart", "productparts", "CodProductPart");
@@ -169,6 +181,25 @@ namespace PapiroMVC.Model
             //foreign key to productTask!
             dbS.AddColumnToTable("productpartstoproducttask", "CodProductTask", SchemaDb.String, "50");
             dbS.AddForeignKey("productpartstoproducttask", "CodProductTask", "producttasks", "CodProductTask");
+
+
+
+
+
+            dbS.AddColumnToTable("productparttasks", "CodItemGraph", SchemaDb.String, "20"); //nodo
+            dbS.AddColumnToTable("producttasks", "CodItemGraph", SchemaDb.String, "20"); //nodo
+
+            dbS.AddTable("productgraphs");
+            dbS.AddColumnToTable("productgraphs", "CodProductGraph", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("productgraphs", "CodItemGraph", SchemaDb.String, "20"); //nodo
+            dbS.AddColumnToTable("productgraphs", "CodItemGraphLink", SchemaDb.String, "20"); //adiacenza
+            //la particolarità è che l'adiacenza è sempre successiva e mai a ritroso
+            
+            //foreign key
+            dbS.AddColumnToTable("productgraphs", "CodProduct", SchemaDb.String, "50");
+            dbS.AddForeignKey("productgraphs", "CodProduct", "products", "CodProduct");
+
+
 
         }
     }

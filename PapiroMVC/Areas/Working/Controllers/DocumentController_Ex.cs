@@ -45,6 +45,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                             a.CodCost,
                             a.CodDocumentProduct,
                             (a.Locked??false).ToString(),
+                            (a.TypeOfCalcolous??0).ToString(), //0=incluso, 1=Aux, 2=escluso
                             a.Description,
                             (a.CostDetails.FirstOrDefault()!=null?a.CostDetails.FirstOrDefault().TypeOfQuantity??0:5).ToString(),
                             (a.Quantity??0).ToString(),                            

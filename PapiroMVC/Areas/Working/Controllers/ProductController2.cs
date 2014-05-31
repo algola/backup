@@ -71,7 +71,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditProduct(Product c)
         {
-
             c.FormatsName = formatsRepository.GetAllById(c.CodMenuProduct);
             c.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             c.InitPageTask();
@@ -109,6 +108,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var qts = pv.Quantities;
             var product = pv.Product;
+
             foreach (var item in product.ProductParts)
             {
                 if (item.Format == "0x0" && item.FormatPersonalized != String.Empty)
@@ -135,13 +135,28 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (ModelState.IsValid)
             {
- //               try
+                //               try
                 {
+                    //il cliente
+                    var cust = customerSupplierRepository.GetAll().OfType<Customer>().Where(x => x.BusinessName == pv.Customer).FirstOrDefault();
+                    if (cust == null)
+                    {
+                        cust = new Customer();
+                        cust.CodCustomerSupplier = customerSupplierRepository.GetNewCode(cust);
+                        cust.BusinessName = pv.Customer;
+                        cust.VatNumber = "00000000000";
+                        customerSupplierRepository.Add(cust);
+                        customerSupplierRepository.Save();
+                    }
+
                     product.CodProduct = productRepository.GetNewCode(product);
 
                     //save the product
                     productRepository.Add(product);
                     productRepository.Save();
+
+                    documentRepository.SetDbName("");
+                    documentRepository.SetDbName(CurrentDatabase);
 
                     //se ho un documento attivo in sessione salvo anche la relazione
                     //oppure se non c'è un domcumento attivo lo creo e salvo la relazione
@@ -156,8 +171,16 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
 
                     var document = documentRepository.GetSingle((string)Session["CodDocument"]);
+                    document.DocumentName = pv.ProductName;
+                    document.CustomerSupplier = cust;
+                    document.Customer = cust.BusinessName;
+                    document.CodCustomer = cust.CodCustomerSupplier;
 
-                    DocumentProduct dp;                    
+                    documentRepository.Edit(document);
+                    documentRepository.Save();
+
+
+                    DocumentProduct dp;
                     DocumentProduct firstDocumentProduct = null;
 
                     foreach (var qtsitem in qts)
@@ -175,7 +198,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                             dp.Product = pv.Product;
 
                             dp.Quantity = qtsitem;
-                           
+
                             dp.InitCost();
                             document.DocumentProducts.Add(dp);
 
@@ -192,10 +215,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                     if (firstDocumentProduct.Costs.FirstOrDefault() != null)
                     {
                         Session["codProduct"] = document.DocumentProducts.LastOrDefault().CodProduct;
-
-                        return Json(new { redirectUrl = Url.Action("EditAndCreateAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodDocumentProduct}) });                    
-                     //   return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
-                    
+                        
+                        return Json( new { redirectUrl = Url.Action("EditAndCreateAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodDocumentProduct }) });
+                        //   return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
                     }
                     else
                     {
@@ -203,7 +225,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
 
                 }
-//                catch (Exception ex)
+                //                catch (Exception ex)
                 //{
                 //    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 //}

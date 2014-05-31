@@ -271,7 +271,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                                     c.Article.TimeStampTable = DateTime.Now;
 
-                                    a = (RollPrintableArticle)c.Article.Clone();
+                                    a = (RollPrintableArticle)c.Article.Clone_();
 
                                     //cost = (RollPrintableArticleStandardCost)c.RollPrintableArticleStandardCost.Clone();
                                     //a.ArticleCosts.Clear();
@@ -325,7 +325,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
                                     c.Article.ArticleName = c.Article.ToString();
 
-                                    a = c.Article.Clone();
+                                    a = c.Article.Clone_();
 
                                     articleRepository.Add(a);
                                     articleRepository.Save();

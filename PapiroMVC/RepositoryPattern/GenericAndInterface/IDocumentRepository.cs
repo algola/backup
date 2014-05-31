@@ -16,6 +16,8 @@ namespace Services
         IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);
         Cost GetCost(string codCost);
         void EditCost(Cost c);
+        void Edit(Document entity, bool deep);
+
         
 
         Document GetEstimateEcommerce(string codCustomerSupplier);

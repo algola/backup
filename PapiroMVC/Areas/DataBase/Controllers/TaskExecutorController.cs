@@ -45,10 +45,26 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
+        public ActionResult IndexPrePostPress()
+        {
+            //deprecated
+            TempData["TaskExecutorIndex"] = "IndexPrePostPress";
+            return View();
+        }
+
+
         public ActionResult IndexFlexo()
         {
             //deprecated
             TempData["TaskExecutorIndex"] = "IndexFlexo";
+            return View();
+        }
+
+        
+        public ActionResult IndexSemiRoll()
+        {
+            //deprecated
+            TempData["TaskExecutorIndex"] = "IndexSemiRoll";
             return View();
         }
 
@@ -63,13 +79,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             //deprecated
             TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
-            return View();
-        }
-
-        public ActionResult IndexPrePostPress()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexPrePostPress";
             return View();
         }
 
@@ -357,6 +366,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ViewBag.ActionMethod = "RollEstimatedOnTime";
                     break;
 
+                case TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime:
+                    ViewBag.ActionMethod = "ControlTableRollEstimatedOnTime";
+                    break;
+
                 case TaskEstimatedOn.EstimatedOnType.OnTime:
                     ViewBag.ActionMethod = "TaskEstimatedOnTime";
                     if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo ||
@@ -364,7 +377,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         ViewBag.ActionMethod = "RollEstimatedOnTime";
                     }
+                    if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.ControlTableRoll)
+                    {
+                        ViewBag.ActionMethod = "ControlTableRollstimatedOnTime";
+                    }
                     break;
+
+              
                 case TaskEstimatedOn.EstimatedOnType.OnMq:
                     ViewBag.ActionMethod = "TaskEstimatedOnMq";
                     break;
@@ -428,6 +447,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     TempData["TaskExecutorIndex"] = "IndexPlotter";
                     break;
                 case TaskExecutor.ExecutorType.PrePostPress:
+                case TaskExecutor.ExecutorType.ControlTableRoll:
                     TempData["TaskExecutorIndex"] = "IndexPrePostPress";
                     break;
                 case TaskExecutor.ExecutorType.Binding:
@@ -537,10 +557,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                 retView = "RollEstimatedOnTime";
                             }
                             else
-                            {
-                                tskEst = new TaskEstimatedOnTime();
-                                retView = "TaskEstimatedOnTime";
-                            }
+                                if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.ControlTableRoll)
+                                {
+                                    tskEst = new ControlTableRollEstimatedOnTime();
+                                    retView = "ControlTableRollEstimatedOnTime";
+                                }
+                                else
+                                {
+                                    tskEst = new TaskEstimatedOnTime();
+                                    retView = "TaskEstimatedOnTime";
+                                }
                         }
                         break;
                     case TaskEstimatedOn.EstimatedOnType.OnMq:
@@ -784,6 +810,134 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateFlexo";
             return PartialView("_EditAndCreateFlexo", c);
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateControlTableRoll()
+        {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreateControlTableRoll";
+
+            var x = new ControlTableRoll();
+
+            x.FormatMin = "0x0";
+            x.FormatMax = "0x0";
+
+            //            TODO: Elaborazione dell'array del tipo di lavorazione che può svolgere.
+            x.CodTypeOfTask = "STAMPA";
+
+            return View(x);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateControlTableRoll(ControlTableRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+
+                        /*-------------------------------------
+                          c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                          c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
+                          c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
+                        /*/
+                    }
+
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPrePostPress") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateControlTableRoll";
+            return PartialView("_EditAndCreateControlTableRoll", c);
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateSemiRoll()
+        {
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this feature is needed when in the view there are more than one input (submit button) form
+            //Action Method speci
+            ViewBag.ActionMethod = "CreateSemiRoll";
+
+            var x = new SemiRoll();
+
+            x.FormatMin = "0x0";
+            x.FormatMax = "0x0";
+
+            //            TODO: Elaborazione dell'array del tipo di lavorazione che può svolgere.
+            x.CodTypeOfTask = "STAMPA";
+
+            return View(x);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateSemiRoll(SemiRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //if code is empty then sistem has to assign one
+                    //                    if (c.Article.CodArticle == null)
+                    {
+                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
+
+                        /*-------------------------------------
+                          c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
+                          c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
+                          c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
+                          c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
+                        /*/
+                    }
+
+                    taskExecutorRepository.Add(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexSemiRoll") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateSemiRoll";
+            return PartialView("_EditAndCreateSemiRoll", c);
         }
 
         [HttpGet]
@@ -1142,6 +1296,55 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         [HttpGet]
+        public ActionResult EditControlTableRoll(string id)
+        {
+            //            ControlTableRoll tskEx = new ControlTableRoll();
+            var tskEx = taskExecutorRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this is a common point where edit function is called
+            ViewBag.ActionMethod = "EditControlTableRoll";
+            return View(tskEx);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditControlTableRoll(ControlTableRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexPrePostPress") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back.      
+
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            ViewBag.ActionMethod = "EditControlTableRoll";
+            return PartialView("_EditAndCreateControlTableRoll", c);
+        }
+
+
+
+        [HttpGet]
         public ActionResult EditFlexo(string id)
         {
             //            Flexo tskEx = new Flexo();
@@ -1159,7 +1362,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditFlexo";
             return View(tskEx);
         }
-
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -1210,6 +1412,79 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditFlexo";
             return PartialView("_EditAndCreateFlexo", c);
         }
+
+
+        [HttpGet]
+        public ActionResult EditSemiRoll(string id)
+        {
+            //            SemiRoll tskEx = new SemiRoll();
+            var tskEx = taskExecutorRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (tskEx == null)
+                return HttpNotFound();
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            //this is a common point where edit function is called
+            ViewBag.ActionMethod = "EditSemiRoll";
+            return View(tskEx);
+        }
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditSemiRoll(SemiRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    //controllare le lastre!!!!!!!!!!!!!!!!!!!!! se è sono articoli validi come per i fornitori di seguito
+                    /*
+                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
+
+                     */
+
+                    var flexoEx = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
+
+                    var maxCyl = flexoEx.TaskExecutorCylinders.Max(x => x.Z);
+                    var minCyl = flexoEx.TaskExecutorCylinders.Where(y => y.Z != 0).Min(x => x.Z);
+
+                    c.FormatMax = c.SemiRollWidth + "x" + ((double)maxCyl / 8) * 2.54;
+                    c.FormatMin = 0 + "x" + ((double)minCyl / 8) * 2.54;
+
+                    taskExecutorRepository.Edit(c);
+                    taskExecutorRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexSemiRoll") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back.      
+
+
+            //Load each type of base
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
+
+            ViewBag.ActionMethod = "EditSemiRoll";
+            return PartialView("_EditAndCreateSemiRoll", c);
+        }
+
         public ActionResult EditLithoRoll(string id)
         {
             LithoRoll tskEx = new LithoRoll();

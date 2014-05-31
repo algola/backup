@@ -11,6 +11,12 @@ namespace PapiroMVC.Models
     public partial class ProductPartRollPrinting : ProductPartPrinting
     {
 
+        public override void Copy(ProductPartPrinting to)
+        {
+            base.Copy(to);
+            ((ProductPartRollPrinting)to).Width = this.Width;
+        }
+
         public override void Update()
         {
             var gain = (ProductPartPrintingRollGain)this.GainPartOnPrinting;

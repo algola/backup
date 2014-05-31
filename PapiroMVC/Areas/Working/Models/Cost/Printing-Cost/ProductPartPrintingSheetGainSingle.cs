@@ -18,6 +18,9 @@ namespace PapiroMVC.Models
         //true = calculated automatically
         public bool AutoDCut { get; set; }
 
+        public int MaxGain1 { get; set;}
+        public int MaxGain2 { get; set; }
+
         //true = pinza sul lato lungo
         public bool GiraVerso { get; set; }
 
@@ -86,6 +89,13 @@ namespace PapiroMVC.Models
                     (LargerFormat.GetSide1() - minusSide1 + dCut1) / (SmallerFormat.GetSide1() + dCut1)
                     )));
 
+
+                //LIMITO LA RESA
+                if(MaxGain1 !=0 && gain1_1 > MaxGain1)
+                {
+                    gain1_1 = MaxGain1;
+                }
+
                 //doppio taglio calcolato su SideOnSide 1
                 double dCut1_1Res = ((LargerFormat.GetSide1() - minusSide1) - (SmallerFormat.GetSide1() * (gain1_1))) / ((gain1_1 - 1) == 0 ? 1 : (gain1_1 - 1));
 
@@ -97,6 +107,14 @@ namespace PapiroMVC.Models
                 int gain2_2 = (int)decimal.Truncate((decimal)((
                     (LargerFormat.GetSide2() - minusSide2 + dCut2) / (SmallerFormat.GetSide2() + dCut2)
                     )));
+
+
+                //LIMITO LA RESA
+                if (MaxGain2 != 0 && gain2_2 > MaxGain2)
+                {
+                    gain2_2 = MaxGain2;
+                }
+
 
                 //doppio taglio calcolato su SideOnSide 2
                 double dCut2_2Res = ((LargerFormat.GetSide2() - minusSide2) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
@@ -110,12 +128,27 @@ namespace PapiroMVC.Models
                 var gSideOnSide12 = gain1_1Perf * gain2_2;
 
                 var gain1_2 = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - minusSide1 + dCut2) / (SmallerFormat.GetSide2() + dCut2))));
+
+
+                //LIMITO LA RESA
+                if (MaxGain1 != 0 && gain1_2 > MaxGain1)
+                {
+                    gain1_2 = MaxGain1;
+                }
+
+                
                 var gain1_2ddp = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - ddpminusSide1 + dCut2) / (SmallerFormat.GetSide2() + dCut2))));
 
                 //doppio taglio calcolato su SideNotSide 1
                 double dCut1_2Res = ((LargerFormat.GetSide1() - minusSide1) - (SmallerFormat.GetSide2() * (gain1_2))) / (gain1_2);
 
                 var gain2_1 = (int)decimal.Truncate(((decimal)((LargerFormat.GetSide2() - minusSide2 + dCut1) / (SmallerFormat.GetSide1() + dCut1))));
+
+                //LIMITO LA RESA
+                if (MaxGain2 != 0 && gain2_1 > MaxGain2)
+                {
+                    gain2_1 = MaxGain2;
+                }
 
                 //doppio taglio calcolato su SideNotSide 1
                 double dCut2_1Res = ((LargerFormat.GetSide2()) - (SmallerFormat.GetSide1() * (gain2_1))) / (gain2_1);

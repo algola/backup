@@ -6,8 +6,30 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
+
+    public class ZVaild
+    {
+        public double Z { get; set; }
+        public int MaxGain2 { get; set; }
+    }
+
     public partial class PrintingLabelRollCostDetail : PrintingCostDetail
     {
+
+
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            PrintingLabelRollCostDetail to2 = (PrintingLabelRollCostDetail)to;
+
+            to2.BuyingFormat = this.BuyingFormat;
+
+            to = to2;
+
+        }
+
+
         public List<Cut> Cuts
         {
             get
@@ -17,22 +39,16 @@ namespace PapiroMVC.Models
                 //task executor corrente
                 var tsk = TaskExecutors.Where(it => it.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();
 
-                //combino per ora gli z della macchina con le larghezze
-                //è da tenere presente dei colori!!!!
-                //il formato massimo della macchina deve essere calcolato come la larghezza x il massimo Z
-
-                //sperimentale potrebbe essere inserita nella procedura anche il controllo della doppia pinza, etc...
+                //se il formato da stampare è < del formato aperto... 
                 if (SheetCut.IsValid(tsk.FormatMax, ProductPart.FormatOpened, tsk.FormatMin))
                 {
                     //i tagli che vanno bene nel formato minimo e massimo
                     y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, tsk.FormatMin);
                 }
-                else
-                {
-                    //i tagli che vanno bene nel formato minimo e formato lavoro
+                else                {
+                    //i tagli che vanno bene nel formato massimo e formato lavoro
                     y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, ProductPart.FormatOpened);
                 }
-
 
                 //ma solo quelli validi
                 List<Cut> x = new List<Cut>();
@@ -170,6 +186,41 @@ namespace PapiroMVC.Models
 
         }
 
+        //public override void Update(IQueryable<CostDetail> costDetailList)
+        //{
+        //    base.Update(costDetailList);
+
+        //    var prePosts = costDetailList.OfType<PrePostPressCostDetail>();
+        //    foreach (var item in prePosts)
+        //    {
+        //        item.Update();
+        //    }
+        //}
+
+
+        public override int GainOnSide1
+        {
+            get
+            {
+                return ProductPartPrinting.CalculatedSide1Gain;
+            }
+            set
+            {
+                base.GainOnSide1 = value;
+            }
+        }
+
+        public override int GainOnSide2
+        {
+            get
+            {
+                return ProductPartPrinting.CalculatedSide2Gain;
+            }
+            set
+            {
+                base.GainOnSide2 = value;
+            }
+        }
 
         public List<PrintingHint> PrintingHints
         {
@@ -191,6 +242,7 @@ namespace PapiroMVC.Models
                 ppP.Part = this.ProductPart;
                 ppP.PrintingFormat = buyingFormat;
                 ppP.AutoCutParameter = true;
+
                 ppP.Update();
 
                 if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
@@ -208,18 +260,46 @@ namespace PapiroMVC.Models
 
                     });
                 }
+                else
+                {
+                    //tolgo una posa!!!
+                    ppP.MaxGain2 = ppP.CalculatedSide2Gain - 1;
+                    ppP.Update();
+                    if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
+                        ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
+                    {
+                        //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
+                        pHint.Add(new PrintingHint
+                        {
+                            Format = ppP.Part.Format,
+                            DCut1 = ppP.CalculatedDCut1,
+                            DCut2 = ppP.CalculatedDCut2,
+                            BuyingFormat = buyingFormat,
+                            PrintingFormat = buyingFormat,
+                            MaxGain2 = ppP.MaxGain2,
+                            Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+
+                        });
+                    }
+
+
+                    ppP.MaxGain2 = 0;
+                }
             }
 
-            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
-            List<double> zValids = new List<double>();
+//            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
+            List<ZVaild> zValids = new List<ZVaild>();// List<double>();
 
             //scorro la lista ed estraggo solo gli z validi
-            foreach (var item in aux)
+            foreach (var item in pHint)
             {
-                var z = item.GetSide2();
-                if (!zValids.Contains(z))
+                var z = item.BuyingFormat.GetSide2();
+                if (!zValids.Select(x=>x.Z).Contains(z))
                 {
-                    zValids.Add(z);
+                    var zValid = new ZVaild();
+                    zValid.Z=z;
+                    zValid.MaxGain2 = item.MaxGain2;
+                    zValids.Add(zValid);
                 }
             }
 
@@ -228,10 +308,11 @@ namespace PapiroMVC.Models
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item, ppP.Part.Format, dCut1, dCut2, 34);
+                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2 ,ppP.Part.Format, dCut1, dCut2, 34);
                 foreach (var nB in newBands)
                 {
-                    ppP.PrintingFormat = nB.ToString() + "x" + item.ToString();
+                    ppP.PrintingFormat = nB.ToString() + "x" + item.Z.ToString();
+                    ppP.MaxGain2 = item.MaxGain2;
                     ppP.Update();
                     pHint.Add(new PrintingHint
                     {
@@ -281,6 +362,13 @@ namespace PapiroMVC.Models
 
         public override double Quantity(double qta)
         {
+
+
+            if (TaskexEcutorSelected == null)
+            {
+                UpdateCoeff();
+            }
+
             double ret;
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
@@ -290,6 +378,8 @@ namespace PapiroMVC.Models
                     break;
                 case QuantityType.RunLengthMlTypeOfQuantity:
                     //calcoli per mt lineari!!!!!!!!
+                    
+                    
                     var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
                     var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
 
@@ -462,7 +552,7 @@ namespace PapiroMVC.Models
             return lst;
         }
 
-        public List<double> GetOptimalWidthFlexo(double z, string SmallerFormat, double DCut1, double DCut2, double maxSide1)
+        public List<double> GetOptimalWidthFlexo(double z, int maxGain2, string SmallerFormat, double DCut1, double DCut2, double maxSide1)
         {
 
             var taskexEcutorSelected = TaskExecutors.SingleOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
@@ -484,6 +574,12 @@ namespace PapiroMVC.Models
                 int gain2_2 = (int)decimal.Truncate((decimal)((
                     (z - minusSide2) / (SmallerFormat.GetSide2())
                     )));
+
+                //limite sulla resa dello z
+                if (gain2_2 > maxGain2 && maxGain2 != 0)
+                {
+                    gain2_2 = maxGain2;
+                }
 
                 //doppio taglio calcolato su SideOnSide 2 0,257 --> 0,3
                 double dCut2_2Res = Math.Ceiling(
@@ -542,7 +638,7 @@ namespace PapiroMVC.Models
                     double cToPrintR = 0;
                     double cToPrintT = 0;
 
-                    TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT); 
+                    TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
                     total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
                 }
                 catch (NotImplementedException)

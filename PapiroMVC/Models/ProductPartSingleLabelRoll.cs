@@ -18,5 +18,14 @@ namespace PapiroMVC.Models
     [DataContract] 
     public partial class ProductPartSingleLabelRoll : ProductPart
     {
+    	
+    	[DataMember] 		
+        public Nullable<int> LabelsPerRoll { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> SoulDiameter { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> MaxDiameter { get; set; }
     }
 }

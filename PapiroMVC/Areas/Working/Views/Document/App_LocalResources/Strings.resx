@@ -126,6 +126,9 @@
   <data name="BuyingFormat" xml:space="preserve">
     <value>F.to acquisto supporto stampa</value>
   </data>
+  <data name="CloneQty" xml:space="preserve">
+    <value>Duplica</value>
+  </data>
   <data name="CodCost" xml:space="preserve">
     <value>Codice</value>
   </data>
@@ -167,6 +170,9 @@
   </data>
   <data name="Description" xml:space="preserve">
     <value>Descrizione costo</value>
+  </data>
+  <data name="DialogCloneTitle" xml:space="preserve">
+    <value>Duplica</value>
   </data>
   <data name="Document" xml:space="preserve">
     <value>Documento</value>
@@ -225,6 +231,9 @@
   <data name="FilterCheckMessage" xml:space="preserve">
     <value>Attenzione! Filtri presenti in ricerca.</value>
   </data>
+  <data name="Inclusion" xml:space="preserve">
+    <value>Inc.</value>
+  </data>
   <data name="LeavingPageMsg" xml:space="preserve">
     <value>Alcune modifiche devono ancora essere salvate</value>
   </data>
@@ -239,6 +248,9 @@
   </data>
   <data name="NewEstimate" xml:space="preserve">
     <value>Nuovo Preventivo</value>
+  </data>
+  <data name="NewQty" xml:space="preserve">
+    <value>Nuova Quantità</value>
   </data>
   <data name="NoTaskEstimatedOnException" xml:space="preserve">
     <value>Errore</value>

@@ -26,7 +26,7 @@ namespace PapiroMVC.Models
         {
             get
             {
-                CostDetail.QuantityType ret = CostDetail.QuantityType.MqSheetTypeOfQuantity;
+                CostDetail.QuantityType ret = CostDetail.QuantityType.NColorPerMqTypeOfQuantity;
                 return ret;
             }
         }

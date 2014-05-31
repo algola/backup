@@ -12,12 +12,13 @@ using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using Newtonsoft.Json;
 using PapiroMVC.Validation.Error;
+using PapiroMVC.ServiceLayer;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
 
-  //  [CustomHandleErrorAttribute(ExceptionType = typeof(NotImplementedException), View = "Error2")]
+    //  [CustomHandleErrorAttribute(ExceptionType = typeof(NotImplementedException), View = "Error2")]
     [AuthorizeUser]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
@@ -84,8 +85,120 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(menu);
             this.Disposables.Add(costDetailRepository);
 
-        
+
         }
+
+        [HttpPost]
+        public ActionResult CloneDocumentProduct(string codDocument, string codDocumentProduct, int newQuantity)
+        {
+
+
+            Document doc = documentRepository.GetSingle(codDocument);
+            var prod = documentRepository.GetDocumentProductByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+
+
+            if (newQuantity != 0)
+            {
+                PapiroService p = new PapiroService();
+                p.DocumentRepository = documentRepository;
+                p.CostDetailRepository = costDetailRepository;
+
+                DocumentProduct prod2 = (DocumentProduct)prod.Clone();
+                prod2.Quantity = newQuantity;
+
+                prod2.CodDocumentProduct = "";
+                prod2.Document = null;
+
+                doc.DocumentProducts.Add(prod2);
+                doc.DocumentProductsCodeRigen(true);
+
+                var codNewDocumentProduct = prod2.CodDocumentProduct;
+
+                p.DocumentRepository.Edit(doc);
+                p.DocumentRepository.Save();
+
+                p.DocumentRepository.SetDbName(CurrentDatabase);
+
+                //array di sostituzione dei codici
+                Dictionary<string, string> trans = new Dictionary<string, string>();
+                foreach (var c in prod.Costs)
+                {
+                    var y = p.CostDetailRepository.GetSingleSimple(c.CodCost);
+
+                    if (y != null)
+                    {
+                        var x = (CostDetail)y.Clone();
+                        x.CodCostDetail = x.CodCostDetail.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
+                        x.CodCost = x.CodCostDetail;
+
+                        x.CostDetailCostCodeRigen();
+
+                        if (x.CodComputedBy != null)
+                        {
+                            x.CodComputedBy = x.CodComputedBy.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
+                        }
+
+                        p.CostDetailRepository.Add(x);
+                    }
+                }
+
+                p.CostDetailRepository.Save();
+
+
+                p.CostDetailRepository.SetDbName(CurrentDatabase);
+
+
+                foreach (var c in prod2.Costs)
+                {
+                    var y = p.CostDetailRepository.GetSingle(c.CodCost);
+
+                    if (y != null)
+                    {
+                        //TEMPORANEOOOOOOOOO
+                        //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
+                        if (y.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                        {
+                            y.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(y.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
+
+                            if (y.CodPartPrintingCostDetail != null)
+                            {
+                                foreach (var item in y.CodPartPrintingCostDetail)
+                                {
+                                    var cv2 = p.CostDetailRepository.GetSingle(item);
+                                    y.Printeres.Add(cv2);
+                                    cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                                }
+                            }
+                        }
+
+
+                        y.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                        y.Update();
+                        y.TaskCost.Update();
+
+                        p.CostDetailRepository.Add(y);
+                    }
+
+                }
+
+                p.CostDetailRepository.Save();
+
+
+                doc = documentRepository.GetSingle(codDocument);
+                prod2 = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codNewDocumentProduct);
+                prod2.UpdateCost();
+
+                p.DocumentRepository.Edit(doc);
+                p.DocumentRepository.Save();
+                // end regen costs
+            }
+
+            return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { area = "Working", id = prod.CodProduct }) });
+
+        }
+
+
+
 
         //
         // GET: /Working/Document/

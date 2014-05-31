@@ -123,6 +123,18 @@
   <data name="AutoChangesValidationError" xml:space="preserve">
     <value>Inserire un'espressione valita (tipo: +5% oppure -0,50 etc..)</value>
   </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="CustomerToolTip" xml:space="preserve">
+    <value>Nome o riferimento al cliente in anagrafia</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Rif. al lavoro</value>
+  </data>
+  <data name="ProductNameToolTip" xml:space="preserve">
+    <value>Nome del lavoro o riferimento alla commissione del cliente</value>
+  </data>
   <data name="Quantities" xml:space="preserve">
     <value>Quantità</value>
   </data>

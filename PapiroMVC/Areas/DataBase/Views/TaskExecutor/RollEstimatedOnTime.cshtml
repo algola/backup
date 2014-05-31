@@ -38,6 +38,14 @@
 
         @Html.AlgolaEditorFor(model => model.AvarageRunPerHour)
 
+        @Html.EditorFor(model => model.UseDifferentRunPerHour)
+
+        <div class="span1"></div>
+        <div class="control-group span9" id="_listAvarageRunPerRunStep">
+            @Html.Partial("_ListAvarageMeterPerSecStep", Model)
+        </div>
+
+
     </fieldset>
 
     <fieldset>

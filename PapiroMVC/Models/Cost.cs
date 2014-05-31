@@ -65,6 +65,18 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> Locked { get; set; }
+    	
+    	[DataMember] 		
+        public string CodItemGraph { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> Markup { get; set; }
+    	
+    	[DataMember] 		
+        public string GranTotalCost { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> TypeOfCalcolous { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }

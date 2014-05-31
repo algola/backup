@@ -160,24 +160,61 @@ namespace UnitTestPapiroMVC
         [TestMethod]
         public void CloneObject()
         {
-
-
             IDocumentRepository docRep = new DocumentRepository();
             IProductRepository prodRep = new ProductRepository();
+            ICostDetailRepository cdetRep = new CostDetailRepository();
 
             PapiroService p = new PapiroService();
             p.DocumentRepository = docRep;
-            p.CostDetailRepository = new CostDetailRepository();
-            p.TaskExecutorRepository = new TaskExecutorRepository();
-            p.ArticleRepository = new ArticleRepository();
+            p.CostDetailRepository = cdetRep;
 
-            Document doc = docRep.GetEstimateEcommerce("000001");
-            doc.EstimateNumber = "0";
+            p.DocumentRepository.SetDbName("castello");
+            p.CostDetailRepository.SetDbName("castello");
 
-            //work with product
-            Product prod = doc.DocumentProducts.First().Product;
+            Document doc = docRep.GetSingle("00000J");
+            var prod = docRep.GetDocumentProductByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault();
 
-            Console.WriteLine(prod.ProductName);
+            DocumentProduct prod2 = (DocumentProduct)prod.Clone();
+            prod2.CodDocumentProduct = "";
+            prod2.Document = null;
+
+            doc.DocumentProducts.Add(prod2);
+            doc.DocumentProductsCodeRigen(true);
+
+            p.DocumentRepository.Edit(doc);
+            p.DocumentRepository.Save();
+
+            p.DocumentRepository.SetDbName("castello");
+
+            //array di sostituzione dei codici
+            Dictionary<string, string> trans = new Dictionary<string, string>();
+            foreach (var c in prod.Costs)
+            {
+                var y = p.CostDetailRepository.GetSingleSimple(c.CodCost);
+
+                if (y != null)
+                {
+                    var x = (CostDetail)y.Clone();
+                    x.CodCostDetail = x.CodCostDetail.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
+                    x.CodCost = x.CodCostDetail;
+
+                    x.CostDetailCostCodeRigen();
+
+                    if (x.CodComputedBy != null)
+                    {
+                        x.CodComputedBy = x.CodComputedBy.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
+                    }
+
+                    p.CostDetailRepository.Add(x);
+                }
+            }
+
+            p.CostDetailRepository.Save();
+
+
+            doc = docRep.GetSingle("00000J");
+
+            Console.WriteLine("");
         }
     }
 }

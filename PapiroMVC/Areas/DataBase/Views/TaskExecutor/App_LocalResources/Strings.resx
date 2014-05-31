@@ -399,4 +399,34 @@
   <data name="FromColorCaption" xml:space="preserve">
     <value>Colori</value>
   </data>
+  <data name="CreateSemiRoll" xml:space="preserve">
+    <value>Nuova Semirotativa</value>
+  </data>
+  <data name="CreateSemiRollTitle" xml:space="preserve">
+    <value>Nuova Semirotativa</value>
+  </data>
+  <data name="EditingSemiRollTitle" xml:space="preserve">
+    <value>Modifica della macchina semirotativa</value>
+  </data>
+  <data name="SemiRollType" xml:space="preserve">
+    <value>Semirotativa</value>
+  </data>
+  <data name="TitleSemiRollIndex" xml:space="preserve">
+    <value>Macchine da stampa semirotative</value>
+  </data>
+  <data name="AvarageMeterPerSecCaption" xml:space="preserve">
+    <value>m/sec</value>
+  </data>
+  <data name="FromMtCaption" xml:space="preserve">
+    <value>da mt</value>
+  </data>
+  <data name="ToMtCaption" xml:space="preserve">
+    <value>a mt</value>
+  </data>
+  <data name="CeatePrePostPress" xml:space="preserve">
+    <value>Pre/Post Stampa</value>
+  </data>
+  <data name="ControlTableRollType" xml:space="preserve">
+    <value>Tavolo Controllo Bobina</value>
+  </data>
 </root>

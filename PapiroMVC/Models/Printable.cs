@@ -48,5 +48,14 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> NoUseInEstimateCalculation { get; set; }
+    	
+    	[DataMember] 		
+        public string SuppOfMaterial { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<long> SuppWeight { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> SuppHand { get; set; }
     }
 }

@@ -71,6 +71,9 @@
           <Property Name="Number" Type="int" />
           <Property Name="Adhesive" Type="char" MaxLength="100" />
           <Property Name="NoUseInEstimateCalculation" Type="bit" />
+          <Property Name="SuppOfMaterial" Type="char" MaxLength="100" />
+          <Property Name="SuppWeight" Type="uint" />
+          <Property Name="SuppHand" Type="double" />
         </EntityType>
         <EntityType Name="costdetails">
           <Key>
@@ -126,6 +129,10 @@
           <Property Name="Hidden" Type="bit" />
           <Property Name="CodProductPartImplantTask" Type="char" MaxLength="50" />
           <Property Name="Locked" Type="bit" />
+          <Property Name="CodItemGraph" Type="char" MaxLength="20" />
+          <Property Name="Markup" Type="double" />
+          <Property Name="GranTotalCost" Type="char" MaxLength="20" />
+          <Property Name="TypeOfCalcolous" Type="int" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -231,6 +238,16 @@
           <Property Name="OptionName" Type="char" MaxLength="100" />
           <Property Name="IdexOf" Type="int" />
         </EntityType>
+        <EntityType Name="productgraphs">
+          <Key>
+            <PropertyRef Name="CodProductGraph" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductGraph" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="CodItemGraph" Type="char" MaxLength="20" />
+          <Property Name="CodItemGraphLink" Type="char" MaxLength="20" />
+          <Property Name="CodProduct" Type="char" MaxLength="50" />
+        </EntityType>
         <EntityType Name="productpartprinting">
           <Key>
             <PropertyRef Name="CodProductPartPrinting" />
@@ -287,6 +304,9 @@
           <Property Name="DCut1" Type="double" />
           <Property Name="DCut2" Type="double" />
           <Property Name="SideOnSide" Type="int" />
+          <Property Name="LabelsPerRoll" Type="int" />
+          <Property Name="SoulDiameter" Type="double" />
+          <Property Name="MaxDiameter" Type="double" />
         </EntityType>
         <EntityType Name="productpartsprintablearticle">
           <Key>
@@ -323,6 +343,7 @@
           <Property Name="IndexOf" Type="int" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
           <Property Name="ImplantHidden" Type="bit" />
+          <Property Name="CodItemGraph" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -348,6 +369,7 @@
           <Property Name="ProductTaskName" Type="char" MaxLength="100" />
           <Property Name="SelectorProductTask" Type="int" />
           <Property Name="ImplantHidden" Type="bit" />
+          <Property Name="CodItemGraph" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="steps">
           <Key>
@@ -815,6 +837,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_productgraphs_CodProduct">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productgraphs" Type="Self.productgraphs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="productgraphs">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_productpartprinting_CodProductPart">
           <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1093,6 +1129,7 @@
           <EntitySet Name="makereadies" EntityType="Self.makereadies" Schema="db" store:Type="Tables" />
           <EntitySet Name="menuproduct" EntityType="Self.menuproduct" Schema="db" store:Type="Tables" />
           <EntitySet Name="optiontypeoftask" EntityType="Self.optiontypeoftask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productgraphs" EntityType="Self.productgraphs" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartprinting" EntityType="Self.productpartprinting" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartprintinggain" EntityType="Self.productpartprintinggain" Schema="db" store:Type="Tables" />
           <EntitySet Name="productparts" EntityType="Self.productparts" Schema="db" store:Type="Tables" />
@@ -1179,6 +1216,10 @@
           <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="Self.FK_optiontypeoftask_CodTypeOfTask">
             <End Role="typeoftask" EntitySet="typeoftask" />
             <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productgraphs_CodProduct" Association="Self.FK_productgraphs_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="productgraphs" EntitySet="productgraphs" />
           </AssociationSet>
           <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="Self.FK_productpartprinting_CodProductPart">
             <End Role="productparts" EntitySet="productparts" />
@@ -1451,6 +1492,11 @@
             <End Role="ProductPartTask" EntitySet="ProductPartTasks" />
             <End Role="Cost" EntitySet="Costs" />
           </AssociationSet>
+          <EntitySet Name="ProductGraphLinks" EntityType="dbModel.ProductGraphLink" />
+          <AssociationSet Name="FK_productgraphs_CodProduct" Association="dbModel.FK_productgraphs_CodProduct">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="productgraph" EntitySet="ProductGraphLinks" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
@@ -1653,6 +1699,9 @@
           <Property Type="String" Name="SupplierMaker" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Adhesive" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="NoUseInEstimateCalculation" Type="Boolean" />
+          <Property Name="SuppOfMaterial" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SuppWeight" Type="Int64" />
+          <Property Name="SuppHand" Type="Double" />
         </EntityType>
         <EntityType Name="NoPrintable" BaseType="dbModel.Article" Abstract="false" >
           <Property Type="String" Name="SupplierMaker" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -1912,7 +1961,7 @@
           <Property Name="DCut1" Type="Double" />
           <Property Name="DCut2" Type="Double" />
           <Property Name="SideOnSide" Type="Int32" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
             <PropertyRef Name="CodProductPartPrintableArticle" />
@@ -1944,6 +1993,7 @@
           <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartTask" FromRole="ProductPartTask" ToRole="cost" />
           <NavigationProperty Name="ImplantCosts" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="ProductPartTask" ToRole="Cost" />
           <Property Name="ImplantHidden" Type="Boolean" />
+          <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -1956,6 +2006,7 @@
           <Property Type="String" Name="ProductName" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CodMenuProduct" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="documentproducts" Relationship="dbModel.FK_documentproducts_CodProduct" FromRole="Product" ToRole="DocumentProduct" />
+          <NavigationProperty Name="ProductGraphLinks" Relationship="dbModel.FK_productgraphs_CodProduct" FromRole="Product" ToRole="productgraph" />
         </EntityType>
         <EntityType Name="ProductTask">
           <Key>
@@ -1974,6 +2025,7 @@
           <NavigationProperty Name="costs" Relationship="dbModel.FK_costs_CodProductTask" FromRole="ProductTask" ToRole="cost" />
           <NavigationProperty Name="productpartstoproducttasks" Relationship="dbModel.FK_productpartstoproducttask_CodProductTask" FromRole="ProductTask" ToRole="productpartstoproducttask" />
           <Property Name="ImplantHidden" Type="Boolean" />
+          <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_productparts_CodProduct">
           <End Type="dbModel.Product" Role="product" Multiplicity="0..1">
@@ -2231,7 +2283,11 @@
           <Property Name="CodProductPartImplantTask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductPartImplantTask" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="Cost" ToRole="ProductPartTask" />
           <Property Name="Locked" Type="Boolean" />
-        </EntityType>
+          <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Markup" Type="Double" />
+          <Property Name="GranTotalCost" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TypeOfCalcolous" Type="Int32" />
+          </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
             <PropertyRef Name="CodDocumentProduct" />
@@ -2432,7 +2488,7 @@
           <Property Name="Guid" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="RollChanges" Type="Double" />
           <Property Name="Implants" Type="Double" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -2741,7 +2797,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityType Name="ProductSingleLabelRoll" BaseType="dbModel.Product" />
-        <EntityType Name="ProductPartSingleLabelRoll" BaseType="dbModel.ProductPart" />
+        <EntityType Name="ProductPartSingleLabelRoll" BaseType="dbModel.ProductPart" >
+          <Property Name="LabelsPerRoll" Type="Int32" />
+          <Property Name="SoulDiameter" Type="Double" />
+          <Property Name="MaxDiameter" Type="Double" />
+        </EntityType>
         <EntityType Name="ProductPartLabelRollArticle" BaseType="dbModel.ProductPartsPrintableArticle" />
         <EntityType Name="PrintingLabelRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
           <Property Name="BuyingFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -2773,6 +2833,40 @@
         <EntityType Name="CostPerColorStep" BaseType="dbModel.Step" >
           <Property Name="CostPerUnit" Type="String" />
         </EntityType>
+        <EntityType Name="SemiRoll" BaseType="dbModel.Litho" >
+          <Property Name="PaperFirstStartLenght" Type="Int64" />
+          <Property Name="Width2" Type="Double" />
+          <Property Name="SemiRollWidth" Type="Double" />
+          <Property Name="PaperSecondStartLenght" Type="Int64" />
+        </EntityType>
+        <EntityType Name="ControlTableRoll" BaseType="dbModel.PrePostPress" />
+        <EntityType Name="ControlTableRollEstimatedOnTime" BaseType="dbModel.TaskEstimatedOnTime" />
+        <EntityType Name="PrePostPressCostDetail" BaseType="dbModel.CostDetail" />
+        <EntityType Name="ProductGraphLink">
+          <Key>
+            <PropertyRef Name="CodProductGraph" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodProductGraph" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodItemGraphLink" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CodProduct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="product" Relationship="dbModel.FK_productgraphs_CodProduct" FromRole="productgraph" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_productgraphs_CodProduct">
+          <End Type="dbModel.Product" Role="Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductGraphLink" Role="productgraph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="productgraph">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2903,6 +2997,22 @@
                 <ScalarProperty Name="Width2" ColumnName="Width" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <Condition ColumnName="Selector" Value="7" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SemiRoll)">
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="Width2" ColumnName="Width" />
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
+                <ScalarProperty Name="PaperSecondStartLenght" ColumnName="PaperSecondStartLenght" />
+                <ScalarProperty Name="SemiRollWidth" ColumnName="FlexoWidth" />
+                <ScalarProperty Name="PaperFirstStartLenght" ColumnName="PaperFirstStartLenght" />
+                <Condition ColumnName="Selector" Value="8" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableRoll)">
+              <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
+                <Condition ColumnName="SelectorBindingPrePostPress" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3041,6 +3151,12 @@
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
                 <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
                 <Condition ColumnName="SelectorTimeRunDigital" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableRollEstimatedOnTime)">
+              <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
+                <Condition ColumnName="SelectorTimeRunDigital" Value="3" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3248,6 +3364,9 @@
           <EntitySetMapping Name="articles">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Printable)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="SuppHand" ColumnName="SuppHand" />
+                <ScalarProperty Name="SuppWeight" ColumnName="SuppWeight" />
+                <ScalarProperty Name="SuppOfMaterial" ColumnName="SuppOfMaterial" />
                 <ScalarProperty Name="NoUseInEstimateCalculation" ColumnName="NoUseInEstimateCalculation" />
                 <ScalarProperty Name="Adhesive" ColumnName="Adhesive" />
                 <ScalarProperty Name="SupplierMaker" ColumnName="SupplierMaker" />
@@ -3435,6 +3554,9 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSingleLabelRoll)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="SoulDiameter" ColumnName="MaxDiameter" />
+                <ScalarProperty Name="MaxDiameter" ColumnName="SoulDiameter" />
+                <ScalarProperty Name="LabelsPerRoll" ColumnName="LabelsPerRoll" />
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <Condition ColumnName="SelectorProductPart" Value="6" />
               </MappingFragment>
@@ -3482,6 +3604,7 @@
           <EntitySetMapping Name="ProductPartTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartTask)">
               <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
                 <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
@@ -3545,6 +3668,7 @@
           <EntitySetMapping Name="ProductTasks">
             <EntityTypeMapping TypeName="dbModel.ProductTask">
               <MappingFragment StoreEntitySet="producttasks">
+                <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
                 <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
@@ -3604,6 +3728,10 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="TypeOfCalcolous" ColumnName="TypeOfCalcolous" />
+                <ScalarProperty Name="GranTotalCost" ColumnName="GranTotalCost" />
+                <ScalarProperty Name="Markup" ColumnName="Markup" />
+                <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
                 <ScalarProperty Name="Locked" ColumnName="Locked" />
                 <ScalarProperty Name="CodProductPartImplantTask" ColumnName="CodProductPartImplantTask" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
@@ -3761,6 +3889,12 @@
               <MappingFragment StoreEntitySet="costdetails">
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrePostPressCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <Condition ColumnName="Selector" Value="3" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3921,6 +4055,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductGraphLinks">
+            <EntityTypeMapping TypeName="dbModel.ProductGraphLink">
+              <MappingFragment StoreEntitySet="productgraphs">
+                <ScalarProperty Name="CodProduct" ColumnName="CodProduct" />
+                <ScalarProperty Name="CodItemGraphLink" ColumnName="CodItemGraphLink" />
+                <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
+                <ScalarProperty Name="CodProductGraph" ColumnName="CodProductGraph" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3944,7 +4089,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="69">
+      <Diagram Name="Model1" ZoomLevel="54">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />
@@ -4042,14 +4187,14 @@
         <EntityTypeShape EntityType="dbModel.NoPrintable" Width="1.5" PointX="47.75" PointY="5.25" Height="0.4" IsExpanded="true" />
         <InheritanceConnector EntityType="dbModel.NoPrintable" ManuallyRouted="false">
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.SheetPrintableArticle" Width="1.5" PointX="39.5" PointY="8.375" Height="1.7879850260416657" />
+        <EntityTypeShape EntityType="dbModel.SheetPrintableArticle" Width="1.5" PointX="39.5" PointY="9" Height="1.7879850260416657" />
         <InheritanceConnector EntityType="dbModel.SheetPrintableArticle" ManuallyRouted="false">
           <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
           <ConnectorPoint PointX="41.125" PointY="8" />
           <ConnectorPoint PointX="40.25" PointY="8" />
           <ConnectorPoint PointX="40.25" PointY="8.375" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.RollPrintableArticle" Width="1.5" PointX="41.5" PointY="8.375" Height="1.2110807291666657" />
+        <EntityTypeShape EntityType="dbModel.RollPrintableArticle" Width="1.5" PointX="41.5" PointY="9.25" Height="1.2110807291666657" />
         <InheritanceConnector EntityType="dbModel.RollPrintableArticle" ManuallyRouted="false">
           <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
           <ConnectorPoint PointX="41.125" PointY="8" />
@@ -4105,14 +4250,14 @@
           <ConnectorPoint PointX="37.625" PointY="8.875" />
           <ConnectorPoint PointX="37.625" PointY="9.25" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.RigidPrintableArticle" Width="1.5" PointX="43.5" PointY="8.375" Height="1.2110807291666657" />
+        <EntityTypeShape EntityType="dbModel.RigidPrintableArticle" Width="1.5" PointX="43.5" PointY="9.125" Height="1.2110807291666657" />
         <InheritanceConnector EntityType="dbModel.RigidPrintableArticle" ManuallyRouted="false">
           <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
           <ConnectorPoint PointX="41.125" PointY="8" />
           <ConnectorPoint PointX="44.25" PointY="8" />
           <ConnectorPoint PointX="44.25" PointY="8.375" />
         </InheritanceConnector>
-        <EntityTypeShape EntityType="dbModel.ObjectPrintableArticle" Width="1.5" PointX="45.625" PointY="8.375" Height="1.4033821614583335" />
+        <EntityTypeShape EntityType="dbModel.ObjectPrintableArticle" Width="1.5" PointX="45.625" PointY="9" Height="1.4033821614583335" />
         <InheritanceConnector EntityType="dbModel.ObjectPrintableArticle" ManuallyRouted="false">
           <ConnectorPoint PointX="41.125" PointY="6.9898893229166656" />
           <ConnectorPoint PointX="41.125" PointY="8" />
@@ -4313,7 +4458,12 @@
         <InheritanceConnector EntityType="dbModel.PrintedSheetArticleCostDetail" />
         <EntityTypeShape EntityType="dbModel.PrintedRollArticleCostDetail" Width="1.5" PointX="39.625" PointY="28.75" />
         <InheritanceConnector EntityType="dbModel.PrintedRollArticleCostDetail" />
-        <AssociationConnector Association="dbModel.FK_costdetails_CodComputedBy" />
+        <AssociationConnector Association="dbModel.FK_costdetails_CodComputedBy" ManuallyRouted="true" >
+          <ConnectorPoint PointX="44" PointY="23.826315104166667" />
+          <ConnectorPoint PointX="43.75" PointY="117.95909105124466" />
+          <ConnectorPoint PointX="43.75" PointY="209.667790784208" />
+          <ConnectorPoint PointX="44" PointY="23.826315104166667" />
+        </AssociationConnector>
         <EntityTypeShape EntityType="dbModel.ProductPartPrinting" PointX="56.25" PointY="18.625" Width="1.5" />
         <EntityTypeShape EntityType="dbModel.ProductPartSheetPrinting" Width="1.5" PointX="52" PointY="22.25" />
         <InheritanceConnector ManuallyRouted="true" EntityType="dbModel.ProductPartSheetPrinting">
@@ -4414,6 +4564,16 @@
         <InheritanceConnector EntityType="dbModel.RollEstimatedOnTime" />
         <EntityTypeShape EntityType="dbModel.CostPerColorStep" Width="1.5" PointX="28.125" PointY="14" />
         <InheritanceConnector EntityType="dbModel.CostPerColorStep" />
+        <EntityTypeShape EntityType="dbModel.SemiRoll" Width="1.5" PointX="3.75" PointY="22.75" />
+        <InheritanceConnector EntityType="dbModel.SemiRoll" />
+        <EntityTypeShape EntityType="dbModel.ControlTableRoll" Width="1.5" PointX="7.625" PointY="19.125" />
+        <InheritanceConnector EntityType="dbModel.ControlTableRoll" />
+        <EntityTypeShape EntityType="dbModel.ControlTableRollEstimatedOnTime" Width="1.5" PointX="6.75" PointY="21.625" />
+        <InheritanceConnector EntityType="dbModel.ControlTableRollEstimatedOnTime" />
+        <EntityTypeShape EntityType="dbModel.PrePostPressCostDetail" Width="1.5" PointX="38.125" PointY="26.5" />
+        <InheritanceConnector EntityType="dbModel.PrePostPressCostDetail" />
+        <EntityTypeShape EntityType="dbModel.ProductGraphLink" Width="1.5" PointX="7.125" PointY="43.375" />
+        <AssociationConnector Association="dbModel.FK_productgraphs_CodProduct" />
       </Diagram>
     </Diagrams>
   </Designer>

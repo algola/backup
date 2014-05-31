@@ -385,6 +385,63 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+
+        
+        
+        public ActionResult SemiRollList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
+
+            var q = this.TaskExecutorList(gridSettings).OfType<SemiRoll>();
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutor,
+                        cell = new string[] 
+                        {                                
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":"",                                           
+                            a.CodTaskExecutor,
+                            a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
+                            a.TaskExecutorName,
+                            a.PrintingUnit.ToString(),
+//                            (a.Width??Convert.ToDouble(0)).ToString(CultureInfo.InvariantCulture.NumberFormat)
+                        }
+
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult DigitalSheetListAndRoll(GridSettings gridSettings)
         {
             //common serarch and order
@@ -547,6 +604,41 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //common serarch and order
             var q = this.TaskExecutorList(gridSettings).OfType<PrePostPress>();
 
+
+            string typeOfTaskExecutorFilter = string.Empty;
+            //if gridsetting is a search option
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string ctrlTblType = resman.GetString("ControlTableRollType");
+           // string rollType = resman.GetString("PlotterRollType");
+
+
+            if (gridSettings.isSearch)
+            {
+                typeOfTaskExecutorFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfTaskExecutor") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfTaskExecutor").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(typeOfTaskExecutorFilter))
+            {
+                Boolean isTable = false, isSupp = false;
+
+                //to match with language we have to compare filter with resource
+                isTable = (ctrlTblType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+//                isSupp = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
+                var a = isTable ? (IQueryable<PrePostPress>)q.OfType<ControlTableRoll>() : q.Where(x => x.CodTaskExecutor == "");
+//                var b = isSupp ? (IQueryable<Plotter>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
+
+//                var res = (a.Union(b));
+//                q = (IQueryable<Plotter>)res;
+
+                q = a;
+            }
+
+
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
 
@@ -579,12 +671,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnTime?"CostTime":
-                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnRun?"CostRun":"",                                           
+                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnRun?"CostRun":
+                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":"",                                           
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
 //CODTASKTODO   a.CodTask,
                             a.TaskExecutorName,
-                            a.FormatMax,
+                            a.TypeOfExecutor.ToString()
                         }
                     }
                 ).ToArray()

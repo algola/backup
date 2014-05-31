@@ -8,6 +8,18 @@ namespace PapiroMVC.Models
     public partial class PrintedRigidArticleCostDetail : PrintedArticleCostDetail
     {
 
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            PrintedRigidArticleCostDetail to2 = (PrintedRigidArticleCostDetail)to;
+
+            to2.CostPerMq = this.CostPerMq;
+
+            to = to2;
+
+        }
+
         public PrintedRigidArticleCostDetail()
         {
             TypeOfCostDetail = CostDetailType.PrintedRigidArticleCostDetail;

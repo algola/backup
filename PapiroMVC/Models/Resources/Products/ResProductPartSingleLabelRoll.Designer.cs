@@ -113,5 +113,59 @@ namespace PapiroMVC.Models.Resources.Products {
                 return ResourceManager.GetString("DCutToolTip", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etichette per rotolo.
+        /// </summary>
+        public static string LabelsPerRoll {
+            get {
+                return ResourceManager.GetString("LabelsPerRoll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numero di etichette esatto per rotolo. Lasciare vuoto se non richiesto. .
+        /// </summary>
+        public static string LabelsPerRollToolTip {
+            get {
+                return ResourceManager.GetString("LabelsPerRollToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diametro massimo bobina (mm).
+        /// </summary>
+        public static string MaxDiameter {
+            get {
+                return ResourceManager.GetString("MaxDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diamtro massimo espresso in millimetri delle bobine.
+        /// </summary>
+        public static string MaxDiameterToolTip {
+            get {
+                return ResourceManager.GetString("MaxDiameterToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diametro anima (mm).
+        /// </summary>
+        public static string SoulDiameter {
+            get {
+                return ResourceManager.GetString("SoulDiameter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diametro espresso in millimetri dell&apos;anima richiesto dall&apos;etichettatrice.
+        /// </summary>
+        public static string SoulDiameterToolTip {
+            get {
+                return ResourceManager.GetString("SoulDiameterToolTip", resourceCulture);
+            }
+        }
     }
 }

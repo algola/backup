@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
         {
             return "";
         }
-
+        
         public static double GetSide1(this string format)
         {
             format = format == null ? "0x0" : format;

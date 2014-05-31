@@ -113,6 +113,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartprinting", "SelectorSheet", SchemaDb.Int, "0");
             dbS.AddColumnToTable("productpartprinting", "SelectorPlotter", SchemaDb.Int, "0");
 
+
             dbS.AddForeignKey("productpartprinting", "CodProductPartPrinting", "costdetails", "CodCostDetail");
 
 
@@ -121,6 +122,16 @@ namespace PapiroMVC.Model
 
             ////First Table
             dbS.AddTable("productpartprintinggain");
+
+
+
+            //Second Table
+            dbS.AddTable("costdetailrelations");
+            dbS.AddColumnToTable("costdetailrelations", "CodCostDetailFrom", SchemaDb.String, "50");
+            dbS.AddColumnToTable("costdetailrelations", "CodCostDetailTo", SchemaDb.String, "50");
+            dbS.AddForeignKey("costdetailrelations", "CodCostDetailFrom", "costdetails", "CodCostDetail");
+            dbS.AddForeignKey("costdetailrelations", "CodCostDetailTo", "costdetails", "CodCostDetail");
+
 
 
             dbS.AddColumnToTable("productpartprintinggain", "CodProductPartPrintingGain", SchemaDb.StringPK, "50");

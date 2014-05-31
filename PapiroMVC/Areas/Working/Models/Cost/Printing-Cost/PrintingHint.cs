@@ -37,5 +37,9 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "PrintingFormatToolTip")]
         public string PrintingFormat { get; set; }
 
+        public int MaxGain1 { get; set; }
+        public int MaxGain2 { get; set; }
+
+
     }
 }

@@ -15,7 +15,7 @@
         <td />
     </tr>
 </table>
-<div id="pagerCostGrid@(Model.CodDocumentProduct)"></div>
+@*<div id="pagerCostGrid@(Model.CodDocumentProduct)"></div>*@
 
 
 <script type="text/javascript">
@@ -101,11 +101,31 @@
                 }
             },
 
+            //upload partial!!!!
+        updateCostAmount = function()
+        {
+            var dataToPass = {
+                codDocument: '@(Model.CodDocument)',
+                codDocumentProduct: '@Model.CodDocumentProduct'
+            };
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetDocumentProduct", new { controller = "Document", area = "Working"})',
+                data: dataToPass,
+                success: function (data) {
+                    $('#documentProduct@(Model.CodDocumentProduct)').html(data);
+                }
+            });
+
+        },
+
 
             cm = [
                 { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editCost, search: false },
                     { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true, search: false },
                     { name: 'Locked', label: '@HttpContext.GetLocalResourceObject(strings, "Locked")', width: 30, align: 'center', editable: false, search: false, formatter: blkFormatter },
+                    { name: 'Inclusion', label: '@HttpContext.GetLocalResourceObject(strings, "Inclusion")', width: 30, align: 'center', editable: false, search: false, formatter: InclFormatter },
                     { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "Description")', width: 350, align: 'right', editable: false, search: false },
                     { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
                     { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: true, search: false },
@@ -223,9 +243,30 @@
                         $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
                     })
                     .done(function () {
+                        updateCostAmount();
 
                     })
                     .fail(function () {
+                        updateCostAmount();
+
+                    });
+
+
+                }
+
+                else if (ci === 4) {
+
+                    var link = '@Url.Action("EditCostTroggleInclusion", "Document", new { Area = "Working", id = "type" })'.replace("type", id);
+
+                    var jqxhr = $.get(link, function () {
+                        $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
+                    })
+                    .done(function () {
+                        updateCostAmount();
+
+                    })
+                    .fail(function () {
+                        updateCostAmount();
 
                     });
 
@@ -238,6 +279,9 @@
                         },
                         aftersavefunc: function () {
                             $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
+
+                            updateCostAmount();
+
                         },
                         url: '@editUrl'
                     });
@@ -316,10 +360,10 @@
 
 <script type="text/javascript">
 
-    //resize jqgrid after windows resize
-    $(window).bind('resize', function () {
+    //ricalibro la griglia
+    function resize@(Model.CodDocumentProduct.Replace("-","_"))() {
 
-        var myGrid = $("#listDocumentProduct");
+        var myGrid = $("#costGrid@(Model.CodDocumentProduct)");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
@@ -328,6 +372,12 @@
 
         }
 
+    }
+
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+        //ricalibro la griglia
+  //      resize@(Model.CodDocumentProduct.Replace("-", "_"));
     }).trigger('resize');
 
 </script>

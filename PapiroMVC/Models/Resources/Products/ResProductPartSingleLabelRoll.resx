@@ -135,4 +135,22 @@
   <data name="DCutToolTip" xml:space="preserve">
     <value>Questo spazio viene lasciato tra una posa e un'altra</value>
   </data>
+  <data name="LabelsPerRoll" xml:space="preserve">
+    <value>Etichette per rotolo</value>
+  </data>
+  <data name="LabelsPerRollToolTip" xml:space="preserve">
+    <value>Numero di etichette esatto per rotolo. Lasciare vuoto se non richiesto. </value>
+  </data>
+  <data name="MaxDiameter" xml:space="preserve">
+    <value>Diametro massimo bobina (mm)</value>
+  </data>
+  <data name="MaxDiameterToolTip" xml:space="preserve">
+    <value>Diamtro massimo espresso in millimetri delle bobine</value>
+  </data>
+  <data name="SoulDiameter" xml:space="preserve">
+    <value>Diametro anima (mm)</value>
+  </data>
+  <data name="SoulDiameterToolTip" xml:space="preserve">
+    <value>Diametro espresso in millimetri dell'anima richiesto dall'etichettatrice</value>
+  </data>
 </root>

@@ -10,8 +10,61 @@ using PapiroMVC.Validation;
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Cost_MetaData))]
-    public partial class Cost : IDataErrorInfo, ICloneable, IDeleteRelated
+    public partial class Cost : ICloneable
     {
+
+        public object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            Cost copyOfObject = (Cost)Activator.CreateInstance(kindOfObject);
+            this.Copy(copyOfObject);
+
+            return copyOfObject;
+        }
+
+        public virtual void Copy(Cost to)
+        {
+
+
+            to.TimeStampTable = this.TimeStampTable;
+            to.CodCost = this.CodCost;
+            //        to.CodDocumentProduct = this.    	 		
+            to.CodProductTask = this.CodProductTask;
+            to.CodProductPartTask = this.CodProductPartTask;
+            to.CodProductPartPrintableArticle = this.CodProductPartPrintableArticle;
+            to.Description = this.Description;
+            to.Quantity = this.Quantity;
+            to.UnitCost = this.UnitCost;
+            to.TotalCost = this.TotalCost;
+            to.ForceZero = this.ForceZero;
+            to.Hidden = this.Hidden;
+            to.CodProductPartImplantTask = this.CodProductPartImplantTask;
+            to.Locked = this.Locked;
+            to.CodItemGraph = this.CodItemGraph;
+            to.Markup = this.Markup;
+            to.GranTotalCost = this.GranTotalCost;
+            to.TypeOfCalcolous = this.TypeOfCalcolous;
+
+            //   to.DocumentProduct = this.DocumentProduct;
+
+            to.ProductPartsPrintableArticle = this.ProductPartsPrintableArticle;
+            to.ProductPartTask = this.ProductPartTask;
+            to.ProductTask = this.ProductTask;
+
+            to.ProductPartImplantTask = this.ProductPartImplantTask;
+
+            //foreach (var costDet in CostDetails)
+            //{
+            //    var cd= (CostDetail) costDet.Clone();
+            //    //cd.TaskCost=to;
+            //    to.CostDetails.Add(cd);
+            //}
+
+        }
+
         /// <summary>
         /// update cost quantity and so other stuff
         /// </summary>
@@ -32,10 +85,12 @@ namespace PapiroMVC.Models
             {
                 this.Quantity = cd.Quantity((double)this.DocumentProduct.Quantity);
                 this.UnitCost = cd.UnitCost((double)this.DocumentProduct.Quantity).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
                 var xx = Convert.ToDouble(UnitCost, Thread.CurrentThread.CurrentUICulture);
                 var tot = xx * Quantity;
 
                 this.TotalCost = (tot ?? 0).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+                this.GranTotalCost = (Convert.ToDouble(TotalCost, Thread.CurrentThread.CurrentUICulture) * (this.Markup ?? 1)).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
 
                 this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
             }
@@ -52,110 +107,6 @@ namespace PapiroMVC.Models
 
 
         #endregion
-
-        #region Error Handle
-
-        private static readonly string[] proprietaDaValidare =
-               {
-                   //Specify validation property
-                       ""
-               };
-
-        public string Error
-        {
-            get
-            {
-                return null;
-            }
-        }
-
-        public virtual string this[string proprieta]
-        {
-            get
-            {
-                string result = null;
-                return result;
-            }
-        }
-
-        //Check validation of entity
-        public virtual bool IsValid
-        {
-            get
-            {
-                bool ret = true;
-                foreach (string prop in proprietaDaValidare)
-                {
-                    if (this[prop] != null)
-                        ret = false;
-                }
-                return ret;
-            }
-        }
-
-        #endregion
-
-        #region Handle copy for modify
-
-        public virtual void Copy(Cost to)
-        {
-            //All properties of object
-            //and pointer of sons
-            to.CodCost = this.CodCost;
-            to.CodDocumentProduct = this.CodDocumentProduct;
-            to.CodProductPartPrintableArticle = this.CodProductPartPrintableArticle;
-            to.CodProductPartTask = this.CodProductPartTask;
-            to.CodProductTask = this.CodProductTask;
-            to.DocumentProduct = this.DocumentProduct;
-            to.ProductPartsPrintableArticle = this.ProductPartsPrintableArticle;
-            to.ProductPartTask = this.ProductPartTask;
-            to.ProductTask = this.ProductTask;
-            to.TimeStampTable = this.TimeStampTable;
-
-            to.Description = this.Description;
-            to.Quantity = this.Quantity;
-            to.UnitCost = this.UnitCost;
-            to.TotalCost = this.TotalCost;
-        }
-
-        public object Clone()
-        {
-            //creo una copia dell'oggetto da utilizzare per le modifiche
-            var kindOfObject = this.GetType();
-
-            //istanzio una copia che sarà gestita dall'invio
-            Cost copyOfObject = (Cost)Activator.CreateInstance(kindOfObject);
-            //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
-            this.Copy(copyOfObject);
-
-            //CREATE DUPLICATION OF ANY FIRST GENERATION OF CHILD
-            //Example
-            //DocumentProduct partCopy = (DocumentProduct)Activator.CreateInstance(copyOfObject.Prodotto.GetType());
-            ////l'oggetto partCopy sarà una copia del contenuto dell'oggetto originale
-            //this.Prodotto.Copia(partCopy);
-
-            //sulla copia del prodotto in producto assegno la copia del suo prodotto
-            //Example
-            //copiaProdottoInProducto.Prodotto = null;
-            //copiaProdotto.ProdottoInProducto = null;
-            //copiaProdottoInProducto.Prodotto = copiaProdotto;
-            //copiaProdotto.ProdottoInProducto.Add(copiaProdottoInProducto);
-            //END COPY OF CHILD
-
-            return copyOfObject;
-        }
-
-        public void ChildsNull()
-        {
-            //Set all chied to null 
-
-            //Example
-            //this.Prodotto = null;
-        }
-
-        #endregion
-
-
 
         public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
@@ -181,11 +132,9 @@ namespace PapiroMVC.Models
             if (this.CodProductPartImplantTask != null)
             {
                 productPart = this.ProductPartImplantTask.ProductPart;
-//                var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
+                //                var task = productPart.ProductPartTasks.FirstOrDefault(x => x.OptionTypeOfTask.CodTypeOfTask.Contains("STAMPA"));
                 var task = productPart.ProductPartTasks.FirstOrDefault(x => x.CodProductPartTask == this.CodProductPartImplantTask);
 
-                //il tipo di materiale dipende dalla stampa o dal tipo di prodotto?               
-                //productPartPrintabelArticles = productPart.ProductPartPrintableArticles;
             }
 
 
@@ -201,8 +150,48 @@ namespace PapiroMVC.Models
             }
 
 
-            if (codTypeOfTask == "STAMPA")
+            if (codTypeOfTask == "TAVOLOCONTROLLO")
             {
+                Console.WriteLine("Tavolo di controllo");
+                String codParte = String.Empty;
+
+                /* se è una STAMPA 
+                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
+                 * etichette in rotolo, manifesti etc...
+                 * per ora carico.
+                 */
+
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+
+                if (tskExec.Count() > 0)
+                {
+
+                    switch (tskExec.FirstOrDefault().TypeOfExecutor)
+                    {
+                        case TaskExecutor.ExecutorType.ControlTableRoll:
+                            cv = new PrePostPressCostDetail();
+
+                            cv.TaskCost = this;
+                            cv.InitCostDetail(tskExec, articles);
+
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
+                            break;
+
+                        default:
+                            break;
+
+                    }
+
+                    cv.ProductPart = productPart;
+
+                    cv.CodCost = this.CodCost;
+                    cv.CodCostDetail = this.CodCost;
+
+                }
 
             }
 
@@ -295,6 +284,8 @@ namespace PapiroMVC.Models
 
                             ((PrintingRollCostDetail)cv).FuzzyAlgo();
 
+                            Console.WriteLine(((PrintingRollCostDetail)cv).BuyingFormats);
+
 
                             if (((PrintingRollCostDetail)cv).PrintingFormat == null)
                             {
@@ -351,6 +342,18 @@ namespace PapiroMVC.Models
                                 cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
                             }
 
+
+
+                            if (cv.TaskExecutors.FirstOrDefault() != null)
+                            {
+                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                            }
+
+                            cv.ProductPart = productPart;
+
+                            ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+
+
                             ((PrintingLabelRollCostDetail)cv).BuyingFormat =
                                  (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
                                  (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
@@ -363,14 +366,6 @@ namespace PapiroMVC.Models
                                 : ((PrintingLabelRollCostDetail)cv).PrintingFormat;
 
 
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
-
-                            cv.ProductPart = productPart;
-
-                            ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
 
                             break;
 

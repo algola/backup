@@ -817,6 +817,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CodTAVOLOCONTROLLO_NO {
+            get {
+                return ResourceManager.GetString("CodTAVOLOCONTROLLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tavolo di controllo.
+        /// </summary>
+        public static string CodTAVOLOCONTROLLO_SI {
+            get {
+                return ResourceManager.GetString("CodTAVOLOCONTROLLO_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verniciatura Lucida 1 Lato.
         /// </summary>
         public static string CodVERNICIATURA_LUCIDA1 {

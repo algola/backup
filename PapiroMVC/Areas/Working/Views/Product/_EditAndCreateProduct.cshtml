@@ -2,6 +2,8 @@
 @model PapiroMVC.Models.ProductViewModel
 
 @{
+    string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
+
     string strings = "~/Areas/Working/Views/Product/Strings";
     ViewBag.FormatsName = Model.Product.FormatsName.ToList();
 
@@ -26,15 +28,44 @@
     {
         @Html.ValidationSummary(true)
 
-        for (int i = 0; i < Model.Quantities.Count; i++)
-        {
-            <div class="control-group">
-                @Html.LabelFor(model => model.Quantities, new { @class = "col-sm-3 control-label no-padding-right" })
-                <div class="controls col-sm-9">
-                    @Html.EditorFor(model => model.Quantities[i])
-                </div>
+        <div class="row-fluid">
+
+            <div class="span7">
+                @if (Model.Customer != "" && Model.Customer != null)
+                {
+                    <fieldset @(Model.Customer != "" && Model.Customer != null ? "disabled" : "")>
+                        @Html.AlgolaEditorFor(model => model.Customer)
+                        @Html.AlgolaEditorFor(model => model.ProductName)
+                    </fieldset>
+
+                        @Html.HiddenFor(model => model.Customer)
+                        @Html.HiddenFor(model => model.ProductName)
+                }
+                else
+                {
+                    @Html.AlgolaAutocompleteFor(model => model.Customer, "CustomerBusinessNameAutoComplete", "CustomerSupplier")
+                    @Html.AlgolaEditorFor(model => model.ProductName)
+                }
+
+                @for (int i = 0; i < Model.Quantities.Count; i++)
+                {
+                    <div class="control-group">
+                        @Html.LabelFor(model => model.Quantities, new { @class = "col-sm-3 control-label no-padding-right" })
+                        <div class="controls col-sm-9">
+                            @Html.EditorFor(model => model.Quantities[i])
+                        </div>
+                    </div>
+                }
+
             </div>
-        }
+
+            <div class="span5">
+
+
+            </div>
+
+            <div class="span9"></div>
+        </div>
 
         <div class="well no-padding-left no-padding-right">
             @Html.EditorFor(x => x.Product)
@@ -58,3 +89,4 @@
     }
 
 </div>
+

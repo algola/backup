@@ -42,6 +42,8 @@ namespace PapiroMVC.Models
             partTask.ImplantHidden = false;
             partTask.IndexOf = 1;
 
+            partTask.CodItemGraph = "ST";
+
             //partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "VERNICIATURA_NO");
             //partTask.Hidden = false;
             //partTask.IndexOf = 2;
@@ -51,8 +53,23 @@ namespace PapiroMVC.Models
             partTask.ImplantHidden = false;
             partTask.IndexOf = 2;
 
+            partTask.CodItemGraph = "FS";
+
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAVOLOCONTROLLO_SI");
+            partTask.Hidden = true;
+            partTask.ImplantHidden = true;
+            partTask.IndexOf = 2;
+
+            partTask.CodItemGraph = "TV";
+
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
+
+            //grafo diretto del prodotto
+            ProductGraphLinks.Clear();
+
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "TV" });
 
         }
 
@@ -63,7 +80,7 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA" };
+            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA", "TAVOLOCONTROLLO" };
 
             foreach (var item in codTypeOfTasks)
             {
@@ -71,8 +88,8 @@ namespace PapiroMVC.Models
                 //default selection
                 pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
 
-                //if (item == "FUSTELLATURA")
-                //    pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
+                if (item == "TAVOLOCONTROLLO")
+                    pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_SI");
 
                 pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
                 pt.Hidden = true;

@@ -10,12 +10,12 @@
     @Scripts.Render("~/bundles/autocomplete")
 
     @using (Ajax.BeginForm("Action", "Article", new AjaxOptions
-{
-    UpdateTargetId = "status",
-    OnBegin = "showProcessingMsg",
-    OnComplete = "hideProcessingMsg",
-    OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+    {
+        UpdateTargetId = "status",
+        OnBegin = "showProcessingMsg",
+        OnComplete = "hideProcessingMsg",
+        OnSuccess = "OnSuccess"
+    }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
 

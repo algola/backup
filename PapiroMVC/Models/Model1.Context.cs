@@ -52,5 +52,6 @@ namespace PapiroMVC.Models
         public DbSet<ProductPartPrintingGain> ProductPartPrintingGain { get; set; }
         public DbSet<Makeready> Makereadies { get; set; }
         public DbSet<TaskExecutorCylinder> TaskExecutorCylinders { get; set; }
+        public DbSet<ProductGraphLink> ProductGraphLinks { get; set; }
     }
 }

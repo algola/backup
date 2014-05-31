@@ -41,6 +41,26 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
+
+        /// <summary>
+        /// returns DocumentProduct
+        /// </summary>
+        /// <param name="codDocumentProduct"></param>
+        /// <returns></returns>
+        /// 
+        [HttpPost]
+        public ActionResult GetDocumentProduct(String codDocument, String codDocumentProduct)
+        {
+            var docs = documentRepository.GetSingle(codDocument);
+            var docProduct = docs.DocumentProducts.Where(z => z.CodDocumentProduct == codDocumentProduct).FirstOrDefault();
+
+            docProduct.UpdateCost();
+            documentRepository.Edit(docs);
+            documentRepository.Save();
+
+            return PartialView("_DocumentProduct", docProduct);
+        }
+
         public ActionResult GetPrintingLabelHints()
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
@@ -94,8 +114,11 @@ namespace PapiroMVC.Areas.Working.Controllers
                     break;
             }
 
+
             cv.PrintingFormat = buyingFormat;
             cv.Update();
+
+
             Session["CostDetail"] = cv;
             return PartialView(cv.PartialViewName, cv);
         }
@@ -376,7 +399,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             var cv = p.EditCostAutomatically(id, new Guid());
             //Console.WriteLine(cv.GainForRun);
 
-            if (cv==null)
+            if (cv == null)
             {
                 return View("NotImplementedCostDetail");
             }
@@ -407,6 +430,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
                     viewName = "PrintingCostDetail";
                     break;
+                case CostDetail.CostDetailType.PrePostPressCostDetail:
+                    viewName = "PrePostPressCostDetail";
+                    break;
 
                 default:
                     break;
@@ -421,10 +447,31 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
 
             var cost = documentRepository.GetCost(id);
-            cost.Locked = !(cost.Locked??false);
+            cost.Locked = !(cost.Locked ?? false);
 
             documentRepository.EditCost(cost);
             documentRepository.Save();
+
+            Console.Write(id);
+            return null;
+        }
+
+        [HttpGet]
+        public ActionResult EditCostTroggleInclusion(string id)
+        {
+            var cost = documentRepository.GetCost(id);
+            cost.TypeOfCalcolous = ((cost.TypeOfCalcolous ?? 0) + 1) % 3;
+
+            //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
+
+            documentRepository.EditCost(cost);
+            documentRepository.Save();
+
+            var doc = documentRepository.GetSingle(cost.DocumentProduct.CodDocument);
+            doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == cost.DocumentProduct.CodDocumentProduct).UpdateCost();
+            documentRepository.Edit(doc);
+            documentRepository.Save();
+
 
             Console.Write(id);
             return null;
@@ -447,6 +494,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //blocco il costo
             cost.Locked = true;
+
+            //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
+            cost.DocumentProduct.UpdateCost();
 
             documentRepository.EditCost(cost);
             documentRepository.Save();
@@ -900,7 +950,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-
         public ActionResult MenuNewProduct()
         {
             if (Session["CodDocument"] != null)
@@ -938,6 +987,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 var est = Session["CodDocument"] != null ? Session["CodDocument"] : newEstimate();
                 return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }
+
             else
             {
                 return Json(new { error = true });
@@ -963,7 +1013,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
 
-            var filteredItems = menuProd.Where(
+            var filteredItems = menuProd.Where(x=>x.Name != null).Where(
                 item => item.Name.IndexOf(c.NewProduct, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 

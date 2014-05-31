@@ -28,6 +28,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IArticleRepository articleRepository;
         private readonly ICostDetailRepository costDetailRepository;
         private readonly ITaskExecutorRepository taskExecuteRepository;
+        private readonly ICustomerSupplierRepository customerSupplierRepository;
 
         protected dbEntities db;
 
@@ -57,6 +58,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             articleRepository.SetDbName(CurrentDatabase);
             costDetailRepository.SetDbName(CurrentDatabase);
             taskExecuteRepository.SetDbName(CurrentDatabase);
+            customerSupplierRepository.SetDbName(CurrentDatabase);
 
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
@@ -78,7 +80,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             IDocumentRepository _documentRepository,
             IArticleRepository _articleRepository,
             ICostDetailRepository _costDetailRepository,
-            ITaskExecutorRepository _taskExecuteRepository
+            ITaskExecutorRepository _taskExecuteRepository,
+            ICustomerSupplierRepository _customerSupplierRepository
 
             )
         {
@@ -91,6 +94,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             articleRepository = _articleRepository;
             costDetailRepository = _costDetailRepository;
             taskExecuteRepository = _taskExecuteRepository;
+            customerSupplierRepository = _customerSupplierRepository;
 
             this.Disposables.Add(typeOfTaskRepository);
             this.Disposables.Add(documentRepository);
@@ -100,6 +104,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(prodTskNameRepository);
             this.Disposables.Add(costDetailRepository);
             this.Disposables.Add(taskExecuteRepository);
+            this.Disposables.Add(customerSupplierRepository);
 
             this.Disposables.Add(menu);
         }
@@ -222,18 +227,27 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AuthorizeModule]
         [AsyncTimeout(2000)]
         [HandleError(ExceptionType = typeof(TimeoutException), View = "TimedOut")]
-
         public async Task<ActionResult> CreateProduct(string id)
         {
-
             var p = new PapiroService();
             var inizio = DateTime.Now;
             var c = p.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
 
             var d = new ProductViewModel();
+
+            //controllo i dati di cliente e riferimento
+            //cercando la session
+            if (Session["CodDocument"] != null)
+            {
+                var doc=documentRepository.GetSingle((string)Session["CodDocument"]);
+                d.ProductName = doc.DocumentName;
+                d.Customer = doc.Customer;
+            }
+
             d.Product = c;
 
             d.Quantities.Add(0);
+//            d.Quantities.Add(0);
 
             //              d.Quantities.Add(0);
             //            d.Quantities.Add(0);

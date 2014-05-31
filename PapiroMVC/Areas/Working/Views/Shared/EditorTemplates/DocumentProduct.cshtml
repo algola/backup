@@ -2,7 +2,9 @@
 @model PapiroMVC.Models.DocumentProduct
 
 @{
-    string strings = "~/Areas/Working/Views/Product/Strings";
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
+
 }
 
 <div class="space-10"></div>
@@ -22,10 +24,114 @@
 
         </div>
     </div>
-    <div class="span6">
-        <div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
-            <canvas class="flot-base" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><canvas class="flot-overlay" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><div class="legend"><div style="position: absolute; width: 100px; height: 110px; top: 15px; right: -30px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div><table style="position:absolute;top:15px;right:-30px;;font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #68BC31;overflow:hidden"></div></div></td><td class="legendLabel">social networks</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #2091CF;overflow:hidden"></div></div></td><td class="legendLabel">search engines</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #AF4E96;overflow:hidden"></div></div></td><td class="legendLabel">ad campaings</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #DA5430;overflow:hidden"></div></div></td><td class="legendLabel">direct traffic</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #FEE074;overflow:hidden"></div></div></td><td class="legendLabel">other</td></tr></tbody></table></div>
-        </div>
+    <div class="span5">
+
+
+        <button id="btn@(Model.CodDocumentProduct)" class="btn btn-grey pull-right"> @Html.T(strings, "CloneQty") </button>
+
+        @*<div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
+                <canvas class="flot-base" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><canvas class="flot-overlay" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><div class="legend"><div style="position: absolute; width: 100px; height: 110px; top: 15px; right: -30px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div><table style="position:absolute;top:15px;right:-30px;;font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #68BC31;overflow:hidden"></div></div></td><td class="legendLabel">social networks</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #2091CF;overflow:hidden"></div></div></td><td class="legendLabel">search engines</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #AF4E96;overflow:hidden"></div></div></td><td class="legendLabel">ad campaings</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #DA5430;overflow:hidden"></div></div></td><td class="legendLabel">direct traffic</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #FEE074;overflow:hidden"></div></div></td><td class="legendLabel">other</td></tr></tbody></table></div>
+            </div>*@
 
     </div>
+    <div class="span1"></div>
 </div>
+
+<div id="dialog-message@(Model.CodDocumentProduct)" class="hide">
+
+    <div class="vspace"></div>
+    <div class="controls">
+        <input type="text" id="qta@(Model.CodDocumentProduct)" placeholder="@Html.T(strings, "NewQty")">
+    </div>
+    <div class="vspace"></div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(
+
+         function () {
+
+             $("#btn@(Model.CodDocumentProduct)").on('click', function (e) {
+                 e.preventDefault();
+
+
+                 function send@(Model.CodDocumentProduct.Replace("-","_"))() {
+
+                     showProcessingMsg();
+
+                     var datastring = {
+                         "codDocument": '@Model.CodDocument',
+                         "codDocumentProduct": '@Model.CodDocumentProduct',
+                         "newQuantity": $("#qta@(Model.CodDocumentProduct)").val()
+                     };
+
+                     //at firt time save estimate or
+                     $.ajax({
+                         type: "POST",
+                         url: "@(Url.Action("CloneDocumentProduct", "Document"))",
+                         data: datastring,
+                         success: function (data) {
+                             if (data.redirectUrl) {
+                                 hideProcessingMsg();
+                                 // if the server returned a JSON object containing an url
+                                 // property we redirect the browser to that url
+                                 window.location.href = data.redirectUrl;
+                             } else {
+
+                             }
+
+                             return;
+                         },
+                         error: function (xhr) {
+                             hideProcessingMsg();
+                             alert('error');
+                         }
+                     });
+
+                 };
+
+                 //enterkey on dialog
+                 $('#qta@(Model.CodDocumentProduct)').keypress(function (e) {
+                     if (e.keyCode == $.ui.keyCode.ENTER) {
+                         send@(Model.CodDocumentProduct.Replace("-","_"))();
+                         $(this).closest(".ui-dialog-content").dialog("close");
+                     }
+                 });
+
+                 var dialog = $("#dialog-message@(Model.CodDocumentProduct)").dialog({
+                     width: 'auto',
+                     modal: true,
+                     title: '@Html.T(strings, "DialogCloneTitle")',
+                     title_html: true,
+                     buttons: [
+                     {
+                         text: '@Html.T(stringsGrid, "Cancel")',
+                         "class": "btn btn-mini",
+                         click: function () {
+                             $(this).dialog("close");
+                         }
+                     },
+                     {
+                         text: '@Html.T(stringsGrid, "Ok")',
+                         "class": "btn btn-primary btn-mini",
+                         click: function () {
+
+                             send@(Model.CodDocumentProduct.Replace("-","_"))();
+                             $(this).dialog("close");
+                         }
+                     }
+                     ]
+                 });
+
+                 /**
+                 dialog.data( "uiDialog" )._title = function(title) {
+                 title.html( this.options.title );
+                 };
+                 **/
+             });
+         });
+
+
+</script>

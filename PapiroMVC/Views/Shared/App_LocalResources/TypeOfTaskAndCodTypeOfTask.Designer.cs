@@ -898,6 +898,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nessuna verniciatura.
+        /// </summary>
+        public static string CodTAVOLOCONTROLLO_NO {
+            get {
+                return ResourceManager.GetString("CodTAVOLOCONTROLLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tavolo di controllo.
+        /// </summary>
+        public static string CodTAVOLOCONTROLLO_SI {
+            get {
+                return ResourceManager.GetString("CodTAVOLOCONTROLLO_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verniciatura.
         /// </summary>
         public static string CodVERNICIATURA {

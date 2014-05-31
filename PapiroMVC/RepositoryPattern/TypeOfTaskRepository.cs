@@ -37,7 +37,7 @@ namespace Services
 
             }          
 
-            var tbCode = new TypeOfTask[19];
+            var tbCode = new TypeOfTask[20];
 
             tbCode[0] = new PIEGA() {CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -59,6 +59,9 @@ namespace Services
             tbCode[17] = new STAMPAETICHROTOLO() { CodCategoryOfTask = "STAMPAETICHROTOLO" };
 
             tbCode[18] = new STAMPAMORBIDO() { CodCategoryOfTask = "STAMPAMORBIDO" };
+
+            tbCode[19] = new TAVOLOCONTROLLO() { CodCategoryOfTask = "TAVOLOCONTROLLO" };
+
 
             foreach (var item in tbCode)
             {

@@ -33,7 +33,7 @@
             return link.replace("type", nr);
 
         if (cellvalue == "3")
-            return link.replace("type", mq);
+            return link.replace("type", nr);
 
         if (cellvalue == "4")
             return link.replace("type", ml);
@@ -52,6 +52,23 @@
 
         if (cellvalue == "True")
             return link.replace("icon", "icon-lock");
+
+        return link;
+
+    }
+
+    function InclFormatter(cellvalue, options, rowobject) {
+
+        var link = '<i class="icon"></i>';
+
+        if (cellvalue == "0")
+            return link.replace("icon", "fa fa-check");
+
+        if (cellvalue == "1")
+            return link.replace("icon", "fa fa-sign-out");
+
+        if (cellvalue == "2")
+            return link.replace("icon", "fa fa-exclamation");
 
         return link;
 

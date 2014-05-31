@@ -324,6 +324,12 @@
   <data name="CodVERNICIATURA_LUCIDA1" xml:space="preserve">
     <value>Verniciatura Lucida 1 Lato</value>
   </data>
+  <data name="CodTAVOLOCONTROLLO_SI" xml:space="preserve">
+    <value>Tavolo di controllo</value>
+  </data>
+  <data name="CodTAVOLOCONTROLLO_NO" xml:space="preserve">
+    <value />
+  </data>
   <data name="CodVERNICIATURA_LUCIDA2" xml:space="preserve">
     <value>Verniciatura  2 Lati</value>
   </data>

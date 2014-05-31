@@ -7,6 +7,16 @@ namespace PapiroMVC.Models
 {
     public partial class ImplantCostDetail : CostDetail
     {
+        public override void Copy(CostDetail to)
+        {
+            base.Copy(to);
+
+            ImplantCostDetail to2 = (ImplantCostDetail)to;
+
+            to = to2;
+
+        }
+
 
         public ImplantCostDetail()
         {
@@ -43,7 +53,7 @@ namespace PapiroMVC.Models
 
             //GainForMqRun is mq in printing format
             GainForMqRun = (double)(this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()
-                * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 10000);
+                * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000);
 
             TypeOfQuantity = (int)ComputedBy.TaskexEcutorSelected.TypeOfImplantQuantity;
         }
@@ -52,14 +62,14 @@ namespace PapiroMVC.Models
         {
             if (this.ComputedBy.TypeOfQuantity == (int)CostDetail.QuantityType.NumberTypeOfQuantity)
             {
-                return Math.Ceiling((GainForRun ?? 0)*100)/100;
+                return Math.Ceiling((GainForRun ?? 0) * 100) / 100;
             }
 
             //colori * mq f.to stampa
-            if (TypeOfQuantity == (int)CostDetail.QuantityType.MqSheetTypeOfQuantity)
+            if (TypeOfQuantity == (int)CostDetail.QuantityType.NColorPerMqTypeOfQuantity)
             {
-                  var x= (GainForRun ?? 0) * (GainForMqRun ?? 0);
-                  return Math.Ceiling(x * 100) / 100;
+                // var x= (GainForRun ?? 0) * (GainForMqRun ?? 0);
+                return GainForRun ?? 0; //GainForRum -> numero impianti
             }
 
             return 0;
@@ -67,7 +77,15 @@ namespace PapiroMVC.Models
 
         public override double UnitCost(double qta)
         {
-           return  Convert.ToDouble(ComputedBy.TaskexEcutorSelected.CostImplant);
+
+            if (TypeOfQuantity == (int)CostDetail.QuantityType.NColorPerMqTypeOfQuantity)
+            {
+                return Convert.ToDouble(ComputedBy.TaskexEcutorSelected.CostImplant) * GainForMqRun??1;
+            }
+            else
+            {
+                return Convert.ToDouble(ComputedBy.TaskexEcutorSelected.CostImplant);
+            }
         }
 
     }

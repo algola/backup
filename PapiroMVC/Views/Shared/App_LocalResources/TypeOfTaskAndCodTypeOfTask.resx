@@ -288,6 +288,12 @@
   <data name="CodVERNICIATURA_OPACA1" xml:space="preserve">
     <value>Opaca 1 Lato</value>
   </data>
+  <data name="CodTAVOLOCONTROLLO_NO" xml:space="preserve">
+    <value>Nessuna verniciatura</value>
+  </data>
+  <data name="CodTAVOLOCONTROLLO_SI" xml:space="preserve">
+    <value>Tavolo di controllo</value>
+  </data>
   <data name="CodVERNICIATURA_OPACA2" xml:space="preserve">
     <value>Opaca 2 Lati</value>
   </data>

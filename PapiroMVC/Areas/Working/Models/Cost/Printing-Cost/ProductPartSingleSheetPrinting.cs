@@ -47,6 +47,8 @@ namespace PapiroMVC.Models
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleLabelRoll)Part).SubjectNumber ?? 1;
 
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).AutoDCut = AutoCutParameter;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain2 = MaxGain2;
+
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).GiraVerso = true;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = 1;
 

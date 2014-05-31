@@ -1,0 +1,158 @@
+﻿@model PapiroMVC.Models.SemiRoll
+@using PapiroMVC.Validation
+
+@{
+
+    string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
+    //    ViewBag.PrintingUnit = new System.Dynamic.ExpandoObject();
+    //    string[] printingUnitName = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+    int[] printingUnitName = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+    //    ViewBag.PrintingUnit.PrintingUnitName = new List<string>(printingUnitName);
+    //we want ot use different resource only to share it between areas and parts
+
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
+    foreach (PapiroMVC.Models.TypeOfTask item in ViewBag.TypeOfTaskList)
+    {
+        item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
+    }
+
+    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPA" : Model.CodTypeOfTask;
+
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <div class="control-group">
+            <div class="controls col-sm-9">
+                @Html.DropDownListFor(y => y.CodTypeOfTask,
+                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+            </div>
+        </div>
+
+        @Html.HiddenFor(model => model.TimeStampTable)
+
+        @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+        @Html.HiddenFor(model => model.Version)
+        @Html.HiddenFor(model => model.Dismissed)
+
+        @Html.HiddenFor(model => model.UniversalCodPapiro)
+
+        @Html.AlgolaEditorFor(model => model.SemiRollWidth)
+        @Html.AlgolaEditorFor(model => model.Laterale)
+
+        @Html.AlgolaEditorFor(model => model.FormatMin)
+        @Html.HiddenFor(model => model.FormatMax)
+
+        @Html.AlgolaEditorFor(model => model.WeightMin)
+        @Html.AlgolaEditorFor(model => model.WeightMax)
+
+        @*
+            @Html.HiddenFor(model => model.Pinza)
+            @Html.HiddenFor(model => model.ControPinza)
+
+        *@
+
+        @*        <h3>@Html.T(strings, "PrintSection")</h3> *@
+        <h3>@Html.T(strings, "CylinderSection")</h3>
+
+        <div hidden="hidden">
+            <div class="control-group">
+                <div class="col-sm-3 control-label no-padding-right">
+                    @Html.LabelFor(model => model.PrintingUnit)
+                </div>
+
+                <div class="controls col-sm-9">
+                    @Html.DropDownListFor(model => model.PrintingUnit,
+                    new SelectList(printingUnitName))
+                </div>
+            </div>
+        </div>
+
+        if (ViewBag.ActionMethod != "CreateSemiRoll")
+        {
+            <div id="_listTaskExecutorCylinder">
+                @Html.Partial("_ListTaskExecutorCylinders", Model)
+            </div>
+        }
+        else
+        {
+            <div id="checkCylinderMessage" class="alert alert-block alert-error">
+                <button type="button" class="close" data-dismiss="alert">
+                    <i class="icon-remove"></i>
+                </button>
+
+                <i class="icon-ok red"></i>
+                @Html.T(strings, "CylinderMessage")
+            </div>
+        }
+
+
+        <div hidden="hidden">
+            @Html.EditorFor(model => model.Sheetwise)
+
+            <div class="control-group">
+                <div class="col-sm-3 control-label no-padding-right">
+                    @Html.LabelFor(model => model.SheetwiseAfterPrintingUnit)
+                </div>
+
+                <div class="controls col-sm-9">
+                    @Html.DropDownListFor(model => model.SheetwiseAfterPrintingUnit,
+                    new SelectList(printingUnitName))
+                </div>
+            </div>
+        </div>
+
+
+        <div class="space-10"></div>
+
+        @Html.AlgolaEditorFor(model => model.InkUsage)
+        @Html.HiddenFor(model => model.InkUsageForfait)
+
+        @Html.HiddenFor(model => model.TimeStampTable)
+        @Html.HiddenFor(model => model.CodTaskExecutor)
+
+        <h3>@Html.T(strings, "WasteSection")</h3>
+
+        @Html.AlgolaAutocompleteFor(model => model.PaperFirstStartLenght, "PaperFirstStartLenght", "TaskExecutor")
+        @Html.AlgolaAutocompleteFor(model => model.PaperSecondStartLenght, "PaperSecondStartLenght", "TaskExecutor")
+
+
+        <h3>@Html.T(strings, "ImplantSectionMq")</h3>
+        @Html.AlgolaEditorFor(model => model.CostImplant)
+
+
+        <p>
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexLithoSheetAndRoll", "TaskExecutor", new { Area = "Database" })');">
+                <i class="icon-arrow-left"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Cancel")
+            </button>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
+
+            @if (ViewBag.ActionMethod != "CreateSemiRoll")
+            {
+                <button class="btn" type="submit" name="CreateLithoRoll">
+                    <i class="icon-save"></i>
+                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                </button>
+            }
+
+        </p>
+
+    }
+
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
