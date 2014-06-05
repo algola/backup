@@ -205,7 +205,9 @@
                     { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
                     { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: true },
                     { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: true },
-                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false }],
+                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false },
+                    { name: 'Markup', label: '@HttpContext.GetLocalResourceObject(strings, "Markup")', width: 50, align: 'right', editable: true, search: false },
+                    { name: 'GranTotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "GranTotalCost")', width: 50, align: 'right', editable: false, search: false }],
 
             pager: '#pagercostGrid@(Model.TaskCost.CodDocumentProduct)',
 

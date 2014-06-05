@@ -50,7 +50,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                             (a.CostDetails.FirstOrDefault()!=null?a.CostDetails.FirstOrDefault().TypeOfQuantity??0:5).ToString(),
                             (a.Quantity??0).ToString(),                            
                             a.UnitCost,
-                            a.TotalCost
+                            a.TotalCost,
+                            (a.Markup??0).ToString(),
+                            a.GranTotalCost
                         }
                     }
                 ).ToArray()
@@ -61,11 +63,15 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         private IQueryable<Document> DocumentList(GridSettings gridSettings)
         {
+            string customerFilter = string.Empty;
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
 
             if (gridSettings.isSearch)
             {
+                customerFilter = gridSettings.where.rules.Any(r => r.field == "Customer") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Customer").data : string.Empty;
+
                 codDocumentFilter = gridSettings.where.rules.Any(r => r.field == "CodDocument") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "CodDocument").data : string.Empty;
 
@@ -76,6 +82,11 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var q = documentRepository.GetAll();
 
+            if (!string.IsNullOrEmpty(customerFilter))
+            {
+                q = q.Where(c => c.Customer != null && c.Customer.ToLower().Contains(customerFilter.ToLower()));
+            }
+
             if (!string.IsNullOrEmpty(codDocumentFilter))
             {
                 q = q.Where(c => c.CodDocument.ToLower().Contains(codDocumentFilter.ToLower()));
@@ -83,7 +94,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (!string.IsNullOrEmpty(documentNameFilter))
             {
-                q = q.Where(c => c.DocumentName.ToLower().Contains(documentNameFilter.ToLower()));
+                q = q.Where(c => c.DocumentName != null && c.DocumentName.ToLower().Contains(documentNameFilter.ToLower()));
             }
 
             switch (gridSettings.sortColumn)

@@ -64,9 +64,13 @@ namespace PapiroMVC.Model
             //derive attribute //taken from product
             dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "100");
 
+
             dbS.AddColumnToTable("documentproducts", "Quantity", SchemaDb.Long, "0");
             dbS.AddColumnToTable("documentproducts", "UnitPrice", SchemaDb.String, "20");
             dbS.AddColumnToTable("documentproducts", "TotalAmount", SchemaDb.String, "20");
+
+            //dbS.AddColumnToTable("documentproducts", "Markup", SchemaDb.Double, "0");
+            //dbS.AddColumnToTable("documentproducts", "GranTotalAmount", SchemaDb.String, "20");
 
 
             //Costi

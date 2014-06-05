@@ -349,7 +349,7 @@ namespace Services
             return query;
         }
 
-        public IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct)
+        public IQueryable<DocumentProduct> GetDocumentProductsByCodProduct(string codProduct)
         {
             try
             {
@@ -365,6 +365,27 @@ namespace Services
             }
 
         }
+
+        public DocumentProduct GetDocumentProductByCodDocumentProduct(string codDocumentProduct)
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                var query = Context.DocumentProducts.Include("Costs")
+                    .Include("Costs.CostDetails")
+                    .Include("Product")
+                    .Include("Document").Where(x => x.CodDocumentProduct == codDocumentProduct);
+                return query.SingleOrDefault();
+            }
+
+        }
+
+
+        
+        
         public override void SetDbName(string name)
         {
             base.SetDbName(name);

@@ -72,9 +72,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return PartialView("_RollPrintableArticleAutoChanges", x);
             }
 
+            foreach (var id in x.Id)
+            {
+                var a=articleRepository.GetSingle(id);
+                var cost = a.ArticleCosts.FirstOrDefault();
+
+                ((RollPrintableArticleCost)cost).CostPerMq = x.CostPerMq;
+
+                articleRepository.Edit(a);
+                articleRepository.Save();
+            }
+
             return Json(new
             {
-                message = "ok"
+                
+                                message = "ok"
             });
         }
 

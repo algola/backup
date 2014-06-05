@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductPartsPrintableArticle))]
     [MetadataType(typeof(ProductPartsPrintableArticle_MetaData))]
     public abstract partial class ProductPartsPrintableArticle
@@ -41,7 +41,18 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color; //ADES +this.Adhesive;
+            return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Color; //ADES +this.Adhesive;                
+        }
+
+        public virtual void ToName()
+        {
+            var x = ProductPart.Product.ProductNameGenerator;
+            x = x.Replace("%TYPEMATERIAL", this.TypeOfMaterial);
+            x = x.Replace("%NAMEMATERIAL", this.NameOfMaterial);
+            x = x.Replace("%COLORMATERIAL", this.Color);
+            x = x.Replace("%ADESHIVEMATERIAL", this.Adhesive);
+
+            ProductPart.Product.ProductNameGenerator = x;
         }
 
     }

@@ -33,6 +33,7 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
+            base.InitCostDetail(tskExec, articles);
             //_articles = articles;
         }
 
@@ -44,6 +45,8 @@ namespace PapiroMVC.Models
         public override void UpdateCoeff()
         {
             base.UpdateCoeff();
+            //sperimentale
+            ComputedBy.UpdateCoeff();
 
             Error = ComputedBy.Error;
             Starts = 1;

@@ -174,7 +174,7 @@ namespace UnitTestPapiroMVC
             Document doc = docRep.GetEstimateEcommerce("000001");
             doc.EstimateNumber = "0";
 
-            DocumentProduct dp = docRep.GetDocumentProductByCodProduct("").FirstOrDefault();
+            DocumentProduct dp = docRep.GetDocumentProductsByCodProduct("").FirstOrDefault();
 
             //work with product
             Product prod = p.InitProduct("SuppRigidi", new ProductTaskNameRepository(), new FormatsNameRepository(), new TypeOfTaskRepository());

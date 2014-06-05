@@ -9,13 +9,16 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(Product))]
     [MetadataType(typeof(Product_MetaData))]
 
     public abstract partial class Product
     {
         #region Proprietà aggiuntive
+
+        //da mettere poi nelle proprietà persistenti nel database
+        public String ProductNameGenerator { get; set; }
 
         public bool ShowDCut { get; set; }
         public Nullable<double> DCut { get; set; }
@@ -199,7 +202,6 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-
             var pParts = String.Empty;
             foreach (var item in this.ProductParts)
             {
@@ -219,6 +221,23 @@ namespace PapiroMVC.Models
         }
 
 
+        public virtual void ToName()
+        {
+
+            var pParts = String.Empty;
+            foreach (var item in this.ProductParts)
+            {
+                item.ToName();
+            }
+
+            var pTasks = String.Empty;
+            foreach (var item in this.ProductTasks)
+            {
+                item.ToName();
+            }
+
+        }
+
         #endregion
 
         public bool IsSelected
@@ -232,9 +251,10 @@ namespace PapiroMVC.Models
             this.TimeStampTable = DateTime.Now;
 
             //parti del prodotto
-            var ppart = this.ProductParts.OrderBy(x=>x.CodProductPart).ToList();
+            var ppart = this.ProductParts.OrderBy(x => x.CodProductPart).ToList();
             foreach (var item in this.ProductParts)
             {
+                item.Product = this;
                 item.UpdateOpenedFormat();
 
                 item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString();
@@ -242,18 +262,20 @@ namespace PapiroMVC.Models
                 item.TimeStampTable = DateTime.Now;
 
                 //task della parte del prodotto
-                var pptask = item.ProductPartTasks.OrderBy(y=>y.CodProductPartTask).ToList();
+                var pptask = item.ProductPartTasks.OrderBy(y => y.CodProductPartTask).ToList();
                 foreach (var item2 in item.ProductPartTasks)
                 {
+                    item2.ProductPart = item;
                     item2.CodProductPart = item.CodProductPart;
                     item2.TimeStampTable = DateTime.Now;
                     item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString().PadLeft(3, '0');
                 }
 
                 //articoli della parte del prodotto
-                var pppart = item.ProductPartPrintableArticles.OrderBy(z=>z.CodProductPartPrintableArticle).ToList();
+                var pppart = item.ProductPartPrintableArticles.OrderBy(z => z.CodProductPartPrintableArticle).ToList();
                 foreach (var item2 in item.ProductPartPrintableArticles)
                 {
+                    item2.ProductPart = item;
                     item2.CodProductPart = item.CodProductPart;
                     item2.TimeStampTable = DateTime.Now;
                     item2.CodProductPartPrintableArticle = item.CodProductPart + "-" + pppart.IndexOf(item2).ToString().PadLeft(3, '0');
@@ -262,22 +284,35 @@ namespace PapiroMVC.Models
             }
 
             //task del prodotto
-            var pt = this.ProductTasks.OrderBy(pp=>pp.CodProductTask).ToList();
+            var pt = this.ProductTasks.OrderBy(pp => pp.CodProductTask).ToList();
             foreach (var item in this.ProductTasks)
             {
-                item.CodProductTask = this.CodProduct + "-" +  (pt.IndexOf(item).ToString()).PadLeft(3,'0');
+                item.Product = this;
+                item.CodProductTask = this.CodProduct + "-" + (pt.IndexOf(item).ToString()).PadLeft(3, '0');
                 item.CodProduct = this.CodProduct;
                 item.TimeStampTable = DateTime.Now;
             }
 
-
             if (this.ProductName == "" || this.ProductName == null)
             {
-                this.ProductName = this.ToString();
+                if (!String.IsNullOrEmpty(ProductNameGenerator))
+                {
+                    this.ToName();
+
+                    var x = ProductNameGenerator;
+                    x = x.Replace("%PARTTASKS", "");
+                    x = x.Replace("%TASKS", "");
+                    ProductNameGenerator = x;
+
+                    this.ProductName = ProductNameGenerator;
+                }else
+                {   
+                    this.ProductName = this.ToString();
+                }
             }
 
             //task del prodotto
-          //  var gr = this.ProductGraphLinks.OrderBy(pp => pp.CodItemGraphLink).ToList();
+            //  var gr = this.ProductGraphLinks.OrderBy(pp => pp.CodItemGraphLink).ToList();
             foreach (var item in this.ProductGraphLinks)
             {
                 item.CodProductGraph = this.CodProduct + "-" + item.CodItemGraph + "-" + item.CodItemGraphLink;

@@ -70,7 +70,6 @@ namespace PapiroMVC.Model
             //mm
             dbS.AddColumnToTable("productparts", "MaxDiameter", SchemaDb.Double, "0");
 
-
             dbS.AddColumnToTable("productparts", "CodProductPart_", SchemaDb.String, "50");
 
 

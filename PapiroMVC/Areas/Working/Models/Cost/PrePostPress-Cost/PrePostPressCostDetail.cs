@@ -29,7 +29,7 @@ namespace PapiroMVC.Models
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
             String codTypeOfTask = String.Empty;
-            Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
+            //Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
             codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
             tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
             TaskExecutors = tskExec.ToList();

@@ -172,7 +172,7 @@ namespace UnitTestPapiroMVC
             p.CostDetailRepository.SetDbName("castello");
 
             Document doc = docRep.GetSingle("00000J");
-            var prod = docRep.GetDocumentProductByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault();
+            var prod = docRep.GetDocumentProductsByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault();
 
             DocumentProduct prod2 = (DocumentProduct)prod.Clone();
             prod2.CodDocumentProduct = "";
@@ -215,6 +215,41 @@ namespace UnitTestPapiroMVC
             doc = docRep.GetSingle("00000J");
 
             Console.WriteLine("");
+        }
+
+
+        [TestMethod]
+        public void PrintDocumentProduct()
+        {
+            IDocumentRepository docRep = new DocumentRepository();
+            IProductRepository prodRep = new ProductRepository();
+
+            docRep.SetDbName("castello");
+            prodRep.SetDbName("castello");
+
+            DocumentProduct docPro = docRep.GetDocumentProductByCodDocumentProduct("00001C-0");            
+            Console.WriteLine(docPro.Product.ProductName);
+
+            var res = String.Empty;
+
+            //regen doc
+            docPro.DocumentProductNameGenerator = "";
+            
+            docPro.FgDescription = "Fg.";
+            docPro.MlDescription = "Ml.";
+            docPro.MqDescription = "Mq.";
+            docPro.NrDescription = "Nr.";
+            docPro.UpDescription = "Cad €";
+            docPro.AmountDescription = "Totale €";
+            docPro.QtyDescription = "Nr.";
+
+            docPro.ToName();
+            Console.WriteLine(docPro.DocumentProductNameGenerator);
+
+            res = (docPro.Product.ProductName + "@@" + docPro.DocumentProductNameGenerator).Replace("@",Environment.NewLine);
+
+            Console.WriteLine(res);
+
         }
     }
 }

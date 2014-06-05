@@ -14,6 +14,7 @@ namespace PapiroMVC.ServiceLayer
         public ICostDetailRepository CostDetailRepository { get; set; }
         public ITaskExecutorRepository TaskExecutorRepository { get; set; }
         public IArticleRepository ArticleRepository { get; set; }
+        public IProductRepository ProductRepository { get; set; }
 
         public string CurrentDatabase { get; set; }
 
@@ -27,6 +28,7 @@ namespace PapiroMVC.ServiceLayer
         /// <returns></returns>
         public Product InitProduct(string id, IProductTaskNameRepository prodTskNameRepository, IFormatsNameRepository formatsRepository, ITypeOfTaskRepository typeOfTaskRepository)
         {
+
             Product product;
             product = new ProductSingleSheet();
 
@@ -52,7 +54,6 @@ namespace PapiroMVC.ServiceLayer
                 //                product.DCut = 0.5;
                 product.DCut1 = 0.5;
                 product.DCut2 = 0.5;
-
             }
 
             if (id == "PuntoMetallico" ||
@@ -64,7 +65,6 @@ namespace PapiroMVC.ServiceLayer
             {
                 product = new ProductBookSheet();
             }
-
 
             if (
                 id == "Fotoquadri" ||
@@ -87,7 +87,6 @@ namespace PapiroMVC.ServiceLayer
                 product = new ProductSoft();
             }
 
-
             if (
                 id == "EtichetteRotolo" ||
                 id == "EtichettaControRotolo" ||
@@ -96,12 +95,13 @@ namespace PapiroMVC.ServiceLayer
                 product = new ProductSingleLabelRoll();
             }
 
-
             product.CodMenuProduct = id;
             product.ProductTaskName = prodTskNameRepository.GetAllById(id);
             product.FormatsName = formatsRepository.GetAllById(id);
 
             product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
+
+            product.ProductNameGenerator = ProductRepository.GetProductNameGenerator(id);
             product.InitProduct();
 
             return product;

@@ -10,7 +10,8 @@ namespace Services
     {
         string GetNewCode(Document a);
         string GetNewEstimateNumber(Document a);
-        IQueryable<DocumentProduct> GetDocumentProductByCodProduct(string codProduct);
+        IQueryable<DocumentProduct> GetDocumentProductsByCodProduct(string codProduct);
+        DocumentProduct GetDocumentProductByCodDocumentProduct(string codDocumentProduct);
         Document GetFromSession();
         void SaveOnSession(Document a);
         IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);

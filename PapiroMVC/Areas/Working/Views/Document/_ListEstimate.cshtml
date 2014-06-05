@@ -26,7 +26,7 @@
 
     <br />
 
-    <button class="btn btnLink btn-danger" type="button" id="delete">
+    <button class="btn btn-danger" type="button" id="delete">
         <i class="icon-trash bigger-125"></i>
         @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
         <span class="badge badge-transparent">
@@ -317,7 +317,7 @@
         var myGrid = $("#list");
         var width = $("#body-container").width();
         try {
-            myGrid.jqGrid('setGridWidth', width, true);
+            myGrid.jqGrid('setGridWidth', width, false);
 
         } catch (e) {
 

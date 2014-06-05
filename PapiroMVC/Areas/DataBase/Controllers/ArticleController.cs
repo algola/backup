@@ -463,7 +463,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
@@ -472,7 +472,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems2.Count() == 0) throw new Exception();
 
@@ -506,7 +506,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
@@ -515,7 +515,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems2.Count() == 0) throw new Exception();
 
@@ -557,7 +557,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
@@ -566,7 +566,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems2.Count() == 0) throw new Exception();
 
@@ -609,7 +609,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems.Count() == 0) throw new Exception();
 
@@ -618,7 +618,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                     var filteredItems2 = customerSuppliers.Where(
-                        item => item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
                     if (filteredItems2.Count() == 0) throw new Exception();
 

@@ -26,7 +26,7 @@ namespace PapiroMVC.Models
                 }
                 else
                 {
-                    return (Format.GetSide1() / 10).ToString() + "x" + (Format.GetSide2() / 10).ToString();
+                    return (Format.GetSide1() * 10).ToString() + "x" + (Format.GetSide2() * 10).ToString();
                 }
             }
 
@@ -34,7 +34,7 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    Format = (value.GetSide1() * 10).ToString() + "x" + (value.GetSide2() * 10).ToString();
+                    Format = (value.GetSide1() / 10).ToString() + "x" + (value.GetSide2() / 10).ToString();
                 }
                 catch (Exception)
                 {
@@ -145,7 +145,6 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-
             var ptArt = String.Empty;
             foreach (var item in ProductPartPrintableArticles)
             {
@@ -162,6 +161,33 @@ namespace PapiroMVC.Models
             }
 
             return ptArt + pTasks;
+        }
+
+        public virtual void ToName()
+        {
+            var x = Product.ProductNameGenerator;
+            x = x.Replace("%PARTFORMATOPENMMSIDE1", this.Formatmm.GetSide1().ToString());
+            x = x.Replace("%PARTFORMATOPENMMSIDE2", this.Formatmm.GetSide2().ToString());
+            x = x.Replace("%PARTFORMATOPENMM", this.Formatmm);
+
+            x = x.Replace("%PARTFORMATOPENSIDE1", this.Format.GetSide1().ToString());
+            x = x.Replace("%PARTFORMATOPENSIDE2", this.Format.GetSide2().ToString());
+            x = x.Replace("%PARTFORMATOPEN", this.Format);
+
+            Product.ProductNameGenerator = x;
+
+            foreach (var item in ProductPartPrintableArticles)
+            {
+                item.ToName();
+            }
+
+            foreach (var item in this.ProductPartTasks)
+            {
+                if (!item.CodOptionTypeOfTask.Contains("_NO"))
+                {
+                    item.ToName();
+                }
+            }
         }
 
     }

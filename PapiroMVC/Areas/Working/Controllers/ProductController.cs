@@ -230,6 +230,9 @@ namespace PapiroMVC.Areas.Working.Controllers
         public async Task<ActionResult> CreateProduct(string id)
         {
             var p = new PapiroService();
+            p.ProductRepository = productRepository;
+            p.CurrentDatabase = CurrentDatabase;
+
             var inizio = DateTime.Now;
             var c = p.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
 
@@ -247,11 +250,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             d.Product = c;
 
             d.Quantities.Add(0);
-//            d.Quantities.Add(0);
-
-            //              d.Quantities.Add(0);
-            //            d.Quantities.Add(0);
-            //            d.Quantities.Add(0);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";

@@ -14,7 +14,6 @@
     typeOfArticle[3] = (string)@Html.T(strings, "RigidPrintableArticleType");
 }
 
-
 <div id="containerbox">
     <!-- Main Page -->
     @*filters check************************************************@
@@ -44,9 +43,13 @@
         @Html.T(strings, "WizardRollPrintableArticle")
     </button>
 
+    <button class="btn btnLink btn-primary" type="button" id="btnDialogChange">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "AutoCahngesCaption")
+    </button>
+
 </div>
 <br />
-
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 
@@ -143,7 +146,7 @@
                 { name: 'NoUseInEstimateCalculation', label: '@HttpContext.GetLocalResourceObject(strings, "NoUseInEstimateCalculationCaption")', align: 'center', width: 45, title: false, search: true, sortable: true, formatter: "checkbox", formatoptions: { disabled: true }},
                 { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
                 { name: 'CostPerMq', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMqCaption")', width: 45, title: false, search: true, align: 'right' },
-                { name: 'CostPerMl', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption")', width: 45, title: false, search: true, align: 'right' }
+            //    { name: 'CostPerMl', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption")', width: 45, title: false, search: true, align: 'right' }
             ],
             saveObjectInLocalStorage = function (storageItemName, object) {
                 if (typeof window.localStorage !== 'undefined') {
@@ -315,7 +318,6 @@
     //]]>
 </script>
 
-
 <script type="text/javascript">
 
     //resize jqgrid after windows resize
@@ -324,7 +326,7 @@
         var myGrid = $("#listRollPrintableArticle");
         var width = $("#body-container").width();
         try {
-            myGrid.jqGrid('setGridWidth', width, true);
+            myGrid.jqGrid('setGridWidth', width, false);
 
         } catch (e) {
 
@@ -346,5 +348,7 @@
 </script>
 
 
-
+<div id="rollPrintableArticleAutoChanges">
+    @Html.Partial("_RollPrintableArticleAutoChanges")
+</div>
 

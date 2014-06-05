@@ -11,7 +11,7 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductPartTask))]
     [MetadataType(typeof(ProductPartTask_MetaData))]
     public partial class ProductPartTask : IDataErrorInfo, ICloneable, IDeleteRelated
@@ -22,7 +22,7 @@ namespace PapiroMVC.Models
         //    TypeOfProductPartTask = ProductPartTasksType.ProductPartTask;
         //}
 
-        #region Proprietà aggiuntive       
+        #region Proprietà aggiuntive
         public enum ProductPartTasksType : int
         {
             ProductPartTask = 0,
@@ -45,7 +45,21 @@ namespace PapiroMVC.Models
         public override string ToString()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
-            return (string) t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+            return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+        }
+
+
+        public virtual void ToName()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
+
+            if (ProductPart != null)
+            {
+                var x = ProductPart.Product.ProductNameGenerator;
+                x = x.Replace("%PARTTASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + " %PARTTASKS");
+                ProductPart.Product.ProductNameGenerator = x;
+            }
+
         }
 
         #region Error Handle
@@ -63,7 +77,7 @@ namespace PapiroMVC.Models
                 return null;
             }
         }
-        
+
         public virtual string this[string proprieta]
         {
             get

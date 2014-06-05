@@ -89,13 +89,38 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
         [HttpPost]
-        public ActionResult CloneDocumentProduct(string codDocument, string codDocumentProduct, int newQuantity)
+        public ActionResult PrintDocumentProductCosts(string CodDocumentProduct)
         {
 
+            DocumentProduct docPro = documentRepository.GetDocumentProductByCodDocumentProduct(CodDocumentProduct);
+            Console.WriteLine(docPro.Product.ProductName);
 
+            var res = String.Empty;
+
+            //regen doc
+            docPro.DocumentProductNameGenerator = "";
+
+            docPro.FgDescription = "Fg.";
+            docPro.MlDescription = "Ml.";
+            docPro.MqDescription = "Mq.";
+            docPro.NrDescription = "Nr.";
+            docPro.UpDescription = "Cad €";
+            docPro.AmountDescription = "Totale €";
+            docPro.QtyDescription = "Nr.";
+
+            docPro.ToName();
+            Console.WriteLine(docPro.DocumentProductNameGenerator);
+
+            res = (docPro.Product.ProductName + "@@" + docPro.DocumentProductNameGenerator).Replace("@", Environment.NewLine);
+
+            return Json(res, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CloneDocumentProduct(string codDocument, string codDocumentProduct, int newQuantity)
+        {
             Document doc = documentRepository.GetSingle(codDocument);
-            var prod = documentRepository.GetDocumentProductByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
-
+            var prod = documentRepository.GetDocumentProductsByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
 
             if (newQuantity != 0)
             {

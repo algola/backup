@@ -10,5 +10,6 @@ namespace Services
     {
         string GetNewCode(Product a);
         new Product GetSingle(string codProduct);
+        string GetProductNameGenerator(string id);
     }
 }

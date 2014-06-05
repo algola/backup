@@ -147,7 +147,7 @@ namespace PapiroMVC.Models
         {
             get
             {
-                Console.WriteLine(Part);
+         //       Console.WriteLine(Part);
                 string format = PrintingFormat;
                 return format.GetSide1() * format.GetSide2() / 10000;
             }

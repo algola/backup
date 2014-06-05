@@ -16,7 +16,7 @@ namespace Services
             CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
             var filteredItems = customerSuppliers.Where(
-                item => item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
             if (filteredItems.Count() == 0) throw new NoSupplierException();
 
@@ -25,7 +25,7 @@ namespace Services
             customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
             var filteredItems2 = customerSuppliers.Where(
-                item => item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
             if (filteredItems2.Count() == 0) throw new NoSupplierException();
 
@@ -115,7 +115,7 @@ namespace Services
 
                         palletCost.CostPerSheet = palletCost.CostPerSheet == null ?
                         null :
-                        Convert.ToDouble(palletCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+                        Convert.ToDouble(palletCost.CostPerSheet, Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
 
                         palletCost.CodArticle = c.CodArticle;
                         palletCost.CodArticleCost = c.CodArticle + "_PLC";
@@ -141,7 +141,7 @@ namespace Services
 
                         standardCost.CostPerMl = standardCost.CostPerMl == null ?
                         null :
-                        Convert.ToDouble(standardCost.CostPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+                        Convert.ToDouble(standardCost.CostPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
 
                         standardCost.CodArticle = c.CodArticle;
                         standardCost.CodArticleCost = c.CodArticle + "_STC";

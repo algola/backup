@@ -403,7 +403,7 @@ namespace PapiroMVC.Models
             base.InitCostDetail(tskExec, articles);
 
             String codTypeOfTask = String.Empty;
-            Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
+            //Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
             codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
             tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
             TaskExecutors = tskExec.ToList();

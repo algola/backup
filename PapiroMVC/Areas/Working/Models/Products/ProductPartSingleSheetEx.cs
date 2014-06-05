@@ -18,7 +18,6 @@ namespace PapiroMVC.Models
         {
 
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProduct);
-
             String s = String.Empty;
 
             if ((FormatOpened ?? Format) == Format)

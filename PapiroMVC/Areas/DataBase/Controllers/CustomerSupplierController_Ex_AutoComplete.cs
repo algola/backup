@@ -19,7 +19,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
             var filteredItems = customerSuppliers.Where(
-            item => item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 
             var projection = from custSupp in filteredItems
@@ -43,7 +43,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().OfType<Supplier>().ToArray();
 
             var filteredItems = customerSuppliers.Where(
-            item => item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 
             var projection = from custSupp in filteredItems
@@ -68,7 +68,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
             var filteredItems = customerSuppliers.Where(
-            item => item.BusinessName !=null && item.BusinessName !="" && item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName !=null && item.BusinessName !="" && item.BusinessName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 
             var projection = from custSupp in filteredItems

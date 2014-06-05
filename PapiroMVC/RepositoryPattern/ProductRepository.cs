@@ -10,9 +10,20 @@ namespace Services
 {
     public class ProductRepository : GenericRepository<dbEntities, Product>, IProductRepository
     {
+        public String GetProductNameGenerator(string id)
+        {
+            switch (id)
+            {
+                case "EtichetteRotolo":
+                    return "Etichette a bobina 1 pista '%PRODNAME' @%TYPEMATERIAL %NAMEMATERIAL %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM o similare in ns possesso previo Vs. conferma @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS";
+                default:
+                    return "";
+            }
+        }
+
         public string GetNewCode(Product a)
         {
-           // var csCode = (from COD in this.GetAll() select COD.CodProduct).Max();
+            // var csCode = (from COD in this.GetAll() select COD.CodProduct).Max();
 
             var csCode = Context.Database.SqlQuery<string>("SELECT MAX(CodProduct) AS CodProduct FROM Products").FirstOrDefault<string>();
             return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
@@ -56,7 +67,7 @@ namespace Services
                 Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
             }
 
-                base.Save();
+            base.Save();
         }
 
 

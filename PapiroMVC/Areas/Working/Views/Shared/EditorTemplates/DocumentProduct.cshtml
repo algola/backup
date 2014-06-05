@@ -26,7 +26,7 @@
     </div>
     <div class="span5">
 
-
+        <button id="btnPrintToScreen@(Model.CodDocumentProduct)" class="btn btn-green pull-right"> @Html.T(strings, "PrintToScreenQty") </button>
         <button id="btn@(Model.CodDocumentProduct)" class="btn btn-grey pull-right"> @Html.T(strings, "CloneQty") </button>
 
         @*<div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
@@ -47,91 +47,171 @@
 
 </div>
 
+<div id="printvideo-message@(Model.CodDocumentProduct)" class="hide">
+
+    <div class="vspace"></div>
+    <div class="controls">
+        <textarea id="printvideo@(Model.CodDocumentProduct)" class="autosize-transition span12" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 110px;"></textarea>
+
+    </div>
+    <div class="vspace"></div>
+
+</div>
+
 <script type="text/javascript">
 
     $(document).ready(
 
          function () {
-
-             $("#btn@(Model.CodDocumentProduct)").on('click', function (e) {
-                 e.preventDefault();
-
-
-                 function send@(Model.CodDocumentProduct.Replace("-","_"))() {
-
-                     showProcessingMsg();
-
-                     var datastring = {
-                         "codDocument": '@Model.CodDocument',
-                         "codDocumentProduct": '@Model.CodDocumentProduct',
-                         "newQuantity": $("#qta@(Model.CodDocumentProduct)").val()
-                     };
-
-                     //at firt time save estimate or
-                     $.ajax({
-                         type: "POST",
-                         url: "@(Url.Action("CloneDocumentProduct", "Document"))",
-                         data: datastring,
-                         success: function (data) {
-                             if (data.redirectUrl) {
-                                 hideProcessingMsg();
-                                 // if the server returned a JSON object containing an url
-                                 // property we redirect the browser to that url
-                                 window.location.href = data.redirectUrl;
-                             } else {
-
-                             }
-
-                             return;
-                         },
-                         error: function (xhr) {
-                             hideProcessingMsg();
-                             alert('error');
-                         }
-                     });
-
-                 };
-
-                 //enterkey on dialog
-                 $('#qta@(Model.CodDocumentProduct)').keypress(function (e) {
-                     if (e.keyCode == $.ui.keyCode.ENTER) {
-                         send@(Model.CodDocumentProduct.Replace("-","_"))();
-                         $(this).closest(".ui-dialog-content").dialog("close");
-                     }
-                 });
-
-                 var dialog = $("#dialog-message@(Model.CodDocumentProduct)").dialog({
-                     width: 'auto',
-                     modal: true,
-                     title: '@Html.T(strings, "DialogCloneTitle")',
-                     title_html: true,
-                     buttons: [
-                     {
-                         text: '@Html.T(stringsGrid, "Cancel")',
-                         "class": "btn btn-mini",
-                         click: function () {
-                             $(this).dialog("close");
-                         }
-                     },
-                     {
-                         text: '@Html.T(stringsGrid, "Ok")',
-                         "class": "btn btn-primary btn-mini",
-                         click: function () {
-
-                             send@(Model.CodDocumentProduct.Replace("-","_"))();
-                             $(this).dialog("close");
-                         }
-                     }
-                     ]
-                 });
-
-                 /**
-                 dialog.data( "uiDialog" )._title = function(title) {
-                 title.html( this.options.title );
-                 };
-                 **/
-             });
+             initPage();
          });
 
+
+
+    function initPage() {
+
+        $('textarea[class*=autosize]').autosize();
+
+
+        $("#btn@(Model.CodDocumentProduct)").on('click', function (e) {
+            e.preventDefault();
+
+
+            function send@(Model.CodDocumentProduct.Replace("-","_"))() {
+
+                showProcessingMsg();
+
+                var datastring = {
+                    "codDocument": '@Model.CodDocument',
+                    "codDocumentProduct": '@Model.CodDocumentProduct',
+                    "newQuantity": $("#qta@(Model.CodDocumentProduct)").val()
+                };
+
+                //at firt time save estimate or
+                $.ajax({
+                    type: "POST",
+                    url: "@(Url.Action("CloneDocumentProduct", "Document"))",
+                    data: datastring,
+                    success: function (data) {
+                        if (data.redirectUrl) {
+                            hideProcessingMsg();
+                            // if the server returned a JSON object containing an url
+                            // property we redirect the browser to that url
+                            window.location.href = data.redirectUrl;
+                        } else {
+
+                        }
+
+                        return;
+                    },
+                    error: function (xhr) {
+                        hideProcessingMsg();
+                        alert('error');
+                    }
+                });
+
+            };
+
+            //enterkey on dialog
+            $('#qta@(Model.CodDocumentProduct)').keypress(function (e) {
+                if (e.keyCode == $.ui.keyCode.ENTER) {
+                    send@(Model.CodDocumentProduct.Replace("-","_"))();
+                    $(this).closest(".ui-dialog-content").dialog("close");
+                }
+            });
+
+            var dialog = $("#dialog-message@(Model.CodDocumentProduct)").dialog({
+                width: 'auto',
+                modal: true,
+                title: '@Html.T(strings, "DialogCloneTitle")',
+                title_html: true,
+                buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        send@(Model.CodDocumentProduct.Replace("-","_"))();
+                        $(this).dialog("close");
+                    }
+                }
+                ]
+            });
+
+            /**
+            dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+            };
+            **/
+        });
+
+
+
+        $("#btnPrintToScreen@(Model.CodDocumentProduct)").on('click', function (e) {
+            e.preventDefault();
+
+
+            showProcessingMsg();
+
+            var datastring = {
+                "codDocumentProduct": '@Model.CodDocumentProduct',
+            };
+
+
+            //at firt time save estimate or
+            $.ajax({
+                type: "POST",
+                url: "@(Url.Action("PrintDocumentProductCosts", "Document"))",
+                data: datastring,
+                success: function (data) {
+                    if (data.redirectUrl) {
+                        hideProcessingMsg();
+                        // if the server returned a JSON object containing an url
+                        // property we redirect the browser to that url
+                        window.location.href = data.redirectUrl;
+                    } else {
+
+                        hideProcessingMsg();
+                        $('#printvideo@(Model.CodDocumentProduct)').val(data).trigger('autosize.resize');
+                    }
+
+                    return;
+                },
+                error: function (xhr) {
+                    hideProcessingMsg();
+                    alert('error');
+                }
+            });
+
+
+
+
+            var dialogPrint = $("#printvideo-message@(Model.CodDocumentProduct)").dialog({
+                width: 'auto',
+                modal: true,
+                title: '@Html.T(strings, "DialogPrintTitle")',
+                title_html: true,
+                buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+                ]
+            });
+
+
+        });
+
+    };
 
 </script>

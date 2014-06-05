@@ -35,9 +35,16 @@
     <script src="~/Content/acetheme/assets/js/flot/jquery.flot.resize.min.js"></script>
 
     <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
+
+
 
     <script type="text/javascript">
         jQuery(function ($) {
+
+
+
+
             $('.easy-pie-chart.percentage').each(function () {
                 var $box = $(this).closest('.infobox');
                 var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
@@ -181,17 +188,17 @@
                 {
                     <li>
                         <a data-toggle="tab" href="#frame@((i + 1).ToString())" onclick="resize@(Model[i].CodDocumentProduct.Replace("-", "_"))();">
-    <i class="blue icon-stackexchange bigger-110"></i>
+                            <i class="blue icon-stackexchange bigger-110"></i>
 
-    @if (Model[i].Quantity != null)
-    {
-        @Model[i].Quantity.ToString()
-    }
-    else
-    {
-        @Html.Label("****Quantità non impostata");
-    }
-                    </a>
+                            @if (Model[i].Quantity != null)
+                            {
+                                @Model[i].Quantity.ToString()
+                            }
+                            else
+                            {
+                                @Html.Label("****Quantità non impostata");
+                            }
+                        </a>
                     </li>
                 }
             }

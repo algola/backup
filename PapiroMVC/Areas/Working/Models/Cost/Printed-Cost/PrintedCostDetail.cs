@@ -42,6 +42,8 @@ namespace PapiroMVC.Models
         public override void UpdateCoeff()
         {
             base.UpdateCoeff();
+            //sperimentale
+            ComputedBy.UpdateCoeff();
 
             Error = ComputedBy.Error;
 

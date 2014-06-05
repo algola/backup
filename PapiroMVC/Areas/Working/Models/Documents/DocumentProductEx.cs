@@ -14,6 +14,80 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(DocumentProduct_MetaData))]
     public partial class DocumentProduct : ICloneable
     {
+
+        public string MqDescription { get; set; }
+        public string FgDescription { get; set; }
+        public string MlDescription { get; set; }
+        public string NrDescription { get; set; }
+        public string UpDescription { get; set; }
+        public string AmountDescription { get; set; }
+        public string QtyDescription { get; set; }
+
+        string _documentProductNameGenerator = "";
+        public String DocumentProductNameGenerator
+        {
+            get
+            {
+                if (_documentProductNameGenerator == "")
+                {
+                    _documentProductNameGenerator = QtyDescription + ": %QUANTITY - " +
+                        UpDescription + " %UNITPRICE " +
+                        AmountDescription + " %TOTALPRICE@@%SUPPCOST@";
+                }
+
+                return _documentProductNameGenerator;
+            }
+            set
+            {
+                _documentProductNameGenerator = value;
+            }
+        }
+
+        public virtual void ToName()
+        {
+            var x = DocumentProductNameGenerator;
+            x = x.Replace("%QUANTITY", Quantity.ToString());
+            x = x.Replace("%UNITPRICE", UnitPrice);
+            x = x.Replace("%TOTALPRICE", TotalAmount);
+
+            foreach (var c in Costs)
+            {
+                if ((c.TypeOfCalcolous??0) == 1 && c.CostDetails != null && c.CostDetails.Count > 0)
+                {
+                    var um = String.Empty;
+                    switch (c.CostDetails.FirstOrDefault().TypeOfQuantity)
+                    {
+                        //RunTypeOfQuantity = 0,
+                        case 0:
+                            um = FgDescription;
+                            break;
+                        case 1:
+                            um = MqDescription;
+                            break;
+                        case 4:
+                            um = MlDescription;
+                            break;
+                        case 2:
+                        case 5:
+                        default:
+                            um = NrDescription;
+                            break;
+
+                    }
+
+                    var unitCost = (Convert.ToDouble(c.TotalCost) / (c.Quantity??1)).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+
+
+                    x = x.Replace("%SUPPCOST", c.Description + " " + um + ": " + c.Quantity + " " + UpDescription + ": " + c.UnitCost + " " + AmountDescription + ": " + c.TotalCost);
+                    x += "@%SUPPCOST";
+                }
+            }
+
+            x = x.Replace("@%SUPPCOST", "");
+            DocumentProductNameGenerator = x;
+
+        }
+
         public object Clone()
         {
             //creo una copia dell'oggetto da utilizzare per le modifiche
@@ -78,11 +152,11 @@ namespace PapiroMVC.Models
             {
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
-                    total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.TotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
+                    total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
                 }
             }
             TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
-            UnitPrice = ((total / Quantity ?? 0).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture));
+            UnitPrice = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
         }
 
         #region Proprietà aggiuntive

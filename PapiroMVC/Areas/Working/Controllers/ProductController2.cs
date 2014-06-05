@@ -179,7 +179,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     documentRepository.Edit(document);
                     documentRepository.Save();
 
-
                     DocumentProduct dp;
                     DocumentProduct firstDocumentProduct = null;
 

@@ -102,8 +102,7 @@
             },
 
             //upload partial!!!!
-        updateCostAmount = function()
-        {
+        updateCostAmount = function () {
             var dataToPass = {
                 codDocument: '@(Model.CodDocument)',
                 codDocumentProduct: '@Model.CodDocumentProduct'
@@ -115,12 +114,10 @@
                 data: dataToPass,
                 success: function (data) {
                     $('#documentProduct@(Model.CodDocumentProduct)').html(data);
+                    initPage();
                 }
             });
-
         },
-
-
             cm = [
                 { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: editCost, search: false },
                     { name: 'CodCost', width: 60, align: 'right', editable: true, hidden: true, search: false },
@@ -130,7 +127,9 @@
                     { name: 'TypeOfQuantity', label: '@HttpContext.GetLocalResourceObject(strings, "Um")', width: 50, align: 'center', editable: false, search: false, formatter: umFormatter },
                     { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "Quantity")', width: 50, align: 'right', editable: true, search: false },
                     { name: 'UnitCost', label: '@HttpContext.GetLocalResourceObject(strings, "UnitCost")', width: 50, align: 'right', editable: true, search: false },
-                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false, search: false }],
+                    { name: 'TotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "TotalCost")', width: 50, align: 'right', editable: false, search: false },
+                    { name: 'Markup', label: '@HttpContext.GetLocalResourceObject(strings, "Markup")', width: 50, align: 'right', editable: true, search: false },
+                    { name: 'GranTotalCost', label: '@HttpContext.GetLocalResourceObject(strings, "GranTotalCost")', width: 50, align: 'right', editable: false, search: false }],
 
                     saveObjectInLocalStorage = function (storageItemName, object) {
                         if (typeof window.localStorage !== 'undefined') {
@@ -279,9 +278,7 @@
                         },
                         aftersavefunc: function () {
                             $("#costGrid@(Model.CodDocumentProduct)").trigger("reloadGrid");
-
                             updateCostAmount();
-
                         },
                         url: '@editUrl'
                     });
@@ -366,7 +363,7 @@
         var myGrid = $("#costGrid@(Model.CodDocumentProduct)");
         var width = $("#body-container").width();
         try {
-            myGrid.jqGrid('setGridWidth', width, true);
+            myGrid.jqGrid('setGridWidth', width, false);
 
         } catch (e) {
 
@@ -377,8 +374,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
         //ricalibro la griglia
-  //      resize@(Model.CodDocumentProduct.Replace("-", "_"));
+        //      resize@(Model.CodDocumentProduct.Replace("-", "_"));
     }).trigger('resize');
 
 </script>
-

@@ -478,22 +478,36 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditCostManual(string id, string quantity, string unitCost)
+        public ActionResult EditCostManual(string id, string quantity, string unitCost, double markup)
         {
 
+            bool doLock;
+ 
             var qta = Convert.ToDouble(quantity);
             var uCost = Convert.ToDouble(unitCost, Thread.CurrentThread.CurrentUICulture);
 
             var cost = documentRepository.GetCost(id);
+
+            doLock = !(cost.Quantity == qta);
+            
             cost.Quantity = qta;
             cost.UnitCost = uCost.ToString("#,0.000", Thread.CurrentThread.CurrentUICulture); ;
+            cost.Markup = markup;
 
             var tot = uCost * qta;
-
             cost.TotalCost = (tot).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
+            cost.GranTotalCost = (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture)+
+                (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture) * 
+                ((cost.Markup ?? 1)/100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+
+
+            //se cambio solo il markup non blocco!!!!!
+            //se cambio solo il prezzo unitario non blocco
+
+
             //blocco il costo
-            cost.Locked = true;
+            cost.Locked = doLock;
 
             //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
             cost.DocumentProduct.UpdateCost();
@@ -597,7 +611,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         //    }
 
         //    //reload saved cost
-        //    var dp = documentRepository.GetDocumentProductByCodProduct(cv.TaskCost.DocumentProduct.CodProduct).Where(x => x.CodDocumentProduct == cv.TaskCost.CodDocumentProduct).FirstOrDefault();
+        //    var dp = documentRepository.GetDocumentProductsByCodProduct(cv.TaskCost.DocumentProduct.CodProduct).Where(x => x.CodDocumentProduct == cv.TaskCost.CodDocumentProduct).FirstOrDefault();
 
         //    if (dp != null)
         //    {
@@ -655,7 +669,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             //id is needed for return after edit
             Session["codProduct"] = id;
 
-            var docProd = documentRepository.GetDocumentProductByCodProduct(id);
+            var docProd = documentRepository.GetDocumentProductsByCodProduct(id);
             var prod = productRepository.GetSingle(id);
 
             foreach (var item in docProd)
