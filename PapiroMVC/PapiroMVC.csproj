@@ -1069,6 +1069,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResProduct.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Models\Resources\Products\ResProductBlockSheet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1505,6 +1506,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1848,32 +1850,84 @@
     <Content Include="Content\Carousel\Clienti.png" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
-    <Content Include="Content\ProductImage\AltriFormati.png" />
-    <Content Include="Content\ProductImage\BigliettiVisita.png" />
-    <Content Include="Content\ProductImage\BrossuraCucitaFilo.png" />
-    <Content Include="Content\ProductImage\BrossuraFresata.png" />
-    <Content Include="Content\ProductImage\Buste.png" />
-    <Content Include="Content\ProductImage\CartaIntestata.png" />
-    <Content Include="Content\ProductImage\CartolineInviti.png" />
-    <Content Include="Content\ProductImage\CartolinePostali.png" />
-    <Content Include="Content\ProductImage\EtichetteCartellini.png" />
-    <Content Include="Content\ProductImage\EtichetteRotolo.png" />
-    <Content Include="Content\ProductImage\EtichetteSagRotolo.png" />
-    <Content Include="Content\ProductImage\FogliMacchina.png" />
-    <Content Include="Content\ProductImage\Fotoquadri.png" />
-    <Content Include="Content\ProductImage\Locandine.png" />
-    <Content Include="Content\ProductImage\Manifesti.png" />
-    <Content Include="Content\ProductImage\NotExist.png" />
-    <Content Include="Content\ProductImage\Pieghevoli.png" />
-    <Content Include="Content\ProductImage\Poster.png" />
-    <Content Include="Content\ProductImage\PuntoMetallico.png" />
-    <Content Include="Content\ProductImage\PVC.png" />
-    <Content Include="Content\ProductImage\RivistePostalizzazione.png" />
-    <Content Include="Content\ProductImage\SchedeNonRilegate.png" />
-    <Content Include="Content\ProductImage\SpiraleMetallica.png" />
-    <Content Include="Content\ProductImage\Striscioni.png" />
-    <Content Include="Content\ProductImage\SuppRigidi.png" />
-    <Content Include="Content\ProductImage\Volantini.png" />
+    <Content Include="Content\ProductImage\AltriFormati.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\BigliettiVisita.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\BrossuraCucitaFilo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\BrossuraFresata.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Buste.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\CartaIntestata.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\CartolineInviti.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\CartolinePostali.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\EtichetteCartellini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\EtichetteRotolo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\EtichetteSagRotolo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\FogliMacchina.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Fotoquadri.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Locandine.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Manifesti.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\NotExist.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Pieghevoli.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Poster.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\PuntoMetallico.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\PVC.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\RivistePostalizzazione.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\SchedeNonRilegate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\SpiraleMetallica.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Striscioni.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\SuppRigidi.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\Volantini.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -2447,10 +2501,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\App_LocalResources\Strings.resx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2707,10 +2761,10 @@
       <LastGenOutput>ResNewMenuProductCommand.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProduct.resx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResProduct.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductBlockSheet.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
