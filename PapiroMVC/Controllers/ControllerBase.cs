@@ -108,7 +108,6 @@ namespace PapiroMVC.Controllers
         {
             //  profilesEntities ctxProfiles = new profilesEntities();
             ProfilesDDL tblProfile = new ProfilesDDL("profiles");
-
             dbEntities ctx = new dbEntities();
 
             tblProfile.UpdateSchema(ctx);

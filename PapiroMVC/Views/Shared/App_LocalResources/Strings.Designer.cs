@@ -700,7 +700,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PapiroStar Software Specifico Per Industrie Grafie Tipografie e Studi Grafici.
+        ///   Looks up a localized string similar to PapiroStar Software Specifico Per Industrie Grafiche Tipografie e Studi Grafici.
         /// </summary>
         public static string Title {
             get {

@@ -674,6 +674,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model2.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelBlog.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBlog.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelBlog.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBlog.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ModelBlog.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelBlog.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Module.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
@@ -2374,6 +2389,21 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
     </None>
+    <Content Include="Models\ModelBlog.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelBlog.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\ModelBlog.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ModelBlog.cs</LastGenOutput>
+    </Content>
+    <EntityDeploy Include="Models\ModelBlog.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelBlog.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\ModelBlog.edmx.diagram">
+      <DependentUpon>ModelBlog.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\gestionestampa.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
