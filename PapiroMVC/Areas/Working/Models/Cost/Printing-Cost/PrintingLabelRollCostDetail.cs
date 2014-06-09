@@ -45,7 +45,8 @@ namespace PapiroMVC.Models
                     //i tagli che vanno bene nel formato minimo e massimo
                     y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, tsk.FormatMin);
                 }
-                else                {
+                else
+                {
                     //i tagli che vanno bene nel formato massimo e formato lavoro
                     y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, ProductPart.FormatOpened);
                 }
@@ -180,9 +181,11 @@ namespace PapiroMVC.Models
 
                     this.ProductPartPrinting.Update();
                 }
+
+                this.UpdateCoeff();
+
             }
 
-            this.UpdateCoeff();
 
         }
 
@@ -231,41 +234,37 @@ namespace PapiroMVC.Models
         public void FuzzyAlgo()
         {
             List<String> newBuyingFormats = new List<string>();
-
             var pHint = new List<PrintingHint>();
 
+            //se esiste almeno una resa e non ho formati validi... provo ad aumentare il range dell'interspazio
+            bool haveAlmostOne = false;
+            //voglio sapere anche qual'è interspazio minore calcolato
+            double smallerCalculatedDCut = 100;
+
             var ppP = new ProductPartSingleSheetPrinting();
-            foreach (var buyingFormat in BuyingFormats)
+
+            do
             {
-                ppP.CostDetail = this;
 
-                ppP.Part = this.ProductPart;
-                ppP.PrintingFormat = buyingFormat;
-                ppP.AutoCutParameter = true;
-
-                ppP.Update();
-
-                if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
-                    ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
+                foreach (var buyingFormat in BuyingFormats)
                 {
-                    //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
-                    pHint.Add(new PrintingHint
-                    {
-                        Format = ppP.Part.Format,
-                        DCut1 = ppP.CalculatedDCut1,
-                        DCut2 = ppP.CalculatedDCut2,
-                        BuyingFormat = buyingFormat,
-                        PrintingFormat = buyingFormat,
-                        Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+                    ppP.CostDetail = this;
 
-                    });
-                }
-                else
-                {
-                    //tolgo una posa!!!
-                    ppP.MaxGain2 = ppP.CalculatedSide2Gain - 1;
+                    ppP.Part = this.ProductPart;
+                    ppP.PrintingFormat = buyingFormat;
+                    ppP.AutoCutParameter = true;
+
                     ppP.Update();
-                    if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
+                    haveAlmostOne = (ppP.CalculatedGain > 0) || haveAlmostOne;
+
+                    //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
+                    if (ppP.CalculatedGain > 0)
+                    {
+                        smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
+                    }
+
+                    //this kind of cost has limit in Interspace
+                    if (ppP.CalculatedDCut2 >= ppP.Part.MinDCut && ppP.CalculatedDCut2 <= ppP.Part.MaxDCut &&
                         ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
                     {
                         //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
@@ -276,28 +275,56 @@ namespace PapiroMVC.Models
                             DCut2 = ppP.CalculatedDCut2,
                             BuyingFormat = buyingFormat,
                             PrintingFormat = buyingFormat,
-                            MaxGain2 = ppP.MaxGain2,
                             Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
 
                         });
                     }
+                    else
+                    {
+                        //tolgo una posa!!!
+                        ppP.MaxGain2 = ppP.CalculatedSide2Gain - 1;
+                        ppP.Update();
+                        if (ppP.CalculatedDCut2 >= 0.2 && ppP.CalculatedDCut2 <= 0.6 &&
+                            ((ppP.CalculatedDCut1 >= ppP.CalculatedDCut2) || ppP.CalculatedSide1Gain == 1))
+                        {
+                            //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
+                            pHint.Add(new PrintingHint
+                            {
+                                Format = ppP.Part.Format,
+                                DCut1 = ppP.CalculatedDCut1,
+                                DCut2 = ppP.CalculatedDCut2,
+                                BuyingFormat = buyingFormat,
+                                PrintingFormat = buyingFormat,
+                                MaxGain2 = ppP.MaxGain2,
+                                Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
 
-
-                    ppP.MaxGain2 = 0;
+                            });
+                        }
+                        ppP.MaxGain2 = 0;
+                    }
                 }
-            }
 
-//            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
+                Console.WriteLine(haveAlmostOne);
+                if (haveAlmostOne && pHint.Count == 0)
+                {
+                    ppP.Part.MaxDCut = smallerCalculatedDCut;
+                }
+
+
+            } while (haveAlmostOne && pHint.Count == 0);
+
+
+            //            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
             List<ZVaild> zValids = new List<ZVaild>();// List<double>();
 
             //scorro la lista ed estraggo solo gli z validi
             foreach (var item in pHint)
             {
                 var z = item.BuyingFormat.GetSide2();
-                if (!zValids.Select(x=>x.Z).Contains(z))
+                if (!zValids.Select(x => x.Z).Contains(z))
                 {
                     var zValid = new ZVaild();
-                    zValid.Z=z;
+                    zValid.Z = z;
                     zValid.MaxGain2 = item.MaxGain2;
                     zValids.Add(zValid);
                 }
@@ -308,7 +335,7 @@ namespace PapiroMVC.Models
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2 ,ppP.Part.Format, dCut1, dCut2, 34);
+                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2, ppP.Part.Format, dCut1, dCut2, 34);
                 foreach (var nB in newBands)
                 {
                     ppP.PrintingFormat = nB.ToString() + "x" + item.Z.ToString();
@@ -378,8 +405,8 @@ namespace PapiroMVC.Models
                     break;
                 case QuantityType.RunLengthMlTypeOfQuantity:
                     //calcoli per mt lineari!!!!!!!!
-                    
-                    
+
+
                     var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
                     var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
 

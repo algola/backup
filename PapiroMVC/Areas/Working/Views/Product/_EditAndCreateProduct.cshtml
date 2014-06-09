@@ -35,16 +35,17 @@
                 {
                     <fieldset @(Model.Customer != "" && Model.Customer != null ? "disabled" : "")>
                         @Html.AlgolaEditorFor(model => model.Customer)
-                        @Html.AlgolaEditorFor(model => model.ProductName)
+                        @Html.AlgolaEditorFor(model => model.DocumentName)
                     </fieldset>
 
-                        @Html.HiddenFor(model => model.Customer)
-                        @Html.HiddenFor(model => model.ProductName)
+                    @Html.HiddenFor(model => model.Customer)
+                    @Html.HiddenFor(model => model.DocumentName)
                 }
+
                 else
                 {
                     @Html.AlgolaAutocompleteFor(model => model.Customer, "CustomerBusinessNameAutoComplete", "CustomerSupplier")
-                    @Html.AlgolaEditorFor(model => model.ProductName)
+                    @Html.AlgolaEditorFor(model => model.DocumentName)
                 }
 
                 @for (int i = 0; i < Model.Quantities.Count; i++)
@@ -68,6 +69,8 @@
         </div>
 
         <div class="well no-padding-left no-padding-right">
+            @Html.AlgolaEditorFor(model => model.ProductRefName)
+
             @Html.EditorFor(x => x.Product)
         </div>
         <p>

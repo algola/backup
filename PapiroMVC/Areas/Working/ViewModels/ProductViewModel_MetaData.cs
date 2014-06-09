@@ -13,9 +13,13 @@ namespace PapiroMVC.Models
     public abstract partial class ProductViewModel_MetaData
     {
 
+        [DisplayNameLocalized(typeof(ResProductViewModel), "DocumentName")]
+        [Tooltip(typeof(ResProductViewModel), "DocumentNameToolTip")]
+        public String DocumentName { get; set; }
+
         [DisplayNameLocalized(typeof(ResProductViewModel), "ProductName")]
         [Tooltip(typeof(ResProductViewModel), "ProductNameToolTip")]
-        public String ProductName { get; set; }
+        public String ProductRefName { get; set; }
 
         [DisplayNameLocalized(typeof(ResProductViewModel), "Customer")]
         [Tooltip(typeof(ResProductViewModel), "CustomerToolTip")]

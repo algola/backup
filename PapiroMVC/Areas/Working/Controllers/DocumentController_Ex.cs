@@ -164,11 +164,17 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (CodDocument != null)
             {
-                var q = documentRepository.GetSingle(CodDocument).DocumentProducts.Select((p) =>
-                            new { CodProduct = p.CodProduct, ProductName = p.ProductName }).Distinct();
+                var q = documentRepository.GetSingle(CodDocument).DocumentProducts;
+
+                foreach (var i in q)
+                {
+                    i.Product = productRepository.GetSingle(i.CodProduct);   
+                }
+
+                var q2 = q.Select((p) => new { CodProduct = p.CodProduct, ProductName = p.ProductName, ProductRefName = p.Product.ProductRefName }).Distinct();
 
                 //var q2 = q.ToList();
-                var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+                var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
 
                 int totalRecords = q.Count();
 
@@ -195,6 +201,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                             cell = new string[] 
                             {                       
                                 a.CodProduct,
+                                a.ProductRefName,
                                 a.ProductName   //attributo derivato
                             }
                         }

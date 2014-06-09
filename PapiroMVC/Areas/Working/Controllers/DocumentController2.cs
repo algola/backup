@@ -482,14 +482,14 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
 
             bool doLock;
- 
+
             var qta = Convert.ToDouble(quantity);
             var uCost = Convert.ToDouble(unitCost, Thread.CurrentThread.CurrentUICulture);
 
             var cost = documentRepository.GetCost(id);
 
             doLock = !(cost.Quantity == qta);
-            
+
             cost.Quantity = qta;
             cost.UnitCost = uCost.ToString("#,0.000", Thread.CurrentThread.CurrentUICulture); ;
             cost.Markup = markup;
@@ -497,17 +497,18 @@ namespace PapiroMVC.Areas.Working.Controllers
             var tot = uCost * qta;
             cost.TotalCost = (tot).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
-            cost.GranTotalCost = (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture)+
-                (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture) * 
-                ((cost.Markup ?? 1)/100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+            cost.GranTotalCost = (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture) +
+                (Convert.ToDouble(cost.TotalCost, Thread.CurrentThread.CurrentUICulture) *
+                ((cost.Markup ?? 1) / 100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
 
             //se cambio solo il markup non blocco!!!!!
             //se cambio solo il prezzo unitario non blocco
-
-
-            //blocco il costo
-            cost.Locked = doLock;
+            if (doLock)
+            {
+                //blocco il costo
+                cost.Locked = doLock;
+            }
 
             //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
             cost.DocumentProduct.UpdateCost();
@@ -1027,7 +1028,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
 
-            var filteredItems = menuProd.Where(x=>x.Name != null).Where(
+            var filteredItems = menuProd.Where(x => x.Name != null).Where(
                 item => item.Name.IndexOf(c.NewProduct, StringComparison.InvariantCultureIgnoreCase) >= 0
             );
 

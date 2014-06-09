@@ -5,6 +5,22 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsGrid = "~/Areas/Working/Views/Document/CustomerSupplierStrings";
 
+    //********************************//********************************
+    //devo sapere quanti sono i documentProduct per poter inizializzare i javascript per ciascuno
+    string[] jInit = new string[Model.Document.DocumentProducts.Count];
+    string jss = String.Empty;
+    var js=Model.Document.DocumentProducts.ToArray();
+    foreach (var j in js)
+    {
+        jInit[Array.IndexOf(js,j)] = "initPage" + j.CodDocumentProduct.Replace("-", "_");
+        jss += "initPage" + j.CodDocumentProduct.Replace("-", "_") + ",";
+    }
+    //remove last common
+    jss = jss.Remove(jss.Length - 1);
+
+    //********************************//********************************
+
+    
 }
 
 <div class="space-10"></div>
@@ -63,12 +79,19 @@
     $(document).ready(
 
          function () {
-             initPage();
+             initPage@(Model.CodDocumentProduct.Replace("-","_"))();
          });
 
-
-
     function initPage() {
+        var arrayOfFunc = '@jss'.split(',');
+        var arrayLength = arrayOfFunc.length;
+        for (var i = 0; i < arrayLength; i++) {
+            window[arrayOfFunc[i]]();
+            //Do something
+        }
+    }
+
+    function initPage@(Model.CodDocumentProduct.Replace("-","_"))() {
 
         $('textarea[class*=autosize]').autosize();
 
@@ -76,6 +99,7 @@
         $("#btn@(Model.CodDocumentProduct)").on('click', function (e) {
             e.preventDefault();
 
+            hideProcessingMsg();
 
             function send@(Model.CodDocumentProduct.Replace("-","_"))() {
 
@@ -99,7 +123,7 @@
                             // property we redirect the browser to that url
                             window.location.href = data.redirectUrl;
                         } else {
-
+                            hideProcessingMsg();
                         }
 
                         return;
@@ -139,6 +163,8 @@
                     click: function () {
 
                         send@(Model.CodDocumentProduct.Replace("-","_"))();
+                        hideProcessingMsg();
+
                         $(this).dialog("close");
                     }
                 }

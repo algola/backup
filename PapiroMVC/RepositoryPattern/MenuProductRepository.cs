@@ -15,7 +15,7 @@ namespace Services
             //load each menuproduct
             var c = Context.MenuProducts;
 
-            var tbCode = new MenuProduct[24];
+            var tbCode = new MenuProduct[26];
 
             //Fogli Singoli
             tbCode[0] = new MenuProduct { CodCategory="FogliSingoli", IndexOf = 0, CodMenuProduct="Buste", IndexOfCategory = 0};
@@ -49,6 +49,8 @@ namespace Services
 
             //etichette in rotolo
             tbCode[23] = new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteRotolo", IndexOfCategory = 3 };
+            tbCode[24] = new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteSagRotolo", IndexOfCategory = 3 };
+            tbCode[25] = new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "FasceGommateRotolo", IndexOfCategory = 3 };
 
 
             foreach (var item in tbCode)

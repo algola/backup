@@ -92,7 +92,7 @@ namespace PapiroMVC.Models
 
                 this.GranTotalCost = (Convert.ToDouble(this.TotalCost, Thread.CurrentThread.CurrentUICulture) +
                (Convert.ToDouble(this.TotalCost, Thread.CurrentThread.CurrentUICulture) *
-               ((this.Markup ?? 1) / 100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+               ((this.Markup ?? 0) / 100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
                 this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
             }

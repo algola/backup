@@ -153,10 +153,12 @@ namespace PapiroMVC.Models
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
                     total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
+              //      total = Math.Round(total / 100) * 100;
                 }
             }
-            TotalAmount = total.ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
             UnitPrice = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
+            TotalAmount = (Convert.ToDouble(UnitPrice,Thread.CurrentThread.CurrentCulture) * (Quantity??0)).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+        
         }
 
         #region Proprietà aggiuntive

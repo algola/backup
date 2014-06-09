@@ -149,6 +149,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         customerSupplierRepository.Save();
                     }
 
+                    product.ProductRefName = pv.ProductRefName;
                     product.CodProduct = productRepository.GetNewCode(product);
 
                     //save the product
@@ -171,7 +172,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
 
                     var document = documentRepository.GetSingle((string)Session["CodDocument"]);
-                    document.DocumentName = pv.ProductName;
+                    document.DocumentName = pv.DocumentName;
                     document.CustomerSupplier = cust;
                     document.Customer = cust.BusinessName;
                     document.CodCustomer = cust.CodCustomerSupplier;

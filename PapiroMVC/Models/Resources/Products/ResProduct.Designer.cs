@@ -142,11 +142,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etichette in bobina.
+        ///   Looks up a localized string similar to Etichette quadrate in bobina.
         /// </summary>
         public static string CodMenuProductEtichetteRotolo {
             get {
                 return ResourceManager.GetString("CodMenuProductEtichetteRotolo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etichette sagomate in bobina.
+        /// </summary>
+        public static string CodMenuProductEtichetteSagRotolo {
+            get {
+                return ResourceManager.GetString("CodMenuProductEtichetteSagRotolo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fasce Gommate in bobina.
+        /// </summary>
+        public static string CodMenuProductFasceGommateRotolo {
+            get {
+                return ResourceManager.GetString("CodMenuProductFasceGommateRotolo", resourceCulture);
             }
         }
         

@@ -97,7 +97,25 @@ namespace PapiroMVC.Models.Resources.ViewModels {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rif. al lavoro.
+        ///   Looks up a localized string similar to Rif. gruppo.
+        /// </summary>
+        public static string DocumentName {
+            get {
+                return ResourceManager.GetString("DocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gruppo di articoli o riferimento ad essi.
+        /// </summary>
+        public static string DocumentNameToolTip {
+            get {
+                return ResourceManager.GetString("DocumentNameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rif. articolo.
         /// </summary>
         public static string ProductName {
             get {
@@ -106,7 +124,7 @@ namespace PapiroMVC.Models.Resources.ViewModels {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome del lavoro o riferimento alla commissione del cliente.
+        ///   Looks up a localized string similar to Nome dell&apos;articolo o riferimento alla commissione del cliente.
         /// </summary>
         public static string ProductNameToolTip {
             get {

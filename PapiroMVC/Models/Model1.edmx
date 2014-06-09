@@ -307,6 +307,9 @@
           <Property Name="LabelsPerRoll" Type="int" />
           <Property Name="SoulDiameter" Type="double" />
           <Property Name="MaxDiameter" Type="double" />
+          <Property Name="HaveDCutLimit" Type="bit" />
+          <Property Name="MaxDCut" Type="double" />
+          <Property Name="MinDCut" Type="double" />
         </EntityType>
         <EntityType Name="productpartsprintablearticle">
           <Key>
@@ -355,6 +358,7 @@
           <Property Name="id" Type="char" MaxLength="100" />
           <Property Name="Format" Type="char" MaxLength="50" />
           <Property Name="SelectorProduct" Type="int" />
+          <Property Name="ProductRefName" Type="char" MaxLength="255" />
         </EntityType>
         <EntityType Name="producttasks">
           <Key>
@@ -1961,6 +1965,9 @@
           <Property Name="DCut1" Type="Double" />
           <Property Name="DCut2" Type="Double" />
           <Property Name="SideOnSide" Type="Int32" />
+          <Property Name="HaveDCutLimit" Type="Boolean" />
+          <Property Name="MaxDCut" Type="Double" />
+          <Property Name="MinDCut" Type="Double" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -2007,6 +2014,7 @@
           <Property Type="String" Name="CodMenuProduct" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="documentproducts" Relationship="dbModel.FK_documentproducts_CodProduct" FromRole="Product" ToRole="DocumentProduct" />
           <NavigationProperty Name="ProductGraphLinks" Relationship="dbModel.FK_productgraphs_CodProduct" FromRole="Product" ToRole="productgraph" />
+          <Property Name="ProductRefName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductTask">
           <Key>
@@ -3494,6 +3502,9 @@
           <EntitySetMapping Name="ProductParts">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPart)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="MinDCut" ColumnName="MinDCut" />
+                <ScalarProperty Name="MaxDCut" ColumnName="MaxDCut" />
+                <ScalarProperty Name="HaveDCutLimit" ColumnName="HaveDCutLimit" />
                 <ScalarProperty Name="SideOnSide" ColumnName="SideOnSide" />
                 <ScalarProperty Name="DCut2" ColumnName="DCut2" />
                 <ScalarProperty Name="DCut1" ColumnName="DCut1" />
@@ -3618,6 +3629,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Product)">
               <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="ProductRefName" ColumnName="ProductRefName" />
                 <ScalarProperty Name="CodMenuProduct" ColumnName="id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="CodProduct" ColumnName="CodProduct" />

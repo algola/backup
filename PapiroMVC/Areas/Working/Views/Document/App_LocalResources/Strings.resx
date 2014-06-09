@@ -294,6 +294,9 @@
   <data name="ProductName" xml:space="preserve">
     <value>Nome del prodotto</value>
   </data>
+  <data name="ProductRefName" xml:space="preserve">
+    <value>Rif. Articolo</value>
+  </data>
   <data name="Quantity" xml:space="preserve">
     <value>Quantità</value>
   </data>

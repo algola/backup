@@ -129,11 +129,17 @@
   <data name="CustomerToolTip" xml:space="preserve">
     <value>Nome o riferimento al cliente in anagrafia</value>
   </data>
+  <data name="DocumentName" xml:space="preserve">
+    <value>Rif. gruppo</value>
+  </data>
+  <data name="DocumentNameToolTip" xml:space="preserve">
+    <value>Gruppo di articoli o riferimento ad essi</value>
+  </data>
   <data name="ProductName" xml:space="preserve">
-    <value>Rif. al lavoro</value>
+    <value>Rif. articolo</value>
   </data>
   <data name="ProductNameToolTip" xml:space="preserve">
-    <value>Nome del lavoro o riferimento alla commissione del cliente</value>
+    <value>Nome dell'articolo o riferimento alla commissione del cliente</value>
   </data>
   <data name="Quantities" xml:space="preserve">
     <value>Quantità</value>

@@ -217,6 +217,12 @@
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
-    <value>Etichette in bobina</value>
+    <value>Etichette quadrate in bobina</value>
+  </data>
+  <data name="CodMenuProductEtichetteSagRotolo" xml:space="preserve">
+    <value>Etichette sagomate in bobina</value>
+  </data>
+  <data name="CodMenuProductFasceGommateRotolo" xml:space="preserve">
+    <value>Fasce Gommate in bobina</value>
   </data>
 </root>

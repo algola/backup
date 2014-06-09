@@ -38,6 +38,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodMenuProduct { get; set; }
+    	
+    	[DataMember] 		
+        public string ProductRefName { get; set; }
     
     	[DataMember]
         public virtual ICollection<ProductPart> ProductParts { get; set; }

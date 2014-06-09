@@ -27,9 +27,8 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "PrintingTypeTooltip")]
         public string PrintingType { get; set; }
         
-//        [Required(ErrorMessageResourceType = typeof(ResProductPart), ErrorMessageResourceName = "RequiredField")]
-        [DisplayNameLocalized(typeof(ResProductPart), "Format")]
-        [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]        
+        //[DisplayNameLocalized(typeof(ResProductPart), "Format")]
+        [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
        
@@ -58,8 +57,22 @@ namespace PapiroMVC.Models
         public Nullable<bool> IsDCut { get; set; }
 
         [DisplayNameLocalized(typeof(ResProductPart), "SideOnSide")]
-        [Tooltip(typeof(ResProductPart), "SideOnSidetToolTip")]
+        [Tooltip(typeof(ResProductPart), "SideOnSideToolTip")]
         public Nullable<int> SideOnSide { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPart), "HaveDCutLimit")]
+        [Tooltip(typeof(ResProductPart), "HaveDCutLimitToolTip")]
+        public Nullable<bool> HaveDCutLimit { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPart), "MaxDCut")]
+        [Tooltip(typeof(ResProductPart), "MaxDCutToolTip")]
+        public Nullable<double> MaxDCut { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPart), "MinDCut")]
+        [Tooltip(typeof(ResProductPart), "MinDCutToolTip")]
+        public Nullable<double> MinDCut { get; set; }
+
+
 
     }
 }

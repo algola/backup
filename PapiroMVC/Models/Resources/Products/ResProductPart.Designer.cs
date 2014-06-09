@@ -259,6 +259,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intersp. limitati.
+        /// </summary>
+        public static string HaveDCutLimit {
+            get {
+                return ResourceManager.GetString("HaveDCutLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interspazi compresi in un range stabilito.
+        /// </summary>
+        public static string HaveDCutLimitToolTip {
+            get {
+                return ResourceManager.GetString("HaveDCutLimitToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Spaziatura tra Soggeti.
         /// </summary>
         public static string IsDCut {
@@ -273,6 +291,42 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string IsDCutToolTip {
             get {
                 return ResourceManager.GetString("IsDCutToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Int. max.
+        /// </summary>
+        public static string MaxDCut {
+            get {
+                return ResourceManager.GetString("MaxDCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interspazio massimo.
+        /// </summary>
+        public static string MaxDCutToolTip {
+            get {
+                return ResourceManager.GetString("MaxDCutToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Int. min.
+        /// </summary>
+        public static string MinDCut {
+            get {
+                return ResourceManager.GetString("MinDCut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interpazio minimo.
+        /// </summary>
+        public static string MinDCutToolTip {
+            get {
+                return ResourceManager.GetString("MinDCutToolTip", resourceCulture);
             }
         }
         

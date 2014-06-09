@@ -64,7 +64,9 @@ else
 }
 
 @Html.HiddenFor(model => model.ShowDCut)
-
+@Html.HiddenFor(model => model.HaveDCutLimit)
+@Html.HiddenFor(model => model.MinDCut)
+@Html.HiddenFor(model => model.MaxDCut)
 
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
 
@@ -74,9 +76,9 @@ else
 
 <hr />
 
-    @Html.AlgolaEditorFor(model => model.LabelsPerRoll)
-    @Html.HiddenFor(model => model.SoulDiameter)
-    @Html.HiddenFor(model => model.MaxDiameter)
+@Html.AlgolaEditorFor(model => model.LabelsPerRoll)
+@Html.HiddenFor(model => model.SoulDiameter)
+@Html.HiddenFor(model => model.MaxDiameter)
 
 <hr />
 

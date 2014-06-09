@@ -183,11 +183,29 @@
   <data name="FormatValidationError" xml:space="preserve">
     <value>formato non valido</value>
   </data>
+  <data name="HaveDCutLimit" xml:space="preserve">
+    <value>Intersp. limitati</value>
+  </data>
+  <data name="HaveDCutLimitToolTip" xml:space="preserve">
+    <value>Interspazi compresi in un range stabilito</value>
+  </data>
   <data name="IsDCut" xml:space="preserve">
     <value>Spaziatura tra Soggeti</value>
   </data>
   <data name="IsDCutToolTip" xml:space="preserve">
     <value>Impostare quando le pose sono spaziate una con l'altra</value>
+  </data>
+  <data name="MaxDCut" xml:space="preserve">
+    <value>Int. max</value>
+  </data>
+  <data name="MaxDCutToolTip" xml:space="preserve">
+    <value>Interspazio massimo</value>
+  </data>
+  <data name="MinDCut" xml:space="preserve">
+    <value>Int. min</value>
+  </data>
+  <data name="MinDCutToolTip" xml:space="preserve">
+    <value>Interpazio minimo</value>
   </data>
   <data name="PrintingFormat" xml:space="preserve">
     <value>Formato di stampa</value>

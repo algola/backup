@@ -243,7 +243,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             if (Session["CodDocument"] != null)
             {
                 var doc=documentRepository.GetSingle((string)Session["CodDocument"]);
-                d.ProductName = doc.DocumentName;
+                d.DocumentName = doc.DocumentName;
                 d.Customer = doc.Customer;
             }
 

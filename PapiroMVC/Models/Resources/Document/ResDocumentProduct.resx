@@ -162,6 +162,9 @@
   <data name="ProductNameToolTip" xml:space="preserve">
     <value>Nome Prodotto</value>
   </data>
+  <data name="ProductRefName" xml:space="preserve">
+    <value>Rif. Articolo</value>
+  </data>
   <data name="ProductToolTip" xml:space="preserve">
     <value>Prodotto</value>
   </data>

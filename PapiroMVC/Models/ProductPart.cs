@@ -72,6 +72,15 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> SideOnSide { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> HaveDCutLimit { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> MaxDCut { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> MinDCut { get; set; }
     
     	[DataMember]
         public virtual Product Product { get; set; }

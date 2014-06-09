@@ -3524,6 +3524,11 @@
               Looks up a localized string similar to Nome Prodotto.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Document.ResDocumentProduct.ProductRefName">
+            <summary>
+              Looks up a localized string similar to Rif. Articolo.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Document.ResDocumentProduct.ProductToolTip">
             <summary>
               Looks up a localized string similar to Prodotto.
@@ -3896,7 +3901,17 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteRotolo">
             <summary>
-              Looks up a localized string similar to Etichette in bobina.
+              Looks up a localized string similar to Etichette quadrate in bobina.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteSagRotolo">
+            <summary>
+              Looks up a localized string similar to Etichette sagomate in bobina.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductFasceGommateRotolo">
+            <summary>
+              Looks up a localized string similar to Fasce Gommate in bobina.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductFogliMacchina">
@@ -4237,6 +4252,16 @@
               Looks up a localized string similar to formato non valido.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.HaveDCutLimit">
+            <summary>
+              Looks up a localized string similar to Intersp. limitati.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.HaveDCutLimitToolTip">
+            <summary>
+              Looks up a localized string similar to Interspazi compresi in un range stabilito.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.IsDCut">
             <summary>
               Looks up a localized string similar to Spaziatura tra Soggeti.
@@ -4245,6 +4270,26 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.IsDCutToolTip">
             <summary>
               Looks up a localized string similar to Impostare quando le pose sono spaziate una con l&apos;altra.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.MaxDCut">
+            <summary>
+              Looks up a localized string similar to Int. max.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.MaxDCutToolTip">
+            <summary>
+              Looks up a localized string similar to Interspazio massimo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.MinDCut">
+            <summary>
+              Looks up a localized string similar to Int. min.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.MinDCutToolTip">
+            <summary>
+              Looks up a localized string similar to Interpazio minimo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPart.PrintingFormat">
@@ -7516,14 +7561,24 @@
               Looks up a localized string similar to Nome o riferimento al cliente in anagrafia.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.DocumentName">
+            <summary>
+              Looks up a localized string similar to Rif. gruppo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.DocumentNameToolTip">
+            <summary>
+              Looks up a localized string similar to Gruppo di articoli o riferimento ad essi.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.ProductName">
             <summary>
-              Looks up a localized string similar to Rif. al lavoro.
+              Looks up a localized string similar to Rif. articolo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.ProductNameToolTip">
             <summary>
-              Looks up a localized string similar to Nome del lavoro o riferimento alla commissione del cliente.
+              Looks up a localized string similar to Nome dell&apos;articolo o riferimento alla commissione del cliente.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.Quantities">
@@ -8314,7 +8369,17 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductEtichetteRotolo">
             <summary>
-              Looks up a localized string similar to Etichette in bobina.
+              Looks up a localized string similar to Etichette quadrate in bobina.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductEtichetteSagRotolo">
+            <summary>
+              Looks up a localized string similar to Etichette sagomate in bobina.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductFasceGommateRotolo">
+            <summary>
+              Looks up a localized string similar to Fasce Gommate in bobina.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductFogliMacchina">

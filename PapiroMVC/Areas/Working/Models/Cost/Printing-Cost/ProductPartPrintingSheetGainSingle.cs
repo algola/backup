@@ -266,7 +266,7 @@ namespace PapiroMVC.Models
 
                 var calculatedShape = MaxShape != 0 ? Math.Min((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0), MaxShape ?? ((gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0))) : (gr.ShapeOnSide1 ?? 0) * (gr.ShapeOnSide2 ?? 0);
 
-                if (calculatedShape == 0)
+                if (calculatedShape <= 0)
                 {
                     throw new ZeroGainException();
                 }

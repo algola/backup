@@ -20,7 +20,8 @@ namespace PapiroMVC.Model
             //First Table
             dbS.AddTable("products");
             dbS.AddColumnToTable("products", "CodProduct", SchemaDb.StringPK, "50");
-            dbS.AddColumnToTable("products", "ProductName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("products", "ProductName", SchemaDb.String, "255");
+            dbS.AddColumnToTable("products", "ProductRefName", SchemaDb.String, "255");
             dbS.AddColumnToTable("products", "id", SchemaDb.String, "100");
             dbS.AddColumnToTable("products", "Format", SchemaDb.String, "50");
 
@@ -33,6 +34,7 @@ namespace PapiroMVC.Model
             //dbS.AddForeignKey("products", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
             //Index
             dbS.AddIndex("products", "ProductName");
+            dbS.AddIndex("products", "ProductRefName");
 
             // 0 = ProductSingleSheet // 1 = ProductBookSheet // 2 = ProductBlockSheet
             dbS.AddColumnToTable("products", "SelectorProduct", SchemaDb.Int, "0");
@@ -93,6 +95,11 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("productparts", "DCut1", SchemaDb.Double, "0");
             dbS.AddColumnToTable("productparts", "DCut2", SchemaDb.Double, "0");
+
+           //this is for label where we have to stay into MaxDCut
+            dbS.AddColumnToTable("productparts", "HaveDCutLimit", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("productparts", "MaxDCut", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productparts", "MinDCut", SchemaDb.Double, "0");
 
             //0 or Null --> Free //1 = SideOnSide //2 = !SideOnSide
             dbS.AddColumnToTable("productparts", "SideOnSide", SchemaDb.Int, "0");

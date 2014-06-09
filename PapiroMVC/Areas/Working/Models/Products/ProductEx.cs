@@ -224,6 +224,10 @@ namespace PapiroMVC.Models
         public virtual void ToName()
         {
 
+            var x = ProductNameGenerator;
+            x = x.Replace("%PRODNAME", this.ProductRefName);
+            ProductNameGenerator = x;
+
             var pParts = String.Empty;
             foreach (var item in this.ProductParts)
             {

@@ -33,15 +33,24 @@ namespace PapiroMVC.Models
             if (extract.FirstOrDefault() == null)
             {
                 //se non trovo il
-                throw (new NullReferenceException());
+                //    throw (new NullReferenceException());
+                TypeOfQuantity = 3;
+                var article = extract.FirstOrDefault();
+
+                CostPerMq = "0";
+                CostPerMl = "0";
             }
+            else
+            {
 
-            TypeOfQuantity = (int)extract.FirstOrDefault().TypeOfQuantity;
-            var article = extract.FirstOrDefault();
+                TypeOfQuantity = (int)extract.FirstOrDefault().TypeOfQuantity;
+                var article = extract.FirstOrDefault();
 
-            var aCost = article.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
-            CostPerMq = ((RollPrintableArticleCost)aCost).CostPerMq;
-            CostPerMl = ((RollPrintableArticleCost)aCost).CostPerMl;
+                var aCost = article.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
+                CostPerMq = ((RollPrintableArticleCost)aCost).CostPerMq;
+                CostPerMl = ((RollPrintableArticleCost)aCost).CostPerMl;
+
+            }
         }
 
         public override void CostDetailCostCodeRigen()
@@ -77,17 +86,17 @@ namespace PapiroMVC.Models
 
             double mqMat = 0;
 
-            if ((QuantityType)(ComputedBy.TypeOfQuantity??0) == QuantityType.RunLengthMlTypeOfQuantity)
+            if ((QuantityType)(ComputedBy.TypeOfQuantity ?? 0) == QuantityType.RunLengthMlTypeOfQuantity)
             {
                 //prendo i ml li moltiplico per la banda
-                mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()/100;
+                mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 100;
             }
             else
             {
                 //devo ottenere i mq totali di materiale stampato ed uso un trucco... voglio il numero di fogli... lo moltiplico per la resa del materiale e per i mq
                 var lastTypeOfQuantity = ComputedBy.TypeOfQuantity;
                 ComputedBy.TypeOfQuantity = 0;
-                mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle??1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
+                mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle ?? 1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
                 ComputedBy.TypeOfQuantity = lastTypeOfQuantity;
             }
 

@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductSingleLabelRoll))]
     [MetadataType(typeof(ProductSingleLabelRoll_MetaData))]
     public partial class ProductSingleLabelRoll : Product
@@ -30,9 +30,21 @@ namespace PapiroMVC.Models
 
             part.DCut1 = DCut1;
             part.DCut2 = DCut2;
-            
+
             part.ShowDCut = ShowDCut;
             part.IsDCut = true;
+
+            //max and min interspace
+            part.HaveDCutLimit = true;
+            part.MaxDCut = 0.6;
+            part.MinDCut = 0.2;
+
+            if (CodMenuProduct == "FasceGommateRotolo")
+            {
+                part.HaveDCutLimit = true;
+                part.MaxDCut = 0;
+                part.MinDCut = 0;
+            }
 
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
@@ -73,7 +85,7 @@ namespace PapiroMVC.Models
 
         }
 
-  
+
         public override List<ProductPartTask> GetInitalizedPartTask()
         {
             var tsksInPart = new List<ProductPartTask>();

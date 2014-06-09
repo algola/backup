@@ -14,7 +14,9 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductViewModel_MetaData))]
     public class ProductViewModel
     {
-        public String ProductName { get; set; }
+        public String DocumentName { get; set; }
+
+        public String ProductRefName { get; set; }
         public String Customer { get; set; }
 
         public Product Product { get; set; }

@@ -89,8 +89,8 @@ namespace PapiroMVC.ServiceLayer
 
             if (
                 id == "EtichetteRotolo" ||
-                id == "EtichettaControRotolo" ||
-                id == "EtichettaControColloRotolo")
+                id == "EtichetteSagRotolo" ||
+                id == "FasceGommateRotolo")
             {
                 product = new ProductSingleLabelRoll();
             }
