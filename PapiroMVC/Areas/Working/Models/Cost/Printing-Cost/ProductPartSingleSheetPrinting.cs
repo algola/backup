@@ -48,7 +48,11 @@ namespace PapiroMVC.Models
 
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).AutoDCut = AutoCutParameter;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain2 = MaxGain2;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain1 = MaxGain1;
 
+                    //PREDISPOSIZIONE PER CAMBIARE NELLA MESSA IN MACCHINA IL TIPO DI CALCOLO SU TYPEOFDCUT1
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).TypeOfDCut1 = Part.TypeOfDCut1??0;
+                    
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).GiraVerso = true;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = 1;
 

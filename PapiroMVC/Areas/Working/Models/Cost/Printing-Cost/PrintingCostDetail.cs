@@ -138,7 +138,16 @@ namespace PapiroMVC.Models
 
                 //moltiplicato per ottenere i mq di produzione
                 GainForMqRun = (startsToPrint * ProductPartPrinting.CalculatedMq);
-                GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMqPrintingFormat / gain);
+
+
+                if (ProductPartPrinting.Part.ProductPartPrintableArticles.FirstOrDefault().RoundTo??true)
+                {
+                    GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMqPrintingFormat / gain);
+                }
+                else
+                {
+                    GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMq / gain);
+                }
 
                 RollChanges = 0;
             }

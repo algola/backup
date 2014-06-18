@@ -22,6 +22,8 @@
 @Html.AlgolaEditorFor(model => model.Color)
 @Html.AlgolaEditorFor(model => model.Weight)
 
+@Html.EditorFor(model => model.RoundTo)
+
 @Html.HiddenFor(model => model.TypeOfProductPartsPrintableArticle)
 
 <div id="dialog-message@(suffx)" class="hide">
@@ -43,17 +45,18 @@
 
     $(document).ready(
         function () {
-            loadGrid@(suffx)();
+            loadRigidGrid@(suffx)();
         });
 
-    function loadGrid@(suffx)() {
+
+    function loadRigidGrid@(suffx)() {
 
         myGrid@(suffx) = $("#gridArticle@(suffx)").jqGrid({
             url: '@url',
             datatype: 'json',
             colModel: [
                 { name: 'Id', label: 'OperationsCaption', key: true, width: 80, editable: false, hidden: true },
-                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
+//                { name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'TypeOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "TypeOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
@@ -96,7 +99,7 @@
 
     }
 
-    function reloadArticle@(suffx)() {
+    function reloadRigidArticle@(suffx)() {
         $("#gridArticle@(suffx)").trigger("reloadGrid");
     }
 
@@ -104,7 +107,46 @@
         e.preventDefault();
         hideProcessingMsg();
 
-        loadGrid@(suffx)();
+        //enterkey on dialog
+        $('#gridArticle@(suffx)').keypress(function (e) {
+            if (e.keyCode == $.ui.keyCode.ENTER) {
+                putData@(suffx)();
+                $(this).closest(".ui-dialog-content").dialog("close");
+            }
+        });
+
+        //copy data from jqgrid to page
+        function putData@(suffx)() {
+
+            if (lastSel@(suffx) != -1) {
+                var myGrid = $('#gridArticle@(suffx)'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'TypeOfMaterial');
+
+                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
+
+                var myGrid = $('#gridArticle@(suffx)'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'NameOfMaterial');
+
+                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
+
+                var myGrid = $('#gridArticle@(suffx)'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
+
+                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+
+                var myGrid = $('#gridArticle@(suffx)'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celValueWeight = myGrid.jqGrid('getCell', lastSel@(suffx), 'Weight');
+
+                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
+
+            }
+        };
+
+        loadRigidGrid@(suffx)();
 
         var dialog = $("#dialog-message@(suffx)").dialog({
             width: 'auto',
@@ -117,7 +159,7 @@
                     "class": "btn btn-mini",
                     click: function () {
 
-                        reloadArticle@(suffx)();
+                        reloadRigidArticle@(suffx)();
                         $(this).dialog("close");
                     }
                 },
@@ -125,35 +167,8 @@
                     text: '@Html.T(stringsGrid, "Ok")',
                     "class": "btn btn-primary btn-mini",
                     click: function () {
-
-                        if (lastSel@(suffx) != -1) {
-                            var myGrid = $('#gridArticle@(suffx)'),
-                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'TypeOfMaterial');
-
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
-
-                            var myGrid = $('#gridArticle@(suffx)'),
-                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'NameOfMaterial');
-
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
-
-                            var myGrid = $('#gridArticle@(suffx)'),
-                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
-
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
-
-                            var myGrid = $('#gridArticle@(suffx)'),
-                                selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                                celValueWeight = myGrid.jqGrid('getCell', lastSel@(suffx), 'Weight');
-
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
-
-                        }
-                        reloadArticle@(suffx)();
-
+                        putData@(suffx)();
+                        reloadRigidArticle@(suffx)();
                         $(this).dialog("close");
                     }
                 }

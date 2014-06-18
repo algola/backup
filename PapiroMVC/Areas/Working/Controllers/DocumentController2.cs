@@ -225,6 +225,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
+            
             switch (cv.TypeOfCostDetail)
             {
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
@@ -484,7 +485,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             bool doLock;
 
             var qta = Convert.ToDouble(quantity);
-            var uCost = Convert.ToDouble(unitCost, Thread.CurrentThread.CurrentUICulture);
+            var uCost = Convert.ToDouble(unitCost==""?"0":unitCost, Thread.CurrentThread.CurrentUICulture);
 
             var cost = documentRepository.GetCost(id);
 

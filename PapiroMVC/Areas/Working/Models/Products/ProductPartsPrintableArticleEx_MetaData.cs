@@ -51,5 +51,9 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResProductPartsPrintableArticle), "Weight")]
         [Tooltip(typeof(ResProductPartsPrintableArticle), "WeightToolTip")]
         public Nullable<long> Weight { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPartsPrintableArticle), "RoundTo")]
+        [Tooltip(typeof(ResProductPartsPrintableArticle), "RoundToToolTip")]
+        public Nullable<bool> RoundTo { get; set; }
     }
 }

@@ -162,6 +162,14 @@ namespace PapiroMVC.Models
             //i formati di stampa devono essere condizionati anche dal formato del lavoro da stampare
             //dalla pinza e dalla contropinza e laterale!!!!
 
+            if (BuyingFormats == null)
+            {
+                Error = 3;
+                BuyingFormats = new List<String>();
+                BuyingFormats.Add(BuyingFormat);
+
+            }
+
             if (BuyingFormats.Count == 0)
             {
                 Error = 3;
@@ -256,6 +264,7 @@ namespace PapiroMVC.Models
             {
                 //no format
                 Error = 3;
+                BuyingFormats.Add(ppP.Part.Format);
             }
         }
 

@@ -8,10 +8,14 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductPartRigidArticle))]
     [MetadataType(typeof(ProductPartRigidArticleEx_MetaData))]
     public partial class ProductPartRigidArticle : ProductPartsPrintableArticle
     {
+        public ProductPartRigidArticle()
+        {
+            TypeOfProductPartsPrintableArticle = TypeOfProductPartsPrintableArticleType.ProductPartRigidArticle;
+        }
     }
 }

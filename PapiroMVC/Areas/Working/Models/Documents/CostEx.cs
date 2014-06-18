@@ -378,24 +378,27 @@ namespace PapiroMVC.Models
                         default:
                             break;
                     }
+
+                    if (cv.Error != 3)
+                    {
+                        cv.ProductPart = productPart;
+                    }
+
+                    cv.TaskCost = this;
+                    cv.CodCost = this.CodCost;
+                    cv.CodCostDetail = this.CodCost;
                 }
-                else
-                {
-                    //
-                    var e = new NoTaskExecutorException();
-                    e.Data.Add("CodTypeOfTask", codTypeOfTask);
-                    throw e;
 
-                }
-
-
-                cv.ProductPart = productPart;
-
-
-                cv.TaskCost = this;
-                cv.CodCost = this.CodCost;
-                cv.CodCostDetail = this.CodCost;
             }
+            else
+            {
+                //
+                var e = new NoTaskExecutorException();
+                e.Data.Add("CodTypeOfTask", codTypeOfTask);
+                throw e;
+
+            }
+
 
             #endregion
 

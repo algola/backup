@@ -324,11 +324,26 @@
             <param name="term"></param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.IndexTaskExecutors(System.String)">
+            <summary>
+            List of taskExecutor filtered by codTypeOfTask
+            </summary>
+            <param name="codTypeOfTask"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutorCost(System.String)">
             <summary>
             
             </summary>
             <param name="id">TaskExecutors id</param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutors(Mvc.HtmlHelpers.GridSettings,System.String)">
+            <summary>
+            Elenco delle macchine da stampa divise per tipo di lavorazione che possono effettuare!!!!
+            </summary>
+            <param name="gridSettings"></param>
+            <param name="codTypeOfTask"></param>
             <returns></returns>
         </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.DeletingStep(System.String)">
@@ -1921,6 +1936,32 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartSingleLabelRoll.SoulDiameterToolTip">
             <summary>
               Looks up a localized string similar to Diametro espresso in millimetri dell&apos;anima richiesto dall&apos;etichettatrice.
+            </summary>
+        </member>
+        <member name="T:PapiroMVC.Models.Resources.Products.ResProductPartRigidArticle">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartRigidArticle.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartRigidArticle.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartRigidArticle.RoundTo">
+            <summary>
+              Looks up a localized string similar to Calcola tutto il F.to acquisto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartRigidArticle.RoundToToolTip">
+            <summary>
+              Looks up a localized string similar to Arrotonda il calcolo al formato di acquisto intero.
             </summary>
         </member>
         <member name="T:PapiroMVC.Models.Resources.TaskExecutor.ResCostPerColorStep">
@@ -4761,7 +4802,7 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_NO">
             <summary>
-              Looks up a localized string similar to Fustellatura in linea.
+              Looks up a localized string similar to .
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_NO_STACCO">
@@ -7568,7 +7609,7 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.DocumentNameToolTip">
             <summary>
-              Looks up a localized string similar to Gruppo di articoli o riferimento ad essi.
+              Looks up a localized string similar to Gruppo di articoli o riferimento ad essi &lt;a href=&apos;http://www.gestionestampa.com/?p=374&apos; target=&apos;_blank&apos;&gt;Approfondisi&lt;/a&gt;.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.ProductName">
@@ -7589,6 +7630,16 @@
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.RequiredField">
             <summary>
               Looks up a localized string similar to Questo campo è richiesto per completare l&apos;operazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.UIntValidation">
+            <summary>
+              Looks up a localized string similar to (^0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*$).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResProductViewModel.UIntValidationError">
+            <summary>
+              Looks up a localized string similar to La quantità deve essere positiva.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.WebApi.ProductApi.Prices">
@@ -8620,6 +8671,21 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.SheetPrintableArticleMenu">
             <summary>
               Looks up a localized string similar to Materiali Stampabili a Foglio.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPAETICHETTEROTOLOMenu">
+            <summary>
+              Looks up a localized string similar to Etichette in Bobina.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPAMORBIDOMenu">
+            <summary>
+              Looks up a localized string similar to Morbido Grande Formato.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPARIGIDOMenu">
+            <summary>
+              Looks up a localized string similar to Rigido Grande Formato.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.Start">

@@ -21,6 +21,7 @@ namespace SchemaManagemet
         public static string Long = "long";
         public static string Memo = "memo";
         public static string String = "string";
+        public static string LongString = "longstring";
         public static string StringPK = "stringPK";
         public static string Time = "time";
         public static string Date = "date";

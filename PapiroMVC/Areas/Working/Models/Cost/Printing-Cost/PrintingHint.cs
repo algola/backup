@@ -40,6 +40,9 @@ namespace PapiroMVC.Models
         public int MaxGain1 { get; set; }
         public int MaxGain2 { get; set; }
 
+        public int MinGain1 { get; set; }
+        public int MinGain2 { get; set; }
+
 
     }
 }

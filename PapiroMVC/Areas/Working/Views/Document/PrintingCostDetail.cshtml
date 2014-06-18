@@ -73,6 +73,13 @@
             </div>
 
         }
+        else
+        {
+            if (Model.Error==3)
+            {
+                <p>***Errore nel format stampa</p>
+            }
+        }
 
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditDocumentProducts", "Document", new { Area = "Working", id=Model.TaskCost.DocumentProduct.CodProduct})');">

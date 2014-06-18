@@ -23,7 +23,8 @@
         UpdateTargetId = "status",
         OnBegin = "showProcessingMsg",
         OnComplete = "hideProcessingMsg",
-        OnSuccess = "OnSuccess"
+        OnSuccess = "OnSuccess",
+        OnFailure = "reload",
     }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
@@ -48,15 +49,7 @@
                     @Html.AlgolaEditorFor(model => model.DocumentName)
                 }
 
-                @for (int i = 0; i < Model.Quantities.Count; i++)
-                {
-                    <div class="control-group">
-                        @Html.LabelFor(model => model.Quantities, new { @class = "col-sm-3 control-label no-padding-right" })
-                        <div class="controls col-sm-9">
-                            @Html.EditorFor(model => model.Quantities[i])
-                        </div>
-                    </div>
-                }
+                @Html.AlgolaEditorFor(model => model.Quantity)
 
             </div>
 

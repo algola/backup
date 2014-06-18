@@ -38,12 +38,14 @@ namespace PapiroMVC.Models
             part.HaveDCutLimit = true;
             part.MaxDCut = 0.6;
             part.MinDCut = 0.2;
+            part.TypeOfDCut1 = 0;
 
             if (CodMenuProduct == "FasceGommateRotolo")
             {
                 part.HaveDCutLimit = true;
                 part.MaxDCut = 0;
                 part.MinDCut = 0;
+                part.TypeOfDCut1 = 2; // must be 0;                
             }
 
             part.ProductPartTasks = this.GetInitalizedPartTask();
@@ -85,6 +87,10 @@ namespace PapiroMVC.Models
 
         }
 
+
+
+  
+        
 
         public override List<ProductPartTask> GetInitalizedPartTask()
         {

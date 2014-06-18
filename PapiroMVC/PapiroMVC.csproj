@@ -922,6 +922,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Models\Resources\Products\ResProductPartRigidArticle.Designer.cs">
+      <DependentUpon>ResProductPartRigidArticle.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Models\Resources\TaskExecutor\ResCostPerColorStep.Designer.cs">
       <DependentUpon>ResCostPerColorStep.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1319,8 +1324,8 @@
       <DependentUpon>ResArticleViewModelAutoChanges.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\Resources\ViewModels\ResProductViewModel.Designer.cs">
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
       <DependentUpon>ResProductViewModel.resx</DependentUpon>
     </Compile>
     <Compile Include="Models\RigidPrintableArticle.cs">
@@ -2011,6 +2016,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap-carousel.js" />
+    <Content Include="Scripts\gridsInCreateProduct.js" />
     <Content Include="Scripts\helper-plugins\jquery.ba-throttle-debounce.min.js" />
     <Content Include="Scripts\helper-plugins\jquery.mousewheel.min.js" />
     <Content Include="Scripts\helper-plugins\jquery.touchSwipe.min.js" />
@@ -2385,6 +2391,8 @@
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductGraphLink.cshtml" />
     <Content Include="Areas\Working\Views\Document\_DocumentProduct.cshtml" />
     <Content Include="Areas\Working\Views\Document\_NewProductCommand.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexTaskExecutors.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListTaskExecutors.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2404,7 +2412,7 @@
     <Content Include="Models\ModelBlog.edmx.diagram">
       <DependentUpon>ModelBlog.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\gestionestampa.pubxml" />
+    <None Include="Properties\PublishProfiles\beta.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -2644,6 +2652,11 @@
       <LastGenOutput>ResProductPartSingleLabelRoll.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Products\ResProductPartRigidArticle.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResProductPartRigidArticle.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResCostPerColorStep.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResCostPerColorStep.Designer.cs</LastGenOutput>
@@ -2738,6 +2751,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResSheetPrintableArticleCuttedCost.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\CustomerSupplier\CustomerSupplierVuoto.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -2866,6 +2880,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\TaskExecutor\ResAvarageRunPerRunStep.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -3006,8 +3021,8 @@
     <EmbeddedResource Include="Models\Resources\ViewModels\ResProductViewModel.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResProductViewModel.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>ResProductViewModel.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Validation\Registration.en-us.resx" />
     <EmbeddedResource Include="Validation\Registration.resx" />

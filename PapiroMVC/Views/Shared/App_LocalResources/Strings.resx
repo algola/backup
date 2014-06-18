@@ -339,4 +339,13 @@
   <data name="EditProfileModuleMenu" xml:space="preserve">
     <value>Moduli</value>
   </data>
+  <data name="STAMPAETICHETTEROTOLOMenu" xml:space="preserve">
+    <value>Etichette in Bobina</value>
+  </data>
+  <data name="STAMPAMORBIDOMenu" xml:space="preserve">
+    <value>Morbido Grande Formato</value>
+  </data>
+  <data name="STAMPARIGIDOMenu" xml:space="preserve">
+    <value>Rigido Grande Formato</value>
+  </data>
 </root>

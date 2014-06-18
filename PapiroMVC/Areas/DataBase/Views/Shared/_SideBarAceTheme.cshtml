@@ -57,7 +57,7 @@
 
             <ul class="submenu">
 
-                <li id="lithoSlidebar">
+                @*<li id="lithoSlidebar">
                     @Html.ActionLinkImage(@Html.T(strings, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
                 </li>
                 <li id="flexoSlidebar">
@@ -71,7 +71,19 @@
                 </li>
                 <li id="prepostSlidebar">
                     @Html.ActionLinkImage(@Html.T(strings, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, "icon-double-angle-right")
+                </li>*@
+
+                <li id="rigidoSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "STAMPARIGIDOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPARIGIDO" }, "icon-double-angle-right")
                 </li>
+                <li id="morbidoSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "STAMPAMORBIDOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAMORBIDO" }, "icon-double-angle-right")
+                </li>
+                <li id="labelSlidebar">
+                    @Html.ActionLinkImage(@Html.T(strings, "STAMPAETICHETTEROTOLOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAETICHROTOLO" }, "icon-double-angle-right")
+                </li>
+
+
 
             </ul>
         </li>

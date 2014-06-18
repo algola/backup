@@ -82,6 +82,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
+        /// <summary>
+        /// List of taskExecutor filtered by codTypeOfTask
+        /// </summary>
+        /// <param name="codTypeOfTask"></param>
+        /// <returns></returns>
+        public ActionResult IndexTaskExecutors(string codTypeOfTask)
+        {
+            return View("IndexTaskExecutors", model:codTypeOfTask);
+        }
+
         [HttpPost]
         public ActionResult TaskEstimatedOnTime(RollEstimatedOnTime c, string returnUrl)
         {

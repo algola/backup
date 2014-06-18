@@ -50,6 +50,8 @@
 
     function loadGrid@(suffx)() {
 
+        alert('loadgridSheet');
+
         myGrid@(suffx) = $("#gridArticle@(suffx)").jqGrid({
             url: '@url',
             datatype: 'json',

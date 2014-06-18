@@ -44,16 +44,9 @@
         }
 
         <li id="aboutSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "About"), "About", "Home", new { area = "" }, "fa fa-fw fa-lg fa-info", "menu-text")
+            <a href="http://www.gestionestampa.com"><i class="fa fa-fw fa-lg fa-lightbulb-o"></i> <span class="menu-text">@Html.T(strings, "About")</span></a>
         </li>
 
-        <li id="advSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "Adv"), "Adv", "Home", new { area = "" }, "fa fa-fw fa-lg fa-lightbulb-o", "menu-text")
-        </li>
-
-        <li id="ecommerceSlidebar">
-            @Html.ActionLinkImageSpan(Html.T(strings, "ECommerce"), "ECommerce", "Home", new { area = "" }, "fa fa-fw fa-lg fa-shopping-cart", "menu-text")
-        </li>
 
 
     </ul>

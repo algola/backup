@@ -14,19 +14,6 @@ namespace PapiroMVC.Models
     public partial class ProductPartSheetArticle : ProductPartsPrintableArticle, IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        public override bool IsInList(IQueryable<Article> arts)
-        {
-            var sel = arts.OfType<Printable>();
-            var cont = (sel.Where(c => c.NameOfMaterial == this.NameOfMaterial &&
-                c.TypeOfMaterial == this.TypeOfMaterial &&
-                c.Weight == this.Weight &&
-                c.Adhesive == this.Adhesive &&
-                c.Color == this.Color).Count());
-
-            return (cont > 0);
-
-        }
-
 
         public ProductPartSheetArticle()
         {

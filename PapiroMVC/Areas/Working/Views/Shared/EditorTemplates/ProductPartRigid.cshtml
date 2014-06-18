@@ -29,7 +29,6 @@
 
 }
 
-
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
@@ -54,6 +53,8 @@
     @Html.AlgolaEditorFor(model => model.FormatPersonalized)
 
 </div>
+
+@Html.HiddenFor(x=> x.ShowDCut)
 
 @if (Model.ShowDCut)
 {
@@ -88,6 +89,8 @@ else
 @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
 {
     ViewBag.IndexPartArticle = i;
+
+    <p> @(Model.ProductPartsPrintableArticlePerView[i].TypeOfProductPartsPrintableArticle) </p>
 
     @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])
 }

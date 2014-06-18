@@ -105,6 +105,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             docPro.MqDescription = "Mq.";
             docPro.NrDescription = "Nr.";
             docPro.UpDescription = "Cad €";
+            docPro.UpDescription1000 = "X 1000 €";
             docPro.AmountDescription = "Totale €";
             docPro.QtyDescription = "Nr.";
 
@@ -122,7 +123,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             Document doc = documentRepository.GetSingle(codDocument);
             var prod = documentRepository.GetDocumentProductsByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
 
-            if (newQuantity != 0)
+            if (newQuantity > 0)
             {
                 PapiroService p = new PapiroService();
                 p.DocumentRepository = documentRepository;

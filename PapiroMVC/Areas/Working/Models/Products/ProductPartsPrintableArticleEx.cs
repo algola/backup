@@ -17,13 +17,24 @@ namespace PapiroMVC.Models
 
         public virtual bool IsInList(IQueryable<Article> arts)
         {
-            throw new Exception();
+            var sel = arts.OfType<Printable>();
+            var cont = (sel.Where(c => c.NameOfMaterial == this.NameOfMaterial &&
+                c.TypeOfMaterial == this.TypeOfMaterial &&
+                c.Weight == this.Weight &&
+                c.Adhesive == this.Adhesive &&
+                c.Color == this.Color).Count());
+
+            return (cont > 0);
         }
 
 
         public enum TypeOfProductPartsPrintableArticleType : int
         {
             ProductPartSheetArticle = 0,
+            ProductPartRigidArticle = 1,
+            ProductPartLabelRollArticle = 2,
+
+
         }
 
         public TypeOfProductPartsPrintableArticleType TypeOfProductPartsPrintableArticle

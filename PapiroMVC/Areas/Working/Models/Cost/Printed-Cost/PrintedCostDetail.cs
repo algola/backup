@@ -48,9 +48,18 @@ namespace PapiroMVC.Models
             Error = ComputedBy.Error;
 
             Starts = 1;
-            //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!!
-            GainForRun = (double)(this.ComputedBy.GainForRunForPrintableArticle / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1));
-            GainForMqRun = (double)(this.ComputedBy.GainForMqRunForPrintableArticle);
+            try
+            {
+                //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!!
+                GainForRun = (double)(this.ComputedBy.GainForRunForPrintableArticle / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1));
+                GainForMqRun = (double)(this.ComputedBy.GainForMqRunForPrintableArticle);
+
+            }
+            catch (Exception)
+            {                
+                GainForMqRun =0;
+                GainForRun = 0;
+            }
 
             if (_articles == null)
             {

@@ -274,11 +274,12 @@ namespace PapiroMVC.Validation
 
             if (metadata.AdditionalValues.ContainsKey("ToolTip"))
             {
-                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);                
             }
+
             if (getTool != null && getTool != "")
             {
-                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
+                tool = "<span class=\"help-button\" data-rel=\"popover\" data-trigger=\"hover\" data-placement=\"right\" data-html=\"true\" data-delay='{\"show\":\"0\", \"hide\":\"3000\"}' data-content=\"" + getTool + "\" title=\"\" data-original-title=\"\">?</span>";
             }
 
             var algolaEditFor = new TagBuilder("div");

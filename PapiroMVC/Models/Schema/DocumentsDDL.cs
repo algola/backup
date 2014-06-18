@@ -56,14 +56,11 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("documentproducts", "CodDocument", SchemaDb.String, "50");
             dbS.AddForeignKey("documentproducts", "CodDocument", "documents", "CodDocument");
 
-            dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "255");
 
             //foreign key
             dbS.AddColumnToTable("documentproducts", "CodProduct", SchemaDb.String, "50");
             dbS.AddForeignKey("documentproducts", "CodProduct", "products", "CodProduct");
-            //derive attribute //taken from product
-            dbS.AddColumnToTable("documentproducts", "ProductName", SchemaDb.String, "100");
-
 
             dbS.AddColumnToTable("documentproducts", "Quantity", SchemaDb.Long, "0");
             dbS.AddColumnToTable("documentproducts", "UnitPrice", SchemaDb.String, "20");

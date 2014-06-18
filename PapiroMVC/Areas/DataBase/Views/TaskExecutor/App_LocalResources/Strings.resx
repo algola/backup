@@ -429,4 +429,13 @@
   <data name="ControlTableRollType" xml:space="preserve">
     <value>Tavolo Controllo Bobina</value>
   </data>
+  <data name="STAMPAETICHROTOLOGridCaption" xml:space="preserve">
+    <value>Stampa etichette a bobina</value>
+  </data>
+  <data name="STAMPAMORBIDOGridCaption" xml:space="preserve">
+    <value>Stampa grande formato di materiale morbido</value>
+  </data>
+  <data name="STAMPARIGIDOGridCaption" xml:space="preserve">
+    <value>Stampa grande formato di materiale rigido</value>
+  </data>
 </root>

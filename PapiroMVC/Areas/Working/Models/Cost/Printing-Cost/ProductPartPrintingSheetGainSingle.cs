@@ -18,7 +18,9 @@ namespace PapiroMVC.Models
         //true = calculated automatically
         public bool AutoDCut { get; set; }
 
-        public int MaxGain1 { get; set;}
+        public int TypeOfDCut1 { get; set; }
+
+        public int MaxGain1 { get; set; }
         public int MaxGain2 { get; set; }
 
         //true = pinza sul lato lungo
@@ -91,7 +93,7 @@ namespace PapiroMVC.Models
 
 
                 //LIMITO LA RESA
-                if(MaxGain1 !=0 && gain1_1 > MaxGain1)
+                if (MaxGain1 != 0 && gain1_1 > MaxGain1)
                 {
                     gain1_1 = MaxGain1;
                 }
@@ -105,7 +107,7 @@ namespace PapiroMVC.Models
                     )));
 
                 int gain2_2 = (int)decimal.Truncate((decimal)((
-                    (LargerFormat.GetSide2() - minusSide2 + dCut2) / (SmallerFormat.GetSide2() + dCut2)
+                    (LargerFormat.GetSide2() - minusSide2 + (dCut2 > 0 ? dCut2 : 0)) / (SmallerFormat.GetSide2() + dCut2)
                     )));
 
 
@@ -136,7 +138,7 @@ namespace PapiroMVC.Models
                     gain1_2 = MaxGain1;
                 }
 
-                
+
                 var gain1_2ddp = (int)decimal.Truncate((decimal)(((LargerFormat.GetSide1() - ddpminusSide1 + dCut2) / (SmallerFormat.GetSide2() + dCut2))));
 
                 //doppio taglio calcolato su SideNotSide 1
@@ -174,8 +176,20 @@ namespace PapiroMVC.Models
 
                         if (AutoDCut)
                         {
-//                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
-                            dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Ceiling(dCut2_2Res*10))/10 : dCut1_1Res;
+                            //                            dCut1_1Res = dCut1_1Res > (dCut2_2Res * 2) ? dCut2_2Res * 2 : dCut1_1Res;
+
+                            switch (TypeOfDCut1)
+                            {
+                                case 1:
+                                    dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (dCut2_2Res) : dCut1_1Res;
+                                    break;
+                                case 2:
+                                    dCut1_1Res = 0;
+                                    break;
+                                default:
+                                    dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Ceiling(dCut2_2Res * 10)) / 10 : dCut1_1Res;
+                                    break;
+                            }
 
                             var tempDCut2 = Math.Round(dCut2_2Res * 10000) / 10000;
                             var tempDCut1 = Math.Round(dCut1_1Res * 10000) / 10000;

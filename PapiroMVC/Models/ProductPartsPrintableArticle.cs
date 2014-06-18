@@ -50,6 +50,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string Adhesive { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> RoundTo { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

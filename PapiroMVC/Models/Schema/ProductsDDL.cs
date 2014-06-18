@@ -20,7 +20,7 @@ namespace PapiroMVC.Model
             //First Table
             dbS.AddTable("products");
             dbS.AddColumnToTable("products", "CodProduct", SchemaDb.StringPK, "50");
-            dbS.AddColumnToTable("products", "ProductName", SchemaDb.String, "255");
+            dbS.AddColumnToTable("products", "ProductName", SchemaDb.LongString, "700");
             dbS.AddColumnToTable("products", "ProductRefName", SchemaDb.String, "255");
             dbS.AddColumnToTable("products", "id", SchemaDb.String, "100");
             dbS.AddColumnToTable("products", "Format", SchemaDb.String, "50");
@@ -101,6 +101,13 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparts", "MaxDCut", SchemaDb.Double, "0");
             dbS.AddColumnToTable("productparts", "MinDCut", SchemaDb.Double, "0");
 
+            //Used in Label... 
+            //0 = normal-> must be >= DCut2
+            //1 = must be = DCut2
+            //2 = must be = 0
+            dbS.AddColumnToTable("productparts", "TypeOfDCut1", SchemaDb.Int, "0");
+
+
             //0 or Null --> Free //1 = SideOnSide //2 = !SideOnSide
             dbS.AddColumnToTable("productparts", "SideOnSide", SchemaDb.Int, "0");
 
@@ -124,6 +131,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartsprintablearticle", "Color", SchemaDb.String, "100");
             dbS.AddColumnToTable("productpartsprintablearticle", "Adhesive", SchemaDb.String, "100");
             dbS.AddColumnToTable("productpartsprintablearticle", "Weight", SchemaDb.IntUS, "0");
+
+            dbS.AddColumnToTable("productpartsprintablearticle", "RoundTo", SchemaDb.Bool, "0");
 
             // 0 = ProductPartSheetArticle //  etc... 
             dbS.AddColumnToTable("productpartsprintablearticle", "SelectorProductPartPrintableArticle", SchemaDb.Int, "0");

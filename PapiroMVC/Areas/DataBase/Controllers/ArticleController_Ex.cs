@@ -838,7 +838,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         cell = new string[] 
                         {                       
                             a.CodArticle,
-                            a.CodArticle,
+                          //  a.CodArticle,
                             a.TypeOfMaterial,
                             a.NameOfMaterial,
                             a.Color,

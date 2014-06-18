@@ -133,7 +133,7 @@
     <value>Rif. gruppo</value>
   </data>
   <data name="DocumentNameToolTip" xml:space="preserve">
-    <value>Gruppo di articoli o riferimento ad essi</value>
+    <value>Gruppo di articoli o riferimento ad essi &lt;a href='http://www.gestionestampa.com/?p=374' target='_blank'&gt;Approfondisi&lt;/a&gt;</value>
   </data>
   <data name="ProductName" xml:space="preserve">
     <value>Rif. articolo</value>
@@ -146,5 +146,11 @@
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>Questo campo è richiesto per completare l'operazione</value>
+  </data>
+  <data name="UIntValidation" xml:space="preserve">
+    <value>(^0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*$)</value>
+  </data>
+  <data name="UIntValidationError" xml:space="preserve">
+    <value>La quantità deve essere positiva</value>
   </data>
 </root>

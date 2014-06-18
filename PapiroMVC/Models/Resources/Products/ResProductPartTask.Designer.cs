@@ -124,7 +124,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fustellatura in linea.
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string CodFUSTELLATURA_NO {
             get {

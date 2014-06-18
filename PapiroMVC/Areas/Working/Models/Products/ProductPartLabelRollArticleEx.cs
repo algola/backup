@@ -13,5 +13,9 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductPartLabelRollArticleEx_MetaData))]
     public partial class ProductPartLabelRollArticle : ProductPartsPrintableArticle
     {
+        public ProductPartLabelRollArticle()
+        {
+            TypeOfProductPartsPrintableArticle = TypeOfProductPartsPrintableArticleType.ProductPartLabelRollArticle;
+        }
     }
 }

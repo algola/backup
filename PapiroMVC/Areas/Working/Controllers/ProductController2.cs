@@ -106,7 +106,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateProduct(ProductViewModel pv)
         {
-            var qts = pv.Quantities;
+           // var qts = pv.Quantities;
             var product = pv.Product;
 
             foreach (var item in product.ProductParts)
@@ -183,29 +183,27 @@ namespace PapiroMVC.Areas.Working.Controllers
                     DocumentProduct dp;
                     DocumentProduct firstDocumentProduct = null;
 
-                    foreach (var qtsitem in qts)
+
+                    if (pv.Quantity != 0)
                     {
-                        if (qtsitem != 0)
+                        dp = new DocumentProduct();
+                        //use first document product to lead each tecnical choice
+                        if (firstDocumentProduct == null)
                         {
-                            dp = new DocumentProduct();
-                            //use first document product to lead each tecnical choice
-                            if (firstDocumentProduct == null)
-                            {
-                                firstDocumentProduct = dp;
-                            }
-                            dp.Document = null;
-                            dp.CodProduct = pv.Product.CodProduct;
-                            dp.Product = pv.Product;
-
-                            dp.Quantity = qtsitem;
-
-                            dp.InitCost();
-                            document.DocumentProducts.Add(dp);
-
-                            documentRepository.Edit(document);
-                            documentRepository.Save();
-
+                            firstDocumentProduct = dp;
                         }
+                        dp.Document = null;
+                        dp.CodProduct = pv.Product.CodProduct;
+                        dp.Product = pv.Product;
+
+                        dp.Quantity = pv.Quantity;
+
+                        dp.InitCost();
+                        document.DocumentProducts.Add(dp);
+
+                        documentRepository.Edit(document);
+                        documentRepository.Save();
+
                     }
 
                     //OK questo funziona ma riporta alla lista dei costi
@@ -215,8 +213,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                     if (firstDocumentProduct.Costs.FirstOrDefault() != null)
                     {
                         Session["codProduct"] = document.DocumentProducts.LastOrDefault().CodProduct;
-                        
-                        return Json( new { redirectUrl = Url.Action("EditAndCreateAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodDocumentProduct }) });
+
+                        return Json(new { redirectUrl = Url.Action("EditAndCreateAllCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodDocumentProduct }) });
                         //   return Json(new { redirectUrl = Url.Action("EditCost", "Document", new { id = firstDocumentProduct.Costs.FirstOrDefault().CodCost }) });
                     }
                     else

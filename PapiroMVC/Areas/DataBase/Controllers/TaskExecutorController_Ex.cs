@@ -76,6 +76,116 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return q;
         }
 
+        /// <summary>
+        /// Elenco delle macchine da stampa divise per tipo di lavorazione che possono effettuare!!!!
+        /// </summary>
+        /// <param name="gridSettings"></param>
+        /// <param name="codTypeOfTask"></param>
+        /// <returns></returns>
+        public ActionResult TaskExecutors(GridSettings gridSettings, string codTypeOfTask)
+        {
+            //load taskexecutor
+            var lst = TaskExecutorList(gridSettings);
+            //and filtering on codTypeOfTask
+            var q = TaskExecutor.FilterByTask(lst, codTypeOfTask);
+
+            string typeOfTaskExecutorFilter = string.Empty;
+            //if gridsetting is a search option
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string sheetType = resman.GetString("SheetType");
+            string rollType = resman.GetString("RollType");
+            string plotterSheetType = resman.GetString("PlotterSheetType");
+            string plotterRollType = resman.GetString("PlotterRollType");
+            //    string ctrlTblType = resman.GetString("ControlTableRollType");
+            string flexoType = resman.GetString("FlexoType");
+
+            if (gridSettings.isSearch)
+            {
+                typeOfTaskExecutorFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfTaskExecutor") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfTaskExecutor").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(typeOfTaskExecutorFilter))
+            {
+                Boolean isSheet = false, isRoll = false, isPlotterS = false, isPlotterR, isCrtlTab = false, isFlexo = false;
+
+                //to match with language we have to compare filter with resource
+                isSheet = (sheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isRoll = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isPlotterS = (plotterSheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isPlotterR = (plotterRollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isFlexo = (flexoType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
+                var s1 = isSheet ? (IQueryable<TaskExecutor>)q.OfType<LithoSheet>() : q.Where(x => x.CodTaskExecutor == "");
+                var s2 = isSheet ? (IQueryable<TaskExecutor>)q.OfType<DigitalSheet>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var r1 = isRoll ? (IQueryable<TaskExecutor>)q.OfType<LithoRoll>() : q.Where(x => x.CodTaskExecutor == "");
+                var r2 = isRoll ? (IQueryable<TaskExecutor>)q.OfType<DigitalRoll>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var p1 = isPlotterS ? (IQueryable<TaskExecutor>)q.OfType<PlotterSheet>() : q.Where(x => x.CodTaskExecutor == "");
+                var p2 = isPlotterR ? (IQueryable<TaskExecutor>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var res = (((((s1.Union(s2)).Union(r1)).Union(r2)).Union(p1)).Union(p2));
+                q = (IQueryable<PapiroMVC.Models.TaskExecutor>)res;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodTaskExecutor,
+                        cell = new string[] 
+                        {
+                            a.CodTaskExecutor,                                                            
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
+                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
+                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
+                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
+                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
+                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"CostMq":                                            
+                                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
+                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":"",
+                                                            
+                            a.CodTaskExecutor,
+                            a.TypeOfExecutor.ToString(),
+                            a.TaskExecutorName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+
+
+        }
+
+
+
         private IQueryable<Litho> LithoList(GridSettings gridSettings)
         {
             //common serarch and order
@@ -386,8 +496,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        
-        
+
+
         public ActionResult SemiRollList(GridSettings gridSettings)
         {
             //common serarch and order
@@ -612,7 +722,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //this resource has to be the same as view's resource
             var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
             string ctrlTblType = resman.GetString("ControlTableRollType");
-           // string rollType = resman.GetString("PlotterRollType");
+            // string rollType = resman.GetString("PlotterRollType");
 
 
             if (gridSettings.isSearch)
@@ -627,13 +737,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                 //to match with language we have to compare filter with resource
                 isTable = (ctrlTblType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
-//                isSupp = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                //                isSupp = (rollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
 
                 var a = isTable ? (IQueryable<PrePostPress>)q.OfType<ControlTableRoll>() : q.Where(x => x.CodTaskExecutor == "");
-//                var b = isSupp ? (IQueryable<Plotter>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
+                //                var b = isSupp ? (IQueryable<Plotter>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
 
-//                var res = (a.Union(b));
-//                q = (IQueryable<Plotter>)res;
+                //                var res = (a.Union(b));
+                //                q = (IQueryable<Plotter>)res;
 
                 q = a;
             }
@@ -672,7 +782,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnTime?"CostTime":
                                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.BindingOnRun?"CostRun":
-                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":"",                                           
+                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":                                                                                               
+                                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
+                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":"",                                           
+
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
 //CODTASKTODO   a.CodTask,
@@ -749,7 +862,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ((Flexo)z).CheckZeroCylinder();
 
             var z2 = z.TaskExecutorCylinders;
-            
+
             var q = z2.OrderBy(x => x.Z).AsQueryable();
 
             var q2 = q.ToList();
@@ -1211,7 +1324,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-            /// <summary>
+        /// <summary>
         /// deleting one step and responding with error or ok message
         /// </summary>
         /// <param name="id"></param>
@@ -1220,7 +1333,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             try
             {
-                var x=taskExecutorRepository.GetSingleTaskExecutorCylindern(id);
+                var x = taskExecutorRepository.GetSingleTaskExecutorCylindern(id);
                 taskExecutorRepository.DeleteSingleCylinder(x);
                 taskExecutorRepository.Save();
             }

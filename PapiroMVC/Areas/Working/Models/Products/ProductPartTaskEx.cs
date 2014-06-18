@@ -55,8 +55,18 @@ namespace PapiroMVC.Models
 
             if (ProductPart != null)
             {
+
                 var x = ProductPart.Product.ProductNameGenerator;
-                x = x.Replace("%PARTTASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + " %PARTTASKS");
+
+                if (x.Contains("%PRINTPARTTASK") && this.CodOptionTypeOfTask.Contains("STAMPA"))
+                {
+                    x = x.Replace("%PRINTPARTTASK", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null));
+                }
+                else
+                {
+                    x = x.Replace("%PARTTASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + " %PARTTASKS");
+                }
+
                 ProductPart.Product.ProductNameGenerator = x;
             }
 

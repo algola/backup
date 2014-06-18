@@ -20,6 +20,7 @@ namespace PapiroMVC.Models
         public string MlDescription { get; set; }
         public string NrDescription { get; set; }
         public string UpDescription { get; set; }
+        public string UpDescription1000 { get; set; }
         public string AmountDescription { get; set; }
         public string QtyDescription { get; set; }
 
@@ -31,8 +32,8 @@ namespace PapiroMVC.Models
                 if (_documentProductNameGenerator == "")
                 {
                     _documentProductNameGenerator = QtyDescription + ": %QUANTITY - " +
-                        UpDescription + " %UNITPRICE " +
-                        AmountDescription + " %TOTALPRICE@@%SUPPCOST@";
+                        " %UNITPRICE " +
+                      "";//  AmountDescription + " %TOTALPRICE@@%SUPPCOST@";
                 }
 
                 return _documentProductNameGenerator;
@@ -47,7 +48,15 @@ namespace PapiroMVC.Models
         {
             var x = DocumentProductNameGenerator;
             x = x.Replace("%QUANTITY", Quantity.ToString());
-            x = x.Replace("%UNITPRICE", UnitPrice);
+
+            if (Math.Truncate(Convert.ToDouble(UnitPrice) * 100)==0)
+            {
+                x = x.Replace("%UNITPRICE", UpDescription1000 + " " + (Convert.ToDouble(UnitPrice) * 1000).ToString());
+            }
+            else
+            {
+                x = x.Replace("%UNITPRICE", UpDescription + " " + UnitPrice);
+            }
             x = x.Replace("%TOTALPRICE", TotalAmount);
 
             foreach (var c in Costs)

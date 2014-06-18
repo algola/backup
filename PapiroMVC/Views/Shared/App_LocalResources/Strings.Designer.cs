@@ -682,6 +682,33 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Etichette in Bobina.
+        /// </summary>
+        public static string STAMPAETICHETTEROTOLOMenu {
+            get {
+                return ResourceManager.GetString("STAMPAETICHETTEROTOLOMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Morbido Grande Formato.
+        /// </summary>
+        public static string STAMPAMORBIDOMenu {
+            get {
+                return ResourceManager.GetString("STAMPAMORBIDOMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rigido Grande Formato.
+        /// </summary>
+        public static string STAMPARIGIDOMenu {
+            get {
+                return ResourceManager.GetString("STAMPARIGIDOMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inizia.
         /// </summary>
         public static string Start {

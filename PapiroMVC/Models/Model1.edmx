@@ -310,6 +310,7 @@
           <Property Name="HaveDCutLimit" Type="bit" />
           <Property Name="MaxDCut" Type="double" />
           <Property Name="MinDCut" Type="double" />
+          <Property Name="TypeOfDCut1" Type="int" />
         </EntityType>
         <EntityType Name="productpartsprintablearticle">
           <Key>
@@ -325,6 +326,7 @@
           <Property Name="Weight" Type="uint" />
           <Property Name="SelectorProductPartPrintableArticle" Type="int" />
           <Property Name="Adhesive" Type="char" MaxLength="100" />
+          <Property Name="RoundTo" Type="bit" />
         </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
@@ -1968,6 +1970,7 @@
           <Property Name="HaveDCutLimit" Type="Boolean" />
           <Property Name="MaxDCut" Type="Double" />
           <Property Name="MinDCut" Type="Double" />
+          <Property Name="TypeOfDCut1" Type="Int32" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -1984,6 +1987,7 @@
           <Property Type="Int64" Name="Weight" />
           <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartPrintableArticle" FromRole="ProductPartsPrintableArticle" ToRole="cost" />
           <Property Name="Adhesive" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RoundTo" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductPartTask">
           <Key>
@@ -3502,6 +3506,7 @@
           <EntitySetMapping Name="ProductParts">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPart)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="TypeOfDCut1" ColumnName="TypeOfDCut1" />
                 <ScalarProperty Name="MinDCut" ColumnName="MinDCut" />
                 <ScalarProperty Name="MaxDCut" ColumnName="MaxDCut" />
                 <ScalarProperty Name="HaveDCutLimit" ColumnName="HaveDCutLimit" />
@@ -3582,6 +3587,7 @@
           <EntitySetMapping Name="ProductPartsPrintableArticles">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartsPrintableArticle)">
               <MappingFragment StoreEntitySet="productpartsprintablearticle">
+                <ScalarProperty Name="RoundTo" ColumnName="RoundTo" />
                 <ScalarProperty Name="Adhesive" ColumnName="Adhesive" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
@@ -4101,7 +4107,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="54">
+      <Diagram Name="Model1" ZoomLevel="62">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="2.625" PointY="7.875" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="1.125" PointY="16.75" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="0.5" PointY="19.5" Height="1.5956835937499996" />

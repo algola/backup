@@ -27,7 +27,9 @@ namespace PapiroMVC.Models
 
         [DisplayNameLocalized(typeof(ResProductViewModel), "Quantities")]
         [Tooltip(typeof(ResProductViewModel), "Quantities")]
-        public List<int> Quantities { get; set; }
+        [RegularExpressionLocalized(typeof(ResProductViewModel), "UIntValidation", "UIntValidationError")]
+
+        public int Quantity { get; set; }
 
     }
 }

@@ -106,7 +106,7 @@ namespace PapiroMVC.Models.Resources.ViewModels {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gruppo di articoli o riferimento ad essi.
+        ///   Looks up a localized string similar to Gruppo di articoli o riferimento ad essi &lt;a href=&apos;http://www.gestionestampa.com/?p=374&apos; target=&apos;_blank&apos;&gt;Approfondisi&lt;/a&gt;.
         /// </summary>
         public static string DocumentNameToolTip {
             get {
@@ -147,6 +147,24 @@ namespace PapiroMVC.Models.Resources.ViewModels {
         public static string RequiredField {
             get {
                 return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (^0*[1-9][0-9]*(\.[0-9]+)?|0+\.[0-9]*[1-9][0-9]*$).
+        /// </summary>
+        public static string UIntValidation {
+            get {
+                return ResourceManager.GetString("UIntValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La quantità deve essere positiva.
+        /// </summary>
+        public static string UIntValidationError {
+            get {
+                return ResourceManager.GetString("UIntValidationError", resourceCulture);
             }
         }
     }

@@ -15,9 +15,9 @@ namespace Services
             switch (id)
             {
                 case "EtichetteRotolo":
-                    return "Etichette a bobina 1 pista '%PRODNAME' @%TYPEMATERIAL %NAMEMATERIAL %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM o similare in ns possesso previo Vs. conferma @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS";
+                    return "Etichette a bobina 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM o similare in ns possesso previo Vs. conferma @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS";
                 case "EtichetteSagRotolo":
-                    return "Etichette sagomate a bobina 1 pista '%PRODNAME' @%TYPEMATERIAL %NAMEMATERIAL %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS";
+                    return "Etichette sagomate a bobina 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @F.to mm sagomato %PARTFORMATOPENMM @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS";
                 case "FasceGommateRotolo":
                     return "prova descrizione";
                 default:
