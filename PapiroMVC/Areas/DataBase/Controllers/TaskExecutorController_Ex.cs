@@ -159,7 +159,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         id = a.CodTaskExecutor,
                         cell = new string[] 
                         {
-                            a.CodTaskExecutor,                                                            
                             a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
@@ -169,6 +168,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
                                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":"",
                                                             
+                            a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,

@@ -20,7 +20,7 @@
     </div>
     @*filters check************************************************@
 
-    <table id="listSheetPrintableArticle"><tr><td /></tr></table>
+    <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
 
     <br />
@@ -34,6 +34,12 @@
         <i class="icon-plus"></i>
         @Html.T(strings, "WizardSheetPrintableArticle")
     </button>
+
+    <div id="dialog-confirm" class="hide">
+
+        @Html.T(strings, "DeleteMessage")
+
+    </div>
 
 </div>
 <br />
@@ -50,7 +56,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#listSheetPrintableArticle"),
+            $grid = $("#list"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -317,7 +323,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#listSheetPrintableArticle");
+        var myGrid = $("#list");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
@@ -330,7 +336,7 @@
 
     //filters check************************************************
     $(window).load(function () {
-        var myGrid = $("#listSheetPrintableArticle");
+        var myGrid = $("#list");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
         if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&

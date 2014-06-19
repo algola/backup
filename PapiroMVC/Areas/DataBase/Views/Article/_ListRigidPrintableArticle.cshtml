@@ -27,7 +27,7 @@
     </div>
     @*filters check************************************************@
 
-    <table id="listRigidPrintableArticle"><tr><td /></tr></table>
+    <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -43,6 +43,12 @@
         <i class="icon-plus"></i>
         @Html.T(strings, "WizardRigidPrintableArticle")
     </button>
+
+    <div id="dialog-confirm" class="hide">
+
+        @Html.T(strings, "DeleteMessage")
+
+    </div>
 
 </div>
 
@@ -61,7 +67,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#listRigidPrintableArticle"),
+            $grid = $("#list"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -320,7 +326,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#listRigidPrintableArticle");
+        var myGrid = $("#list");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
@@ -333,7 +339,7 @@
 
     //filters check************************************************
     $(window).load(function () {
-        var myGrid = $("#listRigidPrintableArticle");
+        var myGrid = $("#list");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
         

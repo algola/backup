@@ -81,14 +81,26 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "Selector", SchemaDb.Int, "0");
 
             //NoPrintableType
-            // 0 = Cylinders
+            // 0 = die
             dbS.AddColumnToTable("articles", "NoPrintableType", SchemaDb.Int, "0");
 
-            //cylinders
-            // 0 = Print // 1 = Die 
-            dbS.AddColumnToTable("articles", "SelectorCylinders", SchemaDb.Int, "0");
+            //DieType
+            // 0 = Sheet // 1 = SemiRoll // 2 = Flexo 
+            dbS.AddColumnToTable("articles", "CodDie", SchemaDb.String, "50");
+            dbS.AddColumnToTable("articles", "DieType", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articles", "Z", SchemaDb.Double, "0");
-            dbS.AddColumnToTable("articles", "Number", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articles", "PrintingFormat", SchemaDb.String, "20");
+            dbS.AddColumnToTable("articles", "Format", SchemaDb.String, "20");
+            dbS.AddColumnToTable("articles", "DCut1", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articles", "DCut2", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articles", "MaxGain1", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("articles", "MaxGain2", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("articles", "Description", SchemaDb.String, "255");
+            // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
+            dbS.AddColumnToTable("articles", "FormatType", SchemaDb.Int, "0");
+
+
 
             //Index
             dbS.AddIndex("articles", "ArticleName");

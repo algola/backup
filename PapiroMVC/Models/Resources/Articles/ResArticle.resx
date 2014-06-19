@@ -129,16 +129,64 @@
   <data name="CodArticleToolTip" xml:space="preserve">
     <value>Il codice articolo è assegnato automaticamente dal sistema</value>
   </data>
+  <data name="CodDie" xml:space="preserve">
+    <value>Codice fustella</value>
+  </data>
   <data name="CurrencyValidation" xml:space="preserve">
     <value>(^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$)</value>
   </data>
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="DCut1" xml:space="preserve">
+    <value>Interspazio verticale</value>
+  </data>
+  <data name="DCut1Flexo" xml:space="preserve">
+    <value>Int.Spazio Banda</value>
+  </data>
+  <data name="DCut2" xml:space="preserve">
+    <value>Interspazio orizzontale</value>
+  </data>
+  <data name="DCut2Flexo" xml:space="preserve">
+    <value>Int.Spazio Passo</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrizione fustella</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Fomato (cm x cm)</value>
+  </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FormatValidationError" xml:space="preserve">
+    <value>formato carta non valido (es. valido: 70x100)</value>
+  </data>
+  <data name="MaxGain1" xml:space="preserve">
+    <value>Resa lato 1</value>
+  </data>
+  <data name="MaxGain1Flexo" xml:space="preserve">
+    <value>Resa in banda</value>
+  </data>
+  <data name="MaxGain2" xml:space="preserve">
+    <value>Resa lato 2</value>
+  </data>
+  <data name="MaxGain2Flexo" xml:space="preserve">
+    <value>Resa in passo</value>
+  </data>
+  <data name="PrintingFormat" xml:space="preserve">
+    <value>Formato di stampa</value>
+  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
   </data>
   <data name="UnitOfMeasure" xml:space="preserve">
     <value>Unità di misura</value>
+  </data>
+  <data name="Width" xml:space="preserve">
+    <value>Banda</value>
+  </data>
+  <data name="Z" xml:space="preserve">
+    <value>Cilindro Z</value>
   </data>
 </root>

@@ -234,6 +234,14 @@
     <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ArticleEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\Die_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieSemiRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieFlexoEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieSheetEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieSemiRoll_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieFlexo_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieSheet_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ObjectPrintableArticleEx.cs" />
@@ -584,6 +592,18 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DeficitOnCostForWeightStep.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Die.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DieFlexo.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DieSemiRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DieSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Digital.cs">
@@ -1873,6 +1893,7 @@
     <Content Include="Content\ProductImage\AltriFormati.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ProductImage\beta-stamp.png" />
     <Content Include="Content\ProductImage\BigliettiVisita.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2393,6 +2414,17 @@
     <Content Include="Areas\Working\Views\Document\_NewProductCommand.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\IndexTaskExecutors.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListTaskExecutors.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexDie.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListDie.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateDieFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditDieFlexo.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditDieSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateDieSheet.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditDieSemiRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateDieSemiRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSemiRoll.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>

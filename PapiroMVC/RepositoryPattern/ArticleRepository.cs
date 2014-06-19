@@ -13,28 +13,32 @@ namespace Services
 
         public string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy)
         {
-            CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
-            var filteredItems = customerSuppliers.Where(
-                item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+            if (!String.IsNullOrEmpty(supplierMaker) && ! String.IsNullOrEmpty(supplyerBuy))
+            {
+                CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
-            if (filteredItems.Count() == 0) throw new NoSupplierException();
+                var filteredItems = customerSuppliers.Where(
+                    item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-            a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+                if (filteredItems.Count() == 0) throw new NoSupplierException();
 
-            customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+                a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
 
-            var filteredItems2 = customerSuppliers.Where(
-                item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+                customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
-            if (filteredItems2.Count() == 0) throw new NoSupplierException();
+                var filteredItems2 = customerSuppliers.Where(
+                    item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-            //if #suppliers < 1 then no supplier has selected correctly and then thow error
-            a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+                if (filteredItems2.Count() == 0) throw new NoSupplierException();
+
+                //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+            }
 
             var csCode = (from COD in this.GetAll() select COD.CodArticle).Max();
 
-            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6,'0');
+            return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
         }
 
         private void ArticleCostCodeRigen(Article c)
@@ -207,16 +211,16 @@ namespace Services
 
             ArticleCostCodeRigen(entity);
 
-            //cehck if name is just inserted
-            var article = (from ART in this.GetAll() where ART.ArticleName == entity.ArticleName select ART);
+            ////cehck if name is just inserted
+            //var article = (from ART in this.GetAll() where ART.ArticleName == entity.ArticleName select ART);
 
-            Console.Write(article.Count());
+            //Console.Write(article.Count());
 
-            if (article.Count() > 0)
-            {
-                //this.Edit(entity);
-            }
-            else
+            //if (article.Count() > 0)
+            //{
+            //    //this.Edit(entity);
+            //}
+            //else
                 base.Add(entity);
 
 

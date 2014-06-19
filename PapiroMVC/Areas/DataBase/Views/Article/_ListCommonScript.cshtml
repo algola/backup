@@ -1,6 +1,8 @@
-﻿@{
+﻿@using PapiroMVC.Validation
+@{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
+    
 
 }
 
@@ -33,6 +35,49 @@
 
         return link;
     }
+
+    $("#delete").click(function () {
+        var grid = jQuery("#list");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+        if (ids.length > 0) {
+
+            hideProcessingMsg();
+            $("#dialog-confirm").dialog({
+                height: 150,
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        //alert("Confirm");
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeleteArticle","Article",null)',
+                            data: {
+                                ids: JSON.stringify(ids)
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                //if (msg.isRedirect) {
+                                //    window.location.href = msg.redirectUrl;
+                                //}
+                                $("#list").trigger("reloadGrid");
+                            },
+                            error: function (res, status, exeption) {
+                                $("#list").trigger("reloadGrid");
+
+                            }
+                        });
+
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            hideProcessingMsg();
+        }
+    });
 
 </script>
 

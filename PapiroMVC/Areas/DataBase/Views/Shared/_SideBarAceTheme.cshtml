@@ -19,8 +19,12 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "fa fa-fw fa-lg fa-male", "menu-text")
         </li>
 
-        <li id="noPrintableSlidebar">
+        @*<li id="noPrintableSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+        </li>*@
+
+        <li id="noPrintableSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "DieMenu"), "IndexDie", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-th-large", "menu-text")
         </li>
 
         <li id="databaseSlidebar">

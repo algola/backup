@@ -123,12 +123,12 @@ namespace PapiroMVC.Model
             ////First Table
             dbS.AddTable("productpartprintinggain");
 
-            //Second Table
-            dbS.AddTable("costdetailrelations");
-            dbS.AddColumnToTable("costdetailrelations", "CodCostDetailFrom", SchemaDb.String, "50");
-            dbS.AddColumnToTable("costdetailrelations", "CodCostDetailTo", SchemaDb.String, "50");
-            dbS.AddForeignKey("costdetailrelations", "CodCostDetailFrom", "costdetails", "CodCostDetail");
-            dbS.AddForeignKey("costdetailrelations", "CodCostDetailTo", "costdetails", "CodCostDetail");
+            ////Second Table
+            //dbS.AddTable("costdetailrelations");
+            //dbS.AddColumnToTable("costdetailrelations", "CodCostDetailFrom", SchemaDb.String, "50");
+            //dbS.AddColumnToTable("costdetailrelations", "CodCostDetailTo", SchemaDb.String, "50");
+            //dbS.AddForeignKey("costdetailrelations", "CodCostDetailFrom", "costdetails", "CodCostDetail");
+            //dbS.AddForeignKey("costdetailrelations", "CodCostDetailTo", "costdetails", "CodCostDetail");
 
 
             dbS.AddColumnToTable("productpartprintinggain", "CodProductPartPrintingGain", SchemaDb.StringPK, "50");

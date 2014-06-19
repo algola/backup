@@ -129,6 +129,9 @@
   <data name="Articles" xml:space="preserve">
     <value>Materiali</value>
   </data>
+  <data name="ArticlesDie" xml:space="preserve">
+    <value>Fustelle</value>
+  </data>
   <data name="AutoCahngesCaption" xml:space="preserve">
     <value>Variazione automatica dati</value>
   </data>
@@ -140,6 +143,9 @@
   </data>
   <data name="CodArticleCaption" xml:space="preserve">
     <value>Codice</value>
+  </data>
+  <data name="CodDieCaption" xml:space="preserve">
+    <value>Codice fustella</value>
   </data>
   <data name="ColorCaption" xml:space="preserve">
     <value>Colore</value>
@@ -156,6 +162,15 @@
   <data name="CostPerSheetCaption" xml:space="preserve">
     <value>Costo al Foglio</value>
   </data>
+  <data name="CreateDieFlexo" xml:space="preserve">
+    <value>Aggiungi flexo</value>
+  </data>
+  <data name="CreateDieSemiRoll" xml:space="preserve">
+    <value>Aggiungi semirotativa</value>
+  </data>
+  <data name="CreateDieSheet" xml:space="preserve">
+    <value>Aggiungi in piano</value>
+  </data>
   <data name="CreateNoPrintable" xml:space="preserve">
     <value>Nuovo Consumabile</value>
   </data>
@@ -168,6 +183,30 @@
   <data name="CreateSheetPrintableArticle" xml:space="preserve">
     <value>Nuovo materiale a Foglio</value>
   </data>
+  <data name="DCut1Caption" xml:space="preserve">
+    <value>Int.Spazio V.</value>
+  </data>
+  <data name="DCut2Caption" xml:space="preserve">
+    <value>Int.Spazio O.</value>
+  </data>
+  <data name="DeleteCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="DeleteDie" xml:space="preserve">
+    <value>Cancella fustella</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Confermi di voler cancellare?</value>
+  </data>
+  <data name="DeleteOk" xml:space="preserve">
+    <value>Conferma</value>
+  </data>
+  <data name="DescriptionCaption" xml:space="preserve">
+    <value>Descrizione</value>
+  </data>
+  <data name="DieGridCaption" xml:space="preserve">
+    <value>Archivio fustelle</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
@@ -179,6 +218,21 @@
   </data>
   <data name="FormatCaption" xml:space="preserve">
     <value>Formato</value>
+  </data>
+  <data name="FormatTypeName0" xml:space="preserve">
+    <value>Quadrata</value>
+  </data>
+  <data name="FormatTypeName1" xml:space="preserve">
+    <value>Ovale</value>
+  </data>
+  <data name="FormatTypeName2" xml:space="preserve">
+    <value>Sagomata</value>
+  </data>
+  <data name="MaxGain1Caption" xml:space="preserve">
+    <value>Resa V.</value>
+  </data>
+  <data name="MaxGain2Caption" xml:space="preserve">
+    <value>Resa O.</value>
   </data>
   <data name="MetaTitleRigid" xml:space="preserve">
     <value>Gestione di supporti rigidi come Forex, Polyonda, Microforato, etc... </value>
@@ -230,6 +284,9 @@
   </data>
   <data name="OptPallet" xml:space="preserve">
     <value>Applica ai costi della carta bandierata</value>
+  </data>
+  <data name="PrintingFormatCaption" xml:space="preserve">
+    <value>Sviluppo fustella</value>
   </data>
   <data name="RigidPrintableArticleGridCaption" xml:space="preserve">
     <value>Materiali stampabili rigidi</value>
@@ -300,10 +357,16 @@
   <data name="WeightCaption" xml:space="preserve">
     <value>gr/mq</value>
   </data>
+  <data name="WidthCaption" xml:space="preserve">
+    <value>Banda</value>
+  </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a rotolo</value>
   </data>
   <data name="WizardSheetPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a foglio</value>
+  </data>
+  <data name="ZCaption" xml:space="preserve">
+    <value>Z</value>
   </data>
 </root>

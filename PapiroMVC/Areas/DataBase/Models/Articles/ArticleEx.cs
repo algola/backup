@@ -51,7 +51,11 @@ namespace PapiroMVC.Models
             RigidPrintableArticle = 2,
             ObjectPrintableArticle = 3,
 
-            NoPrintable = 4
+            NoPrintable = 4,
+
+            DieSheet = 5,
+            DieSemiRoll = 6,
+            DieFlexo = 7,
         }
 
         public ArticleType TypeOfArticle

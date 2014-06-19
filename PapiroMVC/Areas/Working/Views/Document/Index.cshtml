@@ -64,11 +64,12 @@
 
                     <div class="widget-body">
                         <div class="widget-main pagination-centered">
+                     
+                            <div style="position: relative; left: 0; top: 0;">
+                                <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png" style="position: relative; top: 0; left: 0;" />
+                                <img src="~/Content/ProductImage/beta-stamp.png" style="position: absolute; top: 0px; left: 0px;" />
+                            </div>
 
-                            <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png"
-                                 alt="@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)" />
-                        </div>
-                        <div>
 
                             <a href="@(Url.Action("CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
                                 <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
@@ -89,6 +90,17 @@
 
 
 @Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
+
+
+
+<style>
+    .algoAver {
+        position: relative;
+        top: -150px;
+        left: 0;
+        width: 30%;
+    }
+</style>
 
 @section title{
     @Html.T(strings, "Documents")

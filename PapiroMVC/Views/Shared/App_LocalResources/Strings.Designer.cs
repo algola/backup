@@ -457,6 +457,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Archivio fustelle.
+        /// </summary>
+        public static string DieMenu {
+            get {
+                return ResourceManager.GetString("DieMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa Digitale.
         /// </summary>
         public static string DigitalSheetMenu {

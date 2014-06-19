@@ -10,6 +10,7 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
+using Newtonsoft.Json;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -60,9 +61,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult IndexNoPrintable()
         {
             return View();
-           // return View(new NoPrintableAutoChanges());
         }
 
+        public ActionResult IndexDie()
+        {
+            return View();
+        }
 
         [AuthorizeUser]
         [HttpGet]
@@ -196,6 +200,76 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_EditAndCreateNoPrintable", c);
 
         }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditNoPrintable(NoPrintableViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems = customerSuppliers.Where(
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems.Count() == 0) throw new Exception();
+
+                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+
+                    //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
+
+                    var filteredItems2 = customerSuppliers.Where(
+                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
+
+                    if (filteredItems2.Count() == 0) throw new Exception();
+
+                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
+                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexNoPrintable") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditNoPrintable";
+            return PartialView("_EditAndCreateNoPrintable", c);
+        }
+
+        public ActionResult EditNoPrintable(string id)
+        {
+            NoPrintableViewModel viewModel = new NoPrintableViewModel();
+            viewModel.Article = (NoPrintable)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditNoPrintable";
+            return View("EditNoPrintable", viewModel);
+        }
+
+
+
 
         [HttpParamAction]
         [AuthorizeUser]
@@ -362,29 +436,42 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             switch (article.TypeOfArticle)
             {
                 case Article.ArticleType.SheetPrintableArticle:
-                        ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
-                        break;
+                    ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
+                    break;
 
                 case Article.ArticleType.RollPrintableArticle:
-                        ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
-                        break;
+                    ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
+                    break;
 
                 case Article.ArticleType.RigidPrintableArticle:
-                        ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
-                        break;
+                    ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
+                    break;
 
                 case Article.ArticleType.ObjectPrintableArticle:
-                        ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
-                        break;
+                    ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
+                    break;
 
                 case Article.ArticleType.NoPrintable:
-                        ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
-                        break;
+                    ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
+                    break;
+
+                case Article.ArticleType.DieFlexo:
+                    ret = RedirectToAction("EditDieFlexo", "Article", new { id = id });
+                    break;
+
+                case Article.ArticleType.DieSemiRoll:
+                    ret = RedirectToAction("EditDieSemiRoll", "Article", new { id = id });
+                    break;
+
+                case Article.ArticleType.DieSheet:
+                    ret = RedirectToAction("EditDieSheet", "Article", new { id = id });
+                    break;
 
             }
 
             return ret;
         }
+
 
 
         public ActionResult EditSheetPrintableArticle(string id)
@@ -432,20 +519,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View("EditRigidPrintableArticle", viewModel);
         }
 
-        public ActionResult EditNoPrintable(string id)
-        {
-            NoPrintableViewModel viewModel = new NoPrintableViewModel();
-            viewModel.Article = (NoPrintable)articleRepository.GetSingle(id);
-
-            //get producer and maker
-
-            if (viewModel.Article.CodArticle == "")
-                return HttpNotFound();
-
-            //is used to know where we are from and go
-            ViewBag.ActionMethod = "EditNoPrintable";
-            return View("EditNoPrintable", viewModel);
-        }
 
         #endregion
 
@@ -546,57 +619,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_EditAndCreateRigidPrintableArticle", c);
         }
 
-        [HttpParamAction]
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditNoPrintable(NoPrintableViewModel c)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    PapiroMVC.Models.CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                    var filteredItems = customerSuppliers.Where(
-                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                    if (filteredItems.Count() == 0) throw new Exception();
-
-                    c.Article.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
-
-                    //                    customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                    var filteredItems2 = customerSuppliers.Where(
-                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                    if (filteredItems2.Count() == 0) throw new Exception();
-
-                    //if #suppliers < 1 then no supplier has selected correctly and then thow error
-                    c.Article.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
-
-                    articleRepository.Edit(c.Article);
-                    articleRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexNoPrintable") });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
-                }
-            }
-
-            foreach (ModelState modelState in ViewData.ModelState.Values)
-            {
-                foreach (ModelError error in modelState.Errors)
-                {
-                    Console.WriteLine(error);
-                }
-            }
-
-            //If we come here, something went wrong. Return it back. 
-            //multi submit
-            ViewBag.ActionMethod = "EditNoPrintable";
-            return PartialView("_EditAndCreateNoPrintable", c);
-        }
-
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -677,18 +699,295 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         // POST: /Article/Delete/5
 
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult DeleteArticle(string ids, string urlBack)
         {
-            try
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
             {
-                // TODO: Add delete logic here
+                var c = articleRepository.GetSingle(id);
+                articleRepository.Delete(c);
+            }
 
-                return Json(new { redirectUrl = Url.Action("Index") });
-            }
-            catch
+            articleRepository.Save();
+
+            return Json(new { redirectUrl = Url.Action(urlBack, "Article", new { area = "Database" }) });
+        }
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateDieFlexo()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateDieFlexo";
+            return View(new DieFlexo());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateDieFlexo(DieFlexo c)
+        {
+            if (ModelState.IsValid)
             {
-                return View();
+                try
+                {
+
+                    c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
+                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+
+                    articleRepository.Add(c);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
             }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateDieFlexo";
+            return PartialView("_EditAndCreateDieFlexo", c);
+
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditDieFlexo(DieFlexo c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+
+                    articleRepository.Edit(c);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditDieFlexo";
+            return PartialView("_EditAndCreateDieFlexo", c);
+        }
+
+        public ActionResult EditDieFlexo(string id)
+        {
+            DieFlexo viewModel = new DieFlexo();
+            viewModel = (DieFlexo)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditDieFlexo";
+            return View("EditDieFlexo", viewModel);
+        }
+
+
+        //--------- DieSheet
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateDieSheet()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateDieSheet";
+            return View(new DieSheet());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateDieSheet(DieSheet c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
+
+
+                    articleRepository.Add(c);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateDieSheet";
+            return PartialView("_EditAndCreateDieSheet", c);
+
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditDieSheet(DieSheet c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+
+                    articleRepository.Edit(c);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditDieSheet";
+            return PartialView("_EditAndCreateDieSheet", c);
+        }
+
+        public ActionResult EditDieSheet(string id)
+        {
+            DieSheet viewModel = new DieSheet();
+            viewModel = (DieSheet)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditDieSheet";
+            return View("EditDieSheet", viewModel);
+        }
+
+
+        //---------DieSemiRoll
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateDieSemiRoll()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateDieSemiRoll";
+            return View(new DieSemiRoll());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateDieSemiRoll(DieSemiRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
+
+
+                    articleRepository.Add(c);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateDieSemiRoll";
+            return PartialView("_EditAndCreateDieSemiRoll", c);
+
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditDieSemiRoll(DieSemiRoll c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+
+                    articleRepository.Edit(c);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexDie") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditDieSemiRoll";
+            return PartialView("_EditAndCreateDieSemiRoll", c);
+        }
+
+        public ActionResult EditDieSemiRoll(string id)
+        {
+            DieSemiRoll viewModel = new DieSemiRoll();
+            viewModel = (DieSemiRoll)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditDieSemiRoll";
+            return View("EditDieSemiRoll", viewModel);
         }
     }
 }

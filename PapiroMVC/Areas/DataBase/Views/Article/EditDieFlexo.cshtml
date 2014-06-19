@@ -1,0 +1,36 @@
+﻿@model PapiroMVC.Models.DieFlexo
+@using PapiroMVC.Validation
+
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingArticleTitle") + @Model.ArticleName;
+}
+
+@section title{
+    @Html.T(strings, "ArticlesDie")
+}
+
+@section description{
+    @ViewBag.Title
+}
+
+@Html.Partial("_EditAndCreateDieFlexo", Model)
+
+
+@section breadcrumb {
+
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}

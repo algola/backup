@@ -348,4 +348,7 @@
   <data name="STAMPARIGIDOMenu" xml:space="preserve">
     <value>Rigido Grande Formato</value>
   </data>
+  <data name="DieMenu" xml:space="preserve">
+    <value>Archivio fustelle</value>
+  </data>
 </root>
