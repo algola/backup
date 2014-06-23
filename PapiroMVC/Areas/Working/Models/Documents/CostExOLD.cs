@@ -378,7 +378,6 @@ namespace PapiroMVC.Models
                         default:
                             break;
                     }
-
                 }
                 else
                 {

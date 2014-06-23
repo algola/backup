@@ -229,7 +229,11 @@ namespace PapiroMVC.Models
                         DCut2 = ppP.CalculatedDCut2,
                         BuyingFormat = ppP.PrintingFormat,
                         PrintingFormat = ppP.PrintingFormat,
-                        Description = ppP.PrintingFormat
+                        Description = ppP.PrintingFormat,
+                        CalculatedGain = ppP.CalculatedGain,
+                        GainOnSide1 = ppP.CalculatedSide1Gain,
+                        GainOnSide2 = ppP.CalculatedSide2Gain
+
                     });
                 }
 
@@ -249,7 +253,11 @@ namespace PapiroMVC.Models
                             DCut2 = ppP.CalculatedDCut2,
                             BuyingFormat = ppP.PrintingFormat,
                             PrintingFormat = ppP.PrintingFormat,
-                            Description = ppP.PrintingFormat
+                            Description = ppP.PrintingFormat,
+                            CalculatedGain = ppP.CalculatedGain,
+                            GainOnSide1 = ppP.CalculatedSide1Gain,
+                            GainOnSide2 = ppP.CalculatedSide2Gain
+
                         });
 
                     }

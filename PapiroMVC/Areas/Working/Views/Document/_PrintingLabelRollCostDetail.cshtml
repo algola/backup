@@ -71,6 +71,7 @@
                 <th>Format</th>
                 <th>Int.s Banda</th>
                 <th>Int.s Passo</th>
+                <th>Pose</th>
             </tr>
         </thead>
         <tbody>
@@ -81,6 +82,7 @@
                 <td class="padding-2 no-padding-bottom">@i.BuyingFormat</td>
                 <td class="padding-2 no-padding-bottom">@i.DCut1</td>
                 <td class="padding-2 no-padding-bottom">@i.DCut2</td>
+                <td class="padding-2 no-padding-bottom">@i.CalculatedGain</td>                
             </tr>
             }
 
@@ -347,6 +349,7 @@
             var pFormat = $(this).closest('tr').find('td:eq(1)').text();
             var dCut1 = $(this).closest('tr').find('td:eq(2)').text();
             var dCut2 = $(this).closest('tr').find('td:eq(3)').text();
+//            var gain = $(this).closest('tr').find('td:eq(4)').text();
 
             $('#ddBuyingFormat').val(pFormat);
             $('#ddPartDCut1').val(dCut1);
@@ -357,12 +360,22 @@
 
         });
 
-        var searchText = '@(Model.BuyingFormat)';
+        var searchTextBF = '@(Model.BuyingFormat)';
+        var searchTextIB = '@(Model.ProductPart.DCut1)';
+        var searchTextIP = '@(Model.ProductPart.DCut2)';
 
         $("tr").removeClass("highlight");
 
         $("#htmlTable tr").filter(function () {
-            return $("td:eq(" + '1' + ")", this).text().indexOf(searchText) !== -1;
+
+            //var val = $("td:eq(" + '1' + ")", this).text().indexOf(searchTextBF) !== -1;
+            //val = val && $("td:eq(" + '2' + ")", this).text().indexOf(searchTextIB) !== -1;
+
+            var val = $("td:eq(" + '1' + ")", this).text() == searchTextBF;
+            val = val && $("td:eq(" + '2' + ")", this).text() == searchTextIB;
+            val = val && $("td:eq(" + '3' + ")", this).text() == searchTextIP;
+
+            return val;
         }).closest("tr").addClass("highlight");
 
 

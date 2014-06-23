@@ -1178,6 +1178,11 @@
             
             </summary>
         </member>
+        <member name="T:PapiroMVC.Models.PrintingHintComparer">
+            <summary>
+            use for union
+            </summary>
+        </member>
         <member name="M:PapiroMVC.Models.PrintingCostDetail.UpdateCoeff">
             <summary>
             

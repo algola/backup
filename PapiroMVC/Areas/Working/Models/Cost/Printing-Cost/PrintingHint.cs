@@ -43,6 +43,44 @@ namespace PapiroMVC.Models
         public int MinGain1 { get; set; }
         public int MinGain2 { get; set; }
 
+        public double GainOnSide1 { get; set; }
+        public double GainOnSide2 { get; set; }
+        public double CalculatedGain { get; set; }
+
+        public double DeltaDCut2 { get; set; }
+
+        public double Z
+        {
+            get
+            {
+                double a = PrintingFormat.GetSide2() / 2.54;
+                return a*8;
+            }
+        }
+
 
     }
+
+    /// <summary>
+    /// use for union
+    /// </summary>
+    class PrintingHintComparer : IEqualityComparer<PrintingHint>
+    {
+        public bool Equals(PrintingHint p1, PrintingHint p2)
+        {
+
+            var ret = p1.BuyingFormat == p2.BuyingFormat &&
+                p1.Format == p2.Format &&
+                p1.DCut1 == p2.DCut1 &&
+                p1.DCut2 == p2.DCut2;
+
+            return ret;
+        }
+
+        public int GetHashCode(PrintingHint p)
+        {
+            return p.GetHashCode();
+        }
+    }
+
 }

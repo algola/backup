@@ -33,7 +33,7 @@ namespace PapiroMVC.Models
                 {
                     _documentProductNameGenerator = QtyDescription + ": %QUANTITY - " +
                         " %UNITPRICE " +
-                      "";//  AmountDescription + " %TOTALPRICE@@%SUPPCOST@";
+                      "@@%SUPPCOST@";//  AmountDescription + " %TOTALPRICE@@%SUPPCOST@";
                 }
 
                 return _documentProductNameGenerator;

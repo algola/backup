@@ -11,7 +11,11 @@ namespace PapiroMVC.Models
     {
         public double Z { get; set; }
         public int MaxGain2 { get; set; }
+        public int MaxGain1 { get; set; }
+
         public Nullable<double> DCut2 { get; set; }
+        public Nullable<double> DCut1 { get; set; }
+
     }
 
     public partial class PrintingLabelRollCostDetail : PrintingCostDetail
@@ -264,6 +268,13 @@ namespace PapiroMVC.Models
 
             foreach (var buyingFormat in BuyingFormats)
             {
+
+
+                if (buyingFormat.GetSide2() == 40.005)
+                {
+                    Console.Write("ciao");
+                }
+
                 ppP.CostDetail = this;
 
                 ppP.Part = this.ProductPart;
@@ -276,103 +287,126 @@ namespace PapiroMVC.Models
 
                 int maxGain1 = 0;
 
-                //provo a togliere una posa in banda se l'interspazio di banda è > di quello del passo
-                if (ppP.CalculatedDCut1 < ppP.CalculatedDCut2 && ppP.CalculatedSide2Gain > 1)
+                for (int i = 0; i < 10 && (ppP.CalculatedSide2Gain - i) > 0; i++)
                 {
-                    maxGain1 = ppP.CalculatedSide1Gain - 1;
-                    ppP.MaxGain1 = maxGain1;
+
+                    ppP.MaxGain2 = ppP.CalculatedSide2Gain - i;
                     ppP.Update();
-                }
 
-                //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
-                if (ppP.CalculatedGain > 0)
-                {
-                    smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
-
-                    //SPERIMENTALE
-                    //se la resa è maggiore di 1 in side2
-                    if (ppP.CalculatedSide2Gain > 1)
+                    for (int k = 0; k < 6 && (ppP.CalculatedSide1Gain - k) > 0; k++)
                     {
-                        //provo ad aggiungere una nuova resa con interspazio negativo
-                        var lessZero = Math.Abs((ppP.Part.Format.GetSide2() - (ppP.CalculatedDCut2 * ppP.CalculatedSide2Gain))) / (ppP.CalculatedSide2Gain + 1);
-                        lessZero = Math.Truncate(lessZero * 1000 + 1) / 1000;
-                        smallerCalculatedDCutLessZero = lessZero < smallerCalculatedDCutLessZero ? lessZero : smallerCalculatedDCutLessZero;
+                        //provo a togliere una posa in banda se l'interspazio di banda è > di quello del passo
+                        if (ppP.CalculatedDCut1 < ppP.CalculatedDCut2)
+                        {
+                            maxGain1 = ppP.CalculatedSide1Gain - k;
+                            ppP.MaxGain1 = maxGain1;
+                            ppP.Update();
+                        }
 
-                        //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
-                        pHint.Add(new PrintingHint
+                        //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
+                        if (ppP.CalculatedGain > 0)
+                        {
+                            smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
+                        }
+
+
+                        var pH =
+                            new PrintingHint
                         {
                             Format = ppP.Part.Format,
-                            DCut1 = 0,
-                            DCut2 = lessZero * (-1),
+                            DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                            DCut2 = ppP.CalculatedDCut2,
                             BuyingFormat = buyingFormat,
                             PrintingFormat = buyingFormat,
-                            Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+                            MaxGain2 = ppP.MaxGain2,
+                            Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString(),
+                            CalculatedGain = ppP.CalculatedGain,
+                            GainOnSide1 = ppP.CalculatedSide1Gain,
+                            GainOnSide2 = ppP.CalculatedSide2Gain,
+                            DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - ppP.CalculatedDCut2)
 
-                        });
+                        };
+
+                        if (!pHint.Contains(pH, new PrintingHintComparer()))
+                        {
+                            //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
+                            pHint.Add(pH);
+                        }
+
+
+                        if (ppP.CalculatedSide2Gain >= 1 && ppP.MaxGain2==0)
+                        {
+
+                            if (buyingFormat.GetSide2() == 40.005)
+                            {
+                                Console.WriteLine("");
+                            }
+
+                            //provo ad aggiungere una nuova resa con interspazio negativo
+                            var lessZero = Math.Abs((ppP.Part.Format.GetSide2() - (ppP.CalculatedDCut2 * ppP.CalculatedSide2Gain))) / (ppP.CalculatedSide2Gain + 1);
+                            lessZero = Math.Truncate(lessZero * 1000 + 1) / 1000;
+                            smallerCalculatedDCutLessZero = lessZero < smallerCalculatedDCutLessZero ? lessZero : smallerCalculatedDCutLessZero;
+
+                            pH =
+                                new PrintingHint
+                                {
+                                    Format = ppP.Part.Format,
+                                    DCut1 = 0, // DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                                    DCut2 = lessZero * (-1),
+                                    BuyingFormat = buyingFormat,
+                                    PrintingFormat = buyingFormat,
+                                    MaxGain2 = ppP.MaxGain2 + 1,
+                                    Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString(),
+                                    CalculatedGain = ppP.CalculatedGain + ppP.CalculatedSide1Gain,
+                                    GainOnSide1 = ppP.CalculatedSide1Gain,
+                                    GainOnSide2 = ppP.CalculatedSide2Gain + 1,
+                                    DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - lessZero * (-1))
+                                };
+
+                            if (!pHint.Contains(pH, new PrintingHintComparer()))
+                            {
+                                //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
+                                pHint.Add(pH);
+                            }
+
+                            //ripristino l'autocut
+                            ppP.AutoCutParameter = true;
+
+                        }
 
                     }
                 }
-
-                ////this kind of cost has limit in Interspace
-                //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
-                pHint.Add(new PrintingHint
-                {
-                    Format = ppP.Part.Format,
-                    DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
-                    DCut2 = ppP.CalculatedDCut2,
-                    BuyingFormat = buyingFormat,
-                    PrintingFormat = buyingFormat,
-                    Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
-
-                });
-                //}
-                //else
-                //{
-                //tolgo una posa!!!
-                ppP.MaxGain2 = ppP.CalculatedSide2Gain - 1;
-                ppP.Update();
-
-                //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
-                if (ppP.CalculatedGain > 0)
-                {
-                    smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
-                }
-
-                //il printing hint deve avere i formati stampabili, i suoi DCut, ma anche fustelle simili
-                pHint.Add(new PrintingHint
-                {
-                    Format = ppP.Part.Format,
-                    DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
-                    DCut2 = ppP.CalculatedDCut2,
-                    BuyingFormat = buyingFormat,
-                    PrintingFormat = buyingFormat,
-                    MaxGain2 = ppP.MaxGain2,
-                    Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
-
-                });
             }
             ppP.MaxGain2 = 0;
 
             if (PrintingFormat != "" && PrintingFormat != null)
             {
-                // se non ho trovato hint e ho almeno un PrintigFormat allora
-                //inserisco il printing format negli hint
-                if (pHint.Where(x => x.PrintingFormat == PrintingFormat).Count() == 0)
-                {
-                    ppP.PrintingFormat = PrintingFormat;
-                    ppP.Update();
-                    pHint.Add(new PrintingHint
+
+                var pH = new PrintingHint
                     {
                         Format = ppP.Part.Format,
-                        DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                        DCut1 = ProductPartPrinting.CalculatedDCut1,
                         DCut2 = ProductPartPrinting.CalculatedDCut2,
                         BuyingFormat = PrintingFormat,
                         PrintingFormat = PrintingFormat,
                         MaxGain2 = ProductPartPrinting.MaxGain2,
                         MaxGain1 = ProductPartPrinting.MaxGain1,
-                        Description = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString()
+                        Description = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString(),
+                        CalculatedGain = ProductPartPrinting.CalculatedGain,
+                        GainOnSide1 = ProductPartPrinting.CalculatedSide1Gain,
+                        GainOnSide2 = ProductPartPrinting.CalculatedSide2Gain,
+                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - ProductPartPrinting.CalculatedDCut2)
 
-                    });
+                    };
+
+
+                // se non ho trovato hint e ho almeno un PrintigFormat allora
+                //inserisco il printing format negli hint
+                if (!pHint.Contains(pH, new PrintingHintComparer()))
+                {
+                    //ppP.PrintingFormat = PrintingFormat;
+                    //ppP.Update();
+                    pHint.Add(pH);
                 }
 
             }
@@ -380,7 +414,7 @@ namespace PapiroMVC.Models
             //qui inizio a togliere un po di pHint            
             var pHint1 = pHint.Where(x => x.DCut2 >= ProductPart.MinDCut && x.DCut2 <= ProductPart.MaxDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
 
-            if (pHint1.Count == 0)
+            if (pHint1.Count <= 1)
             {
                 //fascette gommate
                 if (ProductPart.MinDCut == 0)
@@ -392,7 +426,15 @@ namespace PapiroMVC.Models
                 }
                 else
                 {
-                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();                
+                    var smaller = pHint.Where(x=>x.DCut1 >= x.DCut2 || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();
+                    var pHintLast1 = pHint.Where(x => x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
+
+                    var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
+                    var pHintLast2 = pHint.Where(x => x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
+
+
+                    pHint1 = pHintLast1.Union(pHintLast2).ToList();
+//                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
                 }
             }
 
@@ -401,42 +443,68 @@ namespace PapiroMVC.Models
 
             //            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
 
-            List<ZVaild> zValids = new List<ZVaild>();// List<double>();
+            List<PrintingHint> zValids = new List<PrintingHint>();// List<double>();
 
             //scorro la lista ed estraggo solo gli z validi
             foreach (var item in pHint)
             {
                 var z = item.BuyingFormat.GetSide2();
-                if (!zValids.Select(x => x.Z).Contains(z))
+                if (!zValids.Select(x => x.BuyingFormat.GetSide2()).Contains(z))
                 {
-                    var zValid = new ZVaild();
-                    zValid.Z = z;
-                    zValid.MaxGain2 = item.MaxGain2;
-                    zValid.DCut2 = item.DCut2;
-                    zValids.Add(zValid);
+                    zValids.Add(item);
                 }
             }
+
+
+
+            ppP.Part = (ProductPart)ppP.Part.Clone();
 
             //bande di carta calcolate semplicemente con la resa, dati gli z validi e il maxWidth della macchina Flexo
             foreach (var item in zValids)
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2, ppP.Part.Format, dCut1, dCut2, 34,ProductPart.TypeOfDCut1??0);
+                var newBands = this.GetOptimalWidthFlexo(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.Format, dCut1, dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
                 foreach (var nB in newBands)
                 {
-                    ppP.PrintingFormat = nB.ToString() + "x" + item.Z.ToString();
-                    ppP.MaxGain2 = item.MaxGain2;
+
+                    ppP.PrintingFormat = nB.ToString() + "x" + item.PrintingFormat.GetSide2();  // item.Z.ToString();
+                    ppP.MaxGain1 = 0;
+                    ppP.MaxGain2 = 0;
+                    ppP.AutoCutParameter = false;
+                    ppP.Part.DCut2 = item.DCut2;
+                    ppP.Part.DCut1 = item.DCut1;
                     ppP.Update();
-                    pHint.Add(new PrintingHint
+
+                    int i = 1;
+
+                    //non vale per le fascette gommate
+                    if (ProductPart.MinDCut != 0)
+                    {
+                        while (ppP.CalculatedDCut1 < ppP.CalculatedDCut2 && (ppP.CalculatedSide1Gain - i) > 0)
+                        {
+                            var maxGain1 = ppP.CalculatedSide1Gain - i;
+                            ppP.MaxGain1 = maxGain1;
+                            ppP.Update();
+                        }
+                    }
+                    var pH = new PrintingHint
                     {
                         Format = ppP.Part.Format,
-                        DCut1 = ppP.CalculatedDCut1,
-                        DCut2 = item.DCut2 == null ? ppP.CalculatedDCut2 : item.DCut2,
+                        //DCut1 = ppP.CalculatedDCut1,
+                        DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                        DCut2 = item.DCut2?? ppP.CalculatedDCut2,
                         BuyingFormat = ppP.PrintingFormat,
                         PrintingFormat = ppP.PrintingFormat,
-                        Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString()
-                    });
+                        Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString(),
+                        CalculatedGain = ppP.CalculatedGain,
+                        GainOnSide1 = ppP.CalculatedSide1Gain,
+                        GainOnSide2 = ppP.CalculatedSide2Gain,
+                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - (item.DCut2?? ppP.CalculatedDCut2))
+
+                    };
+
+                    pHint.Add(pH);
                 }
             }
 
@@ -510,7 +578,10 @@ namespace PapiroMVC.Models
                             DCut2 = ppP.CalculatedDCut2,
                             BuyingFormat = buyingFormat,
                             PrintingFormat = buyingFormat,
-                            Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+                            Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString(),
+                            CalculatedGain = ppP.CalculatedGain,
+                            GainOnSide1 = ppP.CalculatedSide1Gain,
+                            GainOnSide2 = ppP.CalculatedSide2Gain
 
                         });
                     }
@@ -540,7 +611,10 @@ namespace PapiroMVC.Models
                                 BuyingFormat = buyingFormat,
                                 PrintingFormat = buyingFormat,
                                 MaxGain2 = ppP.MaxGain2,
-                                Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString()
+                                Description = "h" + buyingFormat.GetSide1() + " z" + (buyingFormat.GetSide2() / 2.54 * 8).ToString(),
+                                CalculatedGain = ppP.CalculatedGain,
+                                GainOnSide1 = ppP.CalculatedSide1Gain,
+                                GainOnSide2 = ppP.CalculatedSide2Gain
 
                             });
                         }
@@ -554,7 +628,6 @@ namespace PapiroMVC.Models
                     //REIMPOSTO I MAX E MIN
                     ppP.Part.MaxDCut = smallerCalculatedDCut;
                 }
-
 
             } while (haveAlmostOne && pHint.Count == 0 && step < maxStep);
 
@@ -575,7 +648,10 @@ namespace PapiroMVC.Models
                         PrintingFormat = PrintingFormat,
                         MaxGain2 = ProductPartPrinting.MaxGain2,
                         MaxGain1 = ProductPartPrinting.MaxGain1,
-                        Description = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString()
+                        Description = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString(),
+                        CalculatedGain = ppP.CalculatedGain,
+                        GainOnSide1 = ppP.CalculatedSide1Gain,
+                        GainOnSide2 = ppP.CalculatedSide2Gain
 
                     });
                 }
@@ -616,7 +692,10 @@ namespace PapiroMVC.Models
                         DCut2 = item.DCut2 == null ? ppP.CalculatedDCut2 : item.DCut2,
                         BuyingFormat = ppP.PrintingFormat,
                         PrintingFormat = ppP.PrintingFormat,
-                        Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString()
+                        Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString(),
+                        CalculatedGain = ppP.CalculatedGain,
+                        GainOnSide1 = ppP.CalculatedSide1Gain,
+                        GainOnSide2 = ppP.CalculatedSide2Gain
                     });
                 }
             }

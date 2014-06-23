@@ -12,8 +12,49 @@ namespace PapiroMVC.Models
 
     [KnownType(typeof(ProductPart))]
     [MetadataType(typeof(ProductPart_MetaData))]
-    public partial class ProductPart
+    public partial class ProductPart : ICloneable
     {
+
+        public object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            ProductPart copyOfObject = (ProductPart)Activator.CreateInstance(kindOfObject);
+            this.Copy(copyOfObject);
+
+            return copyOfObject;
+        }
+
+        public virtual void Copy(ProductPart to)
+        {
+            to.TimeStampTable = this.TimeStampTable;
+
+            to.CodProduct = this.CodProduct;
+            to.ProductPartName = this.ProductPartName;
+            to.PrintingType = this.PrintingType;
+            to.Format = this.Format;
+            to.ServicesNumber = this.ServicesNumber;
+            //CodProductPart_  = this. ;
+            to.FormatOpened = this.FormatOpened;
+            to.SubjectNumber = this.SubjectNumber;
+            to.DCut = this.DCut;
+            to.IsDCut = this.IsDCut;
+            to.DCut1 = this.DCut1;
+            to.DCut2 = this.DCut2;
+            to.SideOnSide = this.SideOnSide;
+            to.HaveDCutLimit = this.HaveDCutLimit;
+            to.MaxDCut = this.MaxDCut;
+            to.MinDCut = this.MinDCut;
+            to.TypeOfDCut1 = this.TypeOfDCut1;
+
+        }
+
+
+        public double AvarageDCut
+        { get { return ((MinDCut ?? 0) + (MaxDCut ?? 0)) / 2; } }
+
 
         //formato in mm
         public String Formatmm
@@ -156,7 +197,7 @@ namespace PapiroMVC.Models
             {
                 if (!item.CodOptionTypeOfTask.Contains("_NO"))
                 {
-                    pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";                    
+                    pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
                 }
             }
 
