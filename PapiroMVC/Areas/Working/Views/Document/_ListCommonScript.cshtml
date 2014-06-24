@@ -16,6 +16,11 @@
         return link.replace("-1", cellvalue);
     }
 
+    function editDocumentProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProduct", new {id= "-1"},new {@class="tbutton smalledit"})';
+        return link.replace("-1", cellvalue);
+    }
+
     function typeOfDocument(cellvalue, options, rowobject) {
 
         var link = "type";

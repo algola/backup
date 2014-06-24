@@ -1159,6 +1159,21 @@
             <param name="id">CodDocumntProduct</param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DocumentProductList(System.String,Mvc.HtmlHelpers.GridSettings)">
+            <summary>
+            List of DocumentProduct in a Document ie. Estimate
+            </summary>
+            <param name="CodDocument"></param>
+            <param name="gridSettings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DocumentProductsList(Mvc.HtmlHelpers.GridSettings)">
+            <summary>
+            List of all DocumentProducts
+            </summary>
+            <param name="gridSettings"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.NewProductAutoComplete(System.String)">
             <summary>
             AutoComplete
@@ -8646,6 +8661,11 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.DocumentMenu">
             <summary>
               Looks up a localized string similar to Area Lavoro.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.DocumentProductMenu">
+            <summary>
+              Looks up a localized string similar to Articoli.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ECommerce">

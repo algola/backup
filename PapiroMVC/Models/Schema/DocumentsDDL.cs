@@ -2,8 +2,8 @@
 using System.Data.Entity;
 
 namespace PapiroMVC.Model
-{    
-    class DocumentsDDL :IDDL
+{
+    class DocumentsDDL : IDDL
     {
         SchemaDb dbS;
 
@@ -14,7 +14,7 @@ namespace PapiroMVC.Model
         }
 
         public void UpdateSchema(DbContext ctx)
-        {            
+        {
             dbS.Ctx = ctx;
 
             //First Tablef
@@ -26,21 +26,33 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("documents", "EstimateNumber", SchemaDb.String, "20");
             dbS.AddColumnToTable("documents", "EstimateNumberSerie", SchemaDb.String, "20");
 
+            dbS.AddColumnToTable("documents", "OrderNumber", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documents", "OrderNumberSerie", SchemaDb.String, "20");
+
             dbS.AddColumnToTable("documents", "Notes", SchemaDb.String, "100");
 
             dbS.AddColumnToTable("documents", "CodCustomer", SchemaDb.String, "50");
             dbS.AddColumnToTable("documents", "Customer", SchemaDb.String, "50");
 
-            dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");            
-            
+            dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");
+
             //foreign key
             dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
 
-            // 0 = Estimate // 1 = ... // 2 = ...
+            // 0 = Estimate // 1 = Order // 2 = ...
             dbS.AddColumnToTable("documents", "SelectorDocument", SchemaDb.Int, "0");
 
-            // 0 = Ecommerce Estimate
+            //ONLY FOR ORDER
+            dbS.AddColumnToTable("documents", "OrderNumber", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documents", "OrderNumberSerie", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documents", "CodDocumentProduct", SchemaDb.String, "50");
+
+
+            // 0 = Ecommerce Estimate // 1
             dbS.AddColumnToTable("documents", "SelectorEstimate", SchemaDb.Int, "0");
+            //foreign key
+            dbS.AddForeignKey("documents", "CodDocumentProduct", "documentproducts", "CodDocumentProduct");
+
 
             //Index
             dbS.AddIndex("documents", "DocumentName");

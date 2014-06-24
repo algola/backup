@@ -159,6 +159,9 @@
   <data name="DeleteCommand" xml:space="preserve">
     <value>Elimina</value>
   </data>
+  <data name="DeleteMessageDocumentProduct" xml:space="preserve">
+    <value>Si stanno per cancellare i prodotti selezionati, procedere?</value>
+  </data>
   <data name="DeleteMessageEstimate" xml:space="preserve">
     <value>Si stanno per cancellare i preventivi selezionati, procedere?</value>
   </data>
@@ -182,6 +185,21 @@
   </data>
   <data name="DocumentName" xml:space="preserve">
     <value>Descrizione/Nome</value>
+  </data>
+  <data name="DocumentProductName" xml:space="preserve">
+    <value>Nome prodotto</value>
+  </data>
+  <data name="DocumentProductQuantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="DocumentProducts" xml:space="preserve">
+    <value>Prodotti</value>
+  </data>
+  <data name="DocumentProductsDesc" xml:space="preserve">
+    <value>Elenco prodotti</value>
+  </data>
+  <data name="DocumentProductUnitPrice" xml:space="preserve">
+    <value />
   </data>
   <data name="Documents" xml:space="preserve">
     <value>Documenti</value>
@@ -242,6 +260,9 @@
   </data>
   <data name="LeavingPageMsg" xml:space="preserve">
     <value>Alcune modifiche devono ancora essere salvate</value>
+  </data>
+  <data name="ListDocumentProduct" xml:space="preserve">
+    <value>Lista prodotti</value>
   </data>
   <data name="Locked" xml:space="preserve">
     <value>Blk</value>

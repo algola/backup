@@ -351,4 +351,7 @@
   <data name="DieMenu" xml:space="preserve">
     <value>Archivio fustelle</value>
   </data>
+  <data name="DocumentProductMenu" xml:space="preserve">
+    <value>Articoli</value>
+  </data>
 </root>

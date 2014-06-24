@@ -484,6 +484,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Articoli.
+        /// </summary>
+        public static string DocumentProductMenu {
+            get {
+                return ResourceManager.GetString("DocumentProductMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to e-Commerce.
         /// </summary>
         public static string ECommerce {

@@ -1,0 +1,59 @@
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
+
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    //Prendo il titolo dal menù
+    ViewBag.Title = Html.T(strings, "ListDocumentProduct");
+}
+
+@section title{
+    @Html.T(strings, "DocumentProducts")
+}
+
+@section description{
+    @Html.T(strings, "DocumentProductsDesc")
+}
+
+<div id='estimateList'>
+    @Html.Partial("_ListDocumentProducts")
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+
+    <style type="text/css">
+        html, body {
+            font-size: 75%;
+        }
+
+        .ui-jqgrid tr.jqgrow td {
+            padding: 2px,2px !important;
+        }
+    </style>
+
+}
+
+@section specificPluginScript {
+
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+
+    <script src="~/Scripts/jqgridHelper.js"></script>
+
+}
+
+@section breadcrumb
+{
+
+}

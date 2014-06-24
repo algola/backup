@@ -21,6 +21,7 @@ namespace PapiroMVC.Models
         public DocumentProduct()
         {
             this.Costs = new HashSet<Cost>();
+            this.Orders = new HashSet<Document>();
         }
     
     	
@@ -54,5 +55,7 @@ namespace PapiroMVC.Models
         public virtual Document Document { get; set; }
     	[DataMember]
         public virtual Product Product { get; set; }
+    	[DataMember]
+        public virtual ICollection<Document> Orders { get; set; }
     }
 }

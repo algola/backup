@@ -32,7 +32,6 @@ namespace Services
             return estEcom;
         }
 
-
         public void EditCost(Cost c)
         {
             this.Context.Entry(c).State = System.Data.Entity.EntityState.Modified;
@@ -161,6 +160,14 @@ namespace Services
         }
 
         public string GetNewEstimateNumber(Document a)
+        {
+            //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
+            //con un colpo solo!!!
+            var csCode = (from COD in this.GetAll() select COD.EstimateNumber).Max();
+            return AlphaCode.GetNextIntCode(csCode ?? "0").PadLeft(6, '0');
+        }
+
+        public string GetNewOrderNumber(Document a)
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
             //con un colpo solo!!!
@@ -325,7 +332,7 @@ namespace Services
                     }
 
 
-                    if (item2.CostDetails.FirstOrDefault()!=null)
+                    if (item2.CostDetails.FirstOrDefault() != null)
                         EditAdd(item2.CostDetails.FirstOrDefault());
 
                 }
@@ -339,8 +346,8 @@ namespace Services
 
 
         public void Edit(Document entity, bool deep)
-        { 
-        
+        {
+
         }
 
         public new Document GetSingle(string codDocument)
@@ -348,7 +355,21 @@ namespace Services
             var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
             return query;
         }
-
+        public IQueryable<DocumentProduct> GetAllDocumentProducts()
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                var query = Context.DocumentProducts.Include("Costs")
+                    .Include("Costs.CostDetails")
+                    .Include("Product")
+                    .Include("Document");
+                return query;
+            }
+        }
         public IQueryable<DocumentProduct> GetDocumentProductsByCodProduct(string codProduct)
         {
             try
@@ -384,8 +405,8 @@ namespace Services
         }
 
 
-        
-        
+
+
         public override void SetDbName(string name)
         {
             base.SetDbName(name);
@@ -394,7 +415,7 @@ namespace Services
 
         protected void EditAdd(CostDetail entity)
         {
-            
+
             var fromBD = Context.CostDetail.SingleOrDefault(p => p.CodCostDetail == entity.CodCostDetail);
             if (fromBD != null)
             {

@@ -732,14 +732,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodDie,
                             a.Description,
                             a.PrintingFormat,
-                            a.Z.ToString(),
                             a.Width.ToString(),
+                            a.Z.ToString(),
                             a.Format,
                             a.DCut1.ToString(),
                             a.DCut2.ToString(),
                             a.MaxGain1.ToString(),
-                            a.MaxGain2.ToString(),
-                           
+                            a.MaxGain2.ToString(),                           
                         }
                     }
                 ).ToArray()

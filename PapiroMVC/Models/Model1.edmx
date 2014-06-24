@@ -205,6 +205,9 @@
           <Property Name="EstimateNumber" Type="char" MaxLength="20" />
           <Property Name="EstimateNumberSerie" Type="char" MaxLength="20" />
           <Property Name="SelectorEstimate" Type="int" />
+          <Property Name="OrderNumber" Type="char" MaxLength="20" />
+          <Property Name="OrderNumberSerie" Type="char" MaxLength="20" />
+          <Property Name="CodDocumentProduct" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="makereadies">
           <Key>
@@ -824,6 +827,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_documents_CodDocumentProduct">
+          <End Role="documentproducts" Type="Self.documentproducts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="documents" Type="Self.documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documentproducts">
+              <PropertyRef Name="CodDocumentProduct" />
+            </Principal>
+            <Dependent Role="documents">
+              <PropertyRef Name="CodDocumentProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_makereadies_CodProductPartPrintingGain">
           <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1224,6 +1241,10 @@
             <End Role="customersuppliers" EntitySet="customersuppliers" />
             <End Role="documents" EntitySet="documents" />
           </AssociationSet>
+          <AssociationSet Name="FK_documents_CodDocumentProduct" Association="Self.FK_documents_CodDocumentProduct">
+            <End Role="documentproducts" EntitySet="documentproducts" />
+            <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
           <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="Self.FK_makereadies_CodProductPartPrintingGain">
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
             <End Role="makereadies" EntitySet="makereadies" />
@@ -1511,6 +1532,10 @@
           <AssociationSet Name="FK_productgraphs_CodProduct" Association="dbModel.FK_productgraphs_CodProduct">
             <End Role="Product" EntitySet="Products" />
             <End Role="productgraph" EntitySet="ProductGraphLinks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documents_CodDocumentProduct" Association="dbModel.FK_documents_CodDocumentProduct">
+            <End Role="DocumentProduct" EntitySet="DocumentProducts" />
+            <End Role="Document" EntitySet="Documents" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
@@ -2323,6 +2348,7 @@
           <NavigationProperty Name="Product" Relationship="dbModel.FK_documentproducts_CodProduct" FromRole="DocumentProduct" ToRole="Product" />
           <Property Type="String" Name="UnitPrice"  MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="TotalAmount" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="dbModel.FK_documents_CodDocumentProduct" FromRole="DocumentProduct" ToRole="Document" />
         </EntityType>
         <EntityType Name="Document">
           <Key>
@@ -2341,7 +2367,9 @@
           <Property Type="DateTime" Name="DateDocument" />
           <Property Name="EstimateNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="EstimateNumberSerie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
+          <Property Name="CodDocumentProduct" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="OrderProduct" Relationship="dbModel.FK_documents_CodDocumentProduct" FromRole="Document" ToRole="DocumentProduct" />
+          </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
             <PropertyRef Name="CodProductPartToProductTask" />
@@ -2904,6 +2932,24 @@
         <EntityType Name="DieSemiRoll" BaseType="dbModel.Die" />
         <EntityType Name="DieFlexo" BaseType="dbModel.Die" >
         </EntityType>
+        <EntityType Name="Order" BaseType="dbModel.Document" >
+          <Property Name="OrderNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OrderNumberSerie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_documents_CodDocumentProduct">
+          <End Type="dbModel.DocumentProduct" Role="DocumentProduct" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Document" Role="Document" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DocumentProduct">
+              <PropertyRef Name="CodDocumentProduct" />
+            </Principal>
+            <Dependent Role="Document">
+              <PropertyRef Name="CodDocumentProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3843,6 +3889,7 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Document)">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="CodDocumentProduct" ColumnName="CodDocumentProduct" />
                 <ScalarProperty Name="EstimateNumberSerie" ColumnName="EstimateNumberSerie" />
                 <ScalarProperty Name="EstimateNumber" ColumnName="EstimateNumber" />
                 <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
@@ -3866,6 +3913,14 @@
               <MappingFragment StoreEntitySet="documents">
                 <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
                 <Condition ColumnName="SelectorEstimate" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Order)">
+              <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="OrderNumberSerie" ColumnName="OrderNumberSerie" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
+                <Condition ColumnName="Selector" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4166,7 +4221,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="65">
+      <Diagram Name="Model1" ZoomLevel="82">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="33.5" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />
@@ -4646,6 +4701,9 @@
         <EntityTypeShape EntityType="dbModel.DieFlexo" Width="1.5" PointX="81" PointY="20" />
         <InheritanceConnector EntityType="dbModel.DieFlexo" />
         <EntityTypeShape EntityType="dbModel.lastcode" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbModel.Order" Width="1.5" PointX="32.625" PointY="27.75" />
+        <InheritanceConnector EntityType="dbModel.Order" />
+        <AssociationConnector Association="dbModel.FK_documents_CodDocumentProduct" />
       </Diagram>
     </Diagrams>
   </Designer>

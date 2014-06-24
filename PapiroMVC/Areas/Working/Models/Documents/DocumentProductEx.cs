@@ -14,7 +14,6 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(DocumentProduct_MetaData))]
     public partial class DocumentProduct : ICloneable
     {
-
         public string MqDescription { get; set; }
         public string FgDescription { get; set; }
         public string MlDescription { get; set; }

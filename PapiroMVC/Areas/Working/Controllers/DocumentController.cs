@@ -85,9 +85,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(menu);
             this.Disposables.Add(costDetailRepository);
 
-
         }
 
+
+        /// <summary>
+        /// Create and send by Json the DocumentProduct Cost description 
+        /// </summary>
+        /// <param name="CodDocumentProduct"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult PrintDocumentProductCosts(string CodDocumentProduct)
         {
@@ -117,6 +122,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(res, JsonRequestBehavior.AllowGet);
         }
 
+
+        /// <summary>
+        /// This command invokes the cloning of DocumentProduct in the same Document with a new quantity
+        /// </summary>
+        /// <param name="codDocument"></param>
+        /// <param name="codDocumentProduct"></param>
+        /// <param name="newQuantity"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult CloneDocumentProduct(string codDocument, string codDocumentProduct, int newQuantity)
         {
@@ -129,16 +142,20 @@ namespace PapiroMVC.Areas.Working.Controllers
                 p.DocumentRepository = documentRepository;
                 p.CostDetailRepository = costDetailRepository;
 
-                DocumentProduct prod2 = (DocumentProduct)prod.Clone();
-                prod2.Quantity = newQuantity;
+                //get product document and clone it
+                DocumentProduct newProdDoc = (DocumentProduct)prod.Clone();
+                //with new quantity
+                newProdDoc.Quantity = newQuantity;
 
-                prod2.CodDocumentProduct = "";
-                prod2.Document = null;
-
-                doc.DocumentProducts.Add(prod2);
+                newProdDoc.CodDocumentProduct = "";
+                newProdDoc.Document = null;
+                //the document product cloned is added to Document
+                doc.DocumentProducts.Add(newProdDoc);
+                //and all codes are regenerated
                 doc.DocumentProductsCodeRigen(true);
 
-                var codNewDocumentProduct = prod2.CodDocumentProduct;
+                //keep new Code
+                var newCodDocumentProduct = newProdDoc.CodDocumentProduct;
 
                 p.DocumentRepository.Edit(doc);
                 p.DocumentRepository.Save();
@@ -147,72 +164,86 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 //array di sostituzione dei codici
                 Dictionary<string, string> trans = new Dictionary<string, string>();
+
+                //now we have to clone cost and add it in new DocumentProduct
                 foreach (var c in prod.Costs)
                 {
-                    var y = p.CostDetailRepository.GetSingleSimple(c.CodCost);
+                    //get cost
+                    var cost = p.CostDetailRepository.GetSingleSimple(c.CodCost);
 
-                    if (y != null)
+                    //if cost exist
+                    if (cost != null)
                     {
-                        var x = (CostDetail)y.Clone();
-                        x.CodCostDetail = x.CodCostDetail.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
-                        x.CodCost = x.CodCostDetail;
+                        //clone it
+                        var newCost = (CostDetail)cost.Clone();
 
-                        x.CostDetailCostCodeRigen();
+                        //get new CostCode by replace code part about CodDocumentProduct
+                        newCost.CodCostDetail = newCost.CodCostDetail.Replace(prod.CodDocumentProduct, newProdDoc.CodDocumentProduct);
+                        newCost.CodCost = newCost.CodCostDetail;
 
-                        if (x.CodComputedBy != null)
+                        newCost.CostDetailCostCodeRigen();
+
+                        //if cost is computed by another one we have to fix the link
+                        if (newCost.CodComputedBy != null)
                         {
-                            x.CodComputedBy = x.CodComputedBy.Replace(prod.CodDocumentProduct, prod2.CodDocumentProduct);
+                            newCost.CodComputedBy = newCost.CodComputedBy.Replace(prod.CodDocumentProduct, newProdDoc.CodDocumentProduct);
                         }
 
-                        p.CostDetailRepository.Add(x);
+                        p.CostDetailRepository.Add(newCost);
                     }
                 }
 
+                //save all changes
                 p.CostDetailRepository.Save();
 
-
+                //reset contentx
                 p.CostDetailRepository.SetDbName(CurrentDatabase);
 
-
-                foreach (var c in prod2.Costs)
+                foreach (var c in newProdDoc.Costs)
                 {
-                    var y = p.CostDetailRepository.GetSingle(c.CodCost);
+                    var cost = p.CostDetailRepository.GetSingle(c.CodCost);
 
-                    if (y != null)
+                    if (cost != null)
                     {
-                        //TEMPORANEOOOOOOOOO
-                        //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
-                        if (y.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
-                        {
-                            y.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(y.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
 
-                            if (y.CodPartPrintingCostDetail != null)
+                        //TEMPORANEOOOOOOOOO
+                        //another important link to fix is the printer link
+                        //this for PrePressCost
+                        if (cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                        {
+                            //get ST codCost
+                            cost.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cost.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
+
+                            //if there is a ST
+                            if (cost.CodPartPrintingCostDetail != null)
                             {
-                                foreach (var item in y.CodPartPrintingCostDetail)
+                                //fix all links
+                                foreach (var item in cost.CodPartPrintingCostDetail)
                                 {
                                     var cv2 = p.CostDetailRepository.GetSingle(item);
-                                    y.Printeres.Add(cv2);
+                                    cost.Printeres.Add(cv2);
                                     cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
                                 }
                             }
                         }
 
+                        //regen cost initialization
+                        cost.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                        //and regen cost
+                        cost.Update();
+                        cost.TaskCost.Update();
 
-                        y.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
-                        y.Update();
-                        y.TaskCost.Update();
-
-                        p.CostDetailRepository.Add(y);
+                        p.CostDetailRepository.Add(cost);
                     }
 
                 }
 
+                //save all
                 p.CostDetailRepository.Save();
 
-
                 doc = documentRepository.GetSingle(codDocument);
-                prod2 = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codNewDocumentProduct);
-                prod2.UpdateCost();
+                newProdDoc = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == newCodDocumentProduct);
+                newProdDoc.UpdateCost();
 
                 p.DocumentRepository.Edit(doc);
                 p.DocumentRepository.Save();
@@ -235,27 +266,29 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         //
         // GET: /Working/Document/
+        /// <summary>
+        /// return view of estimates
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ListEstimate()
         {
             return View();
         }
 
-        //
-        // POST: /Working/Document/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        /// <summary>
+        /// return view of alla DocumentProduct
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListDocumentProducts()
         {
-            try
-            {
-                // TODO: Add insert logic here
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
+        /// <summary>
+        /// Delete estimate and rediret to List
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult DeleteEstimates(string ids)
         {
@@ -270,6 +303,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return Json(new { redirectUrl = Url.Action("ListEstimate", "Document", new { area = "Working" }) });
         }
+
 
         [HttpParamAction]
         [HttpGet]
@@ -286,8 +320,11 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View("EditDocument", c);
         }
 
-
-        private Estimate newEstimate()
+        /// <summary>
+        /// create fisical new estimate
+        /// </summary>
+        /// <returns></returns>
+        private Estimate NewEstimate()
         {
             var c = new Estimate();
             c.CodDocument = documentRepository.GetNewCode(c);
@@ -300,16 +337,51 @@ namespace PapiroMVC.Areas.Working.Controllers
             return c;
         }
 
-
-
+        /// <summary>
+        /// Action to create new estimate
+        /// </summary>
+        /// <returns></returns>
         [HttpParamAction]
         [HttpGet]
         public ActionResult CreateEstimate()
         {
-            var c = newEstimate();
+            var c = NewEstimate();
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditEstimate";
             return View("EditEstimate", c);
         }
+
+
+        /// <summary>
+        /// create fisical new order
+        /// </summary>
+        /// <returns></returns>
+        private Order NewOrder(string codDocumentProduct)
+        {
+            var c = new Order();
+            c.CodDocument = documentRepository.GetNewCode(c);
+            c.OrderNumber = documentRepository.GetNewOrderNumber(c);
+            c.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+            c.DateDocument = DateTime.Now;
+            documentRepository.Add(c);
+            documentRepository.Save();
+
+            return c;
+        }
+
+        /// <summary>
+        /// Action to create new order
+        /// </summary>
+        /// <returns></returns>
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateOrder(string codDocumentProduct)
+        {
+            var c = NewOrder();
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditOrder";
+            return View("EditOrder", c);
+        }
+
     }
 }

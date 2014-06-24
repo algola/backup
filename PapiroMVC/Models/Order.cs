@@ -11,24 +11,18 @@ namespace PapiroMVC.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.Serialization;
     
-    public partial class Order
+    
+    	
+    [DataContract] 
+    public partial class Order : Document
     {
-        public Order()
-        {
-            this.OrderRows = new HashSet<OrderRow>();
-        }
-    
-        public System.DateTime TimeStampTable { get; set; }
-        public string CodOrder { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> OrderDate { get; set; }
-        public Nullable<int> Status { get; set; }
-        public string Price { get; set; }
-        public Nullable<double> Discount { get; set; }
-        public string Total { get; set; }
-    
-        public virtual ICollection<OrderRow> OrderRows { get; set; }
-        public virtual Profile Profile { get; set; }
+    	
+    	[DataMember] 		
+        public string OrderNumber { get; set; }
+    	
+    	[DataMember] 		
+        public string OrderNumberSerie { get; set; }
     }
 }

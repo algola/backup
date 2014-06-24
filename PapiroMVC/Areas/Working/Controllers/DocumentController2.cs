@@ -1000,7 +1000,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (sel != null)
             {
-                var est = Session["CodDocument"] != null ? Session["CodDocument"] : newEstimate();
+                var est = Session["CodDocument"] != null ? Session["CodDocument"] : NewEstimate();
                 return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }
 
@@ -1037,7 +1037,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (sel != null)
             {
-                var est = newEstimate();
+                var est = NewEstimate();
 
                 return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }

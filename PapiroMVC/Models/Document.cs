@@ -56,10 +56,15 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string EstimateNumberSerie { get; set; }
+    	
+    	[DataMember] 		
+        public string CodDocumentProduct { get; set; }
     
     	[DataMember]
         public virtual CustomerSupplier CustomerSupplier { get; set; }
     	[DataMember]
         public virtual ICollection<DocumentProduct> DocumentProducts { get; set; }
+    	[DataMember]
+        public virtual DocumentProduct OrderProduct { get; set; }
     }
 }
