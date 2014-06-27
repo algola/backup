@@ -473,6 +473,7 @@
     <Compile Include="Areas\Working\Models\Documents\DocumentEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Documents\OrderEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\EstimateEx.cs" />
     <Compile Include="Areas\Working\Models\Products\FactoryPattern\ProductCreator.cs" />
     <Compile Include="Areas\Working\Models\Products\FormatNameEx.cs" />
@@ -625,6 +626,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DocumentProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DocumentState.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Estimate.cs">
@@ -905,6 +909,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
+      <DependentUpon>Model2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProfileOrder.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Resources\Account\AccountVuoto.Designer.cs">
@@ -1398,6 +1405,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SheetPrintableArticlePalletCost.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\State.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Step.cs">
@@ -2428,6 +2438,12 @@
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSemiRoll.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListDocumentProducts.cshtml" />
     <Content Include="Areas\Working\Views\Document\ListDocumentProducts.cshtml" />
+    <Content Include="Areas\Working\Views\Document\ListOrder.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListOrder.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_EditAndCreateOrder.cshtml" />
+    <Content Include="Areas\Working\Views\Document\EditOrder.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListDocumentStates.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentState.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>

@@ -66,9 +66,7 @@
           <Property Name="ToNexMq" Type="bit" />
           <Property Name="FromMinFormat" Type="char" MaxLength="9" />
           <Property Name="NoPrintableType" Type="int" />
-          <Property Name="SelectorCylinders" Type="int" />
           <Property Name="Z" Type="double" />
-          <Property Name="Number" Type="int" />
           <Property Name="Adhesive" Type="char" MaxLength="100" />
           <Property Name="NoUseInEstimateCalculation" Type="bit" />
           <Property Name="SuppOfMaterial" Type="char" MaxLength="100" />
@@ -208,6 +206,20 @@
           <Property Name="OrderNumber" Type="char" MaxLength="20" />
           <Property Name="OrderNumberSerie" Type="char" MaxLength="20" />
           <Property Name="CodDocumentProduct" Type="char" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="documentstate">
+          <Key>
+            <PropertyRef Name="CodDocumentState" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodDocumentState" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="CodDocument" Type="char" MaxLength="50" />
+          <Property Name="StateName" Type="char" MaxLength="100" />
+          <Property Name="StateNumber" Type="int" />
+          <Property Name="StateNumberPrev" Type="int" />
+          <Property Name="Completed" Type="bit" />
+          <Property Name="Selected" Type="bit" />
+          <Property Name="ResetLinkedStates" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="makereadies">
           <Key>
@@ -388,6 +400,19 @@
           <Property Name="SelectorProductTask" Type="int" />
           <Property Name="ImplantHidden" Type="bit" />
           <Property Name="CodItemGraph" Type="char" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="states">
+          <Key>
+            <PropertyRef Name="CodStates" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodStates" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="StateName" Type="char" MaxLength="100" />
+          <Property Name="StateNumber" Type="int" />
+          <Property Name="UsedIn" Type="char" MaxLength="100" />
+          <Property Name="UseInEstimate" Type="bit" />
+          <Property Name="UseInOrder" Type="bit" />
+          <Property Name="ResetLinkedStates" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="steps">
           <Key>
@@ -841,6 +866,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_documentstate_CodDocument">
+          <End Role="documents" Type="Self.documents" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="documentstate" Type="Self.documentstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documents">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="documentstate">
+              <PropertyRef Name="CodDocument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_makereadies_CodProductPartPrintingGain">
           <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1158,6 +1197,7 @@
           <EntitySet Name="customersuppliers" EntityType="Self.customersuppliers" Schema="db" store:Type="Tables" />
           <EntitySet Name="documentproducts" EntityType="Self.documentproducts" Schema="db" store:Type="Tables" />
           <EntitySet Name="documents" EntityType="Self.documents" Schema="db" store:Type="Tables" />
+          <EntitySet Name="documentstate" EntityType="Self.documentstate" Schema="db" store:Type="Tables" />
           <EntitySet Name="makereadies" EntityType="Self.makereadies" Schema="db" store:Type="Tables" />
           <EntitySet Name="menuproduct" EntityType="Self.menuproduct" Schema="db" store:Type="Tables" />
           <EntitySet Name="optiontypeoftask" EntityType="Self.optiontypeoftask" Schema="db" store:Type="Tables" />
@@ -1170,6 +1210,7 @@
           <EntitySet Name="productparttasks" EntityType="Self.productparttasks" Schema="db" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="db" store:Type="Tables" />
           <EntitySet Name="producttasks" EntityType="Self.producttasks" Schema="db" store:Type="Tables" />
+          <EntitySet Name="states" EntityType="Self.states" Schema="db" store:Type="Tables" />
           <EntitySet Name="steps" EntityType="Self.steps" Schema="db" store:Type="Tables" />
           <EntitySet Name="taskexecutorcylinders" EntityType="Self.taskexecutorcylinders" Schema="db" store:Type="Tables" />
           <EntitySet Name="taskexecutorestimatedon" EntityType="Self.taskexecutorestimatedon" Schema="db" store:Type="Tables" />
@@ -1244,6 +1285,10 @@
           <AssociationSet Name="FK_documents_CodDocumentProduct" Association="Self.FK_documents_CodDocumentProduct">
             <End Role="documentproducts" EntitySet="documentproducts" />
             <End Role="documents" EntitySet="documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_documentstate_CodDocument" Association="Self.FK_documentstate_CodDocument">
+            <End Role="documents" EntitySet="documents" />
+            <End Role="documentstate" EntitySet="documentstate" />
           </AssociationSet>
           <AssociationSet Name="FK_makereadies_CodProductPartPrintingGain" Association="Self.FK_makereadies_CodProductPartPrintingGain">
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
@@ -1537,6 +1582,12 @@
             <End Role="DocumentProduct" EntitySet="DocumentProducts" />
             <End Role="Document" EntitySet="Documents" />
           </AssociationSet>
+          <EntitySet Name="DocumentStates" EntityType="dbModel.DocumentState" />
+          <AssociationSet Name="FK_documentstate_CodDocument" Association="dbModel.FK_documentstate_CodDocument">
+            <End Role="Document" EntitySet="Documents" />
+            <End Role="documentstate" EntitySet="DocumentStates" />
+          </AssociationSet>
+          <EntitySet Name="States" EntityType="dbModel.State" />
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
@@ -2369,6 +2420,7 @@
           <Property Name="EstimateNumberSerie" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CodDocumentProduct" MaxLength="50" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="OrderProduct" Relationship="dbModel.FK_documents_CodDocumentProduct" FromRole="Document" ToRole="DocumentProduct" />
+          <NavigationProperty Name="DocumentStates" Relationship="dbModel.FK_documentstate_CodDocument" FromRole="Document" ToRole="documentstate" />
           </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
@@ -2950,6 +3002,48 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DocumentState">
+          <Key>
+            <PropertyRef Name="CodDocumentState" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodDocumentState" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StateNumber" Type="Int32" />
+          <Property Name="StateNumberPrev" Type="Int32" />
+          <Property Name="Completed" Type="Boolean" />
+          <NavigationProperty Name="Document" Relationship="dbModel.FK_documentstate_CodDocument" FromRole="documentstate" ToRole="Document" />
+          <Property Name="Selected" Type="Boolean" Nullable="false" />
+          <Property Name="ResetLinkedStates" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_documentstate_CodDocument">
+          <End Type="dbModel.Document" Role="Document" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.DocumentState" Role="documentstate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="documentstate">
+              <PropertyRef Name="CodDocument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="CodState" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodState" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StateName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StateNumber" Type="Int32" />
+          <Property Name="UsedIn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UseInEstimate" Type="Boolean" />
+          <Property Name="UseInOrder" Type="Boolean" />
+          <Property Name="ResetLinkedStates" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4198,6 +4292,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DocumentStates">
+            <EntityTypeMapping TypeName="dbModel.DocumentState">
+              <MappingFragment StoreEntitySet="documentstate">
+                <ScalarProperty Name="ResetLinkedStates" ColumnName="ResetLinkedStates" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
+                <ScalarProperty Name="StateNumberPrev" ColumnName="StateNumberPrev" />
+                <ScalarProperty Name="StateNumber" ColumnName="StateNumber" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
+                <ScalarProperty Name="CodDocumentState" ColumnName="CodDocumentState" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="dbModel.State">
+              <MappingFragment StoreEntitySet="states">
+                <ScalarProperty Name="ResetLinkedStates" ColumnName="ResetLinkedStates" />
+                <ScalarProperty Name="UseInOrder" ColumnName="UseInOrder" />
+                <ScalarProperty Name="UseInEstimate" ColumnName="UseInEstimate" />
+                <ScalarProperty Name="UsedIn" ColumnName="UsedIn" />
+                <ScalarProperty Name="StateNumber" ColumnName="StateNumber" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CodState" ColumnName="CodStates" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -4552,7 +4675,7 @@
         <AssociationConnector Association="dbModel.FK_optiontypeoftask_CodTypeOfTask" />
         <AssociationConnector Association="dbModel.FK_producttasks_CodOptionTypeOfTask" />
         <AssociationConnector Association="dbModel.FK_productparttasks_CodOptionTypeOfTask" />
-        <EntityTypeShape EntityType="dbModel.MenuProduct" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="dbModel.MenuProduct" Width="1.5" PointX="1.625" PointY="0.5" />
         <AssociationConnector Association="dbModel.FK_taskexecutorestimatedon_CodOptionTypeOfTask" />
         <EntityTypeShape EntityType="dbModel.ProductRigid" Width="1.5" PointX="22.875" PointY="14.125" />
         <InheritanceConnector EntityType="dbModel.ProductRigid" />
@@ -4561,7 +4684,7 @@
         <EntityTypeShape EntityType="dbModel.ProductPartRigidArticle" Width="1.5" PointX="12.5" PointY="24.875" />
         <EntityTypeShape EntityType="dbModel.Cost" Width="2.5" PointX="24.125" PointY="25" />
         <EntityTypeShape EntityType="dbModel.DocumentProduct" Width="2" PointX="27.5" PointY="27.75" />
-        <EntityTypeShape EntityType="dbModel.Document" Width="2.5" PointX="28.25" PointY="23.5" />
+        <EntityTypeShape EntityType="dbModel.Document" Width="2.5" PointX="28.25" PointY="22.625" />
         <EntityTypeShape EntityType="dbModel.productpartstoproducttask" Width="1.5" PointX="15" PointY="22.375" />
         <AssociationConnector Association="dbModel.FK_costs_CodDocumentProduct" />
         <AssociationConnector Association="dbModel.FK_costs_CodProductPartPrintableArticle" />
@@ -4704,6 +4827,9 @@
         <EntityTypeShape EntityType="dbModel.Order" Width="1.5" PointX="32.625" PointY="27.75" />
         <InheritanceConnector EntityType="dbModel.Order" />
         <AssociationConnector Association="dbModel.FK_documents_CodDocumentProduct" />
+        <EntityTypeShape EntityType="dbModel.DocumentState" Width="1.5" PointX="31.5" PointY="24.25" />
+        <AssociationConnector Association="dbModel.FK_documentstate_CodDocument" />
+        <EntityTypeShape EntityType="dbModel.State" Width="1.5" PointX="3.375" PointY="0.625" />
       </Diagram>
     </Diagrams>
   </Designer>

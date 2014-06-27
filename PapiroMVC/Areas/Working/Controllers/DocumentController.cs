@@ -272,6 +272,15 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         public ActionResult ListEstimate()
         {
+            //passo questo elenco alla view per poter implementare una ricerca mediante dropdown nella jqgrid
+            ViewBag.States = documentRepository.GetAllStates().Where(x => x.UseInEstimate??false).OrderBy(x=>x.StateNumber);
+            return View();
+        }
+
+        public ActionResult ListOrder()
+        {
+            //passo questo elenco alla view per poter implementare una ricerca mediante dropdown nella jqgrid
+            ViewBag.States = documentRepository.GetAllStates().Where(x => x.UseInOrder ?? false).OrderBy(x => x.StateNumber);
             return View();
         }
 
@@ -304,6 +313,21 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(new { redirectUrl = Url.Action("ListEstimate", "Document", new { area = "Working" }) });
         }
 
+        [HttpPost]
+        public ActionResult DeleteOrders(string ids)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
+            {
+                var c = documentRepository.GetSingle(id);
+                documentRepository.Delete(c);
+            }
+
+            documentRepository.Save();
+
+            return Json(new { redirectUrl = Url.Action("ListOrder", "Document", new { area = "Working" }) });
+        }
+
 
         [HttpParamAction]
         [HttpGet]
@@ -317,6 +341,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditDocument";
+
+
+
             return View("EditDocument", c);
         }
 
@@ -326,10 +353,27 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         private Estimate NewEstimate()
         {
+            
             var c = new Estimate();
+            c.EstimateNumberSerie = DateTime.Now.Year.ToString();
             c.CodDocument = documentRepository.GetNewCode(c);
             c.EstimateNumber = documentRepository.GetNewEstimateNumber(c);
             c.DateDocument = DateTime.Now;
+
+           var allStates = documentRepository.GetAllStates().Where(x => (x.UseInEstimate??false));
+
+           foreach (var s in allStates)
+           {
+               c.DocumentStates.Add(new DocumentState
+               {
+                   CodDocument = c.CodDocument,
+                   StateNumber = s.StateNumber,
+                   StateName = s.StateName,
+                   ResetLinkedStates = s.ResetLinkedStates,
+                   Selected = false                   
+               });
+           }
+
             documentRepository.Add(c);
             documentRepository.Save();
             Session["CodDocument"] = c.CodDocument;
@@ -360,9 +404,31 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var c = new Order();
             c.CodDocument = documentRepository.GetNewCode(c);
+            c.EstimateNumberSerie = DateTime.Now.Year.ToString();
             c.OrderNumber = documentRepository.GetNewOrderNumber(c);
-            c.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+
+            var docProd = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+
+            c.OrderProduct = docProd;
+            c.CodCustomer = docProd.Document.CodCustomer;
+            c.Customer = docProd.Document.Customer;
+
             c.DateDocument = DateTime.Now;
+
+            var allStates = documentRepository.GetAllStates().Where(x => (x.UseInOrder ?? false)).OrderBy(x=>x.StateNumber);
+
+            foreach (var s in allStates)
+            {
+                c.DocumentStates.Add(new DocumentState
+                {
+                    CodDocument = c.CodDocument,
+                    StateNumber = s.StateNumber,
+                    StateName = s.StateName,
+                    ResetLinkedStates = s.ResetLinkedStates,
+                    Selected = false
+                });
+            }
+
             documentRepository.Add(c);
             documentRepository.Save();
 
@@ -377,9 +443,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult CreateOrder(string codDocumentProduct)
         {
-            var c = NewOrder();
+            var c = NewOrder(codDocumentProduct);
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditOrder";
+            if (Request.IsAjaxRequest())
+            {
+                return Json(new { redirectUrl = Url.Action("EditOrder", new { id = c.CodDocument})}, JsonRequestBehavior.AllowGet);
+            }
             return View("EditOrder", c);
         }
 

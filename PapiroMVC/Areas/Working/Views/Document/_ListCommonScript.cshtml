@@ -12,12 +12,36 @@
     }
 
     function editEstimate(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", new { id = "-1" }, new { @class = "tbutton smalledit" })';
         return link.replace("-1", cellvalue);
     }
 
-    function editDocumentProduct(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProduct", new {id= "-1"},new {@class="tbutton smalledit"})';
+    function openOrder(cellvalue, options, rowobject) {
+        var s = cellvalue.split("%");
+        var caption = s[0];
+        var codDocument = s[1];
+
+        var link = '@Html.ActionLink("-2", "EditOrder", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        return link.replace("-1", codDocument).replace("-2", caption);
+    }
+
+    function createOrder(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateOrder"), "CreateOrder", new { codDocumentProduct = "-1" }, new { @class = "tbutton smalledit" })';
+        return link.replace("-1", cellvalue);
+    }
+
+    function openEstimate(cellvalue, options, rowobject) {
+
+        var s = cellvalue.split("%");
+        var caption = s[0];
+        var codDocument = s[1];
+
+        var link = '@Html.ActionLink("-2", "EditEstimate", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        return link.replace("-1", codDocument).replace("-2", caption);
+    }
+
+    function editOrder(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditOrder", new {id= "-1"},new {@class="tbutton smalledit"})';
         return link.replace("-1", cellvalue);
     }
 
@@ -41,6 +65,11 @@
         return link;
     }
 
+
+    datePick = function (elem) {
+        $(elem).datepicker({ dateFormat: 'dd/mm/yy' }).val();
+        //        jQuery(elem).datepicker();
+    }
 
     $("#delete").click(function () {
         var grid = jQuery("#list");

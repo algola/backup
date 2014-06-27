@@ -1,4 +1,4 @@
-﻿@model PapiroMVC.Models.Document
+﻿@model PapiroMVC.Models.Order
 @using PapiroMVC.Validation
 @using PapiroMVC.Models
 
@@ -23,10 +23,9 @@
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("Action", "Document", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal", @id = "documentForm" }))
     {
-        <div class="row-fluid">
 
 
-        </div>
+
 
 
         <div class="span12">
@@ -40,15 +39,17 @@
                     </div>
                     @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
                     @Html.HiddenFor(model => model.CodDocument)
-                    @Html.AlgolaEditorFor(model => model.DateDocument, new { @Value = ((DateTime)Model.DateDocument).ToString("d") })
-                   
+                    @Html.AlgolaEditorFor(model => model.DateDocument)
                     @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
                     @Html.HiddenFor(model => model.Notes)
                     @Html.AlgolaEditorFor(model => model.EstimateNumberSerie)
-                    @Html.AlgolaEditorFor(model => model.EstimateNumber)
+
+                    @Html.AlgolaEditorFor(model => model.OrderNumber)
                     @Html.HiddenFor(model => model.TimeStampTable)
 
                     @Html.HiddenFor(model => model.CodCustomer)
+                    @Html.HiddenFor(model => model.CodDocumentProduct)
+
 
                     @Scripts.Render("~/bundles/autocomplete")
                 </div>
@@ -75,11 +76,11 @@
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].Completed)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].ResetLinkedStates)
 
-                    <div class="control-group no-padding-bottom no-padding-top">
-                        <div class="col-sm-3 control-label no-padding-right">
+                    <div class="row no-padding-bottom no-padding-top">
+                        <div class="col-sm-3 control-label no-padding-right no-padding-bottom no-padding-top">
                             @Html.Label(Html.T(strings, Model.DocumentStatesPerView[i].StateName))
                         </div>
-                        <div class="controls col-sm-9">
+                        <div class="controls col-sm-9 no-padding-bottom no-padding-top">
                             @Html.CheckBoxFor(m => m.DocumentStatesPerView[i].Selected)
                             @*@Html.CheckBox(" ", Model.DocumentStatesPerView[i].Selected.GetValueOrDefault())*@
 
@@ -89,22 +90,13 @@
             </div>
 
 
-
-            <div id="_listDocumentProduct" class="span11 well no-margin">
-
-                @if (Model.TypeOfDocument == Document.DocumentType.Estimate)
-                {
-                    <div id="status2" class="nopadding well">
-                        @Html.AlgolaAutocompleteFor(model => model.NewProductCommand.NewProduct, "NewProductAutoComplete", "Document")
-                    </div>
-                }
-
-                @Html.Partial("_ListDocumentProduct", Model)
-            </div>
+            
 
             <div class="span1"></div>
+            <div class="span11 well no-padding">@Model.OrderProduct.ProductName</div>
+            <div class="vspace-20"></div>
         </div>
-
+    
 
 
         <div id="dialog-message" class="hide">
@@ -117,6 +109,19 @@
             <div id="pagerCustomer"></div>
 
         </div>
+        <button class="btn btn-danger" type="button" id="delete">
+            <i class="icon-trash bigger-125"></i>
+            @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
+            <span class="badge badge-transparent">
+                <i class="light-red icon-asterisk"></i>
+            </span>
+        </button>
+
+        <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+            <i class="icon-save bigger-160"></i>
+            @HttpContext.GetLocalResourceObject(strings, "Save")
+        </button>
+
 
         <div class="space"></div>
 
@@ -127,38 +132,16 @@
 
 <script type="text/javascript">
 
-
-
-    function estimateOpenxml() {
-
-        clearValidationErrors();
-
-        var datastring = $("#documentForm").serialize();
-
-        //at firt time save estimate or
-        $.ajax({
-            type: "POST",
-            url: "@(Url.Action(ViewBag.ActionMethod, "Document"))",
-            data: datastring,
-            success: function (data) {
-                window.location.href = "@(Url.Action("PrintEstimate", "Document", new { id = Model.CodDocument }))";
-                return;
-            },
-            error: function (xhr) {
-                $('#status').html(xhr);
-            }
-        });
-    }
+    
 
     function save() {
 
+
         window.onbeforeunload = null;
+
         clearValidationErrors();
 
         var datastring = $("#documentForm").serialize();
-
-
-        alert(datastring);
 
         //at firt time save estimate or
         $.ajax({
@@ -187,11 +170,6 @@
     $(document).ready(
 
         function () {
-
-
-
-
-
 
             $('textarea').autosize({ append: "\n" });
             $('#DateDocument').datepicker({ dateFormat: "dd/mm/yy" });
@@ -342,7 +320,7 @@
                 //at firt time save estimate or
                 $.ajax({
                     type: "POST",
-                    url: "@(Url.Action("NewProductCurrentEstimate", "Document"))",
+                    url: "@(Url.Action("NewProductCurrentOrder", "Document"))",
                     data: datastring,
                     success: function (data) {
                         if (data.redirectUrl) {

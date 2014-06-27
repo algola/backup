@@ -13,11 +13,31 @@ namespace PapiroMVC.Model
             dbS.DatabaseName = dbName;
         }
 
+
         public void UpdateSchema(DbContext ctx)
         {
             dbS.Ctx = ctx;
 
-            //First Tablef
+            dbS.AddTable("states");
+            dbS.AddColumnToTable("states", "CodStates", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("states", "StateName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("states", "StateNumber", SchemaDb.Int, "0");
+            //deprecated
+            dbS.AddColumnToTable("states", "UsedIn", SchemaDb.String, "100");
+            //usedin -- CONTAINS  
+            //ES = ESTIMATE
+            //OR = ORDER
+
+            dbS.AddColumnToTable("states", "UseInEstimate", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("states", "UseInOrder", SchemaDb.Bool, "0");
+
+            //10+20+40 = reset if this is checked
+            dbS.AddColumnToTable("states", "ResetLinkedStates", SchemaDb.String, "100");
+          //  dbS.ChangeStringColumnLegth("states", "ResetLinkedStates", "100");
+
+
+
+            //First Table
             dbS.AddTable("documents");
             dbS.AddColumnToTable("documents", "CodDocument", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("documents", "DocumentName", SchemaDb.String, "100");
@@ -128,8 +148,6 @@ namespace PapiroMVC.Model
             //2 Not Included
             dbS.AddColumnToTable("costs", "TypeOfCalcolous", SchemaDb.Int, "0");
 
-
-
             //force to zero
             dbS.AddColumnToTable("costs", "ForceZero", SchemaDb.Bool, "0");
             //Hide
@@ -137,6 +155,25 @@ namespace PapiroMVC.Model
             //Locked
             dbS.AddColumnToTable("costs", "Locked", SchemaDb.Bool, "0");
 
+
+
+            //Second Table
+            dbS.AddTable("documentstate");
+            dbS.AddColumnToTable("documentstate", "CodDocumentState", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("documentstate", "CodDocument", SchemaDb.String, "50");
+            dbS.AddForeignKey("documentstate", "CodDocument", "documents", "CodDocument");
+
+            dbS.AddColumnToTable("documentstate", "StateName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("documentstate", "StateNumber", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("documentstate", "StateNumberPrev", SchemaDb.Int, "0");
+
+            dbS.AddColumnToTable("documentstate", "Completed", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("documentstate", "Selected", SchemaDb.Bool, "0");
+            dbS.ChangeToBoolNotNullable("documentstate", "Selected");
+
+            //10+20+40 = reset if this is checked
+            dbS.AddColumnToTable("documentstate", "ResetLinkedStates", SchemaDb.String, "100");
+ 
 
         }
     }

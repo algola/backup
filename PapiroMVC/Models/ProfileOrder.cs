@@ -12,19 +12,23 @@ namespace PapiroMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class OrderRow
+    public partial class ProfileOrder
     {
+        public ProfileOrder()
+        {
+            this.OrderRows = new HashSet<OrderRow>();
+        }
+    
         public System.DateTime TimeStampTable { get; set; }
-        public string CodOrderRows { get; set; }
-        public string CodModuleName { get; set; }
         public string CodOrder { get; set; }
-        public string Description { get; set; }
-        public string MontlyPrice { get; set; }
-        public Nullable<int> Months { get; set; }
-        public string Discount { get; set; }
+        public string Name { get; set; }
+        public Nullable<System.DateTime> OrderDate { get; set; }
+        public Nullable<int> Status { get; set; }
+        public string Price { get; set; }
+        public Nullable<double> Discount { get; set; }
         public string Total { get; set; }
     
-        public virtual ProfileOrder Order { get; set; }
-        public virtual Module Module { get; set; }
+        public virtual ICollection<OrderRow> OrderRows { get; set; }
+        public virtual Profile Profile { get; set; }
     }
 }

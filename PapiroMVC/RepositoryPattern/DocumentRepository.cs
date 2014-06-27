@@ -163,7 +163,7 @@ namespace Services
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
             //con un colpo solo!!!
-            var csCode = (from COD in this.GetAll() select COD.EstimateNumber).Max();
+            var csCode = (from COD in this.GetAll() where COD.EstimateNumberSerie == a.EstimateNumberSerie select COD.EstimateNumber).Max();
             return AlphaCode.GetNextIntCode(csCode ?? "0").PadLeft(6, '0');
         }
 
@@ -171,7 +171,7 @@ namespace Services
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
             //con un colpo solo!!!
-            var csCode = (from COD in this.GetAll() select COD.EstimateNumber).Max();
+            var csCode = (from COD in this.GetAll().OfType<Order>() select COD.OrderNumber).Max();
             return AlphaCode.GetNextIntCode(csCode ?? "0").PadLeft(6, '0');
         }
 
@@ -223,6 +223,7 @@ namespace Services
 
         public override IQueryable<Document> GetAll()
         {
+
             Console.WriteLine(Context.Database.Connection.ConnectionString);
             return Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs");
         }
@@ -283,6 +284,7 @@ namespace Services
             var dpJustStored = Context.DocumentProducts.Where(x => x.CodDocument == entity.CodDocument).ToList();
             entity.DocumentProducts = entity.DocumentProducts.Union(dpJustStored, new DocumentProductComparer()).ToList();
 
+            #region DocumentProducts
             //we can have some Cost added and dome Just Stored so...
             foreach (var item in entity.DocumentProducts)
             {
@@ -295,8 +297,29 @@ namespace Services
                 }
 
             }
+            #endregion
 
             DocumentProductCodeRigen(entity);
+
+            #region States
+
+            foreach (var item in entity.DocumentStates)
+            {
+                var fromBD2 = Context.DocumentStates.SingleOrDefault(p => p.CodDocumentState == item.CodDocumentState);
+                if (fromBD2 != null)
+                {
+                    Context.Entry(fromBD2).CurrentValues.SetValues(item);
+                    Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                }
+            }
+
+            #endregion
+
+
 
             foreach (var item in entity.DocumentProducts)
             {
@@ -310,11 +333,6 @@ namespace Services
                 {
                     Context.Entry(item).State = System.Data.Entity.EntityState.Added;
                 }
-
-                /*                var product = item.Product;
-                                var fromBD3 = Context.Products.Single(p => p.CodProduct == product.CodProduct);
-                                Context.Entry(fromBD3).CurrentValues.SetValues(product);
-                */
 
                 foreach (var item2 in item.Costs)
                 {
@@ -404,14 +422,10 @@ namespace Services
 
         }
 
-
-
-
         public override void SetDbName(string name)
         {
             base.SetDbName(name);
         }
-
 
         protected void EditAdd(CostDetail entity)
         {
@@ -542,6 +556,70 @@ namespace Services
 
         }
 
+
+        /// <summary>
+        /// returns all system states
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<State> GetAllStates()
+        {
+            Console.WriteLine(Context.Database.Connection.ConnectionString);
+
+            var states = Context.States;
+
+            var tbCode = new State[14];
+
+            tbCode[0] = new State { CodState = "AttInformazioni", StateName = "AttInformazioni", StateNumber = 10, UseInEstimate = true };
+            tbCode[1] = new State { CodState = "InElaborazione", StateName = "InElaborazione", StateNumber = 30, UseInEstimate = true };
+            tbCode[2] = new State { CodState = "Inviato", StateName = "Inviato", StateNumber = 40, UseInEstimate = true, ResetLinkedStates = "10+30" };
+            tbCode[3] = new State { CodState = "Commessa", StateName = "Commessa", StateNumber = 50, UseInEstimate = true, ResetLinkedStates = "10+30" };
+            tbCode[4] = new State { CodState = "Annullato", StateName = "Annullato", StateNumber = 60, UseInEstimate = true };
+
+
+            tbCode[5] = new State { CodState = "AttConfermaDordine", StateName = "AttConfermaDordine", StateNumber = 110, UseInOrder = true };
+            tbCode[6] = new State { CodState = "AttAnticipo", StateName = "AttAnticipo", StateNumber = 120, UseInOrder = true };
+            tbCode[7] = new State { CodState = "AttMateriali", StateName = "AttMateriali", StateNumber = 130, UseInOrder = true };
+            tbCode[8] = new State { CodState = "AttImpianti", StateName = "AttImpianti", StateNumber = 140, UseInOrder = true };
+            tbCode[9] = new State { CodState = "InStampa", StateName = "InStampa", StateNumber = 150, UseInOrder = true };
+            tbCode[10] = new State { CodState = "LavEsterna", StateName = "LavEsterna", StateNumber = 160, UseInOrder = true };
+            tbCode[11] = new State { CodState = "InConfezione", StateName = "InConfezione", StateNumber = 170, UseInOrder = true };
+            tbCode[12] = new State { CodState = "InSpedizione", StateName = "InSpedizione", StateNumber = 180, UseInOrder = true };
+            tbCode[13] = new State { CodState = "Concluso", StateName = "Concluso", StateNumber = 190, UseInOrder = true };
+
+
+            foreach (var item in tbCode)
+            {
+
+                item.TimeStampTable = DateTime.Now;
+                var fromBD2 = Context.States.SingleOrDefault(p => p.CodState == item.CodState);
+                if (fromBD2 != null)
+                {
+                    Context.Entry(fromBD2).CurrentValues.SetValues(item);
+                    Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
+                }
+                else
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                }
+            }
+
+            this.Save();
+
+
+
+
+            return Context.States;
+        }
+
+        /// <summary>
+        /// return the document states
+        /// </summary>
+        /// <param name="codDocument"></param>
+        /// <returns></returns>
+        public IQueryable<DocumentState> GetAllDocumentStates(string codDocument)
+        {
+            return Context.DocumentStates.Where(x => x.CodDocument == codDocument).OrderBy(x => x.StateNumber);
+        }
 
     }
 }

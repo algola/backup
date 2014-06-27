@@ -132,14 +132,14 @@ namespace UnitTestPapiroMVC
             pv.Product = prod;
             //            prod.ProductCodeRigen();
 
-            pv.Quantities.Add(1000);
+            pv.Quantity=1000;
             #endregion
 
             DocumentProduct dp = new DocumentProduct();
             dp.Document = null;
             dp.CodProduct = pv.Product.CodProduct;
             dp.Product = pv.Product;
-            dp.Quantity = pv.Quantities.FirstOrDefault();
+            dp.Quantity = pv.Quantity;
 
             dp.InitCost();
 

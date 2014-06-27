@@ -40,7 +40,8 @@ namespace PapiroMVC.Models
 
         public enum DocumentType : int
         {
-            Estimate = 0
+            Estimate = 0,
+            Order = 1,
         }
 
         public DocumentType TypeOfDocument
@@ -57,11 +58,24 @@ namespace PapiroMVC.Models
             set;
         }
 
-        public void DocumentProductsCodeRigen(bool deeep = false)
+        /// <summary>
+        /// rigeneration of each code in graph tree
+        /// </summary>
+        /// <param name="deep"></param>
+        public void DocumentProductsCodeRigen(bool deep = false)
         {
             this.EstimateNumber = this.EstimateNumber == null ? (0).ToString().PadLeft(6, '0') : this.EstimateNumber.PadLeft(6, '0');
 
-            //prodotti in documento
+            var dstates = this.DocumentStates.OrderBy(y => y.CodDocumentState, new EmptyStringsAreLast()).ToList();
+            foreach (var item in this.DocumentStates.OrderBy(y => y.CodDocumentState, new EmptyStringsAreLast()))
+            {
+                item.CodDocumentState = this.CodDocument + "-" + dstates.IndexOf(item).ToString();
+                item.CodDocument = this.CodDocument;
+                item.TimeStampTable = DateTime.Now;
+            }
+
+
+            #region DocumentProduct
             var ppart = this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
             {
@@ -76,7 +90,7 @@ namespace PapiroMVC.Models
                     itemCost.CodDocumentProduct = item.CodDocumentProduct;
                     itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();
 
-                    if (deeep)
+                    if (deep)
                     {
                         foreach (var itemCostDetail in itemCost.CostDetails)
                         {
@@ -88,10 +102,36 @@ namespace PapiroMVC.Models
 
                 }
             }
+            #endregion
 
             this.TimeStampTable = DateTime.Now;
 
         }
+
+        protected List<DocumentState> documentStates;
+        public List<DocumentState> DocumentStatesPerView
+        {
+            get
+            {
+                if (documentStates == null)
+                {
+                    documentStates = this.DocumentStates.OrderBy(x => x.StateNumber).ToList();
+                }
+
+                return documentStates;
+
+            }
+
+            set
+            {
+                documentStates = value;
+                DocumentStates = documentStates;
+            }
+
+        }
+
+
+
 
     }
 }

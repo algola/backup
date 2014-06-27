@@ -76,6 +76,7 @@ warning 6002: The table/view 'def.profiles.news' does not have a primary key def
           <Property Name="ExpiredY" Type="char" MaxLength="4" />
           <Property Name="BrianTreeCustomerId" Type="char" MaxLength="255" />
           <Property Name="BrainTreeToken" Type="char" MaxLength="255" />
+          <Property Name="City" Type="char" MaxLength="255" />
         </EntityType>
         <Association Name="FK_orderRows_CodModuleName">
           <End Role="modules" Type="Self.modules" Multiplicity="0..1">
@@ -134,14 +135,14 @@ FROM `news` AS `news`</DefiningQuery>
         <EntityContainer Name="profilesEntities" p1:LazyLoadingEnabled="false" >
           <EntitySet Name="Profiles" EntityType="profilesModel.Profile" />
           <EntitySet Name="OrderRows" EntityType="profilesModel.OrderRow" />
-          <EntitySet Name="Orders" EntityType="profilesModel.Order" />
+          <EntitySet Name="ProfileOrders" EntityType="profilesModel.ProfileOrder" />
           <AssociationSet Name="FK_orderRows_CodOrder" Association="profilesModel.FK_orderRows_CodOrder">
-            <End Role="order" EntitySet="Orders" />
+            <End Role="order" EntitySet="ProfileOrders" />
             <End Role="orderRow" EntitySet="OrderRows" />
           </AssociationSet>
           <AssociationSet Name="FK_orders_Name" Association="profilesModel.FK_orders_Name">
             <End Role="Profile" EntitySet="Profiles" />
-            <End Role="order" EntitySet="Orders" />
+            <End Role="order" EntitySet="ProfileOrders" />
           </AssociationSet>
           <EntitySet Name="Modules" EntityType="profilesModel.Module" />
           <AssociationSet Name="FK_modules_Name1" Association="profilesModel.FK_modules_Name1">
@@ -175,6 +176,7 @@ FROM `news` AS `news`</DefiningQuery>
           <NavigationProperty Name="Orders" Relationship="profilesModel.FK_orders_Name" FromRole="Profile" ToRole="order" />
           <NavigationProperty Name="Modules" Relationship="profilesModel.FK_modules_Name1" FromRole="Profile" ToRole="module1" />
           <Property Name="BrainTreeToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="OrderRow">
           <Key>
@@ -192,7 +194,7 @@ FROM `news` AS `news`</DefiningQuery>
           <NavigationProperty Name="Order" Relationship="profilesModel.FK_orderRows_CodOrder" FromRole="orderRow" ToRole="order" />
           <NavigationProperty Name="Module" Relationship="profilesModel.FK_orderRows_CodModuleName1" FromRole="OrderRow" ToRole="module1" />
         </EntityType>
-        <EntityType Name="Order">
+        <EntityType Name="ProfileOrder">
           <Key>
             <PropertyRef Name="CodOrder" />
           </Key>
@@ -208,7 +210,7 @@ FROM `news` AS `news`</DefiningQuery>
           <NavigationProperty Name="Profile" Relationship="profilesModel.FK_orders_Name" FromRole="order" ToRole="Profile" />
         </EntityType>
         <Association Name="FK_orderRows_CodOrder">
-          <End Type="profilesModel.Order" Role="order" Multiplicity="0..1">
+          <End Type="profilesModel.ProfileOrder" Role="order" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="profilesModel.OrderRow" Role="orderRow" Multiplicity="*" />
@@ -225,7 +227,7 @@ FROM `news` AS `news`</DefiningQuery>
           <End Type="profilesModel.Profile" Role="Profile" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="profilesModel.Order" Role="order" Multiplicity="*" />
+          <End Type="profilesModel.ProfileOrder" Role="order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profile">
               <PropertyRef Name="Name" />
@@ -297,6 +299,7 @@ FROM `news` AS `news`</DefiningQuery>
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="profilesModel.Profile">
               <MappingFragment StoreEntitySet="profile">
+                <ScalarProperty Name="City" ColumnName="City" />
                 <ScalarProperty Name="BrainTreeToken" ColumnName="BrainTreeToken" />
                 <ScalarProperty Name="BrianTreeCustomerId" ColumnName="BrianTreeCustomerId" />
                 <ScalarProperty Name="ExpiredY" ColumnName="ExpiredY" />
@@ -315,8 +318,8 @@ FROM `news` AS `news`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="profilesModel.Order">
+          <EntitySetMapping Name="ProfileOrders">
+            <EntityTypeMapping TypeName="profilesModel.ProfileOrder">
               <MappingFragment StoreEntitySet="orders">
                 <ScalarProperty Name="Total" ColumnName="Total" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />

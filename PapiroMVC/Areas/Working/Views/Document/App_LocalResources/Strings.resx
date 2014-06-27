@@ -142,10 +142,10 @@
     <value>Documento</value>
   </data>
   <data name="CreateDocumentDesc" xml:space="preserve">
-    <value>creazione di un nuovo documento</value>
+    <value>Creazione di un nuovo documento</value>
   </data>
   <data name="CreateDocumentDescription" xml:space="preserve">
-    <value>nuovo documento</value>
+    <value>Nuovo documento</value>
   </data>
   <data name="CreateEstimateMenu" xml:space="preserve">
     <value>Nuovo Preventivo</value>
@@ -169,7 +169,7 @@
     <value>Si</value>
   </data>
   <data name="DeletingStep" xml:space="preserve">
-    <value>elimina</value>
+    <value>Elimina</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Descrizione costo</value>
@@ -205,7 +205,7 @@
     <value>Documenti</value>
   </data>
   <data name="DocumentsDesc" xml:space="preserve">
-    <value>elenco dei documenti</value>
+    <value>Elenco dei documenti</value>
   </data>
   <data name="Drafting" xml:space="preserve">
     <value>Montaggio</value>
@@ -214,22 +214,22 @@
     <value>Modifica</value>
   </data>
   <data name="EditCostDesc" xml:space="preserve">
-    <value>dettaglio del costo</value>
+    <value>Dettaglio del costo</value>
   </data>
   <data name="EditDocumentDesc" xml:space="preserve">
-    <value>modifica del documento</value>
+    <value>Modifica del documento</value>
   </data>
   <data name="EditDocumentProducts" xml:space="preserve">
     <value>Modifica del prodotto in un documento</value>
   </data>
   <data name="EditDocumentProductsDesc" xml:space="preserve">
-    <value>modifica del prodotto in documento</value>
+    <value>Modifica del prodotto in documento</value>
   </data>
   <data name="EditDocumet" xml:space="preserve">
     <value>Modifica Documento</value>
   </data>
   <data name="EditEstimateDesc" xml:space="preserve">
-    <value>compilazione</value>
+    <value>Compilazione</value>
   </data>
   <data name="EditEstimateMetaTitle" xml:space="preserve">
     <value>Software Preventivi tipografia e gestionale centro stampa: compilazione del preventivo</value>
@@ -247,7 +247,7 @@
     <value>Preventivi</value>
   </data>
   <data name="EstimatesDesc" xml:space="preserve">
-    <value>elenco</value>
+    <value>Elenco preventivi</value>
   </data>
   <data name="FilterCheckMessage" xml:space="preserve">
     <value>Attenzione! Filtri presenti in ricerca.</value>
@@ -286,7 +286,7 @@
     <value>Errore</value>
   </data>
   <data name="NoTaskEstimatedOnExceptionDesc" xml:space="preserve">
-    <value>nessun costo è stato specificato</value>
+    <value>Nessun costo è stato specificato</value>
   </data>
   <data name="NoTaskEstimatedOnExceptionPage" xml:space="preserve">
     <value>E' possibile inserire un costo ora</value>
@@ -295,7 +295,7 @@
     <value>Errore</value>
   </data>
   <data name="NoTaskExecutorExceptionDesc" xml:space="preserve">
-    <value>nessuna macchina/esecutore è stato specificata per questa lavorazione</value>
+    <value>Nessuna macchina/esecutore è stato specificata per questa lavorazione</value>
   </data>
   <data name="NoTaskExecutorExceptionPage" xml:space="preserve">
     <value>E' possibile inserire una ora grazie al configuratore</value>
@@ -359,5 +359,89 @@
   </data>
   <data name="UnitPrice" xml:space="preserve">
     <value>Cad.</value>
+  </data>
+  <data name="DeleteMessageOrder" xml:space="preserve">
+    <value>Si stanno per cancellare le commesse selezionate, procedere?</value>
+  </data>
+  <data name="ListOrder" xml:space="preserve">
+    <value>Commesse</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Commesse</value>
+  </data>
+  <data name="OrdersDesc" xml:space="preserve">
+    <value>Elenco commesse</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>Nuova commessa</value>
+  </data>
+  <data name="Annullato" xml:space="preserve">
+    <value>Annullato</value>
+  </data>
+  <data name="AttAnticipo" xml:space="preserve">
+    <value>Attendo anticipo</value>
+  </data>
+  <data name="AttConfermaDordine" xml:space="preserve">
+    <value>Attendo conferma ordine</value>
+  </data>
+  <data name="AttInformazioni" xml:space="preserve">
+    <value>Attendo informazioni</value>
+  </data>
+  <data name="AttMateriali" xml:space="preserve">
+    <value>Attendo materia prima</value>
+  </data>
+  <data name="Commessa" xml:space="preserve">
+    <value>Esiste una commessa</value>
+  </data>
+  <data name="Concluso" xml:space="preserve">
+    <value>Concluso</value>
+  </data>
+  <data name="InConfezione" xml:space="preserve">
+    <value>In Confezione</value>
+  </data>
+  <data name="InElaborazione" xml:space="preserve">
+    <value>In elaborazione</value>
+  </data>
+  <data name="InSpedizione" xml:space="preserve">
+    <value>In Spedizione</value>
+  </data>
+  <data name="InStampa" xml:space="preserve">
+    <value>In stampa</value>
+  </data>
+  <data name="Inviato" xml:space="preserve">
+    <value>Inviato</value>
+  </data>
+  <data name="LavEsterna" xml:space="preserve">
+    <value>Lavorazione esterna</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tutti</value>
+  </data>
+  <data name="AttImpianti" xml:space="preserve">
+    <value>Attendo impianti</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Stato</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Commessa N°</value>
+  </data>
+  <data name="CodProductCaption" xml:space="preserve">
+    <value>Cod. articolo</value>
+  </data>
+  <data name="DateDocument" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DocumentAndProductRefName" xml:space="preserve">
+    <value>Riferimento</value>
+  </data>
+  <data name="EstimateNumberSerie" xml:space="preserve">
+    <value>Prev N°</value>
+  </data>
+  <data name="GoToOrder" xml:space="preserve">
+    <value>Crea commessa</value>
+  </data>
+  <data name="EditOrderDesc" xml:space="preserve">
+    <value>Modifica commessa</value>
   </data>
 </root>

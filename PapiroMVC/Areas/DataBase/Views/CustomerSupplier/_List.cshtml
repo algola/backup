@@ -20,7 +20,7 @@
     </div>
     @*filters check************************************************@
 
-    <table id="list"><tr><td /></tr></table>
+    <table id="listCustomerSupplier"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
@@ -52,7 +52,7 @@
     $(document).ready(function () {
         'use strict';
         var // myData = [],
-            $grid = $("#list"),
+            $grid = $("#listCustomerSupplier"),
 
             numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
             numberTemplate = {
@@ -359,7 +359,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
 
     //filters check************************************************
     $(window).load(function () {
-        var myGrid = $("#list");
+        var myGrid = $("#listCustomerSupplier");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
         if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&

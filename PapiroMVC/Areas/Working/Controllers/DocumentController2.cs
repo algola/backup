@@ -225,7 +225,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
-            
+
             switch (cv.TypeOfCostDetail)
             {
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
@@ -485,7 +485,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             bool doLock;
 
             var qta = Convert.ToDouble(quantity);
-            var uCost = Convert.ToDouble(unitCost==""?"0":unitCost, Thread.CurrentThread.CurrentUICulture);
+            var uCost = Convert.ToDouble(unitCost == "" ? "0" : unitCost, Thread.CurrentThread.CurrentUICulture);
 
             var cost = documentRepository.GetCost(id);
 
@@ -718,6 +718,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             Session["CodDocument"] = id;
             var prod = documentRepository.GetSingle(id);
+            prod.DocumentStates = documentRepository.GetAllDocumentStates(id).ToList();
 
             if (prod == null)
             {
@@ -726,6 +727,28 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditEstimate";
+            return View(prod);
+
+        }
+
+        [HttpGet]
+        public ActionResult EditOrder(string id)
+        {
+         //   Session["CodDocument"] = id;
+            var prod = documentRepository.GetSingle(id);
+
+
+
+            if (prod == null)
+            {
+                throw new NotFoundResException();
+            }
+
+            prod.DocumentStates = documentRepository.GetAllDocumentStates(id).ToList();
+            prod.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(prod.CodDocumentProduct);
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditOrder";
             return View(prod);
 
         }
@@ -1011,6 +1034,13 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+
+        public ActionResult NewProductNewEstimateById(string id)
+        {
+            var est = NewEstimate();
+            return RedirectToAction("CreateProduct", "Product", new { id = id });
+        }
+
         [HttpParamAction]
         public ActionResult NewProductNewEstimate(NewProductCommand c)
         {
@@ -1038,7 +1068,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             if (sel != null)
             {
                 var est = NewEstimate();
-
                 return Json(new { redirectUrl = Url.Action("CreateProduct", "Product", new { id = sel.CodMenuProduct }) });
             }
             else
@@ -1056,5 +1085,34 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return PartialView("_MenuNewEstimate");
         }
 
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditOrder(PapiroMVC.Models.Order c)
+        {
+            var taskList = this.typeOfTaskRepository.GetAll();
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    documentRepository.Edit(c);
+                    //rigeneration name of article
+                    //c.OrderSingleSheet.OrderName = c.OrderSingleSheet.ToString();
+                    documentRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("ListOrder") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditOrder";
+            return PartialView("_EditAndCreateOrder", c);
+        }
+
     }
+
+
 }

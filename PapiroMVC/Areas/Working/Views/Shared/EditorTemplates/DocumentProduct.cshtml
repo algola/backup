@@ -42,6 +42,7 @@
     </div>
     <div class="span5">
 
+        <button id="btnGoToOrder@(Model.CodDocumentProduct)" class="btn btn-green pull-right"> @Html.T(strings, "GoToOrder") </button>
         <button id="btnPrintToScreen@(Model.CodDocumentProduct)" class="btn btn-green pull-right"> @Html.T(strings, "PrintToScreenQty") </button>
         <button id="btn@(Model.CodDocumentProduct)" class="btn btn-grey pull-right"> @Html.T(strings, "CloneQty") </button>
 
@@ -58,6 +59,16 @@
     <div class="vspace"></div>
     <div class="controls">
         <input type="text" id="qta@(Model.CodDocumentProduct)" placeholder="@Html.T(strings, "NewQty")">
+    </div>
+    <div class="vspace"></div>
+
+</div>
+
+<div id="dialog-message-create-order@(Model.CodDocumentProduct)" class="hide">
+
+    <div class="vspace"></div>
+    <div class="controls">
+        Vuoi creare una commessa?
     </div>
     <div class="vspace"></div>
 
@@ -178,6 +189,85 @@
             **/
         });
 
+        $("#btnGoToOrder@(Model.CodDocumentProduct)").on('click', function (e) {
+            e.preventDefault();
+
+            hideProcessingMsg();
+
+            function send@(Model.CodDocumentProduct.Replace("-","_"))() {
+
+                showProcessingMsg();
+
+                var datastring = {
+                    
+                    "codDocumentProduct": '@Model.CodDocumentProduct',
+                    
+                };
+
+                //at firt time save estimate or
+                $.ajax({
+                    type: "GET",
+                    url: "@(Url.Action("CreateOrder", "Document"))",
+                    data: datastring,
+                    success: function (data) {
+
+
+                        alert("ok");
+
+                    if (data.redirectUrl) {
+                        hideProcessingMsg();
+                        // if the server returned a JSON object containing an url
+                        // property we redirect the browser to that url
+                        window.location.href = data.redirectUrl;
+                    } else {
+                        hideProcessingMsg();
+                    }
+
+                    return;
+                },
+                error: function (xhr) {
+                    hideProcessingMsg();
+                    alert('error');
+                }
+            });
+
+            };
+
+            //enterkey on dialog
+            $('#qta@(Model.CodDocumentProduct)').keypress(function (e) {
+                if (e.keyCode == $.ui.keyCode.ENTER) {
+                    send@(Model.CodDocumentProduct.Replace("-","_"))();
+                    $(this).closest(".ui-dialog-content").dialog("close");
+                }
+            });
+
+            var dialog = $("#dialog-message-create-order@(Model.CodDocumentProduct)").dialog({
+                width: 'auto',
+                modal: true,
+                title: '@Html.T(strings, "GoToOrderTitle")',
+                title_html: true,
+                buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        send@(Model.CodDocumentProduct.Replace("-","_"))();
+                        hideProcessingMsg();
+
+                        $(this).dialog("close");
+                    }
+                }
+                ]
+            });
+        });
 
 
         $("#btnPrintToScreen@(Model.CodDocumentProduct)").on('click', function (e) {

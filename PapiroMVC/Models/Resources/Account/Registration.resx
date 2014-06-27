@@ -126,6 +126,9 @@
   <data name="Base" xml:space="preserve">
     <value>Indirizzo</value>
   </data>
+  <data name="City" xml:space="preserve">
+    <value>Città</value>
+  </data>
   <data name="ConfirmPassword" xml:space="preserve">
     <value>Ridigitare la password</value>
   </data>

@@ -21,7 +21,8 @@ namespace Services
         void Edit(Document entity, bool deep);
         IQueryable<DocumentProduct> GetAllDocumentProducts();
 
-        
+        IQueryable<State> GetAllStates();
+        IQueryable<DocumentState> GetAllDocumentStates(string codDocument);
 
         Document GetEstimateEcommerce(string codCustomerSupplier);
     }

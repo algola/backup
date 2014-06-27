@@ -23,6 +23,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("profile", "Name", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("profile", "CompanyName", SchemaDb.String, "50");
             dbS.AddColumnToTable("profile", "Base", SchemaDb.String, "255");
+            dbS.AddColumnToTable("profile", "City", SchemaDb.String, "255");
             dbS.AddColumnToTable("profile", "Culture", SchemaDb.String, "50");
             dbS.AddColumnToTable("profile", "Phone", SchemaDb.String, "50");
             dbS.AddColumnToTable("profile", "VatNumber", SchemaDb.String, "50");

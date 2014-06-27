@@ -155,6 +155,30 @@ namespace SchemaManagemet
             }
         }
 
+
+//        
+
+        /// <summary>
+        /// Change column to Bool not nullable
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        public void ChangeToBoolNotNullable(string tableName, string columnName)
+        {
+            var sql = "CALL ChangeToBoolNotNullable('param0','param1','param2');";
+            sql = sql.Replace("param0", DatabaseName);
+            sql = sql.Replace("param1", tableName);
+            sql = sql.Replace("param2", columnName);
+            try
+            {
+                Ctx.Database.ExecuteSqlCommand(sql);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
         /// <summary>
         /// Change column to Double
         /// </summary>

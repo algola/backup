@@ -91,6 +91,9 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(PapiroMVC.Models.Resources.Account.Registration), "Base")]
         public string Base { get; set; }
 
+        [DisplayNameLocalized(typeof(PapiroMVC.Models.Resources.Account.Registration), "City")]
+        public string City { get; set; }
+
         //        [Required(ErrorMessageResourceType = typeof(PapiroMVC.Models.Resources.Account.Registration), ErrorMessageResourceName = "RequiredFieldRefeere")]
         [DisplayNameLocalized(typeof(PapiroMVC.Models.Resources.Account.Registration), "Refeere")]
         public string Refeere { get; set; }

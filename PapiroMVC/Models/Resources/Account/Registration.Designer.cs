@@ -88,6 +88,15 @@ namespace PapiroMVC.Models.Resources.Account {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Città.
+        /// </summary>
+        public static string City {
+            get {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ridigitare la password.
         /// </summary>
         public static string ConfirmPassword {

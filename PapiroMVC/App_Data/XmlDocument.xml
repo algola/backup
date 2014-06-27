@@ -1094,6 +1094,65 @@
             Returns true if this request is from local
             </summary>
         </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.PrintDocumentProductCosts(System.String)">
+            <summary>
+            Create and send by Json the DocumentProduct Cost description 
+            </summary>
+            <param name="CodDocumentProduct"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.CloneDocumentProduct(System.String,System.String,System.Int32)">
+            <summary>
+            This command invokes the cloning of DocumentProduct in the same Document with a new quantity
+            </summary>
+            <param name="codDocument"></param>
+            <param name="codDocumentProduct"></param>
+            <param name="newQuantity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ListEstimate">
+            <summary>
+            return view of estimates
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ListDocumentProducts">
+            <summary>
+            return view of alla DocumentProduct
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DeleteEstimates(System.String)">
+            <summary>
+            Delete estimate and rediret to List
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.NewEstimate">
+            <summary>
+            create fisical new estimate
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.CreateEstimate">
+            <summary>
+            Action to create new estimate
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.NewOrder(System.String)">
+            <summary>
+            create fisical new order
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.CreateOrder(System.String)">
+            <summary>
+            Action to create new order
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.GetPartialCost(System.String,System.String)">
             <summary>
             This Action returns partial view of CosteDetail
@@ -1159,7 +1218,7 @@
             <param name="id">CodDocumntProduct</param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DocumentProductList(System.String,Mvc.HtmlHelpers.GridSettings)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DocumentProductListInDocument(System.String,Mvc.HtmlHelpers.GridSettings)">
             <summary>
             List of DocumentProduct in a Document ie. Estimate
             </summary>
@@ -1272,6 +1331,12 @@
             <summary>
             update cost quantity and so other stuff
             </summary>
+        </member>
+        <member name="M:PapiroMVC.Models.Document.DocumentProductsCodeRigen(System.Boolean)">
+            <summary>
+            rigeneration of each code in graph tree
+            </summary>
+            <param name="deep"></param>
         </member>
         <member name="P:PapiroMVC.Models.Product.SystemTaskList">
             <summary>
@@ -1417,6 +1482,11 @@
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.Base">
             <summary>
               Looks up a localized string similar to Indirizzo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Account.Registration.City">
+            <summary>
+              Looks up a localized string similar to Città.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Account.Registration.ConfirmPassword">
@@ -7759,6 +7829,19 @@
             <param name="c"></param>
             <returns></returns>
         </member>
+        <member name="M:Services.DocumentRepository.GetAllStates">
+            <summary>
+            returns all system states
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Services.DocumentRepository.GetAllDocumentStates(System.String)">
+            <summary>
+            return the document states
+            </summary>
+            <param name="codDocument"></param>
+            <returns></returns>
+        </member>
         <member name="T:Services.EmptyStringsAreLast">
             <summary>
             Returns -1 instead of 1 if y is IsNullOrEmpty when x is Not.
@@ -8735,7 +8818,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.OrderMenu">
             <summary>
-              Looks up a localized string similar to Ordini.
+              Looks up a localized string similar to Commesse.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.PlotterMenu">

@@ -1,0 +1,26 @@
+﻿@model PapiroMVC.Models.DocumentState
+
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+@*@Html.LabelFor(model => model.TimeStampTable, new { @class = "control-label col-md-2" })*@
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodDocumentState)
+@Html.HiddenFor(model => model.CodDocument)
+@Html.HiddenFor(model => model.StateName)
+@Html.HiddenFor(model => model.StateNumber)
+@Html.HiddenFor(model => model.StateNumberPrev)
+@Html.HiddenFor(model => model.Completed)
+@Html.HiddenFor(model => model.ResetLinkedStates)
+
+<div class="control-group no-padding-bottom no-padding-top">
+    <div class="col-sm-3 control-label no-padding-right">
+        @Html.Label(Html.T(strings, Model.StateName))
+    </div>
+    <div class="controls col-sm-9">
+        @Html.CheckBox("", Model.Selected.GetValueOrDefault())        
+    </div>
+</div>

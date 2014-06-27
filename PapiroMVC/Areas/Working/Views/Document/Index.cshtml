@@ -64,16 +64,20 @@
 
                     <div class="widget-body">
                         <div class="widget-main pagination-centered">
-                     
+
                             <div style="position: relative; left: 0; top: 0;">
                                 <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png" style="position: relative; top: 0; left: 0;" />
                                 <img src="~/Content/ProductImage/beta-stamp.png" style="position: absolute; top: 0px; left: 0px;" />
                             </div>
 
-
-                            <a href="@(Url.Action("CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
+                            <a href="@(Url.Action("NewProductNewEstimateById", "Document", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
                                 <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
                             </a>
+
+
+                            @*<a href="@(Url.Action("CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
+                                    <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
+                                </a>*@
                         </div>
                     </div>
                 </div>

@@ -126,12 +126,14 @@
                 }
             },
             cm = [
-                        { name: 'CodDocumentProduct', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 90, sortable: false, formatter: editDocumentProduct },
-                        { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProductCaption")', width: 100, search: true, sortable: true },
+                        { name: 'CodDocumentProduct', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 90, sortable: false, search: false, formatter: createOrder },
+                        { name: 'CodProduct', label: '@HttpContext.GetLocalResourceObject(strings, "CodProductCaption")', width: 100, align: 'right', search: true, sortable: true },
+                        { name: "EstimateNumberSerie", label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumberSerie")', width: 80, align: "right", search: true, formatter: openEstimate },
+                        { name: 'DocumentAndProductRefName', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentAndProductRefName")', width: 400, search: true, sortable: true },
                         { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentProductName")', width: 400, search: true, sortable: true },
-                        { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentProductQuantity")', width: 80, search: true, sortable: true },
-                        { name: 'UnitPrice', label: '@HttpContext.GetLocalResourceObject(strings, "UnitPrice")', width: 80, search: true, sortable: true },
-                        { name: 'TotalAmount', label: '@HttpContext.GetLocalResourceObject(strings, "TotalAmount")', width: 80, search: true, sortable: true },
+                        { name: 'Quantity', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentProductQuantity")', width: 80, align: 'right', search: true, sortable: true },
+                        { name: 'UnitPrice', label: '@HttpContext.GetLocalResourceObject(strings, "UnitPrice")', width: 80, align: 'right', search: true, sortable: true },
+                        { name: 'TotalAmount', label: '@HttpContext.GetLocalResourceObject(strings, "TotalAmount")', width: 80, align: 'right', search: true, sortable: true },
     ],
 
             saveObjectInLocalStorage = function (storageItemName, object) {
@@ -149,7 +151,7 @@
                     return JSON.parse(window.localStorage.getItem(storageItemName));
                 }
             },
-            myColumnStateName = 'ListDocumentProduct.colState',
+            myColumnStateName = 'ListDocumentProducts.colState',
             saveColumnState = function (perm) {
                 var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                     postData = this.jqGrid('getGridParam', 'postData'),

@@ -1,9 +1,18 @@
 ﻿@using Mvc.HtmlHelpers
-
 @using PapiroMVC.Validation
 
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
+
+
+    string searchState = ":" + Html.T(strings, "All") + ";";
+    foreach (var s in ViewBag.States)
+    {
+        searchState += s.StateName + ":" + Html.T(strings, (string)s.StateName) + ";";
+    }
+
+    Console.Write(searchState);
+
 }
 
 
@@ -13,6 +22,7 @@
     <div id="checkFilterMessage" class="alert alert-block alert-error" hidden="hidden">
         <button type="button" class="close" data-dismiss="alert">
             <i class="icon-remove"></i>
+
         </button>
 
         <i class="icon-ok red"></i>
@@ -22,7 +32,7 @@
 
     <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
-
+    
 
     <br />
 
@@ -46,22 +56,26 @@
 
 <script type="text/javascript">
 
-            //<![CDATA[
-            /*global $ */
-            /*jslint devel: true, browser: true, plusplus: true */
-            //$.jgrid.formatter.integer.thousandsSeparator = ',';
-            //$.jgrid.formatter.number.thousandsSeparator = ',';
-            //$.jgrid.formatter.currency.thousandsSeparator = ',';
+    //<![CDATA[
+    /*global $ */
+    /*jslint devel: true, browser: true, plusplus: true */
+    //$.jgrid.formatter.integer.thousandsSeparator = ',';
+    //$.jgrid.formatter.number.thousandsSeparator = ',';
+    //$.jgrid.formatter.currency.thousandsSeparator = ',';
     $(document).ready(function () {
         'use strict';
+
         var // myData = [],
             $grid = $("#list"),
 
-            numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
-            numberTemplate = {
-                formatter: 'number', align: 'right', sorttype: 'number',
-                searchoptions: { sopt: numberSearchOptions }
-            },
+           categoriesStr = "@searchState".slice(0, -1),
+          // categoriesStr = ":All;hhh:sport;sss:science",
+           
+           numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
+           numberTemplate = {
+               formatter: 'number', align: 'right', sorttype: 'number',
+               searchoptions: { sopt: numberSearchOptions }
+           },
             myDefaultSearch = 'cn',
             getColumnIndex = function (grid, columnIndex) {
                 var cm = grid.jqGrid('getGridParam', 'colModel'), i, l = cm.length;
@@ -128,9 +142,11 @@
             cm = [
                         { name: 'Id', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 25, sortable: false, formatter: editEstimate },
                         { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(strings, "Customer")', width: 80, sortable: true },
-                        { name: 'EstimateNumber', label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumber")', align: 'right', width: 50, firstsortorder: 'desc', sortable: true },
+                        { name: "EstimateNumberSerie", label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumber")', width: 80, align: "right", search: true, formatter: openEstimate },
+                        { name: 'DateDocument', label: '@HttpContext.GetLocalResourceObject(strings, "DateDocument")', width: 200, sortable: true, search: true, stype: 'text', searchoptions: { dataInit: datePick, attr: { title: 'Select Date' } } },
                         { name: 'DocumentName', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentName")', width: 200, search: true, sortable: true },
-    ],
+                        { name: 'Category', index: 'Category', label: '@HttpContext.GetLocalResourceObject(strings, "Category")', width: 200, formatter: 'select', stype: 'select', searchoptions: { sopt: ['eq'], value: categoriesStr } }
+            ],
 
             saveObjectInLocalStorage = function (storageItemName, object) {
                 if (typeof window.localStorage !== 'undefined') {
@@ -200,11 +216,14 @@
         myColumnsState = restoreColumnState(cm);
         isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
 
+
+
+  
         $grid.jqGrid({
-            url:'@(Url.Action("EstimateList", "Document"))',
+            url: '@(Url.Action("EstimateList", "Document"))',
             datatype: 'json',
             colModel: cm,
-             loadtext: '',
+            loadtext: '',
             viewrecords: true,
             autowidth: true,
             shrinkToFit: false,
@@ -256,7 +275,10 @@
                 var $this = $(this);
                 var filters = $this.jqGrid('getGridParam', 'postData').filters;
 
-                if (filters === '{"groupOp":"AND","rules":[]}') {
+
+
+                if ((filters === '{"groupOp":"AND","rules":[]}') ||
+                    (filters === '{"groupOp":"AND","rules":[{"field":"Category","op":"eq","data":"0"}]}')) {
                     $("#checkFilterMessage").hide();
                 }
                 //filters check************************************************
@@ -330,7 +352,9 @@
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
         if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
-            ((filters != undefined))) {
+            ((filters != undefined)) &&
+            ((!(filters === '{"groupOp":"AND","rules":[{"field":"Category","op":"eq","data":"0"}]}')))
+            ) {
             $("#checkFilterMessage").show();
         }
 

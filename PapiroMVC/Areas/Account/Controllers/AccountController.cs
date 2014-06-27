@@ -396,6 +396,7 @@ namespace PapiroMVC.Areas.Account.Controllers
                     nProf.TaxCode = model.TaxCode;
                     nProf.Refeere = model.Refeere;
                     nProf.VatNumber = model.VatNumber;
+                    nProf.City = model.City;
 
                     profDataRep.Add(nProf);
                     profDataRep.Save();

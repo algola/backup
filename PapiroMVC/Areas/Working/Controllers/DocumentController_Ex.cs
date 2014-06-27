@@ -64,16 +64,31 @@ namespace PapiroMVC.Areas.Working.Controllers
         private IQueryable<Document> DocumentList(GridSettings gridSettings)
         {
             string customerFilter = string.Empty;
+            string serialFilter = string.Empty;
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
+            string dateDocumentFilter = string.Empty;
+
+            string categoryFilter = string.Empty;
 
             if (gridSettings.isSearch)
             {
+
+                categoryFilter = gridSettings.where.rules.Any(r => r.field == "Category") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Category").data : string.Empty;
+
+
                 customerFilter = gridSettings.where.rules.Any(r => r.field == "Customer") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Customer").data : string.Empty;
 
+                serialFilter = gridSettings.where.rules.Any(r => r.field == "EstimateNumberSerie") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "EstimateNumberSerie").data : string.Empty;
+
                 codDocumentFilter = gridSettings.where.rules.Any(r => r.field == "CodDocument") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "CodDocument").data : string.Empty;
+
+                dateDocumentFilter = gridSettings.where.rules.Any(r => r.field == "DateDocument") ?
+                   gridSettings.where.rules.FirstOrDefault(r => r.field == "DateDocument").data : string.Empty;
 
                 documentNameFilter = gridSettings.where.rules.Any(r => r.field == "DocumentName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "DocumentName").data : string.Empty;
@@ -82,14 +97,41 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var q = documentRepository.GetAll();
 
+            if (!string.IsNullOrEmpty(categoryFilter))
+            {
+                q = q.Where(c => c.DocumentStates.Where(y=>y.StateName == categoryFilter && y.Selected).Count() > 0);
+            }
+
+
             if (!string.IsNullOrEmpty(customerFilter))
             {
                 q = q.Where(c => c.Customer != null && c.Customer.ToLower().Contains(customerFilter.ToLower()));
             }
 
+            if (!string.IsNullOrEmpty(serialFilter))
+            {
+                q = q.Where(c => (c.EstimateNumberSerie != null && c.EstimateNumberSerie.ToLower().Contains(serialFilter.ToLower())) ||
+                    (c.EstimateNumber != null && c.EstimateNumber.ToLower().Contains(serialFilter.ToLower())) ||
+                    (c.CodDocument != null && c.EstimateNumber != null && (c.EstimateNumberSerie + "/" + c.EstimateNumber).ToLower().Contains(serialFilter.ToLower())));
+            }
+
             if (!string.IsNullOrEmpty(codDocumentFilter))
             {
                 q = q.Where(c => c.CodDocument.ToLower().Contains(codDocumentFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(dateDocumentFilter))
+            {
+                try
+                {
+                    DateTime dt = Convert.ToDateTime(dateDocumentFilter);
+                    q = q.Where(c => (c.DateDocument ?? DateTime.Now).Year == dt.Year && (c.DateDocument ?? DateTime.Now).Month == dt.Month && (c.DateDocument ?? DateTime.Now).Day == dt.Day);
+
+                }
+                catch (Exception)
+                {
+
+                }
             }
 
             if (!string.IsNullOrEmpty(documentNameFilter))
@@ -105,6 +147,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case "CodDocument":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodDocument) : q.OrderBy(c => c.CodDocument);
                     break;
+
+                case "DateDocument":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.DateDocument) : q.OrderBy(c => c.DateDocument);
+                    break;
                 case "DocumentName":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.DocumentName) : q.OrderBy(c => c.DocumentName);
                     break;
@@ -119,6 +165,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
 
             var q = this.DocumentList(gridSettings).OfType<Estimate>();
+
             var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
             int totalRecords = q.Count();
@@ -147,7 +194,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {                       
                             a.CodDocument,
                             a.Customer,
-                            a.EstimateNumber,
+                            a.EstimateNumberSerie + "/" + a.EstimateNumber + "%" + a.CodDocument,
+                            (a.DateDocument??DateTime.Now).ToString("d"),
                             a.DocumentName,
                         }
                     }
@@ -159,13 +207,58 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+        public ActionResult OrderList(GridSettings gridSettings)
+        {
+
+            var q = this.DocumentList(gridSettings).OfType<Order>();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3.ToList()
+                    select new
+                    {
+                        id = a.CodDocument,
+                        cell = new string[] 
+                        {                       
+                            a.CodDocument,
+                            a.Customer,
+                            a.EstimateNumberSerie + "/" + a.EstimateNumber + "%" + a.CodDocument,
+                            a.DocumentName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+
         /// <summary>
         /// List of DocumentProduct in a Document ie. Estimate
         /// </summary>
         /// <param name="CodDocument"></param>
         /// <param name="gridSettings"></param>
         /// <returns></returns>
-        public ActionResult DocumentProductList(string CodDocument, GridSettings gridSettings)
+        public ActionResult DocumentProductListInDocument(string CodDocument, GridSettings gridSettings)
         {
 
             if (CodDocument != null)
@@ -231,6 +324,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult DocumentProductsList(GridSettings gridSettings)
         {
             string codProductFilter = string.Empty;
+            string serialFilter = string.Empty;
+            string documentAndProductRefNameFilter = string.Empty;
             string productNameFilter = string.Empty;
             string quantityFilter = string.Empty;
             string unitPriceFilter = string.Empty;
@@ -241,8 +336,14 @@ namespace PapiroMVC.Areas.Working.Controllers
                 codProductFilter = gridSettings.where.rules.Any(r => r.field == "CodProduct") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "CodProduct").data : string.Empty;
 
+                serialFilter = gridSettings.where.rules.Any(r => r.field == "EstimateNumberSerie") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "EstimateNumberSerie").data : string.Empty;
+
                 productNameFilter = gridSettings.where.rules.Any(r => r.field == "ProductName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "ProductName").data : string.Empty;
+
+                documentAndProductRefNameFilter = gridSettings.where.rules.Any(r => r.field == "DocumentAndProductRefName") ?
+                   gridSettings.where.rules.FirstOrDefault(r => r.field == "DocumentAndProductRefName").data : string.Empty;
 
                 quantityFilter = gridSettings.where.rules.Any(r => r.field == "Quantity") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Quantity").data : string.Empty;
@@ -254,11 +355,18 @@ namespace PapiroMVC.Areas.Working.Controllers
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "TotalAmount").data : string.Empty;
             }
 
-            var q = documentRepository.GetAllDocumentProducts();
+            var q = documentRepository.GetAllDocumentProducts().OrderByDescending(x => x.TimeStampTable).AsQueryable();
 
             if (!string.IsNullOrEmpty(codProductFilter))
             {
                 q = q.Where(c => c.CodProduct != null && c.CodProduct.ToLower().Contains(codProductFilter.ToLower()));
+            }
+
+             if (!string.IsNullOrEmpty(serialFilter))
+            {
+                q = q.Where(c => (c.Document.EstimateNumberSerie != null && c.Document.EstimateNumberSerie.ToLower().Contains(serialFilter.ToLower())) ||
+                    (c.Document.EstimateNumber != null && c.Document.EstimateNumber.ToLower().Contains(serialFilter.ToLower())) ||
+                    (c.Document.CodDocument != null && c.Document.EstimateNumber != null && (c.Document.EstimateNumberSerie + "/" + c.Document.EstimateNumber).ToLower().Contains(serialFilter.ToLower())));
             }
 
             if (!string.IsNullOrEmpty(productNameFilter))
@@ -266,9 +374,15 @@ namespace PapiroMVC.Areas.Working.Controllers
                 q = q.Where(c => c.ProductName != null && c.ProductName.ToLower().Contains(productNameFilter.ToLower()));
             }
 
+            if (!string.IsNullOrEmpty(documentAndProductRefNameFilter))
+            {
+                q = q.Where(c => (c.Document.DocumentName != null && c.Document.DocumentName.ToLower().Contains(documentAndProductRefNameFilter.ToLower())) || 
+                    (c.Product.ProductRefName != null && c.Product.ProductRefName.ToLower().Contains(documentAndProductRefNameFilter.ToLower())));
+            }
+
             if (!string.IsNullOrEmpty(quantityFilter))
             {
-                q = q.Where(c => c.Quantity != null && (c.Quantity??0).ToString().ToLower().Contains(quantityFilter.ToLower()));
+                q = q.Where(c => c.Quantity != null && (c.Quantity ?? 0).ToString().ToLower().Contains(quantityFilter.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(unitPriceFilter))
@@ -329,6 +443,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                             {      
                                 a.CodDocumentProduct,
                                 a.CodProduct,
+                                a.Document.EstimateNumberSerie + "/" + a.Document.EstimateNumber + "%" + a.CodDocument,
+                                a.Document.DocumentName + " - " + a.Product.ProductRefName,
                                 a.ProductName,  //attributo derivato
                                 (a.Quantity??0).ToString(),
                                 a.UnitPrice,

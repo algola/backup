@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     {
         public Profile()
         {
-            this.Orders = new HashSet<Order>();
+            this.Orders = new HashSet<ProfileOrder>();
             this.Modules = new HashSet<Module>();
         }
     
@@ -35,8 +35,9 @@ namespace PapiroMVC.Models
         public string ExpiredY { get; set; }
         public string BrianTreeCustomerId { get; set; }
         public string BrainTreeToken { get; set; }
+        public string City { get; set; }
     
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<ProfileOrder> Orders { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
     }
 }

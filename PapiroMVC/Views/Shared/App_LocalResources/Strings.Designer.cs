@@ -610,7 +610,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ordini.
+        ///   Looks up a localized string similar to Commesse.
         /// </summary>
         public static string OrderMenu {
             get {

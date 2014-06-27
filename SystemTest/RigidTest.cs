@@ -132,14 +132,14 @@ namespace UnitTestPapiroMVC
             pv.Product = prod;
 //            prod.ProductCodeRigen();
 
-            pv.Quantities.Add(10);
+            pv.Quantity =10;
             #endregion
 
             DocumentProduct dp = new DocumentProduct();
             dp.Document = null;
             dp.CodProduct = pv.Product.CodProduct;
             dp.Product = pv.Product;
-            dp.Quantity = pv.Quantities.FirstOrDefault();
+            dp.Quantity = pv.Quantity;
 
             dp.InitCost();
 
@@ -208,7 +208,7 @@ namespace UnitTestPapiroMVC
             pv.Product = prod;
             //            prod.ProductCodeRigen();
 
-            pv.Quantities.Add(10);
+            pv.Quantity=10;
             #endregion
 
             p.EditOrCreateAllCost(dp.CodDocumentProduct);
