@@ -111,15 +111,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_EditAndCreateSheetPrintableArticle", c);
         }
 
-
         [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
-        public ActionResult CreateRollPrintableArticle()
+        public ActionResult CreateRollPrintableArticle(string tags)
         {
             //used to understand default actionmethod  when there are more then one submit button
             ViewBag.ActionMethod = "CreateRollPrintableArticle";
-            return View(new RollPrintableArticleViewModel());
+            var vm = new RollPrintableArticleViewModel();
+            vm.Article.Tags = tags;
+            return View(vm);
         }
 
         [HttpParamAction]

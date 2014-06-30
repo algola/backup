@@ -174,6 +174,9 @@
   <data name="SupplyerBuy" xml:space="preserve">
     <value>Fornitore</value>
   </data>
+  <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
   <data name="Weight" xml:space="preserve">
     <value>Grammi al metro quadrato</value>
   </data>

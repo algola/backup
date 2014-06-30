@@ -125,7 +125,7 @@
 
              cm = [
                    { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', sortable: false, formatter: editCustomerSupplier },  //formatter: editCustomerSupplier
-                   { name: 'CodCustomerSupplier', label: '@Html.T(strings, "CodCustomerSupplierCaption")', width: 80, sortable: true },
+                   { name: 'CodCustomerSupplier', index: 'CodCustomerSupplier', label: '@Html.T(strings, "CodCustomerSupplierCaption")', width: 80, sortable: true },
                    { name: 'TypeOfCustomerSupplier', label: '@Html.T(strings, "TypeOfCustomerSupplierCaption")', width: 100, sortable: false, search: true, formatter: typeOfCustomerSupplier },
                    { name: 'BusinessName', label: '@Html.T(strings, "BusinessNameCaption")', width: 200, sortable: true },
                    { name: 'VatNumber', label: '@Html.T(strings, "VatNumberCaption")', width: 200 },
@@ -224,6 +224,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
             postData: isColState ? { filters: myColumnsState.filters } : {},
             sortname: isColState ? myColumnsState.sortname : 'invdate',
             sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            sortable: true,
             ignoreCase: true,
             autowidth: true,
             shrinkToFit: false,

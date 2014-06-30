@@ -66,7 +66,9 @@
           <Property Name="ToNexMq" Type="bit" />
           <Property Name="FromMinFormat" Type="char" MaxLength="9" />
           <Property Name="NoPrintableType" Type="int" />
+          <Property Name="SelectorCylinders" Type="int" />
           <Property Name="Z" Type="double" />
+          <Property Name="Number" Type="int" />
           <Property Name="Adhesive" Type="char" MaxLength="100" />
           <Property Name="NoUseInEstimateCalculation" Type="bit" />
           <Property Name="SuppOfMaterial" Type="char" MaxLength="100" />
@@ -81,6 +83,7 @@
           <Property Name="Description" Type="char" MaxLength="255" />
           <Property Name="CodDie" Type="char" MaxLength="50" />
           <Property Name="FormatType" Type="int" />
+          <Property Name="Tags" Type="char" MaxLength="255" />
         </EntityType>
         <EntityType Name="costdetails">
           <Key>
@@ -218,7 +221,7 @@
           <Property Name="StateNumber" Type="int" />
           <Property Name="StateNumberPrev" Type="int" />
           <Property Name="Completed" Type="bit" />
-          <Property Name="Selected" Type="bit" />
+          <Property Name="Selected" Type="bit" Nullable="false" />
           <Property Name="ResetLinkedStates" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="makereadies">
@@ -1765,6 +1768,9 @@
           <NavigationProperty Name="CustomerSupplierBuy" Relationship="dbModel.FK_articles_customersuppliers" FromRole="Article" ToRole="CustomerSupplier" />
           <NavigationProperty Name="CustomerSupplierMaker" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="Article" ToRole="CustomerSupplier" />
           <Property Type="Int32" Name="Selector" />
+          <Property Name="SelectorCylinders" Type="Int32" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Tags" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
           </EntityType>
         <Association Name="FK_ArticleCost_CodArticle">
           <End Type="dbModel.Article" Role="articles" Multiplicity="0..1" />
@@ -3603,6 +3609,9 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="SelectorCylinders" ColumnName="SelectorCylinders" />
                 <ScalarProperty Name="Selector" ColumnName="Selector" />
                 <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
                 <ScalarProperty Name="CodSupplierMaker" ColumnName="CodSupplierMaker" />
@@ -3614,9 +3623,9 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Die)">
               <MappingFragment StoreEntitySet="articles">
-                <ScalarProperty Name="FormatType" ColumnName="FormatType" />
                 <ScalarProperty Name="DCut2" ColumnName="Dcut2" />
                 <ScalarProperty Name="DCut1" ColumnName="Dcut1" />
+                <ScalarProperty Name="FormatType" ColumnName="FormatType" />
                 <ScalarProperty Name="Format" ColumnName="Format" />
                 <ScalarProperty Name="Width" ColumnName="Width" />
                 <ScalarProperty Name="Z" ColumnName="Z" />

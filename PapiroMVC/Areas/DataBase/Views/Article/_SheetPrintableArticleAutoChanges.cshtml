@@ -28,6 +28,10 @@
                 
 }
 
+
+<h4>@Html.T(strings, "AutoChangeDesc")</h4>
+
+
 <!-- autocomplete works properly only if script is reloaded in partial view -->
 <script src="/Scripts/autocomplete.js" type="text/javascript"></script>
 
@@ -37,7 +41,7 @@
     HttpMethod = "POST",
     //    UpdateTargetId = "sheetPrintableArticleAutoChanges",
     //    InsertionMode = System.Web.Mvc.Ajax.InsertionMode.Replace,
-    OnSuccess = "sendSheetAutomaticallyChanges",
+    OnSuccess = "sendChanges",
     OnFailure = "ReloadForm(xhr)",
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg"
@@ -51,6 +55,8 @@
 
     @Html.AlgolaAutocompleteFor(model => model.Hand, "HandAutoComplete", "Article", new { id = "Hand" })
     @Html.AlgolaEditorFor(model => model.CostPerKg, new { id = "CostPerKg" })
+    @Html.AlgolaEditorFor(model => model.Tags, new { id = "Tags" })
+
 
 
     <div class="col-sm-3 control-label no-padding-right">
@@ -99,9 +105,9 @@
 
     //this function send data to actionmethod of specify control
     //data are read from jqgrid by using grid.jqGrid('getGridParam', 'selarrrow');
-    //jQuery("#sendSheetAutomaticallyChanges").click(function () {
+    //jQuery("#sendChanges").click(function () {
 
-    function sendSheetAutomaticallyChanges() {
+    function sendChanges() {
 
         ClearValidationErrors();
 
@@ -118,6 +124,7 @@
             CostPerKg: document.getElementById("CostPerKg").value,
             TypeOfCostToModify: document.getElementById("optTypeOfCostToModify").options[document.getElementById("optTypeOfCostToModify").selectedIndex].value,
             TypeOfNoBvToModify: document.getElementById("optTypeOfNoBvToModify").options[document.getElementById("optTypeOfNoBvToModify").selectedIndex].value,
+            Tags: document.getElementById("Tags").value,
         };
 
         //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).

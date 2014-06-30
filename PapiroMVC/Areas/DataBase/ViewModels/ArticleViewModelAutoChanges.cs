@@ -48,7 +48,11 @@ namespace PapiroMVC.Models
         public string[] Id { get; set; }
         public string SupplierMaker { get; set; }
         public string SupplyerBuy { get; set; }
+        public string Tags { get; set; }
+
     }
+    
+
 
     [MetadataType(typeof(PrintableAutoChanges_Metadata))]
     abstract public class PrintableAutoChanges : ArticleAutoChanges
@@ -72,8 +76,9 @@ namespace PapiroMVC.Models
     public class RollPrintableArticleAutoChanges : PrintableAutoChanges
     {
         public string MqForafait { get; set; }
-        public string CostPerMl { get; set; }
+//        public string CostPerMl { get; set; }
         public string CostPerMq { get; set; }
+        
     }
 
 

@@ -225,7 +225,7 @@ namespace Services
         {
 
             Console.WriteLine(Context.Database.Connection.ConnectionString);
-            return Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs");
+            return Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").Include("OrderProduct").Include("OrderProduct.Document");
         }
 
         private void ResetStatus()

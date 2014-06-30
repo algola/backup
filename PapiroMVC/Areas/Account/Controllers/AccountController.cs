@@ -15,10 +15,12 @@ using Braintree;
 using Ninject;
 using Braintree.Exceptions;
 using PapiroMVC.Validation;
+using Microsoft.AspNet.SignalR;
+using PapiroMVC.Hubs;
 
 namespace PapiroMVC.Areas.Account.Controllers
 {
-    [Authorize]
+    [System.Web.Mvc.Authorize]
     public class AccountController : ControllerAlgolaBase
     {
         private readonly IProfileRepository profDataRep;
@@ -785,8 +787,6 @@ namespace PapiroMVC.Areas.Account.Controllers
         [AllowAnonymous]
         public ActionResult Verify(string ID)
         {
-            //try
-            //{
                 MembershipUser user = Membership.GetUser(providerUserKey: ID);
                 if (!user.IsApproved)
                 {
@@ -798,59 +798,10 @@ namespace PapiroMVC.Areas.Account.Controllers
                     Roles.AddUserToRole(user.UserName, "Pending");
                     Membership.UpdateUser(user);
 
-                    //when usere has logged in system, database will be updated. 
-                    base.UpdateDatabase(user.UserName);
-
                     FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
                     TempData["message"] = "Activated";
 
-                    //customer
-                    crTo.SetDbName(user.UserName);
-                    crFrom.SetDbName("examples");
-
-                    var cFs = crFrom.GetAll();
-                    foreach (var cf in cFs)
-                    {
-                        crTo.Add(cf);
-                    }
-
-                    crTo.Save();
-
-                    //articles
-                    arTo.SetDbName(user.UserName);
-                    arFrom.SetDbName("examples");
-
-                    var aFs = arFrom.GetForImport();
-                    foreach (var a in aFs)
-                    {
-                        arTo.Add(a);
-                    }
-
-                    arTo.Save();
-
-
-                    //typeoftask
-                    ttrTo.SetDbName(user.UserName);
-                    ttrFrom.SetDbName("examples");
-                    var ttFs = ttrFrom.GetAll();
-                    foreach (var a in ttFs)
-                    {
-                        ttrTo.Add(a);
-                    }
-
-                    ttrTo.Save();
-
-
-                    //taskExecutors
-                    trTo.SetDbName(user.UserName);
-                    trFrom.SetDbName("examples");
-                    var tFs = trFrom.GetAll();
-                    foreach (var a in tFs)
-                    {
-                        trTo.Add(a);
-                    }
-
-                    trTo.Save();
+                    var task = Task.Factory.StartNew(() => { Stuff(user); }, TaskCreationOptions.LongRunning);
 
                 }
                 else
@@ -858,14 +809,73 @@ namespace PapiroMVC.Areas.Account.Controllers
                     FormsAuthentication.SignOut();
                     TempData["message"] = "JustActivated";
                 }
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //    TempData["message"] = "Error";
-            //}
+
             return View();
         }
+
+        private async void Stuff(MembershipUser user)
+        {
+
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+            ChatHub.Update("creazione del database in corso... attendere");
+
+            //when usere has logged in system, database will be updated. 
+            base.UpdateDatabase(user.UserName);
+
+
+            ChatHub.Update("copia dei dati di esempio... attendere");
+            //customer
+            crTo.SetDbName(user.UserName);
+            crFrom.SetDbName("examples");
+
+            var cFs = crFrom.GetAll();
+            foreach (var cf in cFs)
+            {
+                crTo.Add(cf);
+            }
+
+            crTo.Save();
+
+            ChatHub.Update("copia dei dati di esempio... attendere");
+            //articles
+            arTo.SetDbName(user.UserName);
+            arFrom.SetDbName("examples");
+
+            var aFs = arFrom.GetForImport();
+            foreach (var a in aFs)
+            {
+                arTo.Add(a);
+            }
+
+            arTo.Save();
+
+
+            ChatHub.Update("copia delle macchine da stampa di esempio... attendere");
+            //typeoftask
+            ttrTo.SetDbName(user.UserName);
+            ttrFrom.SetDbName("examples");
+            var ttFs = ttrFrom.GetAll();
+            foreach (var a in ttFs)
+            {
+                ttrTo.Add(a);
+            }
+
+            ttrTo.Save();
+
+            ChatHub.Update("copia dei listini di esempio... attendere");
+            trTo.SetDbName(user.UserName);
+            trFrom.SetDbName("examples");
+            var tFs = trFrom.GetAll();
+            foreach (var a in tFs)
+            {
+                trTo.Add(a);
+            }
+
+            trTo.Save();
+            ChatHub.Update("Procedura di inizializzazione terminata");
+        }
+
+
 
         private new IEnumerable<string> GetErrorsFromModelState()
         {

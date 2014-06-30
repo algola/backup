@@ -137,8 +137,9 @@
             },
             cm = [
                         { name: 'Id', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 25, sortable: false, formatter: editOrder },
+                        { name: "OrderNumberSerie", label: '@HttpContext.GetLocalResourceObject(strings, "OrderNumber")', width: 80, align: "right", search: true },
                         { name: 'Customer', label: '@HttpContext.GetLocalResourceObject(strings, "Customer")', width: 80, sortable: true },
-                        { name: "EstimateNumberSerie", label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumber")', width: 80, align: "right", search: true, formatter: openOrder },
+                        { name: "EstimateNumberSerie", label: '@HttpContext.GetLocalResourceObject(strings, "EstimateNumber")', width: 80, align: "right", search: true, formatter: openEstimate },
                         { name: 'DocumentName', label: '@HttpContext.GetLocalResourceObject(strings, "DocumentName")', width: 200, search: true, sortable: true },
                         { name: 'Category', index: 'Category', label: '@HttpContext.GetLocalResourceObject(strings, "Category")', width: 200, formatter: 'select', stype: 'select', searchoptions: { sopt: ['eq'], value: categoriesStr } }
 

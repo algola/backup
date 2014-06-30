@@ -1,0 +1,24 @@
+﻿@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = Html.T(strings, "TitleIndex");
+}
+
+
+@* pulsante variazione del prezzo e del fornitore *@
+<button class="btn btn-primary" type="button" id="btnDialogChange">
+    <i class="icon-plus"></i>
+    @Html.T(strings, "AutoCahngesCaption")
+</button>
+
+<div id="dialog-confirm" class="hide">
+    @Html.T(strings, "DeleteMessage")
+</div>
+
+
+@* dialog box per la variazione del prezzo e del fornitore *@
+<div id="dialog-warning-selection" class="hide">
+    <h4>@Html.T(strings, "AutoChangeSelError")</h4>
+</div>
+

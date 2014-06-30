@@ -1,7 +1,10 @@
 ﻿using Braintree;
+using Microsoft.AspNet.SignalR;
+using PapiroMVC.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -22,13 +25,13 @@ namespace PapiroMVC.Controllers
         }
 
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         public ActionResult Payment()
         {
             return View();
         }
 
-        [Authorize]
+        [System.Web.Mvc.Authorize]
         [HttpPost]
         public ActionResult CreateTransaction(FormCollection collection)
         {
@@ -118,7 +121,7 @@ namespace PapiroMVC.Controllers
             }
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             ViewBag.Message = "Modify this template to kick-start your ASP.NET MVC application.";
             return View();

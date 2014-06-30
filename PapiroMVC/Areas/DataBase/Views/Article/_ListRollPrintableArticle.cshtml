@@ -33,26 +33,30 @@
     <br />
 
 
-    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database", tags="label" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "CreateRollPrintableArticle")
     </button>
 
-    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRollPrintableArticle", "Article", new { Area = "Database", tags="direct" })');">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "CreateRollPrintableArticle")
+    </button>
+
+    <button class="btn btnLink  btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("WizardRollPrintableArticle", "Article", new { Area = "Database" })');">
         <i class="icon-plus"></i>
         @Html.T(strings, "WizardRollPrintableArticle")
     </button>
 
-    <button class="btn btnLink btn-primary" type="button" id="btnDialogChange">
-        <i class="icon-plus"></i>
-        @Html.T(strings, "AutoCahngesCaption")
-    </button>
+    @Html.Partial("_ListBtnChanges")
 
-    <div id="dialog-confirm" class="hide">
-
-        @Html.T(strings, "DeleteMessage")
-
+    @* dialog box per la variazione del prezzo e del fornitore *@
+    <div id="dialog-change" class="hide">
+        <div id="rollPrintableArticleAutoChanges">
+            @Html.Partial("_RollPrintableArticleAutoChanges")
+        </div>
     </div>
+
 
 </div>
 <br />
@@ -149,10 +153,10 @@
                 { name: 'Adhesive', label: '@HttpContext.GetLocalResourceObject(strings, "AdhesiveCaption")', width: 100, title: false, search: true, sortable: true },
                 { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(strings, "WeightCaption")', align: 'right', width: 45, title: false, search: true, sortable: true },
                 { name: 'Width', label: '@HttpContext.GetLocalResourceObject(strings, "WidthCaption")', align: 'right', width: 45, title: false, search: true, sortable: true },
-                { name: 'NoUseInEstimateCalculation', label: '@HttpContext.GetLocalResourceObject(strings, "NoUseInEstimateCalculationCaption")', align: 'center', width: 45, title: false, search: true, sortable: true, formatter: "checkbox", formatoptions: { disabled: true }},
+                { name: 'NoUseInEstimateCalculation', label: '@HttpContext.GetLocalResourceObject(strings, "NoUseInEstimateCalculationCaption")', align: 'center', width: 45, title: false, search: true, sortable: true, formatter: "checkbox", formatoptions: { disabled: true } },
                 { name: 'SupplierName', label: '@HttpContext.GetLocalResourceObject(strings, "SupplierNameCaption")', width: 150, title: false, search: true },
                 { name: 'CostPerMq', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMqCaption")', width: 45, title: false, search: true, align: 'right' },
-            //    { name: 'CostPerMl', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption")', width: 45, title: false, search: true, align: 'right' }
+              //{ name: 'CostPerMl', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerMlCaption")', width: 45, title: false, search: true, align: 'right' }
             ],
             saveObjectInLocalStorage = function (storageItemName, object) {
                 if (typeof window.localStorage !== 'undefined') {
@@ -223,10 +227,10 @@
         isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
 
         $grid.jqGrid({
-           url: '@Url.Action("RollPrintableArticleList", "Article")',
+            url: '@Url.Action("RollPrintableArticleList", "Article")',
             datatype: 'json',
             colModel: cm,
-             loadtext: '',
+            loadtext: '',
             viewrecords: true,
             autowidth: true,
             shrinkToFit: false,
@@ -352,9 +356,3 @@
     });
     //filters check************************************************
 </script>
-
-
-<div id="rollPrintableArticleAutoChanges">
-    @Html.Partial("_RollPrintableArticleAutoChanges")
-</div>
-

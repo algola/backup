@@ -3,7 +3,7 @@
 
 @{
     string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
-    string url = Url.Action("RigidPrintableArticleList", new { controller = "Article", area = "DataBase" });
+    string url = Url.Action("RigidPrintableArticleListPerProduct", new { controller = "Article", area = "DataBase" });
 
     var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
 }

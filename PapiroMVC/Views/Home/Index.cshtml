@@ -33,6 +33,8 @@
 
     <div class="span12">
 
+        <div id="progressbar"></div>
+
         <div class="alert alert-block alert-success">
             <button type="button" class="close" data-dismiss="alert">
                 <i class="icon-remove"></i>
@@ -93,8 +95,8 @@
 
     @section Scripts{
         @Scripts.Render("~/bundles/jqueryval")
-    }
 
+    }
 
 </div>
 
@@ -107,7 +109,6 @@
 <button id="screenshot-button">Capture</button>
 
 <script type="text/javascript">
-
 
     var button = document.querySelector('#screenshot-button');
     var canvas = document.querySelector('#screenshot-canvas');
@@ -144,40 +145,3 @@
         }
     });
 </script>
-
-
-
-@*
-    <script>
-        $.ajax({
-            url: "@uri",
-            dataType: "json",
-            async: false,
-            contentType: "application/json",
-            type: "GET",
-            //data: data,
-            success: function (data) {
-
-                alert(data);
-                $.ajax({
-                    url: "@uri2",
-                    dataType: "json",
-                    data: data,
-                    type: "POST",
-                    //data: data,
-                    success: function (responseData) {
-                        alert("Ok");
-                    },
-                    error: function (request, status, error) {
-                        alert("Errore di comunicazione con il server POST");
-                    }
-                });
-
-            },
-            error: function (request, status, error) {
-                alert("Errore di comunicazione con il server GET");
-            }
-        });
-    </script>
-
-*@

@@ -68,6 +68,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
             string dateDocumentFilter = string.Empty;
+            
 
             string categoryFilter = string.Empty;
 
@@ -93,6 +94,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 documentNameFilter = gridSettings.where.rules.Any(r => r.field == "DocumentName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "DocumentName").data : string.Empty;
 
+               
             }
 
             var q = documentRepository.GetAll();
@@ -138,6 +140,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 q = q.Where(c => c.DocumentName != null && c.DocumentName.ToLower().Contains(documentNameFilter.ToLower()));
             }
+
+           
 
             switch (gridSettings.sortColumn)
             {
@@ -214,6 +218,30 @@ namespace PapiroMVC.Areas.Working.Controllers
             var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
             int totalRecords = q.Count();
+            string orderNumberFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                orderNumberFilter = gridSettings.where.rules.Any(r => r.field == "OrderNumberSerie") ?
+                      gridSettings.where.rules.FirstOrDefault(r => r.field == "OrderNumberSerie").data : string.Empty;
+
+            }
+
+            if (!string.IsNullOrEmpty(orderNumberFilter))
+            {
+                q = q.Where(c => c.DocumentName != null && c.DocumentName.ToLower().Contains(orderNumberFilter.ToLower()));
+            }
+            switch (gridSettings.sortColumn)
+            {
+            case "OrderNumberSerie":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.OrderNumberSerie) : q.OrderBy(c => c.OrderNumberSerie);
+                    break;
+                default:
+                    q = q.OrderByDescending(c => c.CodDocument);
+                    break;
+            }
+           
+        
 
             // create json data
             int pageIndex = gridSettings.pageIndex;
@@ -238,8 +266,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                         cell = new string[] 
                         {                       
                             a.CodDocument,
+                            a.OrderNumberSerie + "/" + a.OrderNumber,
                             a.Customer,
-                            a.EstimateNumberSerie + "/" + a.EstimateNumber + "%" + a.CodDocument,
+                            a.OrderProduct.Document.EstimateNumberSerie + "/" + a.OrderProduct.Document.EstimateNumber + "%" + a.OrderProduct.CodDocument,
                             a.DocumentName,
                         }
                     }

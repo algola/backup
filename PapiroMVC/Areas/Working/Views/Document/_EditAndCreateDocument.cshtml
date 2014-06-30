@@ -157,9 +157,6 @@
 
         var datastring = $("#documentForm").serialize();
 
-
-        alert(datastring);
-
         //at firt time save estimate or
         $.ajax({
             type: "POST",
@@ -315,7 +312,7 @@
            save();
        })
        .change(function () {
-           alert("cha");
+       //    alert("cha");
            window.onbeforeunload = function () {
                return "@pageMessage";
            };

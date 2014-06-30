@@ -67,6 +67,7 @@ namespace PapiroMVC.Model
             
             //Roll
             dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("articles", "Tags", SchemaDb.String, "255");
 
             //Rigid
             dbS.AddColumnToTable("articles", "Thikness", SchemaDb.Double, "0"); //mm

@@ -2,7 +2,7 @@
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleIndex");
-    
+
 
 }
 
@@ -15,7 +15,7 @@
 
     function typeOfArticle(cellvalue, options, rowobject) {
 
-        var link = "type"; 
+        var link = "type";
         var sheet = '@HttpContext.GetLocalResourceObject(strings, "SheetPrintableArticleType")';
         var roll = '@HttpContext.GetLocalResourceObject(strings, "RollPrintableArticleType")';
         var object = '@HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType")';
@@ -35,6 +35,69 @@
 
         return link;
     }
+
+    $("#btnDialogChange").click(function () {
+
+        hideProcessingMsg();
+
+        var grid = jQuery("#list");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+
+        hideProcessingMsg();
+
+
+        if (ids.length > 0) {
+
+            $("#dialog-change").dialog({
+                height: 300,
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        sendChanges();
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            $("#dialog-change").dialog('option', 'width', 500);
+            hideProcessingMsg();
+        } else {
+
+            $("#dialog-warning-selection").dialog({
+                height: 280,
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            hideProcessingMsg();
+        }
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $("#delete").click(function () {
         var grid = jQuery("#list");

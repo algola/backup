@@ -27,6 +27,7 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
+        @Html.HiddenFor(model => model.Article.Tags)
         
         @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)        
         

@@ -135,6 +135,12 @@
   <data name="AutoCahngesCaption" xml:space="preserve">
     <value>Variazione automatica dati</value>
   </data>
+  <data name="AutoChangeDesc" xml:space="preserve">
+    <value>Applica le seguenti variazioni agli articoli selezionati</value>
+  </data>
+  <data name="AutoChangeSelError" xml:space="preserve">
+    <value>Selezionare gli articoli dalla lista prima di procedere</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Annulla</value>
   </data>

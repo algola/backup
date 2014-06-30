@@ -13,7 +13,11 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "SupplierMaker")]
         public string SupplierMaker { get; set; }
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "SupplyerBuy")]
-        public string SupplyerBuy { get; set; }        
+        public string SupplyerBuy { get; set; }
+        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "Tags")]
+        public string Tags { get; set; }    
+
+
     }
 
     public class PrintableAutoChanges_Metadata : ArticleAutoChanges_Metadata
@@ -25,15 +29,15 @@ namespace PapiroMVC.Models
     }
 
     //one ore other
-    [XorFieldRequired(new string[] { "CostPerMl", "CostPerMq" }, typeof(ResArticleViewModelAutoChanges), "RollPrintableXorFieldValidationError")]
+   // [XorFieldRequired(new string[] { "CostPerMl", "CostPerMq" }, typeof(ResArticleViewModelAutoChanges), "RollPrintableXorFieldValidationError")]
     public class RollPrintableArticleAutoChanges_Metadata : PrintableAutoChanges_Metadata
     {
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "MqForafait")]
         public string MqForafait { get; set; }
 
-        [RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
-        [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerMl")]
-        public string CostPerMl { get; set; }
+        //[RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
+        //[DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerMl")]
+        //public string CostPerMl { get; set; }
 
         [RegularExpressionLocalized(typeof(ResArticleViewModelAutoChanges), "AutoChangesValidation", "AutoChangesValidationError")]
         [DisplayNameLocalized(typeof(ResArticleViewModelAutoChanges), "CostPerMq")]

@@ -7726,6 +7726,11 @@
               Looks up a localized string similar to Fornitore.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.ViewModels.ResArticleViewModelAutoChanges.Tags">
+            <summary>
+              Looks up a localized string similar to Tags.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.ViewModels.ResArticleViewModelAutoChanges.Weight">
             <summary>
               Looks up a localized string similar to Grammi al metro quadrato.

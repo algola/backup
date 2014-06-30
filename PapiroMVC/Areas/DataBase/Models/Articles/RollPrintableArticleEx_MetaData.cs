@@ -12,6 +12,8 @@ namespace PapiroMVC.Models
     {
         [DisplayNameLocalized(typeof(ResRollPrintableArticle), "Width")]
         public Nullable<bool> Width { get; set; }
+        [DisplayNameLocalized(typeof(ResRollPrintableArticle), "Tags")]
+        public string Tags { get; set; }
         [DisplayNameLocalized(typeof(ResRollPrintableArticle), "MqForafait")]
         public Nullable<double> MqForafait { get; set; }
     }

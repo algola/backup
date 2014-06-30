@@ -74,21 +74,56 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             foreach (var id in x.Id)
             {
-                var a=articleRepository.GetSingle(id);
+                var a = articleRepository.GetSingle(id);
                 var cost = a.ArticleCosts.FirstOrDefault();
 
                 ((RollPrintableArticleCost)cost).CostPerMq = x.CostPerMq;
-
+                a.Tags = x.Tags!=String.Empty?x.Tags:a.Tags;
                 articleRepository.Edit(a);
                 articleRepository.Save();
             }
 
             return Json(new
             {
-                
-                                message = "ok"
+                message = "ok"
             });
         }
+
+        [HttpPost]
+        public ActionResult RigidAutomaticallyChanges(RigidPrintableArticleAutoChanges x)
+        {
+            //Console.WriteLine(HttpContext.Request.UrlReferrer.OriginalString);
+            ////model contsins data that will be processed
+            try
+            {
+                if (x.SupplierMaker == "error")
+                    throw new Exception();
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+                HttpContext.Response.StatusCode = 500;
+                HttpContext.Response.Clear();
+                return PartialView("_RigidPrintableArticleAutoChanges", x);
+            }
+
+            foreach (var id in x.Id)
+            {
+                var a = articleRepository.GetSingle(id);
+                var cost = a.ArticleCosts.FirstOrDefault();
+
+                ((RigidPrintableArticleCost)cost).CostPerMq = x.CostPerMq;
+                a.Tags = x.Tags != String.Empty ? x.Tags : a.Tags;
+                articleRepository.Edit(a);
+                articleRepository.Save();
+            }
+
+            return Json(new
+            {
+                message = "ok"
+            });
+        }
+
 
 
         /// <summary>
@@ -141,6 +176,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return PartialView("_SheetPrintableArticleAutoChanges", x);
             }
 
+            foreach (var id in x.Id)
+            {
+                var a = articleRepository.GetSingle(id);
+                var cost = a.ArticleCosts.FirstOrDefault();
+
+                a.Tags = x.Tags != String.Empty ? x.Tags : a.Tags;
+                articleRepository.Edit(a);
+                articleRepository.Save();
+            }
+            
             return Json(new
             {
                 message = "ok"
@@ -761,7 +806,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string sheetPerPalletFilter = string.Empty;
             string colorArticleFilter = string.Empty;
             string adhesiveArticleFilter = string.Empty;
-            
+
             if (gridSettings.isSearch)
             {
                 formatArticleFilter = gridSettings.where.rules.Any(r => r.field == "Format") ?
@@ -958,7 +1003,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
-
         public ActionResult RollPrintableArticleList(GridSettings gridSettings)
         {
             //common serarch and order
@@ -1084,7 +1128,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         cell = new string[] 
                         {                       
                             a.CodArticle,
-                          //  a.CodArticle,
+                            a.CodArticle,
                             a.TypeOfMaterial,
                             a.NameOfMaterial,
                             a.Color,
@@ -1093,6 +1137,67 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CustomerSupplierMaker.BusinessName,
                             ((RigidPrintableArticleStandardCost)a.ArticleCosts.First(x => 
                                 x.TypeOfArticleCost == ArticleCost.ArticleCostType.RigidPrintableArticleStandardCost)).CostPerMq,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult RigidPrintableArticleListPerProduct(GridSettings gridSettings)
+        {
+            //common serarch and order
+            var q = PrintableList(gridSettings).OfType<RigidPrintableArticle>();
+
+            string formatArticleFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                formatArticleFilter = gridSettings.where.rules.Any(r => r.field == "Format") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "Format").data : string.Empty;
+
+            }
+
+            if (!string.IsNullOrEmpty(formatArticleFilter))
+            {
+                q = q.Where(c => c.Format.ToLower().Contains(formatArticleFilter.ToLower()));
+            }
+
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.TypeOfMaterial,
+                            a.NameOfMaterial,
+                            a.Color,
+                            a.Weight.ToString(),
                         }
                     }
                 ).ToArray()

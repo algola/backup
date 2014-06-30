@@ -15,7 +15,6 @@
 
 <div id="containerbox">
     <!-- Main Page -->
-
     @*filters check************************************************@
     <div id="checkFilterMessage" class="alert alert-block alert-error" hidden="hidden">
         <button type="button" class="close" data-dismiss="alert">
@@ -30,9 +29,7 @@
     <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
 
-
     <br />
-
 
     <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateRigidPrintableArticle", "Article", new { Area = "Database" })');">
         <i class="icon-plus"></i>
@@ -44,11 +41,15 @@
         @Html.T(strings, "WizardRigidPrintableArticle")
     </button>
 
-    <div id="dialog-confirm" class="hide">
+    @Html.Partial("_ListBtnChanges")
 
-        @Html.T(strings, "DeleteMessage")
-
+    @* dialog box per la variazione del prezzo e del fornitore *@
+    <div id="dialog-change" class="hide">
+        <div id="rigidPrintableArticleAutoChanges">
+            @Html.Partial("_RigidPrintableArticleAutoChanges")
+        </div>
     </div>
+
 
 </div>
 
@@ -342,8 +343,8 @@
         var myGrid = $("#list");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
-        
-        if ((!(filters === '{"groupOp":"AND","rules":[]}')) && 
+
+        if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
             ((filters != undefined))) {
             $("#checkFilterMessage").show();
         }

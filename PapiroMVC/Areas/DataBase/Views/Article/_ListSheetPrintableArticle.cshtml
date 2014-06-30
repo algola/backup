@@ -35,10 +35,14 @@
         @Html.T(strings, "WizardSheetPrintableArticle")
     </button>
 
-    <div id="dialog-confirm" class="hide">
 
-        @Html.T(strings, "DeleteMessage")
+    @Html.Partial("_ListBtnChanges")
 
+    @* dialog box per la variazione del prezzo e del fornitore *@
+    <div id="dialog-change" class="hide">
+        <div id="sheetPrintableArticleAutoChanges">
+            @Html.Partial("_SheetPrintableArticleAutoChanges")
+        </div>
     </div>
 
 </div>
