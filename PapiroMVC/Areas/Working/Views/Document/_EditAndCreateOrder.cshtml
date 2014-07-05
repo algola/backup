@@ -42,9 +42,10 @@
                     @Html.AlgolaEditorFor(model => model.DateDocument)
                     @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
                     @Html.HiddenFor(model => model.Notes)
-                    @Html.AlgolaEditorFor(model => model.EstimateNumberSerie)
 
+                    @Html.AlgolaEditorFor(model => model.OrderNumberSerie)
                     @Html.AlgolaEditorFor(model => model.OrderNumber)
+
                     @Html.HiddenFor(model => model.TimeStampTable)
 
                     @Html.HiddenFor(model => model.CodCustomer)
@@ -90,13 +91,13 @@
             </div>
 
 
-            
+
 
             <div class="span1"></div>
             <div class="span11 well no-padding">@Model.OrderProduct.ProductName</div>
             <div class="vspace-20"></div>
         </div>
-    
+
 
 
         <div id="dialog-message" class="hide">
@@ -122,20 +123,76 @@
             @HttpContext.GetLocalResourceObject(strings, "Save")
         </button>
 
-
-        <div class="space"></div>
-
+        <a href="#" class="btn btn-primary" role="button" id="btnPrinterOrder" onclick="showPrinter();">
+            <i class="icon-print bigger-160"></i>
+            @HttpContext.GetLocalResourceObject(strings, "PrintOrder")
+        </a>
     }
 
+
+
+    <div id="dialog-printreport" class="hide">
+
+        <table>
+
+            @{foreach (var item in Model.ReportOrderNames)
+            {
+                <tr>
+                    <td>@item.Description</td>
+                    <td>
+                        <button class="default btn-mini btn btn-primary" type="button" onclick="printComm('@item.Name');">
+                            <i class="icon-print bigger-125"></i>
+                        </button>
+                    </td>
+                </tr>
+            }}
+        </table>
+
+    </div>
 
 </div>
 
 <script type="text/javascript">
 
-    
+    //stampa della commessa
+    function printComm(reportName) {
+        $("#dialog-printreport").dialog("close");
+        ret = '@Url.Action("PrintOrder", new { codDocument = Model.CodDocument, reportName = -1 })';
+        location.href = ret.replace('-1', reportName).replace('amp;','');
+
+    }
+
+    function showPrinter() {
+
+        var dialog = $("#dialog-printreport").dialog({
+            width: 'auto',
+            modal: true,
+            title: '@Html.T(strings, "DialogPrintOrderTitle")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+
+        });
+
+        /**
+        dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+        };
+        **/
+    };
+
+
+
+
 
     function save() {
-
 
         window.onbeforeunload = null;
 
@@ -235,34 +292,35 @@
             modal: true,
             title: '@Html.T(stringsGrid, "DialogSubTitle")',
             title_html: true,
+
             buttons: [
-                {
-                    text: '@Html.T(stringsGrid, "Cancel")',
-                    "class": "btn btn-mini",
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                },
         {
-            text: '@Html.T(stringsGrid, "Ok")',
-            "class": "btn btn-primary btn-mini",
+            text: '@Html.T(stringsGrid, "Cancel")',
+            "class": "btn btn-mini",
             click: function () {
-
-                var myGrid = $('#gridCustomer'),
-                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                    celValueCodCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'CodCustomer');
-
-                $('#CodCustomer').val(celValueCodCustemerSupplier);
-
-                var myGrid = $('#gridCustomer'),
-                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
-                    celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
-
-                $('#Customer').val(celValueCustemerSupplier);
                 $(this).dialog("close");
-
             }
-        }
+        },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+
+                        var myGrid = $('#gridCustomer'),
+                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                            celValueCodCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'CodCustomer');
+
+                        $('#CodCustomer').val(celValueCodCustemerSupplier);
+
+                        var myGrid = $('#gridCustomer'),
+                            selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                            celValueCustemerSupplier = myGrid.jqGrid('getCell', lastSel, 'BusinessName');
+
+                        $('#Customer').val(celValueCustemerSupplier);
+                        $(this).dialog("close");
+
+                    }
+                }
             ]
         });
 
@@ -346,6 +404,13 @@
 
                 return false;
             }
+
+
+
+
+
+
+
         });
 
 </script>

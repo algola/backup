@@ -37,13 +37,22 @@ namespace SchemaManagemet
 
         public void CreateDatabase()
         {
-            var sql = "CALL AddDatabase('param1');";
-            sql = sql.Replace("param1", DatabaseName);
-            Ctx.Database.ExecuteSqlCommand(sql);
-        }
+            try
+            {
+                /// <summary>
+                /// Add a table to Context
+                var sql = "CALL AddDatabase('param1');";
+                sql = sql.Replace("param1", DatabaseName);
+                Ctx.Database.ExecuteSqlCommand(sql);
+            }
+            catch (Exception e)
+            {
+                
+                throw;
+            }
 
-        /// <summary>
-        /// Add a table to Context
+        
+        }
         /// </summary>
         /// <param name="name"></param>
         public void AddTable(string name)

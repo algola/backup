@@ -171,7 +171,7 @@ namespace Services
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
             //con un colpo solo!!!
-            var csCode = (from COD in this.GetAll().OfType<Order>() select COD.OrderNumber).Max();
+            var csCode = (from COD in this.GetAll().OfType<Order>() where COD.OrderNumberSerie == ((Order)a).OrderNumberSerie select COD.OrderNumber).Max();
             return AlphaCode.GetNextIntCode(csCode ?? "0").PadLeft(6, '0');
         }
 
@@ -620,6 +620,22 @@ namespace Services
         {
             return Context.DocumentStates.Where(x => x.CodDocument == codDocument).OrderBy(x => x.StateNumber);
         }
+
+        /// <summary>
+        /// LIst of report installed for orders
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<ReportOrderName> GetAllReportOrderName()
+        {
+            var p = new ReportOrderName { Name  = "LabelRollHead", Description= "Etichette in rotolo" };
+
+            var ret = new List<ReportOrderName>();
+            ret.Add(p);
+
+            return ret.AsQueryable();
+        }
+
+
 
     }
 }

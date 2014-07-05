@@ -739,13 +739,36 @@ namespace PapiroMVC.Models
         public override double Quantity(double qta)
         {
 
-
             if (TaskexEcutorSelected == null)
             {
                 UpdateCoeff();
             }
 
             double ret;
+            double mqMat = 0;
+            double mlMat = 0;
+            double runMat = 0;
+            double kgMat = 0;
+
+
+
+            var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
+            var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
+
+            var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
+            var mtRuns = runs * PrintingFormat.GetSide2() / 100;
+            var mtWaste = (paperFirstStartLenght ?? 0) + (RollChanges * paperSecondStartLenght ?? 0);
+
+            mlMat = Math.Ceiling(mtRuns + mtWaste);
+            CalculatedMl = mlMat;
+
+            mqMat =  Math.Ceiling(base.Quantity(qta));
+            CalculatedMq = mqMat;
+
+            kgMat = 0;
+            CalculatedKg = kgMat;
+
+            CalculatedRun = 0;
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
@@ -755,15 +778,7 @@ namespace PapiroMVC.Models
                 case QuantityType.RunLengthMlTypeOfQuantity:
                     //calcoli per mt lineari!!!!!!!!
 
-
-                    var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
-                    var paperSecondStartLenght = ((Flexo)TaskexEcutorSelected).PaperSecondStartLenght;
-
-                    var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
-                    var mtRuns = runs * PrintingFormat.GetSide2() / 100;
-                    var mtWaste = (paperFirstStartLenght ?? 0) + (RollChanges * paperSecondStartLenght ?? 0);
-
-                    ret = Math.Ceiling(mtRuns + mtWaste);
+                    ret = mlMat;
                     break;
 
                 default:
@@ -1020,6 +1035,8 @@ namespace PapiroMVC.Models
             //la quantità!!!!
 
             double total = 0;
+            TimeSpan time = new TimeSpan(0, 0, 0);
+            CostAndTime totalCT = new CostAndTime();
             try
             {
                 try
@@ -1029,13 +1046,19 @@ namespace PapiroMVC.Models
                     double cToPrintT = 0;
 
                     TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
-                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
+                
+                
                 }
                 catch (NotImplementedException)
                 {
-                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
                 }
+
                 Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
+                //calcolo del tempo e del costo
+                total = totalCT.Cost;
+                CalculatedTime = totalCT.Time;
             }
             catch (NullReferenceException)
             {
@@ -1047,6 +1070,17 @@ namespace PapiroMVC.Models
 
         }
 
+
+
+        public override void MergeField(Novacode.DocX doc)
+        {
+            base.MergeField(doc);
+            if (ProductPartPrinting != null)
+            {
+                TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+                ProductPartPrinting.MergeField(doc);
+            }
+        }
     }
 
 

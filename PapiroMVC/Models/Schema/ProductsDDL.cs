@@ -147,7 +147,13 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("producttasks", "CodOptionTypeOfTask", SchemaDb.String, "50");
             dbS.AddColumnToTable("producttasks", "Hidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("producttasks", "ImplantHidden", SchemaDb.Bool, "0");
+
+
+
+            //indentificativo per project
             dbS.AddColumnToTable("producttasks", "IndexOf", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("producttasks", "PrecIndexOf", SchemaDb.String, "200");
+            //----------------------------- e ordinamento dei costi
 
             dbS.AddColumnToTable("producttasks", "CodItemGraph", SchemaDb.String, "20");
             

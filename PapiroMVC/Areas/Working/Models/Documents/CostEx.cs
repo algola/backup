@@ -6,11 +6,12 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using PapiroMVC.Validation;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Cost_MetaData))]
-    public partial class Cost : ICloneable
+    public partial class Cost : ICloneable, IPrintDocX
     {
 
         public object Clone()
@@ -171,7 +172,7 @@ namespace PapiroMVC.Models
                     switch (tskExec.FirstOrDefault().TypeOfExecutor)
                     {
                         case TaskExecutor.ExecutorType.ControlTableRoll:
-                            cv = new PrePostPressCostDetail();
+                            cv = new ControlTableCostDetail();
 
                             cv.TaskCost = this;
                             cv.InitCostDetail(tskExec, articles);
@@ -408,6 +409,17 @@ namespace PapiroMVC.Models
         {
             return null;
         }
+
+        public virtual void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Description", this.Description));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Quantity", this.Quantity??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.UnitCost", this.UnitCost));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.TotalCost", this.TotalCost));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Markup", this.Markup ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.GranTotalCost", this.GranTotalCost));
+        }
+
 
     }
 }

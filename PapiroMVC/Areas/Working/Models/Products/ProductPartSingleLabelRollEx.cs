@@ -5,13 +5,14 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
     
     [KnownType(typeof(ProductPartSingleLabelRoll))]
     [MetadataType(typeof(ProductPartSingleLabelRoll_MetaData))]
-    public partial class ProductPartSingleLabelRoll : ProductPart
+    public partial class ProductPartSingleLabelRoll : ProductPart, IPrintDocX
     {
 
         public override string ToString()
@@ -40,6 +41,14 @@ namespace PapiroMVC.Models
             TypeOfProductPart = ProductPart.ProductPartType.ProductPartSingleLabelRoll;
         }
 
+        public override void MergeField(DocX doc)
+        {
+            base.MergeField(doc);
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.LabelsPerRoll", this.LabelsPerRoll??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.SoulDiameter", this.SoulDiameter ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.MaxDiameter", this.MaxDiameter ?? 0));
+        }
         #region Proprietà aggiuntive
         #endregion
 

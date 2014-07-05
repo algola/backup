@@ -10,12 +10,12 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
-using Microsoft.Office.Interop.Word;
 using Novacode;
 using System.IO;
 using System.Reflection;
 using PapiroMVC.ServiceLayer;
 using System.Threading;
+using Microsoft.Office.Interop.Word;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -24,6 +24,257 @@ namespace PapiroMVC.Areas.Working.Controllers
     {
 
         static Assembly g_assembly;
+
+        //public ActionResult PrintOrder(string codDocument)
+        //{
+        //    //carico l'ordine
+        //    Order order = documentRepository.GetAll().OfType<Order>().FirstOrDefault(x => x.CodDocument == codDocument);
+
+        //    //cliente dell'ordine
+        //    Customer cust = (Customer)customerSupplierRepository.GetSingle(order.CodCustomer);
+        //    order.CustomerSupplier = cust;
+
+        //    //il suo prodotto con la sua quantità
+        //    order.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(order.CodDocumentProduct);
+
+        //    //estimate
+        //    order.OrderProduct.Document = (Estimate)documentRepository.GetSingle(order.OrderProduct.CodDocument);
+
+        //    string fileNameMain = Path.Combine(Server.MapPath(@"~/Report"), "OrderHead.docx");
+        //    string fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost.docx");
+
+
+        //    string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), order.OrderNumberSerie + "-" + order.OrderNumber + ".docx");
+        //    string fileNameSaveAsAfterRepair = Path.Combine(Server.MapPath(@"~/Report"), order.OrderNumberSerie + "-" + order.OrderNumber + "AfterRepair.docx");
+
+        //    // Store a global reference to the executing assembly.
+        //    g_assembly = Assembly.GetExecutingAssembly();
+
+
+        //    // Create the document in memory:
+        //    var docMain = DocX.Load(fileNameMain);
+
+        //    order.MergeField(docMain);
+        //    order.OrderProduct.MergeField(docMain);
+        //    order.OrderProduct.Product.MergeField(docMain);
+
+        //    var product = productRepository.GetSingle(order.OrderProduct.Product.CodProduct);
+        //    product.ProductParts.FirstOrDefault().MergeField(docMain);
+
+        //    //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
+
+
+        //    foreach (var cost in order.OrderProduct.Costs)
+        //    {
+        //        // Create the document in memory:
+        //        //var docCost = DocX.Load(fileNameCost);
+        //        //                cost.MergeField(docCost);
+
+        //        //try
+        //        //{
+        //        var cd = cost.CostDetails.FirstOrDefault();
+        //        if (cd != null)
+        //        {
+        //            cd = costDetailRepository.GetSingle(cd.CodCostDetail);
+        //            cd.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+
+        //            if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
+        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
+        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
+        //            {
+        //                var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
+        //                cd.MergeField(docPrintCD);
+        //                cd.TaskCost.MergeField(docPrintCD);
+        //                //il merge con il cost
+
+        //                try
+        //                {
+        //                    cd.TaskCost.ProductPartTask.ProductPart.MergeField(docPrintCD);
+
+        //                }
+        //                catch
+        //                { }
+        //                docMain.InsertDocument(docPrintCD);
+        //                docPrintCD.Dispose();
+        //            }
+        //            else
+        //            {
+        //            }
+        //           // docMain.InsertDocument(docCost);
+
+        //        }
+
+        //        //}
+        //        //catch
+        //        //{ }
+
+        //       // docCost.Dispose();
+        //    }
+
+        //    docMain.SaveAs(fileNameSaveAs);
+
+        //    docMain.Dispose();
+
+        //    // Open a doc file.
+        //    Application application = new Application();
+        //    Microsoft.Office.Interop.Word.Document document = application.Documents.Open(fileNameSaveAs, OpenAndRepair: true);
+
+
+        //    Object fnsa = (Object)fileNameSaveAsAfterRepair;
+        //    // Object of Missing "Null Value".
+        //    Object oMissing = System.Reflection.Missing.Value;
+
+        //    // Object of false.
+        //    Object oFalse = false;
+        //    // Save the document.
+        //    document.SaveAs
+        //    (
+        //        ref fnsa, ref oMissing, ref oMissing, ref oMissing,
+        //        ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+        //        ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+        //        ref oMissing, ref oMissing
+        //    );            // Close word.
+
+        //    document.Close();
+        //    application.Quit();
+
+
+        //    return File(fileNameSaveAsAfterRepair, "application/file", "stampa.docx");
+
+        //}
+
+
+        public ActionResult PrintOrder(string codDocument, string reportName)
+        {
+            //carico l'ordine
+            Order order = documentRepository.GetAll().OfType<Order>().FirstOrDefault(x => x.CodDocument == codDocument);
+
+            //cliente dell'ordine
+            Customer cust = (Customer)customerSupplierRepository.GetSingle(order.CodCustomer);
+            order.CustomerSupplier = cust;
+
+            //il suo prodotto con la sua quantità
+            order.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(order.CodDocumentProduct);
+
+            //estimate
+            order.OrderProduct.Document = (Estimate)documentRepository.GetSingle(order.OrderProduct.CodDocument);
+
+            string fileNameMain = Path.Combine(Server.MapPath(@"~/Report"), (reportName == "" || reportName == null) ? "OrderHead.docx" : (reportName + ".docx"));
+            string fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost.docx");
+
+            string retName = order.OrderNumberSerie + "-" + order.OrderNumber;
+            retName = retName.PurgeFileName();
+
+            string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), retName + ".docx");
+            string fileNameSaveAsAfterRepair = fileNameSaveAs;// Path.Combine(Server.MapPath(@"~/Report"), retName + "AfterRepair.docx");
+
+            // Store a global reference to the executing assembly.
+            g_assembly = Assembly.GetExecutingAssembly();
+
+
+            //// Create the document in memory:
+            var docMain = DocX.Load(fileNameMain);
+
+
+            order.MergeField(docMain);
+            order.OrderProduct.MergeField(docMain);
+            order.OrderProduct.Product.MergeField(docMain);
+
+            var product = productRepository.GetSingle(order.OrderProduct.Product.CodProduct);
+            product.ProductParts.FirstOrDefault().MergeField(docMain);
+
+            //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
+
+            var costs = order.OrderProduct.Costs.OrderBy(x => x.IndexOf);
+            foreach (var cost in costs)
+            {
+                // Create the document in memory:
+                //var docCost = DocX.Load(fileNameCost);
+                //                cost.MergeField(docCost);
+
+                //try
+                //{
+                var cd = cost.CostDetails.FirstOrDefault();
+                if (cd != null)
+                {
+                    cd = costDetailRepository.GetSingle(cd.CodCostDetail);
+                    cd.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+
+                    if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
+                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
+                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
+                    {
+                        var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
+                        cd.MergeField(docPrintCD);
+                        cd.TaskCost.MergeField(docPrintCD);
+                        //il merge con il cost
+
+                        try
+                        {
+                            cd.TaskCost.ProductPartTask.ProductPart.MergeField(docPrintCD);
+
+                        }
+                        catch
+                        { }
+
+                        docPrintCD.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+
+                        var xxx = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+                        docMain.InsertDocument(xxx);
+
+                        docPrintCD.Dispose();
+                        xxx.Dispose();
+
+
+                    }
+                    else
+                    {
+                    }
+                    // docMain.InsertDocument(docCost);
+
+                }
+
+                //}
+                //catch
+                //{ }
+
+                // docCost.Dispose();
+            }
+
+            docMain.SaveAs(fileNameSaveAs);
+
+            docMain.Dispose();
+
+            //// Open a doc file.
+            //Application application = new Application();
+            //Microsoft.Office.Interop.Word.Document document = application.Documents.Open(fileNameSaveAs, OpenAndRepair: true);
+
+
+            //Object fnsa = (Object)fileNameSaveAsAfterRepair;
+            //// Object of Missing "Null Value".
+            //Object oMissing = System.Reflection.Missing.Value;
+
+            //// Object of false.
+            //Object oFalse = false;
+            //// Save the document.
+            //document.SaveAs
+            //(
+            //    ref fnsa, ref oMissing, ref oMissing, ref oMissing,
+            //    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+            //    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+            //    ref oMissing, ref oMissing
+            //);            // Close word.
+
+            //document.Close();
+            //application.Quit();
+
+
+            return File(fileNameSaveAsAfterRepair, "application/file", retName + ".docx");
+
+        }
+
+
+
 
         /// <summary>
         /// This Action returns partial view of CosteDetail
@@ -431,8 +682,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case CostDetail.CostDetailType.PrintedRollArticleCostDetail:
                     viewName = "PrintingCostDetail";
                     break;
-                case CostDetail.CostDetailType.PrePostPressCostDetail:
-                    viewName = "PrePostPressCostDetail";
+                case CostDetail.CostDetailType.ControlTableCostDetail:
+                    viewName = "ControlTableCostDetail";
                     break;
 
                 default:
@@ -734,9 +985,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditOrder(string id)
         {
-         //   Session["CodDocument"] = id;
+            //   Session["CodDocument"] = id;
             var prod = documentRepository.GetSingle(id);
-
 
 
             if (prod == null)
@@ -744,6 +994,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 throw new NotFoundResException();
             }
 
+            ((Order)prod).ReportOrderNames = documentRepository.GetAllReportOrderName();
             prod.DocumentStates = documentRepository.GetAllDocumentStates(id).ToList();
             prod.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(prod.CodDocumentProduct);
 
@@ -1090,6 +1341,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult EditOrder(PapiroMVC.Models.Order c)
         {
             var taskList = this.typeOfTaskRepository.GetAll();
+            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName();
 
             if (ModelState.IsValid)
             {

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Novacode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class PrintedRollArticleCostDetail : PrintedArticleCostDetail
+    public partial class PrintedRollArticleCostDetail : PrintedArticleCostDetail, IPrintDocX
     {
 
         public override void Copy(CostDetail to)
@@ -85,11 +86,20 @@ namespace PapiroMVC.Models
             var article = (RollPrintableArticle)extract.FirstOrDefault();
 
             double mqMat = 0;
+            double mlMat = 0;
+            double runMat = 0;
+            double kgMat = 0;
+
+
+            var thisArticle= ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
+
 
             if ((QuantityType)(ComputedBy.TypeOfQuantity ?? 0) == QuantityType.RunLengthMlTypeOfQuantity)
             {
                 //prendo i ml li moltiplico per la banda
                 mqMat = ComputedBy.Quantity(qta) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 100;
+                mlMat = ComputedBy.Quantity(qta);
+
             }
             else
             {
@@ -98,7 +108,19 @@ namespace PapiroMVC.Models
                 ComputedBy.TypeOfQuantity = 0;
                 mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle ?? 1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
                 ComputedBy.TypeOfQuantity = lastTypeOfQuantity;
+
+                mlMat = mqMat / (ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 100);
             }
+
+            kgMat = mqMat * thisArticle.Weight ?? 0;
+            kgMat /= 1000;
+
+            this.CalculatedMq = mqMat;
+            this.CalculatedMl = mlMat;
+            this.CalculatedKg = kgMat;
+            this.CalculatedRun = runMat;
+
+
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
@@ -114,6 +136,20 @@ namespace PapiroMVC.Models
 
         }
 
+        public override void MergeField(DocX doc)
+        {
+            base.MergeField(doc);
+
+            //voglio stampare i dati relativi al materiale di stampa
+            //questo dovrebbe far ottenere il costo!!!!!!
+
+            var art = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
+            if (art!=null)
+            {
+                art.MergeField(doc);
+            }
+
+        }
 
     }
 }

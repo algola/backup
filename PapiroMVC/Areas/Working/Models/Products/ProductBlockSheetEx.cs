@@ -5,10 +5,11 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductBlockSheet))]
     [MetadataType(typeof(ProductBlockSheet_MetaData))]
     public partial class ProductBlockSheet : Product, IDataErrorInfo, ICloneable, IDeleteRelated
@@ -37,6 +38,12 @@ namespace PapiroMVC.Models
                 }
             }
         }
+
+        public override void MergeField(DocX doc)
+        {
+            base.MergeField(doc);
+        }
+
 
 
         #region Error Handle

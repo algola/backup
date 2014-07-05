@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
@@ -54,7 +55,7 @@ namespace PapiroMVC.Models
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAETICHROTOLO_NO");
             partTask.Hidden = false;
             partTask.ImplantHidden = false;
-            partTask.IndexOf = 1;
+            partTask.IndexOf = 10;
 
             partTask.CodItemGraph = "ST";
 
@@ -65,14 +66,14 @@ namespace PapiroMVC.Models
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
             partTask.Hidden = true;
             partTask.ImplantHidden = false;
-            partTask.IndexOf = 2;
+            partTask.IndexOf = 20;
 
             partTask.CodItemGraph = "FS";
 
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAVOLOCONTROLLO_SI");
             partTask.Hidden = true;
             partTask.ImplantHidden = true;
-            partTask.IndexOf = 2;
+            partTask.IndexOf = 30;
 
             partTask.CodItemGraph = "TV";
 
@@ -89,8 +90,8 @@ namespace PapiroMVC.Models
 
 
 
-  
-        
+
+
 
         public override List<ProductPartTask> GetInitalizedPartTask()
         {
@@ -123,6 +124,11 @@ namespace PapiroMVC.Models
             var s = (string)t.GetProperty("CodMenuProduct" + this.CodMenuProduct).GetValue(null, null);
 
             return s + " " + base.ToString();
+        }
+
+        public override void MergeField(DocX doc) 
+        {
+            base.MergeField(doc);
         }
 
     }

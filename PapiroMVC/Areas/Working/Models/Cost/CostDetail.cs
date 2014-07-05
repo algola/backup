@@ -5,6 +5,7 @@ using System.Web;
 using PapiroMVC.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
@@ -14,7 +15,7 @@ namespace PapiroMVC.Models
     //se è un articolo--> ?? decider
 
     //    [MetadataType(typeof(TaskCostDetail_MetaData))]
-    public partial class CostDetail : ICloneable
+    public partial class CostDetail : ICloneable, IPrintDocX
     {
 
         public object Clone()
@@ -49,6 +50,11 @@ namespace PapiroMVC.Models
             to.Guid = this.Guid;
             to.RollChanges = this.RollChanges;
 
+            to.CalculatedMl = this.CalculatedMl;
+            to.CalculatedMq = this.CalculatedMq;
+            to.CalculatedKg = this.CalculatedKg;
+            to.CalculatedRun = this.CalculatedRun;
+
             to.Implants = this.Implants;
 
             //            public virtual Cost TaskCost = this.
@@ -62,13 +68,13 @@ namespace PapiroMVC.Models
             if (ProductPartPrinting != null)
             {
                 to.ProductPartPrinting = (ProductPartPrinting)ProductPartPrinting.Clone();
-             //   to.ProductPartPrinting.CostDetail = to;
+                //   to.ProductPartPrinting.CostDetail = to;
             }
 
             if (GainPrintingOnBuying != null)
             {
                 var x = (ProductPartPrintingGain)GainPrintingOnBuying.Clone();
-      //          x.CostDetail = to;
+                //          x.CostDetail = to;
                 to.GainPrintingOnBuying = x;
             }
 
@@ -137,7 +143,8 @@ namespace PapiroMVC.Models
             PrintedRigidArticleCostDetail = 12,
 
             ImplantCostDetail = 100,
-            PrePostPressCostDetail = 200
+            PrePostPressCostDetail = 200,
+            ControlTableCostDetail = 201
 
         }
 
@@ -221,7 +228,7 @@ namespace PapiroMVC.Models
                 foreach (var item in Computes)
                 {
                     item.CodComputedBy = this.CodCostDetail;
-                }                
+                }
             }
 
             if (this.GainPrintingOnBuying != null)
@@ -300,5 +307,27 @@ namespace PapiroMVC.Models
             //throw new NotImplementedException();
         }
 
+        public virtual void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Starts", this.Starts ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForRun", this.GainForRun ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForRunForPrintableArticle", this.GainForRunForPrintableArticle ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForMqRun", this.GainForMqRun ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForMqRunForPrintableArticle", this.GainForMqRunForPrintableArticle ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.TypeOfQuantity", this.TypeOfQuantity ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForWeigthRun", this.GainForWeigthRun ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForWeigthRunForPrintableArticle", this.GainForWeigthRunForPrintableArticle ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Error", this.Error ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.RollChanges", this.RollChanges ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedMq", this.CalculatedMq??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedMl", this.CalculatedMl ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedKg", this.CalculatedKg ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedRun", this.CalculatedRun ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedTime", (this.CalculatedTime ?? new TimeSpan(0,0,0)).ToString()));
+        
+        
+        }
+
+        
     }
 }

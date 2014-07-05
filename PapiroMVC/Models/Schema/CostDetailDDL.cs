@@ -94,6 +94,13 @@ namespace PapiroMVC.Model
             //dbS.AddColumnToTable("costdetails", "CodProductPartPrintableArticle", SchemaDb.String, "50");
             //dbS.AddForeignKey("costdetails", "CodProductPartPrintableArticle", "productparts", "CodProductPart");
 
+            dbS.AddColumnToTable("costdetails", "CalculatedMq", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costdetails", "CalculatedMl", SchemaDb.Double, "0");
+
+            dbS.AddColumnToTable("costdetails", "CalculatedRun", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costdetails", "CalculatedKg", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costdetails", "CalculatedTime", SchemaDb.Time, "0");
+
             #endregion
 
             dbS.AddColumnToTable("costdetails", "CodComputedBy", SchemaDb.String, "50");

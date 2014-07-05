@@ -5,13 +5,14 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
 
     [KnownType(typeof(ProductPartsPrintableArticle))]
     [MetadataType(typeof(ProductPartsPrintableArticle_MetaData))]
-    public abstract partial class ProductPartsPrintableArticle
+    public abstract partial class ProductPartsPrintableArticle : IPrintDocX
     {
         #region Proprietà aggiuntive
 
@@ -26,7 +27,6 @@ namespace PapiroMVC.Models
 
             return (cont > 0);
         }
-
 
         public enum TypeOfProductPartsPrintableArticleType : int
         {
@@ -64,6 +64,17 @@ namespace PapiroMVC.Models
             x = x.Replace("%ADESHIVEMATERIAL", this.Adhesive);
 
             ProductPart.Product.ProductNameGenerator = x;
+        }
+
+        public virtual void MergeField(DocX doc)
+        {
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.TypeOfMaterial", this.TypeOfMaterial));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.NameOfMaterial", this.NameOfMaterial));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.Color", this.Color));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.Weight", this.Weight ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.Adhesive", this.Adhesive));
+  		        
         }
 
     }

@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public partial class ControlTableRollEstimatedOnTime : TaskEstimatedOnTime
     {
         //starts = 1 per avviamento, i successivi son
-        public override double GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int tracks, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int tracks, double running)
         {
             TimeSpan totalTimeA;
             totalTimeA = this.StartingTime1 ?? TimeSpan.Zero;
@@ -69,7 +69,9 @@ namespace PapiroMVC.Models
 
             var totalR = (totalTimeR.TotalMinutes) / 60 * Convert.ToDouble(costH, Thread.CurrentThread.CurrentUICulture);
 
-            return totalA + totalR;
+            CostAndTime ct = new CostAndTime { Cost = totalA + totalR, Time = totalTimeA + totalTimeR };
+
+            return ct;
         }
 
         public ControlTableRollEstimatedOnTime()

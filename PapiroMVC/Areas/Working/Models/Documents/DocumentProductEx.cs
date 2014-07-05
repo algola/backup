@@ -6,13 +6,14 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
 
     [Serializable]
     [MetadataType(typeof(DocumentProduct_MetaData))]
-    public partial class DocumentProduct : ICloneable
+    public partial class DocumentProduct : ICloneable , IPrintDocX
     {
         public string MqDescription { get; set; }
         public string FgDescription { get; set; }
@@ -316,7 +317,11 @@ namespace PapiroMVC.Models
             //ProductTask
             //only code 
             //                            foreach (var productTask in product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
-            foreach (var productTask in Product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO")))
+
+            var tsks = Product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO"));
+            tsks = tsks.OrderBy(x => x.IndexOf);
+
+            foreach (var productTask in tsks )
             {
                 cost = new Cost();
                 cost.CodItemGraph = productTask.CodItemGraph;
@@ -332,6 +337,8 @@ namespace PapiroMVC.Models
                     cost.Hidden = true;
                     cost.ForceZero = true;
                 }
+
+                cost.IndexOf = productTask.IndexOf;
                 this.Costs.Add(cost);
             }
 
@@ -352,12 +359,14 @@ namespace PapiroMVC.Models
                     cost.Description = productPartsPrintableArticle.ToString();
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
 
+                    cost.IndexOf = 0;
+
                     this.Costs.Add(cost);
                 }
                 #endregion
 
                 #region ProductPartTask
-                foreach (var productPartTask in productPart.ProductPartTasks)
+                foreach (var productPartTask in productPart.ProductPartTasks.OrderBy(z=>z.IndexOf))
                 {
                     cost = new Cost();
                     cost.CodItemGraph = productPartTask.CodItemGraph;
@@ -382,6 +391,7 @@ namespace PapiroMVC.Models
                         cost.ForceZero = true;
                     }
 
+                    cost.IndexOf = productPartTask.IndexOf;
                     this.Costs.Add(cost);
 
                     #region impianti
@@ -412,6 +422,7 @@ namespace PapiroMVC.Models
                     cost.Hidden = productPartTask.ImplantHidden;
                     cost.ForceZero = productPartTask.ImplantHidden;
 
+                    cost.IndexOf = productPartTask.IndexOf - 1;
                     this.Costs.Add(cost);
 
                     #endregion
@@ -420,6 +431,17 @@ namespace PapiroMVC.Models
             }
 
 
+
+        }
+
+        public virtual void MergeField(DocX doc)
+        {
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductName", this.ProductName.Replace("@", Environment.NewLine)));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", (this.Quantity??0).ToString()));
+            doc.AddCustomProperty(new Novacode.CustomProperty("UnitPrice", this.UnitPrice));
+            doc.AddCustomProperty(new Novacode.CustomProperty("TotalAmount", this.TotalAmount));
+  
         }
     }
 }

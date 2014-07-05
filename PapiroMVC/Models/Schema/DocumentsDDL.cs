@@ -66,6 +66,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("documents", "OrderNumber", SchemaDb.String, "20");
             dbS.AddColumnToTable("documents", "OrderNumberSerie", SchemaDb.String, "20");
             dbS.AddColumnToTable("documents", "CodDocumentProduct", SchemaDb.String, "50");
+            dbS.AddColumnToTable("documents", "ReportOrderName", SchemaDb.String, "255");
 
 
             // 0 = Ecommerce Estimate // 1
@@ -111,6 +112,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costs", "CodCost", SchemaDb.StringPK, "50");
 
             dbS.AddColumnToTable("costs", "CodItemGraph", SchemaDb.String, "20");
+            dbS.AddColumnToTable("costs", "IndexOf", SchemaDb.Int, "0");
 
 
             //foreign key for keep all product cost of single product and single quantity

@@ -5,11 +5,12 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Services;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
     [MetadataType(typeof(Document_MetaData))]
-    public partial class Document
+    public partial class Document : IPrintDocX
     {
         public NewProductCommand NewProductCommand { get; set; }
 
@@ -130,6 +131,11 @@ namespace PapiroMVC.Models
 
         }
 
+
+        public virtual void MergeField(DocX doc)
+        {
+
+        }
 
 
 

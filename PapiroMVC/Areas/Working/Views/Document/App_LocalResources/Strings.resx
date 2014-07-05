@@ -444,4 +444,10 @@
   <data name="EditOrderDesc" xml:space="preserve">
     <value>Modifica commessa</value>
   </data>
+  <data name="PrintOrder" xml:space="preserve">
+    <value>Stampa Commessa</value>
+  </data>
+  <data name="DialogPrintOrderTitle" xml:space="preserve">
+    <value>Modelli di stampa commessa</value>
+  </data>
 </root>

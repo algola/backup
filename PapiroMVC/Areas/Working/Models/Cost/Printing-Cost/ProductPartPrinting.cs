@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Novacode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,7 +10,7 @@ namespace PapiroMVC.Models
     /// <summary>
     /// Get PrintingFormat and calculating gain on this Format based on specifit type
     /// </summary>
-    public partial class ProductPartPrinting : ICloneable
+    public partial class ProductPartPrinting : ICloneable, IPrintDocX
     {
         public object Clone()
         {
@@ -151,7 +152,7 @@ namespace PapiroMVC.Models
         {
             get
             {
-         //       Console.WriteLine(Part);
+                //       Console.WriteLine(Part);
                 string format = PrintingFormat;
                 return format.GetSide1() * format.GetSide2() / 10000;
             }
@@ -187,6 +188,30 @@ namespace PapiroMVC.Models
             {
                 return GainPartOnPrinting.DCut2 ?? 0;
             }
+        }
+
+        public virtual void MergeField(DocX doc)
+        {
+
+            //cerco di capire se la macchina èflexo... se è flexo voglio stampare lo zeta e lo h
+            if (CostDetail.TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
+            {
+                var pFtoFlexo = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString();
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.PrintingFormat", pFtoFlexo));
+            }
+            else
+            {
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.PrintingFormat", this.PrintingFormat));
+            }
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPP.DCut1", this.CalculatedDCut1));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPP.DCut2", this.CalculatedDCut2));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Gain1", this.CalculatedSide1Gain));
+            doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Gain2", this.CalculatedSide2Gain));
+
+
+
+
         }
 
 

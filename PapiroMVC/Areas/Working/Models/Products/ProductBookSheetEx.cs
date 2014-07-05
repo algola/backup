@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
@@ -191,6 +192,11 @@ namespace PapiroMVC.Models
                 item.Format = this.Format;
             }
             base.ProductCodeRigen();
+        }
+
+        public override void MergeField(DocX doc) 
+        {
+            base.MergeField(doc);
         }
 
     }

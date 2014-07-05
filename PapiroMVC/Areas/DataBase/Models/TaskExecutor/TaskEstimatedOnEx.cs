@@ -9,6 +9,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
+
+
+
+    public class CostAndTime
+    {
+        public double Cost { get; set; }
+        public TimeSpan Time { get; set; }    
+    }
+
+
+
     [Serializable]
     [MetadataType(typeof(TaskEstimatedOn_MetaData))]
     public abstract partial class TaskEstimatedOn
@@ -38,7 +49,7 @@ namespace PapiroMVC.Models
         #endregion
 
         //usato per i rotoli
-        public virtual double GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int makereadis, double running)
+        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int makereadis, double running)
         {
             throw new NotImplementedException();
         }
@@ -48,7 +59,7 @@ namespace PapiroMVC.Models
             throw new NotImplementedException();
         }
 
-        public virtual double GetCost(string codOptionTypeOfTask, double starts, double mq)
+        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double mq)
         {
             throw new NotImplementedException();
         }

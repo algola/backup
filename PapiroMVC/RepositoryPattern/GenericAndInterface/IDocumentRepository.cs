@@ -24,6 +24,8 @@ namespace Services
         IQueryable<State> GetAllStates();
         IQueryable<DocumentState> GetAllDocumentStates(string codDocument);
 
+        IQueryable<ReportOrderName> GetAllReportOrderName();
+
         Document GetEstimateEcommerce(string codCustomerSupplier);
     }
 }

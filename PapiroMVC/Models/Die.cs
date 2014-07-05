@@ -29,10 +29,10 @@ namespace PapiroMVC.Models
         public Nullable<double> Z { get; set; }
     	
     	[DataMember] 		
-        public Nullable<double> DCut1 { get; set; }
+        public Nullable<double> DCut2 { get; set; }
     	
     	[DataMember] 		
-        public Nullable<double> DCut2 { get; set; }
+        public Nullable<double> DCut1 { get; set; }
     	
     	[DataMember] 		
         public Nullable<int> MaxGain1 { get; set; }

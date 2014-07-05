@@ -167,6 +167,8 @@ namespace PapiroMVC.Models
             //la quantità!!!!
 
             double total = 0;
+            TimeSpan time = new TimeSpan(0, 0, 0);
+            CostAndTime totalCT = new CostAndTime();
             try
             {
                 try
@@ -175,9 +177,14 @@ namespace PapiroMVC.Models
                 }
                 catch (NotImplementedException)
                 {
-                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
                 }
+
                 Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
+                //calcolo del tempo e del costo
+                total = totalCT.Cost;
+                CalculatedTime = totalCT.Time;
+
             }
             catch (NullReferenceException)
             {

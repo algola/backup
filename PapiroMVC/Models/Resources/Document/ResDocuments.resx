@@ -163,7 +163,7 @@
     <value>Serie di riferimento del progressivo</value>
   </data>
   <data name="EstimateNumberToolTip" xml:space="preserve">
-    <value>Numero progressivo del preventivo</value>
+    <value>Numero progressivo dei preventivi</value>
   </data>
   <data name="Notes" xml:space="preserve">
     <value>Note</value>
@@ -176,6 +176,18 @@
   </data>
   <data name="NumberToolTip" xml:space="preserve">
     <value>Numero</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Commessa N</value>
+  </data>
+  <data name="OrderNumberSerie" xml:space="preserve">
+    <value>Serie</value>
+  </data>
+  <data name="OrderNumberSerieToolTip" xml:space="preserve">
+    <value>Serie di riferimento del progressivo</value>
+  </data>
+  <data name="OrderNumberToolTip" xml:space="preserve">
+    <value>Numero progressivo delle commesse</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>

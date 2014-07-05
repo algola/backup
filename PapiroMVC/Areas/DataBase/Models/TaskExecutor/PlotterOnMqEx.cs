@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public partial class PlotterOnMq : TaskEstimatedOnMq
     {
 
-        public override double GetCost(string codOptionTypeOfTask, double starts, double mq)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, double mq)
         {
 
             double costMq = 0;
@@ -50,7 +50,9 @@ namespace PapiroMVC.Models
                 Convert.ToDouble(StartingCost2, Thread.CurrentThread.CurrentUICulture) * (starts - 1) +
                 costMq * mq;
 
-            return total;
+            CostAndTime ct = new CostAndTime { Cost = total ,Time = new TimeSpan(0,0,0) };
+
+            return ct;
 
         }
 

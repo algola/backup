@@ -5,13 +5,14 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
     
     [KnownType(typeof(ProductPartSingleSheet))]
     [MetadataType(typeof(ProductPartSingleSheet_MetaData))]
-    public partial class ProductPartSingleSheet : ProductPart, ICloneable, IDeleteRelated
+    public partial class ProductPartSingleSheet : ProductPart, ICloneable, IDeleteRelated, IPrintDocX
     {
 
         public override string ToString()
@@ -38,6 +39,12 @@ namespace PapiroMVC.Models
         {
             TypeOfProductPart = ProductPart.ProductPartType.ProductPartSingleSheet;
         }
+
+        public override void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("RawCut", this.RawCut??false));
+        }
+
 
         #region Proprietà aggiuntive
         #endregion

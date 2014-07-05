@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
@@ -73,6 +74,11 @@ namespace PapiroMVC.Models
             var s = (string)t.GetProperty("CodMenuProduct" + this.CodMenuProduct).GetValue(null, null);
 
             return s + " " + base.ToString();
+        }
+
+        public override void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("Product.Format", this.Format));
         }
 
     }

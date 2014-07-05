@@ -6,13 +6,14 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PapiroMVC.Models.Resources.Products;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
 
     [KnownType(typeof(ProductPart))]
     [MetadataType(typeof(ProductPart_MetaData))]
-    public partial class ProductPart : ICloneable
+    public partial class ProductPart : ICloneable, IPrintDocX
     {
 
         public object Clone()
@@ -230,6 +231,25 @@ namespace PapiroMVC.Models
                 }
             }
         }
+
+
+
+        public virtual void MergeField(DocX doc) 
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.ProductPartName", this.ProductPartName));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.Format", this.Format));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.ServicesNumber", this.ServicesNumber??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.FormatOpened", this.FormatOpened));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.SubjectNumber", this.SubjectNumber??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut", this.DCut??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.IsDCut", this.IsDCut??false));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut1", this.DCut1??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut2", this.DCut2??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.HaveDCutLimit", this.HaveDCutLimit ?? false));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.MaxDCut", this.MaxDCut ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.MinDCut", this.MinDCut ?? 0));
+        }
+
 
     }
 }

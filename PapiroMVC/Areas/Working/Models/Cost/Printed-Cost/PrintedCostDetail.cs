@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Novacode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace PapiroMVC.Models
 {
-    public partial class PrintedArticleCostDetail : CostDetail
+    public partial class PrintedArticleCostDetail : CostDetail, IPrintDocX
     {
 
         public override void Copy(CostDetail to)
@@ -69,6 +70,13 @@ namespace PapiroMVC.Models
             GetCostFromList(_articles);
 
         }
+
+        public override void MergeField(DocX doc)
+        {
+            base.MergeField(doc);
+
+        }
+
 
 
     }

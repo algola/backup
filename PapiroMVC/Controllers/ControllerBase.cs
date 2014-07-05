@@ -1,4 +1,7 @@
 ﻿using Braintree;
+using DocumentFormat.OpenXml.CustomProperties;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.VariantTypes;
 using PapiroMVC.Model;
 using PapiroMVC.Models;
 using System;
@@ -8,6 +11,7 @@ using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using System.Linq;
 
 namespace PapiroMVC.Controllers
 {
@@ -16,6 +20,19 @@ namespace PapiroMVC.Controllers
     /// </summary>
     public class ControllerAlgolaBase : AsyncController
     {
+
+
+
+        public enum PropertyTypes : int
+        {
+            YesNo,
+            Text,
+            DateTime,
+            NumberInteger,
+            NumberDouble
+        }
+
+
         protected string RenderRazorViewToString(string viewName, object model)
         {
             ViewData.Model = model;
@@ -120,15 +137,15 @@ namespace PapiroMVC.Controllers
 
             var tables = new List<IDDL>();
 
-            //tables.Add(new DataBaseDDL(dbName));
-            //tables.Add(new CustomerSupplierDLL(dbName));
-            //tables.Add(new TaskExecutorsDDL(dbName));
+            tables.Add(new DataBaseDDL(dbName));
+            tables.Add(new CustomerSupplierDLL(dbName));
+            tables.Add(new TaskExecutorsDDL(dbName));
             tables.Add(new ArticlesDDL(dbName));
-            //tables.Add(new ProductsDDL(dbName));
-            //tables.Add(new DocumentsDDL(dbName));
-            //tables.Add(new MenuProductDDL(dbName));
+            tables.Add(new ProductsDDL(dbName));
+            tables.Add(new DocumentsDDL(dbName));
+            tables.Add(new MenuProductDDL(dbName));
 
-            //tables.Add(new CostDetailDDL(dbName));
+            tables.Add(new CostDetailDDL(dbName));
 
             foreach (var item in tables)
             {

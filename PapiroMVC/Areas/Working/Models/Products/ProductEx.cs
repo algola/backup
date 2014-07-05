@@ -5,6 +5,7 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 
 namespace PapiroMVC.Models
@@ -13,7 +14,7 @@ namespace PapiroMVC.Models
     [KnownType(typeof(Product))]
     [MetadataType(typeof(Product_MetaData))]
 
-    public abstract partial class Product
+    public abstract partial class Product : IPrintDocX
     {
         #region Proprietà aggiuntive
 
@@ -351,5 +352,14 @@ namespace PapiroMVC.Models
                 item.TimeStampTable = DateTime.Now;
             }
         }
+
+        public virtual void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("Product.CodProduct", this.CodProduct));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductName", this.ProductName.Replace("@", Environment.NewLine)));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductRefName", this.ProductRefName));
+            //doc.AddCustomProperty(new Novacode.CustomProperty("Product.Format", "ciao"));
+        } 
+        
     }
 }

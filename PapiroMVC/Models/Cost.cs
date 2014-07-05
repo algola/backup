@@ -77,6 +77,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> TypeOfCalcolous { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> IndexOf { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }

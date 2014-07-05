@@ -78,6 +78,21 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<double> Implants { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> CalculatedMq { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> CalculatedMl { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> CalculatedRun { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> CalculatedKg { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.TimeSpan> CalculatedTime { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

@@ -5,10 +5,11 @@ using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductRigid))]
     [MetadataType(typeof(ProductRigid_MetaData))]
     public partial class ProductRigid : Product, IDataErrorInfo, ICloneable, IDeleteRelated
@@ -164,5 +165,11 @@ namespace PapiroMVC.Models
             return s + " " + base.ToString();
         }
 
+        public override void MergeField(DocX doc)
+        {
+            doc.AddCustomProperty(new Novacode.CustomProperty("Product.Format", this.Format));
+        }
+
     }
+
 }

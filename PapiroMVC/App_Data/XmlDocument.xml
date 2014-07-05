@@ -1338,6 +1338,9 @@
             </summary>
             <param name="deep"></param>
         </member>
+        <member name="P:PapiroMVC.Models.Order.ReportOrderNames">
+            
+        </member>
         <member name="P:PapiroMVC.Models.Product.SystemTaskList">
             <summary>
             list of all TypeOfTask in the system
@@ -3873,7 +3876,7 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.EstimateNumberToolTip">
             <summary>
-              Looks up a localized string similar to Numero progressivo del preventivo.
+              Looks up a localized string similar to Numero progressivo dei preventivi.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.Notes">
@@ -3894,6 +3897,26 @@
         <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.NumberToolTip">
             <summary>
               Looks up a localized string similar to Numero.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.OrderNumber">
+            <summary>
+              Looks up a localized string similar to Commessa N.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.OrderNumberSerie">
+            <summary>
+              Looks up a localized string similar to Serie.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.OrderNumberSerieToolTip">
+            <summary>
+              Looks up a localized string similar to Serie di riferimento del progressivo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.OrderNumberToolTip">
+            <summary>
+              Looks up a localized string similar to Numero progressivo delle commesse.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Document.ResDocuments.RequiredField">
@@ -7845,6 +7868,12 @@
             return the document states
             </summary>
             <param name="codDocument"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.DocumentRepository.GetAllReportOrderName">
+            <summary>
+            LIst of report installed for orders
+            </summary>
             <returns></returns>
         </member>
         <member name="T:Services.EmptyStringsAreLast">

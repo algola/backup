@@ -46,12 +46,6 @@ namespace PapiroMVC.Models
         public Nullable<int> Selector { get; set; }
     	
     	[DataMember] 		
-        public Nullable<int> SelectorCylinders { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<int> Number { get; set; }
-    	
-    	[DataMember] 		
         public string Tags { get; set; }
     
     	[DataMember]

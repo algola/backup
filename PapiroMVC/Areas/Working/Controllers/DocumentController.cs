@@ -209,7 +209,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //TEMPORANEOOOOOOOOO
                         //another important link to fix is the printer link
                         //this for PrePressCost
-                        if (cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                        if (cost.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail)
                         {
                             //get ST codCost
                             cost.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cost.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
@@ -404,7 +404,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             var c = new Order();
             c.CodDocument = documentRepository.GetNewCode(c);
-            c.EstimateNumberSerie = DateTime.Now.Year.ToString();
+            c.OrderNumberSerie = DateTime.Now.Year.ToString();
             c.OrderNumber = documentRepository.GetNewOrderNumber(c);
 
             var docProd = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);

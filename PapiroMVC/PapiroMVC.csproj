@@ -53,9 +53,7 @@
     <Reference Include="Braintree-2.28.1">
       <HintPath>..\packages\Braintree.2.28.1\lib\Braintree-2.28.1.dll</HintPath>
     </Reference>
-    <Reference Include="DocX">
-      <HintPath>..\packages\DocX.1.0.0.13\lib\net40\DocX.dll</HintPath>
-    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -197,6 +195,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Resources\TypeOfTaskAndCodTypeOfTask\" />
@@ -456,6 +455,7 @@
     <Compile Include="Areas\Working\Models\Cost\CostDetail_Ex2.cs" />
     <Compile Include="Areas\Working\Models\Cost\ICostDetailCreator.cs" />
     <Compile Include="Areas\Working\Models\Cost\Implant-Cost - Copy\ImplantCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\PrePostPress-Cost\ControlTableCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\PrePostPress-Cost\PrePostPressCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRigidArticleCostDetail.cs" />
@@ -489,6 +489,7 @@
     <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentEx.cs" />
+    <Compile Include="Areas\Working\Models\Documents\OrderEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
@@ -574,6 +575,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\BindingTsk.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ControlTableCostDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ControlTableRoll.cs">
@@ -1534,6 +1538,8 @@
     <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
     <Compile Include="Validation\Binding\ProductApiModelBinder.cs" />
     <Compile Include="Validation\Binding\ProductModelBinder.cs" />
+    <Compile Include="Validation\IPrintDocX.cs" />
+    <Compile Include="Validation\StringExtension.cs" />
     <Compile Include="Validation\ToolTipCustomModelMetadataProvider.cs" />
     <Compile Include="Validation\CreditCardAttribute.cs" />
     <Compile Include="Validation\Binding\DecimalModelBinder.cs" />
@@ -2486,6 +2492,14 @@
     </Content>
     <None Include="Properties\PublishProfiles\beta.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
+    <Content Include="Report\OrderHead.docx" />
+    <Content Include="Report\Cost.docx" />
+    <Content Include="Report\PrintedRollArticleCostDetail.docx" />
+    <Content Include="Report\PrintingLabelRollCostDetail.docx" />
+    <Content Include="Report\OrderHead - Copy.docx" />
+    <Content Include="Report\Cost - Copy.docx" />
+    <Content Include="Report\ControlTableCostDetail.docx" />
+    <Content Include="Report\LabelRollHead.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -3106,6 +3120,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Docx\DocX\DocX.csproj">
+      <Project>{e863d072-aa8b-4108-b5f1-785241b37f67}</Project>
+      <Name>DocX</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mvc.HtmlHelper.jqGrid\Mvc.HtmlHelper.jqGrid.csproj">
       <Project>{6e40cc48-8edf-4608-9bd3-d43a9b649409}</Project>
       <Name>Mvc.HtmlHelper.jqGrid</Name>
