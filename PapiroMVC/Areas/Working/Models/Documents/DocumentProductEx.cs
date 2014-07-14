@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
 
     [Serializable]
     [MetadataType(typeof(DocumentProduct_MetaData))]
-    public partial class DocumentProduct : ICloneable , IPrintDocX
+    public partial class DocumentProduct : ICloneable, IPrintDocX
     {
         public string MqDescription { get; set; }
         public string FgDescription { get; set; }
@@ -49,7 +49,7 @@ namespace PapiroMVC.Models
             var x = DocumentProductNameGenerator;
             x = x.Replace("%QUANTITY", Quantity.ToString());
 
-            if (Math.Truncate(Convert.ToDouble(UnitPrice) * 100)==0)
+            if (Math.Truncate(Convert.ToDouble(UnitPrice) * 100) == 0)
             {
                 x = x.Replace("%UNITPRICE", UpDescription1000 + " " + (Convert.ToDouble(UnitPrice) * 1000).ToString());
             }
@@ -61,7 +61,7 @@ namespace PapiroMVC.Models
 
             foreach (var c in Costs)
             {
-                if ((c.TypeOfCalcolous??0) == 1 && c.CostDetails != null && c.CostDetails.Count > 0)
+                if ((c.TypeOfCalcolous ?? 0) == 1 && c.CostDetails != null && c.CostDetails.Count > 0)
                 {
                     var um = String.Empty;
                     switch (c.CostDetails.FirstOrDefault().TypeOfQuantity)
@@ -84,7 +84,7 @@ namespace PapiroMVC.Models
 
                     }
 
-                    var unitCost = (Convert.ToDouble(c.TotalCost) / (c.Quantity??1)).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
+                    var unitCost = (Convert.ToDouble(c.TotalCost) / (c.Quantity ?? 1)).ToString("#,0.0000", Thread.CurrentThread.CurrentUICulture);
 
 
                     x = x.Replace("%SUPPCOST", c.Description + " " + um + ": " + c.Quantity + " " + UpDescription + ": " + c.UnitCost + " " + AmountDescription + ": " + c.TotalCost);
@@ -161,13 +161,14 @@ namespace PapiroMVC.Models
             {
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
-                    total += !(item.ForceZero ?? false) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
-              //      total = Math.Round(total / 100) * 100;
+                    total += (!(item.ForceZero ?? false)) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
+                    
+                    //      total = Math.Round(total / 100) * 100;
                 }
             }
             UnitPrice = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
-            TotalAmount = (Convert.ToDouble(UnitPrice,Thread.CurrentThread.CurrentCulture) * (Quantity??0)).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
-        
+            TotalAmount = (Convert.ToDouble(UnitPrice, Thread.CurrentThread.CurrentCulture) * (Quantity ?? 0)).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
+
         }
 
         #region Proprietà aggiuntive
@@ -321,7 +322,7 @@ namespace PapiroMVC.Models
             var tsks = Product.ProductTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO"));
             tsks = tsks.OrderBy(x => x.IndexOf);
 
-            foreach (var productTask in tsks )
+            foreach (var productTask in tsks)
             {
                 cost = new Cost();
                 cost.CodItemGraph = productTask.CodItemGraph;
@@ -366,7 +367,8 @@ namespace PapiroMVC.Models
                 #endregion
 
                 #region ProductPartTask
-                foreach (var productPartTask in productPart.ProductPartTasks.OrderBy(z=>z.IndexOf))
+
+                foreach (var productPartTask in productPart.ProductPartTasks.OrderBy(z => z.IndexOf))
                 {
                     cost = new Cost();
                     cost.CodItemGraph = productPartTask.CodItemGraph;
@@ -409,9 +411,15 @@ namespace PapiroMVC.Models
                     String str = productPartTask.ToString();
                     str = str != "" ? str.Substring(0, str.IndexOf(" ")) : "";
 
-                    cost.Description = "impianti " + str;
+                    cost.Description = productPartTask.ImplantToString(); // "impianti " + str;
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
-                    cost.Description = char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
+                    cost.Description = cost.Description==""?"": char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
+
+
+                    if (productPartTask.CodOptionTypeOfTask.Contains("ACALDO"))
+                    {
+                        Console.WriteLine();                    
+                    }
 
                     if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
                     {
@@ -419,8 +427,9 @@ namespace PapiroMVC.Models
                         cost.ForceZero = true;
                     }
 
-                    cost.Hidden = productPartTask.ImplantHidden;
-                    cost.ForceZero = productPartTask.ImplantHidden;
+                    //if implant Hidden is not specified then CodOptionTypeOfTask decides
+                    cost.Hidden = productPartTask.ImplantHidden == null ? cost.Hidden : productPartTask.ImplantHidden;
+                    cost.ForceZero = productPartTask.ImplantHidden == null ? cost.Hidden : productPartTask.ImplantHidden;
 
                     cost.IndexOf = productPartTask.IndexOf - 1;
                     this.Costs.Add(cost);
@@ -438,10 +447,10 @@ namespace PapiroMVC.Models
         {
 
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductName", this.ProductName.Replace("@", Environment.NewLine)));
-            doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", (this.Quantity??0).ToString()));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", (this.Quantity ?? 0).ToString()));
             doc.AddCustomProperty(new Novacode.CustomProperty("UnitPrice", this.UnitPrice));
             doc.AddCustomProperty(new Novacode.CustomProperty("TotalAmount", this.TotalAmount));
-  
+
         }
     }
 }

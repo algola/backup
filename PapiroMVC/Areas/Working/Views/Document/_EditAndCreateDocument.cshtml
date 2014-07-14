@@ -41,7 +41,7 @@
                     @Html.AlgolaEditorFor(model => model.Customer, new { @readonly = "true" })
                     @Html.HiddenFor(model => model.CodDocument)
                     @Html.AlgolaEditorFor(model => model.DateDocument, new { @Value = ((DateTime)Model.DateDocument).ToString("d") })
-                   
+
                     @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
                     @Html.HiddenFor(model => model.Notes)
                     @Html.AlgolaEditorFor(model => model.EstimateNumberSerie)
@@ -85,8 +85,14 @@
 
                         </div>
                     </div>
+
                 }
             </div>
+
+            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                <i class="icon-save bigger-160"></i>
+                @HttpContext.GetLocalResourceObject(strings, "Save")
+            </button>
 
 
 
@@ -244,11 +250,6 @@
     $("#staticDialog").on('click', function (e) {
         e.preventDefault();
 
-        window.onbeforeunload = function () {
-            return "@pageMessage";
-        };
-
-
         var dialog = $("#dialog-message").dialog({
             width: 'auto',
             modal: true,
@@ -297,35 +298,9 @@
     }
 
 
-    $('input[name=Customer]')
-           .focusout(function () {
-               save();
-           })
-            .change(function () {
-                window.onbeforeunload = function () {
-                    return "@pageMessage";
-                };
-            });
-
-    $('input[name=DateDocument]')
-       .focusout(function () {
-           save();
-       })
-       .change(function () {
-       //    alert("cha");
-           window.onbeforeunload = function () {
-               return "@pageMessage";
-           };
-       });
-
-    $('input[name=DocumentName]')
-           .focusout(function () {
-               save();
-           })
-        .change(function () {
-            window.onbeforeunload = function () {
-                return "@pageMessage";
-            };
+    $('input')
+        .focusout(function () {
+            save();
         });
 
 

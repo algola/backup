@@ -95,7 +95,8 @@ namespace PapiroMVC.Models
                (Convert.ToDouble(this.TotalCost, Thread.CurrentThread.CurrentUICulture) *
                ((this.Markup ?? 0) / 100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
-                this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
+                if (!(this.Hidden??false))
+                    this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
             }
 
         }

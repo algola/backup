@@ -152,6 +152,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                     product.ProductRefName = pv.ProductRefName;
                     product.CodProduct = productRepository.GetNewCode(product);
 
+
+                    product.CheckConsistency();
                     //save the product
                     productRepository.Add(product);
                     productRepository.Save();

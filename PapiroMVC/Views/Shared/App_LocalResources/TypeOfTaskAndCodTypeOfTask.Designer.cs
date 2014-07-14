@@ -502,6 +502,60 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa a caldo.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 colore.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_1 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_2 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_3 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_4 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nessuna stampa a caldo.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa digitale.
         /// </summary>
         public static string CodSTAMPADIGITALE {

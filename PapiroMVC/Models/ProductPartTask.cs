@@ -48,6 +48,12 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodItemGraph { get; set; }
+    	
+    	[DataMember] 		
+        public string PrecIndexOf { get; set; }
+    	
+    	[DataMember] 		
+        public string IfSelectedResetOtherCodItemGraph { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

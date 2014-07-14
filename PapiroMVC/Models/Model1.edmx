@@ -381,6 +381,8 @@
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
           <Property Name="ImplantHidden" Type="bit" />
           <Property Name="CodItemGraph" Type="char" MaxLength="20" />
+          <Property Name="PrecIndexOf" Type="char" MaxLength="200" />
+          <Property Name="IfSelectedResetOtherCodItemGraph" Type="char" MaxLength="200" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -408,6 +410,7 @@
           <Property Name="SelectorProductTask" Type="int" />
           <Property Name="ImplantHidden" Type="bit" />
           <Property Name="CodItemGraph" Type="char" MaxLength="20" />
+          <Property Name="PrecIndexOf" Type="char" MaxLength="200" />
         </EntityType>
         <EntityType Name="states">
           <Key>
@@ -888,6 +891,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_articlecost_CodArticle">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articlecost" Type="Self.articlecost" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="CodArticle" />
+            </Principal>
+            <Dependent Role="articlecost">
+              <PropertyRef Name="CodArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_CodSupplierMaker">
+          <End Role="customersuppliers" Type="Self.customersuppliers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articles" Type="Self.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="CodSupplierMaker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_costdetails_CodComputedBy">
           <End Role="costdetails" Type="Self.costdetails" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1014,6 +1045,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_customersupplierbases_CodCustomerSupplier">
+          <End Role="customersuppliers" Type="Self.customersuppliers" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="customersupplierbases" Type="Self.customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customersuppliers">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodCustomerSupplier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customersupplierbases_CodTypeOfBase">
+          <End Role="typeofbase" Type="Self.typeofbase" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="customersupplierbases" Type="Self.customersupplierbases" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeofbase">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Principal>
+            <Dependent Role="customersupplierbases">
+              <PropertyRef Name="CodTypeOfBase" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_documentproducts_CodDocument">
           <End Role="documents" Type="Self.documents" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1098,6 +1157,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_optiontypeoftask_CodTypeOfTask">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeoftask">
+              <PropertyRef Name="CodTypeOfTask" />
+            </Principal>
+            <Dependent Role="optiontypeoftask">
+              <PropertyRef Name="CodTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productgraphs_CodProduct">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productgraphs" Type="Self.productgraphs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="productgraphs">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_productpartprinting_CodProductPart">
           <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1151,6 +1238,216 @@
             </Principal>
             <Dependent Role="productpartprintinggain">
               <PropertyRef Name="CodProductPartPrintingGainBuying" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productparts_CodProduct">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productparts" Type="Self.productparts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="productparts">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartsprintablearticle_CodProductPart">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartsprintablearticle" Type="Self.productpartsprintablearticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparts">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="productpartsprintablearticle">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartstoproducttask_CodProductPart">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartstoproducttask" Type="Self.productpartstoproducttask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparts">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="productpartstoproducttask">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productpartstoproducttask_CodProductTask">
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productpartstoproducttask" Type="Self.productpartstoproducttask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producttasks">
+              <PropertyRef Name="CodProductTask" />
+            </Principal>
+            <Dependent Role="productpartstoproducttask">
+              <PropertyRef Name="CodProductTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productparttasks_CodOptionTypeOfTask">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="optiontypeoftask">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Principal>
+            <Dependent Role="productparttasks">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productparttasks_CodProductPart">
+          <End Role="productparts" Type="Self.productparts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparts">
+              <PropertyRef Name="CodProductPart" />
+            </Principal>
+            <Dependent Role="productparttasks">
+              <PropertyRef Name="CodProductPart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producttasks_CodOptionTypeOfTask">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="optiontypeoftask">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Principal>
+            <Dependent Role="producttasks">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_producttasks_CodProduct">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="producttasks" Type="Self.producttasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="producttasks">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_steps_CodTaskEstimatedOn">
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="steps" Type="Self.steps" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutorestimatedon">
+              <PropertyRef Name="CodTaskEstimatedOn" />
+            </Principal>
+            <Dependent Role="steps">
+              <PropertyRef Name="CodTaskEstimatedOn" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutorcylinders_CodTaskExecutor">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutorcylinders" Type="Self.taskexecutorcylinders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="taskexecutorcylinders">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutorestimatedon_CodOptionTypeOfTask">
+          <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="optiontypeoftask">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Principal>
+            <Dependent Role="taskexecutorestimatedon">
+              <PropertyRef Name="CodOptionTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutorestimatedon_CodTaskExecutor">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutorestimatedon" Type="Self.taskexecutorestimatedon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="taskexecutorestimatedon">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutors_CodTypeOfTask">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeoftask">
+              <PropertyRef Name="CodTypeOfTask" />
+            </Principal>
+            <Dependent Role="taskexecutors">
+              <PropertyRef Name="CodTypeOfTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutortypeoftask_CodTaskExecutor">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutortypeoftask" Type="Self.taskexecutortypeoftask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="taskexecutortypeoftask">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_taskexecutortypeoftask_CodTypeOfTask">
+          <End Role="typeoftask" Type="Self.typeoftask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="taskexecutortypeoftask" Type="Self.taskexecutortypeoftask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="typeoftask">
+              <PropertyRef Name="CodTypeOfTask" />
+            </Principal>
+            <Dependent Role="taskexecutortypeoftask">
+              <PropertyRef Name="CodTypeOfTask" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1564,6 +1861,14 @@
             <End Role="documents" EntitySet="documents" />
             <End Role="documentstate" EntitySet="documentstate" />
           </AssociationSet>
+          <AssociationSet Name="FK_articlecost_CodArticle" Association="Self.FK_articlecost_CodArticle">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="articlecost" EntitySet="articlecost" />
+          </AssociationSet>
+          <AssociationSet Name="FK_articles_CodSupplierMaker" Association="Self.FK_articles_CodSupplierMaker">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
           <AssociationSet Name="FK_costdetails_CodComputedBy" Association="Self.FK_costdetails_CodComputedBy">
             <End Role="costdetails" EntitySet="costdetails" />
             <End Role="costdetails1" EntitySet="costdetails" />
@@ -1600,6 +1905,14 @@
             <End Role="producttasks" EntitySet="producttasks" />
             <End Role="costs" EntitySet="costs" />
           </AssociationSet>
+          <AssociationSet Name="FK_customersupplierbases_CodCustomerSupplier" Association="Self.FK_customersupplierbases_CodCustomerSupplier">
+            <End Role="customersuppliers" EntitySet="customersuppliers" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customersupplierbases_CodTypeOfBase" Association="Self.FK_customersupplierbases_CodTypeOfBase">
+            <End Role="typeofbase" EntitySet="typeofbase" />
+            <End Role="customersupplierbases" EntitySet="customersupplierbases" />
+          </AssociationSet>
           <AssociationSet Name="FK_documentproducts_CodDocument" Association="Self.FK_documentproducts_CodDocument">
             <End Role="documents" EntitySet="documents" />
             <End Role="documentproducts" EntitySet="documentproducts" />
@@ -1624,6 +1937,14 @@
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
             <End Role="makereadies" EntitySet="makereadies" />
           </AssociationSet>
+          <AssociationSet Name="FK_optiontypeoftask_CodTypeOfTask" Association="Self.FK_optiontypeoftask_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productgraphs_CodProduct" Association="Self.FK_productgraphs_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="productgraphs" EntitySet="productgraphs" />
+          </AssociationSet>
           <AssociationSet Name="FK_productpartprinting_CodProductPart" Association="Self.FK_productpartprinting_CodProductPart">
             <End Role="productparts" EntitySet="productparts" />
             <End Role="productpartprinting" EntitySet="productpartprinting" />
@@ -1639,6 +1960,66 @@
           <AssociationSet Name="FK_productpartprintinggain_CodProductPartPrintingGainBuying" Association="Self.FK_productpartprintinggain_CodProductPartPrintingGainBuying">
             <End Role="costdetails" EntitySet="costdetails" />
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparts_CodProduct" Association="Self.FK_productparts_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="productparts" EntitySet="productparts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartsprintablearticle_CodProductPart" Association="Self.FK_productpartsprintablearticle_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartstoproducttask_CodProductPart" Association="Self.FK_productpartstoproducttask_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productpartstoproducttask_CodProductTask" Association="Self.FK_productpartstoproducttask_CodProductTask">
+            <End Role="producttasks" EntitySet="producttasks" />
+            <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparttasks_CodOptionTypeOfTask" Association="Self.FK_productparttasks_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="productparttasks" EntitySet="productparttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparttasks_CodProductPart" Association="Self.FK_productparttasks_CodProductPart">
+            <End Role="productparts" EntitySet="productparts" />
+            <End Role="productparttasks" EntitySet="productparttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producttasks_CodOptionTypeOfTask" Association="Self.FK_producttasks_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="producttasks" EntitySet="producttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_producttasks_CodProduct" Association="Self.FK_producttasks_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="producttasks" EntitySet="producttasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_steps_CodTaskEstimatedOn" Association="Self.FK_steps_CodTaskEstimatedOn">
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+            <End Role="steps" EntitySet="steps" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutorcylinders_CodTaskExecutor" Association="Self.FK_taskexecutorcylinders_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutorcylinders" EntitySet="taskexecutorcylinders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutorestimatedon_CodOptionTypeOfTask" Association="Self.FK_taskexecutorestimatedon_CodOptionTypeOfTask">
+            <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutorestimatedon_CodTaskExecutor" Association="Self.FK_taskexecutorestimatedon_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutorestimatedon" EntitySet="taskexecutorestimatedon" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutors_CodTypeOfTask" Association="Self.FK_taskexecutors_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutortypeoftask_CodTaskExecutor" Association="Self.FK_taskexecutortypeoftask_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_taskexecutortypeoftask_CodTypeOfTask" Association="Self.FK_taskexecutortypeoftask_CodTypeOfTask">
+            <End Role="typeoftask" EntitySet="typeoftask" />
+            <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
           </AssociationSet>
           <AssociationSet Name="makereadies_ibfk_1" Association="Self.makereadies_ibfk_1">
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
@@ -2440,6 +2821,8 @@
           <NavigationProperty Name="ImplantCosts" Relationship="dbModel.FK_costs_CodProductPartImplantTask" FromRole="ProductPartTask" ToRole="Cost" />
           <Property Name="ImplantHidden" Type="Boolean" />
           <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PrecIndexOf" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IfSelectedResetOtherCodItemGraph" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -2473,6 +2856,7 @@
           <NavigationProperty Name="productpartstoproducttasks" Relationship="dbModel.FK_productpartstoproducttask_CodProductTask" FromRole="ProductTask" ToRole="productpartstoproducttask" />
           <Property Name="ImplantHidden" Type="Boolean" />
           <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PrecIndexOf" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_productparts_CodProduct">
           <End Type="dbModel.Product" Role="product" Multiplicity="0..1">
@@ -4180,6 +4564,8 @@
           <EntitySetMapping Name="ProductPartTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartTask)">
               <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="IfSelectedResetOtherCodItemGraph" ColumnName="IfSelectedResetOtherCodItemGraph" />
+                <ScalarProperty Name="PrecIndexOf" ColumnName="PrecIndexOf" />
                 <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
                 <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
@@ -4245,6 +4631,7 @@
           <EntitySetMapping Name="ProductTasks">
             <EntityTypeMapping TypeName="dbModel.ProductTask">
               <MappingFragment StoreEntitySet="producttasks">
+                <ScalarProperty Name="PrecIndexOf" ColumnName="PrecIndexOf" />
                 <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
                 <ScalarProperty Name="ImplantHidden" ColumnName="ImplantHidden" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />

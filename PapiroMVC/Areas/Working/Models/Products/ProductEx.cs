@@ -251,6 +251,37 @@ namespace PapiroMVC.Models
             set;
         }
 
+
+        public void CheckConsistency()
+        {
+            foreach (var productPart in ProductParts)
+            {
+
+                #region ProductPartTask
+                //prima di tutto scorro le lavorazioni e controllo se devo resettarne alcune
+                foreach (var productPartTask in productPart.ProductPartTasks.OrderBy(z => z.IndexOf))
+                {
+
+                    if (productPartTask.IfSelectedResetOtherCodItemGraph != null && !productPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        var codItemToReset = (productPartTask.IfSelectedResetOtherCodItemGraph ?? "").Split('+');
+
+                        foreach (var it in codItemToReset.Where(x => x != ""))
+                        {
+                            var ptToReset = productPart.ProductPartTasks.SingleOrDefault(x => x.CodItemGraph == it);
+                            ptToReset.CodOptionTypeOfTask = ptToReset.CodOptionTypeOfTask.Substring(0, ptToReset.CodOptionTypeOfTask.IndexOf("_")) + "_NO";
+                            ptToReset.Hidden = true;                           
+                            Console.WriteLine(ptToReset.CodOptionTypeOfTask);
+                        }
+
+                    }
+
+                }
+
+                #endregion
+            }
+
+        }
         public virtual void ProductCodeRigen()
         {
             this.TimeStampTable = DateTime.Now;
@@ -310,8 +341,9 @@ namespace PapiroMVC.Models
                     ProductNameGenerator = x;
 
                     this.ProductName = ProductNameGenerator;
-                }else
-                {   
+                }
+                else
+                {
                     this.ProductName = this.ToString();
                 }
             }
@@ -359,7 +391,7 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductName", this.ProductName.Replace("@", Environment.NewLine)));
             doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductRefName", this.ProductRefName));
             //doc.AddCustomProperty(new Novacode.CustomProperty("Product.Format", "ciao"));
-        } 
-        
+        }
+
     }
 }

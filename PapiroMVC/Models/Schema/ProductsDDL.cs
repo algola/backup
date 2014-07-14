@@ -179,8 +179,11 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparttasks", "Hidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("productparttasks", "ImplantHidden", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("productparttasks", "IndexOf", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("productparttasks", "PrecIndexOf", SchemaDb.String, "200");
+
 
             dbS.AddColumnToTable("productparttasks", "CodItemGraph", SchemaDb.String, "20");
+            dbS.AddColumnToTable("productparttasks", "IfSelectedResetOtherCodItemGraph", SchemaDb.String, "200");
 
             //foreign key
             dbS.AddColumnToTable("productparttasks", "CodProductPart", SchemaDb.String, "50");

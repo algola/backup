@@ -158,7 +158,7 @@
     function printComm(reportName) {
         $("#dialog-printreport").dialog("close");
         ret = '@Url.Action("PrintOrder", new { codDocument = Model.CodDocument, reportName = -1 })';
-        location.href = ret.replace('-1', reportName).replace('amp;','');
+        location.href = ret.replace('-1', reportName).replace('amp;', '');
 
     }
 
@@ -282,11 +282,6 @@
     $("#staticDialog").on('click', function (e) {
         e.preventDefault();
 
-        window.onbeforeunload = function () {
-            return "@pageMessage";
-        };
-
-
         var dialog = $("#dialog-message").dialog({
             width: 'auto',
             modal: true,
@@ -336,37 +331,15 @@
     }
 
 
-    $('input[name=Customer]')
+    $('input:text')
            .focusout(function () {
                save();
-           })
-            .change(function () {
-                window.onbeforeunload = function () {
-                    return "@pageMessage";
-                };
-            });
+           });
 
-    $('input[name=DateDocument]')
-       .focusout(function () {
-           save();
-       })
-       .change(function () {
-           alert("cha");
-           window.onbeforeunload = function () {
-               return "@pageMessage";
-           };
-       });
-
-    $('input[name=DocumentName]')
-           .focusout(function () {
-               save();
-           })
-        .change(function () {
-            window.onbeforeunload = function () {
-                return "@pageMessage";
-            };
+    $("input:checkbox")
+        .focusout(function () {
+            save();
         });
-
 
     $('#NewProductCommand_NewProduct')
         .on("keypress", function (e) {

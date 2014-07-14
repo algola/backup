@@ -420,4 +420,22 @@
   <data name="CodSTAMPAMORBIDO_NO" xml:space="preserve">
     <value />
   </data>
+  <data name="CodSTAMPAACALDOROTOLO" xml:space="preserve">
+    <value>Stampa a caldo</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_1" xml:space="preserve">
+    <value>1 colore</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_2" xml:space="preserve">
+    <value>2 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_3" xml:space="preserve">
+    <value>3 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_4" xml:space="preserve">
+    <value>4 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_NO" xml:space="preserve">
+    <value>Nessuna stampa a caldo</value>
+  </data>
 </root>

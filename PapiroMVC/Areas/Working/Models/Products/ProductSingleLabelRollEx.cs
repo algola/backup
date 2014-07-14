@@ -70,12 +70,22 @@ namespace PapiroMVC.Models
 
             partTask.CodItemGraph = "FS";
 
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAACALDOROTOLO_NO");
+            partTask.Hidden = false;
+            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
+            partTask.IndexOf = 30;
+
+            partTask.CodItemGraph = "SC";
+            //if this is selected we have to reset tv task
+            partTask.IfSelectedResetOtherCodItemGraph = "TV";
+
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAVOLOCONTROLLO_SI");
             partTask.Hidden = true;
             partTask.ImplantHidden = true;
-            partTask.IndexOf = 30;
+            partTask.IndexOf = 40;
 
             partTask.CodItemGraph = "TV";
+
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
@@ -84,14 +94,10 @@ namespace PapiroMVC.Models
             ProductGraphLinks.Clear();
 
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "TV" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "SC" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "TV" });
 
         }
-
-
-
-
-
 
         public override List<ProductPartTask> GetInitalizedPartTask()
         {
@@ -99,7 +105,7 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA", "TAVOLOCONTROLLO" };
+            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA", "STAMPAACALDOROTOLO", "TAVOLOCONTROLLO" };
 
             foreach (var item in codTypeOfTasks)
             {
@@ -126,7 +132,7 @@ namespace PapiroMVC.Models
             return s + " " + base.ToString();
         }
 
-        public override void MergeField(DocX doc) 
+        public override void MergeField(DocX doc)
         {
             base.MergeField(doc);
         }

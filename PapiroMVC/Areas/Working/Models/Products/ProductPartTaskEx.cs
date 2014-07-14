@@ -48,6 +48,24 @@ namespace PapiroMVC.Models
             return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
         }
 
+        public virtual string ImplantToString()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
+            string ret = String.Empty;
+
+            try
+            {
+                var extract = this.CodOptionTypeOfTask.Substring(0, this.CodOptionTypeOfTask.IndexOf('_')) + "_Implant";
+                ret = (string)t.GetProperty("Cod" + extract).GetValue(null, null);
+            }
+            catch
+            { 
+            
+            }
+
+            return ret;
+        }
+
 
         public virtual void ToName()
         {

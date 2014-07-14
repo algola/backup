@@ -124,6 +124,15 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fustella.
+        /// </summary>
+        public static string CodFUSTELLATURA_Implant {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURA_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string CodFUSTELLATURA_NO {
@@ -466,6 +475,60 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to stampa a caldo 1 colore.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_1 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a caldo 2 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_2 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a caldo 3 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_3 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a caldo 4 colori.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_4 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cliche stampa a caldo.
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_Implant {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CodSTAMPAACALDOROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAACALDOROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPADIGITALE_FR_BN {
@@ -565,7 +628,16 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Impianti stampa.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_Implant {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nessuna stampa.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_NO {
             get {

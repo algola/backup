@@ -268,7 +268,7 @@
     <value>stampa a 5 colori</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_NO" xml:space="preserve">
-    <value />
+    <value>Nessuna stampa</value>
   </data>
   <data name="CodSTAMPAOFFeDIGITALE_FRONTE_BN" xml:space="preserve">
     <value>stampa fronte in bianco e nero</value>
@@ -422,5 +422,29 @@
   </data>
   <data name="CodSTAMPAMORBIDO_NO" xml:space="preserve">
     <value />
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_1" xml:space="preserve">
+    <value>stampa a caldo 1 colore</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_2" xml:space="preserve">
+    <value>stampa a caldo 2 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_3" xml:space="preserve">
+    <value>stampa a caldo 3 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_4" xml:space="preserve">
+    <value>stampa a caldo 4 colori</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_NO" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CodFUSTELLATURA_Implant" xml:space="preserve">
+    <value>Fustella</value>
+  </data>
+  <data name="CodSTAMPAACALDOROTOLO_Implant" xml:space="preserve">
+    <value>Cliche stampa a caldo</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_Implant" xml:space="preserve">
+    <value>Impianti stampa</value>
   </data>
 </root>

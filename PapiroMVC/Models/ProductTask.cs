@@ -54,6 +54,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodItemGraph { get; set; }
+    	
+    	[DataMember] 		
+        public string PrecIndexOf { get; set; }
     
     	[DataMember]
         public virtual Product Product { get; set; }

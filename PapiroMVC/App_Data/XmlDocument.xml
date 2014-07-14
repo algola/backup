@@ -4993,6 +4993,11 @@
               Looks up a localized string similar to 1 Foro.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_Implant">
+            <summary>
+              Looks up a localized string similar to Fustella.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_NO">
             <summary>
               Looks up a localized string similar to .
@@ -5183,6 +5188,36 @@
               Looks up a localized string similar to .
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_1">
+            <summary>
+              Looks up a localized string similar to stampa a caldo 1 colore.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_2">
+            <summary>
+              Looks up a localized string similar to stampa a caldo 2 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_3">
+            <summary>
+              Looks up a localized string similar to stampa a caldo 3 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_4">
+            <summary>
+              Looks up a localized string similar to stampa a caldo 4 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_Implant">
+            <summary>
+              Looks up a localized string similar to Cliche stampa a caldo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPADIGITALE_FR_BN">
             <summary>
               Looks up a localized string similar to stampa fronte retro in bianco e nero.
@@ -5238,9 +5273,14 @@
               Looks up a localized string similar to stampa a 6 colori.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_Implant">
+            <summary>
+              Looks up a localized string similar to Impianti stampa.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAETICHROTOLO_NO">
             <summary>
-              Looks up a localized string similar to .
+              Looks up a localized string similar to Nessuna stampa.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAMORBIDO_ALTA">
@@ -9199,6 +9239,36 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPA_NO">
             <summary>
               Looks up a localized string similar to No stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO">
+            <summary>
+              Looks up a localized string similar to Stampa a caldo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_1">
+            <summary>
+              Looks up a localized string similar to 1 colore.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_2">
+            <summary>
+              Looks up a localized string similar to 2 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_3">
+            <summary>
+              Looks up a localized string similar to 3 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_4">
+            <summary>
+              Looks up a localized string similar to 4 colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to Nessuna stampa a caldo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPADIGITALE">

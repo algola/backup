@@ -1504,6 +1504,7 @@
     <Compile Include="RepositoryPattern\TaskExecutorRepository.cs" />
     <Compile Include="RepositoryPattern\TASK\ACCOPPIATURA.cs" />
     <Compile Include="RepositoryPattern\TASK\FORO.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPAACALDOROTOLO.cs" />
     <Compile Include="RepositoryPattern\TASK\FUSTELLATURA.cs" />
     <Compile Include="RepositoryPattern\TASK\INTERCALATURA.cs" />
     <Compile Include="RepositoryPattern\TASK\PIEGA.cs" />
