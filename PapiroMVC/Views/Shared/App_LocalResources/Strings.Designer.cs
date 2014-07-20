@@ -718,6 +718,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In Piano.
+        /// </summary>
+        public static string STAMPAOFFeDIGITALEMenu {
+            get {
+                return ResourceManager.GetString("STAMPAOFFeDIGITALEMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rigido Grande Formato.
         /// </summary>
         public static string STAMPARIGIDOMenu {

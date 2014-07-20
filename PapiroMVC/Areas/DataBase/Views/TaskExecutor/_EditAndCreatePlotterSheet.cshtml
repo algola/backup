@@ -18,18 +18,19 @@
 
 <div id="status">
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
 
 
-        <div class="control-group">
+        @*<div class="control-group">
             <div class="controls col-sm-9">
                 @Html.DropDownListFor(y => y.CodTypeOfTask,
                 new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
             </div>
-        </div>
+        </div>*@
 
+                @Html.HiddenFor(x => x.CodTypeOfTask)
 
         
         @Html.HiddenFor(model => model.TimeStampTable)
@@ -75,7 +76,7 @@
 
         <p>
 
-            <button  class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPlotter", "TaskExecutor", new { Area = "Database" })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask=Model.CodTypeOfTask })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>

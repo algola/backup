@@ -331,7 +331,7 @@
             <param name="codTypeOfTask"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutorCost(System.String)">
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutorCost(System.String,System.String)">
             <summary>
             
             </summary>
@@ -8948,6 +8948,11 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPAMORBIDOMenu">
             <summary>
               Looks up a localized string similar to Morbido Grande Formato.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPAOFFeDIGITALEMenu">
+            <summary>
+              Looks up a localized string similar to In Piano.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.STAMPARIGIDOMenu">

@@ -5,18 +5,7 @@
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
 
-    if (Model == "STAMPARIGIDO")
-    {
-        ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "STAMPARIGIDOGridCaption");
-    }
-    if (Model == "STAMPAMORBIDO")
-    {
-        ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "STAMPAMORBIDOGridCaption");
-    }
-    if (Model == "STAMPAETICHROTOLO")
-    {
-        ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "STAMPAETICHROTOLOGridCaption");
-    }
+        ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, Model+"GridCaption");
 
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
     ViewBag.MetaTitle = Html.T(strings, "MetaTitleDigital");
@@ -60,6 +49,6 @@
 <script>
     $(function () {
         document.getElementById("taskexecutorSlidebar").className = "active open";
-        document.getElementById("digitalSlidebar").className = "active";
+        document.getElementById("@((Model??"a").ToLower())").className = "active";
     });
 </script>

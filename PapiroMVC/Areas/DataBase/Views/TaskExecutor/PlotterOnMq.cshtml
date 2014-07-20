@@ -53,25 +53,26 @@
 
             @*
 
-            @Html.EditorFor(model => model.UseDifferentCostPerUnit)
-            <div id="_listAvarageRunPerRunStep">
-                @Html.Partial("_ListCostPerRunStep", Model)
-            </div>
-            <br />
-            @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
+                @Html.EditorFor(model => model.UseDifferentCostPerUnit)
+                <div id="_listAvarageRunPerRunStep">
+                    @Html.Partial("_ListCostPerRunStep", Model)
+                </div>
+                <br />
+                @Html.EditorFor(model => model.UseDifferentDeficitOnCostForWeightStep)
 
-            <div id="_listDeficitForWeightStep">
-                @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
-            </div>
+                <div id="_listDeficitForWeightStep">
+                    @Html.Partial("_ListDeficitOnCostForWeightStep", Model)
+                </div>
             *@
-        </fieldset> 
+        </fieldset>
 
         <p>
             <br />
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
-                <i class="icon-undo bigger-125"></i>
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
+                <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
+
             <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save bigger-160"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Save")

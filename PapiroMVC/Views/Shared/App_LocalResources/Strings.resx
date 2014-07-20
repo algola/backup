@@ -342,6 +342,9 @@
   <data name="STAMPAETICHETTEROTOLOMenu" xml:space="preserve">
     <value>Etichette in Bobina</value>
   </data>
+  <data name="STAMPAOFFeDIGITALEMenu" xml:space="preserve">
+    <value>In Piano</value>
+  </data>
   <data name="STAMPAMORBIDOMenu" xml:space="preserve">
     <value>Morbido Grande Formato</value>
   </data>

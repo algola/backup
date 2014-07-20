@@ -312,7 +312,7 @@
   <data name="ToWeightCaption" xml:space="preserve">
     <value>a Gr/mq</value>
   </data>
-  <data name="RollTyope" xml:space="preserve">
+  <data name="RollType" xml:space="preserve">
     <value>Rotolo</value>
   </data>
   <data name="SheetType" xml:space="preserve">
@@ -437,5 +437,14 @@
   </data>
   <data name="STAMPARIGIDOGridCaption" xml:space="preserve">
     <value>Stampa grande formato di materiale rigido</value>
+  </data>
+  <data name="DigitalType" xml:space="preserve">
+    <value>Digital</value>
+  </data>
+  <data name="LithoType" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="STAMPAOFFeDIGITALEGridCaption" xml:space="preserve">
+    <value>Stampa a foglio Offset e Digitale</value>
   </data>
 </root>

@@ -64,7 +64,7 @@
             *@
         </fieldset>
         <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database" })');">
                 <i class="icon-undo bigger-125"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>

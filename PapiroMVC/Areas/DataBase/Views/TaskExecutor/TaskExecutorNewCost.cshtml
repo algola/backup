@@ -10,14 +10,19 @@
     ViewBag.Title = Model.TaskExecutorName;
 
     ViewBag.Desc = (string)Html.T(strings, "NoCostSelected");
+    
+    Model.ReturnUrl=ViewBag.ReturnUrl;
+    Model.CodTypeOfTask  = ViewBag.CodTypeOfTask;
 }
 
 @using (Html.BeginForm("TaskExecutorNewCost", "TaskExecutor"))
 {
     @Html.ValidationSummary(true)
 
-
     @Html.HiddenFor(model => model.CodTaskExecutor)
+    @Html.HiddenFor(model => model.ReturnUrl)
+    @Html.HiddenFor(model => model.CodTypeOfTask)
+    
 
     if (((string)ViewBag.TypeCost).Contains("Time"))
     {
@@ -61,7 +66,7 @@
     }
     <br />
     <p>
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
             <i class="icon-arrow-left"></i>
             @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>

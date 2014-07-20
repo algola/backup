@@ -97,6 +97,48 @@ namespace Services
 
         public override IQueryable<TaskExecutor> GetAll()
         {
+
+            var tsks = Context.taskexecutors.Where(x => x.CodTypeOfTask != "STAMPAETICHROTOLO" &&
+                x.CodTypeOfTask != "STAMPAOFFeDIGITALE" &&
+                x.CodTypeOfTask != "STAMPAMORBIDO" &&
+                x.CodTypeOfTask != "STAMPARIGIDO").ToList();
+
+            foreach (var tsk in tsks)
+            {
+                switch (tsk.TypeOfExecutor)
+                {
+                    case TaskExecutor.ExecutorType.LithoSheet:
+                    case TaskExecutor.ExecutorType.DigitalSheet:
+                        tsk.CodTypeOfTask = "STAMPAOFFeDIGITALE";
+                        break;
+                    case TaskExecutor.ExecutorType.Flexo:
+                        tsk.CodTypeOfTask = "STAMPAETICHROTOLO";
+                        break;
+                    case TaskExecutor.ExecutorType.LithoRoll:
+                    case TaskExecutor.ExecutorType.DigitalRoll:
+                        break;
+                    case TaskExecutor.ExecutorType.PlotterSheet:
+                        tsk.CodTypeOfTask = "STAMPARIGIDO";
+                        break;
+                    case TaskExecutor.ExecutorType.PlotterRoll:
+                        tsk.CodTypeOfTask = "STAMPAMORBIDO";
+                        break;
+                    case TaskExecutor.ExecutorType.Binding:
+                    case TaskExecutor.ExecutorType.SemiRoll:
+                    case TaskExecutor.ExecutorType.ControlTableRoll:
+                    case TaskExecutor.ExecutorType.PrePostPress:
+                        Console.WriteLine(tsk.CodTypeOfTask);
+                        break;
+                    default:
+                        break;
+
+                }
+                Edit(tsk);
+                Save();
+            }
+
+
+
             return Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders");
         }
 
@@ -169,12 +211,13 @@ namespace Services
             if (fromBD != null)
             {
                 Context.Entry(fromBD).CurrentValues.SetValues(entity);
+                Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
             }
         }
 
         public TaskExecutorCylinder GetSingleTaskExecutorCylindern(string cod)
         {
-            return this.Context.TaskExecutorCylinders.FirstOrDefault(x=>x.CodTaskExecutorCylinder == cod);
+            return this.Context.TaskExecutorCylinders.FirstOrDefault(x => x.CodTaskExecutorCylinder == cod);
         }
 
         public TaskEstimatedOn GetSingleEstimatedOn(string cod)

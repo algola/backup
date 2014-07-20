@@ -30,31 +30,43 @@
 
 
     @{
-        if (Model == "STAMPARIGIDO")
-        {
-            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterSheet", "TaskExecutor", new { Area = "Database" })');">
-                <i class="icon-plus"></i>
-                @Html.T(strings, "CreatePlotterSheet")
-            </button>
+    if (Model == "STAMPARIGIDO")
+    {
+        <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
+            <i class="icon-plus"></i>
+            @Html.T(strings, "CreatePlotterSheet")
+        </button>
 
-        }
-        if (Model == "STAMPAMORBIDO")
-        {
-            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterRoll", "TaskExecutor", new { Area = "Database" })');">
+    }
+    if (Model == "STAMPAMORBIDO")
+    {
+            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePlotterRoll", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreatePlotterRoll")
             </button>
-        }
-        if (Model == "STAMPAETICHROTOLO")
-        {
-
-            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateFlexo", "TaskExecutor", new { Area = "Database" })');">
-                <i class="icon-plus"></i>
-                @Html.T(strings, "CreateFlexo")
-            </button>
-        }
-
     }
+    if (Model == "STAMPAETICHROTOLO")
+    {
+
+        <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateFlexo", "TaskExecutor", new { Area = "Database" , returnUrl = "IndexTaskExecutors" })');">
+            <i class="icon-plus"></i>
+            @Html.T(strings, "CreateFlexo")
+        </button>
+    }
+    if (Model == "STAMPAOFFeDIGITALE")
+    {
+
+        <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
+            <i class="icon-plus"></i>
+            @Html.T(strings, "CreateDigitalSheet")
+        </button>
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "CreateLithoSheet")
+    </button>
+    }
+
+}
 
 
 

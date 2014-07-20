@@ -13,7 +13,8 @@
 <div id="status"> 
 
 @Scripts.Render("~/bundles/jqueryval")
-@using (Ajax.BeginForm("TaskEstimatedOnRun", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+@using (Ajax.BeginForm("TaskEstimatedOnRun", "TaskExecutor", new {returnUrl = ViewBag.ReturnUrl},
+    new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
 {
     @Html.ValidationSummary(true)
 
@@ -66,12 +67,13 @@
             
         </div>
          <br />   
-
-
+ 
+    @ViewBag.CodTypeOfTask
+    
             <p>
-                <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new {Area="Database"})');">            
+                <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
                     <i class="icon-arrow-left"></i>
-                     @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    @HttpContext.GetLocalResourceObject(strings, "Cancel")
                 </button>                
                 
                 <button class="default btn btn-primary" type="submit">

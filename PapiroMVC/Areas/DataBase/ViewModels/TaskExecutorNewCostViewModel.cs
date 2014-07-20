@@ -16,6 +16,9 @@ namespace PapiroMVC.Models
         public string TaskExecutorName { get; set; }
         public string CodTaskExecutor { get; set; }
 
+        public string CodTypeOfTask {get; set; }
+        public string ReturnUrl { get; set; }
+
         public TaskEstimatedOn.EstimatedOnType TypeTaskExecutorEstimatedOn 
         {
             get

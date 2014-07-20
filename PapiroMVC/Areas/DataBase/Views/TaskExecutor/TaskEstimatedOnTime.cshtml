@@ -10,7 +10,7 @@
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("TaskEstimatedOnTime", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("TaskEstimatedOnTime", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal", returnUrl=ViewBag.ReturnUrl }))
     {
         @Html.ValidationSummary(true)
 
@@ -59,10 +59,10 @@
             *@
         </fieldset>
         <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
-                <i class="icon-undo bigger-125"></i>
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
+                <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
+            </button>     
 
             <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save bigger-160"></i>

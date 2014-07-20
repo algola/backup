@@ -51,10 +51,10 @@
         </fieldset>
 
         <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)TempData["TaskExecutorIndex"], "TaskExecutor", new { Area = "Database" })');">
-                <i class="icon-undo bigger-125"></i>
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
+                <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
+            </button>     
 
             <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save bigger-160"></i>

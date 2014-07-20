@@ -136,9 +136,9 @@ namespace PapiroMVC.Models
             PrePostPress = 6,
             Binding = 7,
             Flexo = 8,
-            SemiRoll = 8,
+            SemiRoll = 9,
 
-            ControlTableRoll = 9
+            ControlTableRoll = 10
 
         }
 

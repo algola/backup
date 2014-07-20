@@ -5,7 +5,6 @@
 <script type="text/javascript">
 
 
-
     function typeOfTaskExecutor(cellvalue, options, rowobject) {
 
         var link = "type";
@@ -56,14 +55,14 @@
         var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                          (object) new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
        
         if (rowobject[0] === 'CostError') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                      (object)new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
         }
 
@@ -71,7 +70,7 @@
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnMq"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                      (object)new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
                 }
 
@@ -79,7 +78,7 @@
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnRun"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                      (object)new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
                 }
 
@@ -87,7 +86,7 @@
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnTime"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                      (object)new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
                 }
 
@@ -95,11 +94,11 @@
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnMq"),
                                           "TaskExecutorCost",
                                           "TaskExecutor",
-                                          (object) new { id = -1 },
+                                      (object)new { id = -1, returnUrl = ViewBag.ReturnUrl },
                                           new {@class=""})';
         }
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class=""})';
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1", returnUrl = ViewBag.ReturnUrl }, new { @class = "" })';
 
     @* var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
                  "Edit", 
