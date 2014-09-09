@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public partial class DigitalOnRun : TaskEstimatedOnRun
     {
 
-        public override double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
         {
 
             double total;
@@ -52,7 +52,9 @@ namespace PapiroMVC.Models
 
             }
 
-            return total;
+            CostAndTime ct = new CostAndTime { Cost = total, Time = new TimeSpan(0,0,0) };
+
+            return ct;
 
         }
 

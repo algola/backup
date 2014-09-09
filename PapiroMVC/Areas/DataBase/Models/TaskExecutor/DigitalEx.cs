@@ -14,6 +14,11 @@ namespace PapiroMVC.Models
     public abstract partial class Digital : PrinterMachine
     {
 
+        public override double GetImplants(string codOptionTypeOfTask)
+        {
+            return 0;
+        }
+
         #region Added Properties
 
         #endregion

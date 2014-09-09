@@ -772,6 +772,15 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Impianti Stampa.
+        /// </summary>
+        public static string CodSTAMPAOFFeDIGITALE_Implant {
+            get {
+                return ResourceManager.GetString("CodSTAMPAOFFeDIGITALE_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string CodSTAMPAOFFeDIGITALE_NO {

@@ -77,6 +77,7 @@ namespace Services
             x.Add("SmallFormat"); 
             x.Add("WideFormat");
             x.Add("Label");
+            x.Add("Cliche");
             return x;
         }
 
@@ -91,10 +92,6 @@ namespace Services
             this.Context.Entry(m).State = System.Data.Entity.EntityState.Modified;
             Context.SaveChanges();
         }
-
-
-       
-
 
         public override void SetDbName(string name)
         {

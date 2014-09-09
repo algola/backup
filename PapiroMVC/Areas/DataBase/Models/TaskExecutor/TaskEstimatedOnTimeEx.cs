@@ -15,14 +15,14 @@ namespace PapiroMVC.Models
     public partial class TaskEstimatedOnTime : TaskEstimatedOn
     {
 
-        public override double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
         {
-            TimeSpan totalTime;
-            totalTime = this.StartingTime1 ?? TimeSpan.Zero;
+            TimeSpan totalTimeR = new TimeSpan(0,0,0);
+            var totalTimeA = this.StartingTime1 ?? TimeSpan.Zero;
 
             for (int i = 0; i < starts - 1; i++)
             {
-                totalTime += (StartingTime2 ?? TimeSpan.Zero);
+                totalTimeA += (StartingTime2 ?? TimeSpan.Zero);
             }
 
             if (UseDifferentRunPerHour ?? false)
@@ -33,7 +33,7 @@ namespace PapiroMVC.Models
             {
                 if (AvarageRunPerHour == null)
                 {
-                    totalTime = TimeSpan.Zero;
+                    totalTimeR = TimeSpan.Zero;
                 }
                 else
                 {
@@ -41,11 +41,19 @@ namespace PapiroMVC.Models
                     var tot = (running / AvarageRunPerHour);
                     var hour = (double)Math.Truncate((decimal)tot);
                     var min = (double)Math.Truncate((decimal)((tot - hour) * 60));
-                    totalTime += TimeSpan.FromHours(hour) + TimeSpan.FromMinutes(min);
+                    totalTimeR += TimeSpan.FromHours(hour) + TimeSpan.FromMinutes(min);
                 }
             }
 
-            return (totalTime.TotalMinutes) / 60 * Convert.ToDouble(CostPerHourRunning, Thread.CurrentThread.CurrentUICulture);
+
+            var costA = CostPerHourStarting;
+            var totalA = (totalTimeA.TotalMinutes) / 60 * Convert.ToDouble(costA, Thread.CurrentThread.CurrentUICulture);
+
+            var totalR = (totalTimeR.TotalMinutes) / 60 * Convert.ToDouble(CostPerHourRunning, Thread.CurrentThread.CurrentUICulture);
+
+            CostAndTime ct = new CostAndTime { Cost = totalA + totalR, Time = totalTimeA + totalTimeR };
+
+            return ct;
         }
 
         public TaskEstimatedOnTime()

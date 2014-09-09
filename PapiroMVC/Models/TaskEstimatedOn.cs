@@ -47,6 +47,12 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> UseDifferentDeficitOnCostForWeightStepBW { get; set; }
+    	
+    	[DataMember] 		
+        public string CostPerHourRunning { get; set; }
+    	
+    	[DataMember] 		
+        public string CostPerHourStarting { get; set; }
     
     	[DataMember]
         public virtual TaskExecutor taskexecutors { get; set; }

@@ -76,5 +76,59 @@ namespace PapiroMVC.Models
             return Convert.ToDouble(CostPerSheet);
         }
 
+
+        public override double Quantity(double qta)
+        {
+            double ret;
+
+            //var ret = base.Quantity(qta);
+            //questo dovrebbe far ottenere il costo!!!!!!
+            var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
+            var article = (SheetPrintableArticle)extract.FirstOrDefault();
+
+            double mqMat = 0;
+            double mlMat = 0;
+            double runMat = 0;
+            double kgMat = 0;
+
+            var thisArticle = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
+
+            //devo ottenere i mq totali di materiale stampato ed uso un trucco... voglio il numero di fogli... lo moltiplico per la resa del materiale e per i mq
+            var lastTypeOfQuantity = ComputedBy.TypeOfQuantity;
+            ComputedBy.TypeOfQuantity = 0;
+            mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle ?? 1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
+            ComputedBy.TypeOfQuantity = lastTypeOfQuantity;
+
+            mlMat = mqMat / (ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 100);
+            runMat = ComputedBy.Quantity(qta) / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1);
+
+            kgMat = mqMat * thisArticle.Weight ?? 0;
+            kgMat /= 1000;
+
+            this.CalculatedMq = mqMat;
+            this.CalculatedMl = mlMat;
+            this.CalculatedKg = kgMat;
+            this.CalculatedRun = runMat;
+
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            {
+                case QuantityType.MqWorkTypeOfQuantity:
+                    ret = Math.Ceiling(mqMat);
+                    break;
+                case QuantityType.NumberTypeOfQuantity:
+                case QuantityType.RunTypeOfQuantity:
+                    ret = runMat;
+                    break;
+                default:
+                    ret = base.Quantity(qta);
+                    break;
+            }
+
+            return ret;
+
+
+        }
+
+
     }
 }

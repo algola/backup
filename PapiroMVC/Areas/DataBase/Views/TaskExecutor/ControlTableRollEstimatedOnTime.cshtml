@@ -10,7 +10,7 @@
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("TaskEstimatedOnTime", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
     @Html.ValidationSummary(true)
 
@@ -54,6 +54,9 @@
             <i class="icon-undo bigger-125"></i>
             @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
+
+
+        @ViewBag.ActionMethod
 
         <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
             <i class="icon-save bigger-160"></i>

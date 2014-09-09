@@ -409,4 +409,19 @@
   <data name="CcValid" xml:space="preserve">
     <value>La carta di credito inserita risulta regolare. Per inserirne una nuova compilare il modulo sottostante e premere Salva, altrimenti Annulla.</value>
   </data>
+  <data name="CodModuleCliche" xml:space="preserve">
+    <value>Incisoria</value>
+  </data>
+  <data name="CodModuleCliche_Desc1" xml:space="preserve">
+    <value>Fotopolimeri</value>
+  </data>
+  <data name="CodModuleCliche_Desc2" xml:space="preserve">
+    <value>Clichè magnesio</value>
+  </data>
+  <data name="CodModuleCliche_Desc3" xml:space="preserve">
+    <value>Calcolo pellicole</value>
+  </data>
+  <data name="CodModuleCliche_Desc4" xml:space="preserve">
+    <value>...</value>
+  </data>
 </root>

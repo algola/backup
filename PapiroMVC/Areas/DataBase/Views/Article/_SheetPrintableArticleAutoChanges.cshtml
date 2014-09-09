@@ -49,7 +49,6 @@
 {          
     @Html.ValidationSummary(true)
     
-
     @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplierMaker" })
     @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier", new { id = "SupplyerBuy" })
 
@@ -111,7 +110,7 @@
 
         ClearValidationErrors();
 
-        var grid = jQuery("#SheetPrintableArticleGrid");
+        var grid = jQuery("#list");
         var ids = grid.jqGrid('getGridParam', 'selarrrow');
 
         //data are collected into
@@ -127,6 +126,7 @@
             Tags: document.getElementById("Tags").value,
         };
 
+
         //Converte un valore JavaScript in una stringa JSON (JavaScript Object Notation).
         var dataToPass = JSON.stringify(allData);
         $.ajax({
@@ -136,7 +136,10 @@
             data: dataToPass,
             contentType: "application/json; charset=utf-8",
             success: function (data) {
-                $.Dialog({
+
+                alert('ok');
+
+                @*$.Dialog({
                     'title': '@Html.T(strings, "MsgBoxAutomaticChangesTitle")',
                     'content': '@Html.T(strings, "MsgBoxAutomaticChangesContent")',
                     'buttons': {
@@ -144,7 +147,7 @@
                             'action': function () { }
                         }
                     }
-                });
+                });*@
 
                 return false;
 

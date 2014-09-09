@@ -180,6 +180,9 @@
   <data name="CodCatFogliSingoli" xml:space="preserve">
     <value>Fogli Singoli</value>
   </data>
+  <data name="CodCatCliche" xml:space="preserve">
+    <value>Clichè</value>
+  </data>
   <data name="CodMenuProductAltriFormati" xml:space="preserve">
     <value>Altri formati</value>
   </data>
@@ -188,6 +191,12 @@
   </data>
   <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
     <value>Etichette quadrate in bobina</value>
+  </data>
+  <data name="CodMenuProductInciso" xml:space="preserve">
+    <value>Clichè inciso</value>
+  </data>
+  <data name="CodMenuProductFotopolimero" xml:space="preserve">
+    <value>Clichè fotopolimero</value>
   </data>
   <data name="CodMenuProductFasceGommateRotolo" xml:space="preserve">
     <value>Fasce Gommate in bobina</value>

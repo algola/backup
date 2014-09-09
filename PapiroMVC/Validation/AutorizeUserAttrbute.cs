@@ -69,6 +69,7 @@ namespace PapiroMVC.Validation
             prodMod.Add("Book", "SmallFormat");
             prodMod.Add("GrandeFormato", "WideFormat");
             prodMod.Add("Rotoli", "Label");
+            prodMod.Add("Cliche", "Cliche");
 
             bool redirect = false;
 
@@ -80,6 +81,11 @@ namespace PapiroMVC.Validation
 
                 if (product != null)
                 {
+                    if (!System.Web.Security.Roles.RoleExists(product.CodCategory))
+                    {
+                        System.Web.Security.Roles.CreateRole(product.CodCategory);
+                    }
+
                     //traduzione e ricerca dal prodotto -> modulo
                     var users = System.Web.Security.Roles.GetUsersInRole(prodMod.SingleOrDefault(k => k.Key == product.CodCategory).Value);
                     redirect = !users.Contains(user);

@@ -52,6 +52,11 @@ namespace Services
             tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteSagRotolo", IndexOfCategory = 3 });
             tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "FasceGommateRotolo", IndexOfCategory = 3 });
 
+
+            //Cliche
+            tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 1, CodMenuProduct = "Inciso", IndexOfCategory = 4 });
+            tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 2, CodMenuProduct = "Fotopolimero", IndexOfCategory = 4 });
+
             foreach (var item in tbCode)
             {
                 //cerco nel 
@@ -71,7 +76,6 @@ namespace Services
 
                     };
 
-
                     trv = x;
                     this.Add(trv);
                 }
@@ -84,16 +88,15 @@ namespace Services
                 }
                 this.Save();
             }
+                return Context.MenuProducts;
 
-            return Context.MenuProducts.Where(x=>x.IndexOfCategory == 1 || x.IndexOfCategory==3 ) ;
+        //    return Context.MenuProducts.Where(x => x.IndexOfCategory == 1 || x.IndexOfCategory == 3 || x.IndexOfCategory == 4);
         }
-
 
         public IQueryable<MenuProduct> GetAll(string codMenuProduct)
         {
             return Context.MenuProducts.Where(o => o.CodMenuProduct == codMenuProduct);
         }
-
 
         public MenuProduct GetSingle(string codMenuProduct)
         {

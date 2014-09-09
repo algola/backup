@@ -123,7 +123,7 @@ namespace PapiroMVC.Models
 
                 //avviamenti con associazione macchina -> tipo di lavorazione
                 //per stampare 1 solo foglio --> offset con + avviamenti o digitale per il fr
-                var startsToPrint = TaskexEcutorSelected.Starts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                var startsToPrint = TaskexEcutorSelected.GetStarts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
                 var makereadies = ProductPartPrinting.CalculatedStarts;
 
                 //per stampare 1 stampato---> tot messe in macchina etc.. oppure resa e calcolo resa media
@@ -173,7 +173,7 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    total = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, 0, Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, 0, Quantity(qta));
                 }
                 catch (NotImplementedException)
                 {

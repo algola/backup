@@ -166,12 +166,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
                                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"CostMq":                                            
                                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
-                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":"",
+                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":
+                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime?"CostTime":"",
+                                                            
                                                             
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,
+                         a.SetTaskExecutorEstimatedOn.Count()==0?"":a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn.ToString()
                         }
                     }
                 ).ToArray()

@@ -31,7 +31,6 @@ namespace PapiroMVC.Models
             }
         }
 
-
         public override void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
         {
             switch (codOptionTypeOfTask)
@@ -82,7 +81,7 @@ namespace PapiroMVC.Models
         /// </summary>
         /// <param name="codOptionTypeOfTask"></param>
         /// <returns></returns>
-        public override double Starts(string codOptionTypeOfTask)
+        public override double GetStarts(string codOptionTypeOfTask)
         {
             double cToPrintF = 0;
             double cToPrintR = 0;
@@ -96,7 +95,7 @@ namespace PapiroMVC.Models
 
 
         //get number of impants by type of task!! ex: 2 colors --> 2 implants
-        public override double Implants(string codOptionTypeOfTask)
+        public override double GetImplants(string codOptionTypeOfTask)
         {
             double cToPrintF = 0;
             double cToPrintR = 0;

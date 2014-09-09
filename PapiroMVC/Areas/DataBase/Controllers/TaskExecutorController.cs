@@ -38,49 +38,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             this.Disposables.Add(typeOfTaskRepository);
         }
 
-        public ActionResult IndexLithoSheetAndRoll()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexLithoSheetAndRoll";
-            return View();
-        }
 
         public ActionResult IndexPrePostPress()
         {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexPrePostPress";
             return View();
         }
 
 
-        public ActionResult IndexFlexo()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexFlexo";
-            return View();
-        }
-
-
-        public ActionResult IndexSemiRoll()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexSemiRoll";
-            return View();
-        }
-
-        public ActionResult IndexPlotter()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexPlotter";
-            return View();
-        }
-
-        public ActionResult IndexDigitalSheetAndRoll()
-        {
-            //deprecated
-            TempData["TaskExecutorIndex"] = "IndexDigitalSheetAndRoll";
-            return View();
-        }
 
         /// <summary>
         /// List of taskExecutor filtered by codTypeOfTask
@@ -94,7 +58,42 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View("IndexTaskExecutors", model: codTypeOfTask);
         }
 
+
+
         [HttpPost]
+        [HttpParamAction]
+        public ActionResult ControlTableRollEstimatedOnTime(ControlTableRollEstimatedOnTime c, string returnUrl)
+        {
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // c.CostPerHourRunning = "10";
+                    taskExecutorRepository.AddEstimatedOn(c);
+                    taskExecutorRepository.Save();
+
+                    //var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
+                    var r = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
+                   //cnsole.Write(r);
+//                                        return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = c.CodTypeOfTask }) });
+                    return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = r.CodTypeOfTask }) });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "ControlTableRollEstimatedOnTime";
+            return PartialView("ControlTableRollEstimatedOnTime", c);
+        }
+
+
+        [HttpPost]
+        [HttpParamAction]
         public ActionResult TaskEstimatedOnTime(TaskEstimatedOnTime c, string returnUrl)
         {
 
@@ -107,10 +106,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
-                    var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
-                    Console.Write(r);
+                    //var r = taskExecutorRepository.GetSingleEstimatedOn(c.CodTaskEstimatedOn);
+                    var r = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
+                   //cnsole.Write(r);
 //                                        return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = c.CodTypeOfTask }) });
-                    return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = r.taskexecutors.CodTypeOfTask }) });
+                    return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = r.CodTypeOfTask }) });
 
                 }
                 catch (Exception ex)
@@ -128,7 +128,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpPost]
         public ActionResult TaskEstimatedOnRun(TaskEstimatedOnRun c, string returnUrl)
         {
-            TempData["TaskExecutorIndex"] = returnUrl;
 
             if (ModelState.IsValid)
             {
@@ -160,7 +159,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [HttpParamAction]
         public ActionResult DigitalOnRun(DigitalOnRun c, string returnUrl)
         {
-            TempData["TaskExecutorIndex"] = returnUrl;
 
             if (ModelState.IsValid)
             {

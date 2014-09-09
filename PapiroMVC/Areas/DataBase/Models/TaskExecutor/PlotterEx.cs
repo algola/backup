@@ -13,7 +13,7 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(Plotter_MetaData))]
     public abstract partial class Plotter : TaskExecutor
     {
-        public override double Starts(string codOptionTypeOfTask)
+        public override double GetStarts(string codOptionTypeOfTask)
         {
             return 1;
         }

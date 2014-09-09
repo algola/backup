@@ -25,7 +25,7 @@ namespace PapiroMVC.Models
                 switch (TypeOfArticle)
                 {
                     case ArticleType.SheetPrintableArticle:
-                        ret = CostDetail.QuantityType.WeigthTypeOfQuantity;
+                        ret = CostDetail.QuantityType.RunTypeOfQuantity;
                         break;
                     case ArticleType.RollPrintableArticle:
                         ret = CostDetail.QuantityType.MqWorkTypeOfQuantity;

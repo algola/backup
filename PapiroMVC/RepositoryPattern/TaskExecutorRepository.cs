@@ -2,6 +2,7 @@
 using PapiroMVC.Models;
 using PapiroMVC.DbCodeManagement;
 using System;
+using System.Collections.Generic;
 
 namespace Services
 {
@@ -12,12 +13,25 @@ namespace Services
         {
             if (Context.Entry(item).State != System.Data.Entity.EntityState.Added)
             {
-                //var tskEst = item;
-                //var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
-                //Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                var tskEst = item;
+                var fromBD2 = Context.taskexecutorestimatedon.Single(p => p.CodTaskEstimatedOn == tskEst.CodTaskEstimatedOn);
+                Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
+                Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
             }
 
+        }
+
+
+        public override void Save()
+        {
+            List<Object> modOrAdded = Context.ChangeTracker.Entries()
+               .Where(x => x.State == System.Data.Entity.EntityState.Modified
+               || x.State == System.Data.Entity.EntityState.Added)
+               .Select(x => x.Entity).ToList();
+
+            Console.Write(modOrAdded);
+
+                base.Save();
         }
 
         /// <summary>
@@ -154,6 +168,7 @@ namespace Services
                 if (fromBD2 != null)
                 {
                     Context.Entry(fromBD2).CurrentValues.SetValues(item);
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
                 }
                 else
                 {

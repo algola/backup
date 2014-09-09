@@ -20,15 +20,9 @@ namespace PapiroMVC.Models
     {
     	
     	[DataMember] 		
-        public Nullable<long> PaperFirstStartLenght { get; set; }
-    	
-    	[DataMember] 		
         public Nullable<double> Width2 { get; set; }
     	
     	[DataMember] 		
         public Nullable<double> FlexoWidth { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<long> PaperSecondStartLenght { get; set; }
     }
 }

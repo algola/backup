@@ -59,6 +59,7 @@ namespace PapiroMVC.Models
                 * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000);
 
             TypeOfQuantity = (int)ComputedBy.TaskexEcutorSelected.TypeOfImplantQuantity;
+            
         }
 
         public override double Quantity(double qta)

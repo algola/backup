@@ -14,7 +14,7 @@ namespace PapiroMVC.Models
     public partial class DigitalSheet : Digital
     {
 
-        public override double Starts(string codOptionTypeOfTask)
+        public override double GetStarts(string codOptionTypeOfTask)
         {
 
             double starts = 0;

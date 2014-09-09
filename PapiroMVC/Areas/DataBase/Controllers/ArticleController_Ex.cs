@@ -179,7 +179,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             foreach (var id in x.Id)
             {
                 var a = articleRepository.GetSingle(id);
-                var cost = a.ArticleCosts.FirstOrDefault();
+
+                if (x.TypeOfCostToModify == SheetPrintableArticleAutoChanges.ProcessCostType.AllCost
+                    || x.TypeOfCostToModify == SheetPrintableArticleAutoChanges.ProcessCostType.PackedCost)
+                {
+                    var cost = a.ArticleCosts.FirstOrDefault(y => y.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost);
+                    ((SheetPrintableArticleCost)cost).CostPerKg = x.CostPerKg;                
+                }
 
                 a.Tags = x.Tags != String.Empty ? x.Tags : a.Tags;
                 articleRepository.Edit(a);

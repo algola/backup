@@ -40,7 +40,12 @@ namespace PapiroMVC.Models
             ProductPartTask partTask;
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
             partTask.Hidden = false;
+            partTask.ImplantHidden = false;
+            partTask.IndexOf = 10;
             partTask.IndexOf = 1;
+
+
+
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);

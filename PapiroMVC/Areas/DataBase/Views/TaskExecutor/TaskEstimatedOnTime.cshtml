@@ -52,8 +52,8 @@
         <fieldset>
             <legend>@HttpContext.GetLocalResourceObject(strings, "CostsLabel")</legend>
 
+            @Html.AlgolaEditorFor(model => model.CostPerHourStarting)
             @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
-            @*deprecated           @Html.AlgolaEditorFor(model => model.CostPerHourStarting) *@
             @Html.AlgolaEditorFor(model => model.CostForfait)
             @*deprecated            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
             *@

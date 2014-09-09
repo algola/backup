@@ -447,4 +447,7 @@
   <data name="CodSTAMPAETICHROTOLO_Implant" xml:space="preserve">
     <value>Impianti stampa</value>
   </data>
+  <data name="CodSTAMPAOFFeDIGITALE_Implant" xml:space="preserve">
+    <value>Impianti Stampa</value>
+  </data>
 </root>

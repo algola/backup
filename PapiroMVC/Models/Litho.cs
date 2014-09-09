@@ -33,14 +33,5 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<System.TimeSpan> ChangePlateTime { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<long> ProofSheetFirstStart { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<long> ProofSheetSecondsStart { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<double> ProductionWaste { get; set; }
     }
 }

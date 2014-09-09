@@ -142,8 +142,8 @@ namespace PapiroMVC.Models
 
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).LargerFormat = this.BuyingFormat;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SmallerFormat = this.PrintingFormat;
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 1;
-            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 1;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).Quantity = 0;
+            ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).SubjectNumber = 0;
             ((ProductPartPrintingSheetGainSingle)GainPrintingOnBuying).CalculateGain();
 
             //devo anche rifare la messa in macchina della parte!!!
@@ -154,7 +154,78 @@ namespace PapiroMVC.Models
 
                 this.ProductPartPrinting.Update();
             }
+
+            UpdateCoeff();
         }
+
+
+        //nuovo appena inserito per calcolo dei coefficienti per il piano
+        public override void UpdateCoeff()
+        {
+            base.UpdateCoeff();
+
+            //questi valori dipendono da quanti sono i colori
+            var paperFirstStartL = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart;
+            var paperSecondStart = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart;
+
+            var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
+            RollChanges = 0;
+
+            //calcolo di quanti impianti sono necessari!!!!
+            Implants = TaskexEcutorSelected.GetImplants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+
+            var fgWaste = (paperFirstStartL ?? 0) + (RollChanges * 0 ?? 0); //lo zero va sostituito con i cambi lastra!!!!
+
+        }
+
+        public override double Quantity(double qta)
+        {
+
+            //mi serve calcolare la quantità con gli scarti!!!
+
+
+            if (TaskexEcutorSelected == null)
+            {
+                UpdateCoeff();
+            }
+
+            double ret;
+            double mqMat = 0;
+            double mlMat = 0;
+            double runMat = 0;
+            double kgMat = 0;
+
+            var proof1 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart;
+            var proof2 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart;
+
+            var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
+            var waste = (proof1 ?? 0) + ((Starts -1) * proof2 ?? 0);
+
+            CalculatedMl = 0;
+
+            mqMat = Math.Ceiling((runs + waste) * ProductPart.Format.GetSide1() * ProductPart.Format.GetSide2()/10000);
+            CalculatedMq = mqMat;
+
+            kgMat = 0;
+            CalculatedKg = kgMat;
+
+            CalculatedRun = runs+waste;
+
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            {
+                case QuantityType.RunTypeOfQuantity:
+
+                    ret = CalculatedRun??0;
+                    break;
+
+                default:
+                    ret = base.Quantity(qta);
+                    break;
+            }
+
+            return ret;
+        }
+
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {

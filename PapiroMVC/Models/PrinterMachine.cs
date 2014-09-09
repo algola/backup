@@ -23,6 +23,21 @@ namespace PapiroMVC.Models
         public Nullable<double> InkUsage { get; set; }
     	
     	[DataMember] 		
+        public Nullable<long> PaperSecondStartLenght { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<long> PaperFirstStartLenght { get; set; }
+    	
+    	[DataMember] 		
         public Nullable<double> InkUsageForfait { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<long> ProofSheetFirstStart { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<long> ProofSheetSecondsStart { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> ProductionWaste { get; set; }
     }
 }

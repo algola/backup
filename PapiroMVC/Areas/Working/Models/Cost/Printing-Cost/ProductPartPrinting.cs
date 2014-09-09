@@ -210,8 +210,6 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Gain2", this.CalculatedSide2Gain));
 
 
-
-
         }
 
 

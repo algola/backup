@@ -115,6 +115,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clichè.
+        /// </summary>
+        public static string CodCatCliche {
+            get {
+                return ResourceManager.GetString("CodCatCliche", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fogli Singoli.
         /// </summary>
         public static string CodCatFogliSingoli {
@@ -259,11 +268,29 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clichè fotopolimero.
+        /// </summary>
+        public static string CodMenuProductFotopolimero {
+            get {
+                return ResourceManager.GetString("CodMenuProductFotopolimero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fotoquadri.
         /// </summary>
         public static string CodMenuProductFotoquadri {
             get {
                 return ResourceManager.GetString("CodMenuProductFotoquadri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clichè inciso.
+        /// </summary>
+        public static string CodMenuProductInciso {
+            get {
+                return ResourceManager.GetString("CodMenuProductInciso", resourceCulture);
             }
         }
         

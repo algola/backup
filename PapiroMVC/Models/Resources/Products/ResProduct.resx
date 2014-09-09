@@ -225,4 +225,10 @@
   <data name="CodMenuProductFasceGommateRotolo" xml:space="preserve">
     <value>Fasce Gommate in bobina</value>
   </data>
+  <data name="CodMenuProductInciso" xml:space="preserve">
+    <value>Clichè inciso</value>
+  </data>
+  <data name="CodMenuProductFotopolimero" xml:space="preserve">
+    <value>Clichè fotopolimero</value>
+  </data>
 </root>

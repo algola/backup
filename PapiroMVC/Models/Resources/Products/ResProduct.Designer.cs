@@ -178,11 +178,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clichè fotopolimero.
+        /// </summary>
+        public static string CodMenuProductFotopolimero {
+            get {
+                return ResourceManager.GetString("CodMenuProductFotopolimero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fotoquadri.
         /// </summary>
         public static string CodMenuProductFotoquadri {
             get {
                 return ResourceManager.GetString("CodMenuProductFotoquadri", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clichè inciso.
+        /// </summary>
+        public static string CodMenuProductInciso {
+            get {
+                return ResourceManager.GetString("CodMenuProductInciso", resourceCulture);
             }
         }
         

@@ -729,7 +729,7 @@ namespace PapiroMVC.Models
             RollChanges = Math.Truncate((mtRuns + paperFirstStartLenght ?? 0) / 2000);
 
             //calcolo di quanti impianti sono necessari!!!!
-            Implants = TaskexEcutorSelected.Implants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+            Implants = TaskexEcutorSelected.GetImplants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
 
             var mtWaste = (paperFirstStartLenght ?? 0) + (RollChanges * paperSecondStartLenght ?? 0);
 
@@ -738,6 +738,9 @@ namespace PapiroMVC.Models
 
         public override double Quantity(double qta)
         {
+
+            //mi serve calcolare la quantità con gli scarti!!!
+
 
             if (TaskexEcutorSelected == null)
             {
@@ -749,7 +752,6 @@ namespace PapiroMVC.Models
             double mlMat = 0;
             double runMat = 0;
             double kgMat = 0;
-
 
 
             var paperFirstStartLenght = ((Flexo)TaskexEcutorSelected).PaperFirstStartLenght;
@@ -850,37 +852,6 @@ namespace PapiroMVC.Models
             //**********************************************
 
             #endregion
-        }
-
-
-        public override List<CostDetail> GetRelatedImplantCostDetail(string codProductPartTask, IQueryable<Cost> costs)
-        {
-            List<CostDetail> lst = new List<CostDetail>();
-
-            var x = new ImplantCostDetail();
-
-            x.ComputedBy = this;
-            x.ProductPart = this.ProductPart;
-
-            //devo pescare il costo e associarlo al dettaglio
-            if (x.CodCost == null)
-            {
-                var xxxx = costs.ToList();
-
-                var cost = costs.Where(pp => pp.CodProductPartImplantTask == codProductPartTask).FirstOrDefault();
-                //da non usare MAIIII                    x.TaskCost = cost;
-                x.CodCost = cost.CodCost;
-                x.CodCostDetail = cost.CodCost;
-
-                x.CostDetailCostCodeRigen();
-            }
-
-            //GUID
-            x.Guid = this.Guid;
-            this.Computes.Add(x);
-            lst.Add(x);
-
-            return lst;
         }
 
         public override List<CostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)

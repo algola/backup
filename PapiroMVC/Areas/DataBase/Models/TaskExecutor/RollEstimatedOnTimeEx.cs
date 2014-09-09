@@ -69,7 +69,6 @@ namespace PapiroMVC.Models
 
             var totalR = (totalTimeR.TotalMinutes) / 60 * Convert.ToDouble(costH, Thread.CurrentThread.CurrentUICulture);
 
-
             CostAndTime ct = new CostAndTime { Cost = totalA + totalR, Time = totalTimeA + totalTimeR };
 
             return ct;

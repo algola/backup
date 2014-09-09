@@ -20,7 +20,7 @@ namespace PapiroMVC.Models
             this.TypeOfEstimatedOn = TaskEstimatedOn.EstimatedOnType.OnRun;
         }
 
-        public override double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
         {
             double total;
             total = Convert.ToDouble(StartingCost1, Thread.CurrentThread.CurrentUICulture);            
@@ -35,7 +35,9 @@ namespace PapiroMVC.Models
                 total += Convert.ToDouble(CostPerUnit, Thread.CurrentThread.CurrentUICulture) * running;
             }
 
-            return total;
+            CostAndTime ct = new CostAndTime { Cost = total, Time = new TimeSpan(0,0,0) };
+
+            return ct;
         }
 
         #region Proprietà aggiuntive

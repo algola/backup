@@ -39,11 +39,5 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<System.TimeSpan> StartingTimePerColor { get; set; }
-    	
-    	[DataMember] 		
-        public string CostPerHourRunning { get; set; }
-    	
-    	[DataMember] 		
-        public string CostPerHourStarting { get; set; }
     }
 }

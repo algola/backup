@@ -51,25 +51,27 @@ namespace PapiroMVC.Models
 
             if (codTypeOfTask == "STAMPAETICHROTOLO")
             {
-                tskExec = tskExec.OfType<Flexo>();
+                var tskExec1 = tskExec.OfType<Flexo>();
+                var tskExec2 = tskExec.OfType<ControlTableRoll>();
+
+                tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
             }
 
             return tskExec;
 
         }
 
-        public virtual double Starts(string codOptionTypeOfTask)
+        public virtual double GetStarts(string codOptionTypeOfTask)
         {
             throw new Exception("Not implemented");
         }
-
 
         public virtual void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
         {
             throw new NotImplementedException();
         }
 
-        public virtual double Implants(string codOptionTypeOfTask)
+        public virtual double GetImplants(string codOptionTypeOfTask)
         {
             throw new Exception("Not implemented");
         }
@@ -143,7 +145,6 @@ namespace PapiroMVC.Models
         }
 
         public string[] CodTypeOfTaskList { get; set; }
-
 
         public ExecutorType TypeOfExecutor
         {

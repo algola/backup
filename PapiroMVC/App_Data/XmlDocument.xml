@@ -377,7 +377,7 @@
             Constructor
             </summary>
         </member>
-        <member name="M:PapiroMVC.Models.SemiRoll.Starts(System.String)">
+        <member name="M:PapiroMVC.Models.SemiRoll.GetStarts(System.String)">
             <summary>
             get printing color (task vs machine)
             </summary>
@@ -395,7 +395,7 @@
             Constructor
             </summary>
         </member>
-        <member name="M:PapiroMVC.Models.Flexo.Starts(System.String)">
+        <member name="M:PapiroMVC.Models.Flexo.GetStarts(System.String)">
             <summary>
             get printing color (task vs machine)
             </summary>
@@ -4153,9 +4153,19 @@
               Looks up a localized string similar to Fogli macchina.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductFotopolimero">
+            <summary>
+              Looks up a localized string similar to Clichè fotopolimero.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductFotoquadri">
             <summary>
               Looks up a localized string similar to Fotoquadri.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductInciso">
+            <summary>
+              Looks up a localized string similar to Clichè inciso.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductLocandine">
@@ -5351,6 +5361,11 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFeDIGITALE_FRONTE_COL">
             <summary>
               Looks up a localized string similar to stampa fronte a colori.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFeDIGITALE_Implant">
+            <summary>
+              Looks up a localized string similar to Impianti Stampa.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAOFFeDIGITALE_NO">
@@ -8615,6 +8630,11 @@
               Looks up a localized string similar to Riviste , Cataloghi e libri.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodCatCliche">
+            <summary>
+              Looks up a localized string similar to Clichè.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodCatFogliSingoli">
             <summary>
               Looks up a localized string similar to Fogli Singoli.
@@ -8695,9 +8715,19 @@
               Looks up a localized string similar to Fogli macchina.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductFotopolimero">
+            <summary>
+              Looks up a localized string similar to Clichè fotopolimero.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductFotoquadri">
             <summary>
               Looks up a localized string similar to Fotoquadri.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductInciso">
+            <summary>
+              Looks up a localized string similar to Clichè inciso.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductLocandine">

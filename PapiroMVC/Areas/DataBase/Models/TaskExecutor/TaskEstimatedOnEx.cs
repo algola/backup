@@ -54,7 +54,7 @@ namespace PapiroMVC.Models
             throw new NotImplementedException();
         }
 
-        public virtual double GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
         {
             throw new NotImplementedException();
         }
