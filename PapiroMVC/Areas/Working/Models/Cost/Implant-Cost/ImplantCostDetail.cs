@@ -64,7 +64,7 @@ namespace PapiroMVC.Models
 
         public override double Quantity(double qta)
         {
-            if (this.ComputedBy.TypeOfQuantity == (int)CostDetail.QuantityType.NumberTypeOfQuantity)
+            if (TypeOfQuantity == (int)CostDetail.QuantityType.NumberTypeOfQuantity)
             {
                 return Math.Ceiling((GainForRun ?? 0) * 100) / 100;
             }

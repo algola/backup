@@ -415,12 +415,6 @@ namespace PapiroMVC.Models
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
                     cost.Description = cost.Description==""?"": char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
 
-
-                    if (productPartTask.CodOptionTypeOfTask.Contains("ACALDO"))
-                    {
-                        Console.WriteLine();                    
-                    }
-
                     if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
                     {
                         cost.Hidden = true;

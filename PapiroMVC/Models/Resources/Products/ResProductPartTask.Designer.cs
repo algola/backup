@@ -142,7 +142,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fustellatura.
+        ///   Looks up a localized string similar to Fustellatura - vecchio.
         /// </summary>
         public static string CodFUSTELLATURA_NO_STACCO {
             get {
@@ -151,11 +151,38 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fustellatura con stacco.
+        ///   Looks up a localized string similar to Fustellatura - si.
         /// </summary>
-        public static string CodFUSTELLATURA_STACCO {
+        public static string CodFUSTELLATURA_SI {
             get {
-                return ResourceManager.GetString("CodFUSTELLATURA_STACCO", resourceCulture);
+                return ResourceManager.GetString("CodFUSTELLATURA_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fustella.
+        /// </summary>
+        public static string CodFUSTELLATURAROTOLO_Implant {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CodFUSTELLATURAROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fustellatura.
+        /// </summary>
+        public static string CodFUSTELLATURAROTOLO_SI {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO_SI", resourceCulture);
             }
         }
         

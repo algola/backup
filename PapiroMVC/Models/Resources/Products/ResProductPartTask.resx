@@ -138,14 +138,20 @@
   <data name="CodFORO_SI" xml:space="preserve">
     <value>1 Foro</value>
   </data>
+  <data name="CodFUSTELLATURAROTOLO_NO" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CodFUSTELLATURAROTOLO_SI" xml:space="preserve">
+    <value>Fustellatura</value>
+  </data>
   <data name="CodFUSTELLATURA_NO" xml:space="preserve">
     <value />
   </data>
   <data name="CodFUSTELLATURA_NO_STACCO" xml:space="preserve">
-    <value>Fustellatura</value>
+    <value>Fustellatura - vecchio</value>
   </data>
-  <data name="CodFUSTELLATURA_STACCO" xml:space="preserve">
-    <value>Fustellatura con stacco</value>
+  <data name="CodFUSTELLATURA_SI" xml:space="preserve">
+    <value>Fustellatura - si</value>
   </data>
   <data name="CodINTERCALATURA_2COPIE" xml:space="preserve">
     <value>Intercalati</value>
@@ -439,6 +445,9 @@
     <value />
   </data>
   <data name="CodFUSTELLATURA_Implant" xml:space="preserve">
+    <value>Fustella</value>
+  </data>
+  <data name="CodFUSTELLATURAROTOLO_Implant" xml:space="preserve">
     <value>Fustella</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_Implant" xml:space="preserve">

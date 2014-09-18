@@ -95,8 +95,33 @@ namespace PapiroMVC.Models
                (Convert.ToDouble(this.TotalCost, Thread.CurrentThread.CurrentUICulture) *
                ((this.Markup ?? 0) / 100))).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
-                if (!(this.Hidden??false))
-                    this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
+                //OLD
+                //if (!(this.Hidden ?? false))
+                //    this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
+
+                //NEW
+                this.Hidden = (cd.TypeOfQuantity == (int)CostDetail.QuantityType.NOTypeOfQuantity);
+
+                //se il costo viene da una lav, controllo l'option
+
+                if (ProductTask != null)
+                {
+                    if (ProductTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        Hidden = true;
+                        ForceZero = true;
+                    }
+                }
+
+                if (ProductPartTask != null)
+                {
+                    if (ProductPartTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        Hidden = true;
+                        ForceZero = true;
+                    }
+                }
+
             }
 
         }
@@ -154,6 +179,8 @@ namespace PapiroMVC.Models
             }
 
 
+
+            #region tavolo di controllo rotolo
             if (codTypeOfTask == "TAVOLOCONTROLLO")
             {
                 Console.WriteLine("Tavolo di controllo");
@@ -198,6 +225,47 @@ namespace PapiroMVC.Models
                 }
 
             }
+            #endregion
+
+
+            #region tavolo di controllo rotolo
+            if (codTypeOfTask == "FUSTELLATURA")
+            {
+                Console.WriteLine("Fustellatura");
+                String codParte = String.Empty;
+
+                /* se è una STAMPA 
+                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
+                 * etichette in rotolo, manifesti etc...
+                 * per ora carico.
+                 */
+
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+
+                if (tskExec.Count() > 0)
+                {
+
+                    cv = new PrePostPressCostDetail();
+                    cv.TaskCost = this;
+                    cv.InitCostDetail(tskExec, articles);
+
+                    if (cv.TaskExecutors != null)
+                    {
+                        cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                    }
+
+                    cv.ProductPart = productPart;
+
+                    cv.CodCost = this.CodCost;
+                    cv.CodCostDetail = this.CodCost;
+
+                }
+
+            }
+            #endregion
+
+
+
 
             if (codTypeOfTask == "STAMPA" ||
                 codTypeOfTask == "STAMPARIGIDO" ||
@@ -414,7 +482,7 @@ namespace PapiroMVC.Models
         public virtual void MergeField(DocX doc)
         {
             doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Description", this.Description));
-            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Quantity", this.Quantity??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Quantity", this.Quantity ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("Cost.UnitCost", this.UnitCost));
             doc.AddCustomProperty(new Novacode.CustomProperty("Cost.TotalCost", this.TotalCost));
             doc.AddCustomProperty(new Novacode.CustomProperty("Cost.Markup", this.Markup ?? 0));

@@ -144,17 +144,23 @@
   <data name="CodFORO_SI" xml:space="preserve">
     <value>Si foro</value>
   </data>
+  <data name="CodFUSTELLATURAROTOLO" xml:space="preserve">
+    <value>Fustellatura</value>
+  </data>
+  <data name="CodFUSTELLATURAROTOLO_NO" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="CodFUSTELLATURAROTOLO_SI" xml:space="preserve">
+    <value>Si</value>
+  </data>
   <data name="CodFUSTELLATURA" xml:space="preserve">
     <value>Fustellatura</value>
   </data>
   <data name="CodFUSTELLATURA_NO" xml:space="preserve">
-    <value>No fustellatura</value>
+    <value>No</value>
   </data>
-  <data name="CodFUSTELLATURA_NO_STACCO" xml:space="preserve">
-    <value>Senza stacco</value>
-  </data>
-  <data name="CodFUSTELLATURA_STACCO" xml:space="preserve">
-    <value>Con stacco</value>
+  <data name="CodFUSTELLATURA_SI" xml:space="preserve">
+    <value>Si</value>
   </data>
   <data name="CodGrandeFormato" xml:space="preserve">
     <value>lllllllllllllll</value>

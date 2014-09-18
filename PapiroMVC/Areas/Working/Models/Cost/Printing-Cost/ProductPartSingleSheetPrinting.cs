@@ -31,6 +31,8 @@ namespace PapiroMVC.Models
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSingleSheet)Part).SubjectNumber ?? 1;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain2 = MaxGain2;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain1 = MaxGain1;
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = ForceSide;
+
                     break;
                 case ProductPart.ProductPartType.ProductPartSoft:
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSoft)Part).SubjectNumber ?? 1;

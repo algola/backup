@@ -63,7 +63,7 @@ namespace PapiroMVC.Models
             //partTask.Hidden = false;
             //partTask.IndexOf = 2;
 
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURAROTOLO_NO");
             partTask.Hidden = true;
             partTask.ImplantHidden = false;
             partTask.IndexOf = 20;
@@ -105,7 +105,7 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURA", "STAMPAACALDOROTOLO", "TAVOLOCONTROLLO" };
+            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURAROTOLO", "STAMPAACALDOROTOLO", "TAVOLOCONTROLLO" };
 
             foreach (var item in codTypeOfTasks)
             {

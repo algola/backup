@@ -187,12 +187,12 @@ namespace PapiroMVC.Models
 
         public virtual void Update()
         {
-
+            Console.WriteLine("");
         }
 
         public virtual void UpdateCoeff()
         {
-
+            Console.WriteLine("");
         }
 
         public virtual void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)

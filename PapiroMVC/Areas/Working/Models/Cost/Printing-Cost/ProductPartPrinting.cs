@@ -70,6 +70,9 @@ namespace PapiroMVC.Models
         public int MinGain1 { get; set; }
         public int MinGain2 { get; set; }
 
+        //prova
+        public int ForceSide { get; set; }
+
 
         public bool AutoCutParameter { get; set; }
 
@@ -155,6 +158,15 @@ namespace PapiroMVC.Models
                 //       Console.WriteLine(Part);
                 string format = PrintingFormat;
                 return format.GetSide1() * format.GetSide2() / 10000;
+            }
+        }
+
+
+        public virtual bool CalculatedSideOnSide
+        {
+            get
+            {
+                return GainPartOnPrinting.Makereadies.FirstOrDefault().SideOnSide ?? false;
             }
         }
 

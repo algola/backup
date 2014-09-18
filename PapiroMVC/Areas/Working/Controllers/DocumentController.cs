@@ -209,7 +209,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //TEMPORANEOOOOOOOOO
                         //another important link to fix is the printer link
                         //this for PrePressCost
-                        if (cost.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail)
+                        if (cost.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail ||
+                            cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
                         {
                             //get ST codCost
                             cost.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cost.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);

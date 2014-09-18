@@ -151,7 +151,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No fustellatura.
+        ///   Looks up a localized string similar to No.
         /// </summary>
         public static string CodFUSTELLATURA_NO {
             get {
@@ -160,20 +160,38 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Senza stacco.
+        ///   Looks up a localized string similar to Si.
         /// </summary>
-        public static string CodFUSTELLATURA_NO_STACCO {
+        public static string CodFUSTELLATURA_SI {
             get {
-                return ResourceManager.GetString("CodFUSTELLATURA_NO_STACCO", resourceCulture);
+                return ResourceManager.GetString("CodFUSTELLATURA_SI", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Con stacco.
+        ///   Looks up a localized string similar to Fustellatura.
         /// </summary>
-        public static string CodFUSTELLATURA_STACCO {
+        public static string CodFUSTELLATURAROTOLO {
             get {
-                return ResourceManager.GetString("CodFUSTELLATURA_STACCO", resourceCulture);
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string CodFUSTELLATURAROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Si.
+        /// </summary>
+        public static string CodFUSTELLATURAROTOLO_SI {
+            get {
+                return ResourceManager.GetString("CodFUSTELLATURAROTOLO_SI", resourceCulture);
             }
         }
         

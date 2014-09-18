@@ -13,9 +13,13 @@ namespace PapiroMVC.Models
     {
         public string FormatTypeName { get; set; }
         public int FormatType { get; set; }
-
     }
 
+    public class DescForDropDown
+    {
+        public string Name { get; set; }
+        public int Cod { get; set; }
+    }
 
     [Serializable]
     // [MetadataType(typeof(Die_MetaData))]

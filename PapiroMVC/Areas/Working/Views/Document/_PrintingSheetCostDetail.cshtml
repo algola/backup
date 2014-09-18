@@ -68,6 +68,38 @@
 
 <script type="text/javascript">
 
+    $("#forceSide").change(function () {
+
+        //data are collected into
+        var dataToPass = {
+            maxGain1: 0,
+            maxGain2: 0,
+            forceSide: $("#forceSide").val()
+        };
+
+        alert("foceside");
+
+        $.ajax({
+            url: '@(Url.Action("ChangeMaxGain", "Document", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#sheetCostDetail').html(data);
+                reloadFormat();
+                initAndPosition();
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    });
+
+
+
+
+
     $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2").keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
@@ -81,6 +113,39 @@
 
             $.ajax({
                 url: '@(Url.Action("ChangePPartFormat", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#sheetCostDetail').html(data);
+                    reloadFormat();
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+        }
+    });
+
+
+
+
+
+
+    $("#gain1, #gain2").keypress(function (event) {
+        if (event.which == 13) {
+            event.preventDefault();
+
+            //data are collected into
+            var dataToPass = {
+                maxGain1: $("#gain1").val(),
+                maxGain2: $("#gain2").val(),
+                forceSide: $("#forceSide").val()
+            };
+
+            $.ajax({
+                url: '@(Url.Action("ChangeMaxGain", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',

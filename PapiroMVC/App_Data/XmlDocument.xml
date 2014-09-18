@@ -372,6 +372,11 @@
             <param name="codTypeOfTask"></param>
             <returns></returns>
         </member>
+        <member name="P:PapiroMVC.Models.TaskExecutor.TypeOfQuantity">
+            <summary>
+            tipo di quantità
+            </summary>
+        </member>
         <member name="M:PapiroMVC.Models.SemiRoll.#ctor">
             <summary>
             Constructor
@@ -1175,6 +1180,14 @@
             Is needed  Session["CostDetail"]
             </summary>
             <param name="buyingFormat"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeMaxGain(System.String,System.String,System.String)">
+            <summary>
+            Change the max gain and update cost
+            </summary>
+            <param name="maxGain1"></param>
+            <param name="maxGain2"></param>
             <returns></returns>
         </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePPartFormat(System.String,System.String,System.String)">
@@ -5015,12 +5028,27 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_NO_STACCO">
             <summary>
-              Looks up a localized string similar to Fustellatura.
+              Looks up a localized string similar to Fustellatura - vecchio.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_STACCO">
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURA_SI">
             <summary>
-              Looks up a localized string similar to Fustellatura con stacco.
+              Looks up a localized string similar to Fustellatura - si.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURAROTOLO_Implant">
+            <summary>
+              Looks up a localized string similar to Fustella.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURAROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to .
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodFUSTELLATURAROTOLO_SI">
+            <summary>
+              Looks up a localized string similar to Fustellatura.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodINTERCALATURA_2COPIE">
@@ -9083,17 +9111,27 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURA_NO">
             <summary>
-              Looks up a localized string similar to No fustellatura.
+              Looks up a localized string similar to No.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURA_NO_STACCO">
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURA_SI">
             <summary>
-              Looks up a localized string similar to Senza stacco.
+              Looks up a localized string similar to Si.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURA_STACCO">
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURAROTOLO">
             <summary>
-              Looks up a localized string similar to Con stacco.
+              Looks up a localized string similar to Fustellatura.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURAROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to No.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodFUSTELLATURAROTOLO_SI">
+            <summary>
+              Looks up a localized string similar to Si.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodGrandeFormato">

@@ -95,6 +95,10 @@
 
         @Html.AlgolaAutocompleteFor(model => model.ProductionWaste, "ProductionWasteAutoComplete", "TaskExecutor")
 
+        
+                @Html.AlgolaEditorFor(model => model.CostImplant)
+
+        
         <p>
 
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask=Model.CodTypeOfTask })');">

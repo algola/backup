@@ -381,6 +381,63 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView(cv.PartialViewName + "Result", cv);
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Change the max gain and update cost
+        /// </summary>
+        /// <param name="maxGain1"></param>
+        /// <param name="maxGain2"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangeMaxGain(string maxGain1, string maxGain2, string forceSide)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            var inizio = DateTime.Now;
+
+            if (ModelState.IsValid)
+            {
+                cv.ProductPartPrinting.MaxGain1 = Convert.ToInt32( maxGain1);
+                cv.ProductPartPrinting.MaxGain2 = Convert.ToInt32(maxGain2);
+
+                cv.ProductPartPrinting.ForceSide = Convert.ToInt32(forceSide);
+            }
+
+            cv.Update();
+            Session["CostDetail"] = cv;
+
+            return PartialView(cv.PartialViewName, cv);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         /// <summary>
         /// This Action modifies ProductPart format and Update Cost
         /// </summary>
@@ -405,6 +462,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     prodPart.DCut1 = dCut1 == "" ? 0 : Convert.ToDouble(dCut1);
                     prodPart.DCut2 = dCut2 == "" ? 0 : Convert.ToDouble(dCut2);
                     prodPart.IsDCut = true;
+
                 }
                 catch (Exception)
                 {

@@ -18,46 +18,52 @@ namespace PapiroMVC.Models
         /// </summary>
         /// <param name="codTypeOfTask"></param>
         /// <returns></returns>
-        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExec, string codTypeOfTask)
+        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExecList, string codTypeOfTask)
         {
+
+
 
             if (codTypeOfTask == "TAVOLOCONTROLLO")
             {
-                tskExec = tskExec.OfType<ControlTableRoll>();
+                tskExecList = tskExecList.OfType<ControlTableRoll>();
             }
 
             if (codTypeOfTask == "STAMPARIGIDO")
             {
-                tskExec = tskExec.OfType<PlotterSheet>();
+                tskExecList = tskExecList.OfType<PlotterSheet>();
             }
 
             if (codTypeOfTask == "STAMPAMORBIDO")
             {
-                tskExec = tskExec.OfType<PlotterRoll>();
+                tskExecList = tskExecList.OfType<PlotterRoll>();
             }
 
             if (codTypeOfTask == "STAMPAOFF")
             {
-                tskExec = tskExec.OfType<LithoSheet>();
+                tskExecList = tskExecList.OfType<LithoSheet>();
             }
 
             if (codTypeOfTask == "STAMPAOFFeDIGITALE")
             {
-                var tskExec1 = tskExec.OfType<LithoSheet>();
-                var tskExec2 = tskExec.OfType<DigitalSheet>();
+                var tskExec1 = tskExecList.OfType<LithoSheet>();
+                var tskExec2 = tskExecList.OfType<DigitalSheet>();
 
-                tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
             }
 
             if (codTypeOfTask == "STAMPAETICHROTOLO")
             {
-                var tskExec1 = tskExec.OfType<Flexo>();
-                var tskExec2 = tskExec.OfType<ControlTableRoll>();
+                var tskExec1 = tskExecList.OfType<Flexo>();
+                var tskExec2 = tskExecList.OfType<ControlTableRoll>();
 
-                tskExec = tskExec1.Union<TaskExecutor>(tskExec2);
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
             }
 
-            return tskExec;
+            if (codTypeOfTask == "FUSTELLATURA")
+            {
+                tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
+            }
+            return tskExecList;
 
         }
 
@@ -76,7 +82,10 @@ namespace PapiroMVC.Models
             throw new Exception("Not implemented");
         }
 
-        public CostDetail.QuantityType TypeOfQuantity
+        /// <summary>
+        /// tipo di quantità
+        /// </summary>
+        public virtual CostDetail.QuantityType TypeOfQuantity
         {
             get
             {

@@ -28,18 +28,18 @@ namespace Services
 
             foreach (var item in typeOfTasks)
             {
-                var lstOptToDel = item.OptionTypeOfTasks.Where(x=>x.CodOptionTypeOfTask.Contains("-")).ToArray();
+                var lstOptToDel = item.OptionTypeOfTasks.Where(x => x.CodOptionTypeOfTask.Contains("-")).ToArray();
 
                 foreach (var item2 in lstOptToDel)
                 {
-                    item.OptionTypeOfTasks.Remove(item.OptionTypeOfTasks.FirstOrDefault(y=>y.CodOptionTypeOfTask==item2.CodOptionTypeOfTask));
-                }                
+                    item.OptionTypeOfTasks.Remove(item.OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item2.CodOptionTypeOfTask));
+                }
 
-            }          
+            }
 
-            var tbCode = new TypeOfTask[21];
+            var tbCode = new TypeOfTask[22];
 
-            tbCode[0] = new PIEGA() {CodCategoryOfTask = "PREPOST" };
+            tbCode[0] = new PIEGA() { CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
             tbCode[2] = new VERNICIATURA() { CodCategoryOfTask = "PREPOST" };
             tbCode[3] = new RILEGATURA_BROSSURA() { CodCategoryOfTask = "RILEGATURA" };
@@ -62,6 +62,7 @@ namespace Services
 
             tbCode[19] = new TAVOLOCONTROLLO() { CodCategoryOfTask = "TAVOLOCONTROLLO" };
             tbCode[20] = new STAMPAACALDOROTOLO() { CodCategoryOfTask = "PREPOST" };
+            tbCode[21] = new FUSTELLATURAROTOLO() { CodCategoryOfTask = "PREPOST" };
 
 
             foreach (var item in tbCode)
@@ -87,17 +88,17 @@ namespace Services
                 }
                 else
                 {
-//                    this.Edit(trv);                    
+                    //                    this.Edit(trv);                    
                 }
 
                 var opt = item.OptionTypeOfTasks;
-                
+
                 {
                     foreach (var optItem in opt)
                     {
-                        var y=trv.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == optItem.CodOptionTypeOfTask);
-                        
-                        if (y!=null)
+                        var y = trv.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == optItem.CodOptionTypeOfTask);
+
+                        if (y != null)
                         {
                             //optItem.Copy(y);
                             //this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
@@ -112,9 +113,24 @@ namespace Services
                     }
                 }
 
-                
+
 
                 this.Save();
+            }
+
+            try
+            {
+                var X = Context.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO_STACCO");
+                Context.Entry(X).State = System.Data.Entity.EntityState.Deleted;
+
+                var Y = Context.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == "FUSTELLATURA_STACCO");
+                Context.Entry(Y).State = System.Data.Entity.EntityState.Deleted;
+
+                Context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
             }
 
 

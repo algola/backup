@@ -6,28 +6,28 @@ using PapiroMVC.Models;
 
 namespace Services
 {
-    public class FUSTELLATURA : TypeOfTask
+    public class FUSTELLATURAROTOLO : TypeOfTask
     {
 
         OptionTypeOfTask optTk;
 
-        public FUSTELLATURA()
+        public FUSTELLATURAROTOLO()
         {
-            CodTypeOfTask = "FUSTELLATURA";
+            CodTypeOfTask = "FUSTELLATURAROTOLO";
             TaskName = "Fustellatura";
 
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "FUSTELLATURA";
-            optTk.CodOptionTypeOfTask = "FUSTELLATURA_NO";
+            optTk.CodTypeOfTask = "FUSTELLATURAROTOLO";
+            optTk.CodOptionTypeOfTask = "FUSTELLATURAROTOLO_NO";
             optTk.OptionName = "No fustellatura";
             optTk.IdexOf = 0;
             //No fustellatura
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "FUSTELLATURA";
-            optTk.CodOptionTypeOfTask = "FUSTELLATURA_SI";
+            optTk.CodTypeOfTask = "FUSTELLATURAROTOLO";
+            optTk.CodOptionTypeOfTask = "FUSTELLATURAROTOLO_SI";
             optTk.OptionName = "Con stacco";
             optTk.IdexOf = 1;
             //Con stacco

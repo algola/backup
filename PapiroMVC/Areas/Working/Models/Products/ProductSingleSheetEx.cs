@@ -33,22 +33,34 @@ namespace PapiroMVC.Models
             part.DCut2 = DCut2;
             
             part.ShowDCut = ShowDCut;
-            part.IsDCut = false;
+            part.IsDCut = ShowDCut;
 
             part.ProductPartTasks = this.GetInitalizedPartTask();
 
             ProductPartTask partTask;
+
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
             partTask.Hidden = false;
             partTask.ImplantHidden = false;
             partTask.IndexOf = 10;
             partTask.IndexOf = 1;
 
+            partTask.CodItemGraph = "ST";
 
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
+            partTask.Hidden = false;
+            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
+            partTask.IndexOf = 20;
 
+            partTask.CodItemGraph = "FS";
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
+
+            //grafo diretto del prodotto
+            ProductGraphLinks.Clear();
+
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
 
         }
 

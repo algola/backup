@@ -198,7 +198,8 @@ namespace PapiroMVC.ServiceLayer
 
                     //TEMPORANEOOOOOOOOO
                     //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
-                    if (cv.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail)
+                    if (cv.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail
+                        || cv.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
                     {
                         cv.CodPartPrintingCostDetail = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y => y.CodItemGraph == "ST").Select(z => z.CodCost);
 
@@ -299,6 +300,7 @@ namespace PapiroMVC.ServiceLayer
 
                         break;
 
+                    case CostDetail.CostDetailType.PrePostPressCostDetail:
                     case CostDetail.CostDetailType.ControlTableCostDetail:
 
                         //if (cv.TaskCost.costs.Count == 0)
@@ -356,7 +358,8 @@ namespace PapiroMVC.ServiceLayer
 
                 //TEMPORANEOOOOOOOOO
                 //devo collegare anche i costi di stampa per reperire alcune unformazioni ultili ai calcoli!!!
-                if (cv.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail)
+                if (cv.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail
+                        || cv.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
                 {
                     cv.CodPartPrintingCostDetail = DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y => y.CodItemGraph == "ST").Select(z => z.CodCost);
 

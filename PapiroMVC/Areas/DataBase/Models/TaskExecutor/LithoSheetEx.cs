@@ -18,11 +18,11 @@ namespace PapiroMVC.Models
         {
             get
             {
-                CostDetail.QuantityType ret = CostDetail.QuantityType.NColorPerMqTypeOfQuantity;
+
+                CostDetail.QuantityType ret = CostDetail.QuantityType.NumberTypeOfQuantity;
                 return ret;
             }
         }
-
 
         public override double GetStarts(string codOptionTypeOfTask)
         {
@@ -85,7 +85,6 @@ namespace PapiroMVC.Models
             //ci sarebbe da distinguere se è un b/v oppure n, per ora no bianca e volta assieme
             return Math.Ceiling(cToPrintT / (double)this.PrintingUnit);
         }
-
 
         //get number of impants by type of task!! ex: 2 colors --> 2 implants
         public override double GetImplants(string codOptionTypeOfTask)

@@ -3,7 +3,20 @@
 @model PapiroMVC.Models.PrintingSheetCostDetail
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
-}
+    List<SelectListItem> formatTypes = new List<SelectListItem>();
+
+    formatTypes.Add(new SelectListItem { Value = "0", Text = "Auto" });
+    formatTypes.Add(new SelectListItem { Value = "1", Text = "Corto/Corto" });
+    formatTypes.Add(new SelectListItem { Value = "2", Text = "Corto/Lungo" });
+
+    var pos = (Model.ProductPart.productpartprintings.FirstOrDefault().GainPartOnPrinting.ForceSideOnSide??0).ToString();
+
+    foreach (var item in formatTypes)
+    {
+       item.Selected =  item.Value == pos;
+    }
+    
+    }
 
 <div class="well">
     <div class="row-fluid">
@@ -30,15 +43,18 @@
     <div class="row-fluid">
 
         <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Pose L</h6>
-            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().MaxGain1, new { @class = "input-mini", id = "gain1" })
+            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Pose H</h6>
+            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide1Gain, new { @class = "input-mini", id = "gain1" })
         </div>
 
         <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Pose H</h6>
-            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().MaxGain2, new { @class = "input-mini", id = "gain2" })
+            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Pose L</h6>
+            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide2Gain, new { @class = "input-mini", id = "gain2" })
         </div>
 
+        <div class="span3">
+            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Disp</h6>
+            @Html.DropDownList(pos, formatTypes, new { @class = "input-medium", id = "forceSide" })
+        </div>
     </div>
-
 </div>
