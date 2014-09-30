@@ -80,6 +80,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> IndexOf { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> QuantityMaterial { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }

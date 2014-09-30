@@ -38,6 +38,7 @@ namespace PapiroMVC.Models
             to.CodProductPartPrintableArticle = this.CodProductPartPrintableArticle;
             to.Description = this.Description;
             to.Quantity = this.Quantity;
+            to.QuantityMaterial = this.QuantityMaterial;
             to.UnitCost = this.UnitCost;
             to.TotalCost = this.TotalCost;
             to.ForceZero = this.ForceZero;
@@ -84,6 +85,7 @@ namespace PapiroMVC.Models
             if (!(this.Locked ?? false))
             {
                 this.Quantity = cd.Quantity((double)this.DocumentProduct.Quantity);
+                this.QuantityMaterial = cd.QuantityMaterial((double)this.DocumentProduct.Quantity);
                 this.UnitCost = cd.UnitCost((double)this.DocumentProduct.Quantity).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
 
                 var xx = Convert.ToDouble(UnitCost, Thread.CurrentThread.CurrentUICulture);

@@ -43,8 +43,9 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
 
-            //avviamenti
+            //avviamenti            
             dbS.AddColumnToTable("costdetails", "Starts", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costdetails", "Washes", SchemaDb.Double, "0");
 
             //impianti (numero di Impanti)
             dbS.AddColumnToTable("costdetails", "Implants", SchemaDb.Double, "0");

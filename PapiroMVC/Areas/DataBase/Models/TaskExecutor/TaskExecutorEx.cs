@@ -72,6 +72,11 @@ namespace PapiroMVC.Models
             throw new Exception("Not implemented");
         }
 
+        public virtual double GetWashes(string codOptionTypeOfTask)
+        {
+            return 0;
+        }
+
         public virtual void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
         {
             throw new NotImplementedException();

@@ -96,11 +96,11 @@ namespace PapiroMVC.Models
             //devo ottenere i mq totali di materiale stampato ed uso un trucco... voglio il numero di fogli... lo moltiplico per la resa del materiale e per i mq
             var lastTypeOfQuantity = ComputedBy.TypeOfQuantity;
             ComputedBy.TypeOfQuantity = 0;
-            mqMat = ComputedBy.Quantity(qta) * (GainForRunForPrintableArticle ?? 1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
+            mqMat = ComputedBy.QuantityMaterial(qta) * (GainForRunForPrintableArticle ?? 1) * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() * ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000;
             ComputedBy.TypeOfQuantity = lastTypeOfQuantity;
 
             mlMat = mqMat / (ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1() / 100);
-            runMat = ComputedBy.Quantity(qta) / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1);
+            runMat = ComputedBy.QuantityMaterial(qta) / (double)this.ComputedBy.GainPrintingOnBuying.Makereadies.Average(x => x.CalculatedGain ?? 1);
 
             kgMat = mqMat * thisArticle.Weight ?? 0;
             kgMat /= 1000;

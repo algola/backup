@@ -123,6 +123,7 @@
           <Property Name="CalculatedRun" Type="double" />
           <Property Name="CalculatedKg" Type="double" />
           <Property Name="CalculatedTime" Type="time" Precision="0" />
+          <Property Name="Washes" Type="double" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -147,6 +148,7 @@
           <Property Name="GranTotalCost" Type="char" MaxLength="20" />
           <Property Name="TypeOfCalcolous" Type="int" />
           <Property Name="IndexOf" Type="int" />
+          <Property Name="QuantityMaterial" Type="double" />
         </EntityType>
         <EntityType Name="customersupplierbases">
           <Key>
@@ -558,6 +560,7 @@
           <Property Name="StartingTimePerColor" Type="time" Precision="0" />
           <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
           <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
+          <Property Name="WashingTime" Type="time" Precision="0" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
@@ -2387,6 +2390,7 @@
           <Property Type="Boolean" Name="UseDifferentDeficitOnCostForWeightStepBW" />
           <Property Name="CostPerHourRunning" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="CostPerHourStarting" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="WashingTime" Type="Time" />
         </EntityType>
         <Association Name="FK_TaskEstimatedOn_CodTaskExecutor">
           <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1" />
@@ -3116,6 +3120,7 @@
           <Property Name="GranTotalCost" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TypeOfCalcolous" Type="Int32" />
           <Property Name="IndexOf" Type="Int32" />
+          <Property Name="QuantityMaterial" Type="Double" />
           </EntityType>
         <EntityType Name="DocumentProduct">
           <Key>
@@ -3327,6 +3332,7 @@
           <Property Name="CalculatedRun" Type="Double" />
           <Property Name="CalculatedKg" Type="Double" />
           <Property Name="CalculatedTime" Type="Time" />
+          <Property Name="Washes" Type="Double" />
           </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -3927,6 +3933,7 @@
           <EntitySetMapping Name="taskexecutorestimatedon">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOn)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="WashingTime" ColumnName="WashingTime" />
                 <ScalarProperty Name="CostPerHourStarting" ColumnName="CostPerHourStarting" />
                 <ScalarProperty Name="CostPerHourRunning" ColumnName="CostPerHourRunning" />
                 <ScalarProperty Name="UseDifferentDeficitOnCostForWeightStepBW" ColumnName="UseDifferentDeficitOnCostForWeightStepBW" />
@@ -4678,6 +4685,7 @@
           <EntitySetMapping Name="Costs">
             <EntityTypeMapping TypeName="dbModel.Cost">
               <MappingFragment StoreEntitySet="costs">
+                <ScalarProperty Name="QuantityMaterial" ColumnName="QuantityMaterial" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
                 <ScalarProperty Name="TypeOfCalcolous" ColumnName="TypeOfCalcolous" />
                 <ScalarProperty Name="GranTotalCost" ColumnName="GranTotalCost" />
@@ -4766,6 +4774,7 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="CalculatedTime" ColumnName="CalculatedTime" />
                 <ScalarProperty Name="CalculatedKg" ColumnName="CalculatedKg" />
                 <ScalarProperty Name="CalculatedRun" ColumnName="CalculatedRun" />
@@ -4865,6 +4874,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
                 <ScalarProperty Name="CodTaskExecutorSelected" ColumnName="CodTaskExecutorSelected" />
                 <ScalarProperty Name="CodCost" ColumnName="CodCost" />

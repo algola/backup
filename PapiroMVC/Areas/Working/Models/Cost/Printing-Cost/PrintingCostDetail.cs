@@ -107,6 +107,7 @@ namespace PapiroMVC.Models
                 Error = 1;
 
                 Starts = 0;
+                Washes = 0;
                 //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
                 GainForRun = 0;
                 GainForRunForPrintableArticle = 0;
@@ -123,24 +124,28 @@ namespace PapiroMVC.Models
 
                 //avviamenti con associazione macchina -> tipo di lavorazione
                 //per stampare 1 solo foglio --> offset con + avviamenti o digitale per il fr
-                var startsToPrint = TaskexEcutorSelected.GetStarts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                var washes = TaskexEcutorSelected.GetWashes(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                var starts = TaskexEcutorSelected.GetStarts(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                
                 var makereadies = ProductPartPrinting.CalculatedStarts;
 
                 //per stampare 1 stampato---> tot messe in macchina etc.. oppure resa e calcolo resa media
                 var gain = ProductPartPrinting.CalculatedGain;
 
-                Starts = (int)Math.Ceiling(startsToPrint * makereadies);
+                Washes = (int)Math.Ceiling(washes) - 1;
+                Starts = (int)Math.Ceiling(starts) * makereadies;
+                
                 //questo valore deve essere moltiplicato per la quantità per ottenere la tiratura!!! 
-                GainForRun = (startsToPrint * makereadies / gain);
+                GainForRun = (Starts / gain);
 
                 //questo valore serve per moltiplicarlo per ottenere le battute del materiale necessario
                 GainForRunForPrintableArticle = (makereadies / gain);
 
                 //moltiplicato per ottenere i mq di produzione
-                GainForMqRun = (startsToPrint * ProductPartPrinting.CalculatedMq);
+                GainForMqRun = (Starts * ProductPartPrinting.CalculatedMq);
 
 
-                if (ProductPartPrinting.Part.ProductPartPrintableArticles.FirstOrDefault().RoundTo??true)
+                if (ProductPartPrinting.Part.ProductPartPrintableArticles.FirstOrDefault().RoundTo ?? true)
                 {
                     GainForMqRunForPrintableArticle = (ProductPartPrinting.CalculatedMqPrintingFormat / gain);
                 }

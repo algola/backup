@@ -53,6 +53,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CostPerHourStarting { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.TimeSpan> WashingTime { get; set; }
     
     	[DataMember]
         public virtual TaskExecutor taskexecutors { get; set; }

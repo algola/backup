@@ -93,6 +93,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<System.TimeSpan> CalculatedTime { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> Washes { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

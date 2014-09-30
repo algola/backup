@@ -39,6 +39,7 @@ namespace PapiroMVC.Models
             to.CodProductPart = this.CodProductPart;
             to.CodComputedBy = this.CodComputedBy;
             to.Starts = this.Starts;
+      //      to. = this.Washes;
             to.GainForRun = this.GainForRun;
             to.GainForRunForPrintableArticle = this.GainForRunForPrintableArticle;
             to.GainForMqRun = this.GainForMqRun;
@@ -294,6 +295,34 @@ namespace PapiroMVC.Models
                     break;
                 default:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);
+                    break;
+            }
+
+            return ret;
+        }
+
+        public virtual double QuantityMaterial(double qta)
+        {
+            double ret;
+
+            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            {
+                case QuantityType.RunTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRunForPrintableArticle ?? 0);
+                    break;
+                case QuantityType.MqWorkTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRunForPrintableArticle ?? 0)) / 1000;
+                    break;
+                case QuantityType.WeigthTypeOfQuantity:
+                    ret = Math.Ceiling(qta * this.GainForRunForPrintableArticle ?? 0);
+                    break;
+                case QuantityType.NColorPerMqTypeOfQuantity:
+                    //se la lavorazione è prezzata a mq allora devo moltiplicare per i mq
+                    ret = Math.Truncate(1000 * qta * (this.GainForMqRunForPrintableArticle ?? 0)) / 1000;
+                    break;
+                default:
+                    ret = Math.Ceiling(qta * this.GainForRunForPrintableArticle ?? 0);
                     break;
             }
 

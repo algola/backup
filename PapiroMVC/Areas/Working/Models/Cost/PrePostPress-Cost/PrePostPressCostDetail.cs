@@ -32,7 +32,7 @@ namespace PapiroMVC.Models
             {
                 foreach (var item in Printeres)
                 {
-                    quantita += item.TaskCost.Quantity ?? 0;
+                    quantita += item.TaskCost.QuantityMaterial ?? 0;
 
                     this.TypeOfQuantity = item.TypeOfQuantity;
                 }

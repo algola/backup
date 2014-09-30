@@ -138,7 +138,9 @@ namespace PapiroMVC.Model
             //description of type of cost
             dbS.AddColumnToTable("costs", "Description", SchemaDb.String, "255");
 
-            dbS.AddColumnToTable("costs", "Quantity", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("costs", "Quantity", SchemaDb.Double, "0"); 
+            dbS.AddColumnToTable("costs", "QuantityMaterial", SchemaDb.Double, "0");
+
             dbS.AddColumnToTable("costs", "UnitCost", SchemaDb.String, "20");
             dbS.AddColumnToTable("costs", "TotalCost", SchemaDb.String, "20");
 
