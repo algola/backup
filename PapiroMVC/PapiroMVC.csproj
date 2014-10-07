@@ -53,7 +53,9 @@
     <Reference Include="Braintree-2.28.1">
       <HintPath>..\packages\Braintree.2.28.1\lib\Braintree-2.28.1.dll</HintPath>
     </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
@@ -2077,6 +2079,7 @@
     </Content>
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Report\montaggio.png" />
     <Content Include="Scripts\bootstrap-carousel.js" />
     <Content Include="Scripts\gridsInCreateProduct.js" />
     <Content Include="Scripts\helper-plugins\jquery.ba-throttle-debounce.min.js" />

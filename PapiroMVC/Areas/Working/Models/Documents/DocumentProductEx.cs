@@ -162,7 +162,7 @@ namespace PapiroMVC.Models
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
                     total += (!(item.ForceZero ?? false)) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
-                    
+
                     //      total = Math.Round(total / 100) * 100;
                 }
             }
@@ -413,7 +413,7 @@ namespace PapiroMVC.Models
 
                     cost.Description = productPartTask.ImplantToString(); // "impianti " + str;
                     cost.Description += (productPart.ProductPartName ?? "") == "" ? "" : " (" + productPart.ProductPartName + ")";
-                    cost.Description = cost.Description==""?"": char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
+                    cost.Description = cost.Description == "" ? "" : char.ToUpper(cost.Description[0]) + cost.Description.Substring(1);
 
                     if (productPartTask.CodOptionTypeOfTask.Contains("_NO"))
                     {
@@ -441,6 +441,16 @@ namespace PapiroMVC.Models
         {
 
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductName", this.ProductName.Replace("@", Environment.NewLine)));
+
+            if (this.Product.ProductRefName != null)
+            {
+                doc.AddCustomProperty(new Novacode.CustomProperty("ProductRefName", this.Product.ProductRefName.Replace("@", Environment.NewLine)));
+            }
+            else
+            {
+                doc.AddCustomProperty(new Novacode.CustomProperty("ProductRefName", ""));
+            }
+
             doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", (this.Quantity ?? 0).ToString()));
             doc.AddCustomProperty(new Novacode.CustomProperty("UnitPrice", this.UnitPrice));
             doc.AddCustomProperty(new Novacode.CustomProperty("TotalAmount", this.TotalAmount));

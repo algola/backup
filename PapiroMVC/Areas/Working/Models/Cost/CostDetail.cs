@@ -338,6 +338,8 @@ namespace PapiroMVC.Models
 
         public virtual void MergeField(DocX doc)
         {
+
+
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Starts", this.Starts ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForRun", this.GainForRun ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForRunForPrintableArticle", this.GainForRunForPrintableArticle ?? 0));

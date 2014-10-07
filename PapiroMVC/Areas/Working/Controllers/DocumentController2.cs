@@ -16,6 +16,7 @@ using System.Reflection;
 using PapiroMVC.ServiceLayer;
 using System.Threading;
 using Microsoft.Office.Interop.Word;
+using DocumentFormat.OpenXml.Packaging;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -143,7 +144,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         //}
 
-
         public ActionResult PrintOrder(string codDocument, string reportName)
         {
             //carico l'ordine
@@ -171,10 +171,11 @@ namespace PapiroMVC.Areas.Working.Controllers
             // Store a global reference to the executing assembly.
             g_assembly = Assembly.GetExecutingAssembly();
 
-
             //// Create the document in memory:
             var docMain = DocX.Load(fileNameMain);
 
+            //questo array mi serve per il merge
+            Queue<string> files = new Queue<string>();
 
             order.MergeField(docMain);
             order.OrderProduct.MergeField(docMain);
@@ -204,6 +205,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
                     {
+
                         var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
                         cd.MergeField(docPrintCD);
                         cd.TaskCost.MergeField(docPrintCD);
@@ -218,13 +220,15 @@ namespace PapiroMVC.Areas.Working.Controllers
                         { }
 
                         docPrintCD.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+                        files.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
 
-                        var xxx = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
-                        docMain.InsertDocument(xxx);
+                        #region Merge con Docx     (vecchio metodo)
+                        //var xxx = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
 
-                        docPrintCD.Dispose();
-                        xxx.Dispose();
-
+                        //docMain.InsertDocument(xxx);
+                        //docPrintCD.Dispose();
+                        //xxx.Dispose();
+                        #endregion
 
                     }
                     else
@@ -241,9 +245,52 @@ namespace PapiroMVC.Areas.Working.Controllers
                 // docCost.Dispose();
             }
 
-            docMain.SaveAs(fileNameSaveAs);
+            #region Immagine
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    System.Drawing.Image myImg = System.Drawing.Image.FromFile(Path.Combine(Server.MapPath(@"~/Report"), "montaggio.png"));
 
+            //    myImg.Save(ms, myImg.RawFormat);  // Save your picture in a memory stream.
+            //    ms.Seek(0, SeekOrigin.Begin);
+
+            //    Novacode.Image img = docMain.AddImage(ms); // Create image.
+
+            //    // Insert an emptyParagraph into this document.
+            //    Novacode.Paragraph p = docMain.InsertParagraph("", false);
+
+            //    Picture pic1 = img.CreatePicture();     // Create picture.
+            //    //   pic1.SetPictureShape(BasicShapes.cube); // Set picture shape (if needed)
+
+            //    p.InsertPicture(pic1, 0); // Insert picture into paragraph.
+
+            //}
+            #endregion
+
+            docMain.SaveAs(fileNameSaveAs);
             docMain.Dispose();
+
+            int id = 0;
+            foreach (var file in files.Reverse())
+            {
+                using (WordprocessingDocument myDoc = WordprocessingDocument.Open(fileNameSaveAs, true))
+                {
+                    var altChunkId = "AltChunkId" + id++;
+                    Console.WriteLine(altChunkId);
+                    var mainPart = myDoc.MainDocumentPart;
+                    var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+                    using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+                    {
+                        chunk.FeedData(fileStream);
+                    }
+                    var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+                    altChunk.Id = altChunkId;
+
+                    var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+                    mainPart.Document.Body.InsertAfter(altChunk, last);
+                    mainPart.Document.Save();
+                }
+            }
 
             //// Open a doc file.
             //Application application = new Application();
@@ -411,7 +458,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (ModelState.IsValid)
             {
-                cv.ProductPartPrinting.MaxGain1 = Convert.ToInt32( maxGain1);
+                cv.ProductPartPrinting.MaxGain1 = Convert.ToInt32(maxGain1);
                 cv.ProductPartPrinting.MaxGain2 = Convert.ToInt32(maxGain2);
 
                 cv.ProductPartPrinting.ForceSide = Convert.ToInt32(forceSide);
@@ -422,22 +469,22 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return PartialView(cv.PartialViewName, cv);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// This Action modifies ProductPart format and Update Cost
         /// </summary>
