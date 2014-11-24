@@ -56,6 +56,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<System.TimeSpan> WashingTime { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> UseDifferentCostPerUnit { get; set; }
     
     	[DataMember]
         public virtual TaskExecutor taskexecutors { get; set; }

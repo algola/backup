@@ -134,7 +134,12 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult CloneDocumentProduct(string codDocument, string codDocumentProduct, int newQuantity)
         {
             Document doc = documentRepository.GetSingle(codDocument);
-            var prod = documentRepository.GetDocumentProductsByCodProduct(doc.DocumentProducts.First().CodProduct).FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+
+
+            var codProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct).CodProduct;
+
+
+            var prod = documentRepository.GetDocumentProductsByCodProduct(codProduct).First();
 
             if (newQuantity > 0)
             {

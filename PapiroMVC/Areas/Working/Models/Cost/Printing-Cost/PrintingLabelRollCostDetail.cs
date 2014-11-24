@@ -464,7 +464,7 @@ namespace PapiroMVC.Models
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.Format, dCut1, dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
+                var newBands = this.GetOptimalWidthFlexo(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.Format, ref dCut1,ref  dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
                 foreach (var nB in newBands)
                 {
 
@@ -472,8 +472,10 @@ namespace PapiroMVC.Models
                     ppP.MaxGain1 = 0;
                     ppP.MaxGain2 = 0;
                     ppP.AutoCutParameter = false;
-                    ppP.Part.DCut2 = item.DCut2;
-                    ppP.Part.DCut1 = item.DCut1;
+                    //ppP.Part.DCut2 = item.DCut2;
+                    //ppP.Part.DCut1 = item.DCut1;
+                    ppP.Part.DCut2 = dCut2;
+                    ppP.Part.DCut1 = dCut1;
                     ppP.Update();
 
                     int i = 1;
@@ -679,7 +681,7 @@ namespace PapiroMVC.Models
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2, ppP.Part.Format, dCut1, dCut2, 34);
+                var newBands = this.GetOptimalWidthFlexo(item.Z, item.MaxGain2, ppP.Part.Format, ref dCut1, ref dCut2, 34);
                 foreach (var nB in newBands)
                 {
                     ppP.PrintingFormat = nB.ToString() + "x" + item.Z.ToString();
@@ -914,7 +916,7 @@ namespace PapiroMVC.Models
             return lst;
         }
 
-        public List<double> GetOptimalWidthFlexo(double z, int maxGain2, string SmallerFormat, double DCut1, double DCut2, double maxSide1, int TypeOfDCut1 = 0)
+        public List<double> GetOptimalWidthFlexo(double z, int maxGain2, string SmallerFormat,  ref double DCut1, ref double DCut2, double maxSide1, int TypeOfDCut1 = 0)
         {
 
             var taskexEcutorSelected = TaskExecutors.SingleOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);

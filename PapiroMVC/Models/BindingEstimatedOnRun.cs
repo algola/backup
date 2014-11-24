@@ -65,9 +65,6 @@ namespace PapiroMVC.Models
         public string BindingCost { get; set; }
     	
     	[DataMember] 		
-        public Nullable<bool> UseDifferentCostPerUnit { get; set; }
-    	
-    	[DataMember] 		
         public string BindingStartingCost { get; set; }
     }
 }

@@ -23,9 +23,6 @@ namespace PapiroMVC.Models
         public string CostPerUnit { get; set; }
     	
     	[DataMember] 		
-        public Nullable<bool> UseDifferentCostPerUnit { get; set; }
-    	
-    	[DataMember] 		
         public string StartingCost1 { get; set; }
     	
     	[DataMember] 		

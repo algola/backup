@@ -53,7 +53,7 @@
                 @Html.T(strings, "CreateFlexo")
             </button>
         }
-        if (Model == "STAMPAOFFeDIGITALE")
+        if (Model == "INPIANO")
         {
 
             <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
@@ -67,7 +67,7 @@
 
             <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreatePrePostPress", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
                 <i class="icon-plus"></i>
-                @Html.T(strings, "CreateLithoSheet")
+                @Html.T(strings, "CreatePrePostPress")
             </button>
         }
 

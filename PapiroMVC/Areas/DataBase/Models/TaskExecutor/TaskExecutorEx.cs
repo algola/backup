@@ -63,6 +63,19 @@ namespace PapiroMVC.Models
             {
                 tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
             }
+
+
+            if (codTypeOfTask == "INPIANO")
+            {
+                var tskExec1 = tskExecList.OfType<LithoSheet>();
+                var tskExec2 = tskExecList.OfType<DigitalSheet>();
+                var tskExec3 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
+
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3);
+
+            }
+
+
             return tskExecList;
 
         }

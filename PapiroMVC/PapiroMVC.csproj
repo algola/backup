@@ -2500,11 +2500,11 @@
     <None Include="Properties\PublishProfiles\beta.pubxml" />
     <None Include="Properties\PublishProfiles\new.pubxml" />
     <Content Include="Report\OrderHead.docx" />
-    <Content Include="Report\Cost.docx" />
+    <Content Include="Report\ExternalCostHeader.docx" />
     <Content Include="Report\PrintedRollArticleCostDetail.docx" />
     <Content Include="Report\PrintingLabelRollCostDetail.docx" />
     <Content Include="Report\OrderHead - Copy.docx" />
-    <Content Include="Report\Cost - Copy.docx" />
+    <Content Include="Report\ExternalCost.docx" />
     <Content Include="Report\ControlTableCostDetail.docx" />
     <Content Include="Report\LabelRollHead.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />

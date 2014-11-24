@@ -176,6 +176,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //questo array mi serve per il merge
             Queue<string> files = new Queue<string>();
+            //questo array mi serve per il merge
+            Queue<string> filesExtCost = new Queue<string>();
 
             order.MergeField(docMain);
             order.OrderProduct.MergeField(docMain);
@@ -187,6 +189,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
 
             var costs = order.OrderProduct.Costs.OrderBy(x => x.IndexOf);
+
+            Console.WriteLine(costs);
+
             foreach (var cost in costs)
             {
                 // Create the document in memory:
@@ -205,7 +210,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
                     {
-
                         var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
                         cd.MergeField(docPrintCD);
                         cd.TaskCost.MergeField(docPrintCD);
@@ -233,17 +237,60 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
                     else
                     {
+                        var res = cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString();
+                        Console.WriteLine(res);
+
                     }
                     // docMain.InsertDocument(docCost);
 
                 }
-
-                //}
-                //catch
-                //{ }
-
-                // docCost.Dispose();
             }
+
+            #region costi supplementari
+
+            //apro l'header dei costi supplementari e lo salvo
+
+            var nomeExt = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + order.CodDocument + ".docx");
+            var docECHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx"));
+            docECHeader.SaveAs(nomeExt);
+            files.Enqueue(nomeExt);
+            
+            //0=incluso, 1=Aux, 2=escluso
+            var extCost = costs.Where(x => x.TypeOfCalcolous == 1 && (x.Quantity??0) !=0);
+            //prestampa
+            foreach (var cost in extCost)
+            {
+                var docPrePress = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost.docx"));
+                cost.MergeField(docPrePress);
+                docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+                filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+            }
+
+            int id = 0;
+            foreach (var file in filesExtCost.Reverse())
+            {
+                using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
+                {
+                    var altChunkId = "AltChunkId" + id++;
+                    Console.WriteLine(altChunkId);
+                    var mainPart = myDoc.MainDocumentPart;
+                    var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+                    using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+                    {
+                        chunk.FeedData(fileStream);
+                    }
+                    var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+                    altChunk.Id = altChunkId;
+
+                    var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+                    mainPart.Document.Body.InsertAfter(altChunk, last);
+                    mainPart.Document.Save();
+                }
+            }
+
+
+#endregion 
 
             #region Immagine
             //using (MemoryStream ms = new MemoryStream())
@@ -269,7 +316,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             docMain.SaveAs(fileNameSaveAs);
             docMain.Dispose();
 
-            int id = 0;
+            id = 0;
             foreach (var file in files.Reverse())
             {
                 using (WordprocessingDocument myDoc = WordprocessingDocument.Open(fileNameSaveAs, true))

@@ -61,26 +61,36 @@ namespace PapiroMVC.Models
 
             foreach (var c in Costs)
             {
-                if ((c.TypeOfCalcolous ?? 0) == 1 && c.CostDetails != null && c.CostDetails.Count > 0)
+                if ((c.TypeOfCalcolous ?? 0) == 1 && c.Quantity > 0)
                 {
                     var um = String.Empty;
-                    switch (c.CostDetails.FirstOrDefault().TypeOfQuantity)
+
+                    if (c.CostDetails != null && c.CostDetails.Count > 0)
                     {
-                        //RunTypeOfQuantity = 0,
-                        case 0:
-                            um = FgDescription;
-                            break;
-                        case 1:
-                            um = MqDescription;
-                            break;
-                        case 4:
-                            um = MlDescription;
-                            break;
-                        case 2:
-                        case 5:
-                        default:
-                            um = NrDescription;
-                            break;
+                        switch (c.CostDetails.FirstOrDefault().TypeOfQuantity)
+                        {
+                            //RunTypeOfQuantity = 0,
+                            case 0:
+                                um = FgDescription;
+                                break;
+                            case 1:
+                                um = MqDescription;
+                                break;
+                            case 4:
+                                um = MlDescription;
+                                break;
+                            case 2:
+                            case 5:
+                            default:
+                                um = NrDescription;
+                                break;
+
+                        }
+
+                    }
+                    else
+                    {
+                        um = NrDescription;
 
                     }
 

@@ -28,7 +28,16 @@ namespace PapiroMVC.Models
 
             if (UseDifferentCostPerUnit??false)
             {
-                throw new NotImplementedException();
+                var step = steps.OfType<CostPerRunStep>().Where(x => x.FromUnit <= running && x.ToUnit >= running).FirstOrDefault();
+                if (step != null)
+                {
+                    total += Convert.ToDouble(step.CostPerUnit, Thread.CurrentThread.CurrentUICulture) * running;
+                }
+                else
+                {
+                    total += Convert.ToDouble(CostPerUnit, Thread.CurrentThread.CurrentUICulture) * running;
+                }
+               // throw new NotImplementedException();
             }
             else
             {
