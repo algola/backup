@@ -20,6 +20,19 @@ namespace PapiroMVC.Models
 
     public partial class PrintingLabelRollCostDetail : PrintingCostDetail
     {
+        //this property is used by Die choice
+        public IQueryable<Die> Dies
+        {
+            get;
+            set;
+        }
+
+        //cm
+        public double DieTollerance
+        {
+            get;
+            set;
+        }
 
 
         public override void Copy(CostDetail to)
@@ -252,6 +265,9 @@ namespace PapiroMVC.Models
             }
         }
 
+
+        //dovrei sapere all'interno della
+
         public void FuzzyAlgo()
         {
             List<String> newBuyingFormats = new List<string>();
@@ -266,15 +282,57 @@ namespace PapiroMVC.Models
 
             var ppP = new ProductPartSingleSheetPrinting();
 
+            //Scorro i Dies e se rientrano nelle tolleranze!!!!
+            var dies = new List<Die>();
+            
+
+            ppP.CostDetail = this;
+            ppP.Part = this.ProductPart;
+
+
+            foreach (var die in Dies.Where(x=>x.FormatType == ProductPart.FormatType))
+            {
+                var side1 = ppP.Part.Format.GetSide1();
+                var side2 = ppP.Part.Format.GetSide2();
+
+                if (Math.Abs(die.Format.GetSide1() - side1) <= DieTollerance &&
+                    Math.Abs(die.Format.GetSide2() - side2) <= DieTollerance)
+                {
+
+                    ppP.PrintingFormat = die.PrintingFormat;
+                    ppP.MaxGain1= die.MaxGain1 ?? 0;
+                    ppP.MaxGain2 = die.MaxGain2 ?? 0;
+                    ppP.Update();
+
+
+                    //voglio aggiungere le fustelle valide!!!!
+                    var pHDie = new PrintingHint
+                    {
+                        Format = die.Format,
+                        //DCut1 = ppP.CalculatedDCut1,
+                        DCut1 = die.DCut1,
+                        DCut2 = die.DCut2,
+                        BuyingFormat = die.PrintingFormat,
+
+                        PrintingFormat = die.PrintingFormat,
+                        Description = "h" + die.PrintingFormat.GetSide1() + " z" + (die.PrintingFormat.GetSide2() / 2.54 * 8).ToString() + "*",
+                        CalculatedGain = ppP.CalculatedGain,
+                        GainOnSide1 = die.MaxGain1 ?? 0,
+                        GainOnSide2 = die.MaxGain2 ?? 0,
+                        
+                        DeltaDCut2 = 0
+                    };
+
+                    pHint.Add(pHDie);
+
+                }
+            }
+
+
+
+
             foreach (var buyingFormat in BuyingFormats)
             {
-
-
-                if (buyingFormat.GetSide2() == 40.005)
-                {
-                    Console.Write("ciao");
-                }
-
                 ppP.CostDetail = this;
 
                 ppP.Part = this.ProductPart;
@@ -323,7 +381,7 @@ namespace PapiroMVC.Models
                             CalculatedGain = ppP.CalculatedGain,
                             GainOnSide1 = ppP.CalculatedSide1Gain,
                             GainOnSide2 = ppP.CalculatedSide2Gain,
-                            DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - ppP.CalculatedDCut2)
+                            DeltaDCut2 = Math.Abs((ProductPart.MaxDCut ?? 0) - ppP.CalculatedDCut2)
 
                         };
 
@@ -334,13 +392,8 @@ namespace PapiroMVC.Models
                         }
 
 
-                        if (ppP.CalculatedSide2Gain >= 1 && ppP.MaxGain2==0)
+                        if (ppP.CalculatedSide2Gain >= 1 && ppP.MaxGain2 == 0)
                         {
-
-                            if (buyingFormat.GetSide2() == 40.005)
-                            {
-                                Console.WriteLine("");
-                            }
 
                             //provo ad aggiungere una nuova resa con interspazio negativo
                             var lessZero = Math.Abs((ppP.Part.Format.GetSide2() - (ppP.CalculatedDCut2 * ppP.CalculatedSide2Gain))) / (ppP.CalculatedSide2Gain + 1);
@@ -360,7 +413,7 @@ namespace PapiroMVC.Models
                                     CalculatedGain = ppP.CalculatedGain + ppP.CalculatedSide1Gain,
                                     GainOnSide1 = ppP.CalculatedSide1Gain,
                                     GainOnSide2 = ppP.CalculatedSide2Gain + 1,
-                                    DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - lessZero * (-1))
+                                    DeltaDCut2 = Math.Abs((ProductPart.MaxDCut ?? 0) - lessZero * (-1))
                                 };
 
                             if (!pHint.Contains(pH, new PrintingHintComparer()))
@@ -381,7 +434,6 @@ namespace PapiroMVC.Models
 
             if (PrintingFormat != "" && PrintingFormat != null)
             {
-
                 var pH = new PrintingHint
                     {
                         Format = ppP.Part.Format,
@@ -395,10 +447,8 @@ namespace PapiroMVC.Models
                         CalculatedGain = ProductPartPrinting.CalculatedGain,
                         GainOnSide1 = ProductPartPrinting.CalculatedSide1Gain,
                         GainOnSide2 = ProductPartPrinting.CalculatedSide2Gain,
-                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - ProductPartPrinting.CalculatedDCut2)
-
+                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut ?? 0) - ProductPartPrinting.CalculatedDCut2)
                     };
-
 
                 // se non ho trovato hint e ho almeno un PrintigFormat allora
                 //inserisco il printing format negli hint
@@ -408,7 +458,6 @@ namespace PapiroMVC.Models
                     //ppP.Update();
                     pHint.Add(pH);
                 }
-
             }
 
             //qui inizio a togliere un po di pHint            
@@ -426,7 +475,7 @@ namespace PapiroMVC.Models
                 }
                 else
                 {
-                    var smaller = pHint.Where(x=>x.DCut1 >= x.DCut2 || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();
+                    var smaller = pHint.Where(x => x.DCut1 >= x.DCut2 || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();
                     var pHintLast1 = pHint.Where(x => x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
 
                     var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
@@ -434,15 +483,13 @@ namespace PapiroMVC.Models
 
 
                     pHint1 = pHintLast1.Union(pHintLast2).ToList();
-//                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
+                    //                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
                 }
             }
-
 
             pHint = pHint1.ToList();
 
             //            List<string> aux = pHint.Select(z => z.BuyingFormat).ToList();
-
             List<PrintingHint> zValids = new List<PrintingHint>();// List<double>();
 
             //scorro la lista ed estraggo solo gli z validi
@@ -455,8 +502,6 @@ namespace PapiroMVC.Models
                 }
             }
 
-
-
             ppP.Part = (ProductPart)ppP.Part.Clone();
 
             //bande di carta calcolate semplicemente con la resa, dati gli z validi e il maxWidth della macchina Flexo
@@ -464,7 +509,7 @@ namespace PapiroMVC.Models
             {
                 double dCut1 = 0;
                 double dCut2 = 0;
-                var newBands = this.GetOptimalWidthFlexo(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.Format, ref dCut1,ref  dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
+                var newBands = this.GetOptimalWidthFlexo(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.Format, ref dCut1, ref  dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
                 foreach (var nB in newBands)
                 {
 
@@ -472,8 +517,6 @@ namespace PapiroMVC.Models
                     ppP.MaxGain1 = 0;
                     ppP.MaxGain2 = 0;
                     ppP.AutoCutParameter = false;
-                    //ppP.Part.DCut2 = item.DCut2;
-                    //ppP.Part.DCut1 = item.DCut1;
                     ppP.Part.DCut2 = dCut2;
                     ppP.Part.DCut1 = dCut1;
                     ppP.Update();
@@ -493,24 +536,25 @@ namespace PapiroMVC.Models
                     var pH = new PrintingHint
                     {
                         Format = ppP.Part.Format,
-                        //DCut1 = ppP.CalculatedDCut1,
                         DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
-                        DCut2 = item.DCut2?? ppP.CalculatedDCut2,
+                        DCut2 = item.DCut2 ?? ppP.CalculatedDCut2,
                         BuyingFormat = ppP.PrintingFormat,
                         PrintingFormat = ppP.PrintingFormat,
                         Description = "h" + ppP.PrintingFormat.GetSide1() + " z" + (ppP.PrintingFormat.GetSide2() / 2.54 * 8).ToString(),
                         CalculatedGain = ppP.CalculatedGain,
                         GainOnSide1 = ppP.CalculatedSide1Gain,
                         GainOnSide2 = ppP.CalculatedSide2Gain,
-                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut??0) - (item.DCut2?? ppP.CalculatedDCut2))
+                        DeltaDCut2 = Math.Abs((ProductPart.MaxDCut ?? 0) - (item.DCut2 ?? ppP.CalculatedDCut2))
 
                     };
 
-                    pHint.Add(pH);
+                    if (!pHint.Contains(pH, new PrintingHintComparer()))
+                    {
+                        pHint.Add(pH);
+                    }
                 }
             }
 
-            Console.WriteLine(BuyingFormat);
 
             PrintingHints = pHint;
             BuyingFormats = pHint.Select(x => x.BuyingFormat).ToList();
@@ -766,7 +810,7 @@ namespace PapiroMVC.Models
             mlMat = Math.Ceiling(mtRuns + mtWaste);
             CalculatedMl = mlMat;
 
-            mqMat =  Math.Ceiling(base.Quantity(qta));
+            mqMat = Math.Ceiling(base.Quantity(qta));
             CalculatedMq = mqMat;
 
             kgMat = 0;
@@ -916,7 +960,7 @@ namespace PapiroMVC.Models
             return lst;
         }
 
-        public List<double> GetOptimalWidthFlexo(double z, int maxGain2, string SmallerFormat,  ref double DCut1, ref double DCut2, double maxSide1, int TypeOfDCut1 = 0)
+        public List<double> GetOptimalWidthFlexo(double z, int maxGain2, string SmallerFormat, ref double DCut1, ref double DCut2, double maxSide1, int TypeOfDCut1 = 0)
         {
 
             var taskexEcutorSelected = TaskExecutors.SingleOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
@@ -1020,8 +1064,8 @@ namespace PapiroMVC.Models
 
                     TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
                     totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
-                
-                
+
+
                 }
                 catch (NotImplementedException)
                 {

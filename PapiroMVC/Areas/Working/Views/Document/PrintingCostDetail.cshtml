@@ -62,11 +62,12 @@
                         Html.RenderPartial("_PrintingRollCostDetail", Model);
                         break;
 
-                        @*                            case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+                        @*  case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
                                 break;
                             case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
                                 break;
-                        *@          default:
+                        *@
+                    default:
                         break;
                 }}
 
@@ -75,7 +76,7 @@
         }
         else
         {
-            if (Model.Error==3)
+            if (Model.Error == 3)
             {
                 <p>***Errore nel format stampa</p>
             }

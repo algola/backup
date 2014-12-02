@@ -818,6 +818,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             switch (cv.TypeOfCostDetail)
             {
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+
+                    ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
+                    ((PrintingLabelRollCostDetail)cv).Dies = articleRepository.GetAll().OfType<Die>();
                     ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;

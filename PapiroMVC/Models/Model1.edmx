@@ -6,7 +6,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="dbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="dbModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="articlecost">
           <Key>
             <PropertyRef Name="CodArticleCost" />
@@ -345,6 +345,7 @@
           <Property Name="MaxDCut" Type="double" />
           <Property Name="MinDCut" Type="double" />
           <Property Name="TypeOfDCut1" Type="int" />
+          <Property Name="FormatType" Type="int" />
         </EntityType>
         <EntityType Name="productpartsprintablearticle">
           <Key>
@@ -2787,6 +2788,7 @@
           <Property Name="MaxDCut" Type="Double" />
           <Property Name="MinDCut" Type="Double" />
           <Property Name="TypeOfDCut1" Type="Int32" />
+          <Property Name="FormatType" Type="Int32" />
           </EntityType>
         <EntityType Name="ProductPartsPrintableArticle" Abstract="true">
           <Key>
@@ -4440,6 +4442,7 @@
           <EntitySetMapping Name="ProductParts">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPart)">
               <MappingFragment StoreEntitySet="productparts">
+                <ScalarProperty Name="FormatType" ColumnName="FormatType" />
                 <ScalarProperty Name="TypeOfDCut1" ColumnName="TypeOfDCut1" />
                 <ScalarProperty Name="MinDCut" ColumnName="MinDCut" />
                 <ScalarProperty Name="MaxDCut" ColumnName="MaxDCut" />
@@ -5417,7 +5420,7 @@
         <InheritanceConnector EntityType="dbModel.BindingAvarageRunPerRunStep" />
         <InheritanceConnector EntityType="dbModel.BindingCostPerRunStep" />
         <AssociationConnector Association="dbModel.FK_Steps_CodTaskEstimatedOn" />
-        <EntityTypeShape EntityType="dbModel.ProductPart" Width="1.5" PointX="19.75" PointY="14.125" />
+        <EntityTypeShape EntityType="dbModel.ProductPart" Width="1.5" PointX="19.75" PointY="13.125" />
         <EntityTypeShape EntityType="dbModel.ProductPartsPrintableArticle" Width="2.375" PointX="9.375" PointY="20.75" />
         <EntityTypeShape EntityType="dbModel.ProductPartTask" Width="2" PointX="18" PointY="20.75" />
         <EntityTypeShape EntityType="dbModel.Product" Width="1.5" PointX="22.375" PointY="10.625" />

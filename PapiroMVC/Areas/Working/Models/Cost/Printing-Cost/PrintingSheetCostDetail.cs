@@ -164,9 +164,18 @@ namespace PapiroMVC.Models
         {
             base.UpdateCoeff();
 
+            long paperFirstStartL = 0;
+            long paperSecondStart = 0;
+
             //questi valori dipendono da quanti sono i colori
-            var paperFirstStartL = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart;
-            var paperSecondStart = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart;
+            try
+            {
+                paperFirstStartL = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart??0;
+                paperSecondStart = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart??0;
+            }
+            catch (Exception)
+            {
+            }
 
             var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
             RollChanges = 0;
@@ -174,7 +183,7 @@ namespace PapiroMVC.Models
             //calcolo di quanti impianti sono necessari!!!!
             Implants = TaskexEcutorSelected.GetImplants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
 
-            var fgWaste = (paperFirstStartL ?? 0) + (RollChanges * 0 ?? 0); //lo zero va sostituito con i cambi lastra!!!!
+            var fgWaste = paperFirstStartL + (RollChanges * 0 ?? 0); //lo zero va sostituito con i cambi lastra!!!!
 
         }
 
@@ -195,27 +204,36 @@ namespace PapiroMVC.Models
             double runMat = 0;
             double kgMat = 0;
 
-            var proof1 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart;
-            var proof2 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart;
+            Nullable<long> proof1=0;
+            Nullable<long> proof2=0;
+
+            try
+            {
+                proof1 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart;
+                proof2 = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart;
+            }
+            catch (Exception)
+            {
+            }
 
             var runs = Math.Ceiling(QuantityProp * this.GainForRun ?? 0);
-            var waste = (proof1 ?? 0) + ((Starts -1) * proof2 ?? 0);
+            var waste = (proof1 ?? 0) + ((Starts - 1) * proof2 ?? 0);
 
             CalculatedMl = 0;
 
-            mqMat = Math.Ceiling((runs + waste) * ProductPart.Format.GetSide1() * ProductPart.Format.GetSide2()/10000);
+            mqMat = Math.Ceiling((runs + waste) * ProductPart.Format.GetSide1() * ProductPart.Format.GetSide2() / 10000);
             CalculatedMq = mqMat;
 
             kgMat = 0;
             CalculatedKg = kgMat;
 
-            CalculatedRun = runs+waste;
+            CalculatedRun = runs + waste;
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
                 case QuantityType.RunTypeOfQuantity:
 
-                    ret = CalculatedRun??0;
+                    ret = CalculatedRun ?? 0;
                     break;
 
                 default:

@@ -68,7 +68,8 @@
     <table class="table" id="htmlTable">
         <thead>
             <tr>
-                <th>Format</th>
+                <th>F.to</th>
+                <th>Sviluppo</th>
                 <th>Int.s Banda</th>
                 <th>Int.s Passo</th>
                 <th>Pose</th>
@@ -78,6 +79,7 @@
             @foreach (var i in Model.PrintingHints)
             {
             <tr>
+                <td class="padding-2 no-padding-bottom">@i.Format</td>
                 <td class="padding-2 no-padding-bottom">@i.Description</td>
                 <td class="padding-2 no-padding-bottom">@i.BuyingFormat</td>
                 <td class="padding-2 no-padding-bottom">@i.DCut1</td>
@@ -133,7 +135,7 @@
 
         var buyingFormat = "";
         $("#ddBuyingFormat option:selected").each(function () {
-            buyingFormat += $(this)[0].value;
+            buyingFormat += $(this)[0].value;            
         });
 
         //data are collected into
@@ -338,7 +340,7 @@
         //sposto la tabella a dx
         myDiv1Para.appendTo('#printingHintTable');
 
-        $('#htmlTable td:nth-child(2)').toggle();
+        $('#htmlTable td:nth-child(3)').toggle();
         $('#ddBuyingFormat').toggle();
 
 
@@ -346,11 +348,14 @@
             $(".highlight").removeClass("highlight");
             $(this).addClass("highlight");
 
-            var pFormat = $(this).closest('tr').find('td:eq(1)').text();
-            var dCut1 = $(this).closest('tr').find('td:eq(2)').text();
-            var dCut2 = $(this).closest('tr').find('td:eq(3)').text();
+            var format = $(this).closest('tr').find('td:eq(0)').text();
+            var pFormat = $(this).closest('tr').find('td:eq(2)').text();
+            var dCut1 = $(this).closest('tr').find('td:eq(3)').text();
+            var dCut2 = $(this).closest('tr').find('td:eq(4)').text();
 //            var gain = $(this).closest('tr').find('td:eq(4)').text();
 
+
+            $("#ddPartFormat").val(format)
             $('#ddBuyingFormat').val(pFormat);
             $('#ddPartDCut1').val(dCut1);
             $('#ddPartDCut2').val(dCut2);
@@ -371,9 +376,9 @@
             //var val = $("td:eq(" + '1' + ")", this).text().indexOf(searchTextBF) !== -1;
             //val = val && $("td:eq(" + '2' + ")", this).text().indexOf(searchTextIB) !== -1;
 
-            var val = $("td:eq(" + '1' + ")", this).text() == searchTextBF;
-            val = val && $("td:eq(" + '2' + ")", this).text() == searchTextIB;
-            val = val && $("td:eq(" + '3' + ")", this).text() == searchTextIP;
+            var val = $("td:eq(" + '2' + ")", this).text() == searchTextBF;
+            val = val && $("td:eq(" + '3' + ")", this).text() == searchTextIB;
+            val = val && $("td:eq(" + '4' + ")", this).text() == searchTextIP;
 
             return val;
         }).closest("tr").addClass("highlight");

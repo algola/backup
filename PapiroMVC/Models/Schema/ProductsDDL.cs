@@ -107,9 +107,11 @@ namespace PapiroMVC.Model
             //2 = must be = 0
             dbS.AddColumnToTable("productparts", "TypeOfDCut1", SchemaDb.Int, "0");
 
-
             //0 or Null --> Free //1 = SideOnSide //2 = !SideOnSide
             dbS.AddColumnToTable("productparts", "SideOnSide", SchemaDb.Int, "0");
+
+            // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
+            dbS.AddColumnToTable("productparts", "FormatType", SchemaDb.Int, "0");
 
             //ProductPartBlockSheet
 

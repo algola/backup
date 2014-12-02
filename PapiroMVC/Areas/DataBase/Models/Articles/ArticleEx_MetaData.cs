@@ -10,7 +10,7 @@ namespace PapiroMVC.Models
 {    
     public partial class Article_MetaData
     {
-        public System.DateTime TimeStampTable { get; set; }
+        //public System.DateTime TimeStampTable { get; set; }
         
 //        [Required(ErrorMessageResourceType = typeof(Strings), ErrorMessageResourceName = "RequiredField")]
         [DisplayNameLocalized(typeof(ResArticle), "CodArticle")]

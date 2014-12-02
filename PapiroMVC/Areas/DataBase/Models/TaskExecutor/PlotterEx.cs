@@ -27,6 +27,12 @@ namespace PapiroMVC.Models
             }
         }
 
+
+        public override double GetImplants(string codOptionTypeOfTask)
+        {
+                return 0;
+        }
+
         #region Added Properties
 
         #endregion

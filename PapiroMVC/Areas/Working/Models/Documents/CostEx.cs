@@ -425,6 +425,13 @@ namespace PapiroMVC.Models
 
                             cv.ProductPart = productPart;
 
+
+
+                            ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
+                            //qui voglio solo le fustelle flexo e semiroll
+                            ((PrintingLabelRollCostDetail)cv).Dies = articles.OfType<Die>();
+
+                            //search valid formats
                             ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
 
 

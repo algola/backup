@@ -735,7 +735,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
 
                     c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
-                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+//                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+
+                    c.PrintingFormat = c.Width + "x" + (Convert.ToDouble(c.Z) / 8) * 2.54;
 
                     articleRepository.Add(c);
 
@@ -763,8 +765,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-
-                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+                    c.PrintingFormat = c.Width + "x" + Convert.ToDouble(c.Z) / 8 * 2.54;
 
                     articleRepository.Edit(c);
                     articleRepository.Save();

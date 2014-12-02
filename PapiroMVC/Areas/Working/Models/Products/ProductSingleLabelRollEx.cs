@@ -41,12 +41,25 @@ namespace PapiroMVC.Models
             part.MinDCut = 0.2;
             part.TypeOfDCut1 = 0;
 
+            if (CodMenuProduct == "EtichetteRotolo")
+            {
+                // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
+                part.FormatType = 0; //quadrata 
+            }
+
+            if (CodMenuProduct == "EtichetteSagRotolo")
+            {
+                // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
+                part.FormatType = 2; //sagomata 
+            }
+
             if (CodMenuProduct == "FasceGommateRotolo")
             {
                 part.HaveDCutLimit = true;
                 part.MaxDCut = 0;
                 part.MinDCut = 0;
-                part.TypeOfDCut1 = 2; // must be 0;                
+                part.TypeOfDCut1 = 2; // must be 0;   
+                part.FormatType = -1; //nessuna fustella 
             }
 
             part.ProductPartTasks = this.GetInitalizedPartTask();

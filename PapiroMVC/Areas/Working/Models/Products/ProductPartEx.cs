@@ -49,7 +49,8 @@ namespace PapiroMVC.Models
             to.MaxDCut = this.MaxDCut;
             to.MinDCut = this.MinDCut;
             to.TypeOfDCut1 = this.TypeOfDCut1;
-
+            to.FormatType = this.FormatType;
+        
         }
 
 
