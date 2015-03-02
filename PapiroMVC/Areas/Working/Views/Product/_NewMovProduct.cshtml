@@ -1,0 +1,46 @@
+﻿@model PapiroMVC.Models.NewMovViewModel
+@using PapiroMVC.Validation
+@using PapiroMVC.Models
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+
+    @using (Ajax.BeginForm("Action", "Product", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+
+        <div id='_WarehouseArticleMov'>
+            @Html.Partial("_WarehouseArticleMov", Model)
+        </div>
+
+        <br />
+        <p>
+
+            <input class="btn" type="submit" name="NewMovProductLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductLoad")' />
+            <input class="btn" type="submit" name="NewMovProductUnLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductUnLoad")' />
+            <input class="btn" type="submit" name="NewMovProductReserve" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductReserve")' />
+            <input class="btn" type="submit" name="NewMovProductOrder" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductOrder")' />
+
+        </p>
+        <br />
+
+        <div id='_WarehouseArticle'>
+            @Html.Partial("_WarehouseArticleInfo", Model)
+        </div>
+
+
+    }
+
+</div>
+

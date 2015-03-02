@@ -27,7 +27,7 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "PrintingTypeTooltip")]
         public string PrintingType { get; set; }
         
-        //[DisplayNameLocalized(typeof(ResProductPart), "Format")]
+        [DisplayNameLocalized(typeof(ResProductPart), "Format")]
         [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }

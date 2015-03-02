@@ -10,6 +10,8 @@ namespace PapiroMVC.Models
 {
     public partial class CustomerSupplier_MetaData
     {
+
+        [NoValidation]
         public System.DateTime TimeStampTable { get; set; }
 
         //soluzione per gestire il multilingua!!!!

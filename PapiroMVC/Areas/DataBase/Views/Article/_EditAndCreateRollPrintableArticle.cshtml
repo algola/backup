@@ -28,9 +28,9 @@
         @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
         @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
         @Html.HiddenFor(model => model.Article.Tags)
-        
-        @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)        
-        
+
+        @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)
+
         @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
 
         @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
@@ -44,6 +44,13 @@
             @Html.Partial("_RollPrintableArticleStandardCost", Model)
         </div>
         <br />
+
+        <div id='_WarehouseArticle'>
+            @Html.Partial("_WarehouseArticle", Model)
+        </div>
+        <br />
+
+
         <p>
             <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new { Area = "Database" })');">
                 <i class="icon-arrow-left"></i>

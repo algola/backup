@@ -78,7 +78,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 var cost = a.ArticleCosts.FirstOrDefault();
 
                 ((RollPrintableArticleCost)cost).CostPerMq = x.CostPerMq;
-                a.Tags = x.Tags!=String.Empty?x.Tags:a.Tags;
+                a.Tags = x.Tags != String.Empty ? x.Tags : a.Tags;
                 articleRepository.Edit(a);
                 articleRepository.Save();
             }
@@ -184,14 +184,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     || x.TypeOfCostToModify == SheetPrintableArticleAutoChanges.ProcessCostType.PackedCost)
                 {
                     var cost = a.ArticleCosts.FirstOrDefault(y => y.TypeOfArticleCost == ArticleCost.ArticleCostType.SheetPrintableArticlePakedCost);
-                    ((SheetPrintableArticleCost)cost).CostPerKg = x.CostPerKg;                
+                    ((SheetPrintableArticleCost)cost).CostPerKg = x.CostPerKg;
                 }
 
                 a.Tags = x.Tags != String.Empty ? x.Tags : a.Tags;
                 articleRepository.Edit(a);
                 articleRepository.Save();
             }
-            
+
             return Json(new
             {
                 message = "ok"
@@ -959,6 +959,281 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+
+        //[HttpParamAction]
+        //[AuthorizeUser]
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public ActionResult CreateWarehouseArticleMov(WarehouseArticleMov c)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+
+        //            c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
+        //            //                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+
+        //            c.PrintingFormat = c.Width + "x" + (Convert.ToDouble(c.Z) / 8) * 2.54;
+
+        //            articleRepository.Add(c);
+
+        //            articleRepository.Save();
+        //            return Json(new { redirectUrl = Url.Action("IndexDie") });
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+        //        }
+        //    }
+
+        //    //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+        //    ViewBag.ActionMethod = "CreateDieFlexo";
+        //    return PartialView("_EditAndCreateDieFlexo", c);
+
+        //}
+
+        public ActionResult WarehouseMovListProduct(string codProduct, GridSettings gridSettings)
+        {
+            var q = warehouseRepository.GetAllMovsProduct(codProduct);
+
+            string warehouseName = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(warehouseName))
+            {
+                q = q.Where(c => c.WarehouseArticle.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodWarehouseArticleMov,
+                        cell = new string[] 
+                        {              
+                            a.CodWarehouseArticleMov,
+                            (a.Date??DateTime.Now).ToString(),
+                            a.WarehouseArticle.WarehouseSpec.WarehouseName,
+                            a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
+                            a.Quantity==null?"":a.Quantity.ToString(),       
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult WarehouseMovListProducts(GridSettings gridSettings)
+        {
+            var q = warehouseRepository.GetAllMovsProduct(null).Where(x => x.WarehouseArticle.CodProduct != null);
+
+            string warehouseName = string.Empty;
+            string date = string.Empty;
+            string type = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
+
+                date = gridSettings.where.rules.Any(r => r.field == "Date") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "Date").data : string.Empty;
+
+                type = gridSettings.where.rules.Any(r => r.field == "TypeOfMov") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfMov").data : string.Empty;
+
+            }
+
+            if (!string.IsNullOrEmpty(warehouseName))
+            {
+                q = q.Where(c => c.WarehouseArticle.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
+            }
+
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                try
+                {
+                    DateTime dt = Convert.ToDateTime(date);
+                    q = q.Where(c => DateTime.Compare(c.Date ?? DateTime.Now, dt) == 0);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string unloadType = resman.GetString("UnloadType");//0
+            string loadType = resman.GetString("LoadType");//1
+            string orderType = resman.GetString("OrderType");//2
+            string reserveType = resman.GetString("ReserveType");//3
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                Boolean isLoad = false, isUnload = false, isOrder = false, isReserve = false;
+
+                //to match with language we have to compare filter with resource
+                isUnload = (unloadType.ToLower().StartsWith(type.ToLower()));
+                isLoad = (loadType.ToLower().StartsWith(type.ToLower()));
+                isOrder = (orderType.ToLower().StartsWith(type.ToLower()));
+                isReserve = (reserveType.ToLower().StartsWith(type.ToLower()));
+
+                if (isUnload)
+                {
+                    q = q.Where(x => x.TypeOfMov == 0);
+                }
+
+                if (isLoad)
+                {
+                    q = q.Where(x => x.TypeOfMov == 1);
+                    var s = q.ToList();
+                }
+
+                if (isOrder)
+                {
+                    q = q.Where(x => x.TypeOfMov == 2);
+                }
+
+                if (isReserve)
+                {
+                    q = q.Where(x => x.TypeOfMov == 3);
+                }
+            }
+
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodWarehouseArticleMov,
+                        cell = new string[] 
+                        {              
+                            a.CodWarehouseArticleMov,
+                            (a.Date??DateTime.Now).ToString(),
+                            a.WarehouseArticle.WarehouseSpec.WarehouseName,
+                            a.WarehouseArticle.Product.ProductName,
+                            a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
+                            a.Quantity==null?"":a.Quantity.ToString(),       
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult WarehouseMovListArticle(string codArticle, GridSettings gridSettings)
+        {
+            var q = warehouseRepository.GetAllMovsArticle(codArticle);
+
+            string warehouseName = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(warehouseName))
+            {
+                q = q.Where(c => c.WarehouseArticle.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodWarehouseArticleMov,
+                        cell = new string[] 
+                        {              
+                            a.CodWarehouseArticleMov,
+                            (a.Date??DateTime.Now).ToString(),
+                            a.WarehouseArticle.WarehouseSpec.WarehouseName,
+                            a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
+                            a.Quantity==null?"":a.Quantity.ToString(),       
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
         public ActionResult SheetPrintableArticleListPerProduct(GridSettings gridSettings)
         {
             var q = PrintableList(gridSettings).OfType<SheetPrintableArticle>().Select(p => new
@@ -1132,7 +1407,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         id = a.CodArticle,
                         cell = new string[] 
-                        {                       
+                        {              
                             a.CodArticle,
                             a.CodArticle,
                             a.TypeOfMaterial,
@@ -1143,6 +1418,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CustomerSupplierMaker.BusinessName,
                             ((RigidPrintableArticleStandardCost)a.ArticleCosts.First(x => 
                                 x.TypeOfArticleCost == ArticleCost.ArticleCostType.RigidPrintableArticleStandardCost)).CostPerMq,
+                        
+                            
                         }
                     }
                 ).ToArray()

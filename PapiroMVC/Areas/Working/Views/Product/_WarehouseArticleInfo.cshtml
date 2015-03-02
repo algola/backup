@@ -1,0 +1,102 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.NewMovViewModel
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseTitle");
+    var x = Model.ArticleOrProduct.Product.ProductName;
+}
+
+<fieldset>
+    <legend>
+        @ViewBag.Title
+    </legend>
+
+    @Html.HiddenFor(model => model.ArticleOrProduct.CodWarehouseArticle)
+
+    @Html.HiddenFor(model => model.ArticleOrProduct.UnitOfMeasureStore)
+    @Html.HiddenFor(model => model.ArticleOrProduct.UnitOfMeasureMov)
+    @Html.HiddenFor(model => model.ArticleOrProduct.UmConversion)
+
+@x
+    <br />
+
+    @Html.AlgolaEditorFor(model => model.ArticleOrProduct.QuantityOnHand, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.ArticleOrProduct.Available, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.ArticleOrProduct.PotentialQuantityOnHand, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.ArticleOrProduct.PotentialAvailable, readOnly: true)
+
+    @Html.HiddenFor(model => model.ArticleOrProduct.TimeStampTable)
+    @Html.HiddenFor(model => model.ArticleOrProduct.CodArticle)
+
+    @Html.AlgolaEditorFor(model => model.ArticleOrProduct.MinQuantity)
+
+    <button class="btn" type="submit" id="updateMinQuantity">
+        @HttpContext.GetLocalResourceObject(strings, "UpdateMinQuantity")
+    </button>
+
+</fieldset>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+        $("#Mov_CodWarehouseArticle, #Mov_WarehouseArticle_CodWarehouse, #Mov_WarehouseArticle_CodProduct").change(function (event) {
+
+            event.preventDefault();
+
+            var warehouse = "";
+            $("#Mov_WarehouseArticle_CodWarehouse option:selected").each(function () {
+                warehouse += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codWarehouseArticle: warehouse,
+                codWarehouse: $("#Mov_WarehouseArticle_CodWarehouse").val(),
+                codProduct: $("#Mov_WarehouseArticle_CodProduct").val()
+            };
+
+            $.ajax({
+                url: '@(Url.Action("UpdateWarehouseArticleInfo", "Product", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#_WarehouseArticle').html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                },
+            });
+        });
+
+    });
+
+    $("#updateMinQuantity").click(function (event) {
+
+        event.preventDefault();
+        //data are collected into
+        var dataToPass = {
+            codWarehouseArticle: $("#ArticleOrProduct_CodWarehouseArticle").val(),
+            minQuantity: $("#ArticleOrProduct_MinQuantity").val()
+        };
+
+        $.ajax({
+            url: '@(Url.Action("UpdateWarehouseMinQuantity", "Product", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#_WarehouseArticle').html(data);
+
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    });
+
+</script>

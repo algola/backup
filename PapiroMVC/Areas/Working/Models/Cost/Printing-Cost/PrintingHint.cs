@@ -49,12 +49,22 @@ namespace PapiroMVC.Models
 
         public double DeltaDCut2 { get; set; }
 
-        public double Z
+
+        public bool ZMetric {get;set;}
+
+        public int Z
         {
             get
             {
-                double a = PrintingFormat.GetSide2() / 2.54;
-                return a*8;
+                if (!ZMetric)
+                {
+                    double a = PrintingFormat.GetSide2() / 2.54;
+                    return Convert.ToInt32( a * 8);                    
+                }
+                else
+                {
+                    return Convert.ToInt32( PrintingFormat.GetSide2() / 3.1415 * 10);
+                }
             }
         }
 

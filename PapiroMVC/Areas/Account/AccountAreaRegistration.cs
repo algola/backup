@@ -25,12 +25,12 @@ namespace PapiroMVC.Areas.Account
 
             DictionaryRouteValueTranslationProvider translationProvider = new DictionaryRouteValueTranslationProvider(
                 new List<RouteValueTranslation> {
-                    new RouteValueTranslation(cultureIT, "Login", "login-gestionale-per-stampa-offset-e-digitale"),
-                    new RouteValueTranslation(cultureIT, "RecoveryPassword", "recupera-la-password-per-il-gestionale-per-la-stampa"),
-                    new RouteValueTranslation(cultureIT, "Register", "registrazione-di-un-nuovo-centro-stampa"),
-                    new RouteValueTranslation(cultureIT, "registerLink", "per-la-stampa-offset-e-digitale"),
-                    new RouteValueTranslation(cultureIT, "loginLink", "gratis"),
-                    new RouteValueTranslation(cultureIT, "EmailSent", "password-per-il-gestionale-inviata"),
+                    //new RouteValueTranslation(cultureIT, "Login", "login"),
+                    //new RouteValueTranslation(cultureIT, "RecoveryPassword", "recupera-la-password"),
+                    //new RouteValueTranslation(cultureIT, "Register", "registrazione-di-un-nuovo-utente"),
+                    //new RouteValueTranslation(cultureIT, "registerLink", "link-per-registrarsi"),
+                    //new RouteValueTranslation(cultureIT, "loginLink", "link-per-loggarsi"),
+                    //new RouteValueTranslation(cultureIT, "EmailSent", "password-per-il-gestionale-inviata"),
                 }
             );
 

@@ -113,7 +113,7 @@ namespace PapiroMVC.Models
                 {
                     foreach (var bF in BuyingFormats)
                     {
-                        lst.Add(new ProductFormatName { FormatName = "h" + bF.GetSide1() + " z" + (bF.GetSide2() / 2.54 * 8).ToString(), CodFormat = bF });
+                        lst.Add(new ProductFormatName { FormatName = "h" + bF.GetSide1() + " z" + (((Flexo)curTsk).GetZFromCm(bF.GetSide2() / 2.54 * 8)).ToString(), CodFormat = bF });
                     }
                 }
                 else

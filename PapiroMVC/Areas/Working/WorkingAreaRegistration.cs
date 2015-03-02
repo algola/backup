@@ -23,11 +23,11 @@ namespace PapiroMVC.Areas.Working
 
             DictionaryRouteValueTranslationProvider translationProvider = new DictionaryRouteValueTranslationProvider(
                 new List<RouteValueTranslation> {
-                    new RouteValueTranslation(cultureIT, "Document", "preventivi-commesse-tipografia"),
-                    new RouteValueTranslation(cultureIT, "ListEstimate", "elenco-documenti-centro-stampa"),
-                    new RouteValueTranslation(cultureIT, "CreateProduct", "inserimento-di-uno-stampato"),
-                    new RouteValueTranslation(cultureIT, "Error", "errore"),
-                    new RouteValueTranslation(cultureIT, "NoTaskEstimatedOnException", "manca-definizione-costo")
+                    //new RouteValueTranslation(cultureIT, "Document", "preventivi-commesse-tipografia"),
+                    //new RouteValueTranslation(cultureIT, "ListEstimate", "elenco-documenti-centro-stampa"),
+                    //new RouteValueTranslation(cultureIT, "CreateProduct", "inserimento-di-uno-stampato"),
+                    //new RouteValueTranslation(cultureIT, "Error", "errore"),
+                    //new RouteValueTranslation(cultureIT, "NoTaskEstimatedOnException", "manca-definizione-costo")
                 }
             );
 

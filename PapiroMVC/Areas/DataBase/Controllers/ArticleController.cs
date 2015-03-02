@@ -11,12 +11,14 @@ using System.Web.Security;
 using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using Newtonsoft.Json;
+using Mvc.HtmlHelpers;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     [AuthorizeUser]
     public partial class ArticleController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
+        private readonly IWarehouseRepository warehouseRepository;
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
 
@@ -25,15 +27,20 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             base.Initialize(requestContext);
             articleRepository.SetDbName(CurrentDatabase);
             customerSupplierRepository.SetDbName(CurrentDatabase);
+            warehouseRepository.SetDbName(CurrentDatabase);
         }
 
-        public ArticleController(IArticleRepository _articleDataRep, ICustomerSupplierRepository _dataRepCS)
+        public ArticleController(IArticleRepository _articleDataRep,
+            ICustomerSupplierRepository _dataRepCS,
+            IWarehouseRepository _warehouseDataRep)
         {
             articleRepository = _articleDataRep;
             customerSupplierRepository = _dataRepCS;
+            warehouseRepository = _warehouseDataRep;
 
             this.Disposables.Add(articleRepository);
-            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(warehouseRepository);
         }
 
         //
@@ -42,6 +49,27 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             return View(new ArticleAutoChangesViewModel());
         }
+
+
+        public ActionResult IndexWarehouse()
+        {
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult EditArticleOnlyMov(string id)
+        {
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var art = articleRepository.GetSingle(id);
+            return View(art);
+        }
+
+
+
 
         public ActionResult IndexSheetPrintableArticle()
         {
@@ -735,7 +763,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
 
                     c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
-//                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+                    //                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
 
                     c.PrintingFormat = c.Width + "x" + (Convert.ToDouble(c.Z) / 8) * 2.54;
 
@@ -991,5 +1019,315 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditDieSemiRoll";
             return View("EditDieSemiRoll", viewModel);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region Warehouse
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticle(NewMovViewModel c)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //il codice del movimento lo prendo dal codice dell'articolo
+                    c.Mov.CodWarehouseArticle = c.ArticleOrProduct.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.Mov.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    var temp = warehouseRepository.GetSingle(c.Mov.CodWarehouseArticle);
+                    var newMov = new NewMovViewModel();
+                    newMov.ArticleOrProduct = temp;
+                    newMov.Mov = new WarehouseArticleMov { WarehouseArticle = temp, CodWarehouseArticle = temp.CodWarehouseArticle };
+
+
+                    return Json(new { redirectUrl = Url.Action("NewMovArticle", new { CodArticle = temp.CodArticle, CodWarehouse = temp.CodWarehouse }) });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            return PartialView("_NewMovArticle", c);
+        }
+
+
+        /// <summary>
+        /// New movment of specific product in a specific Warehouse
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult NewMovArticle(string codArticle, string codWarehouse)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            //the new movment display warehouse information
+            //plus new movment in accord to warehouse article specify
+
+            var c = warehouseRepository.GetSingleArticle(codArticle, codWarehouse);
+            var newMov = new NewMovViewModel();
+            newMov.ArticleOrProduct = c;
+            newMov.IsProduct = false;
+
+            newMov.Mov = new WarehouseArticleMov { WarehouseArticle = c, CodWarehouseArticle = c == null ? "" : c.CodWarehouseArticle };
+
+            return View("NewMovArticle", newMov);
+
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticleOrder(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 2; //ordine!!!!
+            return NewMovArticle(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticleMov(NewMovViewModel c)
+        {
+
+            var oldWare = c.Mov.WarehouseArticle.CodWarehouse;
+            var newWare = c.CodWarehouseTo;
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PapiroMVC.Models.Warehouse art;
+                    //  prod = warehouseRepository.GetSingleProduct(c.ArticleOrProduct.CodProduct, c.ArticleOrProduct.CodWarehouse);
+
+                    c.Mov.TypeOfMov = 0; //scarico!!!!
+                    c.Mov.CodWarehouseArticle = c.ArticleOrProduct.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    art = warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle);
+
+                    warehouseRepository.SetDbName(CurrentDatabase);
+
+                    c.Mov.TypeOfMov = 1; //scarico!!!!
+                    c.Mov.CodWarehouseArticle = newWare + "P" + art.CodProduct;
+                    c.ArticleOrProduct.CodWarehouseArticle = c.Mov.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action("NewMovArticle", new { CodArticle = art.CodArticle, CodWarehouse = art.CodWarehouse }) });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            return PartialView("_NewMovArticle", c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticleLoad(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 1; //carico!!!!
+            return NewMovArticle(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticleUnLoad(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 0; //scarico!!!!
+            return NewMovArticle(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovArticleReserve(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 3; //impegno!!!!
+            return NewMovArticle(c);
+        }
+
+        public ActionResult UpdateWarehouseArticleInfo(string codWarehouseArticle, string codArticle, string codWarehouse)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var c = warehouseRepository.GetSingleArticle(codArticle, codWarehouse);
+            return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
+        }
+
+        public ActionResult UpdateWarehouseMinQuantity(string codWarehouseArticle, string minQuantity)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var c = warehouseRepository.GetSingle(codWarehouseArticle);
+            c.MinQuantity = Convert.ToInt32(minQuantity);
+
+            warehouseRepository.Edit(c);
+            warehouseRepository.Save();
+
+            return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
+        }
+
+
+
+
+
+        public ActionResult ArticleWarehouseList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string productNameFilter = string.Empty;
+            string typeOfProductFilter = string.Empty;
+            string warehouseName = string.Empty;
+            //read from validation's language file
+
+            //LANGFILE
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            if (gridSettings.isSearch)
+            {
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                productNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                typeOfProductFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfProduct") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfProduct").data : string.Empty;
+
+                warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
+
+            }
+
+
+            var fff = articleRepository.GetAll().ToArray();
+
+            var q = warehouseRepository.GetAll();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
+            {
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(productNameFilter))
+            {
+                q = q.Where(c => c.Article.ArticleName.ToLower().Contains(productNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(warehouseName))
+            {
+                q = q.Where(c => c.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
+            }
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Article.ArticleName) : q.OrderBy(c => c.Article.ArticleName);
+                    break;
+                case "WarehouseName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.WarehouseSpec.WarehouseName) : q.OrderBy(c => c.WarehouseSpec.WarehouseName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+
+            var pp = q2.OfType<WarehouseArticle>();
+
+            var q3 = pp.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = pp.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodWarehouseArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.CodArticle,
+                            a.WarehouseSpec.WarehouseName,
+                            a.Article.ArticleName,
+                            ((a.QuantityOnHand??0) <= (a.MinQuantity??0))?"Sotto Scorta":"",
+                            a.QuantityOnHand==null?"0":a.QuantityOnHand.ToString()
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+
     }
 }

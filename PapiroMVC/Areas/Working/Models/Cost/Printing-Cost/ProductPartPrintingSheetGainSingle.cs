@@ -32,7 +32,7 @@ namespace PapiroMVC.Models
             GiraVerso = false;
             //            ForceSideOnSide = 0;
         }
-
+        
         public override void CalculateGain()
         {
             if (Makereadies == null)
@@ -54,9 +54,9 @@ namespace PapiroMVC.Models
                     SubjectNumber -= ((MakereadyPrintingSingleSheet)res).PrintedSubjects ?? SubjectNumber;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Console.WriteLine("");
+                Console.WriteLine(e.Message);
             }
         }
 

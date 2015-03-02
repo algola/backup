@@ -32,5 +32,9 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResFlexo), "CostImplantToolTip")]
         public string CostImplant { get; set; }
 
+        [DisplayNameLocalized(typeof(ResFlexo), "ZMetric")]
+        [Tooltip(typeof(ResFlexo), "ZMetricToolTip")]
+        public Nullable<bool> ZMetric { get; set; }
+
     }
 }

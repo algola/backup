@@ -1,0 +1,100 @@
+﻿@using PapiroMVC.Validation
+
+
+@{
+    string strings = "~/Areas/Warehouse/Views/Warehouse/Strings";
+    string stringsMenu = "~/Views/Shared/Strings";
+
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitle");
+}
+
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+@*        <li data-target="#carousel-example-generic" data-slide-to="2"></li> *@
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+        <div class="item active">
+            <img src="../../Content/Carousel/Consumabili.JPG" />
+            <div class="carousel-caption white">
+                <h3>Magazzino materie prime</h3>
+                <p>Gestione completa dei materiali di stampa della tipografia, centro stampa, etichettificio.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img src="../../Content/Carousel/Stampabili.JPG" />
+            <div class="carousel-caption white">
+                <h3>Magazzino prodotti</h3>
+                <p>Gestione completa dei materiali di stampa della tipografia, centro stampa, etichettificio.</p>
+            </div>
+        </div>
+@*        <div class="item">
+        <img src="../../Content/Carousel/Macchine.JPG" />
+        <div class="carousel-caption white">
+            <h3>Macchine & Lavorazioni</h3>
+            <p>Configura in maniera intuitiva e veloce tutte le caratteristiche delle macchine e delle lavorazioni.</p>
+        </div>
+    </div> *@
+    </div>
+
+</div>
+
+<!-- Controls -->
+<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+</a>
+<a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+</a>
+
+@*
+    <div class="alert alert-block alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-ok green"></i>
+        @Html.T(strings, "Message1") <b>@Html.T(strings, "Message1_I")</b> @Html.T(strings, "Message1_II")
+    </div>
+
+    <p>
+        @Html.T(strings, "Message2") <b>@Html.T(strings, "Message2_I")</b> @Html.T(strings, "Message2_II")
+    </p>
+    <div class="vspace"></div>
+    <p>
+        @Html.T(strings, "Message3") <b>@Html.T(strings, "Message3_I")</b> @Html.T(strings, "Message3_II")
+        @Html.T(strings, "Message3_III") <b>@Html.T(strings, "Message3_I")</b>.
+    </p>
+*@
+@section title{
+    @Html.T(strings, "DataBase")
+}
+
+@section description{
+    @Html.T(strings, "Home")
+}
+
+@section breadcrumb {
+
+}
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+}
+
+<script>
+    $(function () {
+        $('.carousel').carousel({
+            interval: 5000
+        })
+    });
+
+</script>

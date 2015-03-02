@@ -299,6 +299,17 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// return view of all Product
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ListProducts()
+        {
+            return View();
+        }
+
+        
         /// <summary>
         /// Delete estimate and rediret to List
         /// </summary>
@@ -347,8 +358,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditDocument";
-
-
 
             return View("EditDocument", c);
         }
@@ -450,6 +459,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult CreateOrder(string codDocumentProduct)
         {
             var c = NewOrder(codDocumentProduct);
+            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName();
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditOrder";
             if (Request.IsAjaxRequest())

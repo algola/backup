@@ -14,7 +14,7 @@ namespace Services
         public string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy)
         {
 
-            if (!String.IsNullOrEmpty(supplierMaker) && ! String.IsNullOrEmpty(supplyerBuy))
+            if (!String.IsNullOrEmpty(supplierMaker) && !String.IsNullOrEmpty(supplyerBuy))
             {
                 CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
@@ -51,6 +51,27 @@ namespace Services
             {
                 item.TimeStampTable = DateTime.Now;
             }
+
+            #region Magazzeno
+
+            try
+            {
+                foreach (var warehouseInfo in c.WarehouseArticles)
+                {
+                    warehouseInfo.TimeStampTable = DateTime.Now;
+
+                    warehouseInfo.CodArticle = c.CodArticle;
+                    //tengo uguale tanto l'associazione è 1:1 + "A" davanti
+                    warehouseInfo.CodWarehouseArticle = warehouseInfo.CodWarehouse + "A" + c.CodArticle;
+                }
+
+            }
+            catch (Exception)
+            { }
+            #endregion
+
+
+
 
             switch (c.TypeOfArticle)
             {
@@ -204,6 +225,9 @@ namespace Services
                 default:
                     break;
             }
+
+
+
         }
 
         public override void Add(Article entity)
@@ -221,7 +245,7 @@ namespace Services
             //    //this.Edit(entity);
             //}
             //else
-                base.Add(entity);
+            base.Add(entity);
 
 
 
@@ -229,8 +253,40 @@ namespace Services
 
         public override IQueryable<Article> GetAll()
         {
+            var numWare = Context.warehouseSpec.Count();
+
+            //update with new warehouse
+            var lstProd = Context.articles.Where(x => x.WarehouseArticles.Count < numWare).ToList();
+
+            foreach (var article in lstProd)
+            {
+                if (numWare != article.WarehouseArticles.Count())
+                {
+                    foreach (var warehouse in Context.warehouseSpec)
+                    {
+                        //Does article esist in Warehouse?
+                        var res = article.WarehouseArticles.Where(x => x.CodWarehouse == warehouse.CodWarehouse);
+                        //no warehouse
+                        if (res.Count() == 0)
+                        {
+                            var newP = new WarehouseArticle
+                            {
+                                CodWarehouse = warehouse.CodWarehouse,
+                                CodArticle = article.CodArticle
+                            };
+
+                            article.WarehouseArticles.Add(newP);
+                            this.Context.Set<WarehouseArticle>().Add(newP);
+                        }
+                    }
+                }
+                this.ArticleCostCodeRigen(article);
+                Save();
+            }
+
+
             Console.WriteLine(Context.Database.Connection.ConnectionString);
-            return Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy");
+            return Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").Include("warehousearticles");
         }
 
         public virtual IQueryable<Article> GetForImport()
@@ -243,22 +299,109 @@ namespace Services
         {
             ArticleCostCodeRigen(entity);
 
-            foreach (var item in entity.ArticleCosts)
+
+            var fromBD = Context.articles.SingleOrDefault(p => p.CodArticle == entity.CodArticle);
+            if (fromBD != null)
             {
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                Context.Entry(fromBD).CurrentValues.SetValues(entity);
+                Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
+
+                foreach (var item in entity.WarehouseArticles)
+                {
+                    var fromBDW = Context.warehousearticles.SingleOrDefault(p => p.CodWarehouseArticle == item.CodWarehouseArticle);
+                    if (fromBDW != null)
+                    {
+                        Context.Entry(fromBDW).CurrentValues.SetValues(item);
+                        Context.Entry(fromBDW).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                    }
+                }
+
+
+                foreach (var item in entity.ArticleCosts)
+                {
+                    var fromBDC = Context.articlecost.SingleOrDefault(p => p.CodArticleCost == item.CodArticleCost);
+                    if (fromBDC != null)
+                    {
+                        Context.Entry(fromBDC).CurrentValues.SetValues(item);
+                        Context.Entry(fromBDC).State = System.Data.Entity.EntityState.Modified;
+                    }
+                    else
+                    {
+                        Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                    }
+                }
+
+
             }
-            base.Edit(entity);
+            else
+            {
+                Context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+            }
+
+
+
+            //foreach (var item in entity.ArticleCosts)
+            //{
+            //    Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            //}
+
+            //foreach (var item in entity.WarehouseArticles)
+            //{
+            //        var fromBDC = Context.warehousearticles.SingleOrDefault(p => p.CodArticle == entity.CodArticle);
+            //        if (fromBDC != null)
+            //        {
+            //            Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+            //        }
+            //        else
+            //        {
+            //            Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+            //        }                
+            //}
+
+            //base.Edit(entity);
         }
 
         public new Article GetSingle(string codArticle)
         {
-            var query = Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").FirstOrDefault(x => x.CodArticle == codArticle);
-            return query;
+            var article = Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").Include("warehousearticles").FirstOrDefault(x => x.CodArticle == codArticle);
+
+
+            var numWare = Context.warehouseSpec.Count();
+
+            if (numWare != article.WarehouseArticles.Count())
+            {
+                foreach (var warehouse in Context.warehouseSpec)
+                {
+                    //Does article esist in Warehouse?
+                    var res = article.WarehouseArticles.Where(x => x.CodWarehouse == warehouse.CodWarehouse);
+                    //no warehouse
+                    if (res.Count() == 0)
+                    {
+                        var newP = new WarehouseArticle
+                        {
+                            CodWarehouse = warehouse.CodWarehouse,
+                            CodArticle = article.CodArticle
+                        };
+
+                        article.WarehouseArticles.Add(newP);
+                        this.Context.Set<WarehouseArticle>().Add(newP);
+                    }
+                }
+            }
+            this.ArticleCostCodeRigen(article);
+            Save();
+
+            return article;
         }
 
         public override void SetDbName(string name)
         {
             base.SetDbName(name);
         }
+
     }
 }

@@ -198,4 +198,103 @@
   <data name="ProductPartPrintableArticleListError" xml:space="preserve">
     <value>Il materiale da lavorare non è stato trovato in anagrafica</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>Dettagli</value>
+  </data>
+  <data name="Movments" xml:space="preserve">
+    <value>Movimenti</value>
+  </data>
+  <data name="FilterCheckMessage" xml:space="preserve">
+    <value>Attenzione! Filtri presenti in ricerca.</value>
+  </data>
+  <data name="WarehouseNameCaption" xml:space="preserve">
+    <value>Magazzino</value>
+  </data>
+  <data name="MinQuantityCaption" xml:space="preserve">
+    <value>Sotto Scorta</value>
+  </data>
+  <data name="NewMovProductLoad" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="NewMovProductMov" xml:space="preserve">
+    <value>Sposta in Magazzino</value>
+  </data>
+  <data name="NewMovProductOrder" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="NewMovProductProductionOrder" xml:space="preserve">
+    <value>Ordine di Produzione</value>
+  </data>
+  <data name="NewMovProductReserve" xml:space="preserve">
+    <value>Impegno</value>
+  </data>
+  <data name="NewMovProductTitle" xml:space="preserve">
+    <value>Nuovo movimento magazzino</value>
+  </data>
+  <data name="NewMovProductUnLoad" xml:space="preserve">
+    <value>Scarico</value>
+  </data>
+  <data name="QuantityOnHandCaption" xml:space="preserve">
+    <value>Giacenza</value>
+  </data>
+  <data name="UpdateMinQuantity" xml:space="preserve">
+    <value>Aggiorna Quantità Minima</value>
+  </data>
+  <data name="DateCaption" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="QuantityCaption" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="TypeOfMovCaption" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="LoadType" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="OrderType" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="ReserveType" xml:space="preserve">
+    <value>Impegno</value>
+  </data>
+  <data name="UnloadType" xml:space="preserve">
+    <value>Scarico</value>
+  </data>
+  <data name="WarehouseTitle" xml:space="preserve">
+    <value>Magazzino</value>
+  </data>
+  <data name="DeleteCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="DeleteCommand" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeleteMessageProduct" xml:space="preserve">
+    <value>Cancellare i prodotti selezionati?</value>
+  </data>
+  <data name="DeleteOk" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OnlyMovCaption" xml:space="preserve">
+    <value>Movimenti Prodotti (Tutti)</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Prodotto</value>
+  </data>
+  <data name="CodMenuProductCaption" xml:space="preserve">
+    <value>Categoria prodotto</value>
+  </data>
+  <data name="GeneratorCaption" xml:space="preserve">
+    <value>Descrizione prodotto</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Codice prodotto</value>
+  </data>
+  <data name="ProductNameGenerator" xml:space="preserve">
+    <value>Descrizioni</value>
+  </data>
+  <data name="ProductNameGeneratorDesc" xml:space="preserve">
+    <value>Generatore di descrizione</value>
+  </data>
 </root>

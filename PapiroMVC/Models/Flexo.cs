@@ -17,12 +17,14 @@ namespace PapiroMVC.Models
     	
     [DataContract] 
     public partial class Flexo : Litho
-    {
-    	
+    {    	
     	[DataMember] 		
         public Nullable<double> Width2 { get; set; }
     	
     	[DataMember] 		
         public Nullable<double> FlexoWidth { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> ZMetric { get; set; }
     }
 }

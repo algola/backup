@@ -200,6 +200,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Warehouse\Models\" />
     <Folder Include="Models\Resources\TypeOfTaskAndCodTypeOfTask\" />
     <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
@@ -390,8 +391,17 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskExecutorEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TypeOfTaskEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseArticleMovEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseArticleEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseEpecEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseSpecEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseProductEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseArticleMovEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Warehouse\WarehouseEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelAutoChanges_Metadata.cs" />
+    <Compile Include="Areas\DataBase\ViewModels\NewMovViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelCRUD_Metadata.cs" />
     <Compile Include="Areas\DataBase\ViewModels\ArticleViewModelWizard.cs" />
@@ -447,6 +457,8 @@
     <Compile Include="Areas\RouteDebugger\RequestHelper.cs" />
     <Compile Include="Areas\RouteDebugger\RouteDebuggerAreaRegistration.cs" />
     <Compile Include="Areas\RouteDebugger\RouteDebuggerConfig.cs" />
+    <Compile Include="Areas\Warehouse\Controllers\WarehouseController.cs" />
+    <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController2.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController_Ex.cs" />
@@ -504,9 +516,11 @@
     <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductBookSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductCommand.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductNameGeneratorEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductNameGenerator_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartBlockSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartBookSheetEx_MetaData.cs" />
@@ -532,6 +546,7 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductEmpty.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx.cs" />
@@ -826,7 +841,13 @@
     <Compile Include="Models\ProductBookSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductEmpty.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductGraphLink.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductNameGenerator.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPart.cs">
@@ -1405,6 +1426,7 @@
     <Compile Include="Models\RollPrintableArticleStandardCost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema\WarehouseDDL.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
     <Compile Include="Models\Schema\CustomerSupplierDDL.cs" />
@@ -1472,17 +1494,34 @@
     <Compile Include="Models\TypeOfTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Warehouse.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WarehouseArticle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WarehouseArticleMov.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WarehouseProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WarehouseSpec.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WebApi\Price.cs" />
     <Compile Include="Models\WebApi\PrintableArticleApi.cs" />
     <Compile Include="Models\WebApi\ProductApi.cs" />
     <Compile Include="Models\WebApi\RigidProductApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPattern\WarehouseRepository.cs" />
     <Compile Include="RepositoryPattern\ArticleRepository.cs" />
     <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
     <Compile Include="RepositoryPattern\CustomerSupplierBaseRepository.cs" />
     <Compile Include="RepositoryPattern\CustomerSupplierRepository.cs" />
     <Compile Include="RepositoryPattern\DocumentRepository.cs" />
     <Compile Include="RepositoryPattern\FormatsNameRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\IWarehouseRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\IArticleRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ICostDetailRepository.cs" />
     <Compile Include="RepositoryPattern\GenericAndInterface\ICustomerSubblierBasesRepository.cs" />
@@ -1540,6 +1579,7 @@
     <Compile Include="Validation\AutorizeUserAttrbute.cs" />
     <Compile Include="Validation\Base\ContingentValidationAttribute.cs" />
     <Compile Include="Validation\Base\ModelAwareValidationAttribute.cs" />
+    <Compile Include="Validation\Binding\DateTimeModelBinder.cs" />
     <Compile Include="Validation\Binding\ProductApiModelBinder.cs" />
     <Compile Include="Validation\Binding\ProductModelBinder.cs" />
     <Compile Include="Validation\IPrintDocX.cs" />
@@ -1598,6 +1638,7 @@
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Areas\RouteDebugger\Content\rdstyle.css" />
@@ -1979,6 +2020,9 @@
     <Content Include="Content\ProductImage\Manifesti.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ProductImage\Vuoto.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\ProductImage\NotExist.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2225,7 +2269,7 @@
     <Content Include="Areas\DataBase\Views\Article\_RigidPrintableArticleStandardCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleCuttedCost.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_WarehouseArticle.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleAutoChanges.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticleCuttedCost.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_SheetPrintableArticlePakedCost.cshtml" />
@@ -2470,7 +2514,7 @@
     <Content Include="Areas\DataBase\Views\Article\CreateDieSemiRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSemiRoll.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListDocumentProducts.cshtml" />
-    <Content Include="Areas\Working\Views\Document\ListDocumentProducts.cshtml" />
+    <Content Include="Areas\Working\Views\Document\ListProducts.cshtml" />
     <Content Include="Areas\Working\Views\Document\ListOrder.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListOrder.cshtml" />
     <Content Include="Areas\Working\Views\Document\_EditAndCreateOrder.cshtml" />
@@ -2478,6 +2522,42 @@
     <Content Include="Areas\Working\Views\Document\_ListDocumentStates.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\DocumentState.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_ListBtnChanges.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_RollPrintableArticleStandardCost.cshtml" />
+    <Content Include="Areas\Working\Views\Document\ListDocumentProducts.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListProducts.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListWarehouseArticleMov.cshtml" />
+    <Content Include="Areas\Working\Views\Product\NewMovProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_NewMovProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_WarehouseArticleInfo.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_WarehouseArticleMov.cshtml" />
+    <Content Include="Areas\Warehouse\Views\web.config" />
+    <Content Include="Areas\Warehouse\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_breadcrumb.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_LayoutAceTheme.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_MsgProcessOk.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_SideBarAceTheme.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\_TopBarAceTheme.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Shared\Copy of _footer.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Warehouse\Index.cshtml" />
+    <Content Include="Areas\Warehouse\Views\Warehouse\Index_provaCarousel.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductEmpty.cshtml" />
+    <Content Include="Areas\Working\Views\Product\EditProductOnlyMov.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListProduct.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListWarehouseArticleMov.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_NewMovArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_WarehouseArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_WarehouseArticleInfo.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_WarehouseArticleMov.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditArticleOnlyMov.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\NewMovArticle.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexWarehouse.cshtml" />
+    <Content Include="Areas\Working\Views\Product\OnlyMov.cshtml" />
+    <Content Include="Areas\Working\Views\Product\ListProductNameGenerator.cshtml" />
+    <Content Include="Areas\Working\Views\Product\EditProductNameGenerator.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_EditProductNameGenerator.cshtml" />
+    <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2507,6 +2587,7 @@
     <Content Include="Report\ExternalCost.docx" />
     <Content Include="Report\ControlTableCostDetail.docx" />
     <Content Include="Report\LabelRollHead.docx" />
+    <Content Include="Report\DeliveryHeader.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2665,6 +2746,7 @@
     </Content>
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2706,11 +2788,19 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>ecommercestampa.com1.designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\gestionestampa.com.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>gestionestampa.com1.designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Warehouse\Views\Warehouse\App_LocalResources\Strings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings-document.resx">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Models\Resources\Account\AccountVuoto.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3143,6 +3233,25 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>App_Data/XmlDocument.xml</DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

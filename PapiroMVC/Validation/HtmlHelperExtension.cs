@@ -264,7 +264,7 @@ namespace PapiroMVC.Validation
         /// <returns></returns>
         public static IHtmlString AlgolaEditorFor<TModel, TProperty>(
                 this HtmlHelper<TModel> html,
-                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null, int txtLength = 12)
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null, int txtLength = 12, bool readOnly =false)
         {
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
 
@@ -308,7 +308,6 @@ namespace PapiroMVC.Validation
                     attrs.Add("class", "col-xs-10 col-sm-5");
                 }
 
-
                 attrs.Add("placeholder", "Username");
             }
             htmlAttribute = attrs;
@@ -322,11 +321,18 @@ namespace PapiroMVC.Validation
 
             algolaEditFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression, htmlatt);
 
-
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("controls col-sm-9");
 
-            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
+            if (readOnly)
+            {
+                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { @readonly = true });
+            }
+            else 
+            {
+                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
+            }
+
 
 
             var builder = new TagBuilder("span");

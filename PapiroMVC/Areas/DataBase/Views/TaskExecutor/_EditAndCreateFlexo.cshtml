@@ -77,9 +77,15 @@
             </div>
         </div>
 
+
+
+
         if (ViewBag.ActionMethod != "CreateFlexo")
         {
-            <div id="_listTaskExecutorCylinder">
+
+            @Html.EditorFor(model => model.ZMetric)
+
+                <div id="_listTaskExecutorCylinder">
                 @Html.Partial("_ListTaskExecutorCylinders", Model)
             </div>
         }
@@ -112,6 +118,8 @@
         </div>
 
 
+        
+        
         <div class="space-10"></div>
 
         @Html.AlgolaEditorFor(model => model.InkUsage)

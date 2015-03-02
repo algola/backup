@@ -84,18 +84,20 @@
                     @Html.ActionLinkImage(@Html.T(strings, "STAMPAMORBIDOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAMORBIDO" }, "icon-double-angle-right")
                 </li>
                 <li id="etichetterotolo">
-                    @Html.ActionLinkImage(@Html.T(strings, "STAMPAETICHETTEROTOLOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAETICHROTOLO" }, "icon-double-angle-right")
+                    @Html.ActionLinkImage(@Html.T(strings, "STAMPAETICHETTEROTOLOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAETICHROTOLO_LIST" }, "icon-double-angle-right")
                 </li>
                 <li id="stampaoffedigitale">
                     @Html.ActionLinkImage(@Html.T(strings, "STAMPAOFFeDIGITALEMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "INPIANO" }, "icon-double-angle-right")
                 </li>
 
-
-
-
-
             </ul>
         </li>
+
+        <li id="warehouseSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseArticleMenu"), "IndexWarehouse", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+        </li>
+
+
 
     </ul>
     <!-- /.nav-list -->

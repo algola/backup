@@ -48,6 +48,7 @@ namespace PapiroMVC
             ModelBinders.Binders.Add(typeof(ProductPart), new ProductPartModelBinder());
             ModelBinders.Binders.Add(typeof(ProductPartsPrintableArticle), new ProductPartsPrintableArticleModelBinder());
             ModelBinders.Binders.Add(typeof(ProductPartTask), new ProductPartTaskModelBinder());
+            ModelBinders.Binders.Add(typeof(DateTime), new DateTimeModelBinder());
 
             //ToolTip
             ModelMetadataProviders.Current = new ToolTipCustomModelMetadataProvider();

@@ -123,6 +123,9 @@
   <data name="CodMenuProductBigliettiVisita" xml:space="preserve">
     <value>Biglietti da visita</value>
   </data>
+  <data name="CodMenuProductVuoto" xml:space="preserve">
+    <value>Generico</value>
+  </data>
   <data name="CodMenuProductBrossuraCucitaFilo" xml:space="preserve">
     <value>Brossura Cucita Filo Refe</value>
   </data>
@@ -230,5 +233,17 @@
   </data>
   <data name="CodMenuProductFotopolimero" xml:space="preserve">
     <value>Clichè fotopolimero</value>
+  </data>
+  <data name="CodMenuProduct" xml:space="preserve">
+    <value>Tipo del Prodotto</value>
+  </data>
+  <data name="CodMenuProductToolTip" xml:space="preserve">
+    <value>Tipologia del prodotto </value>
+  </data>
+  <data name="Generator" xml:space="preserve">
+    <value>Generatore</value>
+  </data>
+  <data name="GeneratorToolTip" xml:space="preserve">
+    <value>Generatore della descrizione</value>
   </data>
 </root>

@@ -70,6 +70,7 @@ namespace PapiroMVC.Validation
             prodMod.Add("GrandeFormato", "WideFormat");
             prodMod.Add("Rotoli", "Label");
             prodMod.Add("Cliche", "Cliche");
+            prodMod.Add("Description", "Description");
 
             bool redirect = false;
 
@@ -81,9 +82,29 @@ namespace PapiroMVC.Validation
 
                 if (product != null)
                 {
+                   
                     if (!System.Web.Security.Roles.RoleExists(product.CodCategory))
                     {
                         System.Web.Security.Roles.CreateRole(product.CodCategory);
+                    }
+
+                    //if is Generico 
+                    if (product.CodCategory == "Description")
+                    {
+                        try
+                        {
+                            //user that is not in... 
+                            var _users = System.Web.Security.Roles.GetUsersInRole(prodMod.SingleOrDefault(k => k.Key == product.CodCategory).Value);
+                            if (!_users.Contains(user))
+                            {
+                                System.Web.Security.Roles.AddUserToRole(user, "Description");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.Write(e.Message);
+                            System.Web.Security.Roles.AddUserToRole(user, "Description");
+                        }                        
                     }
 
                     //traduzione e ricerca dal prodotto -> modulo

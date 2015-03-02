@@ -196,13 +196,20 @@ namespace PapiroMVC.Models
             Console.WriteLine("");
         }
 
-        public virtual void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
+        IQueryable<TaskExecutor> tskExec;
+        IQueryable<Article> articles;
+
+        public virtual void InitCostDetail(IQueryable<TaskExecutor> _tskExec, IQueryable<Article> _articles)
         {
             if (ComputedBy != null)
             {
-                ComputedBy.InitCostDetail(tskExec, articles);
+                ComputedBy.InitCostDetail(_tskExec, _articles);
             }
             //     TaskCost = taskCost;
+
+            tskExec = _tskExec;
+            articles = _articles;
+
         }
 
         public ProductPartPrintingGain GainPrintingOnBuying

@@ -1,0 +1,73 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.Product
+
+@{
+    string stringsTitle = "~/Views/Shared/Strings";
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
+    //Prendo il titolo dal menù
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.CodMenuProduct);
+
+}
+
+@section title{
+    @Html.T(strings, "Product")
+}
+
+@section description{
+    @ViewBag.Title
+    @* @Html.T(strings, "CreateProductDesc")*@
+}
+
+
+@Html.Partial("_ListWarehouseArticleMov", Model.WarehouseArticles.FirstOrDefault())
+
+
+@*Devo caricare tutti i magazzini e iterare il pulsante per creare un nuovo movimento in quel magazzino*@
+
+@foreach (var item in ViewBag.Locations)
+{
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("NewMovProduct", "Product", new { area = "Working", CodProduct = Model.WarehouseArticles.FirstOrDefault().CodProduct, CodWarehouse = item.CodWarehouse })');">
+        <i class="icon-undo bigger-125"></i>
+
+        Nuovo Movimento Magazzino @item.WarehouseName
+
+        @*    @HttpContext.GetLocalResourceObject(strings, "Cancel") *@
+    </button>
+}
+
+
+@section breadcrumb {
+
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    $(function () {
+        document.getElementById("warehouseSlidebar").className = "active open";
+    });
+</script>
+
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>

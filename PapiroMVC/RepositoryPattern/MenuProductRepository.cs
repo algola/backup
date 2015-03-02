@@ -14,21 +14,22 @@ namespace Services
 
             //load each menuproduct
             var c = Context.MenuProducts;
-
             var tbCode = new List<MenuProduct>();
 
+            tbCode.Add(new MenuProduct { CodCategory = "Description", IndexOf = 0, CodMenuProduct = "Vuoto", IndexOfCategory = 0 });
+
             //Fogli Singoli
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 0, CodMenuProduct = "Buste", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 2, CodMenuProduct = "BigliettiVisita", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 3, CodMenuProduct = "CartolineInviti", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 4, CodMenuProduct = "Volantini", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 5, CodMenuProduct = "Pieghevoli", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 6, CodMenuProduct = "CartaIntestata", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 7, CodMenuProduct = "Locandine", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 8, CodMenuProduct = "CartolinePostali", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 9, CodMenuProduct = "FogliMacchina", IndexOfCategory = 0 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 10, CodMenuProduct = "AltriFormati", IndexOfCategory = 0 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 0, CodMenuProduct = "Buste", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 2, CodMenuProduct = "BigliettiVisita", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 3, CodMenuProduct = "CartolineInviti", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 4, CodMenuProduct = "Volantini", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 5, CodMenuProduct = "Pieghevoli", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 6, CodMenuProduct = "CartaIntestata", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 7, CodMenuProduct = "Locandine", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 8, CodMenuProduct = "CartolinePostali", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 9, CodMenuProduct = "FogliMacchina", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 10, CodMenuProduct = "AltriFormati", IndexOfCategory = 1 });
 
             //Grande formato
             tbCode.Add(new MenuProduct { CodCategory = "GrandeFormato", IndexOf = 1, CodMenuProduct = "Manifesti", IndexOfCategory = 1 });

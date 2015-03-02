@@ -13,7 +13,6 @@ namespace PapiroMVC.Models
     /// </summary>
     public class ObjectPrintableArticleViewModel : ArticleViewModel
     {
-        ObjectPrintableArticle article;
         public ObjectPrintableArticle Article
         {
             get
@@ -24,8 +23,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new ObjectPrintableArticleStandardCost());
+                    
+
                 }
-                return article;
+                return (ObjectPrintableArticle)article;
             }
             set
             {
@@ -45,7 +46,6 @@ namespace PapiroMVC.Models
 
     public class RollPrintableArticleViewModel : ArticleViewModel
     {
-        RollPrintableArticle article;
         public RollPrintableArticle Article
         {
             get
@@ -57,8 +57,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     //                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new RollPrintableArticleStandardCost());
+                    
+
                 }
-                return article;
+                return (RollPrintableArticle) article;
             }
             set
             {
@@ -90,6 +92,8 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ArticleViewModel_Metadata))]
     public abstract class ArticleViewModel
     {
+
+        protected Article article;
         //this field is used to link on view suppplier to article
         //autocomplete is called to recognize supplier
         //after editing / creation / etc.. we have to find supplier by name and link code to article
@@ -97,12 +101,19 @@ namespace PapiroMVC.Models
         public string SupplierMaker { get; set; }
         public string SupplyerBuy { get; set; }
 
+        public Warehouse WarehouseArticle
+        {
+            get
+            {
+                return this.article.WarehouseArticles.FirstOrDefault();
+            }
+        }
+
     }
 
     [MetadataType(typeof(SheetPrintableArticleViewModel_Metadata))]
     public class SheetPrintableArticleViewModel : ArticleViewModel
     {
-        SheetPrintableArticle article;
         public SheetPrintableArticle Article
         {
             get
@@ -115,8 +126,11 @@ namespace PapiroMVC.Models
                     //CUTTED                    article.ArticleCosts.Add(new SheetPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePalletCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePakedCost());
+
+                    
                 }
-                return article;
+                
+                return (SheetPrintableArticle) article;
             }
             set
             {
@@ -159,7 +173,6 @@ namespace PapiroMVC.Models
         {
             Console.Write("");
         }
-        RigidPrintableArticle article;
         public RigidPrintableArticle Article
         {
             get
@@ -170,8 +183,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new RigidPrintableArticleStandardCost());
+                    
+
                 }
-                return article;
+                return (RigidPrintableArticle)article;
             }
             set
             {
@@ -198,7 +213,6 @@ namespace PapiroMVC.Models
         {
             Console.Write("");
         }
-        NoPrintable article;
         public NoPrintable Article
         {
             get
@@ -209,8 +223,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new NoPrintableArticleCostStandard());
+                    
+
                 }
-                return article;
+                return (NoPrintable) article;
             }
             set
             {

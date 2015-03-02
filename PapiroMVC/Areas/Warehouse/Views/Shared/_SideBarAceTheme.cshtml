@@ -1,0 +1,52 @@
+﻿@*Generic side bar in ace theme*@
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Views/Shared/Strings";
+}
+
+<div class="sidebar" id="sidebar">
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'fixed') } catch (e) { }
+    </script>
+
+    <ul class="nav nav-list">
+        <li id="homeSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
+        </li>
+
+        <li id="articleSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseArticleMenu"), "IndexWarehouse", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+        </li>
+
+        <li id="movProductSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "NewMovArticleMenu"), "NewMovArticle", "Article", new { area = "Database", CodProduct = "NULL" }, "fa fa-fw fa-lg fa-plus", "menu-text")
+        </li>
+
+        <li id="productSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseProductMenu"), "Index", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
+        </li>
+
+
+        <li id="movProductSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "NewMovProductMenu"), "NewMovProduct", "Product", new { area = "Working", CodProduct = "NULL" }, "fa fa-fw fa-lg fa-plus", "menu-text")
+        </li>
+
+        <li id="movsProductSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "MovProductMenu"), "OnlyMov", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
+        </li>
+
+
+    </ul>
+    <!-- /.nav-list -->
+
+    <div class="sidebar-collapse" id="sidebar-collapse">
+        <i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+    </div>
+
+    <script type="text/javascript">
+        try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
+    </script>
+</div>
+
+

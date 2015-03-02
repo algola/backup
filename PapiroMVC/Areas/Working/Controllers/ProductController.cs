@@ -12,6 +12,11 @@ using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using PapiroMVC.ServiceLayer;
 using System.Threading.Tasks;
+using System.Data.OleDb;
+using System.Xml;
+using System.Configuration;
+using System.Data.SqlClient;
+using Newtonsoft.Json;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -29,6 +34,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly ICostDetailRepository costDetailRepository;
         private readonly ITaskExecutorRepository taskExecuteRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
+        private readonly IWarehouseRepository warehouseRepository;
 
         protected dbEntities db;
 
@@ -60,6 +66,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             taskExecuteRepository.SetDbName(CurrentDatabase);
             customerSupplierRepository.SetDbName(CurrentDatabase);
 
+            warehouseRepository.SetDbName(CurrentDatabase);
+
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
             if (Session["CodDocument"] == null || documentRepository.GetSingle((string)Session["CodDocument"]) == null)
@@ -81,7 +89,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             IArticleRepository _articleRepository,
             ICostDetailRepository _costDetailRepository,
             ITaskExecutorRepository _taskExecuteRepository,
-            ICustomerSupplierRepository _customerSupplierRepository
+            ICustomerSupplierRepository _customerSupplierRepository,
+            IWarehouseRepository _warehouseRepository
 
             )
         {
@@ -95,6 +104,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             costDetailRepository = _costDetailRepository;
             taskExecuteRepository = _taskExecuteRepository;
             customerSupplierRepository = _customerSupplierRepository;
+            warehouseRepository = _warehouseRepository;
 
             this.Disposables.Add(typeOfTaskRepository);
             this.Disposables.Add(documentRepository);
@@ -116,6 +126,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             return null;
         }
 
+
+        public ActionResult ListProductNameGenerator()
+        {
+
+            return View();
+        
+        }
 
         public ActionResult WarmUp()
         {
@@ -193,6 +210,31 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult DeleteProducts(string ids)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+
+            //delete product and documentproduct
+            foreach (var id in strings)
+            {
+                var c = productRepository.GetSingle(id);
+                productRepository.Delete(c);
+
+            }
+
+            productRepository.Save();
+
+
+
+
+            return Json(new { redirectUrl = Url.Action("Index", "Product", new { area = "Working" }) });
+        }
+
+
+
+
         //
         // GET: /Working/Product/
         public ActionResult Index()
@@ -216,6 +258,139 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return View();
             }
         }
+
+
+        [HttpPost]
+        public ActionResult Excel(HttpPostedFileBase file)
+        {
+            DataSet ds = new DataSet();
+            if (Request.Files["file"].ContentLength > 0)
+            {
+                string fileExtension =
+                                     System.IO.Path.GetExtension(Request.Files["file"].FileName);
+
+                if (fileExtension == ".xls" || fileExtension == ".xlsx")
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["file"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+
+                        System.IO.File.Delete(fileLocation);
+                    }
+                    Request.Files["file"].SaveAs(fileLocation);
+                    string excelConnectionString = string.Empty;
+                    excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                    fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    //connection String for xls file format.
+                    if (fileExtension == ".xls")
+                    {
+                        excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //connection String for xlsx file format.
+                    else if (fileExtension == ".xlsx")
+                    {
+                        excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //Create Connection to Excel work book and add oledb namespace
+                    OleDbConnection excelConnection = new OleDbConnection(excelConnectionString);
+                    excelConnection.Open();
+                    DataTable dt = new DataTable();
+
+                    dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    if (dt == null)
+                    {
+                        return null;
+                    }
+
+                    String[] excelSheets = new String[dt.Rows.Count];
+                    int t = 0;
+                    //excel data saves in temp file here.
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        excelSheets[t] = row["TABLE_NAME"].ToString();
+                        t++;
+                    }
+                    OleDbConnection excelConnection1 = new OleDbConnection(excelConnectionString);
+
+
+                    string query = string.Format("Select * from [{0}]", excelSheets[0]);
+                    using (OleDbDataAdapter dataAdapter = new OleDbDataAdapter(query, excelConnection1))
+                    {
+                        dataAdapter.Fill(ds);
+                    }
+
+                    excelConnection.Close();
+                    excelConnection1.Close();
+                }
+                if (fileExtension.ToString().ToLower().Equals(".xml"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["FileUpload"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+                        System.IO.File.Delete(fileLocation);
+                    }
+
+                    Request.Files["FileUpload"].SaveAs(fileLocation);
+                    XmlTextReader xmlreader = new XmlTextReader(fileLocation);
+                    // DataSet ds = new DataSet();
+                    ds.ReadXml(xmlreader);
+                    xmlreader.Close();
+                }
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+
+                    var a = new ProductEmpty();
+                    a.CodProduct = (ds.Tables[0].Rows[i][0].ToString()).PadLeft(6, '0');
+                    a.ProductName = ds.Tables[0].Rows[i][1].ToString();
+                    a.CodMenuProduct = "Vuoto";
+
+                    var b = productRepository.GetSingle(a.CodProduct);
+                    if (b == null)
+                    {
+                        productRepository.Add(a);
+                    }
+                    else
+                    {
+                        b.ProductName = a.ProductName;
+                        b.CodMenuProduct = "Vuoto";
+                        productRepository.Edit(b);
+                    }
+
+                    productRepository.Save();
+
+                    //now we have to create new warehouse article (ptoduct) and new mov of load!!!
+
+                    var mov = new WarehouseArticleMov();
+                    //il codice del movimento lo prendo dal codice dell'articolo
+                    mov.CodWarehouseArticle = "001P"+ b.CodProduct;
+                    mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(mov);
+                    mov.TypeOfMov = 1;
+                    mov.Date = DateTime.Now;
+                    mov.Quantity = Convert.ToDouble(ds.Tables[0].Rows[i][2].ToString());
+
+
+                    if (mov.Quantity !=0)
+                    {
+                        warehouseRepository.AddMov(mov);
+                        warehouseRepository.Save();
+
+                        warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(mov.CodWarehouseArticle));
+                        warehouseRepository.Save();                        
+                    }
+
+                }
+
+            }
+
+
+
+            return View();
+        }
+
+
 
         /// <summary>
         /// Create new product and put it into current document in session or create new document and put it into
@@ -242,14 +417,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             //cercando la session
             if (Session["CodDocument"] != null)
             {
-                var doc=documentRepository.GetSingle((string)Session["CodDocument"]);
+                var doc = documentRepository.GetSingle((string)Session["CodDocument"]);
                 d.DocumentName = doc.DocumentName;
                 d.Customer = doc.Customer;
             }
 
             d.Product = c;
 
-           // d.Quantities.Add(0);
+            // d.Quantities.Add(0);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "CreateProduct";

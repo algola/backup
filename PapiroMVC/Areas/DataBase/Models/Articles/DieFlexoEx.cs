@@ -26,6 +26,7 @@ namespace PapiroMVC.Models
             return base.ToString() + this.ArticleName;
         }
 
+
     }
 }
 

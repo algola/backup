@@ -450,4 +450,34 @@
   <data name="DialogPrintOrderTitle" xml:space="preserve">
     <value>Modelli di stampa commessa</value>
   </data>
+  <data name="ProductMenu" xml:space="preserve">
+    <value>Prodotti-Articoli</value>
+  </data>
+  <data name="ProductsDesc" xml:space="preserve">
+    <value>Prodotti - Articoli</value>
+  </data>
+  <data name="Formato" xml:space="preserve">
+    <value>F.to</value>
+  </data>
+  <data name="FormatoCM" xml:space="preserve">
+    <value>F.to cm</value>
+  </data>
+  <data name="FormatoEtichetta" xml:space="preserve">
+    <value>F.to Etichetta</value>
+  </data>
+  <data name="Interspazio" xml:space="preserve">
+    <value>Int.Spazio</value>
+  </data>
+  <data name="InterspazioBanda" xml:space="preserve">
+    <value>Int.Spazio Banda</value>
+  </data>
+  <data name="InterspazioPasso" xml:space="preserve">
+    <value>Int.Spazio Passo</value>
+  </data>
+  <data name="Pose" xml:space="preserve">
+    <value>Pose</value>
+  </data>
+  <data name="Sviluppo" xml:space="preserve">
+    <value>Sviluppo</value>
+  </data>
 </root>

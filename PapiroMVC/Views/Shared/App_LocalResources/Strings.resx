@@ -180,6 +180,9 @@
   <data name="CodCatFogliSingoli" xml:space="preserve">
     <value>Fogli Singoli</value>
   </data>
+  <data name="CodCatDescription" xml:space="preserve">
+    <value>Generico</value>
+  </data>
   <data name="CodCatCliche" xml:space="preserve">
     <value>Clichè</value>
   </data>
@@ -188,6 +191,9 @@
   </data>
   <data name="CodMenuProductBigliettiVisita" xml:space="preserve">
     <value>Biglietti da visita</value>
+  </data>
+  <data name="CodMenuProductVuoto" xml:space="preserve">
+    <value>Generico</value>
   </data>
   <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
     <value>Etichette quadrate in bobina</value>
@@ -364,6 +370,27 @@
     <value>Archivio fustelle</value>
   </data>
   <data name="DocumentProductMenu" xml:space="preserve">
-    <value>Articoli</value>
+    <value>Prodotti Codificati</value>
+  </data>
+  <data name="WarehouseArticleMenu" xml:space="preserve">
+    <value>Magazzino Materie</value>
+  </data>
+  <data name="WarehouseMenu" xml:space="preserve">
+    <value>Magazzino</value>
+  </data>
+  <data name="WarehouseProductMenu" xml:space="preserve">
+    <value>Magazzino Prodotti</value>
+  </data>
+  <data name="NewMovProductMenu" xml:space="preserve">
+    <value>Movimento Prodotto</value>
+  </data>
+  <data name="NewMovArticleMenu" xml:space="preserve">
+    <value>Movimento Materiale</value>
+  </data>
+  <data name="MovProductMenu" xml:space="preserve">
+    <value>Movimenti Prodotti</value>
+  </data>
+  <data name="ProductNameGeneratorMenu" xml:space="preserve">
+    <value>Descrizioni Prodotti</value>
   </data>
 </root>

@@ -68,11 +68,11 @@
     <table class="table" id="htmlTable">
         <thead>
             <tr>
-                <th>F.to</th>
-                <th>Sviluppo</th>
-                <th>Int.s Banda</th>
-                <th>Int.s Passo</th>
-                <th>Pose</th>
+                <th>@Html.T(strings, "Formato")</th>
+                <th>@Html.T(strings, "Sviluppo")</th>
+                <th>@Html.T(strings, "InterspazioBanda")</th>
+                <th>@Html.T(strings, "InterspazioPasso")</th>
+                <th>@Html.T(strings, "Pose")</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +84,10 @@
                 <td class="padding-2 no-padding-bottom">@i.BuyingFormat</td>
                 <td class="padding-2 no-padding-bottom">@i.DCut1</td>
                 <td class="padding-2 no-padding-bottom">@i.DCut2</td>
-                <td class="padding-2 no-padding-bottom">@i.CalculatedGain</td>                
+                <td class="padding-2 no-padding-bottom">@i.CalculatedGain (@(i.GainOnSide1)x@(i.GainOnSide2))</td>  
+                <td class="padding-2 no-padding-bottom">@i.GainOnSide1</td>
+                <td class="padding-2 no-padding-bottom">@i.GainOnSide2</td>
+                              
             </tr>
             }
 
@@ -107,9 +110,14 @@
             var dataToPass = {
                 format: $("#ddPartFormat").val(),
                 dCut1: $("#ddPartDCut1").val(),
-                dCut2: $("#ddPartDCut2").val()
+                dCut2: $("#ddPartDCut2").val(),
+
+                maxGain1: $("#maxGain1").val(),
+                maxGain2: $("#maxGain2").val()
+
             };
 
+            alert("ccc");
 
             $.ajax({
                 url: '@(Url.Action("ChangePPartFormat", "Document", new { area = "Working" }))',
@@ -143,8 +151,11 @@
             buyingFormat: buyingFormat,
             format: $("#ddPartFormat").val(),
             dCut1: $("#ddPartDCut1").val(),
-            dCut2: $("#ddPartDCut2").val()
-        };
+            dCut2: $("#ddPartDCut2").val(),
+            maxGain1: $("#maxGain1").val(),
+            maxGain2: $("#maxGain2").val()
+
+    };
 
         $.ajax({
             url: '@(Url.Action("ChangeBuyingFormatAndPPartFormat", "Document", new { area = "Working" }))',
@@ -341,6 +352,8 @@
         myDiv1Para.appendTo('#printingHintTable');
 
         $('#htmlTable td:nth-child(3)').toggle();
+        $('#htmlTable td:nth-child(8)').toggle();
+        $('#htmlTable td:nth-child(7)').toggle();
         $('#ddBuyingFormat').toggle();
 
 
@@ -354,11 +367,16 @@
             var dCut2 = $(this).closest('tr').find('td:eq(4)').text();
 //            var gain = $(this).closest('tr').find('td:eq(4)').text();
 
+            var max1 = $(this).closest('tr').find('td:eq(6)').text();
+            var max2 = $(this).closest('tr').find('td:eq(7)').text();
 
             $("#ddPartFormat").val(format)
             $('#ddBuyingFormat').val(pFormat);
             $('#ddPartDCut1').val(dCut1);
             $('#ddPartDCut2').val(dCut2);
+
+            $('#maxGain1').val(max1);
+            $('#maxGain2').val(max2);
 
             //submit with dropdown change event
             $('#ddBuyingFormat').trigger('change');
@@ -395,3 +413,47 @@
         background-color: #2ba6cb;
     }
 </style>
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#tsk").change(function () {
+            var codTaskExecutor = "";
+            $("#tsk option:selected").each(function () {
+                codTaskExecutor += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codTaskExecutor: codTaskExecutor,
+                codCost: '@(Model.TaskCost.CodCost)'
+            };
+
+            $.ajax({
+                url: '@(Url.Action("GetPrintingLabelRollCostDetailPartial", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#partial').html(data);
+
+                    //ributto i risultati nella pagina
+                    initAndPosition();
+                    reloadFormat();
+
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+
+
+        });
+    });
+
+
+</script>

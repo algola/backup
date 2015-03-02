@@ -33,6 +33,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> Quantity { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> ZMetric { get; set; }
     
     	[DataMember]
         public virtual TaskExecutor taskexecutor { get; set; }

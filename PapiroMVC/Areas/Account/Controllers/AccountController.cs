@@ -37,9 +37,13 @@ namespace PapiroMVC.Areas.Account.Controllers
         protected ITypeOfTaskRepository ttrFrom;
         protected ITypeOfTaskRepository ttrTo;
 
+        protected IWarehouseRepository warehouseRepository;
+
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
+            warehouseRepository.SetDbName(CurrentDatabase);
+
         }
 
         /***
@@ -181,9 +185,9 @@ namespace PapiroMVC.Areas.Account.Controllers
             ITaskExecutorRepository _trFrom,
             ITaskExecutorRepository _trTo,
             ITypeOfTaskRepository _ttrFrom,
-            ITypeOfTaskRepository _ttrTo)
+            ITypeOfTaskRepository _ttrTo,
+            IWarehouseRepository _warehouseRepository)
         {
-            //TODOCHRIS
             //passare al costruttore anche un riferimento di tipo IMenuProductRepository
             //e fare le stesse cose che si fanno ora per il IProfileRepository
             profMenuRep = _profMenuRep;
@@ -197,6 +201,8 @@ namespace PapiroMVC.Areas.Account.Controllers
             ttrFrom = _ttrFrom;
             ttrTo = _ttrTo;
 
+            warehouseRepository = _warehouseRepository;
+
             this.Disposables.Add(profMenuRep);
             this.Disposables.Add(profDataRep);
             this.Disposables.Add(crFrom);
@@ -207,6 +213,7 @@ namespace PapiroMVC.Areas.Account.Controllers
             this.Disposables.Add(trTo);
             this.Disposables.Add(ttrFrom);
             this.Disposables.Add(ttrTo);
+            this.Disposables.Add(warehouseRepository);
 
         }
 
@@ -248,7 +255,6 @@ namespace PapiroMVC.Areas.Account.Controllers
                     var prof = profDataRep.GetSingle(model.UserName);
                     this.CheckModuleRole(prof);
 
-
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -262,9 +268,17 @@ namespace PapiroMVC.Areas.Account.Controllers
                     AsyncManager.Parameters.Add("redirect", true);
                     AsyncManager.Parameters.Add("model", model);
 
-
+                    try
+                    {
+                        warehouseRepository.SetDbName(model.UserName);
+                        var wList = warehouseRepository.GetWarehouseList();
+                        warehouseRepository.Save();
+                    }
+                    catch (Exception)
+                    {
+                    }
                     //AsyncManager.OutstandingOperations.Increment(1);
-                    System.Threading.Tasks.Task.Factory.StartNew(() => longJob(model));
+                    System.Threading.Tasks.Task.Factory.StartNew(() => LongJob(model));
                 }
                 else
                 {
@@ -278,9 +292,10 @@ namespace PapiroMVC.Areas.Account.Controllers
 
         }
 
-        private void longJob(LoginModel model)
+        private void LongJob(LoginModel model)
         {
 
+            //some initilizations
 
             //base.UpdateDatabase(model.UserName);
 
@@ -787,28 +802,28 @@ namespace PapiroMVC.Areas.Account.Controllers
         [AllowAnonymous]
         public ActionResult Verify(string ID)
         {
-                MembershipUser user = Membership.GetUser(providerUserKey: ID);
-                if (!user.IsApproved)
-                {
-                    user.IsApproved = true;
+            MembershipUser user = Membership.GetUser(providerUserKey: ID);
+            if (!user.IsApproved)
+            {
+                user.IsApproved = true;
 
-                    if (!Roles.RoleExists("Pending"))
-                        Roles.CreateRole("Pending");
+                if (!Roles.RoleExists("Pending"))
+                    Roles.CreateRole("Pending");
 
-                    Roles.AddUserToRole(user.UserName, "Pending");
-                    Membership.UpdateUser(user);
+                Roles.AddUserToRole(user.UserName, "Pending");
+                Membership.UpdateUser(user);
 
-                    FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
-                    TempData["message"] = "Activated";
+                FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
+                TempData["message"] = "Activated";
 
-                    var task = Task.Factory.StartNew(() => { Stuff(user); }, TaskCreationOptions.LongRunning);
+                var task = Task.Factory.StartNew(() => { Stuff(user); }, TaskCreationOptions.LongRunning);
 
-                }
-                else
-                {
-                    FormsAuthentication.SignOut();
-                    TempData["message"] = "JustActivated";
-                }
+            }
+            else
+            {
+                FormsAuthentication.SignOut();
+                TempData["message"] = "JustActivated";
+            }
 
             return View();
         }

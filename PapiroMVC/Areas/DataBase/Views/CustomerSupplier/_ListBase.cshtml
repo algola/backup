@@ -240,7 +240,7 @@
         isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
 
         $grid.jqGrid({
-            url: '@Url.Action("CustomerSupplierBaseList", "CustomerSupplier")',
+            url: '@Url.Action("CustomerSupplierBaseList", "CustomerSupplier", Model.CodCustomerSupplier)',
             datatype: 'json',
             colModel: cm,
 

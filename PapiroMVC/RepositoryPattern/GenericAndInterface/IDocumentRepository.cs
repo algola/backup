@@ -20,6 +20,7 @@ namespace Services
         void EditCost(Cost c);
         void Edit(Document entity, bool deep);
         IQueryable<DocumentProduct> GetAllDocumentProducts();
+        IQueryable<Product> GetAllProducts();
 
         IQueryable<State> GetAllStates();
         IQueryable<DocumentState> GetAllDocumentStates(string codDocument);

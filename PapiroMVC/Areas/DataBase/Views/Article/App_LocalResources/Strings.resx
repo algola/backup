@@ -258,6 +258,27 @@
   <data name="NameOfMaterialCaption" xml:space="preserve">
     <value>Nome</value>
   </data>
+  <data name="NewMovProductLoad" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="NewMovProductOrder" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="NewMovProductProductionOrder" xml:space="preserve">
+    <value>Ordine di Produzione</value>
+  </data>
+  <data name="NewMovProductReserve" xml:space="preserve">
+    <value>Impegno</value>
+  </data>
+  <data name="NewMovProductMov" xml:space="preserve">
+    <value>Sposta in Magazzino</value>
+  </data>
+  <data name="NewMovProductTitle" xml:space="preserve">
+    <value>Nuovo movimento magazzino</value>
+  </data>
+  <data name="NewMovProductUnLoad" xml:space="preserve">
+    <value>Scarico</value>
+  </data>
   <data name="NoPrintableArticleCostStandardTitle" xml:space="preserve">
     <value>Costo di acquisto</value>
   </data>
@@ -348,6 +369,9 @@
   <data name="SheetPrintableArticleViewModelWizard" xml:space="preserve">
     <value>Creazione Automatica dei Materiali a Foglio</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value>Carico</value>
+  </data>
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Produttore</value>
   </data>
@@ -359,6 +383,12 @@
   </data>
   <data name="TypeOfMaterialCaption" xml:space="preserve">
     <value>Tipo</value>
+  </data>
+  <data name="WarehouseArticleMovTitle" xml:space="preserve">
+    <value>Movimento</value>
+  </data>
+  <data name="WarehouseTitle" xml:space="preserve">
+    <value>Magazzino</value>
   </data>
   <data name="WeightCaption" xml:space="preserve">
     <value>gr/mq</value>
@@ -374,5 +404,23 @@
   </data>
   <data name="ZCaption" xml:space="preserve">
     <value>Z</value>
+  </data>
+  <data name="Movments" xml:space="preserve">
+    <value>Movimenti </value>
+  </data>
+  <data name="DeleteCommand" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="UpdateMinQuantity" xml:space="preserve">
+    <value>Aggiorna Scorta Minima</value>
+  </data>
+  <data name="WarehouseNameCaption" xml:space="preserve">
+    <value>Magazzino</value>
+  </data>
+  <data name="MinQuantityCaption" xml:space="preserve">
+    <value>Sotto Scorta</value>
+  </data>
+  <data name="QuantityOnHandCaption" xml:space="preserve">
+    <value>Quantità esistente</value>
   </data>
 </root>

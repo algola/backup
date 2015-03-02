@@ -123,11 +123,17 @@
   <data name="ArticleNameToolTip" xml:space="preserve">
     <value>Nome descrittivo dell'articolo</value>
   </data>
+  <data name="Available" xml:space="preserve">
+    <value>Disponibile</value>
+  </data>
+  <data name="AvailableToolTip" xml:space="preserve">
+    <value>Quantità disponibile (Stoccagio - Impegnato)</value>
+  </data>
   <data name="CodArticle" xml:space="preserve">
     <value>Codice Articolo</value>
   </data>
   <data name="CodArticleToolTip" xml:space="preserve">
-    <value>Il codice articolo è assegnato automaticamente dal sistema</value>
+    <value>Codice identificativo dell'articolo</value>
   </data>
   <data name="CodDie" xml:space="preserve">
     <value>Codice fustella</value>
@@ -137,6 +143,12 @@
   </data>
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
+  </data>
+  <data name="DateMov" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DateMovToolTip" xml:space="preserve">
+    <value>Data del movimento</value>
   </data>
   <data name="DCut1" xml:space="preserve">
     <value>Interspazio verticale</value>
@@ -174,19 +186,85 @@
   <data name="MaxGain2Flexo" xml:space="preserve">
     <value>Resa in passo</value>
   </data>
+  <data name="PotentialAvailable" xml:space="preserve">
+    <value>Potenziale disponibile</value>
+  </data>
+  <data name="PotentialAvailableToolTip" xml:space="preserve">
+    <value>Quantità potenziale disponibile (Disponibile + Ordinato)</value>
+  </data>
+  <data name="PotentialQuantityOnHand" xml:space="preserve">
+    <value>Potenziale</value>
+  </data>
+  <data name="PotentialQuantityOnHandToolTip" xml:space="preserve">
+    <value>Quantità potenziale (Stoccaggio + Ordinato)</value>
+  </data>
   <data name="PrintingFormat" xml:space="preserve">
     <value>Formato di stampa</value>
+  </data>
+  <data name="QuantityOnHand" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="QuantityOnHandToolTip" xml:space="preserve">
+    <value>Quantità stoccaggio</value>
   </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
   </data>
+  <data name="UmConversion" xml:space="preserve">
+    <value>Conversione </value>
+  </data>
+  <data name="UmConversionToolTip" xml:space="preserve">
+    <value>Rapporto tra Um Stoccaggio e Um Movimento. Es. 1 Rotolo 2000 mt. Conversione = 0,0005</value>
+  </data>
   <data name="UnitOfMeasure" xml:space="preserve">
     <value>Unità di misura</value>
+  </data>
+  <data name="UnitOfMeasureMov" xml:space="preserve">
+    <value>UM Movimento</value>
+  </data>
+  <data name="UnitOfMeasureMovToolTip" xml:space="preserve">
+    <value>Unità di misura di default dei movimenti</value>
+  </data>
+  <data name="UnitOfMeasureStore" xml:space="preserve">
+    <value>UM Stoccaggio</value>
+  </data>
+  <data name="UnitOfMeasureStoreToolTip" xml:space="preserve">
+    <value>Unità di misura di default dei movimenti</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Banda</value>
   </data>
   <data name="Z" xml:space="preserve">
     <value>Cilindro Z</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="QuantityToolTip" xml:space="preserve">
+    <value>Quantità del Movimento</value>
+  </data>
+  <data name="MinQuantity" xml:space="preserve">
+    <value>Giacenza Minima</value>
+  </data>
+  <data name="MinQuantityToolTip" xml:space="preserve">
+    <value>Quantità in giacenza minima per avvisi</value>
+  </data>
+  <data name="CodWarehouse" xml:space="preserve">
+    <value>Codice Magazzino</value>
+  </data>
+  <data name="CodWarehouseToolTip" xml:space="preserve">
+    <value>Codice del magazzino</value>
+  </data>
+  <data name="WarehouseName" xml:space="preserve">
+    <value>Magazzino Descrizione</value>
+  </data>
+  <data name="WarehouseNameToolTip" xml:space="preserve">
+    <value>Descrizione sommaria del magazzino Es: "Sede Principae"</value>
+  </data>
+  <data name="CodProduct" xml:space="preserve">
+    <value>Codice prodotto</value>
+  </data>
+  <data name="CodProductToolTip" xml:space="preserve">
+    <value>Codice identificativo del prodotto</value>
   </data>
 </root>

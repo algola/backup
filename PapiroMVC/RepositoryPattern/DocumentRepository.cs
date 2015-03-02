@@ -388,6 +388,20 @@ namespace Services
                 return query;
             }
         }
+
+        public IQueryable<Product> GetAllProducts()
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception)
+            {
+                var query = Context.Products.Include("ProductParts");
+                return query;
+            }
+        }
+
         public IQueryable<DocumentProduct> GetDocumentProductsByCodProduct(string codProduct)
         {
             try

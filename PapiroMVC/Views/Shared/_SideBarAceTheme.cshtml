@@ -51,6 +51,14 @@
 
         }
 
+        @if (Request.IsAuthenticated)
+        {
+            <li id="warehouseSlidebar">
+                @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseMenu"), "Index", "Warehouse", new { area = "Warehouse" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+            </li>
+        }
+
+
         <li id="aboutSlidebar">
             <a href="http://www.gestionestampa.com"><i class="fa fa-fw fa-lg fa-lightbulb-o"></i> <span class="menu-text">@Html.T(strings, "About")</span></a>
         </li>
@@ -72,4 +80,3 @@
         try { ace.settings.check('sidebar', 'collapsed') } catch (e) { }
     </script>
 </div>
-

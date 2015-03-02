@@ -192,6 +192,8 @@ namespace PapiroMVC.Models
 
             ProductSingleLabelRoll = 4,
             ProductSoft = 5,
+
+            ProductEmpty = 6
         }
 
         [DataMember]
@@ -285,6 +287,13 @@ namespace PapiroMVC.Models
         public virtual void ProductCodeRigen()
         {
             this.TimeStampTable = DateTime.Now;
+
+            foreach (var item in this.WarehouseArticles)
+            {
+                item.TimeStampTable = DateTime.Now;
+                item.CodProduct = this.CodProduct;
+                item.CodWarehouseArticle = item.CodWarehouse + "P" + CodProduct;
+            }
 
             //parti del prodotto
             var ppart = this.ProductParts.OrderBy(x => x.CodProductPart).ToList();

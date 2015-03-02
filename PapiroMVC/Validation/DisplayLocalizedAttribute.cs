@@ -13,6 +13,33 @@ using System.Web.Routing;
 
 namespace PapiroMVC.Validation
 {
+    [AttributeUsage(AttributeTargets.Property)]
+    public class NoValidationAttribute : ValidationAttribute, IClientValidatable
+    {
+        public override bool IsValid(object value)
+        {
+            return true;
+        }
+
+        public NoValidationAttribute()
+        {
+
+        }
+        public override string FormatErrorMessage(string name)
+        {
+            return "The " + name + " field contains an invalid credit card number.";
+        }
+
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            yield return new ModelClientValidationRule
+            {
+                ErrorMessage = ErrorMessage,
+                ValidationType = "novalidation"
+            };
+        }
+    }
+
 
     public class DisplayNameLocalizedAttribute : DisplayNameAttribute
     {

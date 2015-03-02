@@ -46,15 +46,70 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditProduct(string id)
         {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
             var prod = productRepository.GetSingle(id);
             prod.FormatsName = formatsRepository.GetAllById(prod.CodMenuProduct);
             prod.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             prod.InitPageTask();
 
+            var vm = new ProductViewModel { Product = prod };
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditProduct";
+            return View(vm);
+        }
+
+
+
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult EditProductNameGenerator(string id)
+        {
+
+            var prod = productRepository.GetProductNameGenerator(id);
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditProductNameGenerator";
             return View(prod);
         }
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditProductNameGenerator(ProductNameGenerator c)
+        {
+
+            if (ModelState.IsValid)
+            {
+                //try
+                //{
+                productRepository.SaveProductNameGenerator(c);
+                productRepository.Save();
+                return Json(new { redirectUrl = Url.Action("ListProductNameGenerator") });
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "EditProductNameGenerator";
+            return PartialView("_EditProductNameGenerator", c);
+        }
+
+
+
+        [HttpGet]
+        public ActionResult EditProductOnlyMov(string id)
+        {
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var prod = productRepository.GetSingle(id);
+            return View(prod);
+        }
+
 
         [HttpGet]
         public ActionResult DisplayProduct(string id)
@@ -67,10 +122,48 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
+        //[HttpParamAction]
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public ActionResult EditProduct(Product c)
+        //{
+        //    c.FormatsName = formatsRepository.GetAllById(c.CodMenuProduct);
+        //    c.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
+        //    c.InitPageTask();
+
+        //    var taskList = this.typeOfTaskRepository.GetAll();
+        //    foreach (var item in c.ProductTasks)
+        //    {
+        //        item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
+        //    }
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        //try
+        //        //{
+        //        productRepository.Edit(c);
+        //        //rigeneration name of article
+        //        //c.ProductSingleSheet.ProductName = c.ProductSingleSheet.ToString();
+        //        productRepository.Save();
+        //        return Json(new { redirectUrl = Url.Action("Index") });
+        //        //}
+        //        //catch (Exception ex)
+        //        //{
+        //        //    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+        //        //}
+        //    }
+
+        //    //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+        //    ViewBag.ActionMethod = "EditProduct";
+        //    return PartialView("_EditAndCreateProduct", c);
+        //}
+
+
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditProduct(Product c)
+        public ActionResult EditProduct(ProductViewModel vm)
         {
+
+            var c = vm.Product;
             c.FormatsName = formatsRepository.GetAllById(c.CodMenuProduct);
             c.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
             c.InitPageTask();
@@ -80,6 +173,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
             }
+
+            vm.Quantity = 1;
+            vm.Customer = customerSupplierRepository.GetAll().OfType<Customer>().First().BusinessName;
+
+
+            if (ModelState.ContainsKey("Quantity"))
+                ModelState["Quantity"].Errors.Clear();
 
             if (ModelState.IsValid)
             {
@@ -99,7 +199,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditProduct";
-            return PartialView("_EditAndCreateProduct", c);
+            return PartialView("_EditAndEditProduct", vm);
         }
 
         [HttpParamAction]
@@ -259,6 +359,216 @@ namespace PapiroMVC.Areas.Working.Controllers
             ViewBag.ActionMethod = "CreateProduct";
             return PartialView("_EditAndCreateProduct", pv);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+        #region Warehouse
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult OnlyMov()
+        {
+            return View();        
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProduct(NewMovViewModel c)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //il codice del movimento lo prendo dal codice dell'articolo
+                    c.Mov.CodWarehouseArticle = c.ArticleOrProduct.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.Mov.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    var temp = warehouseRepository.GetSingle(c.Mov.CodWarehouseArticle);
+                    var newMov = new NewMovViewModel();
+                    newMov.ArticleOrProduct = temp;
+                    newMov.Mov = new WarehouseArticleMov { WarehouseArticle = temp, CodWarehouseArticle = temp.CodWarehouseArticle };
+
+
+                    return Json(new { redirectUrl = Url.Action("NewMovProduct", new { CodProduct = temp.CodProduct, CodWarehouse = temp.CodWarehouse }) });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            return PartialView("_NewMovProduct", c);
+        }
+
+
+        /// <summary>
+        /// New movment of specific product in a specific Warehouse
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult NewMovProduct(string codProduct, string codWarehouse)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            //the new movment display warehouse information
+            //plus new movment in accord to warehouse article specify
+
+            var c = warehouseRepository.GetSingleProduct(codProduct, codWarehouse);
+            var newMov = new NewMovViewModel();
+            newMov.ArticleOrProduct = c;
+            newMov.IsProduct = true;
+
+            newMov.Mov = new WarehouseArticleMov { WarehouseArticle = c, CodWarehouseArticle = c == null ? "" : c.CodWarehouseArticle };
+
+            return View("NewMovProduct", newMov);
+
+        }
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProductOrder(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 2; //ordine!!!!
+            return NewMovProduct(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProductMov(NewMovViewModel c)
+        {
+
+            var oldWare = c.Mov.WarehouseArticle.CodWarehouse;
+            var newWare = c.CodWarehouseTo;
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    PapiroMVC.Models.Warehouse prod;
+                    //  prod = warehouseRepository.GetSingleProduct(c.ArticleOrProduct.CodProduct, c.ArticleOrProduct.CodWarehouse);
+
+                    c.Mov.TypeOfMov = 0; //scarico!!!!
+                    c.Mov.CodWarehouseArticle = c.ArticleOrProduct.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    prod = warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle);
+
+                    warehouseRepository.SetDbName(CurrentDatabase);
+
+                    c.Mov.TypeOfMov = 1; //scarico!!!!
+                    c.Mov.CodWarehouseArticle = newWare + "P" + prod.CodProduct;
+                    c.ArticleOrProduct.CodWarehouseArticle = c.Mov.CodWarehouseArticle;
+                    c.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(c.Mov);
+                    warehouseRepository.AddMov(c.Mov);
+                    warehouseRepository.Save();
+
+                    warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(c.ArticleOrProduct.CodWarehouseArticle));
+                    warehouseRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action("NewMovProduct", new { CodProduct = prod.CodProduct, CodWarehouse = prod.CodWarehouse }) });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            return PartialView("_NewMovProduct", c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProductLoad(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 1; //carico!!!!
+            return NewMovProduct(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProductUnLoad(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 0; //scarico!!!!
+            return NewMovProduct(c);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult NewMovProductReserve(NewMovViewModel c)
+        {
+            c.Mov.TypeOfMov = 3; //impegno!!!!
+            return NewMovProduct(c);
+        }
+
+        public ActionResult UpdateWarehouseArticleInfo(string codWarehouseArticle, string codProduct, string codWarehouse)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var c = warehouseRepository.GetSingleProduct(codProduct, codWarehouse);
+            return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
+        }
+
+        public ActionResult UpdateWarehouseMinQuantity(string codWarehouseArticle, string minQuantity)
+        {
+
+            //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+            var locations = warehouseRepository.GetWarehouseList();
+            ViewBag.Locations = locations;
+
+            var c = warehouseRepository.GetSingle(codWarehouseArticle);
+            c.MinQuantity = Convert.ToInt32(minQuantity);
+
+            warehouseRepository.Edit(c);
+            warehouseRepository.Save();
+
+            return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
+        }
+
+        #endregion
+
+
+
+
+
+
+
 
     }
 }

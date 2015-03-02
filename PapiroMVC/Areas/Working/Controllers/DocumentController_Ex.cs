@@ -11,6 +11,105 @@ namespace PapiroMVC.Areas.Working.Controllers
 {
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
+
+
+
+        /// <summary>
+        /// List of all DocumentProducts
+        /// </summary>
+        /// <param name="gridSettings"></param>
+        /// <returns></returns>
+        public ActionResult ProductsList(GridSettings gridSettings)
+        {
+            string codProductFilter = string.Empty;
+            string productRefNameFilter = string.Empty;
+            string productNameFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                codProductFilter = gridSettings.where.rules.Any(r => r.field == "CodProduct") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodProduct").data : string.Empty;
+
+                productNameFilter = gridSettings.where.rules.Any(r => r.field == "ProductName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ProductName").data : string.Empty;
+
+                productRefNameFilter = gridSettings.where.rules.Any(r => r.field == "ProductRefName") ?
+                   gridSettings.where.rules.FirstOrDefault(r => r.field == "ProductRefName").data : string.Empty;
+
+            }
+
+            var q = documentRepository.GetAllProducts().OrderByDescending(x => x.TimeStampTable).AsQueryable();
+
+            if (!string.IsNullOrEmpty(codProductFilter))
+            {
+                q = q.Where(c => c.CodProduct != null && c.CodProduct.ToLower().Contains(codProductFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(productNameFilter))
+            {
+                q = q.Where(c => c.ProductName != null && c.ProductName.ToLower().Contains(productNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(productRefNameFilter))
+            {
+                q = q.Where(c => (c.ProductRefName != null && c.ProductRefName.ToLower().Contains(productRefNameFilter.ToLower())) ||
+                    (c.ProductRefName != null && c.ProductRefName.ToLower().Contains(productRefNameFilter.ToLower())));
+            }
+
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodProduct":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodProduct) : q.OrderBy(c => c.CodProduct);
+                    break;
+                case "ProductName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ProductName) : q.OrderBy(c => c.ProductName);
+                    break;
+                case "ProductRefName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ProductRefName) : q.OrderBy(c => c.ProductRefName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodProduct,
+                        cell = new string[] 
+                            {      
+                                a.CodProduct,
+                                a.CodProduct,
+                                a.ProductName,
+                                a.ProductRefName  //attributo derivato
+                            }
+                    }
+                ).ToArray()
+            };
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Costs(GridSettings gridSettings, String codDocumentProduct)
         {
             var q = documentRepository.GetCostsByCodDocumentProduct(codDocumentProduct).Where(x => !(x.Hidden ?? false));
@@ -476,8 +575,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 a.Document.DocumentName + " - " + a.Product.ProductRefName,
                                 a.ProductName,  //attributo derivato
                                 (a.Quantity??0).ToString(),
-                                a.UnitPrice,
-                                a.TotalAmount
+                                a.UnitPrice??"0",
+                                a.TotalAmount??"0"
                             }
                     }
                 ).ToArray()

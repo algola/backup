@@ -348,4 +348,16 @@
   <data name="ControlTableRollType" xml:space="preserve">
     <value>Tavolo di controllo bobine</value>
   </data>
+  <data name="LoadType" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="OrderType" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="ReserveType" xml:space="preserve">
+    <value>Impegno</value>
+  </data>
+  <data name="UnloadType" xml:space="preserve">
+    <value>Scarico</value>
+  </data>
 </root>

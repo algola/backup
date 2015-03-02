@@ -50,7 +50,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (adhesives != null)
             {
                 var filteredItems = adhesives.Where(
-                item => item.Adhesive!=null && item.Adhesive.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+                item => item.Adhesive != null && item.Adhesive.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
                 );
 
                 var projection = from art in filteredItems
@@ -219,6 +219,46 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult UnitOfMeasureStoreAutoComplete(string term)
+        {
+            Article[] um = articleRepository.GetAll().OfType<Article>().Where(x => x.WarehouseArticles.Count > 0 && x.WarehouseArticles.FirstOrDefault().UnitOfMeasureStore!=null).ToArray();
+
+            var filteredItems = um.Where(
+                item => item.WarehouseArticles.FirstOrDefault().UnitOfMeasureStore.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureStore,
+                                 label = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureStore,
+                                 value = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureStore
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Autocomplete Unit Of Measure
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult UnitOfMeasureMovAutoComplete(string term)
+        {
+            Article[] um = articleRepository.GetAll().OfType<Article>().Where(x => x.WarehouseArticles.Count > 0 && x.WarehouseArticles.FirstOrDefault().UnitOfMeasureMov != null).ToArray();
+
+            var filteredItems = um.Where(
+                item => item.WarehouseArticles.FirstOrDefault().UnitOfMeasureMov.ToString().IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureMov,
+                                 label = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureMov,
+                                 value = art.WarehouseArticles.FirstOrDefault().UnitOfMeasureMov
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult HandAutoComplete(string term)
         {
@@ -285,28 +325,28 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// AutoComplete
-        /// </summary>
-        /// <param name="term"></param>
-        /// <returns></returns>
-        public ActionResult UnitOfMeasureAutoComplete(string term)
-        {
-            Article[] unitOfMeasures = articleRepository.GetAll().OfType<Article>().ToArray();
+        ///// <summary>
+        ///// AutoComplete
+        ///// </summary>
+        ///// <param name="term"></param>
+        ///// <returns></returns>
+        //public ActionResult UnitOfMeasureAutoComplete(string term)
+        //{
+        //    Article[] unitOfMeasures = articleRepository.GetAll().OfType<Article>().ToArray();
 
-            var filteredItems = unitOfMeasures.Where(
-            item => item.UnitOfMeasure.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
+        //    var filteredItems = unitOfMeasures.Where(
+        //    item => item.UnitOfMeasure.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+        //    );
 
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.UnitOfMeasure,
-                                 label = art.UnitOfMeasure,
-                                 value = art.UnitOfMeasure
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
+        //    var projection = from art in filteredItems
+        //                     select new
+        //                     {
+        //                         id = art.UnitOfMeasure,
+        //                         label = art.UnitOfMeasure,
+        //                         value = art.UnitOfMeasure
+        //                     };
+        //    return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        //}
 
         /*
         /// <summary>

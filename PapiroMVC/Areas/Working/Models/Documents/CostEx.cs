@@ -414,26 +414,17 @@ namespace PapiroMVC.Models
                             if (cv.TaskExecutors.FirstOrDefault() != null)
                             {
                                 cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
-
-
-
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                                cv.TaskexEcutorSelected = tskExec.FirstOrDefault();
                             }
 
                             cv.ProductPart = productPart;
 
-
-
                             ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
                             //qui voglio solo le fustelle flexo e semiroll
-                            ((PrintingLabelRollCostDetail)cv).Dies = articles.OfType<Die>();
+                            ((PrintingLabelRollCostDetail)cv).Dies = articles.OfType<Die>().ToList();
 
                             //search valid formats
                             ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
-
 
                             ((PrintingLabelRollCostDetail)cv).BuyingFormat =
                                  (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?

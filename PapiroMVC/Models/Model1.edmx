@@ -282,6 +282,14 @@
           <Property Name="CodItemGraphLink" Type="char" MaxLength="20" />
           <Property Name="CodProduct" Type="char" MaxLength="50" />
         </EntityType>
+        <EntityType Name="productnamegenerators">
+          <Key>
+            <PropertyRef Name="CodMenuProduct" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodMenuProduct" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="ProductNameGenerator" Type="char" MaxLength="255" />
+        </EntityType>
         <EntityType Name="productpartprinting">
           <Key>
             <PropertyRef Name="CodProductPartPrinting" />
@@ -483,6 +491,7 @@
           <Property Name="CodTaskExecutorCylinder" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="Z" Type="int" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="ZMetric" Type="bit" />
         </EntityType>
         <EntityType Name="taskexecutorestimatedon">
           <Key>
@@ -616,6 +625,7 @@
           <Property Name="PaperSecondStartLenght" Type="uint" />
           <Property Name="HasImplant" Type="bit" />
           <Property Name="CostImplant" Type="char" MaxLength="20" />
+          <Property Name="ZMetric" Type="bit" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -642,6 +652,48 @@
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" Nullable="false" />
           <Property Name="TaskName" Type="char" MaxLength="100" />
           <Property Name="CodCategoryOfTask" Type="char" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="warehousearticlemovs">
+          <Key>
+            <PropertyRef Name="CodWarehouseArticleMov" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodWarehouseArticleMov" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="CodWarehouseArticle" Type="char" MaxLength="50" />
+          <Property Name="Quantity" Type="double" />
+          <Property Name="TypeOfMov" Type="int" />
+          <Property Name="UnitOfMeasureMov" Type="char" MaxLength="50" />
+          <Property Name="UmConversion" Type="double" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Used" Type="bit" />
+        </EntityType>
+        <EntityType Name="warehousearticles">
+          <Key>
+            <PropertyRef Name="CodWarehouseArticle" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodWarehouseArticle" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="CodArticle" Type="char" MaxLength="100" />
+          <Property Name="UnitOfMeasureStore" Type="char" MaxLength="50" />
+          <Property Name="UnitOfMeasureMov" Type="char" MaxLength="50" />
+          <Property Name="UmConversion" Type="double" />
+          <Property Name="QuantityOnHand" Type="double" />
+          <Property Name="Available" Type="double" />
+          <Property Name="PotentialQuantityOnHand" Type="double" />
+          <Property Name="PotentialAvailable" Type="double" />
+          <Property Name="CodProduct" Type="char" MaxLength="100" />
+          <Property Name="LastUpdate" Type="date" />
+          <Property Name="MinQuantity" Type="double" />
+          <Property Name="CodWarehouse" Type="char" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="warehouses">
+          <Key>
+            <PropertyRef Name="CodWarehouse" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodWarehouse" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="WarehouseName" Type="char" MaxLength="100" />
         </EntityType>
         <Association Name="articlecost_ibfk_1">
           <End Role="articles" Type="Self.articles" Multiplicity="0..1">
@@ -1455,6 +1507,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_warehousearticlemovs_CodWarehouseArticle">
+          <End Role="warehousearticles" Type="Self.warehousearticles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticlemovs" Type="Self.warehousearticlemovs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehousearticles">
+              <PropertyRef Name="CodWarehouseArticle" />
+            </Principal>
+            <Dependent Role="warehousearticlemovs">
+              <PropertyRef Name="CodWarehouseArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticles_CodArticle">
+          <End Role="articles" Type="Self.articles" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticles" Type="Self.warehousearticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articles">
+              <PropertyRef Name="CodArticle" />
+            </Principal>
+            <Dependent Role="warehousearticles">
+              <PropertyRef Name="CodArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticles_CodProduct">
+          <End Role="products" Type="Self.products" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticles" Type="Self.warehousearticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="warehousearticles">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticles_CodWarehouse">
+          <End Role="warehouses" Type="Self.warehouses" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticles" Type="Self.warehousearticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehouses">
+              <PropertyRef Name="CodWarehouse" />
+            </Principal>
+            <Dependent Role="warehousearticles">
+              <PropertyRef Name="CodWarehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="makereadies_ibfk_1">
           <End Role="productpartprintinggain" Type="Self.productpartprintinggain" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1777,6 +1885,7 @@
           <EntitySet Name="menuproduct" EntityType="Self.menuproduct" Schema="db" store:Type="Tables" />
           <EntitySet Name="optiontypeoftask" EntityType="Self.optiontypeoftask" Schema="db" store:Type="Tables" />
           <EntitySet Name="productgraphs" EntityType="Self.productgraphs" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productnamegenerators" EntityType="Self.productnamegenerators" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartprinting" EntityType="Self.productpartprinting" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartprintinggain" EntityType="Self.productpartprintinggain" Schema="db" store:Type="Tables" />
           <EntitySet Name="productparts" EntityType="Self.productparts" Schema="db" store:Type="Tables" />
@@ -1793,6 +1902,9 @@
           <EntitySet Name="taskexecutortypeoftask" EntityType="Self.taskexecutortypeoftask" Schema="db" store:Type="Tables" />
           <EntitySet Name="typeofbase" EntityType="Self.typeofbase" Schema="db" store:Type="Tables" />
           <EntitySet Name="typeoftask" EntityType="Self.typeoftask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="warehousearticlemovs" EntityType="Self.warehousearticlemovs" Schema="db" store:Type="Tables" />
+          <EntitySet Name="warehousearticles" EntityType="Self.warehousearticles" Schema="db" store:Type="Tables" />
+          <EntitySet Name="warehouses" EntityType="Self.warehouses" Schema="db" store:Type="Tables" />
           <AssociationSet Name="articlecost_ibfk_1" Association="Self.articlecost_ibfk_1">
             <End Role="articles" EntitySet="articles" />
             <End Role="articlecost" EntitySet="articlecost" />
@@ -2024,6 +2136,22 @@
           <AssociationSet Name="FK_taskexecutortypeoftask_CodTypeOfTask" Association="Self.FK_taskexecutortypeoftask_CodTypeOfTask">
             <End Role="typeoftask" EntitySet="typeoftask" />
             <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodWarehouseArticle" Association="Self.FK_warehousearticlemovs_CodWarehouseArticle">
+            <End Role="warehousearticles" EntitySet="warehousearticles" />
+            <End Role="warehousearticlemovs" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticles_CodArticle" Association="Self.FK_warehousearticles_CodArticle">
+            <End Role="articles" EntitySet="articles" />
+            <End Role="warehousearticles" EntitySet="warehousearticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticles_CodProduct" Association="Self.FK_warehousearticles_CodProduct">
+            <End Role="products" EntitySet="products" />
+            <End Role="warehousearticles" EntitySet="warehousearticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticles_CodWarehouse" Association="Self.FK_warehousearticles_CodWarehouse">
+            <End Role="warehouses" EntitySet="warehouses" />
+            <End Role="warehousearticles" EntitySet="warehousearticles" />
           </AssociationSet>
           <AssociationSet Name="makereadies_ibfk_1" Association="Self.makereadies_ibfk_1">
             <End Role="productpartprintinggain" EntitySet="productpartprintinggain" />
@@ -2323,6 +2451,26 @@
             <End Role="documentstate" EntitySet="DocumentStates" />
           </AssociationSet>
           <EntitySet Name="States" EntityType="dbModel.State" />
+          <EntitySet Name="warehousearticlemovs" EntityType="dbModel.WarehouseArticleMov" />
+          <EntitySet Name="warehousearticles" EntityType="dbModel.Warehouse" />
+          <AssociationSet Name="FK_warehousearticles_CodArticle" Association="dbModel.FK_warehousearticles_CodArticle">
+            <End Role="Article" EntitySet="articles" />
+            <End Role="warehousearticle" EntitySet="warehousearticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticles_CodProduct" Association="dbModel.FK_warehousearticles_CodProduct">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="warehousearticle" EntitySet="warehousearticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodWarehouseArticle" Association="dbModel.FK_warehousearticlemovs_CodWarehouseArticle">
+            <End Role="warehousearticle" EntitySet="warehousearticles" />
+            <End Role="warehousearticlemov" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <EntitySet Name="warehouseSpec" EntityType="dbModel.WarehouseSpec" />
+          <AssociationSet Name="FK_warehousearticles_CodWarehouse" Association="dbModel.FK_warehousearticles_CodWarehouse">
+            <End Role="WarehouseSpec" EntitySet="warehouseSpec" />
+            <End Role="Warehouse" EntitySet="warehousearticles" />
+          </AssociationSet>
+          <EntitySet Name="ProductNameGenerators" EntityType="dbModel.ProductNameGenerator" />
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
@@ -2495,7 +2643,8 @@
           <NavigationProperty Name="CustomerSupplierBuy" Relationship="dbModel.FK_articles_customersuppliers" FromRole="Article" ToRole="CustomerSupplier" />
           <NavigationProperty Name="CustomerSupplierMaker" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="Article" ToRole="CustomerSupplier" />
           <Property Type="Int32" Name="Selector" />         
-          <Property Name="Tags" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />         
+          <Property Name="Tags" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="WarehouseArticles" Relationship="dbModel.FK_warehousearticles_CodArticle" FromRole="Article" ToRole="warehousearticle" />         
           </EntityType>
         <Association Name="FK_ArticleCost_CodArticle">
           <End Type="dbModel.Article" Role="articles" Multiplicity="0..1" />
@@ -2839,6 +2988,7 @@
           <NavigationProperty Name="documentproducts" Relationship="dbModel.FK_documentproducts_CodProduct" FromRole="Product" ToRole="DocumentProduct" />
           <NavigationProperty Name="ProductGraphLinks" Relationship="dbModel.FK_productgraphs_CodProduct" FromRole="Product" ToRole="productgraph" />
           <Property Name="ProductRefName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WarehouseArticles" Relationship="dbModel.FK_warehousearticles_CodProduct" FromRole="Product" ToRole="warehousearticle" />
         </EntityType>
         <EntityType Name="ProductTask">
           <Key>
@@ -3614,6 +3764,7 @@
         <EntityType Name="Flexo" BaseType="dbModel.Litho" >
           <Property Name="Width2" Type="Double" />
           <Property Name="FlexoWidth" Type="Double" />
+          <Property Name="ZMetric" Type="Boolean" />
         </EntityType>
         <EntityType Name="TaskExecutorCylinder">
           <Key>
@@ -3625,6 +3776,7 @@
           <Property Name="Z" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="taskexecutor" Relationship="dbModel.FK_taskexecutorcylinders_CodTaskExecutor" FromRole="taskexecutorcylinder" ToRole="TaskExecutor" />
+          <Property Name="ZMetric" Type="Boolean" />
         </EntityType>
         <Association Name="FK_taskexecutorcylinders_CodTaskExecutor">
           <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1">
@@ -3787,6 +3939,120 @@
           <Property Name="ResetLinkedStates" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ControlTableCostDetail" BaseType="dbModel.PrePostPressCostDetail" />
+        <EntityType Name="WarehouseArticleMov">
+          <Key>
+            <PropertyRef Name="CodWarehouseArticleMov" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodWarehouseArticleMov" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodWarehouseArticle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Double" />
+          <Property Name="TypeOfMov" Type="Int32" />
+          <Property Name="UnitOfMeasureMov" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UmConversion" Type="Double" />
+          <NavigationProperty Name="WarehouseArticle" Relationship="dbModel.FK_warehousearticlemovs_CodWarehouseArticle" FromRole="warehousearticlemov" ToRole="warehousearticle" />
+          <Property Name="Date" Type="DateTime" />
+          <Property Name="Used" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="CodWarehouseArticle" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodWarehouseArticle" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodArticle" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasureStore" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasureMov" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UmConversion" Type="Double" />
+          <Property Name="QuantityOnHand" Type="Double" />
+          <Property Name="Available" Type="Double" />
+          <Property Name="PotentialQuantityOnHand" Type="Double" />
+          <Property Name="PotentialAvailable" Type="Double" />
+          <Property Name="CodProduct" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Article" Relationship="dbModel.FK_warehousearticles_CodArticle" FromRole="warehousearticle" ToRole="Article" />
+          <NavigationProperty Name="Product" Relationship="dbModel.FK_warehousearticles_CodProduct" FromRole="warehousearticle" ToRole="Product" />
+          <NavigationProperty Name="WarehouseArticleMovs" Relationship="dbModel.FK_warehousearticlemovs_CodWarehouseArticle" FromRole="warehousearticle" ToRole="warehousearticlemov" />
+          <Property Name="LastUpdate" Type="DateTime" />
+          <Property Name="MinQuantity" Type="Double" />
+          <Property Name="CodWarehouse" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="WarehouseSpec" Relationship="dbModel.FK_warehousearticles_CodWarehouse" FromRole="Warehouse" ToRole="WarehouseSpec" />
+        </EntityType>
+        <Association Name="FK_warehousearticles_CodArticle">
+          <End Type="dbModel.Article" Role="Article" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="CodArticle" />
+            </Principal>
+            <Dependent Role="warehousearticle">
+              <PropertyRef Name="CodArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticles_CodProduct">
+          <End Type="dbModel.Product" Role="Product" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="CodProduct" />
+            </Principal>
+            <Dependent Role="warehousearticle">
+              <PropertyRef Name="CodProduct" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_CodWarehouseArticle">
+          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.WarehouseArticleMov" Role="warehousearticlemov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehousearticle">
+              <PropertyRef Name="CodWarehouseArticle" />
+            </Principal>
+            <Dependent Role="warehousearticlemov">
+              <PropertyRef Name="CodWarehouseArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WarehouseArticle" BaseType="dbModel.Warehouse" />
+        <EntityType Name="WarehouseProduct" BaseType="dbModel.Warehouse" />
+        <EntityType Name="ProductEmpty" BaseType="dbModel.Product" />
+        <EntityType Name="WarehouseSpec">
+          <Key>
+            <PropertyRef Name="CodWarehouse" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodWarehouse" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="warehousearticles" Relationship="dbModel.FK_warehousearticles_CodWarehouse" FromRole="WarehouseSpec" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_warehousearticles_CodWarehouse">
+          <End Type="dbModel.WarehouseSpec" Role="WarehouseSpec" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarehouseSpec">
+              <PropertyRef Name="CodWarehouse" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="CodWarehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductNameGenerator">
+          <Key>
+            <PropertyRef Name="CodMenuProduct" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodMenuProduct" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Generator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3910,6 +4176,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Flexo)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="ZMetric" ColumnName="ZMetric" />
                 <ScalarProperty Name="FlexoWidth" ColumnName="FlexoWidth" />
                 <ScalarProperty Name="Width2" ColumnName="Width" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
@@ -4621,6 +4888,12 @@
                 <Condition ColumnName="SelectorProduct" Value="5" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductEmpty)">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="CodProduct" ColumnName="CodProduct" />
+                <Condition ColumnName="SelectorProduct" Value="6" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ProductTasks">
             <EntityTypeMapping TypeName="dbModel.ProductTask">
@@ -5052,6 +5325,7 @@
           <EntitySetMapping Name="TaskExecutorCylinders">
             <EntityTypeMapping TypeName="dbModel.TaskExecutorCylinder">
               <MappingFragment StoreEntitySet="taskexecutorcylinders">
+                <ScalarProperty Name="ZMetric" ColumnName="ZMetric" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Z" ColumnName="Z" />
                 <ScalarProperty Name="CodTaskExecutorCylinder" ColumnName="CodTaskExecutorCylinder" />
@@ -5100,6 +5374,71 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="warehousearticlemovs">
+            <EntityTypeMapping TypeName="dbModel.WarehouseArticleMov">
+              <MappingFragment StoreEntitySet="warehousearticlemovs">
+                <ScalarProperty Name="Used" ColumnName="Used" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="UmConversion" ColumnName="UmConversion" />
+                <ScalarProperty Name="UnitOfMeasureMov" ColumnName="UnitOfMeasureMov" />
+                <ScalarProperty Name="TypeOfMov" ColumnName="TypeOfMov" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CodWarehouseArticle" ColumnName="CodWarehouseArticle" />
+                <ScalarProperty Name="CodWarehouseArticleMov" ColumnName="CodWarehouseArticleMov" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehousearticles">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Warehouse)">
+              <MappingFragment StoreEntitySet="warehousearticles">
+                <ScalarProperty Name="CodWarehouse" ColumnName="CodWarehouse" />
+                <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="CodWarehouseArticle" ColumnName="CodWarehouseArticle" />
+                <ScalarProperty Name="CodProduct" ColumnName="CodProduct" />
+                <ScalarProperty Name="PotentialAvailable" ColumnName="PotentialAvailable" />
+                <ScalarProperty Name="PotentialQuantityOnHand" ColumnName="PotentialQuantityOnHand" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="UmConversion" ColumnName="UmConversion" />
+                <ScalarProperty Name="UnitOfMeasureMov" ColumnName="UnitOfMeasureMov" />
+                <ScalarProperty Name="UnitOfMeasureStore" ColumnName="UnitOfMeasureStore" />
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.WarehouseProduct)">
+              <MappingFragment StoreEntitySet="warehousearticles">
+                <ScalarProperty Name="CodWarehouseArticle" ColumnName="CodWarehouseArticle" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.WarehouseArticle)">
+              <MappingFragment StoreEntitySet="warehousearticles">
+                <ScalarProperty Name="CodWarehouseArticle" ColumnName="CodWarehouseArticle" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehouseSpec">
+            <EntityTypeMapping TypeName="dbModel.WarehouseSpec">
+              <MappingFragment StoreEntitySet="warehouses">
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="CodWarehouse" ColumnName="CodWarehouse" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductNameGenerators">
+            <EntityTypeMapping TypeName="dbModel.ProductNameGenerator">
+              <MappingFragment StoreEntitySet="productnamegenerators">
+                <ScalarProperty Name="Generator" ColumnName="ProductNameGenerator" />
+                <ScalarProperty Name="CodMenuProduct" ColumnName="CodMenuProduct" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -5123,7 +5462,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="57">
+      <Diagram Name="Model1" ZoomLevel="115">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="34.25" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />
@@ -5611,6 +5950,20 @@
         <EntityTypeShape EntityType="dbModel.ControlTableCostDetail" Width="1.5" PointX="10.75" PointY="41" />
         <InheritanceConnector EntityType="dbModel.ControlTableCostDetail" />
         <InheritanceConnector EntityType="dbModel.DigitalOnRun" />
+        <EntityTypeShape EntityType="dbModel.WarehouseArticleMov" Width="1.5" PointX="67.875" PointY="10.375" />
+        <EntityTypeShape EntityType="dbModel.Warehouse" Width="1.5" PointX="65.625" PointY="9.625" />
+        <AssociationConnector Association="dbModel.FK_warehousearticles_CodArticle" />
+        <AssociationConnector Association="dbModel.FK_warehousearticles_CodProduct" />
+        <AssociationConnector Association="dbModel.FK_warehousearticlemovs_CodWarehouseArticle" />
+        <EntityTypeShape EntityType="dbModel.WarehouseArticle" Width="1.5" PointX="64.625" PointY="15.625" />
+        <InheritanceConnector EntityType="dbModel.WarehouseArticle" />
+        <EntityTypeShape EntityType="dbModel.WarehouseProduct" Width="1.5" PointX="67.25" PointY="15.625" />
+        <InheritanceConnector EntityType="dbModel.WarehouseProduct" />
+        <EntityTypeShape EntityType="dbModel.ProductEmpty" Width="1.5" PointX="1.5" PointY="14" />
+        <InheritanceConnector EntityType="dbModel.ProductEmpty" />
+        <EntityTypeShape EntityType="dbModel.WarehouseSpec" Width="1.5" PointX="9.5" PointY="5.75" />
+        <AssociationConnector Association="dbModel.FK_warehousearticles_CodWarehouse" />
+        <EntityTypeShape EntityType="dbModel.ProductNameGenerator" Width="1.5" PointX="0.75" PointY="4.75" />
       </Diagram>
     </Diagrams>
   </Designer>

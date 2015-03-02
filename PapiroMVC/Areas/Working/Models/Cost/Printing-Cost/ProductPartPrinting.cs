@@ -208,7 +208,8 @@ namespace PapiroMVC.Models
             //cerco di capire se la macchina èflexo... se è flexo voglio stampare lo zeta e lo h
             if (CostDetail.TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
             {
-                var pFtoFlexo = "h" + PrintingFormat.GetSide1() + " z" + (PrintingFormat.GetSide2() / 2.54 * 8).ToString();
+                var z = ((Flexo)CostDetail.TaskexEcutorSelected).GetZFromCm(PrintingFormat.GetSide2());
+                var pFtoFlexo = "h" + PrintingFormat.GetSide1() + " z" + z.ToString();
                 doc.AddCustomProperty(new Novacode.CustomProperty("PPP.PrintingFormat", pFtoFlexo));
             }
             else

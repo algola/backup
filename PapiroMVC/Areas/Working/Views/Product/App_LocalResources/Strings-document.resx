@@ -1,0 +1,459 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AlertWorkingArea" xml:space="preserve">
+    <value>Benvenuto nell'Area di lavoro della tua azienda. Usa il menu a fianco per entrare nelle varie sezioni, oppure usa le operazioni veloci qui sotto.</value>
+  </data>
+  <data name="Assigned" xml:space="preserve">
+    <value>Valido</value>
+  </data>
+  <data name="BuyingFormat" xml:space="preserve">
+    <value>F.to acquisto supporto stampa</value>
+  </data>
+  <data name="CloneQty" xml:space="preserve">
+    <value>Duplica</value>
+  </data>
+  <data name="CodCost" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="CodDocument" xml:space="preserve">
+    <value>Codice del documento</value>
+  </data>
+  <data name="CodDocumentProduct" xml:space="preserve">
+    <value>Codice prodotto</value>
+  </data>
+  <data name="CreateDocument" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="CreateDocumentDesc" xml:space="preserve">
+    <value>Creazione di un nuovo documento</value>
+  </data>
+  <data name="CreateDocumentDescription" xml:space="preserve">
+    <value>Nuovo documento</value>
+  </data>
+  <data name="CreateEstimateMenu" xml:space="preserve">
+    <value>Nuovo Preventivo</value>
+  </data>
+  <data name="Customer" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="DeleteCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="DeleteCommand" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeleteMessageDocumentProduct" xml:space="preserve">
+    <value>Si stanno per cancellare i prodotti selezionati, procedere?</value>
+  </data>
+  <data name="DeleteMessageEstimate" xml:space="preserve">
+    <value>Si stanno per cancellare i preventivi selezionati, procedere?</value>
+  </data>
+  <data name="DeleteOk" xml:space="preserve">
+    <value>Si</value>
+  </data>
+  <data name="DeletingStep" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Descrizione costo</value>
+  </data>
+  <data name="DialogCloneTitle" xml:space="preserve">
+    <value>Duplica</value>
+  </data>
+  <data name="DialogPrintTitle" xml:space="preserve">
+    <value>Stampa a video</value>
+  </data>
+  <data name="Document" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="DocumentName" xml:space="preserve">
+    <value>Descrizione/Nome</value>
+  </data>
+  <data name="DocumentProductName" xml:space="preserve">
+    <value>Nome prodotto</value>
+  </data>
+  <data name="DocumentProductQuantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="DocumentProducts" xml:space="preserve">
+    <value>Prodotti</value>
+  </data>
+  <data name="DocumentProductsDesc" xml:space="preserve">
+    <value>Elenco prodotti</value>
+  </data>
+  <data name="DocumentProductUnitPrice" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Documents" xml:space="preserve">
+    <value>Documenti</value>
+  </data>
+  <data name="DocumentsDesc" xml:space="preserve">
+    <value>Elenco dei documenti</value>
+  </data>
+  <data name="Drafting" xml:space="preserve">
+    <value>Montaggio</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="EditCostDesc" xml:space="preserve">
+    <value>Dettaglio del costo</value>
+  </data>
+  <data name="EditDocumentDesc" xml:space="preserve">
+    <value>Modifica del documento</value>
+  </data>
+  <data name="EditDocumentProducts" xml:space="preserve">
+    <value>Modifica del prodotto in un documento</value>
+  </data>
+  <data name="EditDocumentProductsDesc" xml:space="preserve">
+    <value>Modifica del prodotto in documento</value>
+  </data>
+  <data name="EditDocumet" xml:space="preserve">
+    <value>Modifica Documento</value>
+  </data>
+  <data name="EditEstimateDesc" xml:space="preserve">
+    <value>Compilazione</value>
+  </data>
+  <data name="EditEstimateMetaTitle" xml:space="preserve">
+    <value>Software Preventivi tipografia e gestionale centro stampa: compilazione del preventivo</value>
+  </data>
+  <data name="ErrorLoading" xml:space="preserve">
+    <value>Errore di caricamento</value>
+  </data>
+  <data name="Estimate" xml:space="preserve">
+    <value>Preventivo</value>
+  </data>
+  <data name="EstimateNumber" xml:space="preserve">
+    <value>Prev N°</value>
+  </data>
+  <data name="Estimates" xml:space="preserve">
+    <value>Preventivi</value>
+  </data>
+  <data name="EstimatesDesc" xml:space="preserve">
+    <value>Elenco preventivi</value>
+  </data>
+  <data name="FilterCheckMessage" xml:space="preserve">
+    <value>Attenzione! Filtri presenti in ricerca.</value>
+  </data>
+  <data name="GranTotalCost" xml:space="preserve">
+    <value>Totale</value>
+  </data>
+  <data name="Inclusion" xml:space="preserve">
+    <value>Inc.</value>
+  </data>
+  <data name="LeavingPageMsg" xml:space="preserve">
+    <value>Alcune modifiche devono ancora essere salvate</value>
+  </data>
+  <data name="ListDocumentProduct" xml:space="preserve">
+    <value>Lista prodotti</value>
+  </data>
+  <data name="Locked" xml:space="preserve">
+    <value>Blk</value>
+  </data>
+  <data name="Markup" xml:space="preserve">
+    <value>%</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>In questa area puoi creare facilmente preventivi di stampa Litho/Offset a rotolo e a foglio, preventivi di stampa Digitali a rotolo e a foglio, e preventivi per stampa su supporti rigidi.</value>
+  </data>
+  <data name="NewEstimate" xml:space="preserve">
+    <value>Nuovo Preventivo</value>
+  </data>
+  <data name="NewQty" xml:space="preserve">
+    <value>Nuova Quantità</value>
+  </data>
+  <data name="NoTaskEstimatedOnException" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="NoTaskEstimatedOnExceptionDesc" xml:space="preserve">
+    <value>Nessun costo è stato specificato</value>
+  </data>
+  <data name="NoTaskEstimatedOnExceptionPage" xml:space="preserve">
+    <value>E' possibile inserire un costo ora</value>
+  </data>
+  <data name="NoTaskExecutorException" xml:space="preserve">
+    <value>Errore</value>
+  </data>
+  <data name="NoTaskExecutorExceptionDesc" xml:space="preserve">
+    <value>Nessuna macchina/esecutore è stato specificata per questa lavorazione</value>
+  </data>
+  <data name="NoTaskExecutorExceptionPage" xml:space="preserve">
+    <value>E' possibile inserire una ora grazie al configuratore</value>
+  </data>
+  <data name="OperationsCaption" xml:space="preserve">
+    <value>Operazioni</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>Stampa OpenXML</value>
+  </data>
+  <data name="PrintToScreenQty" xml:space="preserve">
+    <value>St. a video</value>
+  </data>
+  <data name="ProductDescription" xml:space="preserve">
+    <value>Prodotto</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>Nome del prodotto</value>
+  </data>
+  <data name="ProductRefName" xml:space="preserve">
+    <value>Rif. Articolo</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="QuickOperation" xml:space="preserve">
+    <value>Operazioni Rapide</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="TitleIndex" xml:space="preserve">
+    <value>Documento</value>
+  </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>Totale</value>
+  </data>
+  <data name="TotalCost" xml:space="preserve">
+    <value>Sub Tot</value>
+  </data>
+  <data name="Um" xml:space="preserve">
+    <value>Um</value>
+  </data>
+  <data name="UmFg" xml:space="preserve">
+    <value>Fg</value>
+  </data>
+  <data name="UmKg" xml:space="preserve">
+    <value>Kg</value>
+  </data>
+  <data name="UmMl" xml:space="preserve">
+    <value>Ml</value>
+  </data>
+  <data name="UmMq" xml:space="preserve">
+    <value>Mq</value>
+  </data>
+  <data name="UmNr" xml:space="preserve">
+    <value>Nr</value>
+  </data>
+  <data name="UnitCost" xml:space="preserve">
+    <value>Cad.</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>Cad.</value>
+  </data>
+  <data name="DeleteMessageOrder" xml:space="preserve">
+    <value>Si stanno per cancellare le commesse selezionate, procedere?</value>
+  </data>
+  <data name="ListOrder" xml:space="preserve">
+    <value>Commesse</value>
+  </data>
+  <data name="Orders" xml:space="preserve">
+    <value>Commesse</value>
+  </data>
+  <data name="OrdersDesc" xml:space="preserve">
+    <value>Elenco commesse</value>
+  </data>
+  <data name="CreateOrder" xml:space="preserve">
+    <value>Nuova commessa</value>
+  </data>
+  <data name="Annullato" xml:space="preserve">
+    <value>Annullato</value>
+  </data>
+  <data name="AttAnticipo" xml:space="preserve">
+    <value>Attendo anticipo</value>
+  </data>
+  <data name="AttConfermaDordine" xml:space="preserve">
+    <value>Attendo conferma ordine</value>
+  </data>
+  <data name="AttInformazioni" xml:space="preserve">
+    <value>Attendo informazioni</value>
+  </data>
+  <data name="AttMateriali" xml:space="preserve">
+    <value>Attendo materia prima</value>
+  </data>
+  <data name="Commessa" xml:space="preserve">
+    <value>Esiste una commessa</value>
+  </data>
+  <data name="Concluso" xml:space="preserve">
+    <value>Concluso</value>
+  </data>
+  <data name="InConfezione" xml:space="preserve">
+    <value>In Confezione</value>
+  </data>
+  <data name="InElaborazione" xml:space="preserve">
+    <value>In elaborazione</value>
+  </data>
+  <data name="InSpedizione" xml:space="preserve">
+    <value>In Spedizione</value>
+  </data>
+  <data name="InStampa" xml:space="preserve">
+    <value>In stampa</value>
+  </data>
+  <data name="Inviato" xml:space="preserve">
+    <value>Inviato</value>
+  </data>
+  <data name="LavEsterna" xml:space="preserve">
+    <value>Lavorazione esterna</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tutti</value>
+  </data>
+  <data name="AttImpianti" xml:space="preserve">
+    <value>Attendo impianti</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Stato</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Commessa N°</value>
+  </data>
+  <data name="CodProductCaption" xml:space="preserve">
+    <value>Cod. articolo</value>
+  </data>
+  <data name="DateDocument" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DocumentAndProductRefName" xml:space="preserve">
+    <value>Riferimento</value>
+  </data>
+  <data name="EstimateNumberSerie" xml:space="preserve">
+    <value>Prev N°</value>
+  </data>
+  <data name="GoToOrder" xml:space="preserve">
+    <value>Crea commessa</value>
+  </data>
+  <data name="EditOrderDesc" xml:space="preserve">
+    <value>Modifica commessa</value>
+  </data>
+  <data name="PrintOrder" xml:space="preserve">
+    <value>Stampa Commessa</value>
+  </data>
+  <data name="DialogPrintOrderTitle" xml:space="preserve">
+    <value>Modelli di stampa commessa</value>
+  </data>
+  <data name="ProductMenu" xml:space="preserve">
+    <value>Prodotti-Articoli</value>
+  </data>
+  <data name="ProductsDesc" xml:space="preserve">
+    <value>Prodotti - Articoli</value>
+  </data>
+</root>

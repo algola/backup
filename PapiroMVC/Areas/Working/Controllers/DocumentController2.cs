@@ -178,6 +178,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             Queue<string> files = new Queue<string>();
             //questo array mi serve per il merge
             Queue<string> filesExtCost = new Queue<string>();
+            //questo array mi serve per il merge
+            Queue<string> filesDelivery = new Queue<string>();
 
             order.MergeField(docMain);
             order.OrderProduct.MergeField(docMain);
@@ -254,9 +256,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             var docECHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx"));
             docECHeader.SaveAs(nomeExt);
             files.Enqueue(nomeExt);
-            
+
             //0=incluso, 1=Aux, 2=escluso
-            var extCost = costs.Where(x => x.TypeOfCalcolous == 1 && (x.Quantity??0) !=0);
+            var extCost = costs.Where(x => x.TypeOfCalcolous == 1 && (x.Quantity ?? 0) != 0);
             //prestampa
             foreach (var cost in extCost)
             {
@@ -290,7 +292,18 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
 
-#endregion 
+            #endregion
+
+            #region consegne
+
+            //apro l'header dei costi supplementari e lo salvo
+
+            var nomeDelivery = Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader" + order.CodDocument + ".docx");
+            var docDHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader.docx"));
+            docDHeader.SaveAs(nomeDelivery);
+            files.Enqueue(nomeDelivery);
+
+            #endregion
 
             #region Immagine
             //using (MemoryStream ms = new MemoryStream())
@@ -367,15 +380,45 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
-
-
-
         /// <summary>
         /// This Action returns partial view of CosteDetail
         /// </summary>
         /// <param name="codTaskExecutor"></param>
         /// <param name="codCost"></param>
         /// <returns></returns>
+        [HttpPost]
+        public ActionResult GetPrintingLabelRollCostDetailPartial(String codTaskExecutor, String codCost)
+        {
+
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            cv.CodTaskExecutorSelected = codTaskExecutor;
+            cv.TaskexEcutorSelected = taskExecutorRepository.GetSingle(codTaskExecutor);
+            cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+
+            ((PrintingLabelRollCostDetail)cv).BuyingFormat = null;
+            ((PrintingLabelRollCostDetail)cv).PrintingFormat = null;
+
+            ((PrintingLabelRollCostDetail)(cv)).FuzzyAlgo();
+
+
+            ((PrintingLabelRollCostDetail)cv).BuyingFormat =
+             (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
+             (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
+             : ((PrintingLabelRollCostDetail)cv).BuyingFormat;
+
+            //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
+            ((PrintingLabelRollCostDetail)cv).PrintingFormat =
+            (((PrintingLabelRollCostDetail)cv).PrintingFormat == "" || ((PrintingLabelRollCostDetail)cv).PrintingFormat == null) ?
+            ((PrintingLabelRollCostDetail)cv).BuyingFormat
+            : ((PrintingLabelRollCostDetail)cv).PrintingFormat;
+
+
+            cv.Update();
+            Session["CostDetail"] = cv;
+            return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
+        }
+
+
         [HttpPost]
         public ActionResult GetPartialCost(String codTaskExecutor, String codCost)
         {
@@ -385,7 +428,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             Session["CostDetail"] = cv;
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
-
 
         /// <summary>
         /// returns DocumentProduct
@@ -476,21 +518,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         /// <summary>
         /// Change the max gain and update cost
         /// </summary>
@@ -538,7 +565,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2)
+        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string maxGain1="", string maxGain2="")
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
@@ -595,6 +622,15 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             }
 
+            if (ModelState.IsValid)
+            {
+                maxGain1 = maxGain1 == "" ? "0" : maxGain1;
+                maxGain2 = maxGain2 == "" ? "0" : maxGain2;
+
+                cv.ProductPartPrinting.MaxGain1 = Convert.ToInt32(maxGain1);
+                cv.ProductPartPrinting.MaxGain2 = Convert.ToInt32(maxGain2);
+            }
+
             cv.Update();
             Session["CostDetail"] = cv;
 
@@ -624,7 +660,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="BuyingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeBuyingFormatAndPPartFormat(string buyingFormat, string format, string dCut1, string dCut2)
+        public ActionResult ChangeBuyingFormatAndPPartFormat(string buyingFormat, string format, string dCut1, string dCut2, string maxGain1="", string maxGain2="")
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
@@ -646,7 +682,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.PrintingFormat = buyingFormat;
             Session["CostDetail"] = cv;
-            return ChangePPartFormat(format, dCut1, dCut2);
+            return ChangePPartFormat(format, dCut1, dCut2, maxGain1,maxGain2);
         }
 
         /// <summary>
@@ -820,8 +856,13 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
 
                     ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
-                    ((PrintingLabelRollCostDetail)cv).Dies = articleRepository.GetAll().OfType<Die>();
+                    ((PrintingLabelRollCostDetail)cv).Dies = articleRepository.GetAll().OfType<Die>().ToList();
+
+
                     ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+
+
+
                     viewName = "PrintingCostDetail";
                     break;
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
@@ -1450,6 +1491,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpParamAction]
         public ActionResult NewProductNewEstimate(NewProductCommand c)
         {
+
             MenuProduct[] menuProd = menu.GetAll().ToArray();
             string strings = "~/Views/Shared/Strings";
 

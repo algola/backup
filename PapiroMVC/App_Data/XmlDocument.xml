@@ -198,6 +198,13 @@
             database used in this sessione
             </summary>
         </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.NewMovArticle(System.String,System.String)">
+            <summary>
+            New movment of specific product in a specific Warehouse
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.RollAutomaticallyChangesValidation(PapiroMVC.Models.RollPrintableArticleAutoChanges)">
             <summary>
             RollAutomaticallyChangesValidation is used to validate parameter and its responses are used in a ajax beginform
@@ -260,6 +267,13 @@
             <param name="term"></param>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.UnitOfMeasureMovAutoComplete(System.String)">
+            <summary>
+            Autocomplete Unit Of Measure
+            </summary>
+            <param name="term"></param>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.SheetPerPackedComplete(System.String)">
             <summary>
             AutoComplete
@@ -268,13 +282,6 @@
             <returns></returns>
         </member>
         <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.NameOfMaterialAutoComplete(System.String)">
-            <summary>
-            AutoComplete
-            </summary>
-            <param name="term"></param>
-            <returns></returns>
-        </member>
-        <member name="M:PapiroMVC.Areas.DataBase.Controllers.ArticleController.UnitOfMeasureAutoComplete(System.String)">
             <summary>
             AutoComplete
             </summary>
@@ -411,6 +418,11 @@
             <summary>
             Check if Cylinder 0 are in list
             so view has row to insert a new cylinder Z
+            </summary>
+        </member>
+        <member name="T:PapiroMVC.Models.NewMovViewModel">
+            <summary>
+            data used to create and edit
             </summary>
         </member>
         <member name="T:PapiroMVC.Models.ObjectPrintableArticleViewModel">
@@ -1127,6 +1139,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ListProducts">
+            <summary>
+            return view of all Product
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DeleteEstimates(System.String)">
             <summary>
             Delete estimate and rediret to List
@@ -1158,7 +1176,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.GetPartialCost(System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.GetPrintingLabelRollCostDetailPartial(System.String,System.String)">
             <summary>
             This Action returns partial view of CosteDetail
             </summary>
@@ -1190,7 +1208,7 @@
             <param name="maxGain2"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePPartFormat(System.String,System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangePPartFormat(System.String,System.String,System.String,System.String,System.String)">
             <summary>
             This Action modifies ProductPart format and Update Cost
             </summary>
@@ -1204,7 +1222,7 @@
             <param name="PrintingFormat"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatAndPPartFormat(System.String,System.String,System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ChangeBuyingFormatAndPPartFormat(System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Action modifies BuyingFormat and Update Cost
             </summary>
@@ -1229,6 +1247,13 @@
             Action EditOrCreate all Cost in DocumentProduct
             </summary>
             <param name="id">CodDocumntProduct</param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.ProductsList(Mvc.HtmlHelpers.GridSettings)">
+            <summary>
+            List of all DocumentProducts
+            </summary>
+            <param name="gridSettings"></param>
             <returns></returns>
         </member>
         <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.DocumentProductListInDocument(System.String,Mvc.HtmlHelpers.GridSettings)">
@@ -1258,6 +1283,13 @@
             Create new product and put it into current document in session or create new document and put it into
             </summary>
             <param name="id">rapresents the id of type of product</param>
+            <returns></returns>
+        </member>
+        <member name="M:PapiroMVC.Areas.Working.Controllers.ProductController.NewMovProduct(System.String,System.String)">
+            <summary>
+            New movment of specific product in a specific Warehouse
+            </summary>
+            <param name="c"></param>
             <returns></returns>
         </member>
         <member name="P:PapiroMVC.Areas.Working.Controllers.ProductController.MenuProductRepository">
@@ -1290,7 +1322,7 @@
             Elenco dei possibili formati di acquisto 
             </summary>
         </member>
-        <member name="P:PapiroMVC.Models.PrintingLabelRollCostDetail.BuyingFormats">
+        <member name="F:PapiroMVC.Models.PrintingLabelRollCostDetail.buyingFormats">
             <summary>
             Elenco dei possibili formati di acquisto 
             </summary>
@@ -1326,16 +1358,6 @@
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Cut.CutName">
-            <summary>
-            it is exposed on views
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.CutForLabel.Valid">
-            <summary>
-            this cut fits in taskexecutor
-            </summary>
-        </member>
-        <member name="P:PapiroMVC.Models.CutForLabel.CutName">
             <summary>
             it is exposed on views
             </summary>
@@ -2522,6 +2544,16 @@
               Looks up a localized string similar to Nome descrittivo dell&apos;articolo.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.Available">
+            <summary>
+              Looks up a localized string similar to Disponibile.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.AvailableToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità disponibile (Stoccagio - Impegnato).
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodArticle">
             <summary>
               Looks up a localized string similar to Codice Articolo.
@@ -2529,12 +2561,32 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodArticleToolTip">
             <summary>
-              Looks up a localized string similar to Il codice articolo è assegnato automaticamente dal sistema.
+              Looks up a localized string similar to Codice identificativo dell&apos;articolo.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodDie">
             <summary>
               Looks up a localized string similar to Codice fustella.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodProduct">
+            <summary>
+              Looks up a localized string similar to Codice prodotto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodProductToolTip">
+            <summary>
+              Looks up a localized string similar to Codice identificativo del prodotto.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodWarehouse">
+            <summary>
+              Looks up a localized string similar to Codice Magazzino.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CodWarehouseToolTip">
+            <summary>
+              Looks up a localized string similar to Codice del magazzino.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CurrencyValidation">
@@ -2545,6 +2597,16 @@
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.CurrencyValidationError">
             <summary>
               Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.DateMov">
+            <summary>
+              Looks up a localized string similar to Data.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.DateMovToolTip">
+            <summary>
+              Looks up a localized string similar to Data del movimento.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.DCut1">
@@ -2607,9 +2669,59 @@
               Looks up a localized string similar to Resa in passo.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.MinQuantity">
+            <summary>
+              Looks up a localized string similar to Giacenza Minima.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.MinQuantityToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità in giacenza minima per avvisi.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.PotentialAvailable">
+            <summary>
+              Looks up a localized string similar to Potenziale disponibile.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.PotentialAvailableToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità potenziale disponibile (Disponibile + Ordinato).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.PotentialQuantityOnHand">
+            <summary>
+              Looks up a localized string similar to Potenziale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.PotentialQuantityOnHandToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità potenziale (Stoccaggio + Ordinato).
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.PrintingFormat">
             <summary>
               Looks up a localized string similar to Formato di stampa.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.Quantity">
+            <summary>
+              Looks up a localized string similar to Quantità.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.QuantityOnHand">
+            <summary>
+              Looks up a localized string similar to Quantità.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.QuantityOnHandToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità stoccaggio.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.QuantityToolTip">
+            <summary>
+              Looks up a localized string similar to Quantità del Movimento.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.RequiredField">
@@ -2617,9 +2729,49 @@
               Looks up a localized string similar to richiesto per completare l&apos;operazione.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UmConversion">
+            <summary>
+              Looks up a localized string similar to Conversione .
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UmConversionToolTip">
+            <summary>
+              Looks up a localized string similar to Rapporto tra Um Stoccaggio e Um Movimento. Es. 1 Rotolo 2000 mt. Conversione = 0,0005.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UnitOfMeasure">
             <summary>
               Looks up a localized string similar to Unità di misura.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UnitOfMeasureMov">
+            <summary>
+              Looks up a localized string similar to UM Movimento.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UnitOfMeasureMovToolTip">
+            <summary>
+              Looks up a localized string similar to Unità di misura di default dei movimenti.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UnitOfMeasureStore">
+            <summary>
+              Looks up a localized string similar to UM Stoccaggio.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.UnitOfMeasureStoreToolTip">
+            <summary>
+              Looks up a localized string similar to Unità di misura di default dei movimenti.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.WarehouseName">
+            <summary>
+              Looks up a localized string similar to Magazzino Descrizione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.WarehouseNameToolTip">
+            <summary>
+              Looks up a localized string similar to Descrizione sommaria del magazzino Es: &quot;Sede Principae&quot;.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResArticle.Width">
@@ -4101,6 +4253,11 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProduct">
+            <summary>
+              Looks up a localized string similar to Tipo del Prodotto.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductAltriFormati">
             <summary>
               Looks up a localized string similar to Altri formati.
@@ -4236,9 +4393,19 @@
               Looks up a localized string similar to Supporti rigidi.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductToolTip">
+            <summary>
+              Looks up a localized string similar to Tipologia del prodotto .
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductVolantini">
             <summary>
               Looks up a localized string similar to Volantini e Flyer.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductVuoto">
+            <summary>
+              Looks up a localized string similar to Generico.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodProduct">
@@ -4274,6 +4441,16 @@
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.FormatOpened">
             <summary>
               Looks up a localized string similar to formato aperto cm.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.Generator">
+            <summary>
+              Looks up a localized string similar to Generatore.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.GeneratorToolTip">
+            <summary>
+              Looks up a localized string similar to Generatore della descrizione.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.ProductName">
@@ -6645,6 +6822,16 @@
               Looks up a localized string similar to Larghezza massima della bobina.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.ZMetric">
+            <summary>
+              Looks up a localized string similar to Z Metrico.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.ZMetricToolTip">
+            <summary>
+              Looks up a localized string similar to Z esprime il diametro in mm.
+            </summary>
+        </member>
         <member name="T:PapiroMVC.Models.Resources.TaskExecutor.ResLithoWeb">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -7933,6 +8120,23 @@
             id of the product type
             </summary>
         </member>
+        <member name="T:Services.WarehouseRepository">
+            <summary>
+            repository magazzeno
+            </summary>
+        </member>
+        <member name="M:Services.WarehouseRepository.GetAllMovs(System.String)">
+            <summary>
+            get all movments
+            </summary>
+            <param name="codWarehouseWarehouseArticleMov"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.WarehouseRepository.GetNewMovCode(PapiroMVC.Models.WarehouseArticleMov)">
+            <summary>
+            newMovCode
+            </summary>
+        </member>
         <member name="M:Services.CustomerSupplierRepository.GetNewCode(PapiroMVC.Models.CustomerSupplier)">
             <summary>
             Take next code in string numerical order.
@@ -7981,6 +8185,12 @@
             <typeparam name="T"></typeparam>
             <param name="query"></param>
             <param name="a"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Services.ProductRepository.GetAllProductNameGenerator">
+            <summary>
+            get all product description generator
+            </summary>
             <returns></returns>
         </member>
         <member name="M:Services.TaskExecutorRepository.EditSingleCylinder(PapiroMVC.Models.TaskExecutorCylinder)">
@@ -8067,7 +8277,7 @@
             <param name="expression"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Validation.HtmlHelperExtension.AlgolaEditorFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object,System.Int32)">
+        <member name="M:PapiroMVC.Validation.HtmlHelperExtension.AlgolaEditorFor``2(System.Web.Mvc.HtmlHelper{``0},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Object,System.Int32,System.Boolean)">
             <summary>
             HtmlHelper Extension
             This Method create automaticaly HTML with LabelFor + EditFor + Validation Message + Title displaing ToolTip Attribute
@@ -8663,6 +8873,11 @@
               Looks up a localized string similar to Clichè.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodCatDescription">
+            <summary>
+              Looks up a localized string similar to Generico.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodCatFogliSingoli">
             <summary>
               Looks up a localized string similar to Fogli Singoli.
@@ -8818,6 +9033,11 @@
               Looks up a localized string similar to Volantini e Flyer.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.CodMenuProductVuoto">
+            <summary>
+              Looks up a localized string similar to Generico.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.Community">
             <summary>
               Looks up a localized string similar to Community.
@@ -8880,7 +9100,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.DocumentProductMenu">
             <summary>
-              Looks up a localized string similar to Articoli.
+              Looks up a localized string similar to Prodotti Codificati.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ECommerce">
@@ -8943,6 +9163,21 @@
               Looks up a localized string similar to Esci.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.MovProductMenu">
+            <summary>
+              Looks up a localized string similar to Movimenti Prodotti.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.NewMovArticleMenu">
+            <summary>
+              Looks up a localized string similar to Movimento Materiale.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.NewMovProductMenu">
+            <summary>
+              Looks up a localized string similar to Movimento Prodotto.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.NoPrintableMenu">
             <summary>
               Looks up a localized string similar to Consumabili.
@@ -8976,6 +9211,11 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ProductMenu">
             <summary>
               Looks up a localized string similar to Prodotti.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ProductNameGeneratorMenu">
+            <summary>
+              Looks up a localized string similar to Descrizioni Prodotti.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.RegistrationAccount">
@@ -9036,6 +9276,21 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.UpdateDbMenu">
             <summary>
               Looks up a localized string similar to Aggiorna Database.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.WarehouseArticleMenu">
+            <summary>
+              Looks up a localized string similar to Magazzino Materie.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.WarehouseMenu">
+            <summary>
+              Looks up a localized string similar to Magazzino.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.WarehouseProductMenu">
+            <summary>
+              Looks up a localized string similar to Magazzino Prodotti.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.Welcome">

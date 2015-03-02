@@ -51,13 +51,25 @@ namespace PapiroMVC.Models
                 tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
             }
 
+            //CodTypeOfTask
             if (codTypeOfTask == "STAMPAETICHROTOLO")
+            {
+             //   var tskExec1 = tskExecList.OfType<Flexo>();
+             //   var tskExec2 = tskExecList.OfType<ControlTableRoll>();
+
+                tskExecList = tskExecList.OfType<Flexo>();
+            }
+
+
+            //Created for Editor Machines
+            if (codTypeOfTask == "STAMPAETICHROTOLO_LIST")
             {
                 var tskExec1 = tskExecList.OfType<Flexo>();
                 var tskExec2 = tskExecList.OfType<ControlTableRoll>();
 
                 tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
             }
+
 
             if (codTypeOfTask == "FUSTELLATURA")
             {

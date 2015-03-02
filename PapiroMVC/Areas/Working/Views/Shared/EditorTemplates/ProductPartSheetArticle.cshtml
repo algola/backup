@@ -69,6 +69,22 @@
             viewrecords: true,
             autowidth: false,
 
+
+            loadComplete: function () {
+
+                var $this = $(this);
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+
+            },
+
+
+
             onSelectRow: function (id) {
                 if (id && id !== lastSel@(suffx)) {
                     myGrid@(suffx).jqGrid('restoreRow', lastSel@(suffx));
@@ -111,7 +127,7 @@
         var dialog = $("#dialog-message@(suffx)").dialog({
             width: 'auto',
             modal: true,
-            title: '@Html.T(stringsGrid, "DialogSubTitle")',
+            title: '@Html.T(stringsGrid, "DialogTitle")',
             title_html: true,
             buttons: [
                 {

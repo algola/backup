@@ -17,7 +17,8 @@ namespace PapiroMVC.Models
             tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
             TaskExecutors = tskExec.ToList();
 
-            if (TaskexEcutorSelected == null && CodTaskExecutorSelected != "")
+            //            if (TaskexEcutorSelected == null && CodTaskExecutorSelected != "")
+            if (CodTaskExecutorSelected != "")
             {
                 TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
             }
@@ -41,7 +42,7 @@ namespace PapiroMVC.Models
 
             try
             {
-                totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(codOptionTypeOfTask: TaskCost.ProductPartTask.CodOptionTypeOfTask, starts: Starts ?? 1, makereadis:0, running: Quantity(qta));
+                totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(codOptionTypeOfTask: TaskCost.ProductPartTask.CodOptionTypeOfTask, starts: Starts ?? 1, makereadis: 0, running: Quantity(qta));
                 Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
 
                 //calcolo del tempo e del costo

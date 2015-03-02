@@ -89,9 +89,6 @@ else
 @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)
 {
     ViewBag.IndexPartArticle = i;
-
-    <p> @(Model.ProductPartsPrintableArticlePerView[i].TypeOfProductPartsPrintableArticle) </p>
-
     @Html.EditorFor(model => model.ProductPartsPrintableArticlePerView[i])
 }
 

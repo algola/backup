@@ -147,6 +147,8 @@ namespace PapiroMVC.Controllers
 
             tables.Add(new CostDetailDDL(dbName));
 
+            tables.Add(new WarehouseArticlesDDL(dbName));
+
             foreach (var item in tables)
             {
                 item.UpdateSchema(ctx);
@@ -174,8 +176,6 @@ namespace PapiroMVC.Controllers
             {
                 Console.WriteLine(e.Message);
             }
-
-
 
             ctx.Dispose();
         }

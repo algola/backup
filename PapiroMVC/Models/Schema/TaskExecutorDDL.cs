@@ -101,6 +101,7 @@ namespace PapiroMVC.Model
 
             //costo degli impianti stampa
             dbS.AddColumnToTable("taskexecutors", "CostImplant", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutors", "ZMetric", SchemaDb.Bool, "0");
 
 
             dbS.AddTable("taskexecutorcylinders");
@@ -109,6 +110,7 @@ namespace PapiroMVC.Model
             dbS.AddForeignKey("taskexecutorcylinders", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
 
             dbS.AddColumnToTable("taskexecutorcylinders", "Z", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskexecutorcylinders", "ZMetric", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutorcylinders", "Quantity", SchemaDb.Int, "0");
 
             dbS.AddTable("taskexecutorestimatedon");

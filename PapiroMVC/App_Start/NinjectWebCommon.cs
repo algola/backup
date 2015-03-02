@@ -67,6 +67,7 @@ namespace PapiroMVC.App_Start
             kernel.Bind<IProductTaskNameRepository>().To<ProductTaskNameRepository>();
             kernel.Bind<IFormatsNameRepository>().To<FormatsNameRepository>();
             kernel.Bind<ICostDetailRepository>().To<CostDetailRepository>();
+            kernel.Bind<IWarehouseRepository>().To<WarehouseRepository>();
 
         }        
     }

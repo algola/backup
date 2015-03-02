@@ -27,7 +27,7 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
-        <li id="estimatesSlidebar">
+        <li id="createEstimateSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "CreateEstimateMenu"), "Index", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-eur", "menu-text")
         </li>
 
@@ -35,9 +35,23 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "EstimateMenu"), "ListEstimate", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks", "menu-text")
         </li>
 
-        <li id="DocumentProductSlidebar">
+        <li id="documentProductSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "DocumentProductMenu"), "ListDocumentProducts", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
         </li>
+
+        <li id="generatorSlideBar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "ProductNameGeneratorMenu"), "ListProductNameGenerator", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-tags", "menu-text")
+        </li>
+
+@*
+    <li id="ProductSlidebar">
+        @Html.ActionLinkImageSpan(Html.T(strings, "ProductMenu"), "ListProducts", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
+    </li>
+*@
+        <li id="warehouseSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseProductMenu"), "Index", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
+        </li>
+
         
         <li id="OrderSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "OrderMenu"), "ListOrder", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa fa-cube", "menu-text")

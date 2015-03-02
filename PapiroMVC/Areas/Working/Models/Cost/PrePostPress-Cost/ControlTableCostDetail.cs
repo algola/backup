@@ -30,6 +30,7 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
+            Error = 0;
             base.InitCostDetail(tskExec, articles);
         }
 

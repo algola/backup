@@ -156,4 +156,10 @@
   <data name="WidthToolTip" xml:space="preserve">
     <value>Larghezza massima della bobina</value>
   </data>
+  <data name="ZMetric" xml:space="preserve">
+    <value>Z Metrico</value>
+  </data>
+  <data name="ZMetricToolTip" xml:space="preserve">
+    <value>Z esprime il diametro in mm</value>
+  </data>
 </root>

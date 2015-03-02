@@ -1,0 +1,49 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.NewMovViewModel
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseArticleMovTitle");
+}
+
+<fieldset>
+
+    @Html.ValidationMessageFor(model => model.Mov)
+
+ @*   @Html.AlgolaEditorFor(model => model.Mov.CodWarehouseArticle)
+    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodWarehouse )
+      *@
+
+    <div class="control-group">
+        <div class="controls col-sm-9">
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Mov.WarehouseArticle.CodWarehouse, new SelectList(ViewBag.Locations, "CodWarehouse", "WarehouseName"))
+            </div>
+        </div>
+    </div>
+
+    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodProduct)
+
+    @Html.HiddenFor(model => model.Mov.Date)
+    @Html.HiddenFor(model => model.Mov.TimeStampTable)
+    @Html.HiddenFor(model => model.Mov.CodWarehouseArticleMov)
+
+    @Html.AlgolaEditorFor(model => model.Mov.Quantity)
+    @Html.HiddenFor(model => model.Mov.TypeOfMov)
+
+    @Html.HiddenFor(model => model.Mov.UnitOfMeasureMov)
+    @Html.HiddenFor(model => model.Mov.UmConversion)
+
+    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.UnitOfMeasureStore, readOnly: true)
+
+    <div class="control-group">
+        <div class="col-sm-3 control-label no-padding-right">
+            <input class="btn" type="submit" name="NewMovProductMov" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductMov")' />
+        </div>
+
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor(model => model.CodWarehouseTo, new SelectList(ViewBag.Locations, "CodWarehouse", "WarehouseName"))
+        </div>
+    </div>
+
+</fieldset>

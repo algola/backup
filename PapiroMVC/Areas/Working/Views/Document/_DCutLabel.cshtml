@@ -9,20 +9,27 @@
     <div class="row-fluid">
 
         <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">F.to Etichetta</h6>
+            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings, "FormatoEtichetta")</h6>
             @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "input-mini", id = "ddPartFormat" })
         </div>
 
         <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Int.Spazio Banda</h6>
+            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings, "InterspazioBanda")</h6>
             @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
 
         </div>
         <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Int.Spazio Passo</h6>
+            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">@Html.T(strings, "InterspazioPasso")</h6>
             @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
         </div>
+
+            @Html.HiddenFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide1Gain, new { @class = "input-mini", id = "maxGain1" })
+            @Html.HiddenFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide2Gain, new { @class = "input-mini", id = "maxGain2" })
+
+
     </div>
+
+
 
 </div>
 

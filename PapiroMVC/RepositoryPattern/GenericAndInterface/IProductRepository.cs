@@ -10,6 +10,10 @@ namespace Services
     {
         string GetNewCode(Product a);
         new Product GetSingle(string codProduct);
-        string GetProductNameGenerator(string id);
+        ProductNameGenerator GetProductNameGenerator(string id);
+
+         IQueryable<ProductNameGenerator> GetAllProductNameGenerator();
+         void SaveProductNameGenerator(ProductNameGenerator a);
+
     }
 }

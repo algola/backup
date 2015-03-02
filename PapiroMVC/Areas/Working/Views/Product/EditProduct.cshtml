@@ -1,24 +1,43 @@
 ﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.Product
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ProductViewModel
 
 @{
     string stringsTitle = "~/Views/Shared/Strings";
-    //string strings = "~/Areas/Working/Views/Product/Strings";
-    
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
     //Prendo il titolo dal menù
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.CodMenuProduct);
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
+    //Load menu product
+    Html.Action("LoadMenuProduct", "Product", new { area = "Working" });
+
+    //cerco il prodotto nel menu... mi serve per aprire il dropdown menu nella javascript sotto
+    List<MenuProduct> menuP = (List<MenuProduct>)TempData["MenuProd"];//ViewBag.MenuProd;
+
+    var theMenuItem = menuP != null ? menuP.Where(x => x.CodMenuProduct == Model.Product.CodMenuProduct).FirstOrDefault() : null;
 
     //add all task in page
-    Session.Add("TsksInPage", Model.TsksInPage);
-    ViewBag.FormatsName = Model.FormatsName.ToList();
+    Session.Add("TsksInPage", Model.Product.TsksInPage);
+}
 
-    }
+@section title{
+    @Html.T(strings, "Product")
+}
 
-@Html.EditorFor(x=>x)
+@section description{
+    @ViewBag.Title
+    @* @Html.T(strings, "CreateProductDesc")*@
+}
+
+
+@Html.Partial("_EditAndEditProduct", Model)
+
 
 @section breadcrumb {
 
 }
+
+
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
@@ -30,8 +49,28 @@
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
+
+    <script src="~/Scripts/jqgridHelper.js"></script>
+
 }
 
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(function () {
+        document.getElementById("newProductSlidebar").className = "active open";
+        document.getElementById("CodCat@(theMenuItem.CodCategory)").className = "active open";
+        document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
+    });
+
+    $.get('@Url.Action("WarmUp","Product",new { @area="Working" })');
+
+</script>
+
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>

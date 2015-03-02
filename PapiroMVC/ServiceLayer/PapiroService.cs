@@ -30,7 +30,7 @@ namespace PapiroMVC.ServiceLayer
         {
 
             Product product;
-            product = new ProductSingleSheet();
+            product = new ProductEmpty();
 
             if (id == "Buste" ||
                 id == "Volantini" ||
@@ -101,7 +101,7 @@ namespace PapiroMVC.ServiceLayer
 
             product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
 
-            product.ProductNameGenerator = ProductRepository.GetProductNameGenerator(id);
+            product.ProductNameGenerator = ProductRepository.GetProductNameGenerator(id).Generator;
             product.InitProduct();
 
             return product;

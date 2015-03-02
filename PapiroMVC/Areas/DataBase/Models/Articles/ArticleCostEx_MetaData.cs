@@ -10,7 +10,7 @@ namespace PapiroMVC.Models
 {
     public partial class ArticleCost_MetaData
     {
-        public System.DateTime TimeStampTable { get; set; }
+
         [DisplayNameLocalized(typeof(ResArticleCost), "CodArticleCost")]
         public string CodArticleCost { get; set; }
         [DisplayNameLocalized(typeof(ResArticleCost), "CodArticle")]

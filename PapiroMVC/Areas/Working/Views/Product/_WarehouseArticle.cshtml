@@ -1,0 +1,28 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ArticleViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseTitle");
+}
+
+<fieldset>
+    <legend>
+        @ViewBag.Title
+    </legend>
+    @Html.ValidationMessageFor(model => model.WarehouseArticle)
+
+    @Html.AlgolaAutocompleteFor(model => model.WarehouseArticle.UnitOfMeasureStore, "UnitOfMeasureStoreAutoComplete", "Article")
+    @Html.AlgolaAutocompleteFor(model => model.WarehouseArticle.UnitOfMeasureMov, "UnitOfMeasureMovAutoComplete", "Article")
+    @Html.AlgolaEditorFor(model => model.WarehouseArticle.UmConversion)
+
+    @Html.AlgolaEditorFor(model => model.WarehouseArticle.QuantityOnHand, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.WarehouseArticle.Available, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.WarehouseArticle.PotentialQuantityOnHand, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.WarehouseArticle.PotentialAvailable, readOnly: true)
+
+    @Html.HiddenFor(model => model.WarehouseArticle.TimeStampTable)
+    @Html.HiddenFor(model => model.WarehouseArticle.CodWarehouseArticle)
+    @Html.HiddenFor(model => model.WarehouseArticle.CodArticle)
+
+</fieldset>

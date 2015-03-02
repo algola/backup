@@ -1404,8 +1404,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     var maxCyl = flexoEx.TaskExecutorCylinders.Max(x => x.Z);
                     var minCyl = flexoEx.TaskExecutorCylinders.Where(y => y.Z != 0).Min(x => x.Z);
 
-                    c.FormatMax = c.FlexoWidth + "x" + ((double)maxCyl / 8) * 2.54;
-                    c.FormatMin = 0 + "x" + ((double)minCyl / 8) * 2.54;
+                    c.FormatMax = c.FlexoWidth + "x" + c.GetCmFromZ(maxCyl??0);// ((double)maxCyl / 8) * 2.54;
+                    c.FormatMin = 0 + "x" + c.GetCmFromZ(minCyl ?? 0);
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();

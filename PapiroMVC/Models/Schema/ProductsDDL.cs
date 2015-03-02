@@ -208,10 +208,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartstoproducttask", "CodProductTask", SchemaDb.String, "50");
             dbS.AddForeignKey("productpartstoproducttask", "CodProductTask", "producttasks", "CodProductTask");
 
-
-
-
-
             dbS.AddColumnToTable("productparttasks", "CodItemGraph", SchemaDb.String, "20"); //nodo
             dbS.AddColumnToTable("producttasks", "CodItemGraph", SchemaDb.String, "20"); //nodo
 
@@ -225,8 +221,13 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productgraphs", "CodProduct", SchemaDb.String, "50");
             dbS.AddForeignKey("productgraphs", "CodProduct", "products", "CodProduct");
 
+            //generator
+            dbS.AddTable("productnamegenerators");
+            dbS.AddColumnToTable("productnamegenerators", "CodMenuProduct", SchemaDb.StringPK, "50");
 
-
+            //foreign key
+            dbS.AddColumnToTable("productnamegenerators", "ProductNameGenerator", SchemaDb.String, "255");
+    
         }
     }
 }

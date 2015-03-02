@@ -479,6 +479,8 @@ namespace Services
 
                     ret.CodPartPrintingCostDetail = Context.Costs.Where(x => x.CodDocumentProduct == ret.TaskCost.CodDocumentProduct && x.CodItemGraph == "ST").Select(y => y.CodCost);
 
+                    ret.TaskexEcutorSelected = Context.taskexecutors.Where(x => x.CodTaskExecutor == ret.CodTaskExecutorSelected).FirstOrDefault();
+
                 }
 
                 Console.Write(codProduct);

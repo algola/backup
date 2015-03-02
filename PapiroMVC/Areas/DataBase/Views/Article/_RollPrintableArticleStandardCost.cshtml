@@ -10,12 +10,13 @@
             <legend>
                    @ViewBag.Title
                             </legend>
+
         @Html.ValidationMessageFor(model => model.RollPrintableArticleStandardCost)
 
         @Html.AlgolaEditorFor(model => model.RollPrintableArticleStandardCost.CostPerMq)
         @*Html.AlgolaEditorFor(model => model.RollPrintableArticleStandardCost.CostPerMl) *@
 
-        @Html.HiddenFor(model => model.RollPrintableArticleStandardCost.TimeStampTable)
+        @*Html.HiddenFor(model => model.RollPrintableArticleStandardCost.TimeStampTable) *@
         @Html.HiddenFor(model => model.RollPrintableArticleStandardCost.CodArticleCost)
         @Html.HiddenFor(model => model.RollPrintableArticleStandardCost.CodArticle)
 
