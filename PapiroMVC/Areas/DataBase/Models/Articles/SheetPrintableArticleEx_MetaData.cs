@@ -14,10 +14,13 @@ namespace PapiroMVC.Models
         DisplayNameLocalized(typeof(ResSheetPrintableArticle), "Format"),
         RegularExpressionLocalizedAttribute(typeof(ResSheetPrintableArticle),"FormatValidation","FormatValidationError")]        
         public string Format { get; set; }
+        
         [DisplayNameLocalized(typeof(ResSheetPrintableArticle), "NoPinza")]
         public Nullable<bool> NoPinza { get; set; }
+        
         [Required(ErrorMessageResourceType = typeof(ResSheetPrintableArticle), ErrorMessageResourceName = "RequiredField"), DisplayNameLocalized(typeof(ResSheetPrintableArticle), "SheetPerPacked")]
         public Nullable<long> SheetPerPacked { get; set; }
+        
         [Required(ErrorMessageResourceType = typeof(ResSheetPrintableArticle), ErrorMessageResourceName = "RequiredField"), DisplayNameLocalized(typeof(ResSheetPrintableArticle), "SheetPerPallet")]
         public Nullable<long> SheetPerPallet { get; set; }
     }

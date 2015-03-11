@@ -49,12 +49,15 @@
 
         </fieldset>
 
+    <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
         <p>
             
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.CodTypeOfTask })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>     
+            </button>
+    
 
             <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save bigger-160"></i>
@@ -97,3 +100,6 @@
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Scripts/jqgridHelper.js"></script>
 }
+
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())

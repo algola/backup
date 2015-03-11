@@ -7,7 +7,7 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
 }
 
-@Html.Partial("_EditAndCreatePrePostPress", Model)
+@Html.Partial("_EditAndCreateControlTableRoll", Model)
 
 
 @section breadcrumb {
@@ -35,3 +35,10 @@
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script>
+    $(function () {
+        document.querySelector("#taskexecutorSlidebar").className = "active open";
+        document.querySelector("#stampaetichrotolo_list").className = "active";
+    });
+</script>

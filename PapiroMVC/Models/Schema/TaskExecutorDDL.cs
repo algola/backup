@@ -28,8 +28,12 @@ namespace PapiroMVC.Model
             //universal code used for supplier's item
             dbS.AddColumnToTable("taskexecutors", "UniversalCodPapiro", SchemaDb.String, "50");
 
-            dbS.AddColumnToTable("taskexecutors", "FormatMin", SchemaDb.String, "9");
-            dbS.AddColumnToTable("taskexecutors", "FormatMax", SchemaDb.String, "9");
+            dbS.AddColumnToTable("taskexecutors", "FormatMin", SchemaDb.String, "15");
+            dbS.AddColumnToTable("taskexecutors", "FormatMax", SchemaDb.String, "15");
+
+            dbS.ChangeStringColumnLegth("taskexecutors", "FormatMin", "15");
+            dbS.ChangeStringColumnLegth("taskexecutors", "FormatMax", "15");
+
             dbS.AddColumnToTable("taskexecutors", "WeightMin", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "WeightMax", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "Pinza", SchemaDb.Double, "0");

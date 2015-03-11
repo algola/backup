@@ -5462,7 +5462,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="115">
+      <Diagram Name="Model1" ZoomLevel="74">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="34.25" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />

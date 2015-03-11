@@ -338,7 +338,7 @@
             <param name="codTypeOfTask"></param>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutorCost(System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.DataBase.Controllers.TaskExecutorController.TaskExecutorCost(System.String,System.String,System.String)">
             <summary>
             
             </summary>

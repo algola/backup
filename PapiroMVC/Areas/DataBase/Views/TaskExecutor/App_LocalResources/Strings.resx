@@ -447,4 +447,7 @@
   <data name="STAMPAOFFeDIGITALEGridCaption" xml:space="preserve">
     <value>Stampa a foglio Offset e Digitale</value>
   </data>
+  <data name="CreateControlTable" xml:space="preserve">
+    <value>Tavolo di controllo</value>
+  </data>
 </root>

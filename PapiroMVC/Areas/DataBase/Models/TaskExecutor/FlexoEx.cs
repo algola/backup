@@ -146,7 +146,7 @@ namespace PapiroMVC.Models
 
             if (ZMetric??false)
             {
-                ret = (Convert.ToDouble(z)) * 3.1415 / 10;
+                ret = (Convert.ToDouble(z)) * 0.31415;
             }
             else
             {

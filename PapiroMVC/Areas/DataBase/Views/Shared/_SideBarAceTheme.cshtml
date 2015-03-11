@@ -11,11 +11,11 @@
     </script>
 
     <ul class="nav nav-list">
-        <li id="homeSlidebar">
+        <li id="homeSidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "AppName"), "Index", "Home", new { area = "" }, "fa fa-fw fa-lg fa-home", "menu-text")
         </li>
 
-        <li id="customerSlidebar">
+        <li id="customerSidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, "fa fa-fw fa-lg fa-male", "menu-text")
         </li>
 
@@ -83,10 +83,10 @@
                 <li id="stampamorbido">
                     @Html.ActionLinkImage(@Html.T(strings, "STAMPAMORBIDOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAMORBIDO" }, "icon-double-angle-right")
                 </li>
-                <li id="etichetterotolo">
+                <li id="stampaetichrotolo_list">
                     @Html.ActionLinkImage(@Html.T(strings, "STAMPAETICHETTEROTOLOMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "STAMPAETICHROTOLO_LIST" }, "icon-double-angle-right")
                 </li>
-                <li id="stampaoffedigitale">
+                <li id="inpiano">
                     @Html.ActionLinkImage(@Html.T(strings, "STAMPAOFFeDIGITALEMenu"), "IndexTaskExecutors", "TaskExecutor", new { area = "DataBase", codTypeOfTask = "INPIANO" }, "icon-double-angle-right")
                 </li>
 

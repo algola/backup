@@ -68,10 +68,6 @@ namespace Services
             foreach (var item in tbCode)
             {
 
-                if (item.CodTypeOfTask == "STAMPAETICHROTOLO")
-                {
-                    Console.WriteLine("ciao");
-                }
                 var trv = typeOfTasks.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
 
                 if (trv == null)

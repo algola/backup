@@ -2555,6 +2555,8 @@
     <Content Include="Areas\Working\Views\Product\ListProductNameGenerator.cshtml" />
     <Content Include="Areas\Working\Views\Product\EditProductNameGenerator.cshtml" />
     <Content Include="Areas\Working\Views\Product\_EditProductNameGenerator.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditDigitalRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_OnSidebar.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />

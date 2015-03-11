@@ -512,7 +512,8 @@ namespace PapiroMVC.Models
             }
 
             //qui inizio a togliere un po di pHint            
-            var pHint1 = pHint.Where(x => x.DCut2 >= ProductPart.MinDCut && x.DCut2 <= ProductPart.MaxDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
+            var pHint1 = pHint.Where(x => x.DCut2 >= ProductPart.MinDCut 
+                && x.DCut2 <= ProductPart.MaxDCut && (x.DCut1 >= x.DCut2 || (x.DCut1 == 0 && x.MaxGain1==1))).ToList();
 
             if (pHint1.Count <= 1)
             {
@@ -529,11 +530,20 @@ namespace PapiroMVC.Models
                     var smaller = pHint.Where(x => x.DCut1 >= x.DCut2 || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();
                     var pHintLast1 = pHint.Where(x => x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
 
-                    var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
-                    var pHintLast2 = pHint.Where(x => x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
+                    try
+                    {
+                        var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
+                        var pHintLast2 = pHint.Where(x => x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0));
 
 
-                    pHint1 = pHintLast1.Union(pHintLast2).ToList();
+                        pHint1 = pHintLast1.Union(pHintLast2).ToList();
+
+                    }
+                    catch (Exception)
+                    {
+                        pHint1 = pHintLast1.ToList();
+                        
+                    }
                     //                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
                 }
             }

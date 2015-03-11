@@ -35,9 +35,5 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-<script>
-    $(function () {
-        document.getElementById("taskexecutorSlidebar").className = "active open";
-        document.getElementById("lithoSlidebar").className = "active";
-    });
-</script>
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())

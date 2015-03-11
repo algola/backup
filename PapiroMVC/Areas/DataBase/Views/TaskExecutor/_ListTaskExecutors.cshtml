@@ -45,12 +45,16 @@
                 @Html.T(strings, "CreatePlotterRoll")
             </button>
         }
-        if (Model == "STAMPAETICHROTOLO")
+        if (Model == "STAMPAETICHROTOLO_LIST")
         {
-
             <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateFlexo", "TaskExecutor", new { Area = "Database" , returnUrl = "IndexTaskExecutors" })');">
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateFlexo")
+            </button>
+
+            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateControlTableRoll", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
+                <i class="icon-plus"></i>
+                @Html.T(strings, "CreateControlTable")
             </button>
         }
         if (Model == "INPIANO")
@@ -60,6 +64,7 @@
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateDigitalSheet")
             </button>
+        
             <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateLithoSheet")
@@ -245,7 +250,7 @@
 
 
         $grid.jqGrid({
-            url: '@url', // '@Url.Action("DigitalSheetListAndRoll", "TaskExecutor")',
+            url: '@url', 
             datatype: 'json',
             colModel: cm,
 

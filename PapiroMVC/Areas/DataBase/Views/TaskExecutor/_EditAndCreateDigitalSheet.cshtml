@@ -68,9 +68,12 @@
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
+        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
+
         <p>
 
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask=Model.CodTypeOfTask })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
@@ -98,3 +101,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())

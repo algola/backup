@@ -8,7 +8,7 @@
 
     }
 
-@Html.Partial("_EditAndCreatePrePostPress", Model)
+@Html.Partial("_EditAndCreateControlTableRoll", Model)
 
 
 @section breadcrumb {
@@ -35,3 +35,7 @@
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())

@@ -5,7 +5,7 @@
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
 
-        ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, Model+"GridCaption");
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, Model + "GridCaption");
 
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
     ViewBag.MetaTitle = Html.T(strings, "MetaTitleDigital");
@@ -38,17 +38,11 @@
     <script src="~/Scripts/jqgridHelper.js"></script>
 
 }
-
 @section specificPluginScript {
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 }
 
-
-<script>
-    $(function () {
-        document.getElementById("taskexecutorSlidebar").className = "active open";
-        document.getElementById("@((Model??"a").ToLower())").className = "active";
-    });
-</script>
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask??"A").ToLower())

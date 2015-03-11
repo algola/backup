@@ -12,7 +12,7 @@
 
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
-    
+
 }
 
 <div id="status">
@@ -50,9 +50,12 @@
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
+        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
+
         <p>
 
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPrePostPress", "TaskExecutor", new { Area = "Database" })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
@@ -62,12 +65,26 @@
                 @HttpContext.GetLocalResourceObject(strings, "Save")
             </button>
 
-            @if (ViewBag.ActionMethod != "CreatePrePostPress")
+            @if (ViewBag.ActionMethod != "CreatePrePostPress" && ViewBag.ActionMethod != "CreateControlTableRoll")
             {
-                <button class="button" type="submit" name="CreatePrePostPress">
-                    <i class="icon-save"></i>
-                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
-                </button>
+
+                if (((String)ViewBag.ActionMethod).Contains("PrePostPress"))
+                {
+                    <button class="btn" type="submit" name="CreatePrePostPress">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                    </button>
+                }
+                
+                if (((String)ViewBag.ActionMethod).Contains("PrePostPress"))
+                {
+                    <button class="btn" type="submit" name="CreatePrePostPress">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                    </button>
+                }
+
+             
             }
         </p>
 

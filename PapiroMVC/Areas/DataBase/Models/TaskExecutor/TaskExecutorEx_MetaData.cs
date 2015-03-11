@@ -34,12 +34,14 @@ namespace PapiroMVC.Models
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "FormatMin")]
         [Tooltip(typeof(ResTaskExecutor), "FormatMinToolTip")]
-        [RegularExpressionLocalizedAttribute(typeof(ResTaskExecutor),"FormatValidation","FormatValidationError")]     
+        [RegularExpressionLocalizedAttribute(typeof(ResTaskExecutor),"FormatValidation","FormatValidationError")]
+        [Required(ErrorMessageResourceType = typeof(ResTaskExecutor), ErrorMessageResourceName = "RequiredField")]
         public string FormatMin { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "FormatMax")]
         [Tooltip(typeof(ResTaskExecutor), "FormatMaxToolTip")]
         [RegularExpressionLocalizedAttribute(typeof(ResTaskExecutor), "FormatValidation", "FormatValidationError")]
+        [Required(ErrorMessageResourceType = typeof(ResTaskExecutor), ErrorMessageResourceName = "RequiredField")]
         public string FormatMax { get; set; }
 
         [DisplayNameLocalized(typeof(ResTaskExecutor), "WeightMin")]

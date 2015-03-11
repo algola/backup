@@ -49,11 +49,15 @@
         @*deprecated            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
         *@
     </fieldset>
+    
+        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
     <p>
-        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action((string)ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database" })');">
-            <i class="icon-undo bigger-125"></i>
+        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
+            <i class="icon-arrow-left"></i>
             @HttpContext.GetLocalResourceObject(strings, "Cancel")
         </button>
+
 
 
         @ViewBag.ActionMethod
@@ -99,3 +103,6 @@
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Scripts/jqgridHelper.js"></script>
 }
+
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())

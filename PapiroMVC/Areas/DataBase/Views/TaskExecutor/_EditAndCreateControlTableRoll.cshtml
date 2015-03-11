@@ -12,22 +12,22 @@
 
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
-    
+
 }
 
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "TaskExecutor", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
 
-        <div class="control-group">
-            <div class="controls col-sm-9">
-                @Html.DropDownListFor(y => y.CodTypeOfTask,
-                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
-            </div>
-        </div>
+        @*<div class="control-group">
+                <div class="controls col-sm-9">
+                    @Html.DropDownListFor(y => y.CodTypeOfTask,
+                    new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+                </div>
+            </div>*@
 
         @Html.HiddenFor(model => model.TimeStampTable)
 
@@ -50,24 +50,41 @@
         @Html.HiddenFor(model => model.TimeStampTable)
         @Html.HiddenFor(model => model.CodTaskExecutor)
 
+        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
+
         <p>
 
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexPrePostPress", "TaskExecutor", new { Area = "Database" })');">
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                 <i class="icon-arrow-left"></i>
                 @HttpContext.GetLocalResourceObject(strings, "Cancel")
             </button>
 
             <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                 <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
+                @HttpContext.GetLocalResourceObject(strings, "Save") @ViewBag.ActionMethod
             </button>
 
-            @if (ViewBag.ActionMethod != "CreatePrePostPress")
+            @if (ViewBag.ActionMethod != "CreatePrePostPress" && ViewBag.ActionMethod != "CreateControlTableRoll")
             {
-                <button class="button" type="submit" name="CreatePrePostPress">
-                    <i class="icon-save"></i>
-                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
-                </button>
+
+                if (((String)ViewBag.ActionMethod).Contains("PrePostPress"))
+                {
+                    <button class="btn" type="submit" name="CreatePrePostPress">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                    </button>
+                }
+
+                if (((String)ViewBag.ActionMethod).Contains("TableRoll"))
+                {
+                    <button class="btn" type="submit" name="CreateControlTableRoll">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                    </button>
+                }
+
+
             }
         </p>
 
@@ -79,3 +96,6 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@*Put indicator on sidebar*@
+@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())
