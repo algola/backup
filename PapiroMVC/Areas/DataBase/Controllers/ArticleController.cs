@@ -90,6 +90,18 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             return View();
         }
+       
+        public ActionResult IndexInk()
+        {
+            return View();
+        }
+
+        public ActionResult IndexFoil()
+        {
+            return View();
+        }
+
+        
 
         public ActionResult IndexDie()
         {
@@ -231,6 +243,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+
+
+
+
+
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult EditNoPrintable(NoPrintableViewModel c)
@@ -296,6 +313,202 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditNoPrintable";
             return View("EditNoPrintable", viewModel);
         }
+
+
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateInk()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateInk";
+            return View(new InkViewModel());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateInk(InkViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                 //   c.Article.ArticleName =  c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexInk") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateInk";
+            return PartialView("_EditAndCreateInk", c);
+
+        }
+
+
+
+
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditInk(InkViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    articleRepository.SincroSupplier(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexInk") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditInk";
+            return PartialView("_EditAndCreateInk", c);
+        }
+
+        public ActionResult EditInk(string id)
+        {
+            InkViewModel viewModel = new InkViewModel();
+            viewModel.Article = (Ink)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditInk";
+            return View("EditInk", viewModel);
+        }
+
+
+
+
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateFoil()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateFoil";
+            return View(new FoilViewModel());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateFoil(FoilViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                    //   c.Article.ArticleName =  c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexFoil") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateFoil";
+            return PartialView("_EditAndCreateFoil", c);
+
+        }
+
+
+
+
+
+
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditFoil(FoilViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    articleRepository.SincroSupplier(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexFoil") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditFoil";
+            return PartialView("_EditAndCreateFoil", c);
+        }
+
+        public ActionResult EditFoil(string id)
+        {
+            FoilViewModel viewModel = new FoilViewModel();
+            viewModel.Article = (Foil)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditFoil";
+            return View("EditFoil", viewModel);
+        }
+
+
 
 
 
@@ -496,6 +709,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ret = RedirectToAction("EditDieSheet", "Article", new { id = id });
                     break;
 
+                case Article.ArticleType.Ink:
+                    ret = RedirectToAction("EditInk", "Article", new { id = id });
+                    break;
+
+                case Article.ArticleType.Foil:
+                    ret = RedirectToAction("EditFoil", "Article", new { id = id });
+                    break;
             }
 
             return ret;

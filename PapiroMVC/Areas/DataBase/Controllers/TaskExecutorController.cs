@@ -44,6 +44,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
+        //lista delle serigrafie e modifica dei parametri
+        public ActionResult IndexOptionTypeOfTaskSerigraphy()
+        {
+            return View();
+        }
+
+        
 
 
         /// <summary>
@@ -790,6 +797,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "CreateFlexo";
             return PartialView("_EditAndCreateFlexo", c);
         }
+
+
+
 
 
         [HttpGet]
@@ -2414,6 +2424,49 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditCostPerRunStepBW";
             //            return View("EditCostPerRunStep", c);
         }
+
+        [HttpGet]
+        public ActionResult EditSerigraphyOption(string id, string returnUrl)
+        {
+
+          
+            var opt = typeOfTaskRepository.GetSingleOptionTypeOfTask(id);
+
+
+
+   
+            //this is a common point where edit function is called
+            ViewBag.ActionMethod = "EditSerigraphyOption";
+            return View(opt);
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditSerigraphyOption(OptionTypeOfTask c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    typeOfTaskRepository.EditOptionTypeOfTask(c);
+                    typeOfTaskRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexOptionTypeOfTaskSerigraphy")});
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+
+
+
+
+            ViewBag.ActionMethod = "EditSerigraphyOption";
+            return PartialView("_EditSerigraphyOption", c);
+        }
+
 
     }
 }

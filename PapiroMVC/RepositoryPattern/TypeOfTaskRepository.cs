@@ -37,7 +37,7 @@ namespace Services
 
             }
 
-            var tbCode = new TypeOfTask[22];
+            var tbCode = new TypeOfTask[23];
 
             tbCode[0] = new PIEGA() { CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -63,6 +63,8 @@ namespace Services
             tbCode[19] = new TAVOLOCONTROLLO() { CodCategoryOfTask = "TAVOLOCONTROLLO" };
             tbCode[20] = new STAMPAACALDOROTOLO() { CodCategoryOfTask = "PREPOST" };
             tbCode[21] = new FUSTELLATURAROTOLO() { CodCategoryOfTask = "PREPOST" };
+
+            tbCode[22] = new SERIGRAFIA() { CodCategoryOfTask = "STAMPA" };
 
 
             foreach (var item in tbCode)
@@ -161,6 +163,12 @@ namespace Services
         {
             var query = Context.TypeOfTasks.Include("OptionTypeOfTasks").FirstOrDefault(x => x.CodTypeOfTask == codTypeOfTask);
             return query;
+        }
+
+        public void EditOptionTypeOfTask(OptionTypeOfTask entity)
+        {
+           this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+        
         }
     }
 }

@@ -459,4 +459,13 @@
   <data name="CodSTAMPAOFFeDIGITALE_Implant" xml:space="preserve">
     <value>Impianti Stampa</value>
   </data>
+  <data name="CodSERIGRAFIA_NO" xml:space="preserve">
+    <value>Nessuna serigrafia</value>
+  </data>
+  <data name="CodSERIGRAFIA_UVPROT" xml:space="preserve">
+    <value>Serigrafia UV protettiva</value>
+  </data>
+  <data name="CodSERIGRAFIA_UVSPESSORATA" xml:space="preserve">
+    <value>Serigrafia UV spessorata</value>
+  </data>
 </root>

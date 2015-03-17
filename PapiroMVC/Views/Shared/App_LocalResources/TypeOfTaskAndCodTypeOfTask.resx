@@ -444,4 +444,13 @@
   <data name="CodSTAMPAACALDOROTOLO_NO" xml:space="preserve">
     <value>Nessuna stampa a caldo</value>
   </data>
+  <data name="CodSERIGRAFIA_NO" xml:space="preserve">
+    <value>Nessuna serigrafia</value>
+  </data>
+  <data name="CodSERIGRAFIA_UVPROT" xml:space="preserve">
+    <value>Serigrafia UV protettiva</value>
+  </data>
+  <data name="CodSERIGRAFIA_UVSPESSORATA" xml:space="preserve">
+    <value>Serigrafia UV spessorata</value>
+  </data>
 </root>

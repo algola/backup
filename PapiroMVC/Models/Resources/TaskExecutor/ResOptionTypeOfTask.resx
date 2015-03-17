@@ -135,6 +135,24 @@
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="GainMqPerLt" xml:space="preserve">
+    <value>Resa mq/lt</value>
+  </data>
+  <data name="GainMqPerLtToolTip" xml:space="preserve">
+    <value>Resa mq/lt</value>
+  </data>
+  <data name="MeshCostMq" xml:space="preserve">
+    <value>Costo telaio al mq</value>
+  </data>
+  <data name="MeshCostMqToolTip" xml:space="preserve">
+    <value>Costo telaio al mq</value>
+  </data>
+  <data name="MeshRow" xml:space="preserve">
+    <value>Numero fili telaio</value>
+  </data>
+  <data name="MeshRowToolTip" xml:space="preserve">
+    <value>Numero dei fili telaio</value>
+  </data>
   <data name="OptionName" xml:space="preserve">
     <value>xxx</value>
   </data>

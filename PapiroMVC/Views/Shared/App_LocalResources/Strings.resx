@@ -393,4 +393,16 @@
   <data name="ProductNameGeneratorMenu" xml:space="preserve">
     <value>Descrizioni Prodotti</value>
   </data>
+  <data name="InkMenu" xml:space="preserve">
+    <value>Inchiostri serigrafici</value>
+  </data>
+  <data name="FoilMenu" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="SerigraphyArticleMenu" xml:space="preserve">
+    <value>Serigrafica</value>
+  </data>
+  <data name="SerigraphyMenu" xml:space="preserve">
+    <value>Opzioni serigrafia</value>
+  </data>
 </root>

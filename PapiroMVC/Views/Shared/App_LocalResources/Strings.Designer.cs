@@ -601,6 +601,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foil.
+        /// </summary>
+        public static string FoilMenu {
+            get {
+                return ResourceManager.GetString("FoilMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inchiostri serigrafici.
+        /// </summary>
+        public static string InkMenu {
+            get {
+                return ResourceManager.GetString("InkMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italiano.
         /// </summary>
         public static string ItalianMenu {
@@ -768,6 +786,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         public static string RollPrintableArticleMenu {
             get {
                 return ResourceManager.GetString("RollPrintableArticleMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serigrafica.
+        /// </summary>
+        public static string SerigraphyArticleMenu {
+            get {
+                return ResourceManager.GetString("SerigraphyArticleMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opzioni serigrafia.
+        /// </summary>
+        public static string SerigraphyMenu {
+            get {
+                return ResourceManager.GetString("SerigraphyMenu", resourceCulture);
             }
         }
         

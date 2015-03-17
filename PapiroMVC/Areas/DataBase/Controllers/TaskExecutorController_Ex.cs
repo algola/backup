@@ -444,6 +444,58 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+        public ActionResult TypeOfTaskSerigraphyList(GridSettings gridSettings)
+        {
+            //common serarch and order
+            //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
+            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask=="SERIGRAFIA");
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask).FullName, typeof(PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask).Assembly);
+           // string sheetType = resman.GetString("SheetType");
+    
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodOptionTypeOfTask,
+                        cell = new string[] 
+                        {                         
+                            a.CodOptionTypeOfTask,
+                           // resman.GetString("Cod"+a.CodOptionTypeOfTask),
+                           a.OptionName
+
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+
         public ActionResult FlexoList(GridSettings gridSettings)
         {
             //common serarch and order

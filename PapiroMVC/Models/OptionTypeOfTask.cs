@@ -40,6 +40,15 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> IdexOf { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> MeshRow { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> MeshCostMq { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> GainMqPerLt { get; set; }
     
     	[DataMember]
         public virtual TypeOfTask TypeOfTask { get; set; }

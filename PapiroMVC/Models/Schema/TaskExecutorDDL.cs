@@ -286,6 +286,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("optiontypeoftask", "OptionName", SchemaDb.String, "100");
             dbS.AddColumnToTable("optiontypeoftask", "IdexOf ", SchemaDb.Int, "0");
 
+            //serigraphy
+            dbS.AddColumnToTable("optiontypeoftask", "MeshRow", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("optiontypeoftask", "MeshCostMq", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("optiontypeoftask", "GainMqPerLt", SchemaDb.Int, "0");
+
+
             //FK
             dbS.AddForeignKey("optiontypeoftask", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
 

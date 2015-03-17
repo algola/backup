@@ -11,8 +11,16 @@ namespace Services
     public class ArticleRepository : GenericRepository<dbEntities, Article>, IArticleRepository
     {
 
-        public string GetNewCode(Article a, ICustomerSupplierRepository customerSupplierRepository, string supplierMaker, string supplyerBuy)
+        /// <summary>
+        /// if supplier is noi in reporitory than create it
+        /// </summary>
+        public void SincroSupplier(Article a,
+            ICustomerSupplierRepository customerSupplierRepository,
+            string supplierMaker,
+            string supplyerBuy)
+
         {
+
 
             if (!String.IsNullOrEmpty(supplierMaker) && !String.IsNullOrEmpty(supplyerBuy))
             {
@@ -21,21 +29,54 @@ namespace Services
                 var filteredItems = customerSuppliers.Where(
                     item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-                if (filteredItems.Count() == 0) throw new NoSupplierException();
+                if (filteredItems.Count() == 0)
+                {
+                    var sup = new Supplier();
+                    sup.BusinessName = supplierMaker;
+                    sup.CodCustomerSupplier = customerSupplierRepository.GetNewCode(sup);
 
-                a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+                    customerSupplierRepository.Add(sup);
+                    customerSupplierRepository.Save();
+                    a.CodSupplierMaker = sup.CodCustomerSupplier;
+
+                }
+                else
+                {
+
+                    a.CodSupplierMaker = filteredItems.First().CodCustomerSupplier;
+
+                }
 
                 customerSuppliers = customerSupplierRepository.GetAll().ToArray();
 
                 var filteredItems2 = customerSuppliers.Where(
                     item => !String.IsNullOrEmpty(item.BusinessName) && item.BusinessName.IndexOf(supplyerBuy, StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-                if (filteredItems2.Count() == 0) throw new NoSupplierException();
+                if (filteredItems2.Count() == 0)
+                {
+                    var sup = new Supplier();
+                    sup.BusinessName = supplyerBuy;
+                    sup.CodCustomerSupplier = customerSupplierRepository.GetNewCode(sup);
 
-                //if #suppliers < 1 then no supplier has selected correctly and then thow error
-                a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+                    customerSupplierRepository.Add(sup);
+                    customerSupplierRepository.Save();
+                    a.CodSupplierBuy = sup.CodCustomerSupplier;
+                }
+                else
+                {
+                    a.CodSupplierBuy = filteredItems2.First().CodCustomerSupplier;
+                }
             }
 
+
+        }
+        public string GetNewCode(Article a, 
+            ICustomerSupplierRepository customerSupplierRepository, 
+            string supplierMaker, 
+            string supplyerBuy)
+        {
+
+            this.SincroSupplier(a, customerSupplierRepository, supplierMaker, supplierMaker);
             var csCode = (from COD in this.GetAll() select COD.CodArticle).Max();
 
             return AlphaCode.GetNextCode(csCode ?? "0").PadLeft(6, '0');
@@ -222,6 +263,48 @@ namespace Services
 
                     #endregion
                     break;
+                case Article.ArticleType.Ink:
+                    #region Standard
+                    try
+                    {
+                        var CostStandard = ((NoPrintableArticleCostKg)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostKg));
+
+                        CostStandard.CostPerKg = CostStandard.CostPerKg == null ?
+                            null : Convert.ToDouble(CostStandard.CostPerKg,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        CostStandard.CodArticle = c.CodArticle;
+                        CostStandard.CodArticleCost = c.CodArticle + "_STK";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
+                    break;
+                case Article.ArticleType.Foil:
+                    #region Standard
+                    try
+                    {
+                        var CostStandard = ((NoPrintableArticleCostMq)c.ArticleCosts.First(x =>
+                        x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostMq));
+
+                        CostStandard.CostPerMq = CostStandard.CostPerMq == null ?
+                            null : Convert.ToDouble(CostStandard.CostPerMq,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                        CostStandard.CodArticle = c.CodArticle;
+                        CostStandard.CodArticleCost = c.CodArticle + "_STM";
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    #endregion
+                    break;
                 default:
                     break;
             }
@@ -256,7 +339,7 @@ namespace Services
             var numWare = Context.warehouseSpec.Count();
 
             //update with new warehouse
-            var lstProd = Context.articles.Where(x => x.WarehouseArticles.Count < numWare).ToList();
+            var lstProd = Context.articles.Include("articlecosts").Where(x => x.WarehouseArticles.Count < numWare).ToList();
 
             foreach (var article in lstProd)
             {

@@ -23,7 +23,7 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new ObjectPrintableArticleStandardCost());
-                    
+
 
                 }
                 return (ObjectPrintableArticle)article;
@@ -57,10 +57,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     //                    article.ArticleCosts.Add(new RollPrintableArticleCuttedCost());
                     article.ArticleCosts.Add(new RollPrintableArticleStandardCost());
-                    
+
 
                 }
-                return (RollPrintableArticle) article;
+                return (RollPrintableArticle)article;
             }
             set
             {
@@ -127,10 +127,10 @@ namespace PapiroMVC.Models
                     article.ArticleCosts.Add(new SheetPrintableArticlePalletCost());
                     article.ArticleCosts.Add(new SheetPrintableArticlePakedCost());
 
-                    
+
                 }
-                
-                return (SheetPrintableArticle) article;
+
+                return (SheetPrintableArticle)article;
             }
             set
             {
@@ -183,7 +183,7 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new RigidPrintableArticleStandardCost());
-                    
+
 
                 }
                 return (RigidPrintableArticle)article;
@@ -223,10 +223,10 @@ namespace PapiroMVC.Models
                     SupplierMaker = "";
                     SupplyerBuy = "";
                     article.ArticleCosts.Add(new NoPrintableArticleCostStandard());
-                    
+
 
                 }
-                return (NoPrintable) article;
+                return (NoPrintable)article;
             }
             set
             {
@@ -245,4 +245,86 @@ namespace PapiroMVC.Models
         }
     }
 
+    public class FoilViewModel : NoPrintableViewModel
+    {
+
+        public FoilViewModel()
+        {
+            Console.Write("");
+        }
+        public Foil Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new Foil();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+                    article.ArticleCosts.Add(new NoPrintableArticleCostMq());
+
+
+                }
+                return (Foil)article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+        }
+
+        public NoPrintableArticleCostMq NoPrintableArticleCostMq
+        {
+            get
+            {
+                return (NoPrintableArticleCostMq)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostMq);
+            }
+        }
+
+    }
+
+    public class InkViewModel : NoPrintableViewModel
+    {
+
+        public InkViewModel()
+        {
+            Console.Write("");
+        }
+        public Ink Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new Ink();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+                    article.ArticleCosts.Add(new NoPrintableArticleCostKg());
+
+
+                }
+                return (Ink)article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+
+
+        }
+
+        public NoPrintableArticleCostKg NoPrintableArticleCostKg
+        {
+            get
+            {
+                return (NoPrintableArticleCostKg)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostKg);
+            }
+        }
+
+    }
 }
+

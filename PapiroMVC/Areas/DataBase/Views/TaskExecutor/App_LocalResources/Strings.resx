@@ -450,4 +450,19 @@
   <data name="CreateControlTable" xml:space="preserve">
     <value>Tavolo di controllo</value>
   </data>
+  <data name="EditingSerigraphyTitle" xml:space="preserve">
+    <value>Modifica della serigrafia</value>
+  </data>
+  <data name="EditOptionTypeOfSerigraphy" xml:space="preserve">
+    <value>Modifica delle opzioni serigrafiche</value>
+  </data>
+  <data name="OptionTypeOfSerigraphy" xml:space="preserve">
+    <value>Elenco delle opzioni</value>
+  </data>
+  <data name="SerigraphyNameCaption" xml:space="preserve">
+    <value>Tipo di Serigrafia</value>
+  </data>
+  <data name="TitleSerigraphyIndex" xml:space="preserve">
+    <value>Serigrafia</value>
+  </data>
 </root>

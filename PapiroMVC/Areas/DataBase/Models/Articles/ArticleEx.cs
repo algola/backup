@@ -56,6 +56,10 @@ namespace PapiroMVC.Models
             DieSheet = 5,
             DieSemiRoll = 6,
             DieFlexo = 7,
+            Ink = 8,
+            Foil = 9
+
+
         }
 
         public ArticleType TypeOfArticle

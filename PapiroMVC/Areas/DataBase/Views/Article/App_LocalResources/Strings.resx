@@ -423,4 +423,16 @@
   <data name="QuantityOnHandCaption" xml:space="preserve">
     <value>Quantità esistente</value>
   </data>
+  <data name="InkGridCaption" xml:space="preserve">
+    <value>Anagrafica inchiosti serigrafici</value>
+  </data>
+  <data name="CreateInk" xml:space="preserve">
+    <value>Crea nuovo inchiostro</value>
+  </data>
+  <data name="CreateFoil" xml:space="preserve">
+    <value>Crea nuovo foil</value>
+  </data>
+  <data name="FoilGridCaption" xml:space="preserve">
+    <value>Anagrafica foil</value>
+  </data>
 </root>

@@ -13,6 +13,8 @@ namespace Services
         IQueryable<OptionTypeOfTask> GetAllOptionTypeOfTask();
         OptionTypeOfTask GetSingleOptionTypeOfTask(string id);
 
+        void EditOptionTypeOfTask(OptionTypeOfTask c);
+
     }
 
 }

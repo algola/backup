@@ -1,0 +1,23 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.InkViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "InkArticleCostStandardTitle");
+}
+
+<br />
+<h3></h3>
+
+    <fieldset>
+            <legend>
+                            </legend>
+        @Html.ValidationMessageFor(model => model.NoPrintableArticleCostKg)
+
+        @Html.AlgolaEditorFor(model => model.NoPrintableArticleCostKg.CostPerKg)
+
+        @Html.HiddenFor(model => model.NoPrintableArticleCostKg.TimeStampTable)
+        @Html.HiddenFor(model => model.NoPrintableArticleCostKg.CodArticleCost)
+        @Html.HiddenFor(model => model.NoPrintableArticleCostKg.CodArticle)
+
+    </fieldset>

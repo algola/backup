@@ -21,7 +21,10 @@ namespace PapiroMVC.Models
             RollPrintableArticleCuttedCost = 4,
             RigidPrintableArticleStandardCost = 5,
             ObjectPrintableArticleStandardCost = 6,
-            NoPrintableArticleCostStandard = 7
+            NoPrintableArticleCostStandard = 7,
+            NoPrintableArticleCostKg = 8,
+            NoPrintableArticleCostMq = 9
+
         }
 
         public ArticleCostType TypeOfArticleCost

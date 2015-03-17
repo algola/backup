@@ -1965,6 +1965,16 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResNoPrintableArticleCost.CostPerKg">
+            <summary>
+              Looks up a localized string similar to Costo al Kg.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Articles.ResNoPrintableArticleCost.CostPerMq">
+            <summary>
+              Looks up a localized string similar to Costo al Mq.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Articles.ResNoPrintableArticleCost.CostPerUnit">
             <summary>
               Looks up a localized string similar to Costo.
@@ -5378,6 +5388,21 @@
               Looks up a localized string similar to Rilevo a secco.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_NO">
+            <summary>
+              Looks up a localized string similar to Nessuna serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_UVPROT">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV protettiva.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_UVSPESSORATA">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV spessorata.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPA_FR_BN">
             <summary>
               Looks up a localized string similar to stampa fronte retro in bianco e nero.
@@ -6919,6 +6944,36 @@
               Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.GainMqPerLt">
+            <summary>
+              Looks up a localized string similar to Resa mq/lt.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.GainMqPerLtToolTip">
+            <summary>
+              Looks up a localized string similar to Resa mq/lt.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.MeshCostMq">
+            <summary>
+              Looks up a localized string similar to Costo telaio al mq.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.MeshCostMqToolTip">
+            <summary>
+              Looks up a localized string similar to Costo telaio al mq.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.MeshRow">
+            <summary>
+              Looks up a localized string similar to Numero fili telaio.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.MeshRowToolTip">
+            <summary>
+              Looks up a localized string similar to Numero dei fili telaio.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResOptionTypeOfTask.OptionName">
             <summary>
               Looks up a localized string similar to xxx.
@@ -8137,6 +8192,11 @@
             newMovCode
             </summary>
         </member>
+        <member name="M:Services.ArticleRepository.SincroSupplier(PapiroMVC.Models.Article,Services.ICustomerSupplierRepository,System.String,System.String)">
+            <summary>
+            if supplier is noi in reporitory than create it
+            </summary>
+        </member>
         <member name="M:Services.CustomerSupplierRepository.GetNewCode(PapiroMVC.Models.CustomerSupplier)">
             <summary>
             Take next code in string numerical order.
@@ -9138,6 +9198,16 @@
               Looks up a localized string similar to Stampa Flexo.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.FoilMenu">
+            <summary>
+              Looks up a localized string similar to Foil.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.InkMenu">
+            <summary>
+              Looks up a localized string similar to Inchiostri serigrafici.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ItalianMenu">
             <summary>
               Looks up a localized string similar to Italiano.
@@ -9231,6 +9301,16 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.RollPrintableArticleMenu">
             <summary>
               Looks up a localized string similar to Materiali Stampabili a Rotolo.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.SerigraphyArticleMenu">
+            <summary>
+              Looks up a localized string similar to Serigrafica.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.SerigraphyMenu">
+            <summary>
+              Looks up a localized string similar to Opzioni serigrafia.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.SheetPrintableArticleMenu">
@@ -9537,6 +9617,21 @@
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodRILIEVO_A_SECCO_SI">
             <summary>
               Looks up a localized string similar to Si rilevo a secco.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_NO">
+            <summary>
+              Looks up a localized string similar to Nessuna serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_UVPROT">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV protettiva.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_UVSPESSORATA">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV spessorata.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPA">

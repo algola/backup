@@ -271,6 +271,9 @@
           <Property Name="CodTypeOfTask" Type="char" MaxLength="50" />
           <Property Name="OptionName" Type="char" MaxLength="100" />
           <Property Name="IdexOf" Type="int" />
+          <Property Name="MeshRow" Type="int" />
+          <Property Name="MeshCostMq" Type="double" />
+          <Property Name="GainMqPerLt" Type="int" />
         </EntityType>
         <EntityType Name="productgraphs">
           <Key>
@@ -583,8 +586,8 @@
           <Property Name="Version" Type="char" MaxLength="4" />
           <Property Name="Dismissed" Type="bit" />
           <Property Name="UniversalCodPapiro" Type="char" MaxLength="50" />
-          <Property Name="FormatMin" Type="char" MaxLength="9" />
-          <Property Name="FormatMax" Type="char" MaxLength="9" />
+          <Property Name="FormatMin" Type="char" MaxLength="15" />
+          <Property Name="FormatMax" Type="char" MaxLength="15" />
           <Property Name="WeightMin" Type="uint" />
           <Property Name="WeightMax" Type="uint" />
           <Property Name="Pinza" Type="double" />
@@ -2627,7 +2630,6 @@
           <Property Type="String" Name="CodArticleCost" Nullable="false" MaxLength="50" Unicode="false" FixedLength="true" />
           <Property Type="String" Name="CodArticle" MaxLength="50" Unicode="false" FixedLength="true" />
           <NavigationProperty Name="Articles" Relationship="dbModel.FK_ArticleCost_CodArticle" FromRole="articlecost" ToRole="articles" />
-          <Property Name="TypeOfCost" Type="Int32" />
         </EntityType>
         <EntityType Name="Article" Abstract="true">
           <Key>
@@ -3167,6 +3169,9 @@
           <NavigationProperty Name="ProductPartTasks" Relationship="dbModel.FK_productparttasks_CodOptionTypeOfTask" FromRole="optiontypeoftask" ToRole="ProductPartTask" />
           <Property Type="Int32" Name="IdexOf" />
           <NavigationProperty Name="TaskExecutorEstimatedOns" Relationship="dbModel.FK_taskexecutorestimatedon_CodOptionTypeOfTask" FromRole="OptionTypeOfTask" ToRole="TaskEstimatedOn" />
+          <Property Name="MeshRow" Type="Int32" />
+          <Property Name="MeshCostMq" Type="Double" />
+          <Property Name="GainMqPerLt" Type="Int32" />
         </EntityType>
         <Association Name="FK_optiontypeoftask_CodTypeOfTask">
           <End Type="dbModel.TypeOfTask" Role="TypeOfTask" Multiplicity="0..1">
@@ -4053,6 +4058,14 @@
           <Property Name="CodMenuProduct" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Generator" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Ink" BaseType="dbModel.NoPrintable" />
+        <EntityType Name="NoPrintableArticleCostKg" BaseType="dbModel.NoPrintableArticleCostStandard" >
+          <Property Name="CostPerKg" Type="String" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Foil" BaseType="dbModel.NoPrintable" />
+        <EntityType Name="NoPrintableArticleCostMq" BaseType="dbModel.NoPrintableArticleCostStandard" >
+          <Property Name="CostPerMq" Type="String" Nullable="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4447,7 +4460,6 @@
           <EntitySetMapping Name="articlecost">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ArticleCost)">
               <MappingFragment StoreEntitySet="articlecost">
-                <ScalarProperty Name="TypeOfCost" ColumnName="TypeOfCost" />
                 <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
@@ -4538,6 +4550,20 @@
                 <ScalarProperty Name="CostPerUnit" ColumnName="CostPerUnit" />
                 <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
                 <Condition ColumnName="SelectorArticleCost" Value="4" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.NoPrintableArticleCostKg)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <ScalarProperty Name="CostPerKg" ColumnName="CostPerKg" />
+                <Condition ColumnName="TypeOfCost" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.NoPrintableArticleCostMq)">
+              <MappingFragment StoreEntitySet="articlecost">
+                <ScalarProperty Name="CostPerMq" ColumnName="CostPerKg" />
+                <ScalarProperty Name="CodArticleCost" ColumnName="CodArticleCost" />
+                <Condition ColumnName="TypeOfCost" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4649,6 +4675,18 @@
               <MappingFragment StoreEntitySet="articles">
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <Condition ColumnName="DieType" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Ink)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <Condition ColumnName="NoPrintableType" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Foil)">
+              <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
+                <Condition ColumnName="NoPrintableType" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4935,6 +4973,9 @@
           <EntitySetMapping Name="OptionTypeOfTasks">
             <EntityTypeMapping TypeName="dbModel.OptionTypeOfTask">
               <MappingFragment StoreEntitySet="optiontypeoftask">
+                <ScalarProperty Name="GainMqPerLt" ColumnName="GainMqPerLt" />
+                <ScalarProperty Name="MeshCostMq" ColumnName="MeshCostMq" />
+                <ScalarProperty Name="MeshRow" ColumnName="MeshRow" />
                 <ScalarProperty Name="IdexOf" ColumnName="IdexOf" />
                 <ScalarProperty Name="OptionName" ColumnName="OptionName" />
                 <ScalarProperty Name="CodTypeOfTask" ColumnName="CodTypeOfTask" />
@@ -5462,7 +5503,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="74">
+      <Diagram Name="Model1" ZoomLevel="82">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="34.25" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />
@@ -5964,6 +6005,14 @@
         <EntityTypeShape EntityType="dbModel.WarehouseSpec" Width="1.5" PointX="9.5" PointY="5.75" />
         <AssociationConnector Association="dbModel.FK_warehousearticles_CodWarehouse" />
         <EntityTypeShape EntityType="dbModel.ProductNameGenerator" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="dbModel.Ink" Width="1.5" PointX="82.25" PointY="16.75" />
+        <InheritanceConnector EntityType="dbModel.Ink" />
+        <EntityTypeShape EntityType="dbModel.NoPrintableArticleCostKg" Width="1.5" PointX="44" PointY="19.5" />
+        <InheritanceConnector EntityType="dbModel.NoPrintableArticleCostKg" />
+        <EntityTypeShape EntityType="dbModel.Foil" Width="1.5" PointX="84.375" PointY="16.875" />
+        <InheritanceConnector EntityType="dbModel.Foil" />
+        <EntityTypeShape EntityType="dbModel.NoPrintableArticleCostMq" Width="1.5" PointX="42" PointY="19.375" />
+        <InheritanceConnector EntityType="dbModel.NoPrintableArticleCostMq" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -3,7 +3,7 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingPrePostPressTitle") + @Model.TaskExecutorName;
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingPrePostPressTitle") ;
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
 
     }

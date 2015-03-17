@@ -554,6 +554,195 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+
+        public ActionResult InkList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string articleNameFilter = string.Empty;
+
+            string supplierNameFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
+
+            }
+
+            var q = articleRepository.GetAll().OfType<Ink>();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
+            {
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(articleNameFilter))
+            {
+                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
+                    break;
+                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+                default:
+                    q = q.OrderBy(c => c.ArticleName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.CodArticle,
+                            a.ArticleName,
+                            a.CustomerSupplierMaker.BusinessName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult FoilList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string articleNameFilter = string.Empty;
+
+            string supplierNameFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
+
+            }
+
+            var q = articleRepository.GetAll().OfType<Foil>();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
+            {
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(articleNameFilter))
+            {
+                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
+                    break;
+                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+                default:
+                    q = q.OrderBy(c => c.ArticleName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.CodArticle,
+                            a.ArticleName,
+                            a.CustomerSupplierMaker.BusinessName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult DieList(GridSettings gridSettings)
         {
             string codArticleFilter = string.Empty;
