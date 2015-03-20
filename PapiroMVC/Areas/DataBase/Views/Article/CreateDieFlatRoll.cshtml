@@ -1,10 +1,10 @@
-﻿@model PapiroMVC.Models.DieSemiRoll
+﻿@model PapiroMVC.Models.DieFlatRoll
 @using PapiroMVC.Validation
 
 
 @{
     string strings = "~/Areas/DataBase/Views/Article/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "EditingArticleTitle") + @Model.ArticleName;
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "CreateDieFlatRoll");
 }
 
 @section title{
@@ -15,12 +15,14 @@
     @ViewBag.Title
 }
 
-@Html.Partial("_EditAndCreateDieSemiRoll", Model)
+
+@Html.Partial("_EditAndCreateDieFlatRoll", Model)
 
 
 @section breadcrumb {
 
 }
+
 
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />

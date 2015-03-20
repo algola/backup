@@ -2,16 +2,7 @@
 
 @{
     string strings = "~/Views/Home/Strings";
-    var uri = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/empty", id = "SuppRigidi" });
-    var uri2 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/productprice" });
-    var uri3 = Url.RouteUrl("DefaultApi", new { httproute = "", controller = "rigid/materials" });
 }
-
-@Html.Action("MetaGenerator", new
-{
-    area = "",
-    page = (Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
-})
 
 @section title{
     @Html.T(strings, "HomeTitle")
@@ -21,19 +12,11 @@
     @Html.T(strings, "HomeDesc")
 }
 
-@{
-    ViewContext.RequestContext.RouteData.DataTokens.Add("GoingToRenderChildAction", true);
-}
-
-@{
-    ViewContext.RequestContext.RouteData.DataTokens["GoingToRenderChildAction"] = false;
-}
 
 <div class="span12">
 
     <div class="span12">
 
-        <div id="progressbar"></div>
 
         <div class="alert alert-block alert-success">
             <button type="button" class="close" data-dismiss="alert">
@@ -72,11 +55,6 @@
 </div>
 
 
-@*@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)*@
-
-
-<div class="span12">
-    <div class="space-5"></div>
 
     @section specificPlugInStyle {
         <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
@@ -97,5 +75,3 @@
         @Scripts.Render("~/bundles/jqueryval")
 
     }
-
-</div>

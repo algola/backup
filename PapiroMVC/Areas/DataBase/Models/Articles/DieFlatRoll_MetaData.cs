@@ -8,7 +8,7 @@ using PapiroMVC.Models.Resources.Articles;
 
 namespace PapiroMVC.Models
 {
-    public partial class DieSemiRoll_MetaData : Die_MetaData
+    public partial class DieFlatRoll_MetaData : Die_MetaData
     {
 
     }

@@ -15,7 +15,7 @@
         var plotterRoll = '@HttpContext.GetLocalResourceObject(strings, "PlotterRollType")';
         var plotterSheet = '@HttpContext.GetLocalResourceObject(strings, "PlotterSheetType")';
         var flexo = '@HttpContext.GetLocalResourceObject(strings, "FlexoType")';
-        var semiRoll = '@HttpContext.GetLocalResourceObject(strings, "SemiRollType")';
+        var flatRoll = '@HttpContext.GetLocalResourceObject(strings, "FlatRollType")';
         var ctrlTblRoll = '@HttpContext.GetLocalResourceObject(strings, "ControlTableRollType")';
 
             if (cellvalue == "LithoSheet")
@@ -39,8 +39,8 @@
             if (cellvalue == "Flexo")
                 return link.replace("type", flexo);
 
-            if (cellvalue == "SemiRoll")
-                return link.replace("type", semiRoll);
+            if (cellvalue == "FlatRoll")
+                return link.replace("type", flatRoll);
 
             if (cellvalue == "ControlTableRoll")
                 return link.replace("type", ctrlTblRoll);

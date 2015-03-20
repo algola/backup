@@ -4,7 +4,7 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    string url = Url.Action("SemiRollList", new { controller = "TaskExecutor", area = "DataBase" });
+    string url = Url.Action("FlatRollList", new { controller = "TaskExecutor", area = "DataBase" });
 }
 
 <div id="containerbox">
@@ -20,15 +20,15 @@
     </div>
     @*filters check************************************************@
 
-    <table id="listSemiRoll"><tr><td /></tr></table>
+    <table id="listFlatRoll"><tr><td /></tr></table>
     <div id="pager"></div>
 
 
     <br />
 
-    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateSemiRoll", "TaskExecutor", new { Area = "Database" })');">
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateFlatRoll", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
-        @Html.T(strings, "CreateSemiRoll")
+        @Html.T(strings, "CreateFlatRoll")
     </button>
 
 </div>
@@ -48,7 +48,7 @@
         $(document).ready(function () {
             'use strict';
             var // myData = [],
-                $grid = $("#listSemiRoll"),
+                $grid = $("#listFlatRoll"),
 
                 numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
                 numberTemplate = {
@@ -314,7 +314,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var myGrid = $("#listSemiRoll");
+        var myGrid = $("#listFlatRoll");
         var width = $("#body-container").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
@@ -327,7 +327,7 @@
 
     //filters check************************************************
     $(window).load(function () {
-        var myGrid = $("#listSemiRoll");
+        var myGrid = $("#listFlatRoll");
         var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
 
         if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&

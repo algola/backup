@@ -129,6 +129,24 @@
   <data name="CurrencyValidationError" xml:space="preserve">
     <value>Formato valuta non valido (es. valido: 0,8756)</value>
   </data>
+  <data name="DieCutting" xml:space="preserve">
+    <value>Fustellatura</value>
+  </data>
+  <data name="DieCuttingToolTip" xml:space="preserve">
+    <value>Se selezionato, la macchina è equipaggiata con la fustellatura</value>
+  </data>
+  <data name="FoilStamping" xml:space="preserve">
+    <value>Laminazione</value>
+  </data>
+  <data name="FoilStampingPrintingUnit" xml:space="preserve">
+    <value>Unità di laminazione</value>
+  </data>
+  <data name="FoilStampingPrintingUnitToolTip" xml:space="preserve">
+    <value>Numero di unità di laminazione</value>
+  </data>
+  <data name="FoilStampingToolTip" xml:space="preserve">
+    <value>Se selezionato, la macchina è equipaggiata con la laminazione</value>
+  </data>
   <data name="PaperFirstStartLenght" xml:space="preserve">
     <value>Scarto (mt)</value>
   </data>
@@ -147,8 +165,26 @@
   <data name="PrintingUnitToolTip" xml:space="preserve">
     <value>Castelli di stampa della macchina da stampa</value>
   </data>
+  <data name="ProofSheetFirstStartFlatRoll" xml:space="preserve">
+    <value>Scarto (battute)</value>
+  </data>
+  <data name="ProofSheetFirstStartFlatRollToolTip" xml:space="preserve">
+    <value>Indica le battute di scarto in avviamento</value>
+  </data>
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
+  </data>
+  <data name="Serigraphy" xml:space="preserve">
+    <value>Serigrafia</value>
+  </data>
+  <data name="SerigraphyPrintingUnit" xml:space="preserve">
+    <value>Colori serigrafia</value>
+  </data>
+  <data name="SerigraphyPrintingUnitToolTip" xml:space="preserve">
+    <value>Numero di colori di serigrafia</value>
+  </data>
+  <data name="SerigraphyToolTip" xml:space="preserve">
+    <value>Se selezionato, la macchina è equipaggiata con la serigrafia</value>
   </data>
   <data name="Width" xml:space="preserve">
     <value>Larghezza (cm)</value>

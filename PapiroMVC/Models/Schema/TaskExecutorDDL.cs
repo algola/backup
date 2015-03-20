@@ -72,6 +72,21 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutors", "PaperSecondStartLenght", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "FlexoWidth", SchemaDb.Double, "0");
 
+
+            //FlatRoll
+            dbS.AddColumnToTable("taskexecutors", "Serigraphy", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "FoilStamping", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "DieCutting", SchemaDb.Bool, "0");
+
+            dbS.AddColumnToTable("taskexecutors", "ProofSheetFirstStartSerigraphy", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "ProofSheetFirstStartFoilStamping", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "ProofSheetFirstStartDieCutting", SchemaDb.IntUS, "0");
+            //costo degli impianti foilStamping
+            dbS.AddColumnToTable("taskexecutors", "CostImplantFoilStamping", SchemaDb.String, "20");
+            //costo degli impianti fustelle
+            dbS.AddColumnToTable("taskexecutors", "CostImplantDieCutting", SchemaDb.String, "20");
+
+
             //digital
             dbS.AddColumnToTable("taskexecutors", "BWSide1", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("taskexecutors", "BWSide2", SchemaDb.Bool, "0");
@@ -278,6 +293,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("typeoftask", "CodTypeOfTask", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("typeoftask", "TaskName", SchemaDb.String, "100");
             dbS.AddColumnToTable("typeoftask", "CodCategoryOfTask", SchemaDb.String, "100");
+  //          dbS.AddColumnToTable("typeoftask", "Selector", SchemaDb.Int, "0");
+
 
             //optiontypeoftask
             dbS.AddTable("optiontypeoftask");

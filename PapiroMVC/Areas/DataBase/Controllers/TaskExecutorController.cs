@@ -50,7 +50,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
-        
+
 
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -170,7 +170,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     taskExecutorRepository.AddEstimatedOn(c);
                     taskExecutorRepository.Save();
 
-                      return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
+                    return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
 
                 }
                 catch (Exception ex)
@@ -229,7 +229,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
 
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -647,7 +647,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 }
             }
 
-           
+
 
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
@@ -872,23 +872,20 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
-        public ActionResult CreateSemiRoll(string returnUrl)
+        public ActionResult CreateFlatRoll(string returnUrl)
         {
-
             ViewBag.ReturnUrl = returnUrl;
-            ViewBag.ReturnCodTypeOfTask = "XXXX";
+            ViewBag.ReturnCodTypeOfTask = "STAMPAETICHROTOLO_LIST";
 
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
+
             //this feature is needed when in the view there are more than one input (submit button) form
             //Action Method speci
-            ViewBag.ActionMethod = "CreateSemiRoll";
+            ViewBag.ActionMethod = "CreateFlatRoll";
 
-            var x = new SemiRoll();
-
-            x.FormatMin = "0x0";
-            x.FormatMax = "0x0";
+            var x = new FlatRoll();
 
             //            TODO: Elaborazione dell'array del tipo di lavorazione che può svolgere.
             x.CodTypeOfTask = "STAMPAETICHROTOLO";
@@ -898,27 +895,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateSemiRoll(SemiRoll c, string returnUrl, string returnCodTypeOfTask)
+        public ActionResult CreateFlatRoll(FlatRoll c, string returnUrl, string returnCodTypeOfTask)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //if code is empty then sistem has to assign one
-                    //                    if (c.Article.CodArticle == null)
-                    {
-                        c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
-
-                        /*-------------------------------------
-                          c.LithoSheetCuttedCost.CodArticle = c.Article.CodArticle;
-                          c.LithoSheetCuttedCost.CodArticleCost = c.Article.CodArticle + "_CTC";
-                          c.LithoSheetPakedCost.CodArticle = c.Article.CodArticle;
-                          c.LithoSheetPakedCost.CodArticleCost = c.Article.CodArticle + "_PKC";
-                          c.LithoSheetPalletCost.CodArticle = c.Article.CodArticle;
-                          c.LithoSheetPalletCost.CodArticleCost = c.Article.CodArticle + "_PLC";
-                        /*/
-                    }
-
+                    c.CodTaskExecutor = taskExecutorRepository.GetNewCode(c);
                     taskExecutorRepository.Add(c);
                     taskExecutorRepository.Save();
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
@@ -936,8 +919,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-            ViewBag.ActionMethod = "CreateSemiRoll";
-            return PartialView("_EditAndCreateSemiRoll", c);
+            ViewBag.ActionMethod = "CreateFlatRoll";
+            return PartialView("_EditAndCreateFlatRoll", c);
         }
 
         [HttpGet]
@@ -1408,7 +1391,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //Recalculated after POST
             tskEx.FormatMax = "0x0";
-            tskEx.FormatMin = "0x0"; 
+            tskEx.FormatMin = "0x0";
 
 
             //get producer and maker
@@ -1455,7 +1438,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     var maxCyl = flexoEx.TaskExecutorCylinders.Max(x => x.Z);
                     var minCyl = flexoEx.TaskExecutorCylinders.Where(y => y.Z != 0).Min(x => x.Z);
 
-                    c.FormatMax = c.FlexoWidth + "x" + c.GetCmFromZ(maxCyl??0);// ((double)maxCyl / 8) * 2.54;
+                    c.FormatMax = c.FlexoWidth + "x" + c.GetCmFromZ(maxCyl ?? 0);// ((double)maxCyl / 8) * 2.54;
                     c.FormatMin = 0 + "x" + c.GetCmFromZ(minCyl ?? 0);
 
                     taskExecutorRepository.Edit(c);
@@ -1484,12 +1467,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
-        public ActionResult EditSemiRoll(string id,string resultUrl)
+        public ActionResult EditFlatRoll(string id, string resultUrl)
         {
             ViewBag.ResultUrl = resultUrl;
-            ViewBag.ReturnCodTypeOfTask = "XXXX";
+            ViewBag.ReturnCodTypeOfTask = "STAMPAETICHROTOLO_LIST";
 
-            //            SemiRoll tskEx = new SemiRoll();
             var tskEx = taskExecutorRepository.GetSingle(id);
 
             //get producer and maker
@@ -1501,7 +1483,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
             //this is a common point where edit function is called
-            ViewBag.ActionMethod = "EditSemiRoll";
+            ViewBag.ActionMethod = "EditFlatRoll";
             return View(tskEx);
         }
 
@@ -1509,34 +1491,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditSemiRoll(SemiRoll c, string returnUrl, string returnCodTypeOfTask)
+        public ActionResult EditFlatRoll(FlatRoll c, string returnUrl, string returnCodTypeOfTask)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-
-                    //controllare le lastre!!!!!!!!!!!!!!!!!!!!! se è sono articoli validi come per i fornitori di seguito
-                    /*
-                    CustomerSupplier[] customerSuppliers = customerSupplierRepository.GetAll().ToArray();
-
-                    var filteredItems = customerSuppliers.Where(
-                        item => !(String.IsNullOrEmpty(item.BusinessName)) && item.BusinessName.IndexOf(c.SupplierMaker, StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-                    if (filteredItems.Count() == 0) throw new Exception();
-
-                    c.Article.CodSupplierMaker = filteredItems.Single().CodCustomerSupplier;
-
-                     */
-
-                    var flexoEx = taskExecutorRepository.GetSingle(c.CodTaskExecutor);
-
-                    var maxCyl = flexoEx.TaskExecutorCylinders.Max(x => x.Z);
-                    var minCyl = flexoEx.TaskExecutorCylinders.Where(y => y.Z != 0).Min(x => x.Z);
-
-                    c.FormatMax = c.SemiRollWidth + "x" + ((double)maxCyl / 8) * 2.54;
-                    c.FormatMin = 0 + "x" + ((double)minCyl / 8) * 2.54;
-
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
@@ -1555,8 +1515,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
-            ViewBag.ActionMethod = "EditSemiRoll";
-            return PartialView("_EditAndCreateSemiRoll", c);
+            ViewBag.ActionMethod = "EditFlatRoll";
+            return PartialView("_EditAndCreateFlatRoll", c);
         }
 
         public ActionResult EditLithoRoll(string id, string returnUrl)
@@ -1644,7 +1604,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
 
-            
+
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditPlotterSheet";
             return View(tskEx);
@@ -1666,8 +1626,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "STAMPA");
 
-         
-            
+
+
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditPlotterRoll";
             return View(tskEx);
@@ -1718,7 +1678,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        public ActionResult EditPrePostPress(string id, string  resultUrl)
+        public ActionResult EditPrePostPress(string id, string resultUrl)
         {
             ViewBag.ResultUrl = resultUrl;
             ViewBag.returnCodTypeOfTask = "INPIANO";
@@ -1881,7 +1841,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult EditDigitalSheet(DigitalSheet c, string returnUrl, string returnCodTypeOfTask)
         {
-           
+
             if (ModelState.IsValid)
             {
                 try
@@ -1923,7 +1883,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
 
         public ActionResult EditDigitalRoll(DigitalRoll c, string returnUrl, string returnCodTypeOfTask)
-    
         {
             if (ModelState.IsValid)
             {
@@ -2429,12 +2388,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         public ActionResult EditSerigraphyOption(string id, string returnUrl)
         {
 
-          
+
             var opt = typeOfTaskRepository.GetSingleOptionTypeOfTask(id);
 
 
 
-   
+
             //this is a common point where edit function is called
             ViewBag.ActionMethod = "EditSerigraphyOption";
             return View(opt);
@@ -2451,7 +2410,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     typeOfTaskRepository.EditOptionTypeOfTask(c);
                     typeOfTaskRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexOptionTypeOfTaskSerigraphy")});
+                    return Json(new { redirectUrl = Url.Action("IndexOptionTypeOfTaskSerigraphy") });
                 }
                 catch (Exception ex)
                 {

@@ -54,7 +54,7 @@ namespace PapiroMVC.Models
             NoPrintable = 4,
 
             DieSheet = 5,
-            DieSemiRoll = 6,
+            DieFlatRoll = 6,
             DieFlexo = 7,
             Ink = 8,
             Foil = 9

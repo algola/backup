@@ -1,14 +1,13 @@
 ﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.SemiRoll
+@model PapiroMVC.Models.FlatRoll
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "EditingSemiRollTitle") ;
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "CreateFlatRollTitle");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+}
 
-    }
-
-@Html.Partial("_EditAndCreateSemiRoll", Model)
+@Html.Partial("_EditAndCreateFlatRoll", Model)
 
 
 @section breadcrumb {
@@ -22,27 +21,25 @@
 @section description{
     @ViewBag.Desc
 }
-
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
-<link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 }
 
 @section specificPluginScript {
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Scripts/jqgridHelper.js"></script>
 }
 
-
-
-
-
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-@*Put indicator on sidebar*@
-@Html.Partial("_OnSidebar", ((string)ViewBag.ReturnCodTypeOfTask ?? "A").ToLower())
+<script>
+    $(function () {
+        document.querySelector("#taskexecutorSlidebar").className = "active open";
+        document.querySelector("#stampaetichrotolo_list").className = "active";
+    });
+</script>

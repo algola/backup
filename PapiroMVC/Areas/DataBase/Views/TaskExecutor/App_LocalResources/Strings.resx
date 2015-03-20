@@ -399,19 +399,19 @@
   <data name="FromColorCaption" xml:space="preserve">
     <value>Colori</value>
   </data>
-  <data name="CreateSemiRoll" xml:space="preserve">
+  <data name="CreateFlatRoll" xml:space="preserve">
     <value>Nuova Semirotativa</value>
   </data>
-  <data name="CreateSemiRollTitle" xml:space="preserve">
+  <data name="CreateFlatRollTitle" xml:space="preserve">
     <value>Nuova Semirotativa</value>
   </data>
-  <data name="EditingSemiRollTitle" xml:space="preserve">
+  <data name="EditingFlatRollTitle" xml:space="preserve">
     <value>Modifica della macchina semirotativa</value>
   </data>
-  <data name="SemiRollType" xml:space="preserve">
-    <value>Semirotativa</value>
+  <data name="FlatRollType" xml:space="preserve">
+    <value>Modulare</value>
   </data>
-  <data name="TitleSemiRollIndex" xml:space="preserve">
+  <data name="TitleFlatRollIndex" xml:space="preserve">
     <value>Macchine da stampa semirotative</value>
   </data>
   <data name="AvarageMeterPerSecCaption" xml:space="preserve">
@@ -464,5 +464,17 @@
   </data>
   <data name="TitleSerigraphyIndex" xml:space="preserve">
     <value>Serigrafia</value>
+  </data>
+  <data name="SerigraphySection" xml:space="preserve">
+    <value>Serigrafia</value>
+  </data>
+  <data name="SerigraphyWasteSection" xml:space="preserve">
+    <value>Scarti serigrafia</value>
+  </data>
+  <data name="DieCuttingSection" xml:space="preserve">
+    <value>Fustellatura</value>
+  </data>
+  <data name="FoilStampingSection" xml:space="preserve">
+    <value>Laminazione</value>
   </data>
 </root>

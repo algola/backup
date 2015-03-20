@@ -99,8 +99,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string rollType = resman.GetString("RollType");
             string plotterSheetType = resman.GetString("PlotterSheetType");
             string plotterRollType = resman.GetString("PlotterRollType");
-            //    string ctrlTblType = resman.GetString("ControlTableRollType");
+            string ctrlTblType = resman.GetString("ControlTableRollType");
             string flexoType = resman.GetString("FlexoType");
+            string flatRollType = resman.GetString("FlatRollType");
 
             if (gridSettings.isSearch)
             {
@@ -110,7 +111,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (!string.IsNullOrEmpty(typeOfTaskExecutorFilter))
             {
-                Boolean isSheet = false, isRoll = false, isPlotterS = false, isPlotterR, isCrtlTab = false, isFlexo = false;
+                Boolean isSheet = false,
+                    isRoll = false,
+                    isPlotterS = false,
+                    isPlotterR,
+                    isCrtlTab = false,
+                    isFlexo = false,
+                    isFlatRoll = false;
 
                 //to match with language we have to compare filter with resource
                 isSheet = (sheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
@@ -118,6 +125,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 isPlotterS = (plotterSheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
                 isPlotterR = (plotterRollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
                 isFlexo = (flexoType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isCrtlTab = (ctrlTblType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+                isFlatRoll = (flatRollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
 
                 var s1 = isSheet ? (IQueryable<TaskExecutor>)q.OfType<LithoSheet>() : q.Where(x => x.CodTaskExecutor == "");
                 var s2 = isSheet ? (IQueryable<TaskExecutor>)q.OfType<DigitalSheet>() : q.Where(x => x.CodTaskExecutor == "");
@@ -553,12 +563,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
 
-        public ActionResult SemiRollList(GridSettings gridSettings)
+        public ActionResult FlatRollList(GridSettings gridSettings)
         {
             //common serarch and order
             //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
 
-            var q = this.TaskExecutorList(gridSettings).OfType<SemiRoll>();
+            var q = this.TaskExecutorList(gridSettings).OfType<FlatRoll>();
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();

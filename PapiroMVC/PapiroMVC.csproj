@@ -255,12 +255,12 @@
     <Compile Include="Areas\DataBase\Models\Articles\ArticleCostEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ArticleEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\ArticleEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieFlatRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\DieFlatRoll_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\Die_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\DieSemiRollEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieFlexoEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieSheetEx.cs" />
-    <Compile Include="Areas\DataBase\Models\Articles\DieSemiRoll_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieFlexo_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieSheet_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\FoilEx.cs" />
@@ -355,8 +355,8 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\ControlTableRollEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\ControlTableRollEstimatedOnTimeEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\ControlTableRollEstimatedOnTimeEx_MetaData.cs" />
-    <Compile Include="Areas\DataBase\Models\TaskExecutor\SemiRollEx.cs" />
-    <Compile Include="Areas\DataBase\Models\TaskExecutor\SemiRollEx_MetaDat.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlatRollEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlatRollEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\LithoSheetEx.cs" />
@@ -552,6 +552,7 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskSerigraphy.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEmpty.cs" />
@@ -647,10 +648,10 @@
     <Compile Include="Models\Die.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DieFlexo.cs">
+    <Compile Include="Models\DieFlatRoll.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DieSemiRoll.cs">
+    <Compile Include="Models\DieFlexo.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DieSheet.cs">
@@ -684,6 +685,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstimateEcommerce.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FlatRoll.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Flexo.cs">
@@ -922,6 +926,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartRollPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartSerigraphy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartSheetArticle.cs">
@@ -1457,9 +1464,6 @@
     <Compile Include="Models\Schema\ProductsDDL.cs" />
     <Compile Include="Models\Schema\ProfilesDDL.cs" />
     <Compile Include="Models\Schema\TaskExecutorDDL.cs" />
-    <Compile Include="Models\SemiRoll.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SheetPrintableArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -2507,11 +2511,6 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\RollEstimatedOnTime.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerColorStep.cshtml" />
     <Content Include="Areas\Working\Views\Document\NotImplementedCostDetail.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\EditSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexSemiRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListAvarageRunPerRunStep.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateControlTableRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListControlTableRoll.cshtml" />
@@ -2531,9 +2530,6 @@
     <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditDieSheet.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\CreateDieSheet.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\EditDieSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\CreateDieSemiRoll.cshtml" />
-    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieSemiRoll.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListDocumentProducts.cshtml" />
     <Content Include="Areas\Working\Views\Document\ListProducts.cshtml" />
     <Content Include="Areas\Working\Views\Document\ListOrder.cshtml" />
@@ -2594,9 +2590,16 @@
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListTypeOfTaskSerigraphy.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\EditSerigraphyOption.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditSerigraphyOption.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\CreateFlatRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\EditFlatRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateFlatRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateDieFlatRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditDieFlatRoll.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateDieFlatRoll.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphy.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>

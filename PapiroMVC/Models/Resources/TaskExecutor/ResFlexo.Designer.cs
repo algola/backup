@@ -97,6 +97,60 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fustellatura.
+        /// </summary>
+        public static string DieCutting {
+            get {
+                return ResourceManager.GetString("DieCutting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la fustellatura.
+        /// </summary>
+        public static string DieCuttingToolTip {
+            get {
+                return ResourceManager.GetString("DieCuttingToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Laminazione.
+        /// </summary>
+        public static string FoilStamping {
+            get {
+                return ResourceManager.GetString("FoilStamping", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unità di laminazione.
+        /// </summary>
+        public static string FoilStampingPrintingUnit {
+            get {
+                return ResourceManager.GetString("FoilStampingPrintingUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numero di unità di laminazione.
+        /// </summary>
+        public static string FoilStampingPrintingUnitToolTip {
+            get {
+                return ResourceManager.GetString("FoilStampingPrintingUnitToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la laminazione.
+        /// </summary>
+        public static string FoilStampingToolTip {
+            get {
+                return ResourceManager.GetString("FoilStampingToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scarto (mt).
         /// </summary>
         public static string PaperFirstStartLenght {
@@ -151,11 +205,65 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scarto (battute).
+        /// </summary>
+        public static string ProofSheetFirstStartFlatRoll {
+            get {
+                return ResourceManager.GetString("ProofSheetFirstStartFlatRoll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indica le battute di scarto in avviamento.
+        /// </summary>
+        public static string ProofSheetFirstStartFlatRollToolTip {
+            get {
+                return ResourceManager.GetString("ProofSheetFirstStartFlatRollToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to richiesto per completare l&apos;operazione.
         /// </summary>
         public static string RequiredField {
             get {
                 return ResourceManager.GetString("RequiredField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serigrafia.
+        /// </summary>
+        public static string Serigraphy {
+            get {
+                return ResourceManager.GetString("Serigraphy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Colori serigrafia.
+        /// </summary>
+        public static string SerigraphyPrintingUnit {
+            get {
+                return ResourceManager.GetString("SerigraphyPrintingUnit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Numero di colori di serigrafia.
+        /// </summary>
+        public static string SerigraphyPrintingUnitToolTip {
+            get {
+                return ResourceManager.GetString("SerigraphyPrintingUnitToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la serigrafia.
+        /// </summary>
+        public static string SerigraphyToolTip {
+            get {
+                return ResourceManager.GetString("SerigraphyToolTip", resourceCulture);
             }
         }
         

@@ -9,12 +9,12 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [Serializable]
-    [MetadataType(typeof(DieSemiRoll_MetaData))]
-    public partial class DieSemiRoll : Die
+    [MetadataType(typeof(DieFlatRoll_MetaData))]
+    public partial class DieFlatRoll : Die
     {
-        public DieSemiRoll()
+        public DieFlatRoll()
         {
-            TypeOfArticle = ArticleType.DieSemiRoll;
+            TypeOfArticle = ArticleType.DieFlatRoll;
         }
 
         #region Added Properties

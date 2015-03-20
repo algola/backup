@@ -10,16 +10,16 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
     [Serializable]
-    [MetadataType(typeof(SemiRoll_MetaData))]
-    public partial class SemiRoll : Litho
+    [MetadataType(typeof(FlatRoll_MetaData))]
+    public partial class FlatRoll : Litho
     {
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public SemiRoll()
+        public FlatRoll()
         {
-            this.TypeOfExecutor = TaskExecutor.ExecutorType.SemiRoll;
+            this.TypeOfExecutor = TaskExecutor.ExecutorType.FlatRoll;
         }
 
         public override CostDetail.QuantityType TypeOfImplantQuantity
@@ -108,21 +108,6 @@ namespace PapiroMVC.Models
             return Math.Ceiling(cToPrintT);
         }
 
-        public int CurrentZ
-        { get; set; }
-
-        /// <summary>
-        /// Check if Cylinder 0 are in list
-        /// so view has row to insert a new cylinder Z
-        /// </summary>
-        public void CheckZeroCylinder()
-        {
-            var x = this.TaskExecutorCylinders.FirstOrDefault(y => y.Z == 0);
-            if (x == null)
-            {
-                this.TaskExecutorCylinders.Add(new TaskExecutorCylinder { Z = 999, Quantity = 0 });
-            }
-        }
 
         #region Added Properties
 

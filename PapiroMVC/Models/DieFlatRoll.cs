@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     
     	
     [DataContract] 
-    public partial class DieSemiRoll : Die
+    public partial class DieFlatRoll : Die
     {
     }
 }

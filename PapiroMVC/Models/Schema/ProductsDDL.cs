@@ -183,9 +183,11 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparttasks", "IndexOf", SchemaDb.Int, "0");
             dbS.AddColumnToTable("productparttasks", "PrecIndexOf", SchemaDb.String, "200");
 
-
             dbS.AddColumnToTable("productparttasks", "CodItemGraph", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparttasks", "IfSelectedResetOtherCodItemGraph", SchemaDb.String, "200");
+
+            //selettore --> 0 = serigrafia
+            dbS.AddColumnToTable("productparttasks", "Selector", SchemaDb.Int, "0");
 
             //foreign key
             dbS.AddColumnToTable("productparttasks", "CodProductPart", SchemaDb.String, "50");

@@ -360,4 +360,7 @@
   <data name="UnloadType" xml:space="preserve">
     <value>Scarico</value>
   </data>
+  <data name="FlatRollType" xml:space="preserve">
+    <value>Modulare Rotolo</value>
+  </data>
 </root>

@@ -1,13 +1,24 @@
-﻿@using PapiroMVC.Validation
-@model PapiroMVC.Models.SemiRoll
+﻿@using Mvc.HtmlHelpers
+
+@using PapiroMVC.Validation
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
-    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "CreateSemiRollTitle");
+    ViewBag.Desc = (string)HttpContext.GetLocalResourceObject(strings, "TitleFlatRollIndex");
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "PrinterTitle");
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleLitho");
+
 }
 
-@Html.Partial("_EditAndCreateSemiRoll", Model)
+
+<div id='flexo'>
+    <!-- pass RollPrintableArticleAutoChenges is used to can help html filed with facilities -->
+    @Html.Partial("_ListFlatRoll")
+</div>
+
+<div id='script'>
+    @Html.Partial("_ListCommonScript")
+</div>
 
 
 @section breadcrumb {
@@ -26,21 +37,18 @@
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+    <script src="~/Scripts/jqgridHelper.js"></script>
+
 }
 
 @section specificPluginScript {
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-    <script src="~/Scripts/jqgridHelper.js"></script>
-}
-
-@section ScriptS{
-    @Scripts.Render("~/bundles/jqueryval")
 }
 
 <script>
-    $(function () {
+    $(function () {        
         document.getElementById("taskexecutorSlidebar").className = "active open";
         document.getElementById("flexoSlidebar").className = "active";
     });

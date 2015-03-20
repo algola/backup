@@ -89,6 +89,15 @@ namespace PapiroMVC.Models
             partTask.IndexOf = 30;
 
             partTask.CodItemGraph = "SC";
+
+
+            //partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "SERIGRAFIA_NO");
+            //partTask.Hidden = true;
+            //partTask.ImplantHidden = true; //impant is visibile only if task is visibile
+            //partTask.IndexOf = 35;
+
+            //partTask.CodItemGraph = "SE";
+
             //if this is selected we have to reset tv task
             partTask.IfSelectedResetOtherCodItemGraph = "TV";
 
@@ -108,6 +117,7 @@ namespace PapiroMVC.Models
 
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "SC" });
+   //         ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "SE" });
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "TV" });
 
         }
@@ -118,11 +128,22 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURAROTOLO", "STAMPAACALDOROTOLO", "TAVOLOCONTROLLO" };
+            String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURAROTOLO", "STAMPAACALDOROTOLO",
+                                          //"SERIGRAFIA", 
+                                          "TAVOLOCONTROLLO" };
 
             foreach (var item in codTypeOfTasks)
             {
-                pt = new ProductPartTask();
+
+                if (item == "SERIGRAFIA")
+                {
+                    pt = new ProductPartSerigraphy();
+                }
+                else
+                {
+                    pt = new ProductPartTask();
+                }
+
                 //default selection
                 pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
 

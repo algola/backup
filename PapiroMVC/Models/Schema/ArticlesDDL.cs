@@ -86,7 +86,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "NoPrintableType", SchemaDb.Int, "0");
 
             //DieType
-            // 0 = Sheet // 1 = SemiRoll // 2 = Flexo 
+            // 0 = Sheet // 1 = FlatRoll // 2 = Flexo 
             dbS.AddColumnToTable("articles", "CodDie", SchemaDb.String, "50");
             dbS.AddColumnToTable("articles", "DieType", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articles", "Z", SchemaDb.Double, "0");

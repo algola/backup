@@ -397,6 +397,7 @@
           <Property Name="CodItemGraph" Type="char" MaxLength="20" />
           <Property Name="PrecIndexOf" Type="char" MaxLength="200" />
           <Property Name="IfSelectedResetOtherCodItemGraph" Type="char" MaxLength="200" />
+          <Property Name="Selector" Type="int" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -629,6 +630,16 @@
           <Property Name="HasImplant" Type="bit" />
           <Property Name="CostImplant" Type="char" MaxLength="20" />
           <Property Name="ZMetric" Type="bit" />
+          <Property Name="Serigraphy" Type="bit" />
+          <Property Name="SerigraphyPrintingUnit" Type="uint" />
+          <Property Name="FoilStamping" Type="bit" />
+          <Property Name="FoilStampingPrintingUnit" Type="uint" />
+          <Property Name="DieCutting" Type="bit" />
+          <Property Name="ProofSheetFirstStartSerigraphy" Type="uint" />
+          <Property Name="ProofSheetFirstStartFoilStamping" Type="uint" />
+          <Property Name="ProofSheetFirstStartDieCutting" Type="uint" />
+          <Property Name="CostImplantFoilStamping" Type="char" MaxLength="20" />
+          <Property Name="CostImplantDieCutting" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -2500,7 +2511,7 @@
           <NavigationProperty Name="TaskExecutorCylinders" Relationship="dbModel.FK_taskexecutorcylinders_CodTaskExecutor" FromRole="TaskExecutor" ToRole="taskexecutorcylinder" />
           <Property Name="HasImplant" Type="Boolean" />
           <Property Name="CostImplant" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
           <Property Type="Int64" Name="SheetwiseAfterPrintingUnit" />
@@ -3834,9 +3845,19 @@
         <EntityType Name="CostPerColorStep" BaseType="dbModel.Step" >
           <Property Name="CostPerUnit" Type="String" />
         </EntityType>
-        <EntityType Name="SemiRoll" BaseType="dbModel.Litho" >
+        <EntityType Name="FlatRoll" BaseType="dbModel.Litho" >
           <Property Name="Width2" Type="Double" />
-          <Property Name="SemiRollWidth" Type="Double" />
+          <Property Name="Serigraphy" Type="Boolean" />
+          <Property Name="SerigraphyPrintingUnit" Type="Int64" />
+          <Property Name="FoilStamping" Type="Boolean" />
+          <Property Name="FoilStampingPrintingUnit" Type="Int64" />
+          <Property Name="DieCutting" Type="Boolean" />
+          <Property Name="FlatRollWidth" Type="Double" />
+          <Property Name="ProofSheetFirstStartSerigraphy" Type="Int64" />
+          <Property Name="ProofSheetFirstStartFoilStamping" Type="Int64" />
+          <Property Name="ProofSheetFirstStartDieCutting" Type="Int64" />
+          <Property Name="CostImplantFoilStamping" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CostImplantDieCutting" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ControlTableRoll" BaseType="dbModel.PrePostPress" />
         <EntityType Name="ControlTableRollEstimatedOnTime" BaseType="dbModel.TaskEstimatedOnTime" ></EntityType>
@@ -3880,7 +3901,7 @@
           <Property Name="Format" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DieSheet" BaseType="dbModel.Die" />
-        <EntityType Name="DieSemiRoll" BaseType="dbModel.Die" />
+        <EntityType Name="DieFlatRoll" BaseType="dbModel.Die" />
         <EntityType Name="DieFlexo" BaseType="dbModel.Die" >
         </EntityType>
         <EntityType Name="Order" BaseType="dbModel.Document" >
@@ -4066,6 +4087,8 @@
         <EntityType Name="NoPrintableArticleCostMq" BaseType="dbModel.NoPrintableArticleCostStandard" >
           <Property Name="CostPerMq" Type="String" Nullable="true" />
         </EntityType>
+        <EntityType Name="ProductPartSerigraphy" BaseType="dbModel.ProductPartTask">
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4196,11 +4219,21 @@
                 <Condition ColumnName="Selector" Value="7" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.SemiRoll)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.FlatRoll)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="CostImplantDieCutting" ColumnName="CostImplantDieCutting" />
+                <ScalarProperty Name="CostImplantFoilStamping" ColumnName="CostImplantFoilStamping" />
+                <ScalarProperty Name="ProofSheetFirstStartDieCutting" ColumnName="ProofSheetFirstStartDieCutting" />
+                <ScalarProperty Name="ProofSheetFirstStartFoilStamping" ColumnName="ProofSheetFirstStartFoilStamping" />
+                <ScalarProperty Name="ProofSheetFirstStartSerigraphy" ColumnName="ProofSheetFirstStartSerigraphy" />
+                <ScalarProperty Name="SerigraphyPrintingUnit" ColumnName="SerigraphyPrintingUnit" />
+                <ScalarProperty Name="DieCutting" ColumnName="DieCutting" />
+                <ScalarProperty Name="FoilStampingPrintingUnit" ColumnName="FoilStampingPrintingUnit" />
+                <ScalarProperty Name="FoilStamping" ColumnName="FoilStamping" />
+                <ScalarProperty Name="Serigraphy" ColumnName="Serigraphy" />
                 <ScalarProperty Name="Width2" ColumnName="Width" />
                 <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
-                <ScalarProperty Name="SemiRollWidth" ColumnName="FlexoWidth" />
+                <ScalarProperty Name="FlatRollWidth" ColumnName="FlexoWidth" />
                 <Condition ColumnName="Selector" Value="8" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4665,7 +4698,7 @@
                 <Condition ColumnName="DieType" Value="0" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DieSemiRoll)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.DieFlatRoll)">
               <MappingFragment StoreEntitySet="articles">
                 <ScalarProperty Name="CodArticle" ColumnName="CodArticle" />
                 <Condition ColumnName="DieType" Value="1" />
@@ -4873,6 +4906,12 @@
                 <ScalarProperty Name="CodOptionTypeOfTask" ColumnName="CodOptionTypeOfTask" />
                 <ScalarProperty Name="Hidden" ColumnName="Hidden" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSerigraphy)">
+              <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
+                <Condition ColumnName="Selector" Value="1" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5963,8 +6002,8 @@
         <InheritanceConnector EntityType="dbModel.RollEstimatedOnTime" />
         <EntityTypeShape EntityType="dbModel.CostPerColorStep" Width="1.5" PointX="94.75" PointY="38.375" />
         <InheritanceConnector EntityType="dbModel.CostPerColorStep" />
-        <EntityTypeShape EntityType="dbModel.SemiRoll" Width="1.5" PointX="58.875" PointY="36.875" />
-        <InheritanceConnector EntityType="dbModel.SemiRoll" />
+        <EntityTypeShape EntityType="dbModel.FlatRoll" Width="1.5" PointX="58.875" PointY="36.875" />
+        <InheritanceConnector EntityType="dbModel.FlatRoll" />
         <EntityTypeShape EntityType="dbModel.ControlTableRoll" Width="1.5" PointX="49.875" PointY="33.375" />
         <InheritanceConnector EntityType="dbModel.ControlTableRoll" />
         <EntityTypeShape EntityType="dbModel.ControlTableRollEstimatedOnTime" Width="1.5" PointX="3" PointY="38.75" />
@@ -5977,8 +6016,8 @@
         <InheritanceConnector EntityType="dbModel.Die" />
         <EntityTypeShape EntityType="dbModel.DieSheet" Width="1.5" PointX="76.5" PointY="20" />
         <InheritanceConnector EntityType="dbModel.DieSheet" />
-        <EntityTypeShape EntityType="dbModel.DieSemiRoll" Width="1.5" PointX="78.75" PointY="20" />
-        <InheritanceConnector EntityType="dbModel.DieSemiRoll" />
+        <EntityTypeShape EntityType="dbModel.DieFlatRoll" Width="1.5" PointX="78.75" PointY="20" />
+        <InheritanceConnector EntityType="dbModel.DieFlatRoll" />
         <EntityTypeShape EntityType="dbModel.DieFlexo" Width="1.5" PointX="81" PointY="20" />
         <InheritanceConnector EntityType="dbModel.DieFlexo" />
         <EntityTypeShape EntityType="dbModel.lastcode" Width="1.5" PointX="2.75" PointY="0.75" />
@@ -6013,6 +6052,8 @@
         <InheritanceConnector EntityType="dbModel.Foil" />
         <EntityTypeShape EntityType="dbModel.NoPrintableArticleCostMq" Width="1.5" PointX="42" PointY="19.375" />
         <InheritanceConnector EntityType="dbModel.NoPrintableArticleCostMq" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSerigraphy" Width="1.5" PointX="21.125" PointY="23.25" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSerigraphy" />
       </Diagram>
     </Diagrams>
   </Designer>

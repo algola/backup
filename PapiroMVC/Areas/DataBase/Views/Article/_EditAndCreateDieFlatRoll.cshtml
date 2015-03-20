@@ -1,4 +1,4 @@
-﻿@model PapiroMVC.Models.DieSemiRoll
+﻿@model PapiroMVC.Models.DieFlatRoll
 @using PapiroMVC.Validation
 @using PapiroMVC.Models
 
@@ -67,7 +67,7 @@
                 @HttpContext.GetLocalResourceObject(strings, "Save")
             </button>
 
-            @if (ViewBag.ActionMethod != "CreateDieSemiRoll")
+            @if (ViewBag.ActionMethod != "CreateDieFlatRoll")
             {
                 <input class="btn" type="submit" name="CreateDieFlexo" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
             }

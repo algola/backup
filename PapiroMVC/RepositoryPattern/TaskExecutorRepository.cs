@@ -138,7 +138,7 @@ namespace Services
                         tsk.CodTypeOfTask = "STAMPAMORBIDO";
                         break;
                     case TaskExecutor.ExecutorType.Binding:
-                    case TaskExecutor.ExecutorType.SemiRoll:
+                    case TaskExecutor.ExecutorType.FlatRoll:
                     case TaskExecutor.ExecutorType.ControlTableRoll:
                     case TaskExecutor.ExecutorType.PrePostPress:
                         Console.WriteLine(tsk.CodTypeOfTask);

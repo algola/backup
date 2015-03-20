@@ -701,8 +701,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ret = RedirectToAction("EditDieFlexo", "Article", new { id = id });
                     break;
 
-                case Article.ArticleType.DieSemiRoll:
-                    ret = RedirectToAction("EditDieSemiRoll", "Article", new { id = id });
+                case Article.ArticleType.DieFlatRoll:
+                    ret = RedirectToAction("EditDieFlatRoll", "Article", new { id = id });
                     break;
 
                 case Article.ArticleType.DieSheet:
@@ -1148,22 +1148,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        //---------DieSemiRoll
+        //---------DieFlatRoll
 
         [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
-        public ActionResult CreateDieSemiRoll()
+        public ActionResult CreateDieFlatRoll()
         {
             //used to understand default actionmethod  when there are more then one submit button
-            ViewBag.ActionMethod = "CreateDieSemiRoll";
-            return View(new DieSemiRoll());
+            ViewBag.ActionMethod = "CreateDieFlatRoll";
+            return View(new DieFlatRoll());
         }
 
         [HttpParamAction]
         [AuthorizeUser]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult CreateDieSemiRoll(DieSemiRoll c)
+        public ActionResult CreateDieFlatRoll(DieFlatRoll c)
         {
             if (ModelState.IsValid)
             {
@@ -1185,15 +1185,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
-            ViewBag.ActionMethod = "CreateDieSemiRoll";
-            return PartialView("_EditAndCreateDieSemiRoll", c);
+            ViewBag.ActionMethod = "CreateDieFlatRoll";
+            return PartialView("_EditAndCreateDieFlatRoll", c);
 
         }
 
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditDieSemiRoll(DieSemiRoll c)
+        public ActionResult EditDieFlatRoll(DieFlatRoll c)
         {
             if (ModelState.IsValid)
             {
@@ -1221,14 +1221,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //If we come here, something went wrong. Return it back. 
             //multi submit
-            ViewBag.ActionMethod = "EditDieSemiRoll";
-            return PartialView("_EditAndCreateDieSemiRoll", c);
+            ViewBag.ActionMethod = "EditDieFlatRoll";
+            return PartialView("_EditAndCreateDieFlatRoll", c);
         }
 
-        public ActionResult EditDieSemiRoll(string id)
+        public ActionResult EditDieFlatRoll(string id)
         {
-            DieSemiRoll viewModel = new DieSemiRoll();
-            viewModel = (DieSemiRoll)articleRepository.GetSingle(id);
+            DieFlatRoll viewModel = new DieFlatRoll();
+            viewModel = (DieFlatRoll)articleRepository.GetSingle(id);
 
             //get producer and maker
 
@@ -1236,8 +1236,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return HttpNotFound();
 
             //is used to know where we are from and go
-            ViewBag.ActionMethod = "EditDieSemiRoll";
-            return View("EditDieSemiRoll", viewModel);
+            ViewBag.ActionMethod = "EditDieFlatRoll";
+            return View("EditDieFlatRoll", viewModel);
         }
 
 

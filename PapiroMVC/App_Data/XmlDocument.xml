@@ -384,23 +384,17 @@
             tipo di quantità
             </summary>
         </member>
-        <member name="M:PapiroMVC.Models.SemiRoll.#ctor">
+        <member name="M:PapiroMVC.Models.FlatRoll.#ctor">
             <summary>
             Constructor
             </summary>
         </member>
-        <member name="M:PapiroMVC.Models.SemiRoll.GetStarts(System.String)">
+        <member name="M:PapiroMVC.Models.FlatRoll.GetStarts(System.String)">
             <summary>
             get printing color (task vs machine)
             </summary>
             <param name="codOptionTypeOfTask"></param>
             <returns></returns>
-        </member>
-        <member name="M:PapiroMVC.Models.SemiRoll.CheckZeroCylinder">
-            <summary>
-            Check if Cylinder 0 are in list
-            so view has row to insert a new cylinder Z
-            </summary>
         </member>
         <member name="M:PapiroMVC.Models.Flexo.#ctor">
             <summary>
@@ -6802,6 +6796,36 @@
               Looks up a localized string similar to Formato valuta non valido (es. valido: 0,8756).
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.DieCutting">
+            <summary>
+              Looks up a localized string similar to Fustellatura.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.DieCuttingToolTip">
+            <summary>
+              Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la fustellatura.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.FoilStamping">
+            <summary>
+              Looks up a localized string similar to Laminazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.FoilStampingPrintingUnit">
+            <summary>
+              Looks up a localized string similar to Unità di laminazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.FoilStampingPrintingUnitToolTip">
+            <summary>
+              Looks up a localized string similar to Numero di unità di laminazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.FoilStampingToolTip">
+            <summary>
+              Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la laminazione.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.PaperFirstStartLenght">
             <summary>
               Looks up a localized string similar to Scarto (mt).
@@ -6832,9 +6856,39 @@
               Looks up a localized string similar to Castelli di stampa della macchina da stampa.
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.ProofSheetFirstStartFlatRoll">
+            <summary>
+              Looks up a localized string similar to Scarto (battute).
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.ProofSheetFirstStartFlatRollToolTip">
+            <summary>
+              Looks up a localized string similar to Indica le battute di scarto in avviamento.
+            </summary>
+        </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.RequiredField">
             <summary>
               Looks up a localized string similar to richiesto per completare l&apos;operazione.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.Serigraphy">
+            <summary>
+              Looks up a localized string similar to Serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.SerigraphyPrintingUnit">
+            <summary>
+              Looks up a localized string similar to Colori serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.SerigraphyPrintingUnitToolTip">
+            <summary>
+              Looks up a localized string similar to Numero di colori di serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.SerigraphyToolTip">
+            <summary>
+              Looks up a localized string similar to Se selezionato, la macchina è equipaggiata con la serigrafia.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.Width">

@@ -66,8 +66,9 @@ namespace PapiroMVC.Models
             {
                 var tskExec1 = tskExecList.OfType<Flexo>();
                 var tskExec2 = tskExecList.OfType<ControlTableRoll>();
+                var tskExec3 = tskExecList.OfType<FlatRoll>();
 
-                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union(tskExec3);
             }
 
 
@@ -177,7 +178,7 @@ namespace PapiroMVC.Models
             PrePostPress = 6,
             Binding = 7,
             Flexo = 8,
-            SemiRoll = 9,
+            FlatRoll = 9,
 
             ControlTableRoll = 10
 

@@ -17,15 +17,11 @@ namespace PapiroMVC.Models
     public partial class ProductPartTask : IDataErrorInfo, ICloneable, IDeleteRelated
     {
 
-        //public ProductPartTask()
-        //{
-        //    TypeOfProductPartTask = ProductPartTasksType.ProductPartTask;
-        //}
-
         #region Proprietà aggiuntive
         public enum ProductPartTasksType : int
         {
             ProductPartTask = 0,
+            ProductPartSerigraphy = 1
         }
 
         public ProductPartTasksType TypeOfProductPartTask

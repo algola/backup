@@ -16,13 +16,7 @@ namespace PapiroMVC.Models
     
     	
     [DataContract] 
-    public partial class SemiRoll : Litho
+    public partial class ProductPartSerigraphy : ProductPartTask
     {
-    	
-    	[DataMember] 		
-        public Nullable<double> Width2 { get; set; }
-    	
-    	[DataMember] 		
-        public Nullable<double> SemiRollWidth { get; set; }
     }
 }

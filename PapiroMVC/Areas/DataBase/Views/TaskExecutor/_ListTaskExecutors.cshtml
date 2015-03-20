@@ -56,6 +56,11 @@
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateControlTable")
             </button>
+
+            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateFlatRoll", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
+                <i class="icon-plus"></i>
+                @Html.T(strings, "CreateFlatRoll")
+            </button>
         }
         if (Model == "INPIANO")
         {
@@ -64,7 +69,7 @@
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateDigitalSheet")
             </button>
-        
+
             <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateLithoSheet", "TaskExecutor", new { Area = "Database", returnUrl = "IndexTaskExecutors" })');">
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateLithoSheet")
@@ -250,7 +255,7 @@
 
 
         $grid.jqGrid({
-            url: '@url', 
+            url: '@url',
             datatype: 'json',
             colModel: cm,
 
