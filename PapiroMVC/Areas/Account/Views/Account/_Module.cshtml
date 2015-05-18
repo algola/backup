@@ -206,7 +206,7 @@
         $("#btnBuy@(Model.CodModuleName)").on('click', function (e) {
             e.preventDefault();
 
-            var dialog = $("#dmBuy@(Model.CodModuleName)").dialog({
+            var dialog = $("#dmBuy@(Model.CodModuleName)").removeClass("hide").dialog({
                 width: '250',
                 height: '200',
 
@@ -281,7 +281,7 @@
         $("#btnTry@(Model.CodModuleName)").on('click', function (e) {
             e.preventDefault();
 
-            var dialog = $("#dmTry@(Model.CodModuleName)").dialog({
+            var dialog = $("#dmTry@(Model.CodModuleName)").removeClass("hide").dialog({
                 width: '250',
                 height: '150',
                 modal: true,

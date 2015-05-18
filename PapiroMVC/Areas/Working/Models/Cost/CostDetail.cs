@@ -18,6 +18,67 @@ namespace PapiroMVC.Models
     public partial class CostDetail : ICloneable, IPrintDocX
     {
 
+        public virtual List<CostDetail> CreateRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        {
+            return new List<CostDetail>();
+        }
+
+        public virtual List<CostDetail> GetRelatedImplantCostDetail(string codProductPartTask, IQueryable<Cost> costs)
+        {
+            List<CostDetail> lst = new List<CostDetail>();
+
+            var x = new ImplantCostDetail();
+
+            x.ComputedBy = this;
+            x.ProductPart = this.ProductPart;
+
+            //devo pescare il costo e associarlo al dettaglio
+            if (x.CodCost == null)
+            {
+                var xxxx = costs.ToList();
+
+                var cost = costs.Where(pp => pp.CodProductPartImplantTask == codProductPartTask).FirstOrDefault();
+                //da non usare MAIIII                    x.TaskCost = cost;
+                x.CodCost = cost.CodCost;
+                x.CodCostDetail = cost.CodCost;
+
+                x.CostDetailCostCodeRigen();
+            }
+
+            //GUID
+            x.Guid = this.Guid;
+            this.Computes.Add(x);
+            lst.Add(x);
+
+            return lst;
+        }
+
+        //this is used by get this.ComputedBy.ProductPartPrinting.PrintingFormat
+        /// <summary>
+        /// use this property to get PrintingFormat
+        /// </summary>
+        public string PrintingFormat
+        {
+            get
+            {
+                try
+                {
+                    if (this.ProductPartPrinting != null)
+                    {
+                        return this.ProductPartPrinting.PrintingFormat;
+                    }
+                    else
+                    {
+                        return this.Printers.First().ProductPartPrinting.PrintingFormat;
+                    }
+                }
+                catch (Exception)
+                {
+                    return "0x0";
+                }
+            }
+        }
+
         public object Clone()
         {
             //creo una copia dell'oggetto da utilizzare per le modifiche
@@ -39,7 +100,7 @@ namespace PapiroMVC.Models
             to.CodProductPart = this.CodProductPart;
             to.CodComputedBy = this.CodComputedBy;
             to.Starts = this.Starts;
-      //      to. = this.Washes;
+            //      to. = this.Washes;
             to.GainForRun = this.GainForRun;
             to.GainForRunForPrintableArticle = this.GainForRunForPrintableArticle;
             to.GainForMqRun = this.GainForMqRun;
@@ -116,7 +177,7 @@ namespace PapiroMVC.Models
         { get; set; }
 
         private List<CostDetail> _printer;
-        public List<CostDetail> Printeres
+        public List<CostDetail> Printers
         {
             get
             {
@@ -137,7 +198,8 @@ namespace PapiroMVC.Models
             PrintingSheetCostDetail = 0,  //digital and litho sheet and rigid
             PrintingRollCostDetail = 1,  //digital and litho sheet and plotter
 
-            PrintingLabelRollCostDetail = 2, // label roll
+            PrintingZRollCostDetail = 2, // Cylinder
+            PrintingFlatRollCostDetail = 3, // Flat
 
             PrintedSheetArticleCostDetail = 10,
             PrintedRollArticleCostDetail = 11,
@@ -145,7 +207,9 @@ namespace PapiroMVC.Models
 
             ImplantCostDetail = 100,
             PrePostPressCostDetail = 200,
-            ControlTableCostDetail = 201
+            ControlTableCostDetail = 201,
+
+            RepassRollCostDetail = 202
 
         }
 
@@ -154,6 +218,22 @@ namespace PapiroMVC.Models
             get;
             protected set;
         }
+
+
+        //codTaskExecutor 
+        public void SetTaskexecutor(IQueryable<TaskExecutor> tskExecs, string codTaskExecutor)
+        {
+            var tsk = tskExecs.Where(x => x.CodTaskExecutor == codTaskExecutor).FirstOrDefault();
+
+            tsk = tsk != null ? tsk : tskExecs.FirstOrDefault();
+
+            if (tsk != null)
+            {
+                CodTaskExecutorSelected = tsk.CodTaskExecutor;
+                TaskexEcutorSelected = tsk;
+            }
+        }
+
 
 
         //TEMPORANEO forse e' meglio salvarlo??
@@ -210,6 +290,9 @@ namespace PapiroMVC.Models
             tskExec = _tskExec;
             articles = _articles;
 
+            //reset error
+            Error = 0;
+
         }
 
         public ProductPartPrintingGain GainPrintingOnBuying
@@ -226,16 +309,34 @@ namespace PapiroMVC.Models
 
         }
 
+
+
+
         public virtual void CostDetailCostCodeRigen()
         {
             this.TimeStampTable = DateTime.Now;
             //           this.CodCostDetail = this.CodCost;
+
+
+            if (ProductPart != null)
+            {
+                CodProductPart = ProductPart.CodProductPart;
+            }
+
+            if (ComputedBy != null)
+            {
+                if (CodComputedBy == null)
+                {
+                    ComputedBy.CostDetailCostCodeRigen();                    
+                }
+            }
 
             if (Computes != null)
             {
                 foreach (var item in Computes)
                 {
                     item.CodComputedBy = this.CodCostDetail;
+                    item.CostDetailCostCodeRigen();
                 }
             }
 
@@ -262,7 +363,6 @@ namespace PapiroMVC.Models
 
                 if (ProductPartPrinting.GainPartOnPrinting != null)
                 {
-
                     ProductPartPrinting.GainPartOnPrinting.CodProductPartPrinting = CodCostDetail;
                     ProductPartPrinting.GainPartOnPrinting.CodProductPartPrintingGain = ProductPartPrinting.CodProductPartPrinting;
                     ProductPartPrinting.GainPartOnPrinting.TimeStampTable = DateTime.Now;
@@ -276,6 +376,10 @@ namespace PapiroMVC.Models
                     }
                 }
             }
+
+
+
+
         }
 
         Double _quantity;
@@ -357,15 +461,15 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForWeigthRunForPrintableArticle", this.GainForWeigthRunForPrintableArticle ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Error", this.Error ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.RollChanges", this.RollChanges ?? 0));
-            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedMq", this.CalculatedMq??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedMq", this.CalculatedMq ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedMl", this.CalculatedMl ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedKg", this.CalculatedKg ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedRun", this.CalculatedRun ?? 0));
-            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedTime", (this.CalculatedTime ?? new TimeSpan(0,0,0)).ToString()));
-        
-        
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedTime", (this.CalculatedTime ?? new TimeSpan(0, 0, 0)).ToString()));
+
+
         }
 
-        
+
     }
 }

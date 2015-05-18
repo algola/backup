@@ -8,8 +8,10 @@
     var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
 }
 
-<div class="controls col-sm-9">
-    <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+<div class="form-group">
+    <div class="controls col-sm-9 col-sm-offset-3">
+        <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+    </div>
 </div>
 
 @Html.HiddenFor(model => model.IsSelected)
@@ -33,7 +35,7 @@
             <td />
         </tr>
     </table>
-    <div id="pagerArticle@(suffx)"></div>
+    <div id="pagerArticle@(suffx)" class="hide"></div>
 
 </div>
 
@@ -58,7 +60,7 @@
                     { name: 'NameOfMaterial', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "NameOfMaterialCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Color', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ColorCaption")', width: 80, align: 'left', editable: false, hidden: false },
                     { name: 'Adhesive', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "AdhesiveCaption")', width: 80, align: 'left', editable: false, hidden: false },
-                    { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 80, align: 'left', editable: false, hidden: false }
+                    { name: 'Weight', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WeightCaption")', width: 40, align: 'left', editable: false, hidden: false }
             ],
 
             pager: '#pagerArticle@(suffx)',
@@ -67,6 +69,7 @@
             rowList: [15, 20, 50],
             viewrecords: true,
             autowidth: false,
+            shrinkToFit: true,
 
 
             loadComplete: function () {
@@ -118,6 +121,7 @@
 
     $("#staticDialog@(suffx)").on('click', function (e) {
         e.preventDefault();
+
         loadGrid@(suffx)();
         hideProcessingMsg();
 
@@ -165,10 +169,16 @@
                 $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
 
             }
-
         }
-        var dialog = $("#dialog-message@(suffx)").dialog({
+
+
+        $("#dialog-message@(suffx)").removeClass("hide");
+        resizeGrid@(suffx)();
+
+        var dialog = $("#dialog-message@(suffx)").removeClass("hide").dialog({
             width: 'auto',
+            height: 'auto',
+            resizable: false,
             modal: true,
             title: '@Html.T(stringsGrid, "DialogTitle")',
             title_html: true,
@@ -202,6 +212,26 @@
         };
         **/
     });
+
+    function resizeGrid@(suffx)() {
+        $("#gridArticle@(suffx)").setGridWidth($(window).innerWidth() * 0.7);
+        $("#gridArticle@(suffx)").setGridHeight(($(window).height() * 0.5));
+        $("#dialog-message@(suffx)").outerWidth($("#gridArticle@(suffx)").outerWidth()+40);
+    }
+
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+
+        try {
+            resizeGrid@(suffx)();
+            $("#dialog-message@(suffx)").dialog('option', 'position', { my: "center", at: "center", of: window });
+
+        } catch (e) {
+
+        }
+
+    }).trigger('resize');
+
 
 </script>
 

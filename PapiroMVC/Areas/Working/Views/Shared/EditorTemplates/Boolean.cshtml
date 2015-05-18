@@ -1,7 +1,7 @@
 ﻿@model bool?
 @using PapiroMVC.Validation
 
-<div class="control-group">
+<div class="form-group">
     <div class="col-sm-3 control-label no-padding-right">
         @Html.LabelFor(model => model)
     </div>
@@ -9,9 +9,9 @@
         @Html.CheckBox("", Model.GetValueOrDefault())
         @if (Html.ToolTipFor(model => model).ToString() != "")
         {
-                   <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="@Html.ToolTipFor(model=>model).ToString()" title="" data-original-title="">?</span>
+            <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="@Html.ToolTipFor(model=>model).ToString()" title="" data-original-title="">?</span>
         }
-            @Html.ValidationMessageFor(model => model)
+        @Html.ValidationMessageFor(model => model)
     </div>
 </div>
 

@@ -15,7 +15,7 @@
     }
 }
 
-<div id="status">
+<div id="status" class="container-fluid">
 
     @Scripts.Render("~/bundles/autocomplete")
 
@@ -27,56 +27,66 @@
     OnSuccess = "OnSuccess"
 }, new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
 
 
-        @*Html.HiddenFor(model => model.TimeStampTable) *@
-        @Html.HiddenFor(model => model.CodArticle)
-        @Html.AlgolaEditorFor(model => model.CodDie)
-        @Html.AlgolaEditorFor(model => model.Description)
+
+                @*Html.HiddenFor(model => model.TimeStampTable) *@
+                @Html.HiddenFor(model => model.CodArticle)
+                @Html.AlgolaEditorFor(model => model.CodDie)
+
+                @Html.AlgolaEditorFor(model => model.Description)
 
 
-        @Html.AlgolaEditorFor(model => model.Width)
-        @Html.AlgolaEditorFor(model => model.Z)
+                @Html.AlgolaEditorFor(model => model.Width)
+                @Html.AlgolaEditorFor(model => model.Z)
 
 
-        <div class="well no-padding-left no-padding-right">
-            @Html.AlgolaEditorFor(model => model.Format)
-            <div class="control-group">
-                <div class="controls col-sm-9">
-                    <div class="editor-field">
-                        @Html.DropDownListFor(model => model.FormatType, new SelectList(formatTypes, "FormatType", "FormatTypeName"))
+                <div class="well no-padding-left no-padding-right">
+                    @Html.AlgolaEditorFor(model => model.Format)
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="FormatType"></label>
+                        <div class="controls col-sm-9">
+                            @Html.DropDownListFor(model => model.FormatType, new SelectList(formatTypes, "FormatType", "FormatTypeName"), new { @class = "col-xs-10 col-sm-5 text-box single-line" })
+                        </div>
                     </div>
+
+                    @Html.AlgolaEditorFor(model => model.DCut1)
+                    @Html.AlgolaEditorFor(model => model.DCut2)
+                    @Html.AlgolaEditorFor(model => model.MaxGain1)
+                    @Html.AlgolaEditorFor(model => model.MaxGain2)
+
                 </div>
+
+
+                <br />
+                <p>
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexDie", "Article", new { Area = "Database" })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreateDieFlexo")
+                    {
+                        <input class="btn" type="submit" name="CreateDieFlexo" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                    }
+
+                </p>
+
+
             </div>
-            @Html.AlgolaEditorFor(model => model.DCut1)
-            @Html.AlgolaEditorFor(model => model.DCut2)
-            @Html.AlgolaEditorFor(model => model.MaxGain1)
-            @Html.AlgolaEditorFor(model => model.MaxGain2)
-            
         </div>
-
-        
-        <br />
-        <p>
-
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexDie", "Article", new { Area = "Database" })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
-
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-
-            @if (ViewBag.ActionMethod != "CreateDieFlexo")
-            {
-                <input class="btn" type="submit" name="CreateDieFlexo" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
-            }
-
-        </p>
-
     }
 
 </div>

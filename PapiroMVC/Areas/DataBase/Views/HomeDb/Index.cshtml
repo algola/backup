@@ -3,156 +3,9 @@
 
 @{
     string strings = "~/Areas/DataBase/Views/HomeDb/Strings";
-    string stringsMenu = "~/Views/Shared/Strings";
 
     ViewBag.MetaTitle = Html.T(strings, "MetaTitle");
 }
-
-
-@Html.Action("MetaGenerator", new
-{
-    area = "",
-    page = ("db" + Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
-
-})
-@("db" + Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath)))
-@*
-    <div class="widget-box pricing-box">
-
-        <div class="widget-header header-color-green2">
-            <h5 class="bigger white">
-                @Html.T(strings, "Customer")
-            </h5>
-        </div>
-
-        <div class="widget-body" style="background: url(~/../../Content/Carousel/Clienti.png)">
-            <div class="widget-main">
-                <ul class="unstyled spaced3">
-
-                    <li>
-                        <i class="icon-ok green"></i>
-                        @Html.T(strings, "CustomerDescription")
-                    </li>
-                </ul>
-
-                <hr />
-                <div class="align-right">
-                    @Html.ActionLink(Html.T(stringsMenu, "CustomerSupplierMenu"), "Index", "CustomerSupplier", new { area = "DataBase" }, null)
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="widget-box pricing-box">
-        <div class="widget-header header-color-blue2">
-            <h5 class="bigger white">
-                @Html.T(strings, "Consumable")
-            </h5>
-        </div>
-
-        <div class="widget-body" style="background: url(~/../../Content/Carousel/Consumabili.JPG) center no-repeat">
-            <div class="widget-main">
-                <ul class="unstyled spaced3">
-                    <li>
-                        <i class="icon-ok green"></i>
-                        @Html.T(strings, "ConsumableDescription")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                    </li>
-
-                </ul>
-
-                <hr>
-
-                <div class="align-right">
-                    @Html.ActionLink(Html.T(stringsMenu, "NoPrintableMenu"), "IndexNoPrintable", "Article", new { area = "DataBase" }, null)
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="widget-box pricing-box">
-        <div class="widget-header header-color-orange">
-            <h5 class="bigger white">
-                @Html.T(strings, "Printing")
-            </h5>
-        </div>
-
-        <div class="widget-body" style="background: url(~/../../Content/Carousel/Stampabili.JPG) center no-repeat">
-            <div class="widget-main">
-                <ul class="unstyled spaced3">
-
-                    <li>
-                        <i class="icon-ok green"></i>
-                        @Html.T(strings, "PrintingDescription")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                    </li>
-
-                </ul>
-
-                <hr>
-                <div class="align-right">
-                    @Html.ActionLink(Html.T(stringsMenu, "SheetPrintableArticleMenu"), "IndexSheetPrintableArticle", "Article", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "RollPrintableArticleMenu"), "IndexRollPrintableArticle", "Article", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "RigidPrintableArticleMenu"), "IndexRigidPrintableArticle", "Article", new { area = "DataBase" }, null)
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="widget-box pricing-box">
-        <div class="widget-header header-color-red3">
-            <h5 class="bigger white">
-                @Html.T(strings, "Machine")
-            </h5>
-        </div>
-
-        <div class="widget-body" style="background: url(~/../../Content/Carousel/Macchine.JPG) center no-repeat">
-            <div class="widget-main">
-                <ul class="unstyled spaced3">
-
-                    <li>
-                        <i class="icon-ok green"></i>
-                        @Html.T(strings, "MachineDescription")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                        <br />
-                        @Html.T(strings, "Prova")
-                    </li>
-
-                </ul>
-
-                <hr>
-
-                <div class="align-right">
-                    @Html.ActionLink(Html.T(stringsMenu, "LithoSheetMenu"), "IndexLithoSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "FlexoMenu"), "IndexFlexo", "TaskExecutor", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "DigitalSheetMenu"), "IndexDigitalSheetAndRoll", "TaskExecutor", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "PlotterMenu"), "IndexPlotter", "TaskExecutor", new { area = "DataBase" }, null)
-                    -
-                    @Html.ActionLink(Html.T(stringsMenu, "PrePostPressMenu"), "IndexPrePostPress", "TaskExecutor", new { area = "DataBase" }, null)
-
-                </div>
-            </div>
-        </div>
-     </div>
-*@
 
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
@@ -229,11 +82,11 @@
 }
 
 @section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 }
 
 @section specificPluginScript {
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
 }
 
 <script>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CostImplant" xml:space="preserve">
-    <value>Costo impanto / mq</value>
+    <value>Costo impianto / mq</value>
   </data>
   <data name="CostImplantToolTip" xml:space="preserve">
     <value>indicare un costo di impnto al mq</value>

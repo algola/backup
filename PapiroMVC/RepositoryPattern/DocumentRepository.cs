@@ -368,6 +368,13 @@ namespace Services
 
         }
 
+
+        public void DeleteDocumentProduct(DocumentProduct documentProduct)
+        {
+            this.Context.Set<DocumentProduct>().Remove(documentProduct);        
+        }
+
+
         public new Document GetSingle(string codDocument)
         {
             var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
@@ -641,7 +648,7 @@ namespace Services
         /// <returns></returns>
         public IQueryable<ReportOrderName> GetAllReportOrderName()
         {
-            var p = new ReportOrderName { Name  = "LabelRollHead", Description= "Etichette in rotolo" };
+            var p = new ReportOrderName { Name = "LabelRollHead", Description = "Etichette in rotolo" };
 
             var ret = new List<ReportOrderName>();
             ret.Add(p);

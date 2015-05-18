@@ -15,7 +15,6 @@ namespace PapiroMVC.Models
             TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartSingleSheetPrinting;
         }
 
-
         public override void Update()
         {
             if (GainPartOnPrinting == null)

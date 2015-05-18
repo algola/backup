@@ -810,8 +810,12 @@ namespace PapiroMVC.Areas.Account.Controllers
                 if (!Roles.RoleExists("Pending"))
                     Roles.CreateRole("Pending");
 
-                Roles.AddUserToRole(user.UserName, "Pending");
-                Membership.UpdateUser(user);
+
+                if (!Roles.IsUserInRole(user.UserName, "Pending"))
+                {
+                    Roles.AddUserToRole(user.UserName, "Pending");
+                    Membership.UpdateUser(user);                    
+                }
 
                 FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
                 TempData["message"] = "Activated";
@@ -836,7 +840,6 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             //when usere has logged in system, database will be updated. 
             base.UpdateDatabase(user.UserName);
-
 
             ChatHub.Update("copia dei dati di esempio... attendere");
             //customer

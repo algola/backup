@@ -13,97 +13,104 @@
     }
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "STAMPARIGIDO" : Model.CodTypeOfTask;
-  
+
 }
 
 <div id="status">
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ValidationSummary(true)
 
 
-        @*<div class="control-group">
-            <div class="controls col-sm-9">
-                @Html.DropDownListFor(y => y.CodTypeOfTask,
-                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
-            </div>
-        </div>*@
+                @*<div class="form-group">
+                        <div class="controls col-sm-9">
+                            @Html.DropDownListFor(y => y.CodTypeOfTask,
+                            new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+                        </div>
+                    </div>*@
 
                 @Html.HiddenFor(x => x.CodTypeOfTask)
 
-        
-        @Html.HiddenFor(model => model.TimeStampTable)
 
-        @Html.AlgolaEditorFor(model => model.TaskExecutorName)
-        @Html.HiddenFor(model => model.Version)
-        @Html.HiddenFor(model => model.Dismissed)
+                @Html.HiddenFor(model => model.TimeStampTable)
 
-        @Html.HiddenFor(model => model.UniversalCodPapiro)
+                @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.Dismissed)
 
-        @Html.AlgolaEditorFor(model => model.FormatMin)
-        @Html.AlgolaEditorFor(model => model.FormatMax)
+                @Html.HiddenFor(model => model.UniversalCodPapiro)
 
-@*Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
-        @*
-        @*Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
-        *@
-        
-        @Html.HiddenFor(model => model.WeightMin)
-        @Html.HiddenFor(model => model.WeightMax)
+                @Html.AlgolaEditorFor(model => model.FormatMin)
+                @Html.AlgolaEditorFor(model => model.FormatMax)
 
-        @Html.HiddenFor(model => model.Pinza)
-        @Html.HiddenFor(model => model.ControPinza)
-        @Html.AlgolaEditorFor(model => model.Laterale)
+                @*Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMinAutoComplete", "TaskExecutor")
+                    @*
+                    @*Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMaxAutoComplete", "TaskExecutor")
+                *@
 
-        <h3>@Html.T(strings, "PrintCaption")</h3>
+                @Html.HiddenFor(model => model.WeightMin)
+                @Html.HiddenFor(model => model.WeightMax)
 
+                @Html.HiddenFor(model => model.Pinza)
+                @Html.HiddenFor(model => model.ControPinza)
+                @Html.AlgolaEditorFor(model => model.Laterale)
 
-        @Html.EditorFor(model => model.ColorUV)
-        @Html.EditorFor(model => model.WhiteUV)
-        @Html.EditorFor(model => model.ColorJet)
-        @Html.HiddenFor(model => model.Cutting)
-
-        
-@*
-
-        @Html.AlgolaEditorFor(model => model.InkUsage)
-        @Html.AlgolaEditorFor(model => model.InkUsageForfait)
-        *@
-
-        @Html.HiddenFor(model => model.TimeStampTable)
-        @Html.HiddenFor(model => model.CodTaskExecutor)
+                <h3>@Html.T(strings, "PrintCaption")</h3>
 
 
-        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+                @Html.EditorFor(model => model.ColorUV)
+                @Html.EditorFor(model => model.WhiteUV)
+                @Html.EditorFor(model => model.ColorJet)
+                @Html.HiddenFor(model => model.Cutting)
 
-        <p>
 
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
+                @*
 
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
+                    @Html.AlgolaEditorFor(model => model.InkUsage)
+                    @Html.AlgolaEditorFor(model => model.InkUsageForfait)
+                *@
 
-            @if (ViewBag.ActionMethod != "CreatePlotterSheet")
+                @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.CodTaskExecutor)
+
+
+                <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
+                <p>
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreatePlotterSheet")
             {
-                <button class="btn" type="submit" name="CreatePlotterSheet">
-                    <i class="icon-save"></i>
-                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
-                </button>
+                        <button class="btn" type="submit" name="CreatePlotterSheet">
+                            <i class="icon-save"></i>
+                            @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                        </button>
             }
-        </p>
-
-        
-    }
-
-</div>
+                </p>
 
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+                }
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

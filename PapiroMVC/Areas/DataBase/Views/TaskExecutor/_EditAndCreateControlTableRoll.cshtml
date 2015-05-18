@@ -20,73 +20,81 @@
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
-
-        @*<div class="control-group">
-                <div class="controls col-sm-9">
-                    @Html.DropDownListFor(y => y.CodTypeOfTask,
-                    new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
-                </div>
-            </div>*@
-
-        @Html.HiddenFor(model => model.TimeStampTable)
-
-        @Html.AlgolaEditorFor(model => model.TaskExecutorName)
-
-        @Html.HiddenFor(model => model.Version)
-        @Html.HiddenFor(model => model.Dismissed)
-        @Html.HiddenFor(model => model.UniversalCodPapiro)
 
 
-        @Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMin", "TaskExecutor")
-        @Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMax", "TaskExecutor")
-        @Html.AlgolaEditorFor(model => model.WeightMin)
-        @Html.AlgolaEditorFor(model => model.WeightMax)
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.ValidationSummary(true)
 
-        @Html.AlgolaEditorFor(model => model.Pinza)
-        @Html.AlgolaEditorFor(model => model.ControPinza)
-        @Html.AlgolaEditorFor(model => model.Laterale)
+                @*<div class="form-group">
+                        <div class="controls col-sm-9">
+                            @Html.DropDownListFor(y => y.CodTypeOfTask,
+                            new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+                        </div>
+                    </div>*@
 
-        @Html.HiddenFor(model => model.TimeStampTable)
-        @Html.HiddenFor(model => model.CodTaskExecutor)
+                @Html.HiddenFor(model => model.TimeStampTable)
 
-        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+                @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.Dismissed)
+                @Html.HiddenFor(model => model.UniversalCodPapiro)
 
 
-        <p>
+                @Html.AlgolaAutocompleteFor(model => model.FormatMin, "FormatMin", "TaskExecutor")
+                @Html.AlgolaAutocompleteFor(model => model.FormatMax, "FormatMax", "TaskExecutor")
+                @Html.AlgolaEditorFor(model => model.WeightMin)
+                @Html.AlgolaEditorFor(model => model.WeightMax)
 
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
+                @Html.AlgolaEditorFor(model => model.Pinza)
+                @Html.AlgolaEditorFor(model => model.ControPinza)
+                @Html.AlgolaEditorFor(model => model.Laterale)
 
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save") @ViewBag.ActionMethod
-            </button>
+                @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.CodTaskExecutor)
 
-            @if (ViewBag.ActionMethod != "CreatePrePostPress" && ViewBag.ActionMethod != "CreateControlTableRoll")
-            {
+                <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
 
-                if (((String)ViewBag.ActionMethod).Contains("PrePostPress"))
-                {
-                    <button class="btn" type="submit" name="CreatePrePostPress">
-                        <i class="icon-save"></i>
-                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+
+                <p>
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
                     </button>
-                }
 
-                if (((String)ViewBag.ActionMethod).Contains("TableRoll"))
-                {
-                    <button class="btn" type="submit" name="CreateControlTableRoll">
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                         <i class="icon-save"></i>
-                        @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                        @HttpContext.GetLocalResourceObject(strings, "Save") @ViewBag.ActionMethod
                     </button>
-                }
+
+                    @if (ViewBag.ActionMethod != "CreatePrePostPress" && ViewBag.ActionMethod != "CreateControlTableRoll")
+                    {
+
+                        if (((String)ViewBag.ActionMethod).Contains("PrePostPress"))
+                        {
+                            <button class="btn" type="submit" name="CreatePrePostPress">
+                                <i class="icon-save"></i>
+                                @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                            </button>
+                        }
+
+                        if (((String)ViewBag.ActionMethod).Contains("TableRoll"))
+                        {
+                            <button class="btn" type="submit" name="CreateControlTableRoll">
+                                <i class="icon-save"></i>
+                                @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                            </button>
+                        }
 
 
-            }
-        </p>
+                    }
+                </p>
+
+
+            </div>
+        </div>
 
     }
 

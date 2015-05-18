@@ -24,7 +24,7 @@
     <div id="pager"></div>
 
 
-    <br />
+    
 
 
     <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateCustomer", "CustomerSupplier", new { Area = "Database" })');">
@@ -229,7 +229,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
             autowidth: true,
             shrinkToFit: false,
             //viewrecords: true,
-            height: 300,
+            height: $(window).height() * 0.53,
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
 
@@ -348,7 +348,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
     $(window).bind('resize', function () {
 
         var myGrid = $("#list");
-        var width = $("#body-container").width();
+        var width = $("#page-header").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
 

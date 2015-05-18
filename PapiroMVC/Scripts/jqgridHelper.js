@@ -40,6 +40,19 @@ function enableTooltips(table) {
     $(table).find('.ui-pg-div').tooltip({ container: 'body' });
 }
 
+
+function resizeWidthGrid(myGrid) {
+    try {
+
+        var width = $("#page-header").width();
+        myGrid.jqGrid('setGridWidth', width, true);
+
+    } catch (e) {
+        alert("error");
+    }
+}
+
+
 //var selr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
 
 

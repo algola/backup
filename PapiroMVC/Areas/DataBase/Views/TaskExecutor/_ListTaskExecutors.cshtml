@@ -23,12 +23,6 @@
     <table id="listTaskExecutors"><tr><td /></tr></table>
     <div id="pager"></div>
 
-
-    <br />
-
-
-
-
     @{
         if (Model == "STAMPARIGIDO")
         {
@@ -279,7 +273,7 @@
             ignoreCase: true,
             //shrinkToFit: false,
             //viewrecords: true,
-            height: 300,
+            height: $(window).height() * 0.53,
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
 
@@ -362,7 +356,7 @@
     $(window).bind('resize', function () {
 
         var myGrid = $("#listTaskExecutors");
-        var width = $("#body-container").width();
+        var width = $("#page-header").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
 

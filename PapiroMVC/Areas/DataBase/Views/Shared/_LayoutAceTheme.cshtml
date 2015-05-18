@@ -1,5 +1,11 @@
 ﻿<!DOCTYPE html>
 
+
+
+
+
+
+
 <html lang="@ViewBag.Lang">
 
 <head>
@@ -15,47 +21,64 @@
     <meta name="keyword" content="@TempData["MetaKeyword"]" />
     <meta name="robots" content="@TempData["MetaRobots"]" />
 
-    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
- @*   <script src="~/Scripts/spin.js"></script> *@
+    @*    <script src="~/Scripts/jquery-2.1.0.min.js"></script>*@
 
-    <!--basic styles-->
-    <link href="~/Content/acetheme/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/acetheme/assets/css/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/font-awesome.min.css" />
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+    <!--[if !IE]> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-    <!--[if IE 7]>
-          <link rel="stylesheet" href="~/Content/acetheme/assets/css/font-awesome-ie7.min.css" />
-        <![endif]-->
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='~/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" />
+
+    @*usiamo questa versione perchè quella referenziata sopra usa le classi che iniziano con fa- e all'interno del programma spesso sono state usate delle classi senza fa-*@
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+
     <!-- page specific plugin styles -->
     @RenderSection("specificPlugInStyle", required: false)
+    <!-- text fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300" />
 
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/prettify.css" />
+    <!-- ace styles -->
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
 
-    <!--fonts-->
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-fonts.css" />
-
-    <!--ace styles-->
-
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace.min.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-responsive.min.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-skins.min.css" />
-    <!--[if lte IE 8]>
-          <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-ie.min.css" />
-        <![endif]-->
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-ie.min.css" />
+    <![endif]-->
     <!-- inline styles related to this page -->
     @RenderSection("inlineStyle", required: false)
-    @*    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
-    *@
     <!-- ace settings handler -->
     <script src="~/Content/acetheme/assets/js/ace-extra.min.js"></script>
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="~/Content/acetheme/assets/js/html5shiv.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/respond.min.js"></script>
+    <![endif]-->
 
-        <script src="~/Content/acetheme/assets/js/html5shiv.js"></script>
-        <script src="~/Content/acetheme/assets/js/respond.min.js"></script>
-        <![endif]-->
 
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -73,104 +96,62 @@
 
 </head>
 
-<body>
+<body class="no-skin">
 
-    <header>
-        <nav>
-            <div class="navbar navbar-default" id="navbar">
-                <script type="text/javascript">
-                    try { ace.settings.check('navbar', 'fixed') } catch (e) { }
-                </script>
-
-                <!-- section for TopBar -->
-                @Html.Partial("_TopBarAceTheme")
-            </div>
-        </nav>
-    </header>
+    @Html.Partial("_TopBarAceTheme")
 
     <div class="main-container" id="main-container">
         <script type="text/javascript">
             try { ace.settings.check('main-container', 'fixed') } catch (e) { }
         </script>
-        <div class="main-container-inner">
-            <a class="menu-toggler" id="menu-toggler" href="#">
-                <span class="menu-text"></span>
-            </a>
 
-            <!-- renderizzo la toolbar a sx richiudibile (sidebar)-->
-            @Html.Partial("_SideBarAceTheme")
+        <!-- renderizzo la toolbar a sx richiudibile (sidebar)-->
+        @Html.Partial("_SideBarAceTheme")
 
-            <div class="main-content">
-                @RenderSection("breadcrumb", required: false)
+        <div class="main-content">
+            @RenderSection("breadcrumb", required: false)
 
 
-                <div class="page-content">
-                    <div class="page-header position-relative">
-                        <h1>
-                            @RenderSection("title")
-                            <small>
-                                <i class="icon-double-angle-right"></i>
-                                @RenderSection("description")
-                            </small>
-                        </h1>
-                    </div>
-                    <!--/.page-header-->
-                    <div class="row-fluid">
-                        <div class="span12">
-                            @RenderSection("featured", required: false)
-                            @RenderBody()
-                        </div>
+            <div class="page-content">
+                <div id="page-header" class="page-header position-relative">
+                    <h1>
+                        @RenderSection("title")
+                        <small>
+                            <i class="icon-double-angle-right"></i>
+                            @RenderSection("description")
+                        </small>
+                    </h1>
+                </div>
+                <!--/.page-header-->
+                <div class="row-fluid">
+                    <div class="span12">
+                        @RenderSection("featured", required: false)
+                        @RenderBody()
                     </div>
                 </div>
-
             </div>
-            <!-- /.main-container-inner -->
-
-            <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-                <i class="icon-double-angle-up icon-only bigger-110"></i>
-            </a>
 
         </div>
+        <!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+
     </div>
     <!-- /.main-container -->
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!--<script src="~/Scripts/bootstrap.min.js"></script>-->
-    <!--basic scripts-->
-    <!--[if !IE]>-->
+    <!-- basic scripts -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
-        window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-2.1.0.min.js'>" + "<" + "/script>");
-    </script>
-
-    <!--<![endif]-->
-    <!--[if IE]>
-    <script type="text/javascript">
-     window.jQuery || document.write("<script src='/Content/acetheme/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
-    </script>
-    <![endif]-->
-
-    <script type="text/javascript">
-        if ("ontouchend" in document) document.write("<script src='/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-    </script>
-    <script src="~/Content/acetheme/assets/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/spin.js"></script> 
-    <!--page specific plugin scripts-->
+    <!-- inline scripts related to this page -->
     <!-- page specific plugin scripts -->
     @RenderSection("specificPluginScript", required: false)
-    
-    
-    @Html.Partial("_loading")
-
-
-   
-        <script src="~/Content/acetheme/assets//js/prettify.js"></script>
-
-    <!--ace scripts-->
-
+    <!-- ace scripts -->
     <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
     <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+
+    <script src="~/Scripts/spin.js"></script>
+    @Html.Partial("_loading")
 
     <!-- inline scripts related to this page -->
     @RenderSection("Scripts", required: false)

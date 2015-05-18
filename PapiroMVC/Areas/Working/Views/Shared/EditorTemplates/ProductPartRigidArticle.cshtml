@@ -8,7 +8,7 @@
     var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
 }
 
-<div class="controls col-sm-9">
+<div class="controls col-sm-9 col-sm-offset-3">
     <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
 </div>
 
@@ -33,7 +33,7 @@
             <td />
         </tr>
     </table>
-    <div id="pagerArticle@(suffx)"></div>
+    <div id="pagerArticle@(suffx)" class="hide"></div>
 
 </div>
 
@@ -69,6 +69,7 @@
             rowList: [15, 20, 50],
             viewrecords: true,
             autowidth: false,
+            shrinkToFit: true,
 
             loadComplete: function () {
 
@@ -163,8 +164,13 @@
 
         loadRigidGrid@(suffx)();
 
-        var dialog = $("#dialog-message@(suffx)").dialog({
+        $("#dialog-message@(suffx)").removeClass("hide");
+        resizeGrid@(suffx)();
+
+        var dialog = $("#dialog-message@(suffx)").removeClass("hide").dialog({
             width: 'auto',
+            height: 'auto',
+            resizable: false,
             modal: true,
             title: '@Html.T(stringsGrid, "DialogTitle")',
             title_html: true,
@@ -196,6 +202,28 @@
         };
         **/
     });
+
+
+
+    function resizeGrid@(suffx)() {
+        $("#gridArticle@(suffx)").setGridWidth($(window).innerWidth() * 0.7);
+        $("#gridArticle@(suffx)").setGridHeight(($(window).height() * 0.5));
+        $("#dialog-message@(suffx)").outerWidth($("#gridArticle@(suffx)").outerWidth() + 40);
+    }
+
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+
+        try {
+            resizeGrid@(suffx)();
+            $("#dialog-message@(suffx)").dialog('option', 'position', { my: "center", at: "center", of: window });
+
+        } catch (e) {
+
+        }
+
+    }).trigger('resize');
+
 
 </script>
 

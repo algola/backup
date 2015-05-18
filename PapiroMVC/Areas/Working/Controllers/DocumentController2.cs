@@ -80,7 +80,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         //            cd.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
         //            if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
-        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
+        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingZRollCostDetail" ||
         //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
         //            {
         //                var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
@@ -209,7 +209,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     cd.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
                     if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
-                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingLabelRollCostDetail" ||
+                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingZRollCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
                     {
                         var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
@@ -387,7 +387,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="codCost"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult GetPrintingLabelRollCostDetailPartial(String codTaskExecutor, String codCost)
+        public ActionResult GetPrintingZRollCostDetailPartial(String codTaskExecutor, String codCost)
         {
 
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
@@ -395,29 +395,28 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.TaskexEcutorSelected = taskExecutorRepository.GetSingle(codTaskExecutor);
             cv.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
 
-            ((PrintingLabelRollCostDetail)cv).BuyingFormat = null;
-            ((PrintingLabelRollCostDetail)cv).PrintingFormat = null;
+            ((PrintingZRollCostDetail)cv).BuyingFormat = null;
+            ((PrintingZRollCostDetail)cv).PrintingFormat = null;
 
-            ((PrintingLabelRollCostDetail)(cv)).FuzzyAlgo();
+            ((PrintingZRollCostDetail)(cv)).FuzzyAlgo();
 
 
-            ((PrintingLabelRollCostDetail)cv).BuyingFormat =
-             (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
-             (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
-             : ((PrintingLabelRollCostDetail)cv).BuyingFormat;
+            ((PrintingZRollCostDetail)cv).BuyingFormat =
+             (((PrintingZRollCostDetail)cv).BuyingFormat == "" || ((PrintingZRollCostDetail)cv).BuyingFormat == null) ?
+             (((PrintingZRollCostDetail)cv).BuyingFormats != null) && (((PrintingZRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingZRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
+             : ((PrintingZRollCostDetail)cv).BuyingFormat;
 
             //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
-            ((PrintingLabelRollCostDetail)cv).PrintingFormat =
-            (((PrintingLabelRollCostDetail)cv).PrintingFormat == "" || ((PrintingLabelRollCostDetail)cv).PrintingFormat == null) ?
-            ((PrintingLabelRollCostDetail)cv).BuyingFormat
-            : ((PrintingLabelRollCostDetail)cv).PrintingFormat;
+            ((PrintingZRollCostDetail)cv).PrintingFormat =
+            (((PrintingZRollCostDetail)cv).PrintingFormat == "" || ((PrintingZRollCostDetail)cv).PrintingFormat == null) ?
+            ((PrintingZRollCostDetail)cv).BuyingFormat
+            : ((PrintingZRollCostDetail)cv).PrintingFormat;
 
 
             cv.Update();
             Session["CostDetail"] = cv;
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
-
 
         [HttpPost]
         public ActionResult GetPartialCost(String codTaskExecutor, String codCost)
@@ -441,12 +440,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             var docs = documentRepository.GetSingle(codDocument);
             var docProduct = docs.DocumentProducts.Where(z => z.CodDocumentProduct == codDocumentProduct).FirstOrDefault();
 
-            docProduct.UpdateCost();
+            docProduct.UpdateTotal();
             documentRepository.Edit(docs);
             documentRepository.Save();
 
             return PartialView("_DocumentProduct", docProduct);
         }
+
 
         public ActionResult GetPrintingLabelHints()
         {
@@ -457,7 +457,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (cv.TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
             {
-                var x = (PrintingLabelRollCostDetail)cv;
+                var x = (PrintingZRollCostDetail)cv;
                 var lst = x.BuyingFormats;
 
                 foreach (var item in lst)
@@ -488,8 +488,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             switch (cv.TypeOfCostDetail)
             {
-                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-                    ((PrintingLabelRollCostDetail)cv).BuyingFormat = buyingFormat;
+                case CostDetail.CostDetailType.PrintingZRollCostDetail:
+                    ((PrintingZRollCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 case CostDetail.CostDetailType.PrintingSheetCostDetail:
                     ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
@@ -511,7 +511,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetPrintingLabelRollCostDetailResult()
+        public ActionResult GetPrintingZRollCostDetailResult()
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             return PartialView(cv.PartialViewName + "Result", cv);
@@ -545,27 +545,20 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        [HttpPost]
+        public ActionResult ChangePPartFormatAndFuzzy(string format, string dCut1, string dCut2, string maxGain1 = "", string maxGain2 = "")
+        {
+            var x = ChangePPartFormat(format, dCut1, dCut2, maxGain1, maxGain2);
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            return GetPrintingZRollCostDetailPartial(cv.CodTaskExecutorSelected, cv.CodCostDetail);
+        }
         /// <summary>
         /// This Action modifies ProductPart format and Update Cost
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string maxGain1="", string maxGain2="")
+        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string maxGain1 = "", string maxGain2 = "")
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
@@ -638,7 +631,12 @@ namespace PapiroMVC.Areas.Working.Controllers
             Console.WriteLine(tempo.TotalSeconds);
 
             return PartialView(cv.PartialViewName, cv);
+
         }
+
+
+
+
 
         /// <summary>
         /// Action modifies PrintingFormat and Update Cost
@@ -660,15 +658,15 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="BuyingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangeBuyingFormatAndPPartFormat(string buyingFormat, string format, string dCut1, string dCut2, string maxGain1="", string maxGain2="")
+        public ActionResult ChangeBuyingFormatAndPPartFormat(string buyingFormat, string format, string dCut1, string dCut2, string maxGain1 = "", string maxGain2 = "")
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
 
             switch (cv.TypeOfCostDetail)
             {
-                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-                    ((PrintingLabelRollCostDetail)cv).BuyingFormat = buyingFormat;
+                case CostDetail.CostDetailType.PrintingZRollCostDetail:
+                    ((PrintingZRollCostDetail)cv).BuyingFormat = buyingFormat;
                     break;
                 case CostDetail.CostDetailType.PrintingSheetCostDetail:
                     ((PrintingSheetCostDetail)cv).BuyingFormat = buyingFormat;
@@ -682,7 +680,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.PrintingFormat = buyingFormat;
             Session["CostDetail"] = cv;
-            return ChangePPartFormat(format, dCut1, dCut2, maxGain1,maxGain2);
+            return ChangePPartFormat(format, dCut1, dCut2, maxGain1, maxGain2);
         }
 
         /// <summary>
@@ -802,7 +800,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditAndCreateAllCost(string id)
         {
-            var inizio = DateTime.Now;
 
             var idRet = documentRepository.GetCostsByCodDocumentProduct(id).FirstOrDefault().DocumentProduct.CodProduct;
 
@@ -815,13 +812,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             p.EditOrCreateAllCost(id);
 
-            var fine = DateTime.Now;
-
-            var tempo = fine.Subtract(inizio);
-            Console.WriteLine(tempo.TotalSeconds);
-
             return RedirectToAction("EditDocumentProducts", "Document", new { id = idRet });
-            //return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { id = idRet }) });
 
         }
 
@@ -853,18 +844,16 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             switch (cv.TypeOfCostDetail)
             {
-                case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
+                case CostDetail.CostDetailType.PrintingZRollCostDetail:
+                case CostDetail.CostDetailType.PrintingFlatRollCostDetail:
 
-                    ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
-                    ((PrintingLabelRollCostDetail)cv).Dies = articleRepository.GetAll().OfType<Die>().ToList();
-
-
-                    ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
-
-
-
+                    ((PrintingZRollCostDetail)cv).DieTollerance = 0.5;
+                    ((PrintingZRollCostDetail)cv).Dies = articleRepository.GetAll().OfType<Die>().ToList();
+                    ((PrintingZRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
                     break;
+
+
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
                     ((PrintingRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
@@ -916,7 +905,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Save();
 
             var doc = documentRepository.GetSingle(cost.DocumentProduct.CodDocument);
-            doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == cost.DocumentProduct.CodDocumentProduct).UpdateCost();
+            doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == cost.DocumentProduct.CodDocumentProduct).UpdateTotal();
             documentRepository.Edit(doc);
             documentRepository.Save();
 
@@ -959,7 +948,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
             //dopo il salvataggio del dettaglio del costo voglio aggiornare il cost!!!!
-            cost.DocumentProduct.UpdateCost();
+            cost.DocumentProduct.UpdateTotal();
 
             documentRepository.EditCost(cost);
             documentRepository.Save();
@@ -988,8 +977,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             //switch (cv.TypeOfCostDetail)
             //{
 
-            //    case CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-            //        ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+            //    case CostDetail.CostDetailType.PrintingZRollCostDetail:
+            //        ((PrintingZRollCostDetail)cv).FuzzyAlgo();
             //        viewName = "PrintingCostDetail";
             //        break;
             //    case CostDetail.CostDetailType.PrintingRollCostDetail:
@@ -1025,7 +1014,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         //            //if (cv.Computes.Count == 0)
         //            {
         //                var costs = documentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct);
-        //                List<CostDetail> x = ((PrintingCostDetail)cv).GetRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
+        //                List<CostDetail> x = ((PrintingCostDetail)cv).CreateRelatedPrintedCostDetail(articleRepository.GetAll(), costs);
 
         //                foreach (var item in x)
         //                {

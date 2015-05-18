@@ -32,14 +32,13 @@
 
 @Html.Partial("_EditAndCreateProduct", Model)
 
-
 @section breadcrumb {
 
 }
 
 
 @section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 }
@@ -48,25 +47,24 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
 
     <script src="~/Scripts/jqgridHelper.js"></script>
 
+    }
 
-}
-
-@section ScriptS{
+    @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
-}
+    }
 
 <script>
-    $(function () {
+    @*$(function () {
         document.getElementById("newProductSlidebar").className = "active open";
         document.getElementById("CodCat@(theMenuItem.CodCategory)").className = "active open";
         document.getElementById("@(Model.Product.CodMenuProduct)SideBar").className = "active";
     });
 
-    $.get( '@Url.Action("WarmUp","Product",new { @area="Working" })' );
+    $.get( '@Url.Action("WarmUp","Product",new { @area="Working" })' );*@
 
 </script>

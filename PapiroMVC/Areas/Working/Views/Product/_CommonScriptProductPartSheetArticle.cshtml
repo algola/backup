@@ -81,7 +81,7 @@
         reloadArticle@(suffx)();
         reloadArticle@(suffx)();
 
-        var dialog = $("#dialog-message@(suffx)").dialog({
+        var dialog = $("#dialog-message@(suffx)").removeClass("hide").dialog({
             width: 'auto',
             modal: true,
             title: '@Html.T(stringsGrid, "DialogSubTitle")',

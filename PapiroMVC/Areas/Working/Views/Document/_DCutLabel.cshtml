@@ -1,36 +1,40 @@
 ﻿@using PapiroMVC.Validation
 @using PapiroMVC.Models
-@model PapiroMVC.Models.PrintingLabelRollCostDetail
+@model PapiroMVC.Models.PrintingZRollCostDetail
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
 }
 
-<div class="well">
-    <div class="row-fluid">
 
-        <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings, "FormatoEtichetta")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "input-mini", id = "ddPartFormat" })
-        </div>
+<div class="container-fluid">
+    <div class="row">
 
-        <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings, "InterspazioBanda")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
-
-        </div>
-        <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">@Html.T(strings, "InterspazioPasso")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
-        </div>
+        <div class="well col-xs-12">
 
             @Html.HiddenFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide1Gain, new { @class = "input-mini", id = "maxGain1" })
             @Html.HiddenFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide2Gain, new { @class = "input-mini", id = "maxGain2" })
 
+            <div class="container-fluid">
 
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-right no-padding-bottom">@Html.T(strings, "FormatoEtichetta")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "col-xs-12 input-mini", id = "ddPartFormat" })
+
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "InterspazioBanda")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "col-xs-12 input-mini", id = "ddPartDCut1" })
+
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "InterspazioPasso")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini col-xs-12", id = "ddPartDCut2" })
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-
 </div>
-
-<style></style>

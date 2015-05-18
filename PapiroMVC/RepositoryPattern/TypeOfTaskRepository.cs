@@ -34,10 +34,9 @@ namespace Services
                 {
                     item.OptionTypeOfTasks.Remove(item.OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item2.CodOptionTypeOfTask));
                 }
-
             }
 
-            var tbCode = new TypeOfTask[23];
+            var tbCode = new TypeOfTask[24];
 
             tbCode[0] = new PIEGA() { CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -65,6 +64,7 @@ namespace Services
             tbCode[21] = new FUSTELLATURAROTOLO() { CodCategoryOfTask = "PREPOST" };
 
             tbCode[22] = new SERIGRAFIA() { CodCategoryOfTask = "STAMPA" };
+            tbCode[23] = new SERIGRAFIAROTOLO() { CodCategoryOfTask = "STAMPA" };
 
 
             foreach (var item in tbCode)

@@ -17,43 +17,50 @@
     OnSuccess = "OnSuccess"
 }, new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
 
 
-        @Html.HiddenFor(model => model.Article.TimeStampTable)
+                @Html.HiddenFor(model => model.Article.TimeStampTable)
 
-        @Html.HiddenFor(model => model.Article.CodArticle)
-        @Html.AlgolaEditorFor(model => model.Article.ArticleName)
+                @Html.HiddenFor(model => model.Article.CodArticle)
+                @Html.AlgolaEditorFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
-        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+                @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+                @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
-        @Html.HiddenFor(model => model.Article.UnitOfMeasure)
+                @Html.HiddenFor(model => model.Article.UnitOfMeasure)
 
 
-        <div id='_NoPrintableArticleCostStandard'>
-            @Html.Partial("_NoPrintableArticleCostStandard", Model)
+                <div id='_NoPrintableArticleCostStandard'>
+                    @Html.Partial("_NoPrintableArticleCostStandard", Model)
+                </div>
+
+                <br />
+                <p>
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexNoPrintable", "Article", new { Area = "Database" })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreateNoPrintable")
+                    {
+                        <input class="btn" type="submit" name="CreateNoPrintable" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                    }
+
+                </p>
+
+
+            </div>
         </div>
-
-        <br />
-        <p>
-
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexNoPrintable", "Article", new { Area = "Database" })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
-
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-
-            @if (ViewBag.ActionMethod != "CreateNoPrintable")
-            {
-                <input class="btn" type="submit" name="CreateNoPrintable" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
-            }
-
-        </p>
 
     }
 

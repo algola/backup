@@ -33,19 +33,19 @@
 
         <ol class="round">
             <li class="one">
-                <h5 class="green">Gestisci il tuo profilo</h5>
+                <h5>Gestisci il tuo profilo</h5>
                 PapiroStar permette di gestire in piena autonomia il proprio profilo,
                 impostare i propri dati e modificarli in ogni momento.
                 Permette di caricare documenti di vario tipo e condividerli con gli utenti del sistema.
             </li>
 
             <li class="two">
-                <h5 class="green">La tua azienda</h5>
+                <h5>La tua azienda</h5>
                 PapiroStar consente di creare senza limiti listini, aggiornare prezzi in piena autonomia.
             </li>
 
             <li class="three">
-                <h5 class="green">Crea preventivi</h5>
+                <h5>Crea preventivi</h5>
                 PapiroStar rappresenta un ottimo strumento per creare in modo semplice e veloce preventivi per stampa digitale offset e grande formato.
             </li>
         </ol>
@@ -57,17 +57,13 @@
 
 
     @section specificPlugInStyle {
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 
     }
 
     @section specificPluginScript {
-        <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+        <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
         <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
-
-        <!--ace scripts-->
-        <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
-        <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
 
     }
 
@@ -75,3 +71,12 @@
         @Scripts.Render("~/bundles/jqueryval")
 
     }
+
+<script>
+
+    $(function () {
+        document.querySelector("#homeSidebar").className = "active open";
+
+    });
+
+</script>

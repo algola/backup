@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Mvc;
@@ -15,13 +16,31 @@ using System.Web.Routing;
 namespace PapiroMVC.Validation
 {
 
+
+    public static class RouteValueDictionaryExtensions
+    {
+        public static IHtmlString ToHtmlAttributes(this RouteValueDictionary dictionary)
+        {
+            var sb = new StringBuilder();
+            foreach (var kvp in dictionary)
+            {
+                sb.Append(string.Format("{0}=\"{1}\" ", kvp.Key, kvp.Value));
+            }
+            return new HtmlString(sb.ToString());
+        }
+    }
+
+
+
     public static class HtmlHelperExtension
     {
+
 
         private static bool IsPropertyACollection(PropertyInfo property)
         {
             return property.PropertyType.GetInterface(typeof(IEnumerable<>).FullName) != null;
         }
+
 
         private static String GetToolTip<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression)
         {
@@ -106,7 +125,7 @@ namespace PapiroMVC.Validation
             }
 
             var algolaEditFor = new TagBuilder("div");
-            algolaEditFor.AddCssClass("control-group");
+            algolaEditFor.AddCssClass("form-group");
 
             //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
 
@@ -198,7 +217,7 @@ namespace PapiroMVC.Validation
             }
 
             var algolaEditFor = new TagBuilder("div");
-            algolaEditFor.AddCssClass("control-group");
+            algolaEditFor.AddCssClass("form-group");
 
             //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
 
@@ -264,9 +283,29 @@ namespace PapiroMVC.Validation
         /// <returns></returns>
         public static IHtmlString AlgolaEditorFor<TModel, TProperty>(
                 this HtmlHelper<TModel> html,
-                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null, int txtLength = 12, bool readOnly =false)
+                Expression<Func<TModel, TProperty>> expression, object htmlAttribute = null, int txtLength = 12, bool readOnly = false, byte inTheCol = 1)
         {
             var metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, html.ViewData);
+
+            //<div class="form-group">
+            // <label class="col-sm-3 control-label no-padding-right" for="Customer">Cliente</label>
+            // <div class="controls col-sm-9">
+            //  <input class="col-xs-10 col-sm-5 text-box single-line" id="Customer" name="Customer" readonly="true" type="text" value="prova"><span class="grey">&nbsp;&nbsp;</span><span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-html="true" data-delay="{&quot;show&quot;:&quot;0&quot;, &quot;hide&quot;:&quot;3000&quot;}" data-content="Cliente" title="" data-original-title="">?</span>
+            //  <span class="field-validation-valid" data-valmsg-for="Customer" data-valmsg-replace="true"></span>
+            // </div>
+            //</div>
+
+            var mediaQuery = "col-xs-10 col-sm-5";
+
+            if (inTheCol == 2)
+            {
+                mediaQuery = "col-xs-10 col-sm-7";
+            }
+
+            if (inTheCol == 3)
+            {
+                mediaQuery = "col-xs-10 col-sm-10";
+            }
 
 
             string tool = "";
@@ -274,7 +313,7 @@ namespace PapiroMVC.Validation
 
             if (metadata.AdditionalValues.ContainsKey("ToolTip"))
             {
-                getTool = ((string)metadata.AdditionalValues["Tooltip"]);                
+                getTool = ((string)metadata.AdditionalValues["Tooltip"]);
             }
 
             if (getTool != null && getTool != "")
@@ -283,7 +322,7 @@ namespace PapiroMVC.Validation
             }
 
             var algolaEditFor = new TagBuilder("div");
-            algolaEditFor.AddCssClass("control-group");
+            algolaEditFor.AddCssClass("form-group");
 
             //    <label class="col-sm-3 control-label no-padding-right" for="form-field-1"> Text Field </label>
 
@@ -292,6 +331,7 @@ namespace PapiroMVC.Validation
             //    </div>
             //</div>
 
+
             var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttribute);
             {
                 string value;
@@ -299,22 +339,16 @@ namespace PapiroMVC.Validation
                 if (attrs.ContainsKey("class"))
                 {
                     value = (string)attrs["class"];
-                    value += " col-xs-10 col-sm-5";
+                    value += " " + mediaQuery  ;
                     attrs["class"] = value;
                     Console.WriteLine(value);
                 }
                 else
                 {
-                    attrs.Add("class", "col-xs-10 col-sm-5");
+                    attrs.Add("class", mediaQuery);
                 }
-
-                attrs.Add("placeholder", "Username");
             }
             htmlAttribute = attrs;
-
-            //var labelFor = new TagBuilder("div");
-            //labelFor.AddCssClass("editor-label col-sm-3 control-label no-padding-right");
-            //labelFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression);
 
             var htmlatt = new RouteValueDictionary();
             htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
@@ -326,13 +360,12 @@ namespace PapiroMVC.Validation
 
             if (readOnly)
             {
-                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { @readonly = true });
+                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, new { htmlAttributes = new { @class = "col-xs-10 col-sm-5", @readonly = true } });
             }
-            else 
+            else
             {
-                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, htmlAttribute);
+                editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, new { htmlAttributes = htmlAttribute });
             }
-
 
 
             var builder = new TagBuilder("span");
@@ -393,16 +426,40 @@ namespace PapiroMVC.Validation
 
             var algolaEditFor = new TagBuilder("div");
             algolaEditFor.Attributes.Add("Title", GetToolTip(html, expression));
-            algolaEditFor.AddCssClass("control-group");
+            algolaEditFor.AddCssClass("form-group");
 
             var htmlatt = new RouteValueDictionary();
             htmlatt.Add("class", "col-sm-3 control-label no-padding-right");
 
             algolaEditFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.LabelExtensions.LabelFor(html, expression, htmlatt);
 
+
+            var attrs = HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes);
+            {
+                string value;
+
+                if (attrs.ContainsKey("class"))
+                {
+                    value = (string)attrs["class"];
+                    value += " col-xs-10 col-sm-5";
+                    attrs["class"] = value;
+                    Console.WriteLine(value);
+                }
+                else
+                {
+                    attrs.Add("class", "col-xs-10 col-sm-5");
+                }
+            }
+            attrs.Add("data-autocomplete-url" , autocompleteUrl);
+            htmlAttributes = attrs;
+
+
+
             var editFor = new TagBuilder("div");
             editFor.AddCssClass("controls col-sm-9");
-            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { data_autocomplete_url = autocompleteUrl });
+//            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.InputExtensions.TextBoxFor(html, expression, new { });
+            editFor.InnerHtml += Environment.NewLine + "\t\t" + System.Web.Mvc.Html.EditorExtensions.EditorFor(html, expression, new { htmlAttributes = htmlAttributes });
+
 
             var builder = new TagBuilder("span");
             builder.AddCssClass("grey");

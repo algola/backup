@@ -13,117 +13,128 @@
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
 
-    }
+}
 
 <div id="status">
 
     @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, 
-        new AjaxOptions { UpdateTargetId = "status", 
-            OnBegin = "showProcessingMsg", 
-            OnComplete = "initFlatRollPage", 
-            OnSuccess = "OnSuccess" }, 
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl },
+        new AjaxOptions
+        {
+            UpdateTargetId = "status",
+            OnBegin = "showProcessingMsg",
+            OnComplete = "initFlatRollPage",
+            OnSuccess = "OnSuccess"
+        },
             new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
 
 
-        @Html.HiddenFor(x => x.CodTypeOfTask)
+                @Html.HiddenFor(x => x.CodTypeOfTask)
 
-        @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.TimeStampTable)
 
-        @Html.AlgolaEditorFor(model => model.TaskExecutorName)
-        @Html.HiddenFor(model => model.Version)
-        @Html.HiddenFor(model => model.Dismissed)
+                @Html.AlgolaEditorFor(model => model.TaskExecutorName)
+                @Html.HiddenFor(model => model.Version)
+                @Html.HiddenFor(model => model.Dismissed)
 
-        @Html.HiddenFor(model => model.UniversalCodPapiro)
+                @Html.HiddenFor(model => model.UniversalCodPapiro)
 
-        @Html.HiddenFor(model => model.FlatRollWidth)
-        @Html.AlgolaEditorFor(model => model.Laterale)
+                @Html.HiddenFor(model => model.FlatRollWidth)
+                @Html.AlgolaEditorFor(model => model.Laterale)
 
-        @Html.AlgolaEditorFor(model => model.FormatMin)
-        @Html.AlgolaEditorFor(model => model.FormatMax)
+                @Html.AlgolaEditorFor(model => model.FormatMin)
+                @Html.AlgolaEditorFor(model => model.FormatMax)
 
-        @Html.AlgolaEditorFor(model => model.WeightMin)
-        @Html.AlgolaEditorFor(model => model.WeightMax)
+                @Html.AlgolaEditorFor(model => model.WeightMin)
+                @Html.AlgolaEditorFor(model => model.WeightMax)
 
-        <div class="space-10"></div>
+                <div class="space-10"></div>
 
-        @Html.HiddenFor(model => model.InkUsage)
-        @Html.HiddenFor(model => model.InkUsageForfait)
+                @Html.HiddenFor(model => model.InkUsage)
+                @Html.HiddenFor(model => model.InkUsageForfait)
 
-        @Html.HiddenFor(model => model.TimeStampTable)
-        @Html.HiddenFor(model => model.CodTaskExecutor)
+                @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.CodTaskExecutor)
 
 
-        <div id="divSerigraphy">
-            @Html.EditorFor(model => model.Serigraphy)
+                <div id="divSerigraphy">
+                    @Html.EditorFor(model => model.Serigraphy)
 
-            <div class="moduleBox">
-                @Html.AlgolaEditorFor(model => model.SerigraphyPrintingUnit)
-                @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartSerigraphy)
+                    <div class="moduleBox">
+                        @Html.AlgolaEditorFor(model => model.SerigraphyPrintingUnit)
+                        @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartSerigraphy)
+
+                    </div>
+
+                </div>
+
+
+                <div id="divFoilStamping">
+                    @Html.EditorFor(model => model.FoilStamping)
+
+                    <div class="moduleBox">
+                        @Html.AlgolaEditorFor(model => model.FoilStampingPrintingUnit)
+
+                        @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartFoilStamping)
+                        @Html.AlgolaEditorFor(model => model.CostImplantFoilStamping)
+
+                    </div>
+
+                </div>
+
+
+                <div id="divDieCutting">
+                    @Html.EditorFor(model => model.DieCutting)
+
+                    <div class="moduleBox">
+                        @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartDieCutting)
+                        @Html.AlgolaEditorFor(model => model.CostImplantDieCutting)
+                    </div>
+
+                </div>
+
+                <h3>@Html.T(strings, "WasteSection")</h3>
+
+
+                @Html.AlgolaEditorFor(model => model.PaperFirstStartLenght)
+                @Html.AlgolaEditorFor(model => model.PaperSecondStartLenght)
+
+
+                <h3>@Html.T(strings, "ImplantSectionMq")</h3>
+                @Html.AlgolaEditorFor(model => model.CostImplant)
+
+                <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
+
+                <p>
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreateFlatRoll")
+                    {
+                        <button class="btn" type="submit" name="CreateLithoRoll">
+                            <i class="icon-save"></i>
+                            @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                        </button>
+                    }
+
+                </p>
+
 
             </div>
-
         </div>
-
-
-        <div id="divFoilStamping">
-            @Html.EditorFor(model => model.FoilStamping)
-
-            <div class="moduleBox">
-                @Html.AlgolaEditorFor(model => model.FoilStampingPrintingUnit)
-
-                @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartFoilStamping)
-                @Html.AlgolaEditorFor(model => model.CostImplantFoilStamping)
-
-            </div>
-
-        </div>
-
-
-        <div id="divDieCutting">
-            @Html.EditorFor(model => model.DieCutting)
-
-            <div class="moduleBox">
-                @Html.AlgolaEditorFor(model => model.ProofSheetFirstStartDieCutting)
-                @Html.AlgolaEditorFor(model => model.CostImplantDieCutting)
-            </div>
-
-        </div>
-
-        <h3>@Html.T(strings, "WasteSection")</h3>
-
-
-        @Html.AlgolaEditorFor(model => model.PaperFirstStartLenght)
-        @Html.AlgolaEditorFor(model => model.PaperSecondStartLenght)
-
-
-        <h3>@Html.T(strings, "ImplantSectionMq")</h3>
-        @Html.AlgolaEditorFor(model => model.CostImplant)
-
-        <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
-
-        <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
-
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-
-            @if (ViewBag.ActionMethod != "CreateFlatRoll")
-            {
-                <button class="btn" type="submit" name="CreateLithoRoll">
-                    <i class="icon-save"></i>
-                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
-                </button>
-            }
-
-        </p>
 
     }
 

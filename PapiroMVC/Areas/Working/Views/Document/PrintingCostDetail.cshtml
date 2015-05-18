@@ -37,101 +37,103 @@
     </div>
 
 *@
-<div class="span12">
-    <div class="span6">
-        <h3 class="header smaller lighter green">Macchina da stampa / lavorazione</h3>
-        <div class="control-group">
-            <div class="controls col-sm-9">
-                @Html.DropDownListFor(y => y.CodTaskExecutorSelected,
-                new SelectList(Model.TaskExecutors, "CodTaskExecutor", "TaskExecutorName"), new { id = "tsk" })
-            </div>
-        </div>
-
-        @if (Model.Error == 0 || Model.Error == null)
-        {
-            <div id="partial">
-                @{switch (Model.TypeOfCostDetail)
-                {
-                    case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
-                        Html.RenderPartial("_PrintingSheetCostDetail", Model);
-                        break;
-                    case PapiroMVC.Models.CostDetail.CostDetailType.PrintingLabelRollCostDetail:
-                        Html.RenderPartial("_PrintingLabelRollCostDetail", Model);
-                        break;
-                    case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
-                        Html.RenderPartial("_PrintingRollCostDetail", Model);
-                        break;
-
-                        @*  case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
-                                break;
-                            case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
-                                break;
-                        *@
-                    default:
-                        break;
-                }}
-
-            </div>
-
-        }
-        else
-        {
-            if (Model.Error == 3)
-            {
-                <p>***Errore nel format stampa</p>
-            }
-        }
-
-        <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditDocumentProducts", "Document", new { Area = "Working", id=Model.TaskCost.DocumentProduct.CodProduct})');">
-                <i class="icon-undo bigger-125"></i>
-                @Html.T(strings, "Back")
-            </button>
-            @*
-                <button class="default btn btn-primary" onclick="Javascrip:save()" name="@ViewBag.ActionMethod">
-                    <i class="icon-save bigger-160"></i>
-                    @Html.T(strings, "Save")
-                </button>
-            *@
-        </p>
-    </div>
 
 
-    <div class="span6 vspace-1"></div>
-
-    <div class="span5 no-padding">
-
-        <button class="btn btn-mini btn-danger toggle-btn btn-block">
-            <i class="icon-bolt"></i>
-
-            Costi
-            <i class="icon-arrow-right  icon-on-right"></i>
+<p>
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditDocumentProducts", "Document", new { Area = "Working", id=Model.TaskCost.DocumentProduct.CodProduct})');">
+        <i class="icon-undo bigger-125"></i>
+        @Html.T(strings, "Back")
+    </button>
+    @*
+        <button class="default btn btn-primary" onclick="Javascrip:save()" name="@ViewBag.ActionMethod">
+            <i class="icon-save bigger-160"></i>
+            @Html.T(strings, "Save")
         </button>
+    *@
+</p>
 
-        @*        <div id="dialog" title="***Basic dialog" class="span4"> *@
 
-        <div id="divCostGrid@(Model.TaskCost.CodDocumentProduct)">
-            <table id="costGrid@(Model.TaskCost.CodDocumentProduct)">
-                <tr>
-                    <td />
-                </tr>
-            </table>
-            <div id="pagerCostGrid(@Model.TaskCost.CodDocumentProduct)"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <h3 class="header smaller lighter green">Macchina da stampa / lavorazione</h3>
+            <div class="form-group">
+                <div class="controls col-xs-12">
+                    @Html.DropDownListFor(y => y.CodTaskExecutorSelected,
+                new SelectList(Model.TaskExecutors, "CodTaskExecutor", "TaskExecutorName"), new { @class = "col-xs-12", id = "tsk" })
+                </div>
+            </div>
 
         </div>
+        <div class="col-xs-12 col-sm-6 hidden-xs">
+
+            <button class="btn btn-mini btn-danger toggle-btn btn-block">
+                <i class="icon-bolt"></i>
+
+                Costi
+                <i class="icon-arrow-right  icon-on-right"></i>
+            </button>
+
+            <div id="dialog" title="***Basic dialog" style="position: absolute;">
+
+                <div id="divCostGrid@(Model.TaskCost.CodDocumentProduct)">
+                    <table id="costGrid@(Model.TaskCost.CodDocumentProduct)">
+                        <tr>
+                            <td />
+                        </tr>
+                    </table>
+                    <div id="pagerCostGrid(@Model.TaskCost.CodDocumentProduct)"></div>
+
+                </div>
+            </div>
+            @*</div>*@
+
+        </div>
+
     </div>
-
-    <div class="span1">
-    </div>
-    @*    </div> *@
-
-
-    <div class="span6 no-padding"></div>
-    @*div usato per spostare a dx la tabella delle hint*@
-    <div id="printingHintTable" class="span5 no-padding well"></div>
-    <div class="span1"></div>
-
+    @*@Model.Error*@
 </div>
+
+@if (Model.Error == 0 || Model.Error == null)
+{
+
+    <div id="partial">
+        @{switch (Model.TypeOfCostDetail)
+        {
+            case PapiroMVC.Models.CostDetail.CostDetailType.PrintingSheetCostDetail:
+                Html.RenderPartial("_PrintingSheetCostDetail", Model);
+                break;
+            case PapiroMVC.Models.CostDetail.CostDetailType.PrintingZRollCostDetail:
+                Html.RenderPartial("_PrintingZRollCostDetail", Model);
+                break;
+            case PapiroMVC.Models.CostDetail.CostDetailType.PrintingFlatRollCostDetail:
+                Html.RenderPartial("_PrintingFlatRollCostDetail", Model);
+                break;
+            case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
+                Html.RenderPartial("_PrintingRollCostDetail", Model);
+                break;
+
+                @*  case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
+                        break;
+                    case PapiroMVC.Models.CostDetail.CostDetailType.DigitalSheetCostDetail:
+                        break;
+                *@
+            default:
+                break;
+        }}
+
+
+    </div>
+
+}
+else
+{
+    if (Model.Error == 3)
+    {
+        <p>***Errore nel format stampa</p>
+    }
+}
+
 
 <script type="text/javascript">
     function save() {
@@ -223,7 +225,8 @@
             rowList: [100, 200, 500],
             viewrecords: true,
             autowidth: true,
-            width: 650,
+            shrinkToFit: true,
+            width: 'auto',
 
             onSelectRow: function (id) {
                 if (id && id !== lastSel) {
@@ -300,16 +303,14 @@
 *@
 
 @section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
+
 
     <style type="text/css">
         #dialog {
-            width: 350px;
-            float: right;
-            background: #fff;
-            padding: 10px;
+            width: 100% !important;
         }
     </style>
 
@@ -319,7 +320,7 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
 }
 
 @section ScriptS{

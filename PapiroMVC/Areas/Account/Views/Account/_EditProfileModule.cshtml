@@ -9,14 +9,19 @@
     {
         ViewData.ModelState.AddModelError(string.Empty, Html.T(strings, err.Value.Errors[0].ErrorMessage));
     }
-}
 
-@foreach (var m in Model.Profile.Modules)
-{
-    <div id="div@(m.CodModuleName)" class="span3">
-        @*visualizzazione dei moduli*@
-        @Html.Partial("_Module", m)
+}
+<div class="container-fluid">
+    <div class="row">
+
+        @foreach (var m in Model.Profile.Modules)
+        {
+            <div id="div@(m.CodModuleName)" class="col-xs-12 col-md-3 col-sm-4">
+                @*visualizzazione dei moduli*@
+                @Html.Partial("_Module", m)
+            </div>
+        }
+
     </div>
-}
-
+</div>
 

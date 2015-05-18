@@ -13,6 +13,8 @@ namespace Services
         string GetNewOrderNumber(Document a);
         IQueryable<DocumentProduct> GetDocumentProductsByCodProduct(string codProduct);
         DocumentProduct GetDocumentProductByCodDocumentProduct(string codDocumentProduct);
+
+
         Document GetFromSession();
         void SaveOnSession(Document a);
         IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);
@@ -28,5 +30,7 @@ namespace Services
         IQueryable<ReportOrderName> GetAllReportOrderName();
 
         Document GetEstimateEcommerce(string codCustomerSupplier);
+
+        void DeleteDocumentProduct(DocumentProduct documentProduct);
     }
 }

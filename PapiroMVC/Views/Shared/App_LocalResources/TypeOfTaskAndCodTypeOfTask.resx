@@ -427,7 +427,7 @@
     <value />
   </data>
   <data name="CodSTAMPAACALDOROTOLO" xml:space="preserve">
-    <value>Stampa a caldo</value>
+    <value>Laminazione</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_1" xml:space="preserve">
     <value>1 colore</value>
@@ -442,15 +442,24 @@
     <value>4 colori</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_NO" xml:space="preserve">
-    <value>Nessuna stampa a caldo</value>
+    <value>Nessuna laminazione</value>
   </data>
   <data name="CodSERIGRAFIA_NO" xml:space="preserve">
     <value>Nessuna serigrafia</value>
   </data>
-  <data name="CodSERIGRAFIA_UVPROT" xml:space="preserve">
-    <value>Serigrafia UV protettiva</value>
+  <data name="CodSERIGRAFIA_SI" xml:space="preserve">
+    <value>Stampa Serigrafica</value>
   </data>
   <data name="CodSERIGRAFIA_UVSPESSORATA" xml:space="preserve">
+    <value>Serigrafia UV spessorata</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_NO" xml:space="preserve">
+    <value>Nessuna serigrafia</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_SI" xml:space="preserve">
+    <value>Stampa Serigrafica</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
   </data>
 </root>

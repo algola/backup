@@ -8,35 +8,39 @@
 
 <fieldset>
 
+    <legend>
+        @ViewBag.Title
+    </legend>
+
     @Html.ValidationMessageFor(model => model.Mov)
 
- @*   @Html.AlgolaEditorFor(model => model.Mov.CodWarehouseArticle)
-    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodWarehouse )
-      *@
+    @*   @Html.AlgolaEditorFor(model => model.Mov.CodWarehouseArticle)
+        @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodWarehouse )
+    *@
 
-    <div class="control-group">
-        <div class="controls col-sm-9">
+    <div class="form-group">
+        <div class="controls col-sm-9 col-sm-offset-3">
             <div class="editor-field">
                 @Html.DropDownListFor(model => model.Mov.WarehouseArticle.CodWarehouse, new SelectList(ViewBag.Locations, "CodWarehouse", "WarehouseName"))
             </div>
         </div>
     </div>
 
-    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodArticle)
+    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.CodArticle, inTheCol: 3)
 
     @Html.HiddenFor(model => model.Mov.Date)
     @Html.HiddenFor(model => model.Mov.TimeStampTable)
     @Html.HiddenFor(model => model.Mov.CodWarehouseArticleMov)
 
-    @Html.AlgolaEditorFor(model => model.Mov.Quantity)
+    @Html.AlgolaEditorFor(model => model.Mov.Quantity, inTheCol: 3)
     @Html.HiddenFor(model => model.Mov.TypeOfMov)
 
     @Html.HiddenFor(model => model.Mov.UnitOfMeasureMov)
     @Html.HiddenFor(model => model.Mov.UmConversion)
 
-    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.UnitOfMeasureStore, readOnly: true)
+    @Html.AlgolaEditorFor(model => model.Mov.WarehouseArticle.UnitOfMeasureStore, readOnly: true, inTheCol: 3)
 
-    <div class="control-group">
+    <div class="form-group">
         <div class="col-sm-3 control-label no-padding-right">
             <input class="btn" type="submit" name="NewMovArticleMov" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductMov")' />
         </div>

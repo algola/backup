@@ -458,7 +458,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             //common serarch and order
             //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
-            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask=="SERIGRAFIA");
+            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask == "SERIGRAFIA" || x.CodOptionTypeOfTask == "SERIGRAFIAROTOLO");
 
             //read from validation's language file
             //this resource has to be the same as view's resource

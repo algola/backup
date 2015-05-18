@@ -141,18 +141,26 @@ namespace Services
         }
     }
 
+
+
     public abstract class GenericRepository<C, T> : IGenericRepository<T>, IDisposable
         where T : class
         where C : DbContext, new()
     {
+
+        protected string _name;
+
         public virtual void SetDbName(string name)
         {
+            _name = name;
             if (_entities != null)
             {
                 _entities.Dispose();
             }
 
             _entities = new C();
+            //            _entities.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
             if (name != null)
             {
                 _entities.Database.Connection.ConnectionString = _entities.Database.Connection.ConnectionString.Replace("db", name);
@@ -176,11 +184,13 @@ namespace Services
 
                     _entities = new C();
 
+                    //                    _entities.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+
                     _entities.Configuration.ProxyCreationEnabled = false;
                     _entities.Configuration.AutoDetectChangesEnabled = false;
                     _entities.Configuration.ValidateOnSaveEnabled = false;
 
-  
+
                 }
 
                 var tempo = DateTime.Now.Subtract(inizio);

@@ -21,8 +21,6 @@ namespace PapiroMVC.Models
         public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExecList, string codTypeOfTask)
         {
 
-
-
             if (codTypeOfTask == "TAVOLOCONTROLLO")
             {
                 tskExecList = tskExecList.OfType<ControlTableRoll>();
@@ -54,12 +52,22 @@ namespace PapiroMVC.Models
             //CodTypeOfTask
             if (codTypeOfTask == "STAMPAETICHROTOLO")
             {
-             //   var tskExec1 = tskExecList.OfType<Flexo>();
-             //   var tskExec2 = tskExecList.OfType<ControlTableRoll>();
+                var tskExec1 = tskExecList.OfType<Flexo>();
+                var tskExec2 = tskExecList.OfType<FlatRoll>();
 
-                tskExecList = tskExecList.OfType<Flexo>();
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2);
+                //                tskExecList = tskExecList.OfType<FlatRoll>();
+
             }
 
+            //CodTypeOfTask
+            if (codTypeOfTask == "SERIGRAFIAROTOLO")
+            {
+                //   var tskExec1 = tskExecList.OfType<Flexo>();
+                //   var tskExec2 = tskExecList.OfType<ControlTableRoll>();
+
+                tskExecList = tskExecList.OfType<FlatRoll>().Where(x => x.Serigraphy ?? false);
+            }
 
             //Created for Editor Machines
             if (codTypeOfTask == "STAMPAETICHROTOLO_LIST")
@@ -70,7 +78,6 @@ namespace PapiroMVC.Models
 
                 tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union(tskExec3);
             }
-
 
             if (codTypeOfTask == "FUSTELLATURA")
             {
@@ -87,6 +94,8 @@ namespace PapiroMVC.Models
                 tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3);
 
             }
+
+
 
 
             return tskExecList;

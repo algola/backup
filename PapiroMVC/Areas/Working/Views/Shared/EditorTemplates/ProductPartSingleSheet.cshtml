@@ -29,24 +29,35 @@
 
 }
 
-
-<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
         @Html.AlgolaEditorFor(model => model.Format)
     }
     else
     {
-        @Html.LabelFor(model => model.Format, new { @class = "col-sm-3 control-label no-padding-right" })
 
-        <div class="controls col-sm-9">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Format, new { @class = "col-sm-3 control-label no-padding-right" })
 
-            @Html.DropDownListFor((model => model.Format),
-            new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"))
+            <div class="controls col-sm-9">
+
+                @Html.DropDownListFor((model => model.Format),
+             new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"), new { @class = "col-xs-10 col-sm-5" })
+            </div>
         </div>
 
     }
 </div>
+
+
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
+
+    @Html.AlgolaEditorFor(model => model.FormatPersonalized)
+
+</div>
+
+
 
 @if (Model.ShowDCut)
 {
@@ -69,12 +80,6 @@ else
 
 @Html.HiddenFor(model => model.ShowDCut)
 
-
-<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
-
-    @Html.AlgolaEditorFor(model => model.FormatPersonalized)
-
-</div>
 
 <!-- artilce -->
 @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)

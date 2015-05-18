@@ -90,16 +90,15 @@ namespace PapiroMVC.Models
 
             partTask.CodItemGraph = "SC";
 
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "SERIGRAFIAROTOLO_NO");
+            partTask.Hidden = false;
+            partTask.ImplantHidden = false; //impant is visibile only if task is visibile
+            partTask.IndexOf = 35;
 
-            //partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "SERIGRAFIA_NO");
-            //partTask.Hidden = true;
-            //partTask.ImplantHidden = true; //impant is visibile only if task is visibile
-            //partTask.IndexOf = 35;
-
-            //partTask.CodItemGraph = "SE";
+            partTask.CodItemGraph = "SE";
 
             //if this is selected we have to reset tv task
-            partTask.IfSelectedResetOtherCodItemGraph = "TV";
+        //    partTask.IfSelectedResetOtherCodItemGraph = "TV";
 
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAVOLOCONTROLLO_SI");
             partTask.Hidden = true;
@@ -107,7 +106,6 @@ namespace PapiroMVC.Models
             partTask.IndexOf = 40;
 
             partTask.CodItemGraph = "TV";
-
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
@@ -117,8 +115,8 @@ namespace PapiroMVC.Models
 
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "SC" });
-   //         ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "SE" });
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "TV" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "SE" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SE", CodItemGraphLink = "TV" });
 
         }
 
@@ -129,13 +127,13 @@ namespace PapiroMVC.Models
             ProductPartTask pt;
 
             String[] codTypeOfTasks = { "STAMPAETICHROTOLO", "FUSTELLATURAROTOLO", "STAMPAACALDOROTOLO",
-                                          //"SERIGRAFIA", 
+                                          "SERIGRAFIAROTOLO", 
                                           "TAVOLOCONTROLLO" };
 
             foreach (var item in codTypeOfTasks)
             {
 
-                if (item == "SERIGRAFIA")
+                if (item == "SERIGRAFIAROTOLO")
                 {
                     pt = new ProductPartSerigraphy();
                 }

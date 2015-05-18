@@ -17,15 +17,13 @@
 
 @if ((Model.Hidden == null) || (Model.Hidden != true))
 {
-    <div class="control-group">
+    <div class="form-group">
 
         @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName, new { @class = "col-sm-3 control-label no-padding-right" })
 
         <div class="controls col-sm-9">
-            <div class="editor-field">
                 @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
-            new SelectList(c, "CodOptionTypeOfTask", "OptionName"))
-            </div>
+            new SelectList(c, "CodOptionTypeOfTask", "OptionName") ,new { @class = "col-xs-10 col-sm-5" })
         </div>
     </div>
 }

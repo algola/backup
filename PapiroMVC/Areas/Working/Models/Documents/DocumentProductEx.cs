@@ -164,7 +164,7 @@ namespace PapiroMVC.Models
 
         }
 
-        public void UpdateCost()
+        public void UpdateTotal()
         {
             double total = 0;
             foreach (var item in Costs)

@@ -1930,7 +1930,7 @@ namespace Mvc.HtmlHelpers
                         $('#divErrPopup{0}').append('{2}');
                         $('#divErrPopup{0}').append(error);
                         $('#divErrPopup{0}').append('</p>');
-                        $('#divErrPopup{0}').dialog({{
+                        $('#divErrPopup{0}').removeClass('hide').dialog({{
                             modal: true,
                             title: '{1}'
                         }});
@@ -2405,7 +2405,7 @@ namespace Mvc.HtmlHelpers
                         $('#divErrPopup{0}').append('{2}');
                         $('#divErrPopup{0}').append(error);
                         $('#divErrPopup{0}').append('</p>');
-                        $('#divErrPopup{0}').dialog({{
+                        $('#divErrPopup{0}').removeClass('hide).dialog({{
                             modal: true,
                             title: '{1}'
                         }});
@@ -3076,7 +3076,7 @@ namespace Mvc.HtmlHelpers
                             $('#divErrPopup{0}').append('{2}');
                             $('#divErrPopup{0}').append(data);
                             $('#divErrPopup{0}').append('</p>');
-                            $('#divErrPopup{0}').dialog({{
+                            $('#divErrPopup{0}').removeClass('hide').dialog({{
                                 modal: true,
                                 title: '{1}'
                             }});

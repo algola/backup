@@ -138,8 +138,8 @@ namespace PapiroMVC.Models
                 switch (ProductPart.TypeOfProductPart)
                 {
                     case ProductPart.ProductPartType.ProductPartSoft:
+                        this.HideBuyingInView = true;
                         this.ProductPartPrinting = new ProductPartSingleSheetPrinting();
-
                         break;
                     default:
                         throw new Exception();
@@ -356,7 +356,7 @@ namespace PapiroMVC.Models
             #endregion
         }
 
-        public override List<CostDetail> GetRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
+        public override List<CostDetail> CreateRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
         {
             List<CostDetail> lst = new List<CostDetail>();
 

@@ -87,8 +87,8 @@
 
         if (ids.length > 0) {
 
-            $("#dialog-change").dialog({
-                height: 300,
+            $("#dialog-change").removeClass("hide").dialog({
+                height: 250,
                 modal: true,
                 buttons: {
                     '@Html.T(strings,"DeleteCancel")': function () {
@@ -105,7 +105,7 @@
             hideProcessingMsg();
         } else {
 
-            $("#dialog-warning-selection").dialog({
+            $("#dialog-warning-selection").removeClass("hide").dialog({
                 height: 280,
                 modal: true,
                 buttons: {
@@ -144,8 +144,10 @@
         if (ids.length > 0) {
 
             hideProcessingMsg();
-            $("#dialog-confirm").dialog({
-                height: 150,
+
+            $("#dialog-confirm").removeClass("hide").dialog({
+                width: 'auto',
+                heigth: 'auto',
                 modal: true,
                 buttons: {
                     '@Html.T(strings,"DeleteCancel")': function () {

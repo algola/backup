@@ -41,7 +41,7 @@
         @Html.EditorFor(model => model.UseDifferentRunPerHour)
 
         <div class="span1"></div>
-        <div class="control-group span9" id="_listAvarageRunPerRunStep">
+        <div class="form-group span9" id="_listAvarageRunPerRunStep">
             @Html.Partial("_ListAvarageMeterPerSecStep", Model)
         </div>
 
@@ -54,7 +54,7 @@
         @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
 
         <div class="span1"></div>
-        <div class="control-group span9" id="_listCostPerColorStep">
+        <div class="form-group span9" id="_listCostPerColorStep">
             @Html.Partial("_ListCostPerColorStep", Model)
         </div>
 
@@ -103,7 +103,7 @@
 }
 
 @section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 }

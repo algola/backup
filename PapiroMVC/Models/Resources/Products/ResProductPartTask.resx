@@ -430,16 +430,16 @@
     <value />
   </data>
   <data name="CodSTAMPAACALDOROTOLO_1" xml:space="preserve">
-    <value>stampa a caldo 1 colore</value>
+    <value>laminazione 1 colore</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_2" xml:space="preserve">
-    <value>stampa a caldo 2 colori</value>
+    <value>laminazione 2 colori</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_3" xml:space="preserve">
-    <value>stampa a caldo 3 colori</value>
+    <value>laminazione 3 colori</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_4" xml:space="preserve">
-    <value>stampa a caldo 4 colori</value>
+    <value>laminazione 4 colori</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_NO" xml:space="preserve">
     <value />
@@ -451,7 +451,10 @@
     <value>Fustella</value>
   </data>
   <data name="CodSTAMPAACALDOROTOLO_Implant" xml:space="preserve">
-    <value>Cliche stampa a caldo</value>
+    <value>Cliche laminazione</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_Implant" xml:space="preserve">
+    <value>Telaio serigrafico</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_Implant" xml:space="preserve">
     <value>Impianti stampa</value>
@@ -462,10 +465,19 @@
   <data name="CodSERIGRAFIA_NO" xml:space="preserve">
     <value>Nessuna serigrafia</value>
   </data>
-  <data name="CodSERIGRAFIA_UVPROT" xml:space="preserve">
-    <value>Serigrafia UV protettiva</value>
+  <data name="CodSERIGRAFIA_SI" xml:space="preserve">
+    <value>Stampa Serigrafica</value>
   </data>
   <data name="CodSERIGRAFIA_UVSPESSORATA" xml:space="preserve">
+    <value>Serigrafia UV spessorata</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_NO" xml:space="preserve">
+    <value>Nessuna serigrafia</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_SI" xml:space="preserve">
+    <value>Stampa Serigrafica</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
   </data>
 </root>

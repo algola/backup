@@ -14,15 +14,15 @@ namespace Services
         public STAMPAACALDOROTOLO()
         {
             CodTypeOfTask = "STAMPAACALDOROTOLO";
-            TaskName = "Stampa a caldo";
+            TaskName = "Laminazione";
 
 
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAACALDOROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAACALDOROTOLO_NO";
-            optTk.OptionName = "No stampa a caldo";
+            optTk.OptionName = "No laminazione";
             optTk.IdexOf = 0;
-            //No stampa a caldo
+            //No laminazione
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();

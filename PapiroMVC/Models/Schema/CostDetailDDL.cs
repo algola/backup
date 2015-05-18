@@ -76,6 +76,8 @@ namespace PapiroMVC.Model
 
 
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("costdetails", "SelectorPrintingRoll", SchemaDb.Int, "0");
+
             dbS.AddColumnToTable("costdetails", "HideBuyingInView", SchemaDb.Bool, "0");
 
             #region Printable Article
@@ -105,6 +107,9 @@ namespace PapiroMVC.Model
             #endregion
 
             dbS.AddColumnToTable("costdetails", "CodComputedBy", SchemaDb.String, "50");
+
+            //if just computed no othere cost detail computes this
+            dbS.AddColumnToTable("costdetails", "JustComputed", SchemaDb.Bool, "0");
             dbS.AddForeignKey("costdetails", "CodComputedBy", "costdetails", "CodCostDetail");
 
 

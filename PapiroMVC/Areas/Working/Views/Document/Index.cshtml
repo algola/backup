@@ -41,61 +41,59 @@
 *@
 
 <div id="well no-padding-left no-padding-rigth">
-    <span class="span12">
+    <span class="col-xs-12">
         <!--/span--> @Html.Partial("_NewProductCommand", new NewProductCommand())
     </span>
 </div>
 
+<div class="row">
 
-
-@foreach (var item in categories)
-{
-
-    selectedMenuProd = menuProd.FindAll(x => x.CodCategory == item.CodCategory && !x.Hidden.Value).ToList();
-    foreach (var menuItem in selectedMenuProd)
+    @foreach (var item in categories)
     {
-        try
+
+        selectedMenuProd = menuProd.FindAll(x => x.CodCategory == item.CodCategory && !x.Hidden.Value).ToList();
+        foreach (var menuItem in selectedMenuProd)
         {
-            <div class="span3">
-                <div class="widget-box pricing-box">
-                    <div class="widget-header header-color-orange">
-                        <h5 class="bigger lighter">@Html.T(stringsProd, "CodCat" + item.CodCategory)</h5>
-                    </div>
+            try
+            {
 
-                    <div class="widget-body">
-                        <div class="widget-main pagination-centered">
+                <div class="col-xs-6 col-sm-4 pricing-box">
+                    <div class="widget-box pricing-box">
+                        <div class="widget-header header-color-orange">
+                            <h5 class="bigger lighter">@Html.T(stringsProd, "CodCat" + item.CodCategory)</h5>
+                        </div>
 
-                            <div style="position: relative; left: 0; top: 0;">
-                                <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png" style="position: relative; top: 0; left: 0;" />
-                                <img src="~/Content/ProductImage/beta-stamp.png" style="position: absolute; top: 0px; left: 0px;" />
-                            </div>
+                        <div class="widget-body">
+                            <div class="widget-main text-center" style="overflow:hidden;">
 
-                            <a href="@(Url.Action("NewProductNewEstimateById", "Document", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
-                                <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
-                            </a>
+                                <div style="position: relative; left: 0; top: 0;">
+                                    <img src="~/Content/ProductImage/@(menuItem.CodMenuProduct).png" style="z-index:90; position: relative; top: 0; left: 0;" />
+                                    <img src="~/Content/ProductImage/beta-stamp.png" style="z-index:90; position: relative; margin-top:-10em; margin-left:auto; margin-right:auto;" />
+                                </div>
 
-
-                            @*<a href="@(Url.Action("CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
+                                <a href="@(Url.Action("NewProductNewEstimateById", "Document", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
                                     <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
-                                </a>*@
+                                </a>
+
+
+                                @*<a href="@(Url.Action("CreateProduct", "Product", (object)new { id = menuItem.CodMenuProduct.ToString(), area = "Working" }))" class="btn btn-block btn-inverse">
+                <span>@Html.T(stringsProd, "CodMenuProduct" + menuItem.CodMenuProduct)</span>
+            </a>*@
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        }
-        catch (Exception)
-        {
-            Console.WriteLine(menuItem.CodMenuProduct);
-            throw;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine(menuItem.CodMenuProduct);
+                throw;
+            }
         }
     }
-}
 
-
-@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)
-
-
+</div>
 
 <style>
     .algoAver {
@@ -115,7 +113,7 @@
 }
 
 @section specificPlugInStyle {
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui-1.10.3.full.min.css" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 
@@ -125,7 +123,7 @@
     <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
-    <script src="~/Content/acetheme/assets/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
 }
 

@@ -3,13 +3,16 @@
 
 @{
     string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
-    string url = Url.Action("SheetPrintableArticleListPerProduct", new { controller = "Article", area = "DataBase"});
+    string url = Url.Action("SheetPrintableArticleListPerProduct", new { controller = "Article", area = "DataBase" });
 
     var suffx = "Part" + (ViewBag.IndexPart) + "PartArticle" + (ViewBag.IndexPartArticle);
 }
 
-<div class="controls col-sm-9">
-    <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+<div class="form-group">
+    <div class="col-sm-3 control-label no-padding-right"></div>
+    <div class="controls col-sm-9">
+        <a class="dialogRef" href="javascript:void(0)" id="staticDialog@(suffx)">@Html.T(stringsGrid, "DialogTitle")</a>
+    </div>
 </div>
 
 @Html.HiddenFor(model => model.IsSelected)
@@ -33,7 +36,7 @@
             <td />
         </tr>
     </table>
-    <div id="pagerArticle@(suffx)"></div>
+    <div id="pagerArticle@(suffx)" class="hide"></div>
 
 </div>
 
@@ -68,6 +71,7 @@
             rowList: [15, 20, 50],
             viewrecords: true,
             autowidth: false,
+            shrinkToFit: true,
 
 
             loadComplete: function () {
@@ -124,8 +128,13 @@
         hideProcessingMsg();
         loadGrid@(suffx)();
 
-        var dialog = $("#dialog-message@(suffx)").dialog({
+        $("#dialog-message@(suffx)").removeClass("hide");
+        resizeGrid@(suffx)();
+
+        var dialog = $("#dialog-message@(suffx)").removeClass("hide").dialog({
             width: 'auto',
+            height: 'auto',
+            resizable: false,
             modal: true,
             title: '@Html.T(stringsGrid, "DialogTitle")',
             title_html: true,
@@ -149,31 +158,31 @@
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
                                 celValueTypeOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'TypeOfMaterial');
 
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__TypeOfMaterial').val(celValueTypeOfMaterial);
 
                             var myGrid = $('#gridArticle@(suffx)'),
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
                                 celValueNameOfMaterial = myGrid.jqGrid('getCell', lastSel@(suffx), 'NameOfMaterial');
 
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__NameOfMaterial').val(celValueNameOfMaterial);
 
                             var myGrid = $('#gridArticle@(suffx)'),
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
                                 celValueColor = myGrid.jqGrid('getCell', lastSel@(suffx), 'Color');
 
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Color').val(celValueColor);
 
                             var myGrid = $('#gridArticle@(suffx)'),
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
                                 celValueAdhesive = myGrid.jqGrid('getCell', lastSel@(suffx), 'Adhesive');
 
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Adhesive').val(celValueAdhesive);
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Adhesive').val(celValueAdhesive);
 
                             var myGrid = $('#gridArticle@(suffx)'),
                                 selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
                                 celValueWeight = myGrid.jqGrid('getCell', lastSel@(suffx), 'Weight');
 
-                                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
+                            $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__ProductPartsPrintableArticlePerView_@(ViewBag.IndexPartArticle)__Weight').val(celValueWeight);
 
                         }
                         reloadArticle@(suffx)();
@@ -190,6 +199,28 @@
         };
         **/
     });
+
+
+    function resizeGrid@(suffx)() {
+        $("#gridArticle@(suffx)").setGridWidth($(window).innerWidth() * 0.7);
+        $("#gridArticle@(suffx)").setGridHeight(($(window).height() * 0.5));
+        $("#dialog-message@(suffx)").outerWidth($("#gridArticle@(suffx)").outerWidth()+40);
+    }
+
+        //resize jqgrid after windows resize
+        $(window).bind('resize', function () {
+
+            try {
+                resizeGrid@(suffx)();
+                $("#dialog-message@(suffx)").dialog('option', 'position', { my: "center", at: "center", of: window });
+
+            } catch (e) {
+
+            }
+
+        }).trigger('resize');
+
+
 
 </script>
 

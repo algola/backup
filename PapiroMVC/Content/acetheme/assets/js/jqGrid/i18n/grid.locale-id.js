@@ -19,8 +19,10 @@ $.extend($.jgrid,{
 		caption: "Pencarian",
 		Find: "Cari !",
 		Reset: "Segarkan",
-		odata: [{ oper:'eq', text:"sama dengan"},{ oper:'ne', text:"tidak sama dengan"},{ oper:'lt', text:"kurang dari"},{ oper:'le', text:"kurang dari atau sama dengan"},{ oper:'gt', text:"lebih besar"},{ oper:'ge', text:"lebih besar atau sama dengan"},{ oper:'bw', text:"dimulai dengan"},{ oper:'bn', text:"tidak dimulai dengan"},{ oper:'in', text:"di dalam"},{ oper:'ni', text:"tidak di dalam"},{ oper:'ew', text:"diakhiri dengan"},{ oper:'en', text:"tidak diakhiri dengan"},{ oper:'cn', text:"mengandung"},{ oper:'nc', text:"tidak mengandung"}],
-		groupOps: [	{ op: "AND", text: "all" },	{ op: "OR",  text: "any" }	]
+		odata: [{ oper:'eq', text:"sama dengan"},{ oper:'ne', text:"tidak sama dengan"},{ oper:'lt', text:"kurang dari"},{ oper:'le', text:"kurang dari atau sama dengan"},{ oper:'gt', text:"lebih besar"},{ oper:'ge', text:"lebih besar atau sama dengan"},{ oper:'bw', text:"dimulai dengan"},{ oper:'bn', text:"tidak dimulai dengan"},{ oper:'in', text:"di dalam"},{ oper:'ni', text:"tidak di dalam"},{ oper:'ew', text:"diakhiri dengan"},{ oper:'en', text:"tidak diakhiri dengan"},{ oper:'cn', text:"mengandung"},{ oper:'nc', text:"tidak mengandung"},{ oper:'nu', text:'is null'},{ oper:'nn', text:'is not null'}],
+		groupOps: [	{ op: "AND", text: "all" },	{ op: "OR",  text: "any" }	],
+		operandTitle : "Click to select search operation.",
+		resetTitle : "Reset Search Value"
 	},
 	edit : {
 		addCaption: "Tambah Data",
@@ -102,7 +104,7 @@ $.extend($.jgrid,{
 			S: function (j) {return j < 11 || j > 13 ? ['st', 'nd', 'rd', 'th'][Math.min((j - 1) % 10, 3)] : 'th';},
 			srcformat: 'Y-m-d',
 			newformat: 'n/j/Y',
-			parseRe : /[Tt\\\/:_;.,\t\s-]/,
+			parseRe : /[#%\\\/:_;.,\t\s-]/,
 			masks : {
 				// see http://php.net/manual/en/function.date.php for PHP format used in jqGrid
 				// and see http://docs.jquery.com/UI/Datepicker/formatDate
@@ -133,7 +135,7 @@ $.extend($.jgrid,{
 				//    i - Minutes with leading zeros
 				//    s - Seconds, with leading zeros
 				//    A - Uppercase Ante meridiem and Post meridiem (AM or PM)
-				FullDateTime: "l, F d, Y g:i:s A", // in jQuery UI Datepicker: "dddd, MMMM dd, yyyy h:hh:mm tt"
+				FullDateTime: "l, F d, Y g:i:s A", // in jQuery UI Datepicker: "dddd, MMMM dd, yyyy h:mm:ss tt"
 				// month day:
 				//    F - A full textual representation of a month
 				//    d - Day of the month, 2 digits with leading zeros
@@ -148,7 +150,7 @@ $.extend($.jgrid,{
 				//    i - Minutes with leading zeros
 				//    s - Seconds, with leading zeros
 				//    A - Uppercase Ante meridiem and Post meridiem (AM or PM)
-				LongTime: "g:i:s A", // in jQuery UI Datepicker: "h:hh:mm tt"
+				LongTime: "g:i:s A", // in jQuery UI Datepicker: "h:mm:ss tt"
 				SortableDateTime: "Y-m-d\\TH:i:s",
 				UniversalSortableDateTime: "Y-m-d H:i:sO",
 				// month with year

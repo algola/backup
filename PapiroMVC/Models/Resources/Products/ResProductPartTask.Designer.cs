@@ -466,11 +466,11 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Serigrafia UV protettiva.
+        ///   Looks up a localized string similar to Stampa Serigrafica.
         /// </summary>
-        public static string CodSERIGRAFIA_UVPROT {
+        public static string CodSERIGRAFIA_SI {
             get {
-                return ResourceManager.GetString("CodSERIGRAFIA_UVPROT", resourceCulture);
+                return ResourceManager.GetString("CodSERIGRAFIA_SI", resourceCulture);
             }
         }
         
@@ -480,6 +480,42 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string CodSERIGRAFIA_UVSPESSORATA {
             get {
                 return ResourceManager.GetString("CodSERIGRAFIA_UVSPESSORATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telaio serigrafico.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_Implant {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nessuna serigrafia.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_SI {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serigrafia UV spessorata.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_UVSPESSORATA {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_UVSPESSORATA", resourceCulture);
             }
         }
         
@@ -529,7 +565,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a caldo 1 colore.
+        ///   Looks up a localized string similar to laminazione 1 colore.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_1 {
             get {
@@ -538,7 +574,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a caldo 2 colori.
+        ///   Looks up a localized string similar to laminazione 2 colori.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_2 {
             get {
@@ -547,7 +583,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a caldo 3 colori.
+        ///   Looks up a localized string similar to laminazione 3 colori.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_3 {
             get {
@@ -556,7 +592,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a caldo 4 colori.
+        ///   Looks up a localized string similar to laminazione 4 colori.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_4 {
             get {
@@ -565,7 +601,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cliche stampa a caldo.
+        ///   Looks up a localized string similar to Cliche laminazione.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_Implant {
             get {

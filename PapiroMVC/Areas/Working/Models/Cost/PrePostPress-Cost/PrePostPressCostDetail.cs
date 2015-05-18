@@ -76,9 +76,9 @@ namespace PapiroMVC.Models
             double quantita = 0;
             int typeOfQ = 0;
 
-            if (Printeres != null)
+            if (Printers != null)
             {
-                foreach (var item in Printeres)
+                foreach (var item in Printers)
                 {
                     quantita += item.TaskCost.QuantityMaterial ?? 0;
 

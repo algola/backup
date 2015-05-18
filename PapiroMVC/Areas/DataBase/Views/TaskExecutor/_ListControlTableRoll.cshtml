@@ -24,7 +24,7 @@
     <table id="listPrePostPress"><tr><td /></tr></table>
     <div id="pager"></div>
 
-    <br />
+    
 
     <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDigitalSheet", "TaskExecutor", new { Area = "Database" })');">
         <i class="icon-plus"></i>
@@ -238,7 +238,7 @@
             ignoreCase: true,
             //shrinkToFit: false,
             //viewrecords: true,
-            height: 300,
+            height: $(window).height() * 0.53,
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
 
@@ -322,7 +322,7 @@
                 $(window).bind('resize', function () {
 
                     var myGrid = $("#listPrePostPress");
-                    var width = $("#body-container").width();
+                    var width = $("#page-header").width();
                     try {
                         myGrid.jqGrid('setGridWidth', width, true);
 

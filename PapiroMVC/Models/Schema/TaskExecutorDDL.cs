@@ -75,7 +75,10 @@ namespace PapiroMVC.Model
 
             //FlatRoll
             dbS.AddColumnToTable("taskexecutors", "Serigraphy", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "SerigraphyPrintingUnit", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("taskexecutors", "FoilStamping", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("taskexecutors", "FoilStampingPrintingUnit", SchemaDb.IntUS, "0");
+
             dbS.AddColumnToTable("taskexecutors", "DieCutting", SchemaDb.Bool, "0");
 
             dbS.AddColumnToTable("taskexecutors", "ProofSheetFirstStartSerigraphy", SchemaDb.IntUS, "0");

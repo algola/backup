@@ -47,11 +47,11 @@ namespace PapiroMVC.Models
             //devo capire quale tipo quantità usare e che moltiplicatore usare!!!!
             //lo devo salvare in una proprietà del dettaglio costo
 
-            if (Printeres != null)
+            if (Printers != null)
             {
 
                 double gainForRun = 1;
-                foreach (var fromP in this.Printeres)
+                foreach (var fromP in this.Printers)
                 {
                     Starts = fromP.GainOnSide1;
 
@@ -68,9 +68,9 @@ namespace PapiroMVC.Models
             double quantita = 0;
             int typeOfQ = 0;
 
-            if (Printeres != null)
+            if (Printers != null)
             {
-                foreach (var item in Printeres)
+                foreach (var item in Printers)
                 {
                     quantita += item.TaskCost.Quantity ?? 0;
                     this.TypeOfQuantity = item.TypeOfQuantity;
@@ -90,10 +90,10 @@ namespace PapiroMVC.Models
 
             try
             {
-                var labelPerRoll = ((ProductPartSingleLabelRoll)this.Printeres.FirstOrDefault().ProductPart).LabelsPerRoll;
+                var labelPerRoll = ((ProductPartSingleLabelRoll)this.Printers.FirstOrDefault().ProductPart).LabelsPerRoll;
                 if (labelPerRoll != null)
                 {
-                    RollChanges = (qta / labelPerRoll) / this.Printeres.FirstOrDefault().ProductPartPrinting.CalculatedSide1Gain;
+                    RollChanges = (qta / labelPerRoll) / this.Printers.FirstOrDefault().ProductPartPrinting.CalculatedSide1Gain;
                 }
             }
             catch (Exception)

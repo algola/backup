@@ -30,7 +30,7 @@
 }
 
 
-<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv" class="control-group">
+<div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
     {
         @Html.AlgolaEditorFor(model => model.Format)
@@ -42,7 +42,8 @@
         <div class="controls col-sm-9">
 
             @Html.DropDownListFor((model => model.Format),
-            new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"))
+            new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"), new { @class = "col-xs-10 col-sm-5" })
+
         </div>
 
     }
@@ -71,18 +72,14 @@ else
 @Html.HiddenFor(model => model.FormatType)
 
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatTxTDiv" hidden="hidden">
-
     @Html.AlgolaEditorFor(model => model.FormatPersonalized, new { @class = "personal" })
-
 </div>
 
-<hr />
 
 @Html.AlgolaEditorFor(model => model.LabelsPerRoll)
 @Html.HiddenFor(model => model.SoulDiameter)
 @Html.HiddenFor(model => model.MaxDiameter)
 
-<hr />
 
 <!-- artilce -->
 @for (int i = 0; i < Model.ProductPartsPrintableArticlePerView.Count; i++)

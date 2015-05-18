@@ -139,7 +139,7 @@ namespace PapiroMVC.Models
 
         #endregion
 
-        public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
+        public CostDetail MakeCostDetail(IQueryable<TaskExecutor> tskExecs, IQueryable<Article> articles, string codTaskExecutor = "")
         {
             CostDetail cv = null;
             ProductPart productPart = null;
@@ -180,37 +180,25 @@ namespace PapiroMVC.Models
                 productPart = this.ProductPartTask.ProductPart;
             }
 
-
-
             #region tavolo di controllo rotolo
             if (codTypeOfTask == "TAVOLOCONTROLLO")
             {
                 Console.WriteLine("Tavolo di controllo");
                 String codParte = String.Empty;
 
-                /* se è una STAMPA 
-                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
-                 * etichette in rotolo, manifesti etc...
-                 * per ora carico.
-                 */
+                tskExecs = TaskExecutor.FilterByTask(tskExecs, codTypeOfTask);
 
-                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-
-                if (tskExec.Count() > 0)
+                if (tskExecs.Count() > 0)
                 {
 
-                    switch (tskExec.FirstOrDefault().TypeOfExecutor)
+                    switch (tskExecs.FirstOrDefault().TypeOfExecutor)
                     {
                         case TaskExecutor.ExecutorType.ControlTableRoll:
                             cv = new ControlTableCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles);
-
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
+                            cv.InitCostDetail(tskExecs, articles);
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             break;
 
@@ -230,30 +218,31 @@ namespace PapiroMVC.Models
             #endregion
 
 
-            #region tavolo di controllo rotolo
-            if (codTypeOfTask == "FUSTELLATURA")
+            #region serigrafia rotolo!!! ripasso!!!
+            if (codTypeOfTask == "SERIGRAFIAROTOLO")
             {
-                Console.WriteLine("Fustellatura");
+                Console.WriteLine("Serigrafia rotolo");
                 String codParte = String.Empty;
 
-                /* se è una STAMPA 
-                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
-                 * etichette in rotolo, manifesti etc...
-                 * per ora carico.
-                 */
+                tskExecs = TaskExecutor.FilterByTask(tskExecs, codTypeOfTask);
 
-                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-
-                if (tskExec.Count() > 0)
+                if (tskExecs.Count() > 0)
                 {
 
-                    cv = new PrePostPressCostDetail();
-                    cv.TaskCost = this;
-                    cv.InitCostDetail(tskExec, articles);
-
-                    if (cv.TaskExecutors != null)
+                    switch (tskExecs.FirstOrDefault().TypeOfExecutor)
                     {
-                        cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
+                        case TaskExecutor.ExecutorType.FlatRoll:
+                            cv = new  RepassRollCostDetail();
+
+                            cv.TaskCost = this;
+                            cv.InitCostDetail(tskExecs, articles);
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
+
+                            break;
+
+                        default:
+                            break;
+
                     }
 
                     cv.ProductPart = productPart;
@@ -266,8 +255,41 @@ namespace PapiroMVC.Models
             }
             #endregion
 
+            #region tavolo di controllo rotolo
+            if (codTypeOfTask == "FUSTELLATURA")
+            {
+                Console.WriteLine("Fustellatura");
+                String codParte = String.Empty;
 
+                /* se è una STAMPA 
+                 * dovrò selezionare il tipo di macchina anche a seconda del tipo di lavoro
+                 * etichette in rotolo, manifesti etc...
+                 * per ora carico.
+                 */
 
+                tskExecs = TaskExecutor.FilterByTask(tskExecs, codTypeOfTask);
+
+                if (tskExecs.Count() > 0)
+                {
+
+                    cv = new PrePostPressCostDetail();
+                    cv.TaskCost = this;
+                    cv.InitCostDetail(tskExecs, articles);
+
+                    if (cv.TaskExecutors != null)
+                    {
+                        cv.CodTaskExecutorSelected = tskExecs.FirstOrDefault().CodTaskExecutor;
+                    }
+
+                    cv.ProductPart = productPart;
+
+                    cv.CodCost = this.CodCost;
+                    cv.CodCostDetail = this.CodCost;
+
+                }
+
+            }
+            #endregion
 
             if (codTypeOfTask == "STAMPA" ||
                 codTypeOfTask == "STAMPARIGIDO" ||
@@ -282,19 +304,21 @@ namespace PapiroMVC.Models
                  * etichette in rotolo, manifesti etc...
                  * per ora carico.
                  */
+                
+                tskExecs = TaskExecutor.FilterByTask(tskExecs, codTypeOfTask);
 
-                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+                //search selected taskexecutor
+                var tskFirst = tskExecs.Where(x => x.CodTaskExecutor == codTaskExecutor).FirstOrDefault();
 
-                if (tskExec.Count() > 0)
+                if (tskExecs.Count() > 0)
                 {
-
-                    switch (tskExec.FirstOrDefault().TypeOfExecutor)
+                    switch ((tskFirst!=null?tskFirst:tskExecs.FirstOrDefault()).TypeOfExecutor)
                     {
                         case TaskExecutor.ExecutorType.LithoSheet:
                             cv = new PrintingSheetCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles);
+                            cv.InitCostDetail(tskExecs, articles);
 
                             ((PrintingSheetCostDetail)cv).BuyingFormat =
                                  (((PrintingSheetCostDetail)cv).BuyingFormat == "" || ((PrintingSheetCostDetail)cv).BuyingFormat == null) ?
@@ -308,18 +332,14 @@ namespace PapiroMVC.Models
                                 : ((PrintingSheetCostDetail)cv).PrintingFormat;
 
 
-
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             break;
                         case TaskExecutor.ExecutorType.LithoRoll:
                             break;
                         case TaskExecutor.ExecutorType.DigitalSheet:
                             cv = new PrintingSheetCostDetail();
-                            cv.TaskExecutors = tskExec.ToList();
+                            cv.TaskExecutors = tskExecs.ToList();
                             cv.TaskCost = this;
                             break;
                         case TaskExecutor.ExecutorType.DigitalRoll:
@@ -329,13 +349,10 @@ namespace PapiroMVC.Models
                             cv = new PrintingRollCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles);
+                            cv.InitCostDetail(tskExecs, articles);
 
 
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             ((PrintingRollCostDetail)cv).BuyingFormat =
                                  (((PrintingRollCostDetail)cv).BuyingFormat == "" || ((PrintingRollCostDetail)cv).BuyingFormat == null) ?
@@ -349,17 +366,13 @@ namespace PapiroMVC.Models
                                 : ((PrintingRollCostDetail)cv).PrintingFormat;
 
 
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             cv.ProductPart = productPart;
 
                             ((PrintingRollCostDetail)cv).FuzzyAlgo();
 
                             Console.WriteLine(((PrintingRollCostDetail)cv).BuyingFormats);
-
 
                             if (((PrintingRollCostDetail)cv).PrintingFormat == null)
                             {
@@ -383,7 +396,7 @@ namespace PapiroMVC.Models
                             cv = new PrintingSheetCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles);
+                            cv.InitCostDetail(tskExecs, articles);
 
                             ((PrintingSheetCostDetail)cv).BuyingFormat =
                                  (((PrintingSheetCostDetail)cv).BuyingFormat == "" || ((PrintingSheetCostDetail)cv).BuyingFormat == null) ?
@@ -396,46 +409,42 @@ namespace PapiroMVC.Models
                                 ((PrintingSheetCostDetail)cv).BuyingFormat
                                 : ((PrintingSheetCostDetail)cv).PrintingFormat;
 
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                            }
+
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             break;
 
 
+
                         case TaskExecutor.ExecutorType.Flexo:
-                            cv = new PrintingLabelRollCostDetail();
+                        case TaskExecutor.ExecutorType.FlatRoll:
+
+                            cv = new PrintingZRollCostDetail();
 
                             cv.TaskCost = this;
-                            cv.InitCostDetail(tskExec, articles);
+                            cv.InitCostDetail(tskExecs, articles);
 
-
-                            if (cv.TaskExecutors.FirstOrDefault() != null)
-                            {
-                                cv.CodTaskExecutorSelected = tskExec.FirstOrDefault().CodTaskExecutor;
-                                cv.TaskexEcutorSelected = tskExec.FirstOrDefault();
-                            }
+                            cv.SetTaskexecutor(tskExecs, codTaskExecutor);
 
                             cv.ProductPart = productPart;
 
-                            ((PrintingLabelRollCostDetail)cv).DieTollerance = 0.5;
+                            ((PrintingZRollCostDetail)cv).DieTollerance = 0.5;
                             //qui voglio solo le fustelle flexo e semiroll
-                            ((PrintingLabelRollCostDetail)cv).Dies = articles.OfType<Die>().ToList();
+                            ((PrintingZRollCostDetail)cv).Dies = articles.OfType<Die>().ToList();
 
                             //search valid formats
-                            ((PrintingLabelRollCostDetail)cv).FuzzyAlgo();
+                            ((PrintingZRollCostDetail)cv).FuzzyAlgo();
 
-                            ((PrintingLabelRollCostDetail)cv).BuyingFormat =
-                                 (((PrintingLabelRollCostDetail)cv).BuyingFormat == "" || ((PrintingLabelRollCostDetail)cv).BuyingFormat == null) ?
-                                 (((PrintingLabelRollCostDetail)cv).BuyingFormats != null) && (((PrintingLabelRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingLabelRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
-                                 : ((PrintingLabelRollCostDetail)cv).BuyingFormat;
+                            ((PrintingZRollCostDetail)cv).BuyingFormat =
+                                 (((PrintingZRollCostDetail)cv).BuyingFormat == "" || ((PrintingZRollCostDetail)cv).BuyingFormat == null) ?
+                                 (((PrintingZRollCostDetail)cv).BuyingFormats != null) && (((PrintingZRollCostDetail)cv).BuyingFormats.Count > 0) ? ((PrintingZRollCostDetail)cv).BuyingFormats.FirstOrDefault() : null
+                                 : ((PrintingZRollCostDetail)cv).BuyingFormat;
 
                             //TODO: E' da calcolare il formato di stampa a seconda del formato macchina
-                            ((PrintingLabelRollCostDetail)cv).PrintingFormat =
-                                (((PrintingLabelRollCostDetail)cv).PrintingFormat == "" || ((PrintingLabelRollCostDetail)cv).PrintingFormat == null) ?
-                                ((PrintingLabelRollCostDetail)cv).BuyingFormat
-                                : ((PrintingLabelRollCostDetail)cv).PrintingFormat;
+                            ((PrintingZRollCostDetail)cv).PrintingFormat =
+                                (((PrintingZRollCostDetail)cv).PrintingFormat == "" || ((PrintingZRollCostDetail)cv).PrintingFormat == null) ?
+                                ((PrintingZRollCostDetail)cv).BuyingFormat
+                                : ((PrintingZRollCostDetail)cv).PrintingFormat;
 
 
 
@@ -473,11 +482,6 @@ namespace PapiroMVC.Models
             return cv;
         }
 
-
-        public CostDetail MakeCostDetail2(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles, IQueryable<Cost> costsDocumentProduct, Guid guid)
-        {
-            return null;
-        }
 
         public virtual void MergeField(DocX doc)
         {

@@ -77,8 +77,8 @@
         if (ids.length > 0) {
 
             hideProcessingMsg();
-            $("#dialog-confirm").dialog({
-                height: 280,
+            $("#dialog-confirm").removeClass("hide").dialog({
+                height: 'auto',
                 modal: true,
                 buttons: {
                     '@Html.T(strings,"DeleteCancel")': function () {

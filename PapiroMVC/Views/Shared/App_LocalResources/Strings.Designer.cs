@@ -790,7 +790,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Serigrafica.
+        ///   Looks up a localized string similar to Serigrafia.
         /// </summary>
         public static string SerigraphyArticleMenu {
             get {

@@ -9,52 +9,69 @@
     formatTypes.Add(new SelectListItem { Value = "1", Text = "Corto/Corto" });
     formatTypes.Add(new SelectListItem { Value = "2", Text = "Corto/Lungo" });
 
-    var pos = (Model.ProductPart.productpartprintings.FirstOrDefault().GainPartOnPrinting.ForceSideOnSide??0).ToString();
+    var pos = (Model.ProductPart.productpartprintings.FirstOrDefault().GainPartOnPrinting.ForceSideOnSide ?? 0).ToString();
 
     foreach (var item in formatTypes)
     {
-       item.Selected =  item.Value == pos;
-    }
-    
+        item.Selected = item.Value == pos;
     }
 
-<div class="well">
-    <div class="row-fluid">
+}
 
-        <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings,"FormatoCM")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "input-mini", id = "ddPartFormat" })
-        </div>
+<div class="container-fluid">
 
-        <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">@Html.T(strings,"Interspazio")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "input-mini", id = "ddPartDCut1" })
+    <div class="row">
 
-        </div>
-        <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">@Html.T(strings,"Interspazio")</h6>
-            @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini", id = "ddPartDCut2" })
+        <div class="well col-xs-12">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "FormatoCM")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "col-xs-12 input-mini", id = "ddPartFormat" })
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "Interspazio")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "col-xs-12 input-mini", id = "ddPartDCut1" })
+
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "Interspazio")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini col-xs-12", id = "ddPartDCut2" })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
+    <div class="row">
 
-<div class="well">
-    <div class="row-fluid">
+        <div class="well col-xs-12">
 
-        <div class="span3">
-            <h6 class="col-sm-1 control-label no-padding-right no-padding-bottom">Pose H</h6>
-            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide1Gain, new { @class = "input-mini", id = "gain1" })
-        </div>
+            <div class="container-fluid">
 
-        <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Pose L</h6>
-            @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide2Gain, new { @class = "input-mini", id = "gain2" })
-        </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-right no-padding-bottom">Pose H</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide1Gain, new { @class = "col-xs-12 input-mini", id = "gain1" })
+                    </div>
 
-        <div class="span3">
-            <h6 class="col-sm-3 control-label no-padding-right no-padding-bottom">Disp</h6>
-            @Html.DropDownList(pos, formatTypes, new { @class = "input-medium", id = "forceSide" })
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-right no-padding-bottom">Pose L</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.productpartprintings.FirstOrDefault().CalculatedSide2Gain, new { @class = "col-xs-12 input-mini", id = "gain2" })
+
+
+                    </div>
+
+                    <div class="col-xs-4">
+                        <h6 class="col-xs-12 control-label no-padding-right no-padding-bottom">Disp</h6>
+                        @Html.DropDownList(pos, formatTypes, new { @class = "col-xs-12 input-medium", id = "forceSide" })
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1170,7 +1170,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.GetPrintingLabelRollCostDetailPartial(System.String,System.String)">
+        <member name="M:PapiroMVC.Areas.Working.Controllers.DocumentController.GetPrintingZRollCostDetailPartial(System.String,System.String)">
             <summary>
             This Action returns partial view of CosteDetail
             </summary>
@@ -1291,6 +1291,11 @@
             
             </summary>
         </member>
+        <member name="P:PapiroMVC.Models.CostDetail.PrintingFormat">
+            <summary>
+            use this property to get PrintingFormat
+            </summary>
+        </member>
         <member name="T:PapiroMVC.Models.PrintingHintComparer">
             <summary>
             use for union
@@ -1316,7 +1321,7 @@
             Elenco dei possibili formati di acquisto 
             </summary>
         </member>
-        <member name="F:PapiroMVC.Models.PrintingLabelRollCostDetail.buyingFormats">
+        <member name="F:PapiroMVC.Models.PrintingZRollCostDetail.buyingFormats">
             <summary>
             Elenco dei possibili formati di acquisto 
             </summary>
@@ -5387,12 +5392,32 @@
               Looks up a localized string similar to Nessuna serigrafia.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_UVPROT">
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_SI">
             <summary>
-              Looks up a localized string similar to Serigrafia UV protettiva.
+              Looks up a localized string similar to Stampa Serigrafica.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIA_UVSPESSORATA">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV spessorata.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIAROTOLO_Implant">
+            <summary>
+              Looks up a localized string similar to Telaio serigrafico.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIAROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to Nessuna serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIAROTOLO_SI">
+            <summary>
+              Looks up a localized string similar to Stampa Serigrafica.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSERIGRAFIAROTOLO_UVSPESSORATA">
             <summary>
               Looks up a localized string similar to Serigrafia UV spessorata.
             </summary>
@@ -5424,27 +5449,27 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_1">
             <summary>
-              Looks up a localized string similar to stampa a caldo 1 colore.
+              Looks up a localized string similar to laminazione 1 colore.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_2">
             <summary>
-              Looks up a localized string similar to stampa a caldo 2 colori.
+              Looks up a localized string similar to laminazione 2 colori.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_3">
             <summary>
-              Looks up a localized string similar to stampa a caldo 3 colori.
+              Looks up a localized string similar to laminazione 3 colori.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_4">
             <summary>
-              Looks up a localized string similar to stampa a caldo 4 colori.
+              Looks up a localized string similar to laminazione 4 colori.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_Implant">
             <summary>
-              Looks up a localized string similar to Cliche stampa a caldo.
+              Looks up a localized string similar to Cliche laminazione.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.Products.ResProductPartTask.CodSTAMPAACALDOROTOLO_NO">
@@ -6778,7 +6803,7 @@
         </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.CostImplant">
             <summary>
-              Looks up a localized string similar to Costo impanto / mq.
+              Looks up a localized string similar to Costo impianto / mq.
             </summary>
         </member>
         <member name="P:PapiroMVC.Models.Resources.TaskExecutor.ResFlexo.CostImplantToolTip">
@@ -9678,12 +9703,27 @@
               Looks up a localized string similar to Nessuna serigrafia.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_UVPROT">
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_SI">
             <summary>
-              Looks up a localized string similar to Serigrafia UV protettiva.
+              Looks up a localized string similar to Stampa Serigrafica.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIA_UVSPESSORATA">
+            <summary>
+              Looks up a localized string similar to Serigrafia UV spessorata.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIAROTOLO_NO">
+            <summary>
+              Looks up a localized string similar to Nessuna serigrafia.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIAROTOLO_SI">
+            <summary>
+              Looks up a localized string similar to Stampa Serigrafica.
+            </summary>
+        </member>
+        <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSERIGRAFIAROTOLO_UVSPESSORATA">
             <summary>
               Looks up a localized string similar to Serigrafia UV spessorata.
             </summary>
@@ -9720,7 +9760,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO">
             <summary>
-              Looks up a localized string similar to Stampa a caldo.
+              Looks up a localized string similar to Laminazione.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_1">
@@ -9745,7 +9785,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPAACALDOROTOLO_NO">
             <summary>
-              Looks up a localized string similar to Nessuna stampa a caldo.
+              Looks up a localized string similar to Nessuna laminazione.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask.CodSTAMPADIGITALE">

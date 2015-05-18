@@ -201,10 +201,12 @@ namespace PapiroMVC.Areas.Working.Controllers
                 //save all changes
                 p.CostDetailRepository.Save();
 
+
+                //Updating
                 //reset contentx
                 p.CostDetailRepository.SetDbName(CurrentDatabase);
 
-                foreach (var c in newProdDoc.Costs)
+                foreach (var c in newProdDoc.Costs.OrderBy(x=>x.CodCost))
                 {
                     var cost = p.CostDetailRepository.GetSingle(c.CodCost);
 
@@ -215,7 +217,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //another important link to fix is the printer link
                         //this for PrePressCost
                         if (cost.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail ||
-                            cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail)
+                            cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail ||
+                            cost.TypeOfCostDetail == CostDetail.CostDetailType.RepassRollCostDetail                             
+                            )
                         {
                             //get ST codCost
                             cost.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cost.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
@@ -227,7 +231,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 foreach (var item in cost.CodPartPrintingCostDetail)
                                 {
                                     var cv2 = p.CostDetailRepository.GetSingle(item);
-                                    cost.Printeres.Add(cv2);
+                                    cost.Printers.Add(cv2);
                                     cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
                                 }
                             }
@@ -236,10 +240,20 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //regen cost initialization
                         cost.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
                         //and regen cost
+
+
+                        //DA RIMUOVERE
+                        if (cost.TaskCost.CostDetails.FirstOrDefault(x => x.CodCostDetail == cost.CodCostDetail) == null)
+                        {
+                            cost.TaskCost.CostDetails.Add(cost);
+                        }
+                        //********
+                    
                         cost.Update();
                         cost.TaskCost.Update();
 
                         p.CostDetailRepository.Add(cost);
+                        p.CostDetailRepository.Save();
                     }
 
                 }
@@ -249,7 +263,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 doc = documentRepository.GetSingle(codDocument);
                 newProdDoc = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == newCodDocumentProduct);
-                newProdDoc.UpdateCost();
+                newProdDoc.UpdateTotal();
 
                 p.DocumentRepository.Edit(doc);
                 p.DocumentRepository.Save();
@@ -309,7 +323,33 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View();
         }
 
-        
+
+        /// <summary>
+        /// Delete DocumentProduct 
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteDocumentProduct(string ids)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
+            {
+                var c = documentRepository.GetDocumentProductsByCodProduct(id);
+
+                foreach (var item in c)
+                {
+                    documentRepository.DeleteDocumentProduct(item);                    
+                }
+            }
+
+            documentRepository.Save();
+
+            return Json(new { redirectUrl = Url.Action("ListEstimate", "Document", new { area = "Working" }) });
+        }
+
+
+
         /// <summary>
         /// Delete estimate and rediret to List
         /// </summary>

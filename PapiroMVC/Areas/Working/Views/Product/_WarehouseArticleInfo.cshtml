@@ -4,7 +4,15 @@
 @{
     string strings = "~/Areas/Working/Views/Product/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseTitle");
-    var x = Model.ArticleOrProduct.Product.ProductName;
+    var x = String.Empty;
+    try
+    {
+    x=    Model.ArticleOrProduct.Product.ProductName;
+    }
+    catch (Exception)
+    {
+        x = "";
+    }
 }
 
 <fieldset>

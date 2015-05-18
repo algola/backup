@@ -164,7 +164,7 @@
 
     function showPrinter() {
 
-        var dialog = $("#dialog-printreport").dialog({
+        var dialog = $("#dialog-printreport").removeClass("hide").dialog({
             width: 'auto',
             modal: true,
             title: '@Html.T(strings, "DialogPrintOrderTitle")',
@@ -282,7 +282,7 @@
     $("#staticDialog").on('click', function (e) {
         e.preventDefault();
 
-        var dialog = $("#dialog-message").dialog({
+        var dialog = $("#dialog-message").removeClass("hide").dialog({
             width: 'auto',
             modal: true,
             title: '@Html.T(stringsGrid, "DialogSubTitle")',

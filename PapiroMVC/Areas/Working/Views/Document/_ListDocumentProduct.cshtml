@@ -15,9 +15,22 @@
 
     <table id="listDocumentProduct" style="background-color:white"><tr><td /></tr></table>
     <div id="pager"></div>
+    <button class="btn btn-danger" type="button" id="delete">
+        <i class="icon-trash bigger-125"></i>
+        @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
+        <span class="badge badge-transparent">
+            <i class="light-red icon-asterisk"></i>
+        </span>
+    </button>
+
 </div>
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+
+<div id="dialog-confirm" class="hide">
+    @Html.T(strings, "DeleteMessageEstimate")
+</div>
+
 
 <script type="text/javascript">
     //<![CDATA[
@@ -206,7 +219,7 @@
             //shrinkToFit: false,
             //viewrecords: true,
             caption: '',
-            height: 300,
+            height: $(window).height() * 0.53,
 
             onSelectRow: function (id) {
                 if (id && id !== lastSelPD) {
@@ -318,7 +331,7 @@
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
 
-        var width = $("#body-container").width();
+        var width = $("#page-header").width();
         try {
             myGrid.jqGrid('setGridWidth', width, true);
 
@@ -338,5 +351,51 @@
     function reloadCostPerMqStep() {
         $("#listDocumentProduct").trigger("reloadGrid");
     }
+
+
+
+    $("#delete").click(function () {
+        var grid = jQuery("#listDocumentProduct");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+        if (ids.length > 0) {
+
+            hideProcessingMsg();
+            $("#dialog-confirm").removeClass("hide").dialog({
+                height: 'auto',
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        //alert("Confirm");
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeleteDocumentProduct", "Document", null)',
+                            data: {
+                                ids: JSON.stringify(ids)
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                //if (msg.isRedirect) {
+                                //    window.location.href = msg.redirectUrl;
+                                //}
+                                $("#listDocumentProduct").trigger("reloadGrid");
+                            },
+                            error: function (res, status, exeption) {
+                                $("#listDocumentProduct").trigger("reloadGrid");
+
+                            }
+                        });
+
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            hideProcessingMsg();
+        }
+    });
+
 
 </script>

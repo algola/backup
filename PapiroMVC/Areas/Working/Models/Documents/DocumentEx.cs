@@ -75,7 +75,6 @@ namespace PapiroMVC.Models
                 item.TimeStampTable = DateTime.Now;
             }
 
-
             #region DocumentProduct
             var ppart = this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
@@ -84,12 +83,46 @@ namespace PapiroMVC.Models
                 item.CodDocument = this.CodDocument;
                 item.TimeStampTable = DateTime.Now;
 
-                var costl = item.Costs.OrderBy(x => x.CodCost).ToList();
-                foreach (var itemCost in item.Costs.OrderBy(x => x.CodCost))
+                var costl = item.Costs.OrderBy(x => x.CodCost, new EmptyStringsAreLast()).ToList();
+                // var costl = item.Costs.OrderBy(x => x.CodCost).ToList();
+                foreach (var itemCost in item.Costs.OrderBy(x => x.CodCost, new EmptyStringsAreLast()))
                 {
                     itemCost.TimeStampTable = DateTime.Now;
                     itemCost.CodDocumentProduct = item.CodDocumentProduct;
-                    itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();
+
+                    //compatibilità verso le versioni precedenti
+                    //******************************************************
+                    //se il codice finale è lungo < 3 allora è vecchio ed è un casino e lo lascio così
+                    //altrimenti modifico il codice!!!
+
+                    var s = itemCost.CodCost??"";
+                    var lastCod = String.Empty;
+                    // Loop through all instances of the letter a.
+                    int i = 0;
+                    while ((i = s.IndexOf('-', i)) != -1)
+                    {
+                        // Print out the substring.
+                        lastCod = s.Substring(i + 1);
+                        // Increment the index.
+                        i++;
+                    }
+
+
+                    if (lastCod.Length<3 && lastCod != "")
+                    {
+                        itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString();                        
+                    }
+                    else
+                    {
+                        itemCost.CodCost = item.CodDocumentProduct + "-" + costl.IndexOf(itemCost).ToString().PadLeft(6, '0');                                                    
+                    }
+                    
+
+
+
+
+                    //compatibilità verso le versioni precedenti
+                    //******************************************************
 
                     if (deep)
                     {
@@ -98,7 +131,7 @@ namespace PapiroMVC.Models
                             itemCostDetail.CodCost = itemCost.CodCost;
                             itemCostDetail.CodCostDetail = itemCost.CodCost;
                             itemCostDetail.CostDetailCostCodeRigen();
-                        }                        
+                        }
                     }
 
                 }

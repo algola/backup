@@ -361,8 +361,18 @@
     function resize@(Model.CodDocumentProduct.Replace("-","_"))() {
 
         var myGrid = $("#costGrid@(Model.CodDocumentProduct)");
-        var width = $("#body-container").width();
+
+        var width = $("#myTabo").width();
+
+        var t =$("#myTabo").offset().top - $("#myTabo").height;
+        var s = $(window).height() - t;
+
+
         try {
+
+            var $content = $('#container-grid');
+            $content.height(s);
+            myGrid.jquery('setGridHeigth', s);
             myGrid.jqGrid('setGridWidth', width, false);
 
         } catch (e) {
@@ -371,10 +381,13 @@
 
     }
 
+    var resize@(Model.CodDocumentProduct.Replace("-","_"))clearTimeout;
+
     //resize jqgrid after windows resize
     $(window).bind('resize', function () {
-        //ricalibro la griglia
-        //      resize@(Model.CodDocumentProduct.Replace("-", "_"));
+        clearTimeout(resize@(Model.CodDocumentProduct.Replace("-","_"))clearTimeout);
+        resize@(Model.CodDocumentProduct.Replace("-","_"))clearTimeout = setTimeout('resize@(Model.CodDocumentProduct.Replace("-", "_"))()',500)
+        //alert("ciao");
     }).trigger('resize');
 
 </script>

@@ -22,7 +22,7 @@
     <div id="pager"></div>
 
 
-    <br />
+    
 
     <button class="btn btn-danger" type="button" id="delete">
         <i class="icon-trash bigger-125"></i>
@@ -226,7 +226,7 @@
             //shrinkToFit: false,
             //viewrecords: true,
             caption: '',
-            height: 300,
+            height: $(window).height() * 0.53,
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
 
@@ -315,7 +315,7 @@
     $(window).bind('resize', function () {
 
         var myGrid = $("#list");
-        var width = $("#body-container").width();
+        var width = $("#page-header").width();
         try {
             myGrid.jqGrid('setGridWidth', width, false);
 
@@ -349,7 +349,7 @@
         if (ids.length > 0) {
 
             hideProcessingMsg();
-            $("#dialog-confirm").dialog({
+            $("#dialog-confirm").removeClass("hide").dialog({
                 height: 280,
                 modal: true,
                 buttons: {

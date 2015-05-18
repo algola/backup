@@ -51,14 +51,14 @@ else
     @Html.HiddenFor(m => m.Profile.Name)
 
     <div class="well no-padding-right no-padding-left">
-        <div class="control-group">
+        <div class="form-group">
             <label class="col-sm-3 control-label"> @Html.T(strings, "CardNumber") </label>
             <div class="col-sm-9 controls">
                 <input type="text" class="col-xs-10 col-sm-5" autocomplete="off" data-encrypted-name="number">
             </div>
 
         </div>
-        <div class="control-group">
+        <div class="form-group">
             <label class="col-sm-3 control-label"> @Html.T(strings, "CVV") </label>
             <div class="col-sm-9 controls">
                 <input type="text" class="col-xs-1 span1 col-sm-5" autocomplete="off" data-encrypted-name="cvv">
@@ -66,7 +66,7 @@ else
 
         </div>
 
-        <div class="control-group">
+        <div class="form-group">
             <label class="col-sm-3 control-label"> @Html.T(strings, "Expiration") </label>
             <div class="col-sm-9 controls">
                 <input type="text" class="col-xs-1 span1 col-sm-5" autocomplete="off" data-encrypted-name="month" />

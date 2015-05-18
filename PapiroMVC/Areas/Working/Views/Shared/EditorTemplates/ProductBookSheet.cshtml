@@ -43,7 +43,7 @@
         <div class="controls col-sm-9">
 
             @Html.DropDownListFor((model => model.Format),
-            new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"))
+             new SelectList(ViewBag.FormatsName, "CodFormat", "FormatName"), new { @class = "col-xs-10 col-sm-5" })
         </div>
     }
 </div>

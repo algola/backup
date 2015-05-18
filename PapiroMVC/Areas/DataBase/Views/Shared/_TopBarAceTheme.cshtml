@@ -7,99 +7,136 @@
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "AppTitle");
 }
 
-<div class="navbar-container navbar-inner" id="navbar-container">
-    <div class="navbar-header pull-left">
-        <a href="#" class="brand" style="margin-left: 10px">
-            <small>
-                <i class="icon-group"></i>
-            </small>
-            @*            @Html.T(strings, "AppName")*@
-            <b>P</b>apiro<b>S</b>tar
-            @if (!Request.IsAuthenticated)
-            {
-                @Html.T(strings, "Demo");
-            }
 
-        </a>
-        <!--/.brand-->
-    </div>
+<div id="navbar" class="navbar navbar-default">
+    <script type="text/javascript">
+        try { ace.settings.check('navbar', 'fixed') } catch (e) { }
+    </script>
 
-    <div class="navbar-header pull-right" role="navigation" style="margin-right: 20px">
-        <ul class="nav ace-nav">
-            @if (Request.IsAuthenticated)
-            {
-                <li class="light-blue" style="float: right">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="User's Photo" />
-                        <span class="user-info">
-                            <small>@Html.T(strings, "Welcome")</small>
-                            @User.Identity.Name
-                        </span>
 
-                        <i class="icon-caret-down"></i>
-                    </a>
 
-                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "EditProfileMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfile", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-user")
-                        </li>
+    <div class="navbar-container" id="navbar-container">
 
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "EditProfileModuleMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileModule", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-wrench")
-                        </li>
+        <button type="button" class="navbar-toggle menu-toggler pull-left" id="menu-toggler" data-target="#sidebar">
+            <span class="sr-only">Toggle sidebar</span>
 
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "EditProfileCcMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileCc", title = Html.T(strings, "EditProfileCcMenu"), area = "Account" }, "fa fa-fw fa-lg fa-credit-card")
-                        </li>
+            <span class="icon-bar"></span>
 
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "ChangePasswordMenu"), "ChangePassword", "Account", new { @class = "username", title = "Change password", area = "Account" }, "fa fa-fw fa-lg fa-shield")
-                        </li>
+            <span class="icon-bar"></span>
 
-                        @if (User.Identity.Name == "db")
-                        {
+            <span class="icon-bar"></span>
+        </button>
+
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                    <i class="icon-group"></i>
+
+                </small>
+                @*            @Html.T(strings, "AppName")*@
+                <b>P</b>apiro<b>S</b>tar
+                @if (!Request.IsAuthenticated)
+                {
+                    @Html.T(strings, "Demo");
+                }
+
+            </a>
+
+            <!--/.brand-->
+        </div>
+
+ 
+
+        <div class="navbar-buttons navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                @if (Request.IsAuthenticated)
+                {
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle" aria-expanded="false">
+                            <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="PapiroStar" />
+                            <span class="user-info">
+                                <small>@Html.T(strings, "Welcome")</small>
+                                @User.Identity.Name
+                            </span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "fa fa-fw fa-lg fa-group")
+                                @Html.ActionLinkImage(Html.T(strings, "EditProfileMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfile", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-user")
                             </li>
 
-                        }
+                            <li>
+                                @Html.ActionLinkImage(Html.T(strings, "EditProfileModuleMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileModule", title = Html.T(strings, "EditProfileMenu"), area = "Account" }, "fa fa-fw fa-lg fa-wrench")
+                            </li>
 
-                        <li class="divider"></li>
+                            <li>
+                                @Html.ActionLinkImage(Html.T(strings, "EditProfileCcMenu"), "EditProfile", "Account", new { @class = "username", view = "EditProfileCc", title = Html.T(strings, "EditProfileCcMenu"), area = "Account" }, "fa fa-fw fa-lg fa-credit-card")
+                            </li>
 
-                        <li>
-                            @Html.ActionLinkImage(@Html.T(strings, "LogOffMenu"), "LogOff", "Account", new { area = "Account" }, "fa fa-fw fa-lg fa-power-off")
-                        </li>
-                    </ul>
-                </li>
-            }
-            else
-            {
-                //se non si è loggati propongo la possibilità di loggarsi o registrarsi
-                <li class="light-blue" style="float: right">
-                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="User's Photo" />
-                        <span class="user-info">
-                            <small>@Html.T(strings, "Start")</small>
-                            @Html.T(strings, "AppName")
-                        </span>
+                            <li>
+                                @Html.ActionLinkImage(Html.T(strings, "ChangePasswordMenu"), "ChangePassword", "Account", new { @class = "username", title = "Change password", area = "Account" }, "fa fa-fw fa-lg fa-shield")
+                            </li>
 
-                        <i class="icon-caret-down"></i>
-                    </a>
+                            @if (User.Identity.Name == "db")
+                            {
+                                <li>
+                                    @Html.ActionLinkImage(@Html.T(strings, "UpdateDbMenu"), "UpdateDb", "Home", new { area = "" }, "fa fa-fw fa-lg fa-group")
+                                </li>
 
-                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "fa fa-fw fa-lg fa-sign-in")
-                        </li>
-                        <li>
-                            @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "fa fa-fw fa-lg fa-group")
-                        </li>
-                    </ul>
-                </li>
-            }
-        </ul>
-        <!--/.ace-nav-->
+                            }
+
+                            <li class="divider"></li>
+
+                            <li>
+                                @Html.ActionLinkImage(@Html.T(strings, "LogOffMenu"), "LogOff", "Account", new { area = "Account" }, "fa fa-fw fa-lg fa-power-off")
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    //se non si è loggati propongo la possibilità di loggarsi o registrarsi
+
+                    <li class="light-blue">
+                        <a data-toggle="dropdown" href="#" class="dropdown-toggle" aria-expanded="false">
+                            <img class="nav-user-photo" src="~/Content/acetheme/assets/avatars/avatar2.png" alt="PapiroStar" />
+                            <span class="user-info">
+                                <small>@Html.T(strings, "Start")</small>
+                                @Html.T(strings, "AppName")
+                            </span>
+
+                            <i class="ace-icon fa fa-caret-down"></i>
+                        </a>
+
+                        <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                            <li>
+                                @Html.ActionLinkImage(Html.T(strings, "AccessAccount"), "Login", "Account", new { area = "Account", id = "loginLink" }, "fa fa-fw fa-lg fa-sign-in")
+                            </li>
+                            <li>
+                                @Html.ActionLinkImage(Html.T(strings, "RegistrationAccount"), "Register", "Account", new { area = "Account", id = "registerLink" }, "fa fa-fw fa-lg fa-group")
+                            </li>
+                        </ul>
+                    </li>
+
+
+
+                }
+
+
+
+
+
+
+            </ul>
+            <!--/.ace-nav-->
+
+        </div>
+
+
 
     </div>
-    <!--/.container-fluid-->
+    <!--/.navbar-inner-->
+
 </div>
-<!--/.navbar-inner-->

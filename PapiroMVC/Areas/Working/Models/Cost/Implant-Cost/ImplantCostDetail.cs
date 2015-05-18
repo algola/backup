@@ -54,9 +54,14 @@ namespace PapiroMVC.Models
             //GainForRun is number of Implants (clichè)           
             GainForRun = this.ComputedBy.Implants; //gli avviamenti mi danno il numero di impianti
 
+            //OLD FUNZIONANTE PER PRINTING MA NON PER PREPOSTPRESS CON IMPIANTO
+            ////GainForMqRun is mq in printing format
+            //GainForMqRun = (double)(this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()
+            //    * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000);
+
             //GainForMqRun is mq in printing format
-            GainForMqRun = (double)(this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide1()
-                * this.ComputedBy.ProductPartPrinting.PrintingFormat.GetSide2() / 10000);
+            GainForMqRun = (double)(this.ComputedBy.PrintingFormat.GetSide1()
+                * this.ComputedBy.PrintingFormat.GetSide2() / 10000);
 
             TypeOfQuantity = (int)ComputedBy.TaskexEcutorSelected.TypeOfImplantQuantity;
             

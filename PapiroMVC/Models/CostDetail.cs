@@ -96,6 +96,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<double> Washes { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> JustComputed { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

@@ -297,4 +297,7 @@
   <data name="ProductNameGeneratorDesc" xml:space="preserve">
     <value>Generatore di descrizione</value>
   </data>
+  <data name="WarehouseArticleMovTitle" xml:space="preserve">
+    <value>Movimento</value>
+  </data>
 </root>

@@ -11,66 +11,73 @@
 
     @using (Ajax.BeginForm("Action", "Article", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
-        @Html.ValidationSummary(true)
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
 
 
-        @Html.HiddenFor(model => model.Article.TimeStampTable)
+                @Html.HiddenFor(model => model.Article.TimeStampTable)
 
-        @Html.HiddenFor(model => model.Article.CodArticle)
-        @Html.HiddenFor(model => model.Article.ArticleName)
+                @Html.HiddenFor(model => model.Article.CodArticle)
+                @Html.HiddenFor(model => model.Article.ArticleName)
 
-        @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
-        @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.TypeOfMaterial, "TypeOfMaterialAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.NameOfMaterial, "NameOfMaterialAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.Color, "ColorAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
-        @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
-        @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
-        @Html.HiddenFor(model => model.Article.Tags)
+                @Html.AlgolaAutocompleteFor(model => model.Article.Adhesive, "AdhesiveAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.Weight, "WeightAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.Width, "WidthAutoComplete", "Article")
+                @Html.HiddenFor(model => model.Article.Tags)
 
-        @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)
+                @Html.EditorFor(model => model.Article.NoUseInEstimateCalculation)
 
-        @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.MqForafait, "MqForafaitAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
+                @Html.AlgolaAutocompleteFor(model => model.Article.Hand, "HandAutoComplete", "Article")
 
-        @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
-        @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+                @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+                @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
 
-        @Html.HiddenFor(model => model.Article.UnitOfMeasure)
+                @Html.HiddenFor(model => model.Article.UnitOfMeasure)
 
-        <div id='_RollPrintableArticleStandardCost'>
-            @Html.Partial("_RollPrintableArticleStandardCost", Model)
+                <div id='_RollPrintableArticleStandardCost'>
+                    @Html.Partial("_RollPrintableArticleStandardCost", Model)
+                </div>
+                <br />
+
+                <div id='_WarehouseArticle'>
+                    @Html.Partial("_WarehouseArticle", Model)
+                </div>
+                <br />
+
+
+                <p>
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new { Area = "Database" })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")
+                    {
+                        <button class="btn" type="submit" name="CreateRollPrintableArticle">
+                            <i class="icon-save"></i>
+                            @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
+                        </button>
+                    }
+
+                </p>
+
+
+            </div>
         </div>
-        <br />
-
-        <div id='_WarehouseArticle'>
-            @Html.Partial("_WarehouseArticle", Model)
-        </div>
-        <br />
-
-
-        <p>
-            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexRollPrintableArticle", "Article", new { Area = "Database" })');">
-                <i class="icon-arrow-left"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Cancel")
-            </button>
-
-            <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                <i class="icon-save"></i>
-                @HttpContext.GetLocalResourceObject(strings, "Save")
-            </button>
-
-            @if (ViewBag.ActionMethod != "CreateRollPrintableArticle")
-            {
-                <button class="btn" type="submit" name="CreateRollPrintableArticle">
-                    <i class="icon-save"></i>
-                    @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
-                </button>
-            }
-
-        </p>
 
     }
 

@@ -475,11 +475,11 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Serigrafia UV protettiva.
+        ///   Looks up a localized string similar to Stampa Serigrafica.
         /// </summary>
-        public static string CodSERIGRAFIA_UVPROT {
+        public static string CodSERIGRAFIA_SI {
             get {
-                return ResourceManager.GetString("CodSERIGRAFIA_UVPROT", resourceCulture);
+                return ResourceManager.GetString("CodSERIGRAFIA_SI", resourceCulture);
             }
         }
         
@@ -489,6 +489,33 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         public static string CodSERIGRAFIA_UVSPESSORATA {
             get {
                 return ResourceManager.GetString("CodSERIGRAFIA_UVSPESSORATA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nessuna serigrafia.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_NO {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_SI {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_SI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Serigrafia UV spessorata.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_UVSPESSORATA {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_UVSPESSORATA", resourceCulture);
             }
         }
         
@@ -547,7 +574,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampa a caldo.
+        ///   Looks up a localized string similar to Laminazione.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO {
             get {
@@ -592,7 +619,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nessuna stampa a caldo.
+        ///   Looks up a localized string similar to Nessuna laminazione.
         /// </summary>
         public static string CodSTAMPAACALDOROTOLO_NO {
             get {

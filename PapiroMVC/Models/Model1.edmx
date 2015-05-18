@@ -124,6 +124,8 @@
           <Property Name="CalculatedKg" Type="double" />
           <Property Name="CalculatedTime" Type="time" Precision="0" />
           <Property Name="Washes" Type="double" />
+          <Property Name="SelectorPrintingRoll" Type="int" />
+          <Property Name="JustComputed" Type="bit" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -3500,6 +3502,7 @@
           <Property Name="CalculatedKg" Type="Double" />
           <Property Name="CalculatedTime" Type="Time" />
           <Property Name="Washes" Type="Double" />
+          <Property Name="JustComputed" Type="Boolean" />
           </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -3815,7 +3818,7 @@
           <Property Name="MaxDiameter" Type="Double" />
         </EntityType>
         <EntityType Name="ProductPartLabelRollArticle" BaseType="dbModel.ProductPartsPrintableArticle" />
-        <EntityType Name="PrintingLabelRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
+        <EntityType Name="PrintingZRollCostDetail" BaseType="dbModel.PrintingCostDetail" >
           <Property Name="BuyingFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_costs_CodProductPartImplantTask">
@@ -4089,6 +4092,7 @@
         </EntityType>
         <EntityType Name="ProductPartSerigraphy" BaseType="dbModel.ProductPartTask">
         </EntityType>
+        <EntityType Name="RepassRollCostDetail" BaseType="dbModel.PrePostPressCostDetail" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5128,6 +5132,7 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
                 <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="CalculatedTime" ColumnName="CalculatedTime" />
                 <ScalarProperty Name="CalculatedKg" ColumnName="CalculatedKg" />
@@ -5199,15 +5204,7 @@
                 <Condition ColumnName="SelectorPrintedArticle" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingCostDetail)">
-              <MappingFragment StoreEntitySet="costdetails">
-                <ScalarProperty Name="HideBuyingInView" ColumnName="HideBuyingInView" />
-                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
-                <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />
-                <Condition ColumnName="Selector" Value="0" />
-              </MappingFragment>
-            </EntityTypeMapping>
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingLabelRollCostDetail)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingZRollCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
                 <ScalarProperty Name="BuyingFormat" ColumnName="BuyingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
@@ -5228,6 +5225,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
                 <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
                 <ScalarProperty Name="CodTaskExecutorSelected" ColumnName="CodTaskExecutorSelected" />
@@ -5253,6 +5251,44 @@
                 <ScalarProperty Name="CalculatedTime" ColumnName="CalculatedTime" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <Condition ColumnName="Selector" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.PrintingCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />
+                <ScalarProperty Name="HideBuyingInView" ColumnName="HideBuyingInView" />
+                <Condition ColumnName="Selector" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.RepassRollCostDetail)">
+              <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+                <ScalarProperty Name="CodTaskExecutorSelected" ColumnName="CodTaskExecutorSelected" />
+                <ScalarProperty Name="CodCost" ColumnName="CodCost" />
+                <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
+                <ScalarProperty Name="CodComputedBy" ColumnName="CodComputedBy" />
+                <ScalarProperty Name="Starts" ColumnName="Starts" />
+                <ScalarProperty Name="GainForRun" ColumnName="GainForRun" />
+                <ScalarProperty Name="GainForRunForPrintableArticle" ColumnName="GainForRunForPrintableArticle" />
+                <ScalarProperty Name="GainForMqRun" ColumnName="GainForMqRun" />
+                <ScalarProperty Name="GainForMqRunForPrintableArticle" ColumnName="GainForMqRunForPrintableArticle" />
+                <ScalarProperty Name="TypeOfQuantity" ColumnName="TypeOfQuantity" />
+                <ScalarProperty Name="GainForWeigthRun" ColumnName="GainForWeigthRun" />
+                <ScalarProperty Name="GainForWeigthRunForPrintableArticle" ColumnName="GainForWeigthRunForPrintableArticle" />
+                <ScalarProperty Name="Error" ColumnName="Error" />
+                <ScalarProperty Name="Guid" ColumnName="Guid" />
+                <ScalarProperty Name="RollChanges" ColumnName="RollChanges" />
+                <ScalarProperty Name="Implants" ColumnName="Implants" />
+                <ScalarProperty Name="CalculatedMq" ColumnName="CalculatedMq" />
+                <ScalarProperty Name="CalculatedMl" ColumnName="CalculatedMl" />
+                <ScalarProperty Name="CalculatedRun" ColumnName="CalculatedRun" />
+                <ScalarProperty Name="CalculatedKg" ColumnName="CalculatedKg" />
+                <ScalarProperty Name="CalculatedTime" ColumnName="CalculatedTime" />
+                <ScalarProperty Name="Washes" ColumnName="Washes" />
+                <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
+                <Condition ColumnName="Selector" Value="4" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5542,7 +5578,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="82">
+      <Diagram Name="Model1" ZoomLevel="66">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="34.25" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />
@@ -5985,8 +6021,8 @@
         <EntityTypeShape EntityType="dbModel.ProductPartLabelRollArticle" Width="1.5" PointX="7" PointY="24.875" />
         <InheritanceConnector EntityType="dbModel.ProductPartLabelRollArticle" />
         <InheritanceConnector EntityType="dbModel.ProductPartRigidArticle" />
-        <EntityTypeShape EntityType="dbModel.PrintingLabelRollCostDetail" Width="1.5" PointX="41.125" PointY="40.125" />
-        <InheritanceConnector EntityType="dbModel.PrintingLabelRollCostDetail" />
+        <EntityTypeShape EntityType="dbModel.PrintingZRollCostDetail" Width="1.5" PointX="41.125" PointY="40.125" />
+        <InheritanceConnector EntityType="dbModel.PrintingZRollCostDetail" />
         <AssociationConnector Association="dbModel.FK_costs_CodProductPartImplantTask" />
         <EntityTypeShape EntityType="dbModel.ImplantCostDetail" Width="1.5" PointX="27" PointY="38" />
         <InheritanceConnector EntityType="dbModel.ImplantCostDetail" />
@@ -6054,6 +6090,8 @@
         <InheritanceConnector EntityType="dbModel.NoPrintableArticleCostMq" />
         <EntityTypeShape EntityType="dbModel.ProductPartSerigraphy" Width="1.5" PointX="21.125" PointY="23.25" />
         <InheritanceConnector EntityType="dbModel.ProductPartSerigraphy" />
+        <EntityTypeShape EntityType="dbModel.RepassRollCostDetail" Width="1.5" PointX="12.75" PointY="41" />
+        <InheritanceConnector EntityType="dbModel.RepassRollCostDetail" />
       </Diagram>
     </Diagrams>
   </Designer>

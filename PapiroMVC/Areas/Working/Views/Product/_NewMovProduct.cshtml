@@ -20,26 +20,40 @@
     {
         @Html.ValidationSummary(true)
 
-        <div id='_WarehouseArticleMov'>
-            @Html.Partial("_WarehouseArticleMov", Model)
+        <div class="container-fluid">
+
+            <div class="row">
+
+                <div class="col-sm-12 col-md-6">
+                    <div id='_WarehouseArticleMov'>
+                        @Html.Partial("_WarehouseArticleMov", Model)
+                    </div>
+
+
+                    <br />
+
+                    <p>
+
+                        <input class="btn" type="submit" name="NewMovProductLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductLoad")' />
+                        <input class="btn" type="submit" name="NewMovProductUnLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductUnLoad")' />
+                        <input class="btn" type="submit" name="NewMovProductReserve" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductReserve")' />
+                        <input class="btn" type="submit" name="NewMovProductOrder" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductOrder")' />
+
+                    </p>
+
+                    <br />
+                </div>
+                <div class="col-sm-12 col-md-6">
+
+                    <div id='_WarehouseArticle'>
+                        @Html.Partial("_WarehouseArticleInfo", Model)
+                    </div>
+
+                </div>
+            </div>
+
+
         </div>
-
-        <br />
-        <p>
-
-            <input class="btn" type="submit" name="NewMovProductLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductLoad")' />
-            <input class="btn" type="submit" name="NewMovProductUnLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductUnLoad")' />
-            <input class="btn" type="submit" name="NewMovProductReserve" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductReserve")' />
-            <input class="btn" type="submit" name="NewMovProductOrder" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductOrder")' />
-
-        </p>
-        <br />
-
-        <div id='_WarehouseArticle'>
-            @Html.Partial("_WarehouseArticleInfo", Model)
-        </div>
-
-
     }
 
 </div>

@@ -13,57 +13,93 @@
 }
 
 <div id="sheetCostDetail">
-    <h3 class="header smaller lighter green ">@Html.T(strings, "BuyingFormat")</h3>
 
-    <div class="control-group">
-        <div class="controls col-sm-9">
-            @Html.DropDownListFor(y => y.BuyingFormat,
-                new SelectList(Model.BuyingFormats), new { id = "ddBuyingFormat" })
-        </div>
-    
-        @*hidden="@((Model.HideBuyingInView ?? false) ? "hidden" : "")"*@
+    <div class="container-fluid">
+        <!-- div che contiene tutto il formato di acquisto -->
 
-            <div class="no-padding" @((Model.HideBuyingInView??false)?@"hidden=""hidden""":"")>
-                <canvas id="buyingSheet" width="300" height="170" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")></canvas>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <h3 class="header smaller lighter green ">@Html.T(strings, "BuyingFormat")</h3>
+            </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <div class="controls col-xs-12">
+                        @Html.DropDownListFor(y => y.BuyingFormat,
+                                  new SelectList(Model.BuyingFormats), new { id = "ddBuyingFormat", @class = "col-xs-12" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space"></div>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")>
+                    <div class="vspace"></div>
+                    <canvas id="buyingSheet" width="300" height="170" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "") style="margin-left: auto; margin-right: auto;display: block;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="col-xs-12 col-sm-6">
+            <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="col-xs-12 col-sm-6">
+            <div class="form-group" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")>
+                <div class="controls col-xs-12">
+                    @Html.DropDownListFor(y => y.PrintingFormat,
+                new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat", @class = "col-xs-12" })
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <div class="space"></div>
-    <h3 class="header smaller lighter green">@Html.T(strings, "Drafting")</h3>
 
-    <div class="control-group" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")>
-        <div class="controls col-sm-9">
-            @Html.DropDownListFor(y => y.PrintingFormat,
-                new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat" })
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <canvas id="printingSingleSheet" width="300" height="170" style="margin-left: auto; margin-right: auto;display: block;"></canvas>
         </div>
-    </div>
 
-    @Html.Partial("_DCutSheet", Model)
+        <div class="col-xs-12 col-sm-6">
+            @Html.Partial("_DCutSheet", Model)
+</div>
+</div>
+</div>
 
-    <canvas id="printingSingleSheet" width="300" height="170"></canvas>
-    <div id="partialPrinting">
-        @if (Model.ProductPartPrinting != null)
+<div id="partialPrinting">
+
+    @if (Model.ProductPartPrinting != null)
+    {
+        switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
         {
-            switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
-            {
-                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
-                    Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
-                    break;
-                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
-                    Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
-                    break;
-                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
-                    Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
-                    break;
-                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartRigidPrinting:
-                    Html.RenderPartial("_ProductPartRigidPrinting", Model.ProductPartPrinting);
-                    break;
-                default:
-                    break;
-            }
+            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
+                Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
+                break;
+            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
+                Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
+                break;
+            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
+                Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
+                break;
+            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartRigidPrinting:
+                Html.RenderPartial("_ProductPartRigidPrinting", Model.ProductPartPrinting);
+                break;
+            default:
+                break;
         }
-    </div>
-
+    }
 </div>
 
 <script type="text/javascript">
@@ -77,7 +113,7 @@
             forceSide: $("#forceSide").val()
         };
 
-      //  alert("foceside");
+        //  alert("foceside");
 
         $.ajax({
             url: '@(Url.Action("ChangeMaxGain", "Document", new { area = "Working" }))',
@@ -338,8 +374,6 @@
         reloadFormat(); //draw buying and printing
     });
 </script>
-
-
 
 <script type="text/javascript">
 

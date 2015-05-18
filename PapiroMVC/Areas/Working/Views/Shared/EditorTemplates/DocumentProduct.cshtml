@@ -9,10 +9,10 @@
     //devo sapere quanti sono i documentProduct per poter inizializzare i javascript per ciascuno
     string[] jInit = new string[Model.Document.DocumentProducts.Count];
     string jss = String.Empty;
-    var js=Model.Document.DocumentProducts.ToArray();
+    var js = Model.Document.DocumentProducts.ToArray();
     foreach (var j in js)
     {
-        jInit[Array.IndexOf(js,j)] = "initPage" + j.CodDocumentProduct.Replace("-", "_");
+        jInit[Array.IndexOf(js, j)] = "initPage" + j.CodDocumentProduct.Replace("-", "_");
         jss += "initPage" + j.CodDocumentProduct.Replace("-", "_") + ",";
     }
     //remove last common
@@ -20,13 +20,12 @@
 
     //********************************//********************************
 
-    
 }
 
 <div class="space-10"></div>
 
-<div class="span12">
-    <div class="span6">
+<div class="row">
+    <div class="col-xs-12 col-sm-7">
 
         <div class="form-horizontal">
             @Html.HiddenFor(model => model.CodDocumentProduct)
@@ -40,18 +39,17 @@
 
         </div>
     </div>
-    <div class="span5">
+    <div class="col-xs-12 col-sm-5">
 
-        <button id="btnGoToOrder@(Model.CodDocumentProduct)" class="btn btn-green pull-right"> @Html.T(strings, "GoToOrder") </button>
-        <button id="btnPrintToScreen@(Model.CodDocumentProduct)" class="btn btn-green pull-right"> @Html.T(strings, "PrintToScreenQty") </button>
-        <button id="btn@(Model.CodDocumentProduct)" class="btn btn-grey pull-right"> @Html.T(strings, "CloneQty") </button>
+        <button id="btn@(Model.CodDocumentProduct)" class="btn btn-primary"> @Html.T(strings, "CloneQty") </button>
+        <button id="btnPrintToScreen@(Model.CodDocumentProduct)" class="btn btn-primary"> @Html.T(strings, "PrintToScreenQty") </button>
+        <button id="btnGoToOrder@(Model.CodDocumentProduct)" class="btn btn-success"> @Html.T(strings, "GoToOrder") </button>
 
         @*<div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
                 <canvas class="flot-base" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><canvas class="flot-overlay" width="350" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 350px; height: 150px;"></canvas><div class="legend"><div style="position: absolute; width: 100px; height: 110px; top: 15px; right: -30px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div><table style="position:absolute;top:15px;right:-30px;;font-size:smaller;color:#545454"><tbody><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #68BC31;overflow:hidden"></div></div></td><td class="legendLabel">social networks</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #2091CF;overflow:hidden"></div></div></td><td class="legendLabel">search engines</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #AF4E96;overflow:hidden"></div></div></td><td class="legendLabel">ad campaings</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #DA5430;overflow:hidden"></div></div></td><td class="legendLabel">direct traffic</td></tr><tr><td class="legendColorBox"><div style="border:1px solid null;padding:1px"><div style="width:4px;height:0;border:5px solid #FEE074;overflow:hidden"></div></div></td><td class="legendLabel">other</td></tr></tbody></table></div>
             </div>*@
 
     </div>
-    <div class="span1"></div>
 </div>
 
 <div id="dialog-message@(Model.CodDocumentProduct)" class="hide">
@@ -78,8 +76,7 @@
 
     <div class="vspace"></div>
     <div class="controls">
-        <textarea id="printvideo@(Model.CodDocumentProduct)" class="autosize-transition span12" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 110px;"></textarea>
-
+        <textarea id="printvideo@(Model.CodDocumentProduct)" class="autosize-transition" style="overflow: hidden; word-wrap: break-word; resize: horizontal; width:80vw;"></textarea>
     </div>
     <div class="vspace"></div>
 
@@ -105,7 +102,6 @@
     function initPage@(Model.CodDocumentProduct.Replace("-","_"))() {
 
         $('textarea[class*=autosize]').autosize();
-
 
         $("#btn@(Model.CodDocumentProduct)").on('click', function (e) {
             e.preventDefault();
@@ -155,7 +151,7 @@
                 }
             });
 
-            var dialog = $("#dialog-message@(Model.CodDocumentProduct)").dialog({
+            var dialog = $("#dialog-message@(Model.CodDocumentProduct)").removeClass("hide").dialog({
                 width: 'auto',
                 modal: true,
                 title: '@Html.T(strings, "DialogCloneTitle")',
@@ -191,7 +187,6 @@
 
         $("#btnGoToOrder@(Model.CodDocumentProduct)").on('click', function (e) {
             e.preventDefault();
-
             hideProcessingMsg();
 
             function send@(Model.CodDocumentProduct.Replace("-","_"))() {
@@ -199,9 +194,9 @@
                 showProcessingMsg();
 
                 var datastring = {
-                    
+
                     "codDocumentProduct": '@Model.CodDocumentProduct',
-                    
+
                 };
 
                 //at firt time save estimate or
@@ -214,22 +209,22 @@
 
                         alert("ok");
 
-                    if (data.redirectUrl) {
-                        hideProcessingMsg();
-                        // if the server returned a JSON object containing an url
-                        // property we redirect the browser to that url
-                        window.location.href = data.redirectUrl;
-                    } else {
-                        hideProcessingMsg();
-                    }
+                        if (data.redirectUrl) {
+                            hideProcessingMsg();
+                            // if the server returned a JSON object containing an url
+                            // property we redirect the browser to that url
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            hideProcessingMsg();
+                        }
 
-                    return;
-                },
-                error: function (xhr) {
-                    hideProcessingMsg();
-                    alert('error');
-                }
-            });
+                        return;
+                    },
+                    error: function (xhr) {
+                        hideProcessingMsg();
+                        alert('error');
+                    }
+                });
 
             };
 
@@ -241,7 +236,8 @@
                 }
             });
 
-            var dialog = $("#dialog-message-create-order@(Model.CodDocumentProduct)").dialog({
+
+            var dialog = $("#dialog-message-create-order@(Model.CodDocumentProduct)").removeClass("hide").dialog({
                 width: 'auto',
                 modal: true,
                 title: '@Html.T(strings, "GoToOrderTitle")',
@@ -270,6 +266,9 @@
         });
 
 
+
+
+
         $("#btnPrintToScreen@(Model.CodDocumentProduct)").on('click', function (e) {
             e.preventDefault();
 
@@ -296,6 +295,26 @@
 
                         hideProcessingMsg();
                         $('#printvideo@(Model.CodDocumentProduct)').val(data).trigger('autosize.resize');
+
+
+
+                        var dialogPrint = $("#printvideo-message@(Model.CodDocumentProduct)").removeClass("hide").dialog({
+                            width: 'auto',
+                            modal: true,
+                            title: '@Html.T(strings, "DialogPrintTitle")',
+                            title_html: true,
+                            buttons: [
+                            {
+                                text: '@Html.T(stringsGrid, "Ok")',
+                                "class": "btn btn-primary btn-mini",
+                                click: function () {
+                                    $(this).dialog("close");
+                                }
+                            }
+                            ]
+                        });
+
+
                     }
 
                     return;
@@ -305,26 +324,6 @@
                     alert('error');
                 }
             });
-
-
-
-
-            var dialogPrint = $("#printvideo-message@(Model.CodDocumentProduct)").dialog({
-                width: 'auto',
-                modal: true,
-                title: '@Html.T(strings, "DialogPrintTitle")',
-                title_html: true,
-                buttons: [
-                {
-                    text: '@Html.T(stringsGrid, "Ok")',
-                    "class": "btn btn-primary btn-mini",
-                    click: function () {
-                        $(this).dialog("close");
-                    }
-                }
-                ]
-            });
-
 
         });
 
