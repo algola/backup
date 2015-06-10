@@ -708,7 +708,7 @@ namespace PapiroMVC.Models
             kgMat = 0;
             CalculatedKg = kgMat;
 
-            CalculatedRun = 0;
+            CalculatedRun = runs;
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))
             {
@@ -970,12 +970,11 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    double cToPrintF = 0;
-                    double cToPrintR = 0;
-                    double cToPrintT = 0;
 
-                    TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask, out cToPrintF, out cToPrintR, out cToPrintT);
-                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, RollChanges ?? 0, (int)cToPrintT, Quantity(qta));
+                   var x=TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(
+                        TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1,x.cToPrintR, RollChanges ?? 0, (int)(x.cToPrintT+x.cToPrintTNoImplant), Quantity(qta));
 
 
                 }

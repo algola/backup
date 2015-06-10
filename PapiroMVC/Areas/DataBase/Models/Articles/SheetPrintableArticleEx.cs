@@ -36,5 +36,11 @@ namespace PapiroMVC.Models
 
             return this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Format + " " + this.Weight + " " + resman.GetString("Weight"); 
         }
+
+        public override string GetEditMethod()
+        {
+            return "EditSheetPrintableArticle";
+        }
+
     }
 }

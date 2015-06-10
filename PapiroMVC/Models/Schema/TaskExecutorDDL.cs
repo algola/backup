@@ -154,6 +154,12 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTime2", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "WashingTime", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimePerColor", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimeRetro", SchemaDb.Time, "0");
+
+
+
+
+
             dbS.AddColumnToTable("taskexecutorestimatedon", "TimeForfait", SchemaDb.Time, "0");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunning", SchemaDb.String, "20");
             dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStarting", SchemaDb.String, "20");

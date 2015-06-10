@@ -10,7 +10,12 @@ using System.ComponentModel.DataAnnotations;
 namespace PapiroMVC.Models
 {
 
-
+    public class color 
+    {
+        double cToPrintF;
+        double cToPrintR;
+        double cToPrintT;
+    }
 
     public class CostAndTime
     {
@@ -48,8 +53,13 @@ namespace PapiroMVC.Models
 
         #endregion
 
-        //usato per i rotoli
-        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int makereadis, double running)
+        ////usato per i rotoli
+        //public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int makereadis, double running)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double retroStarts, double rollChanges, int makereadis, double running)
         {
             throw new NotImplementedException();
         }

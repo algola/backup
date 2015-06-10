@@ -1,0 +1,95 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartPrintRoll
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
+
+    var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
+
+    List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).Where(y => !y.CodOptionTypeOfTask.ToLower().Contains("retro")).ToList();
+    foreach (PapiroMVC.Models.OptionTypeOfTask optItem in c)
+    {
+        optItem.OptionName = Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask);
+    }
+
+    if (Model.CodOptionTypeOfTask.Contains("retro"))
+    {
+        Model.CodOptionTypeOfTask = Model.CodOptionTypeOfTask.Replace("RETRO", "");
+        Model.Retro = true;
+    }
+    if (Model.CodOptionTypeOfTask.Contains("vernice"))
+    {
+        Model.CodOptionTypeOfTask = Model.CodOptionTypeOfTask.Replace("VERNICE", "");
+        Model.Vernice = true;
+    }
+
+}
+
+@if ((Model.Hidden == null) || (Model.Hidden != true))
+{
+    <div class="form-group">
+
+        @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName, new { @class = "col-sm-3 control-label no-padding-right" })
+
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
+            new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
+        </div>
+    </div>
+    <div class="form-group">
+
+        <div class="col-sm-3 control-label no-padding-right">
+        </div>
+        <div class="controls col-sm-9">
+            @Html.CheckBox("", Model.Retro)
+            @Html.LabelFor(model => model.Retro)
+            @if (Html.ToolTipFor(model => model.Retro).ToString() != "")
+            {
+                <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="@Html.ToolTipFor(model=>model.Retro).ToString()" title="" data-original-title="">?</span>
+            }
+            @Html.ValidationMessageFor(model => model.Retro)
+        </div>
+
+
+
+
+
+    </div>
+    <div class="form-group">
+
+        <div class="col-sm-3 control-label no-padding-right">
+        </div>
+        <div class="controls col-sm-9">
+            @Html.CheckBox("", Model.Vernice)
+            @Html.LabelFor(model => model.Vernice)
+            @if (Html.ToolTipFor(model => model.Vernice).ToString() != "")
+            {
+                <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-content="@Html.ToolTipFor(model=>model.Vernice).ToString()" title="" data-original-title="">?</span>
+            }
+            @Html.ValidationMessageFor(model => model.Vernice)
+        </div>
+
+
+
+
+
+    </div>
+}
+else
+{
+    @Html.HiddenFor(model => model.CodOptionTypeOfTask)
+}
+@Html.HiddenFor(model => model.IsSelected)
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodProductPartTask)
+@Html.HiddenFor(model => model.CodProductPart)
+@Html.HiddenFor(model => model.Hidden)
+@Html.HiddenFor(model => model.ImplantHidden)
+@Html.HiddenFor(model => model.TypeOfProductPartTask)
+@Html.HiddenFor(model => model.CodItemGraph)
+@Html.HiddenFor(model => model.IndexOf)
+@Html.HiddenFor(model => model.IfSelectedResetOtherCodItemGraph)

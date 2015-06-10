@@ -94,11 +94,6 @@ namespace PapiroMVC.Models
         /// <summary>
         /// Elenco dei possibili formati di acquisto 
         /// </summary>
-        public List<String> BuyingFormats { get; set; }
-
-        /// <summary>
-        /// Elenco dei possibili formati di acquisto 
-        /// </summary>
         public List<double> BuyingWidths { get; set; }
 
 

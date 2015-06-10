@@ -1240,64 +1240,67 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             var task = taskExecutorRepository.GetSingle(id);
             ActionResult ret = null;
 
-            //check type
 
-            switch (task.TypeOfExecutor)
-            {
-                case TaskExecutor.ExecutorType.LithoSheet:
-                    {
-                        ret = RedirectToAction("EditLithoSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            ret = RedirectToAction(task.GetEditMethod(), "TaskExecutor", new { id = id, returnUrl = returnUrl });
 
-                case TaskExecutor.ExecutorType.LithoRoll:
-                    {
-                        ret = RedirectToAction("EditLithoRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            ////check type
 
-                case TaskExecutor.ExecutorType.DigitalSheet:
-                    {
-                        ret = RedirectToAction("EditDigitalSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            //switch (task.TypeOfExecutor)
+            //{
+            //    case TaskExecutor.ExecutorType.LithoSheet:
+            //        {
+            //            ret = RedirectToAction("EditLithoSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
 
-                case TaskExecutor.ExecutorType.DigitalRoll:
-                    {
-                        ret = RedirectToAction("EditDigitalRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            //    case TaskExecutor.ExecutorType.LithoRoll:
+            //        {
+            //            ret = RedirectToAction("EditLithoRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
 
-                case TaskExecutor.ExecutorType.PrePostPress:
-                    {
-                        ret = RedirectToAction("EditPrePostPress", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
-                case TaskExecutor.ExecutorType.PlotterSheet:
-                    {
-                        ret = RedirectToAction("EditPlotterSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
-                case TaskExecutor.ExecutorType.PlotterRoll:
-                    {
-                        ret = RedirectToAction("EditPlotterRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            //    case TaskExecutor.ExecutorType.DigitalSheet:
+            //        {
+            //            ret = RedirectToAction("EditDigitalSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
 
-                case TaskExecutor.ExecutorType.Flexo:
-                    {
-                        ret = RedirectToAction("EditFlexo", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
-                case TaskExecutor.ExecutorType.ControlTableRoll:
-                    {
-                        ret = RedirectToAction("EditControlTableRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
-                        break;
-                    }
+            //    case TaskExecutor.ExecutorType.DigitalRoll:
+            //        {
+            //            ret = RedirectToAction("EditDigitalRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
 
-                /* continuing....................*/
+            //    case TaskExecutor.ExecutorType.PrePostPress:
+            //        {
+            //            ret = RedirectToAction("EditPrePostPress", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
+            //    case TaskExecutor.ExecutorType.PlotterSheet:
+            //        {
+            //            ret = RedirectToAction("EditPlotterSheet", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
+            //    case TaskExecutor.ExecutorType.PlotterRoll:
+            //        {
+            //            ret = RedirectToAction("EditPlotterRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
 
-            }
+            //    case TaskExecutor.ExecutorType.Flexo:
+            //        {
+            //            ret = RedirectToAction("EditFlexo", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
+            //    case TaskExecutor.ExecutorType.ControlTableRoll:
+            //        {
+            //            ret = RedirectToAction("EditControlTableRoll", "TaskExecutor", new { id = id, returnUrl = returnUrl });
+            //            break;
+            //        }
+
+            //    /* continuing....................*/
+
+          //  }
 
             return ret;
         }

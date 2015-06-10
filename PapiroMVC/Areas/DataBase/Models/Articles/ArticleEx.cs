@@ -10,7 +10,7 @@ namespace PapiroMVC.Models
 {
     [Serializable]
     [MetadataType(typeof(Article_MetaData))]
-    abstract partial class Article
+    abstract partial class Article: IAlgolaEdit
     {
 
         /// <summary>
@@ -79,6 +79,11 @@ namespace PapiroMVC.Models
         public override string ToString()
         {
            return "";
+        }
+
+        public virtual string GetEditMethod()
+        {
+            throw new NotImplementedException();        
         }
 
     }

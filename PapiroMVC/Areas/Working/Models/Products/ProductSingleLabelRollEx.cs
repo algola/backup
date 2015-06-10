@@ -98,7 +98,7 @@ namespace PapiroMVC.Models
             partTask.CodItemGraph = "SE";
 
             //if this is selected we have to reset tv task
-        //    partTask.IfSelectedResetOtherCodItemGraph = "TV";
+            //    partTask.IfSelectedResetOtherCodItemGraph = "TV";
 
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAVOLOCONTROLLO_SI");
             partTask.Hidden = true;
@@ -133,15 +133,21 @@ namespace PapiroMVC.Models
             foreach (var item in codTypeOfTasks)
             {
 
-                if (item == "SERIGRAFIAROTOLO")
+                switch (item)
                 {
-                    pt = new ProductPartSerigraphy();
-                }
-                else
-                {
-                    pt = new ProductPartTask();
-                }
+                    case "STAMPAETICHROTOLO":
+                        pt = new ProductPartPrintRoll();
+                        break;
+                    case "SERIGRAFIAROTOLO":
+                        var pts = new ProductPartSerigraphy();
+                        pts.OptionsProductPartSerigraphy.Add(new OptionProductPartSerigraphy { TypeOfTaskSerigraphy = "a", InkSerigraphy = "b" });
+                        pt = pts;
+                        break;
 
+                    default:
+                        pt = new ProductPartTask();
+                        break;
+                }
                 //default selection
                 pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
 

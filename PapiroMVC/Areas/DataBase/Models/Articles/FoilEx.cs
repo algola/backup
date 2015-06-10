@@ -26,6 +26,10 @@ namespace PapiroMVC.Models
             return this.ArticleName;
         }
 
+        public override string GetEditMethod()
+        {
+            return "EditFoil";
+        }
     }
 }
 

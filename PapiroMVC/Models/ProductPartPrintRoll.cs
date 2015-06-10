@@ -16,10 +16,7 @@ namespace PapiroMVC.Models
     
     	
     [DataContract] 
-    public partial class PrePostPressCostDetail : CostDetail
+    public partial class ProductPartPrintRoll : ProductPartTask
     {
-    	
-    	[DataMember] 		
-        public string WorkingFormat { get; set; }
     }
 }

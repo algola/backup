@@ -93,6 +93,11 @@ namespace PapiroMVC.Models
         public override void Copy(CostDetail to)
         {
             base.Copy(to);
+
+            PrePostPressCostDetail to2 = (PrePostPressCostDetail)to;
+            to2.WorkingFormat = this.WorkingFormat;
+            to = to2;
+
         }
 
         public PrePostPressCostDetail()

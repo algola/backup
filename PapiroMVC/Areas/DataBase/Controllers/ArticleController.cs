@@ -12,6 +12,8 @@ using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using Newtonsoft.Json;
 using Mvc.HtmlHelpers;
+using System.Data.OleDb;
+using System.Xml;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -21,6 +23,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         private readonly IWarehouseRepository warehouseRepository;
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
+        private readonly ITaskExecutorRepository taskExecutorRepository;
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
@@ -28,19 +31,23 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             articleRepository.SetDbName(CurrentDatabase);
             customerSupplierRepository.SetDbName(CurrentDatabase);
             warehouseRepository.SetDbName(CurrentDatabase);
+            taskExecutorRepository.SetDbName(CurrentDatabase);
         }
 
         public ArticleController(IArticleRepository _articleDataRep,
             ICustomerSupplierRepository _dataRepCS,
-            IWarehouseRepository _warehouseDataRep)
+            IWarehouseRepository _warehouseDataRep,
+            ITaskExecutorRepository _taskExecutorRep)
         {
             articleRepository = _articleDataRep;
             customerSupplierRepository = _dataRepCS;
             warehouseRepository = _warehouseDataRep;
+            taskExecutorRepository = _taskExecutorRep;
 
             this.Disposables.Add(articleRepository);
             this.Disposables.Add(customerSupplierRepository);
             this.Disposables.Add(warehouseRepository);
+            this.Disposables.Add(taskExecutorRepository);
         }
 
         //
@@ -55,6 +62,120 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             return View();
         }
+
+
+
+        [HttpPost]
+        public ActionResult ExcelDie(HttpPostedFileBase file)
+        {
+            DataSet ds = new DataSet();
+            if (Request.Files["file"].ContentLength > 0)
+            {
+                string fileExtension =
+                                     System.IO.Path.GetExtension(Request.Files["file"].FileName);
+
+                if (fileExtension == ".xls" || fileExtension == ".xlsx")
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["file"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+
+                        System.IO.File.Delete(fileLocation);
+                    }
+                    Request.Files["file"].SaveAs(fileLocation);
+                    string excelConnectionString = string.Empty;
+                    excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                    fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    //connection String for xls file format.
+                    if (fileExtension == ".xls")
+                    {
+                        excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //connection String for xlsx file format.
+                    else if (fileExtension == ".xlsx")
+                    {
+                        excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //Create Connection to Excel work book and add oledb namespace
+                    OleDbConnection excelConnection = new OleDbConnection(excelConnectionString);
+                    excelConnection.Open();
+                    DataTable dt = new DataTable();
+
+                    dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    if (dt == null)
+                    {
+                        return null;
+                    }
+
+                    String[] excelSheets = new String[dt.Rows.Count];
+                    int t = 0;
+                    //excel data saves in temp file here.
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        excelSheets[t] = row["TABLE_NAME"].ToString();
+                        t++;
+                    }
+                    OleDbConnection excelConnection1 = new OleDbConnection(excelConnectionString);
+
+
+                    string query = string.Format("Select * from [{0}]", excelSheets[0]);
+                    using (OleDbDataAdapter dataAdapter = new OleDbDataAdapter(query, excelConnection1))
+                    {
+                        dataAdapter.Fill(ds);
+                    }
+
+                    excelConnection.Close();
+                    excelConnection1.Close();
+                }
+                if (fileExtension.ToString().ToLower().Equals(".xml"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["FileUpload"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+                        System.IO.File.Delete(fileLocation);
+                    }
+
+                    Request.Files["FileUpload"].SaveAs(fileLocation);
+                    XmlTextReader xmlreader = new XmlTextReader(fileLocation);
+                    // DataSet ds = new DataSet();
+                    ds.ReadXml(xmlreader);
+                    xmlreader.Close();
+                }
+
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+
+                    var a = new DieFlexo();
+                    a.CodArticle = (ds.Tables[0].Rows[i][0].ToString()).PadLeft(6, '0');
+                    a.ArticleName = ds.Tables[0].Rows[i][1].ToString();
+                    a.CodDie = "Vuoto";
+
+                    var b = articleRepository.GetSingle(a.CodArticle);
+                    if (b == null)
+                    {
+                        articleRepository.Add(a);
+                    }
+                    else
+                    {
+                        //b.ProductName = a.ProductName;
+                        //b.CodMenuProduct = "Vuoto";
+                        articleRepository.Edit(b);
+                    }
+
+                    articleRepository.Save();
+
+                }
+
+            }
+
+
+
+            return View();
+        }
+
+
 
 
         [HttpGet]
@@ -90,7 +211,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             return View();
         }
-       
+
         public ActionResult IndexInk()
         {
             return View();
@@ -101,7 +222,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return View();
         }
 
-        
+
 
         public ActionResult IndexDie()
         {
@@ -174,6 +295,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
                     articleRepository.Add(c.Article);
+
                     //rigeneration name of article
                     c.Article.ArticleName = c.Article.ToString();
                     articleRepository.Save();
@@ -338,7 +460,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
 
-                 //   c.Article.ArticleName =  c.Article.ToString();
+                    //   c.Article.ArticleName =  c.Article.ToString();
                     articleRepository.Add(c.Article);
 
                     articleRepository.Save();
@@ -675,48 +797,51 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //check type
 
-            switch (article.TypeOfArticle)
-            {
-                case Article.ArticleType.SheetPrintableArticle:
-                    ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
-                    break;
 
-                case Article.ArticleType.RollPrintableArticle:
-                    ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
-                    break;
+            ret = RedirectToAction(article.GetEditMethod(), "Article", new { id = id });
 
-                case Article.ArticleType.RigidPrintableArticle:
-                    ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
-                    break;
+            //switch (article.TypeOfArticle)
+            //{
+            //    case Article.ArticleType.SheetPrintableArticle:
+            //        ret = RedirectToAction("EditSheetPrintableArticle", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.ObjectPrintableArticle:
-                    ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.RollPrintableArticle:
+            //        ret = RedirectToAction("EditRollPrintableArticle", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.NoPrintable:
-                    ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.RigidPrintableArticle:
+            //        ret = RedirectToAction("EditRigidPrintableArticle", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.DieFlexo:
-                    ret = RedirectToAction("EditDieFlexo", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.ObjectPrintableArticle:
+            //        ret = RedirectToAction("EditObjectPrintableArticle", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.DieFlatRoll:
-                    ret = RedirectToAction("EditDieFlatRoll", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.NoPrintable:
+            //        ret = RedirectToAction("EditNoPrintable", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.DieSheet:
-                    ret = RedirectToAction("EditDieSheet", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.DieFlexo:
+            //        ret = RedirectToAction("EditDieFlexo", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.Ink:
-                    ret = RedirectToAction("EditInk", "Article", new { id = id });
-                    break;
+            //    case Article.ArticleType.DieFlatRoll:
+            //        ret = RedirectToAction("EditDieFlatRoll", "Article", new { id = id });
+            //        break;
 
-                case Article.ArticleType.Foil:
-                    ret = RedirectToAction("EditFoil", "Article", new { id = id });
-                    break;
-            }
+            //    case Article.ArticleType.DieSheet:
+            //        ret = RedirectToAction("EditDieSheet", "Article", new { id = id });
+            //        break;
+
+            //    case Article.ArticleType.Ink:
+            //        ret = RedirectToAction("EditInk", "Article", new { id = id });
+            //        break;
+
+            //    case Article.ArticleType.Foil:
+            //        ret = RedirectToAction("EditFoil", "Article", new { id = id });
+            //        break;
+            //}
 
             return ret;
         }
@@ -945,7 +1070,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         //
-        // POST: /Article/Delete/5
+        // POST: Database/Article/DeleteArticle/5,
 
         [HttpPost]
         public ActionResult DeleteArticle(string ids, string urlBack)
@@ -981,11 +1106,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-
                     c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
-                    //                    c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
+                    //c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
 
                     c.PrintingFormat = c.Width + "x" + (Convert.ToDouble(c.Z) / 8) * 2.54;
+
+                    //CHECK IF TASKEXECUTOR EXIST
+                    var resTask = taskExecutorRepository.GetAll().FirstOrDefault(x => x.TaskExecutorName == c.TaskExecutorName);
+                    if (resTask != null)
+                    {
+                        c.CodTaskExecutor = resTask.CodTaskExecutor;
+                    }
+                    else
+                    {
+                        c.CodTaskExecutor = null;
+                    }
 
                     articleRepository.Add(c);
 
@@ -1015,6 +1150,19 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     c.PrintingFormat = c.Width + "x" + Convert.ToDouble(c.Z) / 8 * 2.54;
 
+                    //CHECK IF TASKEXECUTOR EXIST
+                    var resTask = taskExecutorRepository.GetAll().FirstOrDefault(x => x.TaskExecutorName == c.TaskExecutorName);
+                    if (resTask != null)
+                    {
+                        c.CodTaskExecutor = resTask.CodTaskExecutor;
+                    }
+                    else
+                    {
+                        c.CodTaskExecutor = null;
+                    }
+
+
+
                     articleRepository.Edit(c);
                     articleRepository.Save();
                     return Json(new { redirectUrl = Url.Action("IndexDie") });
@@ -1043,6 +1191,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             DieFlexo viewModel = new DieFlexo();
             viewModel = (DieFlexo)articleRepository.GetSingle(id);
+
+
+            var tsk = taskExecutorRepository.GetSingle(viewModel.CodTaskExecutor);
+
+            if (tsk != null)
+            {
+                viewModel.TaskExecutorName = tsk.TaskExecutorName;
+
+            }
 
             //get producer and maker
 
@@ -1229,6 +1386,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             DieFlatRoll viewModel = new DieFlatRoll();
             viewModel = (DieFlatRoll)articleRepository.GetSingle(id);
+
 
             //get producer and maker
 

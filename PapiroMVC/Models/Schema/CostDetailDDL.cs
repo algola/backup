@@ -38,6 +38,8 @@ namespace PapiroMVC.Model
             // 0 = Printing // 1 = PrintedArticle 
             dbS.AddColumnToTable("costdetails", "Selector", SchemaDb.Int, "0");
 
+            //working format is used for PrePostPress
+            dbS.AddColumnToTable("costdetails", "WorkingFormat", SchemaDb.String, "20");
             dbS.AddColumnToTable("costdetails", "PrintingFormat", SchemaDb.String, "20");
             dbS.AddColumnToTable("costdetails", "BuyingFormat", SchemaDb.String, "20");
 

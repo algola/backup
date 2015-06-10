@@ -426,7 +426,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {
                             id = a.CodProduct,
                             cell = new string[] 
-                            {                       
+                            {
                                 a.CodProduct,
                                 a.ProductRefName,
                                 a.ProductName   //attributo derivato
@@ -434,7 +434,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                         }
                     ).ToArray()
                 };
-
 
                 return Json(jsonData, JsonRequestBehavior.AllowGet);
             }

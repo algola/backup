@@ -23,5 +23,9 @@ namespace PapiroMVC.Models
 
         #endregion
 
+        public override string GetEditMethod()
+        {
+            return "EditLithoRoll";
+        }
     }
 }

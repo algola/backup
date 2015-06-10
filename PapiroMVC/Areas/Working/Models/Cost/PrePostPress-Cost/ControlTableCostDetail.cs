@@ -114,7 +114,7 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, 1, RollChanges ?? 0, (int)(Starts ?? 0), Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, 1,0, RollChanges ?? 0, (int)(Starts ?? 0), Quantity(qta));
                 }
                 catch (NotImplementedException)
                 {

@@ -112,6 +112,13 @@
             case PapiroMVC.Models.CostDetail.CostDetailType.PrintingRollCostDetail:
                 Html.RenderPartial("_PrintingRollCostDetail", Model);
                 break;
+            case PapiroMVC.Models.CostDetail.CostDetailType.RepassRollCostDetail:
+                  
+                //only to draw!!!
+                Model.ProductPartPrinting = Model.Printers.FirstOrDefault().ProductPartPrinting;                
+                Html.RenderPartial("_RepassRollCostDetail", Model);
+
+                break;
 
                 @*  case PapiroMVC.Models.CostDetail.CostDetailType.LithoSheetCostDetail:
                         break;

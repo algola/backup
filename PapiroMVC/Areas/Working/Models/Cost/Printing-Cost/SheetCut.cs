@@ -28,16 +28,24 @@ namespace PapiroMVC.Models
             return (Comparer<T>.Default.Compare(x, y) < 0) ? x : y;
         }
 
-        public Cut(String desc, byte longSide, byte shortSide)
+        public Cut(String desc, double cutOnSide2, double cutOnSide1)
         {
             this.CodCut = desc;
-            LongSide = longSide;
-            ShortSide = shortSide;
+            CutOnSide2 = cutOnSide2;
+            CutOnSide1 = cutOnSide1;
         }
 
-        byte LongSide { get; set; }
-        byte ShortSide { get; set; }
+        double CutOnSide2 { get; set; }
+        double CutOnSide1 { get; set; }
         public String ManualFormat { get; set; }
+
+        public double Gain
+        {
+            get
+            {
+                return (CutOnSide1 + 1) * (CutOnSide2 + 1);
+            }
+        }
 
         public string GetCuttedFormat(string format)
         {
@@ -46,65 +54,26 @@ namespace PapiroMVC.Models
             double side1 = format.GetSide1();
             double side2 = format.GetSide2();
 
-            if (side1 < side2)
-            {
-                var s1 = ShortSide > 0 ? side1 / ShortSide : side1;
-                var s2 = LongSide > 0 ? side2 / LongSide : side2;
+            //if (side1 < side2)
+            //{
+            var s1 = CutOnSide1 > 0 ? side1 / CutOnSide1 : side1;
+            var s2 = CutOnSide2 > 0 ? side2 / CutOnSide2 : side2;
 
-                result = s1 < s2 ? s1.ToString("0.#") + "x" + s2.ToString("0.#") : s2.ToString("0.#") + "x" + s1.ToString("0.#");
-            }
-            else
-            {
-                var s1 = LongSide > 0 ? side1 / LongSide : side1;
-                var s2 = ShortSide > 0 ? side2 / ShortSide : side2;
+            result = s1.ToString("0.##") + "x" + s2.ToString("0.##");
 
-                result = s1 < s2 ? s1.ToString("0.#") + "x" + s2.ToString("0.#") : s2.ToString("0.#") + "x" + s1.ToString("0.#");
-            }
+            // result = s1 < s2 ? s1.ToString("0.#") + "x" + s2.ToString("0.#") : s2.ToString("0.#") + "x" + s1.ToString("0.#");
+            //}
+            //else
+            //{
+            //    var s1 = CutOnSide2 > 0 ? side1 / CutOnSide2 : side1;
+            //    var s2 = CutOnSide1 > 0 ? side2 / CutOnSide1 : side2;
+
+            //    result = s1 < s2 ? s1.ToString("0.#") + "x" + s2.ToString("0.#") : s2.ToString("0.#") + "x" + s1.ToString("0.#");
+            //}
 
             return (ManualFormat == null || ManualFormat == String.Empty) ? result : ManualFormat;
         }
     }
-
-
-    //public class CutForLabel
-    //{
-    //    /// <summary>
-    //    /// this cut fits in taskexecutor
-    //    /// </summary>
-    //    public bool Valid { get; set; }
-
-    //    public String CodCutForLabel { get; set; }
-
-    //    /// <summary>
-    //    /// it is exposed on views
-    //    /// </summary>
-    //    public String CutName { get; set; }
-    //    public static T Max<T>(T x, T y)
-    //    {
-    //        return (Comparer<T>.Default.Compare(x, y) > 0) ? x : y;
-    //    }
-    //    public static T Min<T>(T x, T y)
-    //    {
-    //        return (Comparer<T>.Default.Compare(x, y) < 0) ? x : y;
-    //    }
-
-    //    public CutForLabel(String desc, int z)
-    //    {
-    //        this.CodCutForLabel = desc;
-    //        Z = z / 8 * 2.54;
-    //    }
-
-    //    double Z { get; set; }
-    //    public String ManualFormat { get; set; }
-
-    //    public string GetCuttedFormat(string width)
-    //    {
-    //        string result;
-    //        result = width + "x" + Z.ToString("0.#");
-    //        return (ManualFormat == null || ManualFormat == String.Empty) ? result : ManualFormat;
-    //    }
-    //}
-
 
     public static class SheetCut
     {
@@ -138,19 +107,35 @@ namespace PapiroMVC.Models
                 (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2());
         }
 
-        public static List<Cut> Cuts(string buyingFormat, string maxFormat, string minFormat, bool noCuts = false)
+        public static List<Cut> Cuts(string buyingFormat, string maxFormat, string minFormat, bool noCuts = false, int gain = 0)
         {
+
+            //if i have to cut on gain!!!
+            if (gain != 0)
+            {
+                cuts = new Dictionary<String, Cut>();
+                for (int i = gain; i >= 0; i--)
+                {
+                    var res = (double)gain / (double)i;
+                    cuts.Add("ct0-" + i.ToString(), 
+                        new Cut("ct1-0-" + i.ToString(), res, 0));
+                }
+            }
+
             foreach (var item in cuts.Values)
             {
                 var ftoRes = item.GetCuttedFormat(buyingFormat);
                 item.Valid = (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
                 (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2()); ;
+
+                Console.WriteLine(item.Valid);
+
             }
 
             if (noCuts)
             {
                 //if is noCut returns only key=ct0-0 that rappresent no cut
-                return cuts.Where(x => x.Key == "ct0-0").ToDictionary(y => y.Key, g => g.Value).Values.ToList();                
+                return cuts.Where(x => x.Key == "ct0-0").ToDictionary(y => y.Key, g => g.Value).Values.ToList();
             }
             else
             {
@@ -175,65 +160,4 @@ namespace PapiroMVC.Models
     }
 
 
-    //public static class LabelCut
-    //{
-    //    private static Dictionary<String, CutForLabel> cuts;
-
-    //    public static List<int> Zs
-    //    {
-    //        set
-    //        {
-    //            cuts = new Dictionary<String, CutForLabel>();
-
-    //            int i = 0;
-    //            foreach (var z in value)
-    //            {
-    //                cuts.Add("ct0-0", new CutForLabel("ct1-" + (i++).ToString(), z));
-    //            }
-    //        }             
-    //    }
-        
-    //    static LabelCut()
-    //    {
-    //    }
-
-    //    public static List<CutForLabel> Cuts()
-    //    {
-    //        return cuts.Values.OrderByDescending(x => x.CutName).ToList();
-    //    }
-
-    //    public static bool IsValid(string maxFormat, string minFormat, string ftoRes)
-    //    {
-    //        return true;
-    //        //return (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
-    //        //    (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2());
-    //    }
-
-    //    public static List<CutForLabel> Cuts(string width, string maxFormat, string minFormat)
-    //    {
-    //        foreach (var item in cuts.Values)
-    //        {
-    //            var ftoRes = item.GetCuttedFormat(width);
-    //            item.Valid = true;// (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
-    //            //(ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2()); ;
-    //        }
-
-    //        return cuts.Values.ToList();
-    //    }
-
-    //    //calcola in base al codice di taglio il formato tagliato
-    //    public static String CuttedFormat(string width, string codCut)
-    //    {
-    //        var x = String.Empty;
-    //        try
-    //        {
-    //            x = cuts[codCut].GetCuttedFormat(width);
-    //        }
-    //        catch (Exception)
-    //        {
-    //            x = width;
-    //        }
-    //        return x;
-    //    }
-    //}
 }

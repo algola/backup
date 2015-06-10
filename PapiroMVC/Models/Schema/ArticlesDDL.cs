@@ -98,8 +98,11 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "MaxGain1", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articles", "MaxGain2", SchemaDb.Int, "0");
             dbS.AddColumnToTable("articles", "Description", SchemaDb.String, "255");
-            // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
+            // 0 = Quadrato // 1 = Ovale // 2 = Sagomato // 3 rotonda
             dbS.AddColumnToTable("articles", "FormatType", SchemaDb.Int, "0");
+
+            dbS.AddColumnToTable("articles", "CodTaskExecutor", SchemaDb.String, "50");
+            dbS.AddForeignKey("articles", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
 
 
 

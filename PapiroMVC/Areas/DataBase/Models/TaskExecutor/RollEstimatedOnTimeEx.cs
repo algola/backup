@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public partial class RollEstimatedOnTime : TaskEstimatedOnTime
     {
         //starts = 1 per avviamento, i successivi son
-        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, double rollChanges, int colors, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, double retroStarts, double rollChanges, int colors, double running)
         {
             TimeSpan totalTimeA;
             totalTimeA = this.StartingTime1 ?? TimeSpan.Zero;
@@ -28,6 +28,11 @@ namespace PapiroMVC.Models
             for (int i = 0; i < colors; i++)
             {
                 totalTimeA += (StartingTimePerColor ?? TimeSpan.Zero);
+            }
+
+            for (int i = 0; i < retroStarts; i++)
+            {
+                totalTimeA += (StartingTimeRetro ?? TimeSpan.Zero);
             }
 
             var costA = CostPerHourStarting;

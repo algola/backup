@@ -48,6 +48,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string Tags { get; set; }
+    	
+    	[DataMember] 		
+        public string CodTaskExecutor { get; set; }
     
     	[DataMember]
         public virtual ICollection<ArticleCost> ArticleCosts { get; set; }
@@ -57,5 +60,7 @@ namespace PapiroMVC.Models
         public virtual CustomerSupplier CustomerSupplierMaker { get; set; }
     	[DataMember]
         public virtual ICollection<Warehouse> WarehouseArticles { get; set; }
+    	[DataMember]
+        public virtual TaskExecutor TaskExecutor { get; set; }
     }
 }

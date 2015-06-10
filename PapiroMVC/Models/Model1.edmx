@@ -82,6 +82,7 @@
           <Property Name="Description" Type="char" MaxLength="255" />
           <Property Name="FormatType" Type="int" />
           <Property Name="Tags" Type="char" MaxLength="255" />
+          <Property Name="CodTaskExecutor" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="costdetails">
           <Key>
@@ -126,6 +127,7 @@
           <Property Name="Washes" Type="double" />
           <Property Name="SelectorPrintingRoll" Type="int" />
           <Property Name="JustComputed" Type="bit" />
+          <Property Name="WorkingFormat" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -577,6 +579,7 @@
           <Property Name="CostPerHourRunning" Type="char" MaxLength="20" />
           <Property Name="CostPerHourStarting" Type="char" MaxLength="20" />
           <Property Name="WashingTime" Type="time" Precision="0" />
+          <Property Name="StartingTimeRetro" Type="time" Precision="0" />
         </EntityType>
         <EntityType Name="taskexecutors">
           <Key>
@@ -988,6 +991,20 @@
             </Principal>
             <Dependent Role="articles">
               <PropertyRef Name="CodSupplierMaker" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_articles_CodTaskExecutor">
+          <End Role="taskexecutors" Type="Self.taskexecutors" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="articles" Type="Self.articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="taskexecutors">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="articles">
+              <PropertyRef Name="CodTaskExecutor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2001,6 +2018,10 @@
             <End Role="customersuppliers" EntitySet="customersuppliers" />
             <End Role="articles" EntitySet="articles" />
           </AssociationSet>
+          <AssociationSet Name="FK_articles_CodTaskExecutor" Association="Self.FK_articles_CodTaskExecutor">
+            <End Role="taskexecutors" EntitySet="taskexecutors" />
+            <End Role="articles" EntitySet="articles" />
+          </AssociationSet>
           <AssociationSet Name="FK_costdetails_CodComputedBy" Association="Self.FK_costdetails_CodComputedBy">
             <End Role="costdetails" EntitySet="costdetails" />
             <End Role="costdetails1" EntitySet="costdetails" />
@@ -2487,6 +2508,10 @@
             <End Role="Warehouse" EntitySet="warehousearticles" />
           </AssociationSet>
           <EntitySet Name="ProductNameGenerators" EntityType="dbModel.ProductNameGenerator" />
+          <AssociationSet Name="FK_articles_CodTaskExecutor" Association="dbModel.FK_articles_CodTaskExecutor">
+            <End Role="TaskExecutor" EntitySet="taskexecutors" />
+            <End Role="Article" EntitySet="articles" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
           <Key>
@@ -2513,6 +2538,7 @@
           <NavigationProperty Name="TaskExecutorCylinders" Relationship="dbModel.FK_taskexecutorcylinders_CodTaskExecutor" FromRole="TaskExecutor" ToRole="taskexecutorcylinder" />
           <Property Name="HasImplant" Type="Boolean" />
           <Property Name="CostImplant" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="articles" Relationship="dbModel.FK_articles_CodTaskExecutor" FromRole="TaskExecutor" ToRole="Article" />
           </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
@@ -2578,6 +2604,7 @@
           <Property Type="Time" Name="TimeForfait" Precision="0" />
           <Property Type="Boolean" Name="UseDifferentDeficitForWeightStep" />
           <Property Name="StartingTimePerColor" Type="Time" />
+          <Property Name="StartingTimeRetro" Type="Time" />
         </EntityType>
         <EntityType Name="TaskEstimatedOnUnit" BaseType="dbModel.TaskEstimatedOn" Abstract="true">
           <Property Type="String" Name="CostPerUnit" />
@@ -2659,7 +2686,9 @@
           <NavigationProperty Name="CustomerSupplierMaker" Relationship="dbModel.FK_articles_customersuppliers_2" FromRole="Article" ToRole="CustomerSupplier" />
           <Property Type="Int32" Name="Selector" />         
           <Property Name="Tags" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
-          <NavigationProperty Name="WarehouseArticles" Relationship="dbModel.FK_warehousearticles_CodArticle" FromRole="Article" ToRole="warehousearticle" />         
+          <NavigationProperty Name="WarehouseArticles" Relationship="dbModel.FK_warehousearticles_CodArticle" FromRole="Article" ToRole="warehousearticle" />
+          <Property Name="CodTaskExecutor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TaskExecutor" Relationship="dbModel.FK_articles_CodTaskExecutor" FromRole="Article" ToRole="TaskExecutor" />         
           </EntityType>
         <Association Name="FK_ArticleCost_CodArticle">
           <End Type="dbModel.Article" Role="articles" Multiplicity="0..1" />
@@ -3864,7 +3893,9 @@
         </EntityType>
         <EntityType Name="ControlTableRoll" BaseType="dbModel.PrePostPress" />
         <EntityType Name="ControlTableRollEstimatedOnTime" BaseType="dbModel.TaskEstimatedOnTime" ></EntityType>
-        <EntityType Name="PrePostPressCostDetail" BaseType="dbModel.CostDetail" />
+        <EntityType Name="PrePostPressCostDetail" BaseType="dbModel.CostDetail" >
+          <Property Name="WorkingFormat" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="ProductGraphLink">
           <Key>
             <PropertyRef Name="CodProductGraph" />
@@ -4093,6 +4124,21 @@
         <EntityType Name="ProductPartSerigraphy" BaseType="dbModel.ProductPartTask">
         </EntityType>
         <EntityType Name="RepassRollCostDetail" BaseType="dbModel.PrePostPressCostDetail" />
+        <Association Name="FK_articles_CodTaskExecutor">
+          <End Type="dbModel.TaskExecutor" Role="TaskExecutor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TaskExecutor">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="CodTaskExecutor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductPartPrintRoll" BaseType="dbModel.ProductPartTask" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4267,6 +4313,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskEstimatedOnTime)">
               <MappingFragment StoreEntitySet="taskexecutorestimatedon">
+                <ScalarProperty Name="StartingTimeRetro" ColumnName="StartingTimeRetro" />
                 <ScalarProperty Name="StartingTimePerColor" ColumnName="StartingTimePerColor" />
                 <ScalarProperty Name="UseDifferentDeficitForWeightStep" ColumnName="UseDifferentDeficitForWeightStep" />
                 <ScalarProperty Name="CodTaskEstimatedOn" ColumnName="CodTaskEstimatedOn" />
@@ -4669,6 +4716,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Article)">
               <MappingFragment StoreEntitySet="articles">
+                <ScalarProperty Name="CodTaskExecutor" ColumnName="CodTaskExecutor" />
                 <ScalarProperty Name="Tags" ColumnName="Tags" />
                 <ScalarProperty Name="Selector" ColumnName="Selector" />
                 <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
@@ -4916,6 +4964,12 @@
               <MappingFragment StoreEntitySet="productparttasks">
                 <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
                 <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintRoll)">
+              <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
+                <Condition ColumnName="Selector" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -5219,12 +5273,14 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="dbModel.PrePostPressCostDetail">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="WorkingFormat" ColumnName="WorkingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <Condition ColumnName="Selector" Value="8" />
               </MappingFragment>
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="WorkingFormat" ColumnName="WorkingFormat" />
                 <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
                 <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
@@ -5263,6 +5319,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.RepassRollCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="WorkingFormat" ColumnName="WorkingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
                 <ScalarProperty Name="CodTaskExecutorSelected" ColumnName="CodTaskExecutorSelected" />
@@ -5578,7 +5635,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="Model1" ZoomLevel="66">
+      <Diagram Name="Model1" ZoomLevel="72">
         <EntityTypeShape EntityType="dbModel.TaskExecutor" Width="2.25" PointX="19.125" PointY="25.625" Height="4.480205078125" IsExpanded="true" />
         <EntityTypeShape EntityType="dbModel.Litho" Width="1.5" PointX="55.5" PointY="34.25" Height="1.9802864583333335" />
         <EntityTypeShape EntityType="dbModel.LithoSheet" Width="1.5" PointX="52.125" PointY="36.875" Height="1.5956835937499996" />
@@ -6092,6 +6149,9 @@
         <InheritanceConnector EntityType="dbModel.ProductPartSerigraphy" />
         <EntityTypeShape EntityType="dbModel.RepassRollCostDetail" Width="1.5" PointX="12.75" PointY="41" />
         <InheritanceConnector EntityType="dbModel.RepassRollCostDetail" />
+        <AssociationConnector Association="dbModel.FK_articles_CodTaskExecutor" />
+        <EntityTypeShape EntityType="dbModel.ProductPartPrintRoll" Width="1.5" PointX="26" PointY="23.625" />
+        <InheritanceConnector EntityType="dbModel.ProductPartPrintRoll" />
       </Diagram>
     </Diagrams>
   </Designer>

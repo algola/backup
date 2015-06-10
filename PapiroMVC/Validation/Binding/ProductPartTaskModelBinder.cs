@@ -26,5 +26,32 @@ namespace PapiroMVC.Validation
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
             return model;
         }
+
+
+        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        {
+                var ret= base.BindModel(controllerContext, bindingContext);
+
+
+                var typeValue = bindingContext.ValueProvider.GetValue(bindingContext.ModelName + ".TypeOfProductPartTask");
+
+                if (typeValue.AttemptedValue.ToString() == "ProductPartPrintRoll")
+                {
+                    ((ProductPartPrintRoll)ret).CodOptionTypeOfTask = ((ProductPartPrintRoll)ret).CodOptionTypeOfTask.Replace("RETRO", "");
+                    ((ProductPartPrintRoll)ret).CodOptionTypeOfTask = ((ProductPartPrintRoll)ret).CodOptionTypeOfTask.Replace("VERNICE", "");
+
+                    if (((ProductPartPrintRoll)ret).Retro)
+                    {
+                        ((ProductPartPrintRoll)ret).CodOptionTypeOfTask = ((ProductPartPrintRoll)ret).CodOptionTypeOfTask + "RETRO";
+                    }
+                    if (((ProductPartPrintRoll)ret).Vernice)
+                    {
+                        ((ProductPartPrintRoll)ret).CodOptionTypeOfTask = ((ProductPartPrintRoll)ret).CodOptionTypeOfTask + "VERNICE";
+                    }
+                    
+                }
+                return ret;
+        }
+
     }
 }

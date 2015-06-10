@@ -42,5 +42,13 @@ namespace PapiroMVC.Models
         [DataType(DataType.Time)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public Nullable<System.TimeSpan> StartingTimePerColor { get; set; }
+
+
+        [DisplayNameLocalized(typeof(ResRollEstimatedOnTime), "StartingTimeRetro")]
+        [Tooltip(typeof(ResRollEstimatedOnTime), "StartingTimeRetroToolTip")]
+        [DataType(DataType.Time)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
+        public Nullable<System.TimeSpan> StartingTimeRetro { get; set; }
+
     }
 }

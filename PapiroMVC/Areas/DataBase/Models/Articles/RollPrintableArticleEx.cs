@@ -27,5 +27,10 @@ namespace PapiroMVC.Models
         {
             return base.ToString() + this.Width + " ";
         }
+
+        public override string GetEditMethod()
+        {
+            return "EditRollPrintableArticle";
+        }
     }
 }

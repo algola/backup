@@ -700,11 +700,29 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1 colore e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_1RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_1RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2 colori.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_2 {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2 colori e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_2RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_2RETRO", resourceCulture);
             }
         }
         
@@ -718,11 +736,29 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 3 colori e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_3RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_3RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 4 colori.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_4 {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4 colori e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_4RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_4RETRO", resourceCulture);
             }
         }
         
@@ -736,6 +772,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 5 colori e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_5RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_5RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 6 colori.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_6 {
@@ -745,7 +790,16 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to 6 colori e retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_6RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_6RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nessuna stampa.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_NO {
             get {

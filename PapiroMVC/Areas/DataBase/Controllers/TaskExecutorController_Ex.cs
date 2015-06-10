@@ -76,6 +76,46 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return q;
         }
 
+
+        /// <summary>
+        /// Get Taskexecutor name from autocomplete method
+        /// </summary>
+        /// <param name="term"></param>
+        /// <returns></returns>
+        public ActionResult TaskExecutorAutoComplete(string term)
+        {
+            PapiroMVC.Models.TaskExecutor[] customerSuppliers = taskExecutorRepository.GetAll().ToArray();
+
+            var filteredItems = customerSuppliers.Where(
+            item => !(String.IsNullOrEmpty(item.TaskExecutorName)) && item.TaskExecutorName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from custSupp in filteredItems
+                             select new
+                             {
+                                 id = custSupp.CodTaskExecutor,
+                                 label = custSupp.TaskExecutorName,
+                                 value = custSupp.TaskExecutorName
+                             };
+            return Json(projection.ToList(), JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         /// Elenco delle macchine da stampa divise per tipo di lavorazione che possono effettuare!!!!
         /// </summary>
@@ -196,7 +236,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         }
-
 
 
         private IQueryable<Litho> LithoList(GridSettings gridSettings)

@@ -167,6 +167,7 @@ namespace PapiroMVC.Models
                 pt = new ProductTask();
                 //default selection
                 pt.OptionTypeOfTask = item.OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item.CodTypeOfTask + "_NO");
+               
                 pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
                 pt.Hidden = true;
                 tsksInProduct.Add(pt);

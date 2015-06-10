@@ -24,6 +24,7 @@ namespace PapiroMVC.Models
             this.TypeOfTasks = new HashSet<TaskExecutorTypeOfTask>();
             this.costdetails = new HashSet<CostDetail>();
             this.TaskExecutorCylinders = new HashSet<TaskExecutorCylinder>();
+            this.articles = new HashSet<Article>();
         }
     
     	
@@ -85,5 +86,7 @@ namespace PapiroMVC.Models
         public virtual ICollection<CostDetail> costdetails { get; set; }
     	[DataMember]
         public virtual ICollection<TaskExecutorCylinder> TaskExecutorCylinders { get; set; }
+    	[DataMember]
+        public virtual ICollection<Article> articles { get; set; }
     }
 }

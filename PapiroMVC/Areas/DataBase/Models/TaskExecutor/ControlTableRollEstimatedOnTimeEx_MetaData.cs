@@ -32,13 +32,6 @@ namespace PapiroMVC.Models
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = @"{0:hh\:mm}")]
         public Nullable<System.TimeSpan> TimeForfait { get; set; }
 
-        //[DisplayNameLocalized(typeof(ResControlTableRollEstimatedOnTime), "CostPerHourRunning")]
-        //[Tooltip(typeof(ResControlTableRollEstimatedOnTime), "CostPerHourRunningToolTip")]
-        //[RegularExpressionLocalized(typeof(ResControlTableRollEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
-        //public string CostPerHourRunning { get; set; }
-        //[DisplayNameLocalized(typeof(ResControlTableRollEstimatedOnTime), "CostPerHourStarting")]
-        //[Tooltip(typeof(ResControlTableRollEstimatedOnTime), "CostPerHourStartingToolTip")]
-        //[RegularExpressionLocalized(typeof(ResControlTableRollEstimatedOnTime), "CurrencyValidation", "CurrencyValidationError")]
         public string CostPerHourStarting { get; set; }
         [DisplayNameLocalized(typeof(ResControlTableRollEstimatedOnTime), "UseDifferentDeficitForWeightStep")]
         [Tooltip(typeof(ResControlTableRollEstimatedOnTime), "UseDifferentDeficitForWeightStepToolTip")]

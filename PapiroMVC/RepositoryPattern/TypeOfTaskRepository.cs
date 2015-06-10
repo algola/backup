@@ -24,9 +24,9 @@ namespace Services
         {
             Console.WriteLine(Context.Database.Connection.ConnectionString);
 
-            var typeOfTasks = Context.TypeOfTasks.Include("OptionTypeOfTasks");
+            var typeOfTasksDb = Context.TypeOfTasks.Include("OptionTypeOfTasks");
 
-            foreach (var item in typeOfTasks)
+            foreach (var item in typeOfTasksDb)
             {
                 var lstOptToDel = item.OptionTypeOfTasks.Where(x => x.CodOptionTypeOfTask.Contains("-")).ToArray();
 
@@ -70,9 +70,9 @@ namespace Services
             foreach (var item in tbCode)
             {
 
-                var trv = typeOfTasks.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
+                var typeOfTaskDb = typeOfTasksDb.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
 
-                if (trv == null)
+                if (typeOfTaskDb == null)
                 {
                     var x = new TypeOfTask
                     {
@@ -81,12 +81,12 @@ namespace Services
                         TimeStampTable = DateTime.Now,
                         TaskName = item.TaskName
                     };
-                    trv = x;
-                    this.Add(trv);
+                    typeOfTaskDb = x;
+                    this.Add(typeOfTaskDb);
                 }
                 else
-                {
-                    //                    this.Edit(trv);                    
+                {                    
+                    //this.Edit(trv);                    
                 }
 
                 var opt = item.OptionTypeOfTasks;
@@ -94,18 +94,17 @@ namespace Services
                 {
                     foreach (var optItem in opt)
                     {
-                        var y = trv.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == optItem.CodOptionTypeOfTask);
+                        var y = typeOfTaskDb.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == optItem.CodOptionTypeOfTask);
 
                         if (y != null)
                         {
-                            //optItem.Copy(y);
-                            //this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-                            y.TimeStampTable = DateTime.Now;
+                            optItem.TimeStampTable = DateTime.Now;
+                            this.EditOptionTypeOfTask(optItem);
                         }
                         else
                         {
                             optItem.TimeStampTable = DateTime.Now;
-                            trv.OptionTypeOfTasks.Add(optItem);
+                            typeOfTaskDb.OptionTypeOfTasks.Add(optItem);
                             Context.Entry(optItem).State = System.Data.Entity.EntityState.Added;
                         }
                     }
@@ -156,18 +155,32 @@ namespace Services
 
         public IQueryable<TypeOfTask> GetAll(string codTypeOfTask)
         {
-            return Context.TypeOfTasks.Where(o => o.CodTypeOfTask == codTypeOfTask);
+            return Context.TypeOfTasks.AsNoTracking().Where(o => o.CodTypeOfTask == codTypeOfTask);
         }
 
         public TypeOfTask GetSingle(string codTypeOfTask)
         {
-            var query = Context.TypeOfTasks.Include("OptionTypeOfTasks").FirstOrDefault(x => x.CodTypeOfTask == codTypeOfTask);
+            var query = Context.TypeOfTasks.AsNoTracking().Include("OptionTypeOfTasks").FirstOrDefault(x => x.CodTypeOfTask == codTypeOfTask);
             return query;
         }
 
         public void EditOptionTypeOfTask(OptionTypeOfTask entity)
         {
-           this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+
+
+            var dbEnt = this.Context.OptionTypeOfTasks.SingleOrDefault(x => x.CodOptionTypeOfTask == entity.CodOptionTypeOfTask);
+
+            if (dbEnt !=null)
+            {
+                if (dbEnt.CodTypeOfTask == "STAMPAETICHROTOLO")
+                {
+                    Console.Write(dbEnt.CodOptionTypeOfTask);
+                    Console.Write(dbEnt.IdexOf);
+                }
+                    Context.Entry(dbEnt).CurrentValues.SetValues(entity);
+                    Context.Entry(dbEnt).State = System.Data.Entity.EntityState.Modified;
+            }
+            
         
         }
     }

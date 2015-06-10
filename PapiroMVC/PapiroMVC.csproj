@@ -318,6 +318,7 @@
     <Compile Include="Areas\DataBase\Models\CustomerSupplier\CustomerSupplierEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx.cs" />
     <Compile Include="Areas\DataBase\Models\CustomerSupplier\SupplierEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\IAlgolaEdit.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\NewProductCommand_MetaData.cs" />
@@ -382,6 +383,7 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrePostPressEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\PrintingColor.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\RollEstimatedOnTimeEx.cs" />
@@ -557,6 +559,8 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartSingleSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskSerigraphy.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
@@ -919,6 +923,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartPrintingSheetGainSingle.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintRoll.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartRigid.cs">
@@ -2553,7 +2560,7 @@
     <Content Include="Areas\Working\Views\Document\_DCutSheet.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSoft.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSoft.cshtml" />
-    <Content Include="Areas\Working\Views\Document\_PrintingRollCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_RepassRollCostDetail.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\RollEstimatedOnTime.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerColorStep.cshtml" />
     <Content Include="Areas\Working\Views\Document\NotImplementedCostDetail.cshtml" />
@@ -2662,6 +2669,8 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="Areas\Working\Views\Document\_DCutLabel.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrintingRollCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartRepass.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -2675,6 +2684,8 @@
     <Content Include="Content\acetheme\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\acetheme\assets\fonts\OpenSans-300.woff" />
     <Content Include="Content\acetheme\assets\fonts\OpenSans-400.woff" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\OptionProductPartSerigraphy.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartPrintRoll.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>

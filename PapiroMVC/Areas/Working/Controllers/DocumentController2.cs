@@ -698,6 +698,20 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView(cv.PartialViewName, cv);
         }
 
+        [HttpPost]
+        public ActionResult ChangePrintingFormatRepass(string PrintingFormat)
+        {
+            RepassRollCostDetail cv = (RepassRollCostDetail)Session["CostDetail"];
+            cv.WorkingFormat = PrintingFormat;
+            cv.Update();
+            Session["CostDetail"] = cv;
+
+            costDetailRepository.Edit(cv);
+            costDetailRepository.Save();
+
+            return PartialView(cv.PartialViewName, cv);
+        }
+
         /// <summary>
         /// Uptate cost in Cost from CostDetail
         /// </summary>
@@ -853,7 +867,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     viewName = "PrintingCostDetail";
                     break;
 
-
                 case CostDetail.CostDetailType.PrintingRollCostDetail:
                     ((PrintingRollCostDetail)cv).FuzzyAlgo();
                     viewName = "PrintingCostDetail";
@@ -869,6 +882,28 @@ namespace PapiroMVC.Areas.Working.Controllers
                     break;
                 case CostDetail.CostDetailType.ControlTableCostDetail:
                     viewName = "ControlTableCostDetail";
+                    break;
+
+                case CostDetail.CostDetailType.RepassRollCostDetail:
+
+
+                    //get ST codCost
+                    cv.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
+
+                    //if there is a ST
+                    if (cv.CodPartPrintingCostDetail != null)
+                    {
+                        //fix all links
+                        foreach (var item in cv.CodPartPrintingCostDetail)
+                        {
+                            var cv2 = p.CostDetailRepository.GetSingle(item);
+                            cv.Printers.Add(cv2);
+                            cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                        }
+                    }
+
+                    
+                    viewName = "PrintingCostDetail";
                     break;
 
                 default:

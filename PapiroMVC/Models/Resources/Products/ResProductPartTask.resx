@@ -480,4 +480,40 @@
   <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_1RETRO" xml:space="preserve">
+    <value>stampa a 1 colore e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_2RETRO" xml:space="preserve">
+    <value>stampa a 2 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_3RETRO" xml:space="preserve">
+    <value>stampa a 3 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_4RETRO" xml:space="preserve">
+    <value>stampa a 4 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_5RETRO" xml:space="preserve">
+    <value>stampa a 5 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_6RETRO" xml:space="preserve">
+    <value>stampa a 6 colori e retro</value>
+  </data>
+  <data name="ProductPartPrintRoll" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ProductPartPrintRollToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Retro" xml:space="preserve">
+    <value>Retrotacca</value>
+  </data>
+  <data name="RetroToolTip" xml:space="preserve">
+    <value>Stampa la retrotacca</value>
+  </data>
+  <data name="Vernice" xml:space="preserve">
+    <value>Verniciatura</value>
+  </data>
+  <data name="VerniceToolTip" xml:space="preserve">
+    <value>Usa vernice</value>
+  </data>
 </root>

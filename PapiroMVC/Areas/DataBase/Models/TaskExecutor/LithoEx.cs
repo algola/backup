@@ -28,5 +28,26 @@ namespace PapiroMVC.Models
 
         #endregion
 
+
+        /// <summary>
+        /// get printing color (task vs machine)
+        /// </summary>
+        /// <param name="codOptionTypeOfTask"></param>
+        /// <returns></returns>
+        public override double GetStarts(string codOptionTypeOfTask)
+        {
+            var colors = GetColorFR(codOptionTypeOfTask);
+            double total = 0;
+            total = (colors.cToPrintT + colors.cToPrintTNoImplant) == 0 ? 1 : (colors.cToPrintT + colors.cToPrintTNoImplant);
+            var ret = Math.Ceiling(total / this.PrintingUnit ?? 1);
+            //Starts is used with printerFormat to have
+            return ret;
+        }
+
+
     }
+
+
+
+
 }

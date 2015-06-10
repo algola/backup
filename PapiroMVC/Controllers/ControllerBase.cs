@@ -137,17 +137,17 @@ namespace PapiroMVC.Controllers
 
             var tables = new List<IDDL>();
 
-            tables.Add(new DataBaseDDL(dbName));
-            tables.Add(new CustomerSupplierDLL(dbName));
+            //tables.Add(new DataBaseDDL(dbName));
+            //tables.Add(new CustomerSupplierDLL(dbName));
             tables.Add(new TaskExecutorsDDL(dbName));
-            tables.Add(new ArticlesDDL(dbName));
-            tables.Add(new ProductsDDL(dbName));
-            tables.Add(new DocumentsDDL(dbName));
-            tables.Add(new MenuProductDDL(dbName));
+            //tables.Add(new ArticlesDDL(dbName));
+            //tables.Add(new ProductsDDL(dbName));
+            //tables.Add(new DocumentsDDL(dbName));
+            //tables.Add(new MenuProductDDL(dbName));
 
-            tables.Add(new CostDetailDDL(dbName));
+            //tables.Add(new CostDetailDDL(dbName));
 
-            tables.Add(new WarehouseArticlesDDL(dbName));
+            //tables.Add(new WarehouseArticlesDDL(dbName));
 
             foreach (var item in tables)
             {

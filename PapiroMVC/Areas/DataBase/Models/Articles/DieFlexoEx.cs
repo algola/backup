@@ -18,7 +18,7 @@ namespace PapiroMVC.Models
         }
 
         #region Added Properties
-
+        public string TaskExecutorName { get; set; }
         #endregion
 
         public override string ToString()
@@ -26,7 +26,10 @@ namespace PapiroMVC.Models
             return base.ToString() + this.ArticleName;
         }
 
-
+        public override string GetEditMethod()
+        {
+            return "EditDieFlexo";
+        }
     }
 }
 

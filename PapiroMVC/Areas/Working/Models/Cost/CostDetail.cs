@@ -18,6 +18,24 @@ namespace PapiroMVC.Models
     public partial class CostDetail : ICloneable, IPrintDocX
     {
 
+
+        /// <summary>
+        /// Elenco dei possibili formati di acquisto 
+        /// </summary>
+        public List<String> BuyingFormats { get; set; }
+
+        /// <summary>
+        /// get the partialview name
+        /// </summary>
+        public virtual string PartialViewName
+        {
+            get
+            {
+                return "_" + TypeOfCostDetail.ToString();
+            }
+        }
+
+
         public virtual List<CostDetail> CreateRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)
         {
             return new List<CostDetail>();
@@ -93,6 +111,7 @@ namespace PapiroMVC.Models
 
         public virtual void Copy(CostDetail to)
         {
+
             to.TimeStampTable = this.TimeStampTable;
             to.CodCostDetail = this.CodCostDetail;
             to.CodTaskExecutorSelected = this.CodTaskExecutorSelected;

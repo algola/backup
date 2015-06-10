@@ -11,7 +11,7 @@ namespace PapiroMVC.Models
 {
     [Serializable]
     [MetadataType(typeof(TaskExecutor_MetaData))]
-    public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated
+    public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated , IAlgolaEdit
     {
         /// <summary>
         /// filters whitch taskexecutor can run codTypeOfTask task
@@ -112,7 +112,7 @@ namespace PapiroMVC.Models
             return 0;
         }
 
-        public virtual void GetColorFR(string codOptionTypeOfTask, out double cToPrintF, out double cToPrintR, out double cToPrintT)
+        public virtual PrintingColor GetColorFR(string codOptionTypeOfTask)
         {
             throw new NotImplementedException();
         }
@@ -340,6 +340,15 @@ namespace PapiroMVC.Models
         }
 
         #endregion
+
+
+
+        public virtual string GetEditMethod()
+        {
+             throw new NotImplementedException();
+        }
+
+
     }
 
 }

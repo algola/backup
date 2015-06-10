@@ -1,6 +1,6 @@
 ﻿@using PapiroMVC.Validation
 @using PapiroMVC.Models
-@model PapiroMVC.Models.PrintingRollCostDetail
+@model PapiroMVC.Models.RepassRollCostDetail
 
 @{
 
@@ -9,42 +9,35 @@
 
     var x = Model.Cuts;
 
+    Console.WriteLine(Model.GainForRun);
+
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
-}
+
+    //string strings = "~/Areas/Working/Views/Document/Strings";
+    //string stringsCod = "~/Views/Shared/Cuts";
+
+    var dCut = Model.ProductPartPrinting.GainPartOnPrinting.DCut ?? 0;
+
+    var dCut1 = Model.ProductPartPrinting.GainPartOnPrinting.DCut1 ?? 0;
+    var dCut2 = Model.ProductPartPrinting.GainPartOnPrinting.DCut2 ?? 0;
+
+
+    }
 
 <div id="sheetCostDetail">
 
-    <div class="container-fluid">
-        <!-- div che contiene tutto il formato di acquisto -->
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <h3 class="header smaller lighter green ">@Html.T(strings, "BuyingFormat")</h3>
-            </div>
-        </div>
+    @(Model.GainForRun ?? 1)
 
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div class="form-group">
-                    <div class="controls col-xs-12">
-                        @Html.DropDownListFor(y => y.BuyingFormat,
-                                  new SelectList(Model.BuyingFormats), new { id = "ddBuyingFormat", @class = "col-xs-12" })
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="space"></div>
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <div @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")>
-                    <div class="vspace"></div>
-                    <canvas id="buyingSheet" width="300" height="170" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "") style="margin-left: auto; margin-right: auto;display: block;"></canvas>
-                </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div>
+                <div class="vspace"></div>
+                <canvas id="buyingSheet" width="300" height="170" style="margin-left: auto; margin-right: auto;display: block;"></canvas>
             </div>
         </div>
     </div>
+
 
     <div class="container-fluid">
         <div class="col-xs-12 col-sm-6">
@@ -54,9 +47,9 @@
 
     <div class="container-fluid">
         <div class="col-xs-12 col-sm-6">
-            <div class="form-group" @((Model.HideBuyingInView ?? false) ? @"hidden=""hidden""" : "")>
-                    <div class="controls col-xs-12">
-                        @Html.DropDownListFor(y => y.PrintingFormat,
+            <div class="form-group">
+                <div class="controls col-xs-12">
+                    @Html.DropDownListFor(y => y.WorkingFormat,
                 new SelectList(x, "CutName", "CutName"), new { id = "ddPrintingFormat", @class = "col-xs-12" })
                 </div>
             </div>
@@ -72,37 +65,16 @@
         </div>
 
         <div class="col-xs-12 col-sm-6">
-        @*     @Html.Partial("_DCutSheet", Model) *@
+            @*     @Html.Partial("_DCutSheet", Model) *@
         </div>
     </div>
 </div>
 
 
 
-
 <div id="partialPrinting">
-    @if (Model.ProductPartPrinting != null)
-    {
-        switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
-        {
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
-                Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
-                Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartBookSheetPrinting:
-                Html.RenderPartial("_ProductPartBookSheetPrinting", Model.ProductPartPrinting);
-                break;
-            case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartRigidPrinting:
-                Html.RenderPartial("_ProductPartRigidPrinting", Model.ProductPartPrinting);
-                break;
-            default:
-                break;
-        }
-    }
-</div>
 
+</div>
 
 <script type="text/javascript">
 
@@ -114,7 +86,11 @@
             var dataToPass = {
                 format: $("#ddPartFormat").val(),
                 dCut1: $("#ddPartDCut1").val(),
-                dCut2: $("#ddPartDCut2").val()
+                dCut2: $("#ddPartDCut2").val(),
+
+                maxGain1: $("#maxGain1").val(),
+                maxGain2: $("#maxGain2").val()
+
             };
 
             $.ajax({
@@ -124,8 +100,14 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
-                    reloadFormat();
+                    //reloadFormat();
+                    //initAndPosition();
+
+                    // alert("sheetCostDetail")
+
                 },
+
+
                 error: function () {
                     alert("error");
                 },
@@ -133,7 +115,6 @@
             });
         }
     });
-
 
 
     $("#ddBuyingFormat").change(function () {
@@ -146,16 +127,25 @@
         //data are collected into
         var dataToPass = {
             buyingFormat: buyingFormat,
+            format: $("#ddPartFormat").val(),
+            dCut1: $("#ddPartDCut1").val(),
+            dCut2: $("#ddPartDCut2").val(),
+            maxGain1: $("#maxGain1").val(),
+            maxGain2: $("#maxGain2").val()
+
         };
 
         $.ajax({
-            url: '@(Url.Action("ChangeBuyingFormat", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangeBuyingFormatAndPPartFormat", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-                reloadFormat();
+                //reloadFormat();
+                //initAndPosition();
+                //alert("sheetCostDetail")
+
             },
             error: function () {
                 alert("error");
@@ -164,11 +154,29 @@
         });
     });
 
+    function getPrintingZRollCostDetailResult() {
+
+        $.ajax({
+            url: '@(Url.Action("getPrintingZRollCostDetailResult", "Document", new { area = "Working" }))',
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                $('#results').html(data);
+            },
+            error: function () {
+                alert("error");
+            },
+
+        });
+    }
+
 </script>
 
 <script type="text/javascript">
 
     $("#ddPrintingFormat").change(function () {
+
+        event.preventDefault();
 
         var printingFormat = "";
         $("#ddPrintingFormat option:selected").each(function () {
@@ -181,13 +189,16 @@
         };
 
         $.ajax({
-            url: '@(Url.Action("ChangePrintingFormat", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangePrintingFormatRepass", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-                reloadFormat();
+                //reloadFormat();
+                //initAndPosition();
+                //alert("sheetCostDetail")
+
             },
             error: function () {
                 alert("error");
@@ -261,7 +272,48 @@
 
     }
 
-    var zoomGlo = 3.5;
+    var zoomGlo = 2;
+
+
+
+    function drawPrintingFormat(context, printingFormatV, printingFormatH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2) {
+
+
+        printingFormatH.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        printingFormatV.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        printingFormatH *= zoom;
+        printingFormatV *= zoom;
+
+        var passo = 10 * zoom;
+
+        context.beginPath();
+
+        context.strokeStyle = "#eee";
+        context.stroke();
+
+        context.beginPath();
+        if (sideOnside == 'True') {
+
+            for (var j = 0; j < gainOnSide1; j++) {
+                for (var i = 0; i < gainOnSide2; i++) {
+                    context.rect(offsetx + printingFormatH * i, offsety + printingFormatV * j, printingFormatH, printingFormatV);
+                }
+            }
+        }
+        else {
+            for (var j = 0; j < gainOnSide2; j++) {
+                for (var i = 0; i < gainOnSide1; i++) {
+                    context.rect(offsetx + printingFormatV * j, offsety + printingFormatH * i, printingFormatV, printingFormatH);
+                }
+            }
+        }
+
+
+        context.strokeStyle = "rgb(10, 10, 10)";
+        context.stroke();
+
+    }
 
 
     function reloadFormat() {
@@ -275,32 +327,21 @@
         side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
         side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-        var zoom = zoomGlo;
+        zoomGlo = 5;
+        var zoom = 2;
+        zoom = zoomGlo;
 
-        if ((zoomGlo * side1) > 300) {
-            zoomGlo = 280 / side1;
-        }
+        //alert(zoom);
 
         var offsetX = 0;
         var offsetY = 0;
 
         drawBuiyngFormat(context, side1, side2, offsetX, offsetY, zoom, 0);
 
-        var side1pr = '@Model.PrintingFormat.GetSide1()';
-        var side2pr = '@Model.PrintingFormat.GetSide2()';
-
-        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
-        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+//        drawPrintingAndSheet();
+//        drawPrintingFormat(context, side1pr, side2pr, offsetX, offsetY, zoom, sideOnSide, gain1, gain2);
 
 
-        var sideOnSide = '@g.SideOnSide';
-
-        var gain1 = parseInt('@g.ShapeOnSide1');
-        var gain2 = parseInt('@g.ShapeOnSide2');
-
-        drawPrintingFormat(context, side1pr, side2pr, offsetX, offsetY, zoom, sideOnSide, gain1, gain2);
-
-        drawPrintingAndSheet();
         save();
 
     }
@@ -312,7 +353,65 @@
     //this event is fired only the first time
     $(document).ready(function () {
         reloadFormat(); //draw buying and printing
+     //   initAndPosition();
     });
+
+
 </script>
 
 
+
+
+<script type="text/javascript">
+
+    //this event is fired only the first time
+    $(document).ready(function () {
+        //        drawPrintingAndSheet(); //draw printing and work
+    });
+
+    function drawPrintingAndSheet() {
+
+        var side1 = '@Model.PrintingFormat.GetSide1()';
+        var side2 = '@Model.PrintingFormat.GetSide2()';
+
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var c_canvas = document.getElementById("printingSingleSheet");
+        var context = c_canvas.getContext("2d");
+
+        var zoom = 2.5;
+        zoom = zoomGlo;
+
+        var offsetX = 0;
+        var offsetY = 0;
+
+        var bv = '@g.TypeOfPerfecting';
+        var maxG = '@g.PrintedShapes';
+
+        drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
+
+
+        var side1pr = '@Model.ProductPartPrinting.Part.FormatOpened.GetSide1()';
+        var side2pr = '@Model.ProductPartPrinting.Part.FormatOpened.GetSide2()';
+
+        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var sideOnSide = '@g.SideOnSide';
+
+        var gain1 = parseInt('@g.ShapeOnSide1');
+        var gain2 = parseInt('@g.ShapeOnSide2');
+
+        var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut1 = '@dCut1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut2 = '@dCut2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        alert("draw");
+        drawPrinting(context, side1pr, side2pr, side1, side2, offsetX, offsetY, zoom, sideOnSide, gain1, gain2, maxG, dCut1, dCut2);
+
+    }
+
+</script>
+
+@Html.Partial("_CommonScriptDraw")

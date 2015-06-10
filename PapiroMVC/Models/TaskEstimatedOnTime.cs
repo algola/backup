@@ -39,5 +39,8 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<System.TimeSpan> StartingTimePerColor { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.TimeSpan> StartingTimeRetro { get; set; }
     }
 }

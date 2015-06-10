@@ -21,7 +21,8 @@ namespace PapiroMVC.Models
         public enum ProductPartTasksType : int
         {
             ProductPartTask = 0,
-            ProductPartSerigraphy = 1
+            ProductPartSerigraphy = 1, 
+            ProductPartPrintRoll=2
         }
 
         public ProductPartTasksType TypeOfProductPartTask

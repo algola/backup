@@ -343,7 +343,7 @@
     <value>5 colori</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_NO" xml:space="preserve">
-    <value />
+    <value>nessuna stampa</value>
   </data>
   <data name="CodSTAMPAOFFeDIGITALE" xml:space="preserve">
     <value>Stampa offset o digitale</value>
@@ -461,5 +461,23 @@
   </data>
   <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_1RETRO" xml:space="preserve">
+    <value>1 colore e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_2RETRO" xml:space="preserve">
+    <value>2 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_3RETRO" xml:space="preserve">
+    <value>3 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_4RETRO" xml:space="preserve">
+    <value>4 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_5RETRO" xml:space="preserve">
+    <value>5 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_6RETRO" xml:space="preserve">
+    <value>6 colori e retro</value>
   </data>
 </root>

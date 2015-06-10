@@ -210,7 +210,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
-
         [HttpPost]
         public ActionResult DeleteProducts(string ids)
         {
@@ -225,9 +224,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
             productRepository.Save();
-
-
-
 
             return Json(new { redirectUrl = Url.Action("Index", "Product", new { area = "Working" }) });
         }

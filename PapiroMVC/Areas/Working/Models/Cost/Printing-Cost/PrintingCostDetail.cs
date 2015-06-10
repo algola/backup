@@ -13,9 +13,9 @@ namespace PapiroMVC.Models
         public override void Copy(CostDetail to)
         {
             base.Copy(to);
-
+            
             PrintingCostDetail to2 = (PrintingCostDetail)to;
-
+            
             to2.PrintingFormat = this.PrintingFormat;
             to2.HideBuyingInView = this.HideBuyingInView;
 
@@ -34,17 +34,6 @@ namespace PapiroMVC.Models
             }
         }
 
-
-        /// <summary>
-        /// get the partialview name
-        /// </summary>
-        public virtual string PartialViewName
-        {
-            get
-            {
-                return "_" + TypeOfCostDetail.ToString();
-            }
-        }
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {

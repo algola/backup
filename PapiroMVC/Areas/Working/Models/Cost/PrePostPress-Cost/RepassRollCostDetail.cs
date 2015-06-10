@@ -12,12 +12,92 @@ namespace PapiroMVC.Models
         public override void Copy(CostDetail to)
         {
             base.Copy(to);
+
+            RepassRollCostDetail to2 = (RepassRollCostDetail)to;
+
+            to = to2;
+
         }
 
         public RepassRollCostDetail()
         {
             TypeOfCostDetail = CostDetailType.RepassRollCostDetail;
         }
+
+        /// <summary>
+        /// this cuts returns a plausible format by 
+        /// </summary>
+        public List<Cut> Cuts
+        {
+            get
+            {
+                List<Cut> y;
+
+                //task executor corrente
+                var tsk = TaskExecutors.Where(it => it.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();
+
+                //combino per ora gli z della macchina con le larghezze
+                //è da tenere presente dei colori!!!!
+                //il formato massimo della macchina deve essere calcolato come la larghezza x il massimo Z
+
+                //sperimentale potrebbe essere inserita nella procedura anche il controllo della doppia pinza, etc...
+                if (SheetCut.IsValid(tsk.FormatMax, ProductPart.FormatOpened, tsk.FormatMin))
+                {
+                    //i tagli che vanno bene nel formato minimo e massimo
+                    y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, tsk.FormatMin);
+                }
+                else
+                {
+
+                    var print = Printers.FirstOrDefault();
+                    Console.WriteLine(print.ProductPartPrinting.CalculatedSide1Gain);
+                    Console.WriteLine(print.ProductPartPrinting.CalculatedSide2Gain);
+
+                    //i tagli che vanno bene nel formato minimo e formato lavoro
+                    y = SheetCut.Cuts(BuyingFormat, tsk.FormatMax, ProductPart.FormatOpened, false, print.ProductPartPrinting.CalculatedSide2Gain);
+                }
+
+
+
+
+                //ma solo quelli validi
+                List<Cut> x = new List<Cut>();
+                x = y.Where(k => k.Valid).ToList();
+
+                if (WorkingFormat != null && WorkingFormat != "")
+                {
+                    var k = 0;
+                    for (int i = 0; i < x.Count &&
+                        !SheetCut.IsValid(tsk.FormatMax, tsk.FormatMin, WorkingFormat);
+                        i++,
+                        WorkingFormat = x[k].GetCuttedFormat(BuyingFormat)) ;
+                }
+
+                foreach (var item in x)
+                {
+                    item.CutName = item.GetCuttedFormat(BuyingFormat);
+                }
+
+                //Controllo del formato se è presente nell'elenco dei formati
+                //Se non è presente lo aggiungo
+
+                //da controllare solo se l'elenco non è vuoto    
+                if (x.Count > 0)
+                {
+                    var ele = x.Find(z => z.CutName == WorkingFormat);
+                    if (ele == null && WorkingFormat != null)
+                    {
+                        var toAdd = new Cut("manual", 0, 0);
+                        toAdd.ManualFormat = WorkingFormat;
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
+                        x.Add(toAdd);
+                    }
+                }
+
+                return x;
+            }
+        }
+
 
         public virtual void GetCostFromList()
         {
@@ -35,6 +115,33 @@ namespace PapiroMVC.Models
             this.TimeStampTable = DateTime.Now;
         }
 
+
+
+
+        //lo voglio prendere dalla stampa!!! che deve esserci SEMPRE (per ora)
+        public string BuyingFormat
+        {
+            get
+            {
+                string ret = String.Empty;
+
+                foreach (var fromP in this.Printers)
+                {
+                    ret = fromP.PrintingFormat;
+                }
+                return ret;
+
+            }
+        }
+
+
+        //public string PrintingFormat
+        //{
+        //    get;
+        //    set;
+        //}
+
+
         public override void UpdateCoeff()
         {
             base.UpdateCoeff();
@@ -42,6 +149,21 @@ namespace PapiroMVC.Models
 
             //devo capire quale tipo quantità usare e che moltiplicatore usare!!!!
             //lo devo salvare in una proprietà del dettaglio costo
+
+            var x = Cuts;
+
+            foreach (var item in Cuts)
+            {
+                var res = item.GetCuttedFormat(BuyingFormat);
+                if (res == WorkingFormat)
+                {
+                    GainForRun = item.Gain;
+                }
+            }
+
+            Console.WriteLine(Cuts);
+
+
 
             if (Printers != null)
             {
@@ -55,7 +177,14 @@ namespace PapiroMVC.Models
 
             }
 
-            TypeOfQuantity = 5;  //TaskexEcutorSelected.TypeOfImplantQuantity;
+            TypeOfQuantity = Convert.ToInt16(QuantityType.RunTypeOfQuantity);  //TaskexEcutorSelected.TypeOfImplantQuantity;
+        }
+
+
+        public override void Update()
+        {
+            base.Update();
+            this.UpdateCoeff();
         }
 
         public override double Quantity(double qta)
@@ -67,13 +196,13 @@ namespace PapiroMVC.Models
             {
                 foreach (var item in Printers)
                 {
-                    quantita += item.TaskCost.Quantity ?? 0;
-                    this.TypeOfQuantity = item.TypeOfQuantity;
+                    quantita += (item.CalculatedMl * 100) / this.WorkingFormat.GetSide2() ?? 0;
+                    //                    this.TypeOfQuantity = item.TypeOfQuantity;
                 }
 
             }
 
-            return quantita;
+            return Math.Ceiling(quantita * GainForRun ?? 1);
         }
 
         public override double UnitCost(double qta)
@@ -109,7 +238,7 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, 1, RollChanges ?? 0, (int)(Starts ?? 0), Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, 1,0, RollChanges ?? 0, (int)(Starts ?? 0), Quantity(qta));
                 }
                 catch (NotImplementedException)
                 {

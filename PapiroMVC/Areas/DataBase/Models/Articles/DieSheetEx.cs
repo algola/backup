@@ -26,6 +26,10 @@ namespace PapiroMVC.Models
             return base.ToString() + this.ArticleName;
         }
 
+        public override string GetEditMethod()
+        {
+            return "EditDieSheet";
+        }
     }
 }
 
