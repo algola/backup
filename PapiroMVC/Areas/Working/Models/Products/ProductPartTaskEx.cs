@@ -22,7 +22,8 @@ namespace PapiroMVC.Models
         {
             ProductPartTask = 0,
             ProductPartSerigraphy = 1, 
-            ProductPartPrintRoll=2
+            ProductPartPrintRoll=2,
+            ProductPartHotPrinting=3
         }
 
         public ProductPartTasksType TypeOfProductPartTask
@@ -62,6 +63,30 @@ namespace PapiroMVC.Models
 
             return ret;
         }
+
+
+        protected List<ProductPartTaskOption> productPartTaskOptions;
+        public List<ProductPartTaskOption> ProductPartTaskOptionsPerView
+        {
+            get
+            {
+                if (productPartTaskOptions == null)
+                {
+                    productPartTaskOptions = this.ProductPartTaskOptions.ToList();
+                }
+
+                return productPartTaskOptions;
+
+            }
+
+            set
+            {
+                productPartTaskOptions = value;
+                ProductPartTaskOptions = productPartTaskOptions;
+            }
+
+        }
+
 
 
         public virtual void ToName()

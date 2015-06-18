@@ -457,6 +457,33 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 1 colore.
+        /// </summary>
+        public static string CodSERIGRAFIA_1 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 2 colori.
+        /// </summary>
+        public static string CodSERIGRAFIA_2 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 3 colori.
+        /// </summary>
+        public static string CodSERIGRAFIA_3 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nessuna serigrafia.
         /// </summary>
         public static string CodSERIGRAFIA_NO {
@@ -484,6 +511,33 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 1 colore.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_1 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 2 colori.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_2 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 3 colori.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_3 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telaio serigrafico.
         /// </summary>
         public static string CodSERIGRAFIAROTOLO_Implant {
@@ -502,7 +556,7 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampa Serigrafica.
+        ///   Looks up a localized string similar to Stampa serigrafica.
         /// </summary>
         public static string CodSERIGRAFIAROTOLO_SI {
             get {
@@ -673,11 +727,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 1 colore e retro.
+        ///   Looks up a localized string similar to stampa a 1 colore con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_1RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_1RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 1 colore con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_1RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_1RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 1 colore più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_1VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_1VERNICE", resourceCulture);
             }
         }
         
@@ -691,11 +763,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 2 colori e retro.
+        ///   Looks up a localized string similar to stampa a 2 colori con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_2RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_2RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 2 colori con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_2RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_2RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 2 colori più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_2VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_2VERNICE", resourceCulture);
             }
         }
         
@@ -709,11 +799,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 3 colori e retro.
+        ///   Looks up a localized string similar to stampa a 3 colori con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_3RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_3RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 3 colori con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_3RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_3RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 3 colori più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_3VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_3VERNICE", resourceCulture);
             }
         }
         
@@ -727,11 +835,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 4 colori e retro.
+        ///   Looks up a localized string similar to stampa a 4 colori con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_4RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_4RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 4 colori con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_4RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_4RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 4 colori più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_4VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_4VERNICE", resourceCulture);
             }
         }
         
@@ -745,11 +871,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 5 colori e retro.
+        ///   Looks up a localized string similar to stampa a 5 colori con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_5RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_5RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 5 colori con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_5RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_5RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 5 colori più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_5VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_5VERNICE", resourceCulture);
             }
         }
         
@@ -763,11 +907,29 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stampa a 6 colori e retro.
+        ///   Looks up a localized string similar to stampa a 6 colori con retrotacca.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_6RETRO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_6RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 6 colori con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_6RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_6RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa a 6 colori più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_6VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_6VERNICE", resourceCulture);
             }
         }
         
@@ -786,6 +948,33 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string CodSTAMPAETICHROTOLO_NO {
             get {
                 return ResourceManager.GetString("CodSTAMPAETICHROTOLO_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa con retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_NORETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_NORETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_NORETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_NORETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa con vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_NOVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_NOVERNICE", resourceCulture);
             }
         }
         
@@ -1123,6 +1312,42 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Foil.
+        /// </summary>
+        public static string Foil {
+            get {
+                return ResourceManager.GetString("Foil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foil.
+        /// </summary>
+        public static string FoilToolTip {
+            get {
+                return ResourceManager.GetString("FoilToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formato.
+        /// </summary>
+        public static string Format {
+            get {
+                return ResourceManager.GetString("Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scrivi formato.
+        /// </summary>
+        public static string FormatToolTip {
+            get {
+                return ResourceManager.GetString("FormatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lavorazione nascosta.
         /// </summary>
         public static string Hidden {
@@ -1155,6 +1380,42 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string IndexOfToolTip {
             get {
                 return ResourceManager.GetString("IndexOfToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inchiostro serigrafia.
+        /// </summary>
+        public static string InkSerigraphy {
+            get {
+                return ResourceManager.GetString("InkSerigraphy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specifica inchiostro per serigrafia.
+        /// </summary>
+        public static string InkSerigraphyToolTip {
+            get {
+                return ResourceManager.GetString("InkSerigraphyToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ricoprimento.
+        /// </summary>
+        public static string Overlay {
+            get {
+                return ResourceManager.GetString("Overlay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Effettua il ricoprimento.
+        /// </summary>
+        public static string OverlayToolTip {
+            get {
+                return ResourceManager.GetString("OverlayToolTip", resourceCulture);
             }
         }
         
@@ -1222,6 +1483,15 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to richiesto.
+        /// </summary>
+        public static string RequiredFieldSimple {
+            get {
+                return ResourceManager.GetString("RequiredFieldSimple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retrotacca.
         /// </summary>
         public static string Retro {
@@ -1236,6 +1506,24 @@ namespace PapiroMVC.Models.Resources.Products {
         public static string RetroToolTip {
             get {
                 return ResourceManager.GetString("RetroToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo di serigrafia.
+        /// </summary>
+        public static string TypeOfTaskSerigraphy {
+            get {
+                return ResourceManager.GetString("TypeOfTaskSerigraphy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specifica tipo di serigrafia.
+        /// </summary>
+        public static string TypeOfTaskSerigraphyToolTip {
+            get {
+                return ResourceManager.GetString("TypeOfTaskSerigraphyToolTip", resourceCulture);
             }
         }
         

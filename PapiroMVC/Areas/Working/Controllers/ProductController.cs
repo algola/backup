@@ -131,7 +131,32 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
 
             return View();
-        
+
+        }
+
+        public ActionResult TypeOfTaskSerigraphyAutoComplete(string term)
+        {
+            OptionTypeOfTask[] typeOfSerigraphy = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask=="SERIGRAFIASOLOTIPI").ToArray();
+
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            foreach(var x in typeOfSerigraphy)
+            {
+                var res = resman.GetString(x.CodOptionTypeOfTask);
+                x.OptionName = res!=null?res:"" ;
+            }
+
+            var filteredItems = typeOfSerigraphy.Where(
+            item => item.OptionName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.OptionName,
+                                 label = art.OptionName,
+                                 value = art.OptionName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult WarmUp()
@@ -361,20 +386,20 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     var mov = new WarehouseArticleMov();
                     //il codice del movimento lo prendo dal codice dell'articolo
-                    mov.CodWarehouseArticle = "001P"+ b.CodProduct;
+                    mov.CodWarehouseArticle = "001P" + b.CodProduct;
                     mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(mov);
                     mov.TypeOfMov = 1;
                     mov.Date = DateTime.Now;
                     mov.Quantity = Convert.ToDouble(ds.Tables[0].Rows[i][2].ToString());
 
 
-                    if (mov.Quantity !=0)
+                    if (mov.Quantity != 0)
                     {
                         warehouseRepository.AddMov(mov);
                         warehouseRepository.Save();
 
                         warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(mov.CodWarehouseArticle));
-                        warehouseRepository.Save();                        
+                        warehouseRepository.Save();
                     }
 
                 }
@@ -386,7 +411,219 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View();
         }
 
+        public ActionResult UpdateSerigraphy(ProductViewModel pv)
+        {
+            var product = pv.Product;
 
+            var sery = product.ProductParts.FirstOrDefault().ProductPartTasks.OfType<ProductPartSerigraphy>().SingleOrDefault(x => x.TypeOfProductPartTask == ProductPartTask.ProductPartTasksType.ProductPartSerigraphy);
+            int requested = 0;
+           
+                try
+                {
+                    requested = Convert.ToInt32(sery.CodOptionTypeOfTask.Replace("SERIGRAFIAROTOLO_", ""));
+                }
+                catch (Exception)
+                { 
+                    requested = 0; 
+                }
+            
+            int actual = sery.ProductPartTaskOptions.Count;
+
+
+
+            if (requested > actual)
+            {
+                int c = requested - actual;
+                for (int i = 0; i < c; i++)
+                {
+                    sery.ProductPartTaskOptions.Add(new ProductPartSerigraphyOption());
+                }
+            }
+            else
+            {
+                ProductPartTaskOption[] a = sery.ProductPartTaskOptions.ToArray();
+                if (requested < actual)
+                {
+                    int c = actual-requested;
+                    var last = a.Count() - 1;
+                    for(int i=0;i<c;i++)
+                    {
+                        sery.ProductPartTaskOptions.Remove(a[last]);
+                        last--;
+                    }
+                }
+            }
+           
+            //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli
+            product.FormatsName = formatsRepository.GetAllById(product.CodMenuProduct);
+            product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
+
+            //reload option object for productTask and productPartTask
+            var taskList = this.typeOfTaskRepository.GetAll();
+            foreach (var item in product.ProductTasks)
+            {
+                item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
+            }
+
+
+            foreach (var item in product.ProductParts)
+            {
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item2.CodOptionTypeOfTask);
+                }
+
+            }
+            //-----end reloding
+            //????
+
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateProduct";
+            return PartialView("_EditAndCreateProduct", pv);
+
+        }
+
+        public ActionResult UpdateHotPrinting(ProductViewModel pv)
+        {
+            var product = pv.Product;
+
+            var sery = product.ProductParts.FirstOrDefault().ProductPartTasks.OfType<ProductPartHotPrinting>().SingleOrDefault(x => x.TypeOfProductPartTask == ProductPartTask.ProductPartTasksType.ProductPartHotPrinting);
+            int requested = 0;
+
+            try
+            {
+                requested = Convert.ToInt32(sery.CodOptionTypeOfTask.Replace("STAMPAACALDOROTOLO_", ""));
+            }
+            catch (Exception)
+            {
+                requested = 0;
+            }
+
+            int actual = sery.ProductPartTaskOptions.Count;
+
+
+
+            if (requested > actual)
+            {
+                int c = requested - actual;
+                for (int i = 0; i < c; i++)
+                {
+                    sery.ProductPartTaskOptions.Add(new ProductPartHotPrintingOption());
+                }
+            }
+            else
+            {
+                ProductPartTaskOption[] a = sery.ProductPartTaskOptions.ToArray();
+                if (requested < actual)
+                {
+                    int c = actual - requested;
+                    var last = a.Count() - 1;
+                    for (int i = 0; i < c; i++)
+                    {
+                        sery.ProductPartTaskOptions.Remove(a[last]);
+                        last--;
+                    }
+                }
+            }
+
+            //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli
+            product.FormatsName = formatsRepository.GetAllById(product.CodMenuProduct);
+            product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
+
+            //reload option object for productTask and productPartTask
+            var taskList = this.typeOfTaskRepository.GetAll();
+            foreach (var item in product.ProductTasks)
+            {
+                item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
+            }
+
+
+            foreach (var item in product.ProductParts)
+            {
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item2.CodOptionTypeOfTask);
+                }
+
+            }
+            //-----end reloding
+            //????
+
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateProduct";
+            return PartialView("_EditAndCreateProduct", pv);
+
+        }
+
+
+
+        [HttpGet]
+        public ActionResult NewFromCodProduct(string id)
+        {
+            var p = new PapiroService();
+            p.ProductRepository = productRepository;
+            p.CurrentDatabase = CurrentDatabase;
+
+
+
+            var inizio = DateTime.Now;
+            var c = p.ProductRepository.GetSingle(id);// p.InitProduct(id, prodTskNameRepository, formatsRepository, typeOfTaskRepository);
+
+            var d = new ProductViewModel();
+
+            //controllo i dati di cliente e riferimento
+            //cercando la session
+            if (Session["CodDocument"] != null)
+            {
+                var doc = documentRepository.GetSingle((string)Session["CodDocument"]);
+                d.DocumentName = doc.DocumentName;
+                d.Customer = doc.Customer;
+            }
+
+            d.Product = c;
+
+
+            var product = c;
+
+            //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli
+            product.FormatsName = formatsRepository.GetAllById(product.CodMenuProduct);
+            product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
+
+            product.InitPageTask();
+
+
+            //reload option object for productTask and productPartTask
+            var taskList = this.typeOfTaskRepository.GetAll();
+            foreach (var item in product.ProductTasks)
+            {
+                item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
+            }
+
+
+            foreach (var item in product.ProductParts)
+            {
+                foreach (var item2 in item.ProductPartTasks)
+                {
+                    item2.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item2.CodOptionTypeOfTask);
+                }
+
+            }
+            //-----end reloding
+            //????
+
+
+            // d.Quantities.Add(0);
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateProduct";
+
+
+            var tempo = DateTime.Now.Subtract(inizio);
+            Console.WriteLine(tempo);
+            return View("CreateProduct", d);
+        }
 
         /// <summary>
         /// Create new product and put it into current document in session or create new document and put it into

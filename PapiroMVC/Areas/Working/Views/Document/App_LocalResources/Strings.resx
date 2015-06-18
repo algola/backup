@@ -480,4 +480,16 @@
   <data name="Sviluppo" xml:space="preserve">
     <value>Sviluppo</value>
   </data>
+  <data name="CreateorderMessage" xml:space="preserve">
+    <value>Vuoi creare una commessa?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Elimina</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Vuoi cancellare questa quantità?</value>
+  </data>
+  <data name="NewFromCodProduct" xml:space="preserve">
+    <value>Duplica</value>
+  </data>
 </root>

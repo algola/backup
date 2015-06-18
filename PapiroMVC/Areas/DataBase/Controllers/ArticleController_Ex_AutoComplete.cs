@@ -325,6 +325,27 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult FoilAutoComplete(string term)
+        {
+            Article[] typeOfSerigraphy = articleRepository.GetAll().OfType<Foil>().ToArray();
+
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            var filteredItems = typeOfSerigraphy.Where(
+            item => item.ArticleName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.ArticleName,
+                                 label = art.ArticleName,
+                                 value = art.ArticleName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        
         ///// <summary>
         ///// AutoComplete
         ///// </summary>

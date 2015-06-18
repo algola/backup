@@ -119,10 +119,12 @@
                         </h1>
                     </div><!-- /.page-header -->
                     <!--/.page-header-->
-                    <div class="row">
-                        <div class="col-xs-12">
-                            @RenderSection("featured", required: false)
-                            @RenderBody()
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @RenderSection("featured", required: false)
+                                @RenderBody()
+                            </div>
                         </div>
                     </div>
                 </div>

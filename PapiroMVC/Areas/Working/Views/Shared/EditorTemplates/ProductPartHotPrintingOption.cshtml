@@ -1,0 +1,50 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartHotPrintingOption
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
+}
+
+@Html.HiddenFor(model => model.TypeOfProductPartTaskOption)
+
+<div class="todelete form-group hidden-md visible-sm visible-xs">
+    <div class="col-sm-3 control-label no-padding-right"></div>
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="hidden-md visible-sm visible-xs col-sm-3">
+                @Html.T(strings, "HeadHotPrintingFoil")
+            </div>
+            <div class=" no-padding controls col-sm-9">
+                @Html.TextBoxFor(model => model.Foil, new { autocomplete = "off", data_autocomplete_url = Url.Action("FoilAutoComplete", "Article", null) })*
+                @Html.ValidationMessageFor(model => model.Foil)
+            </div>
+        </div>
+        <div class="row">
+            <div class="hidden-md visible-sm visible-xs col-sm-3">
+                @Html.T(strings, "HeadHotPrintingFormat")
+            </div>
+            <div class="no-padding controls col-sm-9">
+                @Html.EditorFor(model => model.Format)*
+                @Html.ValidationMessageFor(model => model.Format)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="todelete form-group visible-md visible-lg hidden-sm ">
+    <div class="col-sm-3 control-label no-padding-right"></div>
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-4">
+            @Html.TextBoxFor(model => model.Foil, new { autocomplete = "off", data_autocomplete_url = Url.Action("FoilAutoComplete", "Article", null) })*
+            @Html.ValidationMessageFor(model => model.Foil)
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.EditorFor(model => model.Format)*
+            @Html.ValidationMessageFor(model => model.Format)
+        </div>
+    </div>
+</div>

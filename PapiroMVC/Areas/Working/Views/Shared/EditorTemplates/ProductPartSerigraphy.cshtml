@@ -24,7 +24,7 @@
 
         <div class="controls col-sm-9">
             @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
-         new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
+         new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5", id = "srg" })
         </div>
     </div>
 }
@@ -43,6 +43,63 @@ else
 @Html.HiddenFor(model => model.IndexOf)
 @Html.HiddenFor(model => model.IfSelectedResetOtherCodItemGraph)
 
-@Html.EditorFor(model =>  model.OptionsProductPartSerigraphy)
+@if (Model.ProductPartTaskOptionsPerView.Count > 0)
+{
+    <div class="visible-md visible-lg hidden-sm ">
 
-***
+        <div class="col-sm-3 control-label no-padding-right"></div>
+        <div class="col-sm-9">
+            <div class=" no-padding controls col-md-4">
+                @Html.T(strings, "HeadSerigraphyType")
+            </div>
+            <div class="no-padding controls col-md-4">
+                @Html.T(strings, "HeadSerigraphyInk")
+            </div>
+            <div class="no-padding controls col-md-4">
+                @Html.T(strings, "HeadSerigraphyOverlay")
+            </div>
+
+        </div>
+
+    </div>
+}
+@Html.EditorFor(model => model.ProductPartTaskOptionsPerView)
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#srg").change(function () {
+            var codSerigraphy = "";
+            $("#srg option:selected").each(function () {
+                codSerigraphy += $(this)[0].value;
+            });
+
+            $(".todelete:hidden").remove();
+
+            //data are collected into
+            var dataToPass = $('#prod').serialize();
+            showProcessingMsg();
+            $.post('@(Url.Action("UpdateSerigraphy", "Product", new { area = "Working" }))', dataToPass)
+                .done(function (x) {
+                    hideProcessingMsg();
+                    $('#status').html(x);
+                    clearValidationErrors();
+                    $("#srg").focus();
+                });
+
+        });
+    });
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#prod").submit(function (e) {
+            $(".todelete:hidden").remove();
+        });
+    });
+
+</script>

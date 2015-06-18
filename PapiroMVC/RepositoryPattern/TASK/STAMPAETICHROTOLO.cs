@@ -187,9 +187,30 @@ namespace Services
 
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NORETROVERNICE";
+            optTk.OptionName = "Stampa con retro e vernice";
+            optTk.IdexOf = 24;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NORETRO";
+            optTk.OptionName = "Stampa con retro";
+            optTk.IdexOf = 25;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NOVERNICE";
+            optTk.OptionName = "Stampa con vernice";
+            optTk.IdexOf = 26;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NO";
             optTk.OptionName = "NO stampa";
-            optTk.IdexOf = 12;
+            optTk.IdexOf = -1;
             this.OptionTypeOfTasks.Add(optTk);
 }
     }

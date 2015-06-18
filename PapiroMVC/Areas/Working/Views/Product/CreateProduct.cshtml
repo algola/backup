@@ -5,7 +5,7 @@
 @{
     string stringsTitle = "~/Views/Shared/Strings";
     string strings = "~/Areas/Working/Views/Product/Strings";
-
+    
     //Prendo il titolo dal menù
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(stringsTitle, "CodMenuProduct" + Model.Product.CodMenuProduct);
 
@@ -67,4 +67,21 @@
 
     $.get( '@Url.Action("WarmUp","Product",new { @area="Working" })' );*@
 
+
+
+
+</script>
+
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        setInterval(KeepSessionAlive, 10000);
+    });
+
+    function KeepSessionAlive() {
+
+        $.post("/Helper/KeepSessionAlive.ashx", null, function () {
+
+        });
+    }
 </script>

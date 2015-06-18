@@ -497,13 +497,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             //common serarch and order
             //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
-            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask == "SERIGRAFIA" || x.CodOptionTypeOfTask == "SERIGRAFIAROTOLO");
+            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask == "SERIGRAFIASOLOTIPI");
 
             //read from validation's language file
             //this resource has to be the same as view's resource
-            var resman = new System.Resources.ResourceManager(typeof(PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask).FullName, typeof(PapiroMVC.Views.Shared.App_LocalResources.TypeOfTaskAndCodTypeOfTask).Assembly);
-           // string sheetType = resman.GetString("SheetType");
-    
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            //Console.WriteLine(y);
+
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
 
@@ -532,8 +533,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         cell = new string[] 
                         {                         
                             a.CodOptionTypeOfTask,
-                           // resman.GetString("Cod"+a.CodOptionTypeOfTask),
-                           a.OptionName
+                            resman.GetString(a.CodOptionTypeOfTask),
+                            a.OptionName
 
                         }
                     }

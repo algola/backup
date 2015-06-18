@@ -83,19 +83,20 @@ namespace PapiroMVC.Models
 
             partTask.CodItemGraph = "FS";
 
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAACALDOROTOLO_NO");
-            partTask.Hidden = false;
-            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
-            partTask.IndexOf = 30;
-
-            partTask.CodItemGraph = "SC";
-
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "SERIGRAFIAROTOLO_NO");
             partTask.Hidden = false;
             partTask.ImplantHidden = false; //impant is visibile only if task is visibile
-            partTask.IndexOf = 35;
+            partTask.IndexOf = 30;
 
             partTask.CodItemGraph = "SE";
+
+
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAACALDOROTOLO_NO");
+            partTask.Hidden = false;
+            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
+            partTask.IndexOf = 35;
+
+            partTask.CodItemGraph = "SC";
 
             //if this is selected we have to reset tv task
             //    partTask.IfSelectedResetOtherCodItemGraph = "TV";
@@ -114,9 +115,9 @@ namespace PapiroMVC.Models
             ProductGraphLinks.Clear();
 
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "SC" });
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "SE" });
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SE", CodItemGraphLink = "TV" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "SE" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SE", CodItemGraphLink = "SC" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "SC", CodItemGraphLink = "TV" });
 
         }
 
@@ -140,8 +141,11 @@ namespace PapiroMVC.Models
                         break;
                     case "SERIGRAFIAROTOLO":
                         var pts = new ProductPartSerigraphy();
-                        pts.OptionsProductPartSerigraphy.Add(new OptionProductPartSerigraphy { TypeOfTaskSerigraphy = "a", InkSerigraphy = "b" });
+                        //pts.ProductPartTaskOptions.Add(new ProductPartSerigraphyOption { TypeOfTaskSerigraphy = "", InkSerigraphy = "b" });
                         pt = pts;
+                        break;
+                    case "STAMPAACALDOROTOLO":
+                        pt = new ProductPartHotPrinting();
                         break;
 
                     default:

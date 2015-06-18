@@ -465,8 +465,8 @@
   <data name="CodSERIGRAFIA_NO" xml:space="preserve">
     <value>Nessuna serigrafia</value>
   </data>
-  <data name="CodSERIGRAFIA_SI" xml:space="preserve">
-    <value>Stampa Serigrafica</value>
+  <data name="CodSERIGRAFIA_1" xml:space="preserve">
+    <value>Stampa Serigrafica 1 colore</value>
   </data>
   <data name="CodSERIGRAFIA_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
@@ -474,29 +474,29 @@
   <data name="CodSERIGRAFIAROTOLO_NO" xml:space="preserve">
     <value>Nessuna serigrafia</value>
   </data>
-  <data name="CodSERIGRAFIAROTOLO_SI" xml:space="preserve">
-    <value>Stampa Serigrafica</value>
+  <data name="CodSERIGRAFIAROTOLO_1" xml:space="preserve">
+    <value>Stampa Serigrafica 1 colore</value>
   </data>
   <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_1RETRO" xml:space="preserve">
-    <value>stampa a 1 colore e retro</value>
+    <value>stampa a 1 colore con retrotacca</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_2RETRO" xml:space="preserve">
-    <value>stampa a 2 colori e retro</value>
+    <value>stampa a 2 colori con retrotacca</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_3RETRO" xml:space="preserve">
-    <value>stampa a 3 colori e retro</value>
+    <value>stampa a 3 colori con retrotacca</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_4RETRO" xml:space="preserve">
-    <value>stampa a 4 colori e retro</value>
+    <value>stampa a 4 colori con retrotacca</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_5RETRO" xml:space="preserve">
-    <value>stampa a 5 colori e retro</value>
+    <value>stampa a 5 colori con retrotacca</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_6RETRO" xml:space="preserve">
-    <value>stampa a 6 colori e retro</value>
+    <value>stampa a 6 colori con retrotacca</value>
   </data>
   <data name="ProductPartPrintRoll" xml:space="preserve">
     <value />
@@ -515,5 +515,101 @@
   </data>
   <data name="VerniceToolTip" xml:space="preserve">
     <value>Usa vernice</value>
+  </data>
+  <data name="InkSerigraphy" xml:space="preserve">
+    <value>Inchiostro serigrafia</value>
+  </data>
+  <data name="InkSerigraphyToolTip" xml:space="preserve">
+    <value>Specifica inchiostro per serigrafia</value>
+  </data>
+  <data name="TypeOfTaskSerigraphy" xml:space="preserve">
+    <value>Tipo di serigrafia</value>
+  </data>
+  <data name="TypeOfTaskSerigraphyToolTip" xml:space="preserve">
+    <value>Specifica tipo di serigrafia</value>
+  </data>
+  <data name="Foil" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="FoilToolTip" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="Overlay" xml:space="preserve">
+    <value>Ricoprimento</value>
+  </data>
+  <data name="OverlayToolTip" xml:space="preserve">
+    <value>Effettua il ricoprimento</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_2" xml:space="preserve">
+    <value>Stampa Serigrafica 2 colori</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_3" xml:space="preserve">
+    <value>Stampa Serigrafica 3 colori</value>
+  </data>
+  <data name="CodSERIGRAFIA_2" xml:space="preserve">
+    <value>Stampa serigrafica 2 colori</value>
+  </data>
+  <data name="CodSERIGRAFIA_3" xml:space="preserve">
+    <value>Stampa serigrafica 3 colori</value>
+  </data>
+  <data name="CodSERIGRAFIAROTOLO_SI" xml:space="preserve">
+    <value>Stampa serigrafica</value>
+  </data>
+  <data name="CodSERIGRAFIA_SI" xml:space="preserve">
+    <value>Stampa Serigrafica</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_1RETROVERNICE" xml:space="preserve">
+    <value>stampa a 1 colore con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_1VERNICE" xml:space="preserve">
+    <value>stampa a 1 colore più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_2RETROVERNICE" xml:space="preserve">
+    <value>stampa a 2 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_2VERNICE" xml:space="preserve">
+    <value>stampa a 2 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_3RETROVERNICE" xml:space="preserve">
+    <value>stampa a 3 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_3VERNICE" xml:space="preserve">
+    <value>stampa a 3 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_4RETROVERNICE" xml:space="preserve">
+    <value>stampa a 4 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_4VERNICE" xml:space="preserve">
+    <value>stampa a 4 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_5RETROVERNICE" xml:space="preserve">
+    <value>stampa a 5 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_5VERNICE" xml:space="preserve">
+    <value>stampa a 5 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_6RETROVERNICE" xml:space="preserve">
+    <value>stampa a 6 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_6VERNICE" xml:space="preserve">
+    <value>stampa a 6 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_NORETROVERNICE" xml:space="preserve">
+    <value>stampa con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_NOVERNICE" xml:space="preserve">
+    <value>stampa con vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_NORETRO" xml:space="preserve">
+    <value>stampa con retrotacca</value>
+  </data>
+  <data name="RequiredFieldSimple" xml:space="preserve">
+    <value>richiesto</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="FormatToolTip" xml:space="preserve">
+    <value>Scrivi formato</value>
   </data>
 </root>

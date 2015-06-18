@@ -17,9 +17,6 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResOptionTypeOfTask), "IdexOfToolTip")]
         public Nullable<int> IdexOf { get; set; }
 
-
-
-
         [DisplayNameLocalized(typeof(ResOptionTypeOfTask), "MeshRow")]
         [Tooltip(typeof(ResOptionTypeOfTask), "MeshRowToolTip")]
         public Nullable<int> MeshRow { get; set; }
@@ -32,6 +29,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResOptionTypeOfTask), "GainMqPerLt")]
         [Tooltip(typeof(ResOptionTypeOfTask), "GainMqPerLtToolTip")]
         public Nullable<int> GainMqPerLt { get; set; }
-    
+        
     }
 }

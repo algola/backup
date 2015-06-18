@@ -63,8 +63,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             return View(vm);
         }
 
-
-
         [HttpParamAction]
         [HttpGet]
         public ActionResult EditProductNameGenerator(string id)
@@ -75,8 +73,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             ViewBag.ActionMethod = "EditProductNameGenerator";
             return View(prod);
         }
-
-
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
@@ -96,8 +92,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             ViewBag.ActionMethod = "EditProductNameGenerator";
             return PartialView("_EditProductNameGenerator", c);
         }
-
-
 
         [HttpGet]
         public ActionResult EditProductOnlyMov(string id)
@@ -330,6 +324,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 //    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 //}
             }
+
 
             //Carico i nomi dei formati perchè se la validazione non va a buon fine devo ripresentarli
             product.FormatsName = formatsRepository.GetAllById(product.CodMenuProduct);

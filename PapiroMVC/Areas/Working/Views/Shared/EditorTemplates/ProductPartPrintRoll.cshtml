@@ -9,8 +9,9 @@
 
 
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
-
-    List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).Where(y => !y.CodOptionTypeOfTask.ToLower().Contains("retro")).ToList();
+    List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.Where(y => !y.CodOptionTypeOfTask.ToLower().Contains("retro") && !y.CodOptionTypeOfTask.ToLower().Contains("vernice")).OrderBy(x => x.IdexOf).ToList();
+    
+    
     foreach (PapiroMVC.Models.OptionTypeOfTask optItem in c)
     {
         optItem.OptionName = Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask);
@@ -40,7 +41,13 @@
             new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
         </div>
     </div>
-    <div class="form-group">
+    
+    
+    
+    @Html.EditorFor(x=>x.Retro)
+    @Html.EditorFor(x=>x.Vernice)
+    
+    @*<div class="form-group">
 
         <div class="col-sm-3 control-label no-padding-right">
         </div>
@@ -77,7 +84,7 @@
 
 
 
-    </div>
+    </div>*@
 }
 else
 {

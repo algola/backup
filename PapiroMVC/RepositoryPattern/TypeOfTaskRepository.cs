@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PapiroMVC.Models;
+using System.Reflection;
+using PapiroMVC.Models.Resources.Products;
 
 namespace Services
 {
@@ -36,7 +38,7 @@ namespace Services
                 }
             }
 
-            var tbCode = new TypeOfTask[24];
+            var tbCode = new TypeOfTask[25];
 
             tbCode[0] = new PIEGA() { CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -66,6 +68,7 @@ namespace Services
             tbCode[22] = new SERIGRAFIA() { CodCategoryOfTask = "STAMPA" };
             tbCode[23] = new SERIGRAFIAROTOLO() { CodCategoryOfTask = "STAMPA" };
 
+            tbCode[24] = new SERIGRAFIASOLOTIPI() { CodCategoryOfTask = "STAMPA" };
 
             foreach (var item in tbCode)
             {
@@ -79,7 +82,8 @@ namespace Services
                         CodCategoryOfTask = item.CodCategoryOfTask,
                         CodTypeOfTask = item.CodTypeOfTask,
                         TimeStampTable = DateTime.Now,
-                        TaskName = item.TaskName
+                        TaskName =  item.TaskName
+                        
                     };
                     typeOfTaskDb = x;
                     this.Add(typeOfTaskDb);

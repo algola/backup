@@ -363,4 +363,22 @@
   <data name="FlatRollType" xml:space="preserve">
     <value>Modulare Rotolo</value>
   </data>
+  <data name="SERIGRAFIASOLOTIPI_NO" xml:space="preserve">
+    <value>No serigrafia</value>
+  </data>
+  <data name="SERIGRAFIASOLOTIPI_UVLUCIDO" xml:space="preserve">
+    <value>UV Lucida</value>
+  </data>
+  <data name="SERIGRAFIASOLOTIPI_ALTOSPESSORE" xml:space="preserve">
+    <value>Braille alto Sp.</value>
+  </data>
+  <data name="SERIGRAFIASOLOTIPI_FONDOPIENO" xml:space="preserve">
+    <value>Braille Fondo Pieno</value>
+  </data>
+  <data name="SERIGRAFIASOLOTIPI_MEDIOSPESSORE" xml:space="preserve">
+    <value>Braille medio Sp.</value>
+  </data>
+  <data name="SERIGRAFIASOLOTIPI_UVOPACO" xml:space="preserve">
+    <value>UV Opaca</value>
+  </data>
 </root>

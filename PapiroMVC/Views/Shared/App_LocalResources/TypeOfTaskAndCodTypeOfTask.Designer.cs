@@ -466,6 +466,33 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 1 colore.
+        /// </summary>
+        public static string CodSERIGRAFIA_1 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 2 colori.
+        /// </summary>
+        public static string CodSERIGRAFIA_2 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 3 colori.
+        /// </summary>
+        public static string CodSERIGRAFIA_3 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIA_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nessuna serigrafia.
         /// </summary>
         public static string CodSERIGRAFIA_NO {
@@ -493,6 +520,33 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stampa Serigrafica 1 colore.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_1 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 2 colori.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_2 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stampa serigrafica 3 colori.
+        /// </summary>
+        public static string CodSERIGRAFIAROTOLO_3 {
+            get {
+                return ResourceManager.GetString("CodSERIGRAFIAROTOLO_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nessuna serigrafia.
         /// </summary>
         public static string CodSERIGRAFIAROTOLO_NO {
@@ -502,7 +556,7 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stampa Serigrafica.
+        ///   Looks up a localized string similar to Stampa serigrafica.
         /// </summary>
         public static string CodSERIGRAFIAROTOLO_SI {
             get {

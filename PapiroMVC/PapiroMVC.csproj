@@ -165,6 +165,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
@@ -543,10 +544,17 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartCoverSheetEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartHotPrintingOptionEx_Metadata.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartHotPrintingOptionEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyOptionEx_Metadata.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyOptionEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartHotPrinting_Metadata.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphy_Metadata.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx_MetaData.cs" />
@@ -561,10 +569,12 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartsPrintableArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollEx_MetaData.cs" />
-    <Compile Include="Areas\Working\Models\Products\ProductPartTaskSerigraphy.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartHotPrintingEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductEmpty.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskOptionEx_Metadata.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartTaskOptionEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx.cs" />
@@ -587,6 +597,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Helper\KeepSessionAlive.ashx.cs">
+      <DependentUpon>KeepSessionAlive.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Hubs\Registrer.cs" />
     <Compile Include="Models\Article.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -901,6 +914,13 @@
     <Compile Include="Models\ProductPartCoverSheetPrinting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartHotPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Models\ProductPartHotPrintingOption.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartLabelRollArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -943,6 +963,9 @@
     <Compile Include="Models\ProductPartSerigraphy.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductPartSerigraphyOption.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductPartSheetArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -977,6 +1000,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartTask.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartTaskOption.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductRigid.cs">
@@ -1553,6 +1579,7 @@
     <Compile Include="Models\WebApi\ProductApi.cs" />
     <Compile Include="Models\WebApi\RigidProductApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPattern\TASK\SERIGRAFIASOLOTIPI.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIAROTOLO.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIA.cs" />
     <Compile Include="RepositoryPattern\WarehouseRepository.cs" />
@@ -1623,6 +1650,7 @@
     <Compile Include="Validation\Binding\DateTimeModelBinder.cs" />
     <Compile Include="Validation\Binding\ProductApiModelBinder.cs" />
     <Compile Include="Validation\Binding\ProductModelBinder.cs" />
+    <Compile Include="Validation\Binding\ProductPartTaskOptionModelBinder.cs" />
     <Compile Include="Validation\IPrintDocX.cs" />
     <Compile Include="Validation\StringExtension.cs" />
     <Compile Include="Validation\ToolTipCustomModelMetadataProvider.cs" />
@@ -2674,7 +2702,7 @@
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
-    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphy.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartHotPrinting.cshtml" />
     <Content Include="Content\acetheme\assets\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\acetheme\assets\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\acetheme\assets\fonts\fontawesome-webfont.woff" />
@@ -2684,8 +2712,12 @@
     <Content Include="Content\acetheme\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\acetheme\assets\fonts\OpenSans-300.woff" />
     <Content Include="Content\acetheme\assets\fonts\OpenSans-400.woff" />
-    <Content Include="Areas\Working\Views\Shared\EditorTemplates\OptionProductPartSerigraphy.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphyOption.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartPrintRoll.cshtml" />
+    <Content Include="Areas\Working\Views\Product\_ProductPartSerigraphy.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartHotPrintingOption.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphy.cshtml" />
+    <Content Include="Helper\KeepSessionAlive.ashx" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2911,6 +2943,7 @@
     </Content>
     <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_GlobalResources\ecommercestampa.com.resx">
       <Generator>GlobalResourceProxyGenerator</Generator>

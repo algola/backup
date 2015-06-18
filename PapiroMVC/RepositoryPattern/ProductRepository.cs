@@ -10,7 +10,6 @@ namespace Services
 {
     public class ProductRepository : GenericRepository<dbEntities, Product>, IProductRepository
     {
-
         /// <summary>
         /// get all product description generator
         /// </summary>
@@ -23,8 +22,6 @@ namespace Services
             return l;
 
         }
-
-
 
         public void SaveProductNameGenerator(ProductNameGenerator a)
         {

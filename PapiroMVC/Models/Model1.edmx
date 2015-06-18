@@ -387,6 +387,20 @@
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
           <Property Name="CodProductTask" Type="char" MaxLength="50" />
         </EntityType>
+        <EntityType Name="productparttaskoptions">
+          <Key>
+            <PropertyRef Name="CodProductPartTaskOption" />
+          </Key>
+          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="CodProductPartTaskOption" Type="char" MaxLength="50" Nullable="false" />
+          <Property Name="CodProductPartTask" Type="char" MaxLength="50" />
+          <Property Name="TypeOfTaskSerigraphy" Type="char" MaxLength="100" />
+          <Property Name="InkSerigraphy" Type="char" MaxLength="100" />
+          <Property Name="Foil" Type="char" MaxLength="100" />
+          <Property Name="Overlay" Type="double" />
+          <Property Name="Selector" Type="int" />
+          <Property Name="Format" Type="char" MaxLength="20" />
+        </EntityType>
         <EntityType Name="productparttasks">
           <Key>
             <PropertyRef Name="CodProductPartTask" />
@@ -1386,6 +1400,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_productparttaskoptions_CodProductPartTask">
+          <End Role="productparttasks" Type="Self.productparttasks" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="productparttaskoptions" Type="Self.productparttaskoptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productparttasks">
+              <PropertyRef Name="CodProductPartTask" />
+            </Principal>
+            <Dependent Role="productparttaskoptions">
+              <PropertyRef Name="CodProductPartTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_productparttasks_CodOptionTypeOfTask">
           <End Role="optiontypeoftask" Type="Self.optiontypeoftask" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1924,6 +1952,7 @@
           <EntitySet Name="productparts" EntityType="Self.productparts" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartsprintablearticle" EntityType="Self.productpartsprintablearticle" Schema="db" store:Type="Tables" />
           <EntitySet Name="productpartstoproducttask" EntityType="Self.productpartstoproducttask" Schema="db" store:Type="Tables" />
+          <EntitySet Name="productparttaskoptions" EntityType="Self.productparttaskoptions" Schema="db" store:Type="Tables" />
           <EntitySet Name="productparttasks" EntityType="Self.productparttasks" Schema="db" store:Type="Tables" />
           <EntitySet Name="products" EntityType="Self.products" Schema="db" store:Type="Tables" />
           <EntitySet Name="producttasks" EntityType="Self.producttasks" Schema="db" store:Type="Tables" />
@@ -2129,6 +2158,10 @@
           <AssociationSet Name="FK_productpartstoproducttask_CodProductTask" Association="Self.FK_productpartstoproducttask_CodProductTask">
             <End Role="producttasks" EntitySet="producttasks" />
             <End Role="productpartstoproducttask" EntitySet="productpartstoproducttask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productparttaskoptions_CodProductPartTask" Association="Self.FK_productparttaskoptions_CodProductPartTask">
+            <End Role="productparttasks" EntitySet="productparttasks" />
+            <End Role="productparttaskoptions" EntitySet="productparttaskoptions" />
           </AssociationSet>
           <AssociationSet Name="FK_productparttasks_CodOptionTypeOfTask" Association="Self.FK_productparttasks_CodOptionTypeOfTask">
             <End Role="optiontypeoftask" EntitySet="optiontypeoftask" />
@@ -2511,6 +2544,11 @@
           <AssociationSet Name="FK_articles_CodTaskExecutor" Association="dbModel.FK_articles_CodTaskExecutor">
             <End Role="TaskExecutor" EntitySet="taskexecutors" />
             <End Role="Article" EntitySet="articles" />
+          </AssociationSet>
+          <EntitySet Name="ProductPartTaskOptions" EntityType="dbModel.ProductPartTaskOption" />
+          <AssociationSet Name="FK_productparttaskoptions_CodProductPartTask" Association="dbModel.FK_productparttaskoptions_CodProductPartTask">
+            <End Role="ProductPartTask" EntitySet="ProductPartTasks" />
+            <End Role="productparttaskoption" EntitySet="ProductPartTaskOptions" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
@@ -3018,6 +3056,7 @@
           <Property Name="CodItemGraph" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="PrecIndexOf" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IfSelectedResetOtherCodItemGraph" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductPartTaskOptions" Relationship="dbModel.FK_productparttaskoptions_CodProductPartTask" FromRole="ProductPartTask" ToRole="productparttaskoption" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -4139,6 +4178,39 @@
           </ReferentialConstraint>
         </Association>
         <EntityType Name="ProductPartPrintRoll" BaseType="dbModel.ProductPartTask" />
+        <EntityType Name="ProductPartTaskOption">
+          <Key>
+            <PropertyRef Name="CodProductPartTaskOption" />
+          </Key>
+          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
+          <Property Name="CodProductPartTaskOption" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodProductPartTask" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProductPartTask" Relationship="dbModel.FK_productparttaskoptions_CodProductPartTask" FromRole="productparttaskoption" ToRole="ProductPartTask" />
+        </EntityType>
+        <Association Name="FK_productparttaskoptions_CodProductPartTask">
+          <End Type="dbModel.ProductPartTask" Role="ProductPartTask" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.ProductPartTaskOption" Role="productparttaskoption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartTask">
+              <PropertyRef Name="CodProductPartTask" />
+            </Principal>
+            <Dependent Role="productparttaskoption">
+              <PropertyRef Name="CodProductPartTask" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductPartSerigraphyOption" BaseType="dbModel.ProductPartTaskOption" >
+          <Property Name="TypeOfTaskSerigraphy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="InkSerigraphy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Overlay" Type="Double" />
+        </EntityType>
+        <EntityType Name="ProductPartHotPrintingOption" BaseType="dbModel.ProductPartTaskOption" >
+          <Property Name="Foil" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Format" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ProductPartHotPrinting" BaseType="dbModel.ProductPartTask" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4972,6 +5044,12 @@
                 <Condition ColumnName="Selector" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartHotPrinting)">
+              <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
+                <Condition ColumnName="Selector" Value="3" />
+              </MappingFragment>
+            </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Product)">
@@ -5612,6 +5690,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductPartTaskOptions">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartTaskOption)">
+              <MappingFragment StoreEntitySet="productparttaskoptions">
+                <ScalarProperty Name="CodProductPartTaskOption" ColumnName="CodProductPartTaskOption" />
+                <ScalarProperty Name="CodProductPartTask" ColumnName="CodProductPartTask" />
+                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartSerigraphyOption)">
+              <MappingFragment StoreEntitySet="productparttaskoptions">
+                <ScalarProperty Name="Overlay" ColumnName="Overlay" />
+                <ScalarProperty Name="InkSerigraphy" ColumnName="InkSerigraphy" />
+                <ScalarProperty Name="TypeOfTaskSerigraphy" ColumnName="TypeOfTaskSerigraphy" />
+                <ScalarProperty Name="CodProductPartTaskOption" ColumnName="CodProductPartTaskOption" />
+                <Condition ColumnName="Selector" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartHotPrintingOption)">
+              <MappingFragment StoreEntitySet="productparttaskoptions">
+                <ScalarProperty Name="Format" ColumnName="Format" />
+                <ScalarProperty Name="CodProductPartTaskOption" ColumnName="CodProductPartTaskOption" />
+                <ScalarProperty Name="Foil" ColumnName="Foil" />
+                <Condition ColumnName="Selector" Value="2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -6152,6 +6256,19 @@
         <AssociationConnector Association="dbModel.FK_articles_CodTaskExecutor" />
         <EntityTypeShape EntityType="dbModel.ProductPartPrintRoll" Width="1.5" PointX="26" PointY="23.625" />
         <InheritanceConnector EntityType="dbModel.ProductPartPrintRoll" />
+        <EntityTypeShape EntityType="dbModel.ProductPartTaskOption" Width="1.5" PointX="44.125" PointY="23.25" />
+        <AssociationConnector Association="dbModel.FK_productparttaskoptions_CodProductPartTask" />
+        <EntityTypeShape EntityType="dbModel.ProductPartSerigraphyOption" Width="1.5" PointX="47.75" PointY="25.875" />
+        <InheritanceConnector EntityType="dbModel.ProductPartSerigraphyOption" />
+        <EntityTypeShape EntityType="dbModel.ProductPartHotPrintingOption" Width="1.5" PointX="42.25" PointY="26" />
+        <InheritanceConnector EntityType="dbModel.ProductPartHotPrintingOption" ManuallyRouted="true" >
+          <ConnectorPoint PointX="44.875" PointY="25.037985026041671" />
+          <ConnectorPoint PointX="44.875" PointY="25.625" />
+          <ConnectorPoint PointX="43" PointY="25.625" />
+          <ConnectorPoint PointX="43" PointY="26" />
+        </InheritanceConnector>
+        <EntityTypeShape EntityType="dbModel.ProductPartHotPrinting" Width="1.5" PointX="25.875" PointY="22.5" />
+        <InheritanceConnector EntityType="dbModel.ProductPartHotPrinting" />
       </Diagram>
     </Diagrams>
   </Designer>

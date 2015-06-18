@@ -229,7 +229,18 @@ namespace PapiroMVC.Model
 
             //foreign key
             dbS.AddColumnToTable("productnamegenerators", "ProductNameGenerator", SchemaDb.String, "255");
-    
+
+            dbS.AddTable("productparttaskoptions");
+            dbS.AddColumnToTable("productparttaskoptions", "CodProductPartTaskOption", SchemaDb.StringPK, "50");
+            dbS.AddColumnToTable("productparttaskoptions", "CodProductPartTask", SchemaDb.String, "50");
+            dbS.AddColumnToTable("productparttaskoptions", "TypeOfTaskSerigraphy", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productparttaskoptions", "InkSerigraphy", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productparttaskoptions", "Foil", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productparttaskoptions", "Overlay", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("productparttaskoptions", "Format", SchemaDb.String, "20");
+            dbS.AddColumnToTable("productparttaskoptions", "Selector", SchemaDb.Int, "0");
+
+            dbS.AddForeignKey("productparttaskoptions", "CodProductPartTask", "productparttasks", "CodProductPartTask");
         }
     }
 }

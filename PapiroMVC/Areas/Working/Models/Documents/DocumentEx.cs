@@ -75,11 +75,27 @@ namespace PapiroMVC.Models
                 item.TimeStampTable = DateTime.Now;
             }
 
+            int firtCodDocumentProductToInsert = 0;
+            int inserted = 0;
+
+            try
+            {
+                firtCodDocumentProductToInsert = Convert.ToInt32(this.DocumentProducts.Where(y => y.CodDocumentProduct != null).Max(x => x.CodDocumentProduct).Replace(this.CodDocument + "-", ""))+1;
+            }
+            catch (Exception)
+            {
+                
+            }
+
+
             #region DocumentProduct
             var ppart = this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.DocumentProducts.OrderBy(y => y.CodDocumentProduct, new EmptyStringsAreLast()))
             {
-                item.CodDocumentProduct = this.CodDocument + "-" + ppart.IndexOf(item).ToString();
+                if (item.CodDocumentProduct == "" || item.CodDocumentProduct == null)
+                    {
+                        item.CodDocumentProduct = this.CodDocument + "-" + (firtCodDocumentProductToInsert + inserted++).ToString();
+                    }
                 item.CodDocument = this.CodDocument;
                 item.TimeStampTable = DateTime.Now;
 

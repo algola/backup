@@ -11,40 +11,16 @@ using System.Runtime.Serialization;
 
 namespace PapiroMVC.Models
 {
-
+    [MetadataType(typeof(ProductPartSerigraphy_Metadata))]
     public partial class ProductPartSerigraphy : ProductPartTask, IDataErrorInfo, ICloneable
     {
 
         public ProductPartSerigraphy()
         {
             TypeOfProductPartTask = ProductPartTasksType.ProductPartSerigraphy;
-            this.OptionsProductPartSerigraphy = new List<OptionProductPartSerigraphy>();        
         }
       
         public bool IsSelected
-        {
-            get;
-            set;
-        }
-
-        public virtual List<OptionProductPartSerigraphy> OptionsProductPartSerigraphy
-        { 
-            get; 
-            set; 
-        }
-
-    }
-
-    public partial class OptionProductPartSerigraphy
-    {
-
-        public string TypeOfTaskSerigraphy
-        { 
-            get; 
-            set; 
-        }
-
-        public string InkSerigraphy
         {
             get;
             set;

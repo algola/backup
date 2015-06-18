@@ -1,0 +1,66 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartSerigraphyOption
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";
+
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+}
+
+<div class="todelete form-group hidden-md visible-sm visible-xs">
+    <div class="col-sm-3 control-label no-padding-right"></div>
+    <div class="col-sm-9">
+        <div class="row">
+            <div class="hidden-md visible-sm visible-xs col-sm-3">
+                @Html.T(strings, "HeadSerigraphyType")
+            </div>
+            <div class=" no-padding controls col-sm-9">
+                @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new {autocomplete="off", data_autocomplete_url= Url.Action("TypeOfTaskSerigraphyAutoComplete","Product",null) })*
+                @*@Html.AlgolaAutocompleteFor(model => model.TypeOfTaskSerigraphy,  "TypeOfTaskSerigraphyAutoComplete", "Product")**@
+                @Html.ValidationMessageFor(model=>model.TypeOfTaskSerigraphy)
+            </div>
+        </div>
+        <div class="row">
+            <div class="hidden-md visible-sm visible-xs col-sm-3">
+                @Html.T(strings, "HeadSerigraphyInk")
+            </div>
+            <div class="no-padding controls col-sm-9">
+                @Html.TextBoxFor(model => model.InkSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("InkAutoComplete", "Article", null) })*
+                @Html.ValidationMessageFor(model => model.InkSerigraphy)
+            </div>
+        </div>
+        <div class="row">
+            <div class="hidden-md visible-sm visible-xs col-sm-3">
+                @Html.T(strings, "HeadSerigraphyOverlay")
+            </div>
+            <div class="no-padding controls col-sm-9">
+                @Html.EditorFor(model => model.Overlay)*
+                @Html.ValidationMessageFor(model => model.Overlay)
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="todelete form-group visible-md visible-lg hidden-sm ">
+    <div class="col-sm-3 control-label no-padding-right"></div>
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-4">
+            @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("TypeOfTaskSerigraphyAutoComplete", "Product", null) })*
+            @Html.ValidationMessageFor(model => model.TypeOfTaskSerigraphy)
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.TextBoxFor(model => model.InkSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("InkAutoComplete", "Article", null) })*
+            @Html.ValidationMessageFor(model => model.InkSerigraphy)
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.EditorFor(model => model.Overlay)*
+            @Html.ValidationMessageFor(model => model.Overlay)
+        </div>
+    </div>
+</div>
+
+
+
+
+@Html.HiddenFor(model => model.TypeOfProductPartTaskOption)

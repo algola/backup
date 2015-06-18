@@ -190,10 +190,8 @@ namespace PapiroMVC.Models
             ProductBlockSheet = 1,
             ProductBookSheet = 2,
             ProductRigid = 3,
-
             ProductSingleLabelRoll = 4,
             ProductSoft = 5,
-
             ProductEmpty = 6
         }
 
@@ -315,6 +313,16 @@ namespace PapiroMVC.Models
                     item2.CodProductPart = item.CodProductPart;
                     item2.TimeStampTable = DateTime.Now;
                     item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString().PadLeft(3, '0');
+
+                    var pptaskOpt = item2.ProductPartTaskOptions.OrderBy(y => y.CodProductPartTaskOption).ToList();
+                    foreach (var item3 in item2.ProductPartTaskOptions)
+                    {
+                        item3.ProductPartTask = item2;
+                        item3.CodProductPartTask = item2.CodProductPartTask;
+                        item3.TimeStampTable = DateTime.Now;
+                        item3.CodProductPartTaskOption = item2.CodProductPartTask + "-" + pptaskOpt.IndexOf(item3).ToString().PadLeft(3, '0');
+                    }
+
                 }
 
                 //articoli della parte del prodotto

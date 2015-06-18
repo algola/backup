@@ -34,6 +34,13 @@ namespace PapiroMVC.Models
         public override PrintingColor GetColorFR(string codOptionTypeOfTask)
         {
             var ret = new PrintingColor();
+            if (codOptionTypeOfTask.Contains("VERNICE"))
+            {
+                ret.cToPrintFNoImplant = 1;
+                ret.cToPrintTNoImplant = 1;
+
+                codOptionTypeOfTask = codOptionTypeOfTask.Replace("VERNICE", "");
+            }
             switch (codOptionTypeOfTask)
             {
 
@@ -97,6 +104,10 @@ namespace PapiroMVC.Models
                     ret.cToPrintF = 6;
                     ret.cToPrintR = 1;
                     break;
+                case "STAMPAETICHROTOLO_NORETRO":
+                    ret.cToPrintF = 0;
+                    ret.cToPrintR = 1;
+                    break;
 
 
                 //4 colori offset fronte e retro
@@ -145,13 +156,6 @@ namespace PapiroMVC.Models
                     ret.cToPrintR = 0;
                     //  throw new Exception();
                     break;
-            }
-
-
-            if (codOptionTypeOfTask.Contains("VERNICE"))
-            {
-                ret.cToPrintFNoImplant = 1;
-                ret.cToPrintTNoImplant = 1;
             }
 
             ret.cToPrintT = ret.cToPrintF + ret.cToPrintR;

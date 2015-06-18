@@ -36,6 +36,13 @@
 
 <div class="row">
     <div class="alert alert-block alert-success">
+        @if (Model.FirstOrDefault().Document.TypeOfDocument == PapiroMVC.Models.Document.DocumentType.Estimate)
+        {
+            <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditEstimate", "Document", new { area = "Working", id = Model.FirstOrDefault().Document.CodDocument })');">
+                <i class="icon-undo bigger-125"></i>
+                @Html.T(strings, "Back")
+            </button>
+        }
         @Html.Label(Model.First().Product.ProductName)
     </div>
 </div>
@@ -76,6 +83,7 @@
 
                     </a>
                 </li>
+            
             }
             else
             {

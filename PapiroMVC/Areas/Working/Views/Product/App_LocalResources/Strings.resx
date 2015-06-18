@@ -300,4 +300,19 @@
   <data name="WarehouseArticleMovTitle" xml:space="preserve">
     <value>Movimento</value>
   </data>
+  <data name="HeadSerigraphyInk" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="HeadSerigraphyOverlay" xml:space="preserve">
+    <value>Coprenza Percentuale</value>
+  </data>
+  <data name="HeadSerigraphyType" xml:space="preserve">
+    <value>Tipo serigrafia</value>
+  </data>
+  <data name="HeadHotPrintingFoil" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="HeadHotPrintingFormat" xml:space="preserve">
+    <value>Formato</value>
+  </data>
 </root>

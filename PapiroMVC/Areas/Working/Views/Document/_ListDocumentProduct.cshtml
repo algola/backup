@@ -343,9 +343,14 @@
 
 
     function editProduct(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
 
-        return link.replace("-1", cellvalue);
+
+        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "NewFromCodProduct"), "NewFromCodProduct", "Product", new { area="Working", id = "-1" }, new { @class = "tbutton smalledit" })';
+
+        return link.replace("-1", cellvalue) + " | " + link2.replace("-1", cellvalue);
+
+//        return link.replace("-1", cellvalue);
     }
 
     function reloadCostPerMqStep() {
@@ -371,7 +376,7 @@
                         //alert("Confirm");
                         $.ajax({
                             type: "POST",
-                            url: '@Url.Action("DeleteDocumentProduct", "Document", null)',
+                            url: '@Url.Action("DeleteDocumentProducts", "Document", null)',
                             data: {
                                 ids: JSON.stringify(ids)
                             },

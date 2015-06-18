@@ -30,17 +30,29 @@ namespace PapiroMVC.Models
         public virtual string ToName()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
-
+            string ret = String.Empty;
 
             if (Product != null)
             {
                 var x = Product.ProductNameGenerator;
-                x = x.Replace("%TASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + "%XX");
-                x = x.Replace("%XX", "%TASKS");
+
+                try
+                {
+                    x = x.Replace("%TASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + "%XX");
+                    x = x.Replace("%XX", "%TASKS");
+                    ret = (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+
+                }
+                catch (Exception)
+                {
+                    x = x.Replace("%TASKS", "" + "%XX");
+                    x = x.Replace("%XX", "%TASKS");
+                }
+                
                 Product.ProductNameGenerator = x;
             }
 
-            return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+            return ret;
         }
 
     }

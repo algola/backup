@@ -335,4 +335,20 @@
             }
         });
 
+
+</script>
+
+
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        setInterval(KeepSessionAlive, 10000);
+    });
+
+    function KeepSessionAlive() {
+
+        $.post("/Helper/KeepSessionAlive.ashx", null, function () {
+
+        });
+    }
 </script>

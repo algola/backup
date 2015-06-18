@@ -8,7 +8,6 @@ using System.Data.Entity;
 
 namespace Services
 {
-
     public class CostDetailRepository : GenericRepository<dbEntities, CostDetail>, ICostDetailRepository
     {
         private Dictionary<string, CostDetail> cache;
@@ -518,7 +517,11 @@ namespace Services
                             {
                                 c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
                             }
+                        
+                        
+                        
                         }
+
                         c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
 
                         if (codProduct == "")
@@ -640,6 +643,10 @@ namespace Services
                         {
                             c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").AsNoTracking().Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
                         }
+
+                        //Option of serigraphy / hotprinting
+                        c.ProductPartTask.ProductPartTaskOptions = Context.ProductPartTaskOptions.AsNoTracking().Where(x => x.CodProductPartTask == c.ProductPartTask.CodProductPartTask).ToList();
+
                     }
                     c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").AsNoTracking().SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
 

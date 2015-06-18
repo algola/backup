@@ -276,6 +276,35 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
 
+        /// <summary>
+        /// This command invokes the deleting of DocumentProduct
+        /// </summary>
+        /// <param name="codDocument"></param>
+        /// <param name="codDocumentProduct"></param>
+        /// <param name="newQuantity"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult DeleteDocumentProduct(string codDocument, string codDocumentProduct)
+        {
+
+            Document doc = documentRepository.GetSingle(codDocument);
+
+
+            if (doc.DocumentProducts.Count > 1)
+            {
+                var documentProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+                var codProduct = documentProduct.CodProduct;
+
+                documentRepository.DeleteDocumentProduct(documentProduct);
+                documentRepository.Save();                
+            }
+
+            return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { area = "Working", id = codProduct }) });
+
+        }
+
+
+
 
         //
         // GET: /Working/Document/
@@ -330,7 +359,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult DeleteDocumentProduct(string ids)
+        public ActionResult DeleteDocumentProducts(string ids)
         {
             string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
             foreach (var id in strings)

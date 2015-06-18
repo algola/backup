@@ -59,5 +59,6 @@ namespace PapiroMVC.Models
         public DbSet<Warehouse> warehousearticles { get; set; }
         public DbSet<WarehouseSpec> warehouseSpec { get; set; }
         public DbSet<ProductNameGenerator> ProductNameGenerators { get; set; }
+        public DbSet<ProductPartTaskOption> ProductPartTaskOptions { get; set; }
     }
 }
