@@ -79,6 +79,7 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
             dbS.AddColumnToTable("costdetails", "SelectorPrintingRoll", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("costdetails", "SelectorImplant", SchemaDb.Int, "0");
 
             dbS.AddColumnToTable("costdetails", "HideBuyingInView", SchemaDb.Bool, "0");
 
@@ -115,7 +116,7 @@ namespace PapiroMVC.Model
             dbS.AddForeignKey("costdetails", "CodComputedBy", "costdetails", "CodCostDetail");
 
 
-            //First Table
+            //Second Table
             dbS.AddTable("productpartprinting");
             dbS.AddColumnToTable("productpartprinting", "CodProductPartPrinting", SchemaDb.StringPK, "50");
             //           dbS.AddColumnToTable("productpartprinting", "CodCostDetail", SchemaDb.String, "50");
@@ -192,6 +193,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("makereadies", "PrintablePages", SchemaDb.Int, "0");
             dbS.AddColumnToTable("makereadies", "PrintedPages", SchemaDb.Int, "0");
             dbS.AddColumnToTable("makereadies", "CodMaxSegn", SchemaDb.Int, "0");
+
 
         }
     }

@@ -198,6 +198,9 @@
   <data name="ProductPartPrintableArticleListError" xml:space="preserve">
     <value>Il materiale da lavorare non è stato trovato in anagrafica</value>
   </data>
+  <data name="FormatOrTaskExecutorError" xml:space="preserve">
+    <value>Per alcune lavorazioni o formati non sono state trovate macchine. Controllare per prima cosa i formati.</value>
+  </data>
   <data name="Details" xml:space="preserve">
     <value>Dettagli</value>
   </data>
@@ -309,10 +312,52 @@
   <data name="HeadSerigraphyType" xml:space="preserve">
     <value>Tipo serigrafia</value>
   </data>
+  <data name="HeadPrintRollInk" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="HeadPrintRollOverlay" xml:space="preserve">
+    <value>Coprenza Percentuale</value>
+  </data>
+  <data name="HeadPrintRollType" xml:space="preserve">
+    <value>Tipo serigrafia</value>
+  </data>
   <data name="HeadHotPrintingFoil" xml:space="preserve">
     <value>Foil</value>
   </data>
   <data name="HeadHotPrintingFormat" xml:space="preserve">
     <value>Formato</value>
+  </data>
+  <data name="DieDialogTitle" xml:space="preserve">
+    <value>Consulta archivio fustelle</value>
+  </data>
+  <data name="PrintSide" xml:space="preserve">
+    <value>Tipo di stampa</value>
+  </data>
+  <data name="PrintSide0" xml:space="preserve">
+    <value>Non Specificato</value>
+  </data>
+  <data name="PrintSide1" xml:space="preserve">
+    <value>Normale</value>
+  </data>
+  <data name="PrintSide2" xml:space="preserve">
+    <value>Speculare</value>
+  </data>
+  <data name="FormatTypeName0" xml:space="preserve">
+    <value>Quadrata</value>
+  </data>
+  <data name="FormatTypeName1" xml:space="preserve">
+    <value>Ovale</value>
+  </data>
+  <data name="FormatTypeName2" xml:space="preserve">
+    <value>Sagomata</value>
+  </data>
+  <data name="FormatTypeName3" xml:space="preserve">
+    <value>Rettangolare</value>
+  </data>
+  <data name="FormatTypeName4" xml:space="preserve">
+    <value>Triangolare</value>
+  </data>
+  <data name="FormatTypeName5" xml:space="preserve">
+    <value>Rotonda</value>
   </data>
 </root>

@@ -153,6 +153,12 @@
   <data name="DocumentToolTip" xml:space="preserve">
     <value>Documento</value>
   </data>
+  <data name="Markup" xml:space="preserve">
+    <value>Ricarico</value>
+  </data>
+  <data name="MarkupToolTip" xml:space="preserve">
+    <value>Ricarico %</value>
+  </data>
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
   </data>

@@ -222,6 +222,9 @@
   <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
     <value>Etichette quadrate in bobina</value>
   </data>
+  <data name="CodMenuProductEtichetteRotoloDouble" xml:space="preserve">
+    <value>Etichette e controetichette</value>
+  </data>
   <data name="CodMenuProductEtichetteSagRotolo" xml:space="preserve">
     <value>Etichette sagomate in bobina</value>
   </data>
@@ -245,5 +248,14 @@
   </data>
   <data name="GeneratorToolTip" xml:space="preserve">
     <value>Generatore della descrizione</value>
+  </data>
+  <data name="FormatA" xml:space="preserve">
+    <value>f.to cm</value>
+  </data>
+  <data name="FormatB" xml:space="preserve">
+    <value>f.to contro etichetta cm</value>
+  </data>
+  <data name="CodMenuProductFasceGommateRotolo2" xml:space="preserve">
+    <value>Etichette film</value>
   </data>
 </root>

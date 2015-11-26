@@ -198,6 +198,9 @@
   <data name="CodMenuProductEtichetteRotolo" xml:space="preserve">
     <value>Etichette quadrate in bobina</value>
   </data>
+  <data name="CodMenuProductEtichetteRotoloDouble" xml:space="preserve">
+    <value>Etichette e controetichette bobina</value>
+  </data>
   <data name="CodMenuProductInciso" xml:space="preserve">
     <value>Clichè inciso</value>
   </data>
@@ -394,15 +397,27 @@
     <value>Descrizioni Prodotti</value>
   </data>
   <data name="InkMenu" xml:space="preserve">
-    <value>Inchiostri serigrafici</value>
+    <value>Inchiostri</value>
   </data>
   <data name="FoilMenu" xml:space="preserve">
     <value>Foil</value>
   </data>
   <data name="SerigraphyArticleMenu" xml:space="preserve">
-    <value>Serigrafia</value>
+    <value>Serigrafia-Flexo</value>
   </data>
   <data name="SerigraphyMenu" xml:space="preserve">
     <value>Opzioni serigrafia</value>
+  </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="CodMenuProductFasceGommateRotolo2" xml:space="preserve">
+    <value>Etichette film</value>
+  </data>
+  <data name="AniloxMenu" xml:space="preserve">
+    <value>Anilox flexo</value>
+  </data>
+  <data name="TaskCenterMenu" xml:space="preserve">
+    <value>Centri di lavoro</value>
   </data>
 </root>

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PapiroMVC.Models
 {
- //   [XorFieldRequired(new string[] { "CostPerMl", "CostPerMq" }, typeof(ResRollPrintableArticleCost), "RollPrintableArticleCostFieldValidationError")]
+    [XorFieldRequired(new string[] { "CostPerKg", "CostPerMq" }, typeof(ResRollPrintableArticleCost), "RollPrintableArticleCostFieldValidationError")]
     public class RollPrintableArticleStandardCost_MetaData : RollPrintableArticleCost_MetaData
     {
     }

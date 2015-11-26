@@ -129,6 +129,37 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+
+        [HttpPost]
+        [HttpParamAction]
+        public ActionResult FlatRollEstimatedOnTime(FlatRollEstimatedOnTime c, string returnUrl, string returnCodTypeOfTask)
+        {
+            ViewBag.ReturnCodTypeOfTask = returnCodTypeOfTask;
+            ViewBag.ReturnUrl = returnUrl;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // c.CostPerHourRunning = "10";
+                    taskExecutorRepository.AddEstimatedOn(c);
+                    taskExecutorRepository.Save();
+
+                    return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "FlatRollEstimatedOnTime";
+            return PartialView("FlatRollEstimatedOnTime", c);
+        }
+
+
         [HttpPost]
         public ActionResult TaskEstimatedOnRun(TaskEstimatedOnRun c, string returnUrl, string returnCodTypeOfTask)
         {
@@ -324,6 +355,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     case TaskExecutor.ExecutorType.Binding:
                         ViewBag.TypeCost = "RunTime";
                         break;
+                    case TaskExecutor.ExecutorType.FlatRoll:
+                        ViewBag.TypeCost = "Time";
+                        break;
                     default:
                         ViewBag.TypeCost = "RunTimeMq";
                         break;
@@ -351,6 +385,10 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ViewBag.ActionMethod = "RollEstimatedOnTime";
                     break;
 
+                case TaskEstimatedOn.EstimatedOnType.FlatRollEstimatedOnTime:
+                    ViewBag.ActionMethod = "FlatRollEstimatedOnTime";
+                    break;
+
                 case TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime:
                     ViewBag.ActionMethod = "ControlTableRollEstimatedOnTime";
                     break;
@@ -365,7 +403,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     }
                     if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.ControlTableRoll)
                     {
-                        ViewBag.ActionMethod = "ControlTableRollstimatedOnTime";
+                        ViewBag.ActionMethod = "ControlTableRollEstimatedOnTime";
                     }
                     break;
 
@@ -422,11 +460,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (taskExecutor.SetTaskExecutorEstimatedOn.Count() != 0)
                 return RedirectToAction("TaskExecutorCost", new { id = c.CodTaskExecutor });
 
-            if (!taskExecutor.CodTypeOfTask.StartsWith("STAMPA"))
-            {
-                var optionTypeOfTaskList = typeOfTaskRepository.GetSingle(taskExecutor.CodTypeOfTask).OptionTypeOfTasks;
 
-                foreach (var item in optionTypeOfTaskList.Except(optionTypeOfTaskList.Where(x => x.CodOptionTypeOfTask == taskExecutor.CodTypeOfTask + "_NO")))
+            if (taskExecutor.CodTypeOfTask == null || !taskExecutor.CodTypeOfTask.StartsWith("STAMPA"))
+            {
+                // var optionTypeOfTaskList = typeOfTaskRepository.GetSingle(taskExecutor.CodTypeOfTask).OptionTypeOfTasks;
+
+                // foreach (var item in optionTypeOfTaskList.Except(optionTypeOfTaskList.Where(x => x.CodOptionTypeOfTask == taskExecutor.CodTypeOfTask + "_NO")))
                 {
                     switch (c.TypeTaskExecutorEstimatedOn)
                     {
@@ -453,8 +492,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             }
                             else
                             {
-                                tskEst = new TaskEstimatedOnTime();
-                                retView = "TaskEstimatedOnTime";
+                                if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.ControlTableRoll)
+                                {
+                                    tskEst = new ControlTableRollEstimatedOnTime();
+                                    retView = "ControlTableRollEstimatedOnTime";
+                                }
+                                else
+                                {
+                                    tskEst = new TaskEstimatedOnTime();
+                                    retView = "TaskEstimatedOnTime";
+                                }
                             }
                             break;
                         case TaskEstimatedOn.EstimatedOnType.OnMq:
@@ -479,7 +526,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             break;
                     }
 
-                    tskEst.CodOptionTypeOfTask = item.CodOptionTypeOfTask;
+                    //     tskEst.CodOptionTypeOfTask = item.CodOptionTypeOfTask;
                     taskExecutor.SetTaskExecutorEstimatedOn.Add(tskEst);
 
                 }
@@ -525,8 +572,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                 }
                                 else
                                 {
-                                    tskEst = new TaskEstimatedOnTime();
-                                    retView = "TaskEstimatedOnTime";
+                                    if (taskExecutor.TypeOfExecutor == TaskExecutor.ExecutorType.FlatRoll)
+                                    {
+                                        tskEst = new FlatRollEstimatedOnTime();
+                                        retView = "FlatRollEstimatedOnTime";
+                                    }
+                                    else
+                                    {
+                                        tskEst = new TaskEstimatedOnTime();
+                                        retView = "TaskEstimatedOnTime";
+                                    }
                                 }
                         }
                         break;
@@ -1300,7 +1355,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             //    /* continuing....................*/
 
-          //  }
+            //  }
 
             return ret;
         }
@@ -1470,9 +1525,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
-        public ActionResult EditFlatRoll(string id, string resultUrl)
+        public ActionResult EditFlatRoll(string id, string returnUrl)
         {
-            ViewBag.ResultUrl = resultUrl;
+            ViewBag.ResultUrl = returnUrl;
             ViewBag.ReturnCodTypeOfTask = "STAMPAETICHROTOLO_LIST";
 
             var tskEx = taskExecutorRepository.GetSingle(id);
@@ -1502,7 +1557,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
+
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
+
                 }
                 catch (Exception ex)
                 {
@@ -2386,49 +2443,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditCostPerRunStepBW";
             //            return View("EditCostPerRunStep", c);
         }
-
-        [HttpGet]
-        public ActionResult EditSerigraphyOption(string id, string returnUrl)
-        {
-
-
-            var opt = typeOfTaskRepository.GetSingleOptionTypeOfTask(id);
-
-
-
-
-            //this is a common point where edit function is called
-            ViewBag.ActionMethod = "EditSerigraphyOption";
-            return View(opt);
-        }
-
-        [HttpParamAction]
-        [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditSerigraphyOption(OptionTypeOfTask c)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-
-                    typeOfTaskRepository.EditOptionTypeOfTask(c);
-                    typeOfTaskRepository.Save();
-                    return Json(new { redirectUrl = Url.Action("IndexOptionTypeOfTaskSerigraphy") });
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
-                }
-            }
-
-
-
-
-
-            ViewBag.ActionMethod = "EditSerigraphyOption";
-            return PartialView("_EditSerigraphyOption", c);
-        }
-
 
     }
 }

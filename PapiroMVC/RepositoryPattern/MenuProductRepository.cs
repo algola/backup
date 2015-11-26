@@ -18,18 +18,18 @@ namespace Services
 
             tbCode.Add(new MenuProduct { CodCategory = "Description", IndexOf = 0, CodMenuProduct = "Vuoto", IndexOfCategory = 0 });
 
-            //Fogli Singoli
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 0, CodMenuProduct = "Buste", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 2, CodMenuProduct = "BigliettiVisita", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 3, CodMenuProduct = "CartolineInviti", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 4, CodMenuProduct = "Volantini", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 5, CodMenuProduct = "Pieghevoli", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 6, CodMenuProduct = "CartaIntestata", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 7, CodMenuProduct = "Locandine", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 8, CodMenuProduct = "CartolinePostali", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 9, CodMenuProduct = "FogliMacchina", IndexOfCategory = 1 });
-            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 10, CodMenuProduct = "AltriFormati", IndexOfCategory = 1 });
+            ////Fogli Singoli
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 0, CodMenuProduct = "Buste", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 2, CodMenuProduct = "BigliettiVisita", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 3, CodMenuProduct = "CartolineInviti", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 4, CodMenuProduct = "Volantini", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 5, CodMenuProduct = "Pieghevoli", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 6, CodMenuProduct = "CartaIntestata", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 7, CodMenuProduct = "Locandine", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 8, CodMenuProduct = "CartolinePostali", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 9, CodMenuProduct = "FogliMacchina", IndexOfCategory = 1 });
+            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 10, CodMenuProduct = "AltriFormati", IndexOfCategory = 1 });
 
             //Grande formato
             tbCode.Add(new MenuProduct { CodCategory = "GrandeFormato", IndexOf = 1, CodMenuProduct = "Manifesti", IndexOfCategory = 1 });
@@ -39,24 +39,26 @@ namespace Services
             tbCode.Add(new MenuProduct { CodCategory = "GrandeFormato", IndexOf = 5, CodMenuProduct = "SuppRigidi", IndexOfCategory = 1 });
             tbCode.Add(new MenuProduct { CodCategory = "GrandeFormato", IndexOf = 6, CodMenuProduct = "Poster", IndexOfCategory = 1 });
 
-            //Riviste , Cataloghi e libri
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 0, CodMenuProduct = "PuntoMetallico", IndexOfCategory = 2 });
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 1, CodMenuProduct = "SpiraleMetallica", IndexOfCategory = 2 });
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 2, CodMenuProduct = "BrossuraFresata", IndexOfCategory = 2 });
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 3, CodMenuProduct = "BrossuraCucitaFilo", IndexOfCategory = 2 });
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 4, CodMenuProduct = "RivistePostalizzazione", IndexOfCategory = 2 });
-            tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 5, CodMenuProduct = "SchedeNonRilegate", IndexOfCategory = 2 });
+            ////Riviste , Cataloghi e libri
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 0, CodMenuProduct = "PuntoMetallico", IndexOfCategory = 2 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 1, CodMenuProduct = "SpiraleMetallica", IndexOfCategory = 2 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 2, CodMenuProduct = "BrossuraFresata", IndexOfCategory = 2 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 3, CodMenuProduct = "BrossuraCucitaFilo", IndexOfCategory = 2 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 4, CodMenuProduct = "RivistePostalizzazione", IndexOfCategory = 2 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Book", IndexOf = 5, CodMenuProduct = "SchedeNonRilegate", IndexOfCategory = 2 });
 
 
             //etichette in rotolo
             tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteRotolo", IndexOfCategory = 3 });
             tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteSagRotolo", IndexOfCategory = 3 });
             tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "FasceGommateRotolo", IndexOfCategory = 3 });
+            tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "FasceGommateRotolo2", IndexOfCategory = 3 });
+            tbCode.Add(new MenuProduct { CodCategory = "Rotoli", IndexOf = 0, CodMenuProduct = "EtichetteRotoloDouble", IndexOfCategory = 3 });
 
 
-            //Cliche
-            tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 1, CodMenuProduct = "Inciso", IndexOfCategory = 4 });
-            tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 2, CodMenuProduct = "Fotopolimero", IndexOfCategory = 4 });
+            ////Cliche
+            //tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 1, CodMenuProduct = "Inciso", IndexOfCategory = 4 });
+            //tbCode.Add(new MenuProduct { CodCategory = "Cliche", IndexOf = 2, CodMenuProduct = "Fotopolimero", IndexOfCategory = 4 });
 
             foreach (var item in tbCode)
             {
@@ -96,7 +98,9 @@ namespace Services
 
         public IQueryable<MenuProduct> GetAll(string codMenuProduct)
         {
+
             return Context.MenuProducts.Where(o => o.CodMenuProduct == codMenuProduct);
+        
         }
 
         public MenuProduct GetSingle(string codMenuProduct)

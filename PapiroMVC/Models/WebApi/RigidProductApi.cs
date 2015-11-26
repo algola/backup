@@ -11,7 +11,7 @@ namespace PapiroMVC.Models.WebApi
         public string TypeOfMaterial { get; set; }
         public string NameOfMaterial { get; set; }
         public string Color { get; set; }
-        public Nullable<long> Weight { get; set; } 
+        public Nullable<double> Weight { get; set; } 
 
     }
 

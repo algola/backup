@@ -18,7 +18,10 @@ namespace PapiroMVC.Models
         //true = calculated automatically
         public bool AutoDCut { get; set; }
 
+        public bool LateralMinDCut { get; set; }
+
         public int TypeOfDCut1 { get; set; }
+        public int TypeOfDCut2 { get; set; }
 
         public int MaxGain1 { get; set; }
         public int MaxGain2 { get; set; }
@@ -30,9 +33,9 @@ namespace PapiroMVC.Models
         {
             AutoDCut = false;
             GiraVerso = false;
-            //            ForceSideOnSide = 0;
+            LateralMinDCut = false;
         }
-        
+
         public override void CalculateGain()
         {
             if (Makereadies == null)
@@ -80,8 +83,10 @@ namespace PapiroMVC.Models
                 dCut1 = 0;
                 dCut2 = 0;
             }
-
+           
             double minusSide1 = GiraVerso ? laterale * 2 : pinza + controPinza;
+            double minusSide1WoLat = GiraVerso ? 0 : pinza + controPinza;
+
             var ddpminusSide1 = GiraVerso ? laterale * 2 : pinza * 2;
             var minusSide2 = GiraVerso ? pinza + controPinza : laterale * 2;
 
@@ -91,15 +96,39 @@ namespace PapiroMVC.Models
                     (LargerFormat.GetSide1() - minusSide1 + dCut1) / (SmallerFormat.GetSide1() + dCut1)
                     )));
 
+                int gain1_1WoLat = (int)decimal.Truncate((decimal)((
+                    (LargerFormat.GetSide1() - minusSide1WoLat) / (SmallerFormat.GetSide1())
+                    )));
 
                 //LIMITO LA RESA
                 if (MaxGain1 != 0 && gain1_1 > MaxGain1)
                 {
                     gain1_1 = MaxGain1;
+                    gain1_1WoLat = MaxGain1;
                 }
 
                 //doppio taglio calcolato su SideOnSide 1
                 double dCut1_1Res = ((LargerFormat.GetSide1() - minusSide1) - (SmallerFormat.GetSide1() * (gain1_1))) / ((gain1_1 - 1) == 0 ? 1 : (gain1_1 - 1));
+
+                //doppio taglio calcolato su SideOnSide 1 w/o Laterale
+                double dCut1_1ResWoLat = ((LargerFormat.GetSide1() - minusSide1WoLat) - (SmallerFormat.GetSide1() * (gain1_1WoLat))) / (gain1_1WoLat + 1);
+
+                if (dCut1_1ResWoLat == 0)
+                {
+                    gain1_1WoLat--;
+                    dCut1_1ResWoLat = ((LargerFormat.GetSide1() - minusSide1WoLat) - (SmallerFormat.GetSide1() * (gain1_1WoLat))) / (gain1_1WoLat + 1);
+                }
+
+
+                ////solo per etichette                
+                if (LateralMinDCut)
+                {
+                    if (dCut1_1Res > laterale)
+                    {
+                        gain1_1 = gain1_1WoLat;
+                        dCut1_1Res = dCut1_1ResWoLat;
+                    }
+                }
 
 
                 int gain1_1ddp = (int)decimal.Truncate((decimal)(((
@@ -120,6 +149,9 @@ namespace PapiroMVC.Models
 
                 //doppio taglio calcolato su SideOnSide 2
                 double dCut2_2Res = ((LargerFormat.GetSide2() - minusSide2) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
+                double dCut2_2ResDouble = dCut2_2Res / 2;
+
+
 
                 //TODO: controllare la pinza e doppia pinza!!!!!
                 int gain2_2Perf = (gain2_2 % 2) == 0 ? gain2_2 : gain2_2 - 1;
@@ -189,6 +221,27 @@ namespace PapiroMVC.Models
                                 default:
                                     dCut1_1Res = dCut1_1Res > (dCut2_2Res) ? (Math.Ceiling(dCut2_2Res * 10)) / 10 : dCut1_1Res;
                                     break;
+                            }
+
+
+                            //se il formato è doppio (etichetta e contro) e lo so per il tipo di dcut2
+                            //allora devo arrotondare il dcut1 usando la metà di dcut2Res --> dCut2_2ResDouble
+                            if (TypeOfDCut2 != 0)
+                            {
+
+                                switch (TypeOfDCut1)
+                                {
+                                    case 1:
+                                        dCut1_1Res = dCut1_1Res > (dCut2_2ResDouble) ? (dCut2_2ResDouble) : dCut1_1Res;
+                                        break;
+                                    case 2:
+                                        dCut1_1Res = 0;
+                                        break;
+                                    default:
+                                        dCut1_1Res = dCut1_1Res > (dCut2_2ResDouble) ? (Math.Ceiling(dCut2_2ResDouble * 10)) / 10 : dCut1_1Res;
+                                        break;
+                                }
+
                             }
 
                             var tempDCut2 = Math.Round(dCut2_2Res * 10000) / 10000;
@@ -287,7 +340,7 @@ namespace PapiroMVC.Models
 
                 var subMolQta = SubjectNumber * Quantity;
 
-                if (subMolQta !=0 && subMolQta <= calculatedShape)
+                if (subMolQta != 0 && subMolQta <= calculatedShape)
                 {
                     gr.PrintedShapes = (int)decimal.Truncate(calculatedShape / (subMolQta != 0 ? subMolQta : 1)) * (subMolQta != 0 ? subMolQta : 1);
                     //se le quantità non superano le printed shape... allora limito le shape alle quantità
@@ -319,6 +372,10 @@ namespace PapiroMVC.Models
             }
             return gr;
         }
+
+
+
+
 
     }
 }

@@ -177,6 +177,9 @@
   <data name="DialogCloneTitle" xml:space="preserve">
     <value>Duplica</value>
   </data>
+  <data name="DialogNewManualTitle" xml:space="preserve">
+    <value>CostoManuale</value>
+  </data>
   <data name="DialogPrintTitle" xml:space="preserve">
     <value>Stampa a video</value>
   </data>
@@ -281,6 +284,9 @@
   </data>
   <data name="NewQty" xml:space="preserve">
     <value>Nuova Quantità</value>
+  </data>
+  <data name="NewDesc" xml:space="preserve">
+    <value>Descrizione</value>
   </data>
   <data name="NoTaskEstimatedOnException" xml:space="preserve">
     <value>Errore</value>
@@ -491,5 +497,98 @@
   </data>
   <data name="NewFromCodProduct" xml:space="preserve">
     <value>Duplica</value>
+  </data>
+  <data name="FormatTypeName0" xml:space="preserve">
+    <value>Quadrata</value>
+  </data>
+  <data name="FormatTypeName1" xml:space="preserve">
+    <value>Ovale</value>
+  </data>
+  <data name="FormatTypeName2" xml:space="preserve">
+    <value>Sagomata</value>
+  </data>
+  <data name="FormatTypeName3" xml:space="preserve">
+    <value>Rettangolare</value>
+  </data>
+  <data name="FormatTypeName4" xml:space="preserve">
+    <value>Triangolare</value>
+  </data>
+  <data name="FormatTypeName5" xml:space="preserve">
+    <value>Rotonda</value>
+  </data>
+  <data name="DescClone" xml:space="preserve">
+    <value>Duplica</value>
+  </data>
+  <data name="DescOpen" xml:space="preserve">
+    <value>Apri</value>
+  </data>
+  <data name="DescPrint" xml:space="preserve">
+    <value>Stampa</value>
+  </data>
+  <data name="CodProductPartTaskOption" xml:space="preserve">
+    <value>Codice Opzione</value>
+  </data>
+  <data name="InkCaption" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="OverlayCaption" xml:space="preserve">
+    <value>% Coprenza </value>
+  </data>
+  <data name="TypeOfTaskPrintCaption" xml:space="preserve">
+    <value>Tipo Anilox / Applicazione</value>
+  </data>
+  <data name="HeadPrintRollInk" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="HeadPrintRollOverlay" xml:space="preserve">
+    <value>Coprenza %</value>
+  </data>
+  <data name="HeadPrintRollType" xml:space="preserve">
+    <value>Anilox / Applicazione</value>
+  </data>
+  <data name="HeadHotPrintingFoil" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="DeleteMessageProductPartTaskOption" xml:space="preserve">
+    <value>Cancellare le opzioni selezionate?</value>
+  </data>
+  <data name="Planning" xml:space="preserve">
+    <value>Pianificazione</value>
+  </data>
+  <data name="ClearFirst" xml:space="preserve">
+    <value>Svuota Primo</value>
+  </data>
+  <data name="ClearLast" xml:space="preserve">
+    <value>Svuota Ultimo</value>
+  </data>
+  <data name="HeadSerigraphyInk" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="HeadSerigraphyOverlay" xml:space="preserve">
+    <value>Coprenza</value>
+  </data>
+  <data name="HeadSerigraphyType" xml:space="preserve">
+    <value>Serigrafia</value>
+  </data>
+  <data name="InkSerigraphyCaption" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="TypeOfTaskSerigraphyCaption" xml:space="preserve">
+    <value>Serigrafia</value>
+  </data>
+  <data name="Addoption" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="HeaderAnilox" xml:space="preserve">
+    <value>Inchiostri / coprenza</value>
+  </data>
+  <data name="HeadFoils" xml:space="preserve">
+    <value>Foil</value>
+  </data>
+  <data name="HeadSerigraphys" xml:space="preserve">
+    <value>Serigrafie / Inchiostri</value>
+  </data>
+  <data name="SaveDie" xml:space="preserve">
+    <value>Salva Fustella in archivio</value>
   </data>
 </root>

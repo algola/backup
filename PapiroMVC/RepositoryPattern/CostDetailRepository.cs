@@ -109,17 +109,17 @@ namespace Services
                 Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
                 //se è' da modificare ma è contrassegnato come added faccio che lo segno come unmodificato
 
-                if (entity.Computes != null)
-                {
-                    foreach (var item in entity.Computes)
-                    {
-                        item.CodComputedBy = entity.CodCostDetail;
-                        var fromBDComp = Context.CostDetail.Single(p => p.CodCostDetail == item.CodCostDetail);
-                        Context.Entry(fromBDComp).CurrentValues.SetValues(item);
-                        Context.Entry(fromBDComp).State = System.Data.Entity.EntityState.Modified;
+                //if (entity.Computes != null)
+                //{
+                //    foreach (var item in entity.Computes)
+                //    {
+                //        item.CodComputedBy = entity.CodCostDetail;
+                //        var fromBDComp = Context.CostDetail.Single(p => p.CodCostDetail == item.CodCostDetail);
+                //        Context.Entry(fromBDComp).CurrentValues.SetValues(item);
+                //        Context.Entry(fromBDComp).State = System.Data.Entity.EntityState.Modified;
 
-                    }
-                }
+                //    }
+                //}
 
                 if (entity.ProductPartPrinting != null)
                 {
@@ -208,7 +208,6 @@ namespace Services
         {
             CostDetailCostCodeRigen(entity);
 
-
             //if (entity.TaskCost != null)
             //{
             //    var fromBDC = Context.Costs.SingleOrDefault(p => p.CodCost == entity.CodCostDetail);
@@ -231,70 +230,26 @@ namespace Services
             }
             else
             {
-                Context.Set<CostDetail>().Add(entity);
-                //foreach (var entry in Context.ChangeTracker.Entries<CostDetail>())
-                //{
-                //    if (entry.State == EntityState.Added && entry.Entity != entity)
-                //    {
-                //        entry.State = EntityState.Unchanged;
-                //    }
-                //}
+                Context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+                //                Context.Set<CostDetail>().Add(entity);
 
+                List<Object> modOrAdded = Context.ChangeTracker.Entries()
+                .Where(x => x.State == System.Data.Entity.EntityState.Modified
+                || x.State == System.Data.Entity.EntityState.Added)
+                .Select(x => x.Entity).ToList();
 
-                List<Object> modOrAdded = Context.ChangeTracker.Entries().Where(x =>
-                    x.State == System.Data.Entity.EntityState.Added).Select(x => x.Entity).ToList();
+                var notAll = modOrAdded.OfType<Cost>().GroupBy(x => x.CodCost).Where(grp => grp.Count() > 1).SelectMany(x => x).ToList();
 
-                Console.Write(modOrAdded);
+                Console.WriteLine(notAll);
 
+                for (int i = 0; i < notAll.Count; i++)
+                {
+                    if (notAll[i].CostDetails.Count == 0)
+                    {
+                        notAll[i] = null;
+                    }
 
-                //#region provo a togliere le cose superflue
-                ////non aggiungo i productpartprinting se già sono presenti
-                //foreach (var entry in Context.ChangeTracker.Entries<ProductPartPrinting>())
-                //{
-                //    try
-                //    {
-                //        var fromDBEntity = Context.ProductPartPrinting.FirstOrDefault(p => p.CodProductPartPrinting == entry.Entity.CodProductPartPrinting);
-                //        if (fromDBEntity != null)
-                //        {
-                //            Context.Entry(fromDBEntity).State = System.Data.Entity.EntityState.Unchanged;
-                //        }
-
-                //    }
-                //    catch (Exception)
-                //    {
-                //        entry.State = System.Data.Entity.EntityState.Unchanged;
-                //    }
-                //}
-
-
-                ////non aggiungo i ProductPartPrintingGain se già sono presenti
-                //foreach (var entry in Context.ChangeTracker.Entries<ProductPartPrintingGain>())
-                //{
-                //    var fromDBEntity = Context.ProductPartPrintingGain.SingleOrDefault(p => p.CodProductPartPrintingGain == entry.Entity.CodProductPartPrintingGain);
-                //    if (fromDBEntity != null)
-                //    {
-                //        Context.Entry(fromDBEntity).State = System.Data.Entity.EntityState.Unchanged;
-                //    }
-                //}
-
-                ////non aggiungo i Makeready se già sono presenti
-                //foreach (var entry in Context.ChangeTracker.Entries<Makeready>())
-                //{
-                //    var fromDBEntity = Context.Makereadies.SingleOrDefault(p => p.CodMakeready == entry.Entity.CodMakeready);
-                //    if (fromDBEntity != null)
-                //    {
-                //        Context.Entry(fromDBEntity).State = System.Data.Entity.EntityState.Unchanged;
-                //    }
-                //}
-
-                //#endregion
-
-
-                List<CostDetail> Added2 = Context.ChangeTracker.Entries()
-                .Where(x => x.State == System.Data.Entity.EntityState.Added)
-                .Select(x => x.Entity).OfType<CostDetail>().ToList();
-
-                Console.WriteLine(Added2);
+                }
 
 
             }
@@ -420,6 +375,11 @@ namespace Services
 
         public override void Save()
         {
+
+
+
+
+
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
                 .Where(x => x.State == System.Data.Entity.EntityState.Modified
                 || x.State == System.Data.Entity.EntityState.Added)
@@ -432,9 +392,31 @@ namespace Services
                .Except(modOrAdded.OfType<ProductPartPrintingGain>())
                .Except(modOrAdded.OfType<Makeready>());
 
+            var notAll2 = modOrAdded.OfType<Cost>().GroupBy(x => x.CodCost).Where(grp => grp.Count() > 1).SelectMany(x => x).ToList();
+
+            Console.WriteLine(notAll2);
+
+            for (int i = 0; i < notAll2.Count; i++)
+            {
+                if (notAll2[i].CostDetails.Count == 0)
+                {
+                    notAll2[i] = null;
+                }
+
+            }
+
             foreach (var item in notAll)
             {
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+
+                try
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                }
+                catch (Exception)
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                    //throw;
+                }
             }
 
             base.Save();
@@ -517,9 +499,9 @@ namespace Services
                             {
                                 c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
                             }
-                        
-                        
-                        
+
+
+
                         }
 
                         c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
@@ -583,7 +565,6 @@ namespace Services
             }
         }
 
-
         public override CostDetail GetSingle(string Cod)
         {
 
@@ -620,7 +601,7 @@ namespace Services
 
                         if (ret.ProductPartPrinting.Part != null)
                         {
-                            ret.ProductPartPrinting.Part.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.AsNoTracking().Where(x => x.CodProductPart == ret.ProductPartPrinting.Part.CodProductPart).ToList();
+                            ret.ProductPartPrinting.Part.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Where(x => x.CodProductPart == ret.ProductPartPrinting.Part.CodProductPart).ToList();
                         }
 
                     }
@@ -630,39 +611,39 @@ namespace Services
 
 
                 ret.TaskCost = Context.Costs        //.SingleOrDefault(x => x.CodCost == ret.CodCostDetail)
-                    .AsNoTracking().SingleOrDefault(x => x.CodCost == ret.CodCostDetail);
+                    .SingleOrDefault(x => x.CodCost == ret.CodCostDetail);
 
                 if (ret.TaskCost != null)
                 {
                     var c = ret.TaskCost;
-                    c.ProductPartTask = Context.ProductPartTasks.Include("OptionTypeOfTask").AsNoTracking().SingleOrDefault(x => x.CodProductPartTask == c.CodProductPartTask);
+                    c.ProductPartTask = Context.ProductPartTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductPartTask == c.CodProductPartTask);
                     if (c.ProductPartTask != null)
                     {
-                        c.ProductPartTask.ProductPart = Context.ProductParts.AsNoTracking().SingleOrDefault(x => x.CodProductPart == c.ProductPartTask.CodProductPart);
+                        c.ProductPartTask.ProductPart = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == c.ProductPartTask.CodProductPart);
                         if (c.ProductPartTask.ProductPart != null)
                         {
-                            c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").AsNoTracking().Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
+                            c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
                         }
 
                         //Option of serigraphy / hotprinting
-                        c.ProductPartTask.ProductPartTaskOptions = Context.ProductPartTaskOptions.AsNoTracking().Where(x => x.CodProductPartTask == c.ProductPartTask.CodProductPartTask).ToList();
+                        c.ProductPartTask.ProductPartTaskOptions = Context.ProductPartTaskOptions.Where(x => x.CodProductPartTask == c.ProductPartTask.CodProductPartTask).ToList();
 
                     }
-                    c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").AsNoTracking().SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
+                    c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
 
                     if (codProduct == "")
                         codProduct = c.ProductTask != null ? c.ProductTask.CodProduct : "";
 
-                    c.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.AsNoTracking().SingleOrDefault(x => x.CodProductPartPrintableArticle == c.CodProductPartPrintableArticle);
-                    
-                    c.DocumentProduct = Context.DocumentProducts.AsNoTracking().SingleOrDefault(x => x.CodDocumentProduct == c.CodDocumentProduct);
+                    c.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.SingleOrDefault(x => x.CodProductPartPrintableArticle == c.CodProductPartPrintableArticle);
+
+                    c.DocumentProduct = Context.DocumentProducts.SingleOrDefault(x => x.CodDocumentProduct == c.CodDocumentProduct);
                     if (c.DocumentProduct != null)
                     {
-                        c.DocumentProduct.Document = Context.Documents.AsNoTracking().SingleOrDefault(x => x.CodDocument == c.DocumentProduct.CodDocument);
+                        c.DocumentProduct.Document = Context.Documents.SingleOrDefault(x => x.CodDocument == c.DocumentProduct.CodDocument);
                         if (c.DocumentProduct.Document != null)
                         {
                         }
-                        c.DocumentProduct.Costs = Context.Costs.AsNoTracking().Where(x => x.CodDocumentProduct == c.DocumentProduct.CodDocumentProduct).ToList();
+                        c.DocumentProduct.Costs = Context.Costs.Where(x => x.CodDocumentProduct == c.DocumentProduct.CodDocumentProduct).ToList();
                         //                    .Include(x => x.DocumentProduct.Document.DocumentProducts)
                         //                    .Include("DocumentProduct.Document.DocumentProducts.Costs")
                     }
@@ -680,8 +661,8 @@ namespace Services
                 //    Console.WriteLine(item.CodItemGraphLink);
                 //}
 
-                ret.CodPartPrintingCostDetail = Context.Costs.AsNoTracking().Where(x => x.CodDocumentProduct == ret.TaskCost.CodDocumentProduct && x.CodItemGraph == "ST").Select(y => y.CodCost);
-                ret.TaskexEcutorSelected = Context.taskexecutors.AsNoTracking().Where(x => x.CodTaskExecutor == ret.CodTaskExecutorSelected).FirstOrDefault();
+                ret.CodPartPrintingCostDetail = Context.Costs.Where(x => x.CodDocumentProduct == ret.TaskCost.CodDocumentProduct && x.CodItemGraph == "ST").Select(y => y.CodCost);
+                ret.TaskexEcutorSelected = Context.taskexecutors.Where(x => x.CodTaskExecutor == ret.CodTaskExecutorSelected).FirstOrDefault();
 
 
                 try

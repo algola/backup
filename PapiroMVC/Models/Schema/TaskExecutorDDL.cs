@@ -34,8 +34,16 @@ namespace PapiroMVC.Model
             dbS.ChangeStringColumnLegth("taskexecutors", "FormatMin", "15");
             dbS.ChangeStringColumnLegth("taskexecutors", "FormatMax", "15");
 
-            dbS.AddColumnToTable("taskexecutors", "WeightMin", SchemaDb.IntUS, "0");
-            dbS.AddColumnToTable("taskexecutors", "WeightMax", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("taskexecutors", "WeightMin", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("taskexecutors", "WeightMax", SchemaDb.Double, "0");
+
+            //UPDATE TO DOUBLE
+            //"taskexecutors", "WeightMin"
+            //"taskexecutors", "WeightMax"
+            dbS.ChangeColumnToDouble("articles", "Weight");
+            dbS.ChangeColumnToDouble("articles", "SuppWeight");
+
+
             dbS.AddColumnToTable("taskexecutors", "Pinza", SchemaDb.Double, "0");
             dbS.AddColumnToTable("taskexecutors", "ControPinza", SchemaDb.Double, "0");
             dbS.AddColumnToTable("taskexecutors", "Laterale", SchemaDb.Double, "0");
@@ -157,7 +165,17 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimeRetro", SchemaDb.Time, "0");
 
 
+            //new for FlatRoll
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimeSerigraphy", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunningSerigraphy", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStartingSerigraphy", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHourSerigraphy", SchemaDb.IntUS, "0");
 
+            //new for FlatRoll
+            dbS.AddColumnToTable("taskexecutorestimatedon", "StartingTimeFoilStamping", SchemaDb.Time, "0");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourRunningFoilStamping", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "CostPerHourStartingFoilStamping", SchemaDb.String, "20");
+            dbS.AddColumnToTable("taskexecutorestimatedon", "AvarageRunPerHourFoilStamping", SchemaDb.IntUS, "0");
 
 
             dbS.AddColumnToTable("taskexecutorestimatedon", "TimeForfait", SchemaDb.Time, "0");
@@ -312,10 +330,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("optiontypeoftask", "OptionName", SchemaDb.String, "100");
             dbS.AddColumnToTable("optiontypeoftask", "IdexOf ", SchemaDb.Int, "0");
 
-            //serigraphy
-            dbS.AddColumnToTable("optiontypeoftask", "MeshRow", SchemaDb.Int, "0");
-            dbS.AddColumnToTable("optiontypeoftask", "MeshCostMq", SchemaDb.Double, "0");
-            dbS.AddColumnToTable("optiontypeoftask", "GainMqPerLt", SchemaDb.Int, "0");
 
 
             //FK

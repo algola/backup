@@ -1,0 +1,90 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartHotPrintingOption
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+@*header*@
+<div class="">
+
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-6">
+            @Html.T(strings, "HeadHotPrintingFoil")
+        </div>
+    </div>
+    <div class="col-sm-3 control-label no-padding-right"></div>
+
+</div>
+
+<div class="todelete form-group ">
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-6">
+            @Html.TextBoxFor(model => model.Foil, new { autocomplete = "off", data_autocomplete_url = Url.Action("FoilAutoComplete", "Article", null) })*
+            @Html.ValidationMessageFor(model => model.Foil)
+        </div>
+    </div>
+    <div class="col-sm-3 control-label no-padding-right">
+        @*<button type="submit" form="addOption" value="Submit">@Html.T(strings,"Addoption")</button>*@
+        <button type="submit" form="addOption" value="Submit">@Html.T(strings,"Addoption")</button>
+    </div>
+</div>
+
+@Html.HiddenFor(model => model.CodProductPartTask)
+
+@Html.HiddenFor(model => model.TypeOfProductPartTaskOption)
+
+
+
+
+
+
+<script>
+
+    //Attach a submit handler to the form
+    $("#addOption").submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        //data are collected into
+        var dataToPass = {
+            Foil: $("#newOption_Foil").val(),
+            codProductPartTask: '@Model.CodProductPartTask'
+        };
+
+        showProcessingMsg();
+
+        $.ajax({
+            url: '@(Url.Action("AddProductPartHotPrintingOption", "Document", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+
+                $('#addOption')[0].reset();
+
+                if (data.textStatus != "ok") {
+                    $('#status').html(data.view);
+                    hideProcessingMsg();
+                }
+                else {
+                    //reload grid
+                    reloadGrid();
+                    $("#listOptions").trigger("reloadGrid");
+                    hideProcessingMsg();
+                }
+            },
+
+            error: function () {
+                hideProcessingMsg();
+                alert("error");
+            },
+        });
+
+    });
+</script>
+
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+

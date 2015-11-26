@@ -171,8 +171,8 @@ namespace PapiroMVC.Models
             //questi valori dipendono da quanti sono i colori
             try
             {
-                paperFirstStartL = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart??0;
-                paperSecondStart = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart??0;
+                paperFirstStartL = ((PrinterMachine)TaskexEcutorSelected).ProofSheetFirstStart ?? 0;
+                paperSecondStart = ((PrinterMachine)TaskexEcutorSelected).ProofSheetSecondsStart ?? 0;
             }
             catch (Exception)
             {
@@ -205,8 +205,8 @@ namespace PapiroMVC.Models
             double runMat = 0;
             double kgMat = 0;
 
-            Nullable<long> proof1=0;
-            Nullable<long> proof2=0;
+            Nullable<long> proof1 = 0;
+            Nullable<long> proof2 = 0;
 
             try
             {
@@ -248,58 +248,61 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-            base.InitCostDetail(tskExec, articles);
-
-            String codTypeOfTask = String.Empty;
-            Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
-            codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
-            tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-            TaskExecutors = tskExec.ToList();
-
-            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
-
-            productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
-
-            #region Format
-            List<string> formats = new List<string>();
-            //
-            //voglio sapere quali sono i formati degli articoli ma gli articoli che posso stampare dipendono dal tipo di macchina!!!!
-            foreach (var item in productPartPrintabelArticles)
+            if (!justInited)
             {
-                //accomunano lo stesso tipo!!!
-                var CurTskE = tskExec.FirstOrDefault();
+                base.InitCostDetail(tskExec, articles);
+                String codTypeOfTask = String.Empty;
+                Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
+                codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+                TaskExecutors = tskExec.ToList();
 
-                if (CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.LithoSheet ||
-                    CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
+
+                productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
+
+                #region Format
+                List<string> formats = new List<string>();
+                //
+                //voglio sapere quali sono i formati degli articoli ma gli articoli che posso stampare dipendono dal tipo di macchina!!!!
+                foreach (var item in productPartPrintabelArticles)
                 {
-                    var formatList = articles.OfType<SheetPrintableArticle>()
-                                .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
-                                    x.Color == item.Color &&
-                                    x.Adhesive == item.Adhesive &&
-                                    x.NameOfMaterial == item.NameOfMaterial)
-                                        .Select(x => x.Format);
+                    //accomunano lo stesso tipo!!!
+                    var CurTskE = tskExec.FirstOrDefault();
 
-                    formats = formats.Union(formatList.ToList()).ToList();
+                    if (CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.LithoSheet ||
+                        CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.DigitalSheet)
+                    {
+                        var formatList = articles.OfType<SheetPrintableArticle>()
+                                    .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
+                                        x.Color == item.Color &&
+                                        x.Adhesive == item.Adhesive &&
+                                        x.NameOfMaterial == item.NameOfMaterial)
+                                            .Select(x => x.Format);
+
+                        formats = formats.Union(formatList.ToList()).ToList();
+
+                    }
+
+                    if (CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterSheet)
+                    {
+                        var formatList = articles.OfType<RigidPrintableArticle>()
+                                    .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
+                                        x.Color == item.Color &&
+                                        x.Adhesive == item.Adhesive &&
+                                        x.NameOfMaterial == item.NameOfMaterial)
+                                            .Select(x => x.Format);
+
+                        formats = formats.Union(formatList.ToList()).ToList();
+                    }
 
                 }
 
-                if (CurTskE.TypeOfExecutor == TaskExecutor.ExecutorType.PlotterSheet)
-                {
-                    var formatList = articles.OfType<RigidPrintableArticle>()
-                                .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
-                                    x.Color == item.Color &&
-                                    x.Adhesive == item.Adhesive &&
-                                    x.NameOfMaterial == item.NameOfMaterial)
-                                        .Select(x => x.Format);
+                BuyingFormats = formats;
 
-                    formats = formats.Union(formatList.ToList()).ToList();
-                }
+                #endregion
 
             }
-
-            BuyingFormats = formats;
-
-            #endregion
         }
 
         public override List<CostDetail> CreateRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)

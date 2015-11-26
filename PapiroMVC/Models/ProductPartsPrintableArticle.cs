@@ -46,7 +46,7 @@ namespace PapiroMVC.Models
         public string Color { get; set; }
     	
     	[DataMember] 		
-        public Nullable<long> Weight { get; set; }
+        public Nullable<double> Weight { get; set; }
     	
     	[DataMember] 		
         public string Adhesive { get; set; }

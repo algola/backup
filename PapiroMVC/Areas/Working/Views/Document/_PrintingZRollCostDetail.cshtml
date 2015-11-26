@@ -5,9 +5,28 @@
 
     string strings = "~/Areas/Working/Views/Document/Strings";
     // string stringsCod = "~/Views/Shared/Cuts";
+    string stringsFormatType = "~/Areas/DataBase/Views/Article/App_LocalResources/Strings";
 
     var x = Model.Cuts;
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
+
+    Die die;
+    if (Model.TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
+    {
+        die = new DieFlexo();
+        die.PrintingFormat = Model.BuyingFormat;
+        die.ZMetric = ((Flexo)Model.TaskexEcutorSelected).ZMetric;
+        die.Z = die.GetZFromCm(Model.BuyingFormat.GetSide2());
+        die.Width = Model.BuyingFormat.GetSide1();
+    }
+    else
+    {
+        die = new DieFlatRoll();
+        die.PrintingFormat = Model.BuyingFormat;
+        die.Width = Model.BuyingFormat.GetSide1();
+    }
+
+    die.Format = Model.ProductPart.Format;
 
 }
 
@@ -39,15 +58,25 @@
             </div>
         </div>
 
+        @*
+            <button id="dieDialog" class="btn btn-primary" type="button">Nuova Fustella</button>
+            <button id="prova" class="btn btn-primary" type="button">Prova</button>
+        *@
 
         @*Change DCut after flat*@
         <button type="button" id="staticDialog"> dcut </button>
-        @Html.Partial("_DCutLabelSet", Model)
 
+        @Html.Partial("_DCutLabelSet", Model)
 
         <div class="row">
             <div class="col-xs-12 col-sm-6">
+
                 @Html.Partial("_DCutLabel", Model)
+                @if (Model.ProductPart.FormatType != -1)
+                {
+                    @Html.Partial("_SaveDieFlexo", die)
+                }
+
             </div>
 
             <div class="col-xs-12 col-sm-6">
@@ -60,6 +89,7 @@
                             <th>@Html.T(strings, "InterspazioBanda")</th>
                             <th>@Html.T(strings, "InterspazioPasso")</th>
                             <th>@Html.T(strings, "Pose")</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -67,27 +97,33 @@
                         {
                             <tr>
                                 <td class="padding-2 no-padding-bottom">@i.Format</td>
-                                <td class="padding-2 no-padding-bottom">@i.Description</td>
+                                <td class="padding-2 no-padding-bottom">
+                                    @i.Description @if (i.FormatType != null && i.FormatType != "")
+                                    {
+                                        @Html.T(strings, "FormatTypeName" + i.FormatType)
+                                    }
+                                </td>
                                 <td class="padding-2 no-padding-bottom">@i.BuyingFormat</td>
                                 <td class="padding-2 no-padding-bottom">@i.DCut1</td>
-                                <td class="padding-2 no-padding-bottom">@i.DCut2</td>
+                                <td class="padding-2 no-padding-bottom">@(i.TypeOfDCut2 == 0 ? i.DCut2 : i.DCut2 / 2)</td>
                                 <td class="padding-2 no-padding-bottom">@i.CalculatedGain (@(i.GainOnSide1)x@(i.GainOnSide2))</td>
                                 <td class="padding-2 no-padding-bottom">@i.GainOnSide1</td>
                                 <td class="padding-2 no-padding-bottom">@i.GainOnSide2</td>
-
+                                <td class="padding-2 no-padding-bottom">@i.DCut2</td>
                             </tr>
                         }
 
                     </tbody>
                 </table>
 
+
             </div>
 
         </div>
 
+        @Html.Partial("_ProductPartPrintRollOptions", Model)
 
     </div>
-
 
     <div id="partialPrinting">
         @if (Model.ProductPartPrinting != null)
@@ -96,6 +132,9 @@
             {
                 case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
                     Html.RenderPartial("_ProductPartSingleSheetPrinting", Model.ProductPartPrinting);
+                    break;
+                case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartDoubleSheetPrinting:
+                    Html.RenderPartial("_ProductPartDoubleSheetPrinting", Model.ProductPartPrinting);
                     break;
                 case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartCoverSheetPrinting:
                     Html.RenderPartial("_ProductPartCoverSheetPrinting", Model.ProductPartPrinting);
@@ -377,10 +416,10 @@
         ////sposto la tabella a dx
         //myDiv1Para.appendTo('#printingHintTable');
 
-
         $('#htmlTable td:nth-child(3)').toggle();
         $('#htmlTable td:nth-child(7)').toggle();
         $('#htmlTable td:nth-child(8)').toggle();
+        $('#htmlTable td:nth-child(9)').toggle();
         $('#ddBuyingFormat').toggle();
 
 
@@ -391,8 +430,14 @@
             var format = $(this).closest('tr').find('td:eq(0)').text();
             var pFormat = $(this).closest('tr').find('td:eq(2)').text();
             var dCut1 = $(this).closest('tr').find('td:eq(3)').text();
+
             var dCut2 = $(this).closest('tr').find('td:eq(4)').text();
+
+            //new dCud2 ---> for Etichette e controetichette (real double DCut2)
+            var dCut2 = $(this).closest('tr').find('td:eq(8)').text();
             //            var gain = $(this).closest('tr').find('td:eq(4)').text();
+
+            //     alert(dCut2);
 
             var max1 = $(this).closest('tr').find('td:eq(6)').text();
             var max2 = $(this).closest('tr').find('td:eq(7)').text();
@@ -405,14 +450,21 @@
             $('#maxGain1').val(max1);
             $('#maxGain2').val(max2);
 
+            $("#formatDie").val(format)
+            $('#printingFormatDie').val(pFormat);
+            $('#gain1Die').val(max1);
+            $('#gain2Die').val(max2);
+
+
             //submit with dropdown change event
             $('#ddBuyingFormat').trigger('change');
 
         });
 
+        var searchTextWF = '@(Model.ProductPart.Format)';
         var searchTextBF = '@(Model.BuyingFormat)';
         var searchTextIB = '@(Model.ProductPart.DCut1)';
-        var searchTextIP = '@(Model.ProductPart.DCut2)';
+        var searchTextIP = '@((Model.ProductPart.TypeOfDCut2 ?? 0)==0 ? Model.ProductPart.DCut2 : Model.ProductPart.DCut2/2)';
 
         $("tr").removeClass("highlight");
 
@@ -422,6 +474,7 @@
             //val = val && $("td:eq(" + '2' + ")", this).text().indexOf(searchTextIB) !== -1;
 
             var val = $("td:eq(" + '2' + ")", this).text() == searchTextBF;
+            val = val && $("td:eq(" + '0' + ")", this).text() == searchTextWF;
             val = val && $("td:eq(" + '3' + ")", this).text() == searchTextIB;
             val = val && $("td:eq(" + '4' + ")", this).text() == searchTextIP;
 
@@ -486,3 +539,4 @@
 
 
 </script>
+

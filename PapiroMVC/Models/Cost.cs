@@ -83,6 +83,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<double> QuantityMaterial { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Manual { get; set; }
     
     	[DataMember]
         public virtual DocumentProduct DocumentProduct { get; set; }

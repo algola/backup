@@ -115,60 +115,6 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resa mq/lt.
-        /// </summary>
-        public static string GainMqPerLt {
-            get {
-                return ResourceManager.GetString("GainMqPerLt", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Resa mq/lt.
-        /// </summary>
-        public static string GainMqPerLtToolTip {
-            get {
-                return ResourceManager.GetString("GainMqPerLtToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Costo telaio al mq.
-        /// </summary>
-        public static string MeshCostMq {
-            get {
-                return ResourceManager.GetString("MeshCostMq", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Costo telaio al mq.
-        /// </summary>
-        public static string MeshCostMqToolTip {
-            get {
-                return ResourceManager.GetString("MeshCostMqToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Numero fili telaio.
-        /// </summary>
-        public static string MeshRow {
-            get {
-                return ResourceManager.GetString("MeshRow", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Numero dei fili telaio.
-        /// </summary>
-        public static string MeshRowToolTip {
-            get {
-                return ResourceManager.GetString("MeshRowToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to xxx.
         /// </summary>
         public static string OptionName {

@@ -594,6 +594,18 @@
   <data name="CodSTAMPAETICHROTOLO_6VERNICE" xml:space="preserve">
     <value>stampa a 6 colori più vernice</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_7RETROVERNICE" xml:space="preserve">
+    <value>stampa a 7 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_7VERNICE" xml:space="preserve">
+    <value>stampa a 7 colori più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8RETROVERNICE" xml:space="preserve">
+    <value>stampa a 8 colori con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8VERNICE" xml:space="preserve">
+    <value>stampa a 8 colori più vernice</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_NORETROVERNICE" xml:space="preserve">
     <value>stampa con vernice più retrotacca</value>
   </data>
@@ -611,5 +623,44 @@
   </data>
   <data name="FormatToolTip" xml:space="preserve">
     <value>Scrivi formato</value>
+  </data>
+  <data name="PrintSide0" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PrintSide1" xml:space="preserve">
+    <value>(verso: Normale)</value>
+  </data>
+  <data name="PrintSide2" xml:space="preserve">
+    <value>(verso: Speculare)</value>
+  </data>
+  <data name="PrintSide" xml:space="preserve">
+    <value>Stampa in</value>
+  </data>
+  <data name="PrintSideToolTip" xml:space="preserve">
+    <value>Indica se la stampa su film trasparente è normale (fronte) oppure in retro (speculare)</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_7" xml:space="preserve">
+    <value>stampa a 7 colori</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_7RETRO" xml:space="preserve">
+    <value>stampa a 7 colori con retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8" xml:space="preserve">
+    <value>stampa a 8 colori</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8RETRO" xml:space="preserve">
+    <value>stampa a 8 colori con retrotacca</value>
+  </data>
+  <data name="Ink" xml:space="preserve">
+    <value>Inchiostro</value>
+  </data>
+  <data name="InkToolTip" xml:space="preserve">
+    <value>Tipologia in inchiostro per identificare un prezzo</value>
+  </data>
+  <data name="TypeOfTaskPrint" xml:space="preserve">
+    <value>Anilox / Applicazione</value>
+  </data>
+  <data name="TypeOfTaskPrintToolTip" xml:space="preserve">
+    <value>Quadricromina, Pantoni, Assorbimento, etc...</value>
   </data>
 </root>

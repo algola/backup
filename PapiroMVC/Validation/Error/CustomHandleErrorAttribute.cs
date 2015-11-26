@@ -11,7 +11,7 @@ namespace PapiroMVC.Validation.Error
         public override void OnException(ExceptionContext filterContext)
         {
             if (filterContext.ExceptionHandled || !filterContext.HttpContext.IsCustomErrorEnabled)
-            {
+            {              
                 return;
             }
 

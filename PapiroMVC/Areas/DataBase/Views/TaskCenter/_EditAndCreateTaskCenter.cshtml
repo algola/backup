@@ -1,0 +1,48 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskCenter
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskCenter/Strings";
+}
+
+<div id="status">
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "TaskCenter", new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
+
+
+                @Html.HiddenFor(model => model.TimeStampTable)
+                @Html.HiddenFor(model => model.CodTaskCenter)
+                @Html.HiddenFor(model => model.IndexOf)
+                @Html.AlgolaEditorFor(model => model.TaskCenterName)
+                <br />
+                <div class="controls col-sm-9 col-sm-offset-3">
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("Index", "TaskCenter", new { Area = "Database" })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+
+</div>
+
+
+
+
+

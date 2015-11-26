@@ -18,5 +18,8 @@ namespace PapiroMVC.Models
     [DataContract] 
     public partial class ProductPartPrintRoll : ProductPartTask
     {
+    	
+    	[DataMember] 		
+        public Nullable<int> PrintSide { get; set; }
     }
 }

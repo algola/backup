@@ -1,0 +1,42 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskCenter
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskCenter/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "TitleEditTaskCenter");
+}
+
+@Html.Partial("_EditAndCreateTaskCenter", Model)
+
+@section breadcrumb {
+
+}
+
+@section title{
+    @Html.T(strings, "TaskCenters")
+}
+
+@section description{
+    @Html.T(strings, "TitleEditTaskCenter")
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
+}
+
+@section ScriptS{
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+}
+
+<script>
+    $(function () {
+        document.getElementById("taskcenterSidebar").className = "active open";
+    });
+</script>

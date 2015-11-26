@@ -22,7 +22,7 @@
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
         <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
-    <data name="icon1" type="System.Drawing.icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
         <comment>This is a comment</comment>
     </data>
@@ -132,6 +132,12 @@
   <data name="CodArticleCaption" xml:space="preserve">
     <value>Codice</value>
   </data>
+  <data name="CodArticleCaption1" xml:space="preserve">
+    <value>Codice</value>
+  </data>
+  <data name="CodDieCaption" xml:space="preserve">
+    <value>Codice fustella</value>
+  </data>
   <data name="ColorCaption" xml:space="preserve">
     <value>Colore</value>
   </data>
@@ -153,11 +159,32 @@
   <data name="CreateSheetPrintableArticle" xml:space="preserve">
     <value>Nuovo materiale a Foglio</value>
   </data>
+  <data name="DCut1Caption" xml:space="preserve">
+    <value>Int.Spazio V.</value>
+  </data>
+  <data name="DCut2Caption" xml:space="preserve">
+    <value>Int.Spazio O.</value>
+  </data>
+  <data name="DescriptionCaption" xml:space="preserve">
+    <value>Descrizione</value>
+  </data>
   <data name="DialogSubTitle" xml:space="preserve">
     <value>Listino materiali a foglio</value>
   </data>
   <data name="DialogTitle" xml:space="preserve">
     <value>Preleva materiale dal listino</value>
+  </data>
+  <data name="DialogTitleDie" xml:space="preserve">
+    <value>Archivio fustelle</value>
+  </data>
+  <data name="DieFlatRollType" xml:space="preserve">
+    <value>Semirotativa</value>
+  </data>
+  <data name="DieFlexoType" xml:space="preserve">
+    <value>Lamierino magnetico</value>
+  </data>
+  <data name="DieSheetType" xml:space="preserve">
+    <value>Piana</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
@@ -165,8 +192,41 @@
   <data name="EditingArticleTitle" xml:space="preserve">
     <value>Modifica dell'articolo: </value>
   </data>
+  <data name="FormatBCaption" xml:space="preserve">
+    <value>F.to controetichettta</value>
+  </data>
   <data name="FormatCaption" xml:space="preserve">
     <value>Formato</value>
+  </data>
+  <data name="FormatCaption1" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="FormatType" xml:space="preserve">
+    <value>Tipo Formato</value>
+  </data>
+  <data name="FormatTypeName0" xml:space="preserve">
+    <value>Quadrata</value>
+  </data>
+  <data name="FormatTypeName1" xml:space="preserve">
+    <value>Ovale</value>
+  </data>
+  <data name="FormatTypeName2" xml:space="preserve">
+    <value>Sagomata</value>
+  </data>
+  <data name="FormatTypeName3" xml:space="preserve">
+    <value>Rettangolare</value>
+  </data>
+  <data name="FormatTypeName4" xml:space="preserve">
+    <value>Triangolare</value>
+  </data>
+  <data name="FormatTypeName5" xml:space="preserve">
+    <value>Rotonda</value>
+  </data>
+  <data name="MaxGain1Caption" xml:space="preserve">
+    <value>Resa V.</value>
+  </data>
+  <data name="MaxGain2Caption" xml:space="preserve">
+    <value>Resa O.</value>
   </data>
   <data name="MsgBoxAutomaticChangesContent" xml:space="preserve">
     <value>Elaborazione avvenuta con successo. premere ok per continuare.</value>
@@ -184,6 +244,9 @@
     <value>Ok</value>
   </data>
   <data name="OperationsCaption" xml:space="preserve">
+    <value>Operazioni</value>
+  </data>
+  <data name="OperationsCaption1" xml:space="preserve">
     <value>Operazioni</value>
   </data>
   <data name="OperationsCaptionWidth" xml:space="preserve">
@@ -206,6 +269,9 @@
   </data>
   <data name="OptPallet" xml:space="preserve">
     <value>Applica ai costi della carta bandierata</value>
+  </data>
+  <data name="PrintingFormatCaption" xml:space="preserve">
+    <value>Sviluppo fustella</value>
   </data>
   <data name="RigidPrintableArticleType" xml:space="preserve">
     <value>Rigido/Banner/Mq</value>
@@ -258,6 +324,9 @@
   <data name="SupplierNameCaption" xml:space="preserve">
     <value>Fornitore</value>
   </data>
+  <data name="TypeOfArticle" xml:space="preserve">
+    <value>Tipo Articolo</value>
+  </data>
   <data name="TypeOfCostToModify" xml:space="preserve">
     <value>Applica modifiche ai costi</value>
   </data>
@@ -270,10 +339,16 @@
   <data name="WeightCaption" xml:space="preserve">
     <value>gr/mq</value>
   </data>
+  <data name="WidthCaption" xml:space="preserve">
+    <value>Banda</value>
+  </data>
   <data name="WizardRollPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a rotolo</value>
   </data>
   <data name="WizardSheetPrintableArticle" xml:space="preserve">
     <value>Creazione multipla articoli a foglio</value>
+  </data>
+  <data name="ZCaption" xml:space="preserve">
+    <value>Z</value>
   </data>
 </root>

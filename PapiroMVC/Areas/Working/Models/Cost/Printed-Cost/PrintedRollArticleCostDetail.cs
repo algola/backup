@@ -28,8 +28,10 @@ namespace PapiroMVC.Models
 
         public override void GetCostFromList(IQueryable<Article> articles)
         {
+
+            var p = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
             //questo dovrebbe far ottenere il costo!!!!!!
-            var extract = articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
+            var extract = articles.GetArticlesByProductPartPrintableArticle(p);
 
             if (extract.FirstOrDefault() == null)
             {
@@ -48,7 +50,7 @@ namespace PapiroMVC.Models
                 var article = extract.FirstOrDefault();
 
                 var aCost = article.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
-                CostPerMq = ((RollPrintableArticleCost)aCost).CostPerMq;
+                CostPerMq = ((RollPrintableArticleCost)aCost).GetCostPerMq();   //.CostPerMq;
                 CostPerMl = ((RollPrintableArticleCost)aCost).CostPerMl;
 
             }
@@ -119,7 +121,6 @@ namespace PapiroMVC.Models
             this.CalculatedMl = mlMat;
             this.CalculatedKg = kgMat;
             this.CalculatedRun = runMat;
-
 
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))

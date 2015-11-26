@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using Novacode;
+using Services;
 
 
 namespace PapiroMVC.Models
@@ -174,7 +175,6 @@ namespace PapiroMVC.Models
             }
 
             this.ProductTasks = tsksInProduct;
-
         }
 
         [DataMember]
@@ -192,7 +192,9 @@ namespace PapiroMVC.Models
             ProductRigid = 3,
             ProductSingleLabelRoll = 4,
             ProductSoft = 5,
-            ProductEmpty = 6
+            ProductEmpty = 6,
+            ProductDoubleLabelRoll=7
+
         }
 
         [DataMember]
@@ -213,7 +215,13 @@ namespace PapiroMVC.Models
             var pTasks = String.Empty;
             foreach (var item in this.ProductTasks)
             {
-                pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
+                try
+                {
+                    pTasks += item.ToString() == String.Empty ? "" : item.ToString() + "\n";
+                }
+                catch (Exception)
+                {
+                }
             }
 
             var sb = pParts + pTasks;
@@ -295,18 +303,27 @@ namespace PapiroMVC.Models
             }
 
             //parti del prodotto
-            var ppart = this.ProductParts.OrderBy(x => x.CodProductPart).ToList();
+            var ppart = this.ProductParts.OrderBy(x => x.CodProductPart, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.ProductParts)
             {
                 item.Product = this;
                 item.UpdateOpenedFormat();
 
-                item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString();
+                if (item.CodProductPart == null || item.CodProductPart == string.Empty  || item.CodProductPart.Length == 10)
+                {
+                    item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString().PadLeft(3, '0');                                        
+                }
+                else
+                {
+                    //retrocompatibilità
+                    item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString(); //.PadLeft(3, '0');                                        
+                }
+
                 item.CodProduct = this.CodProduct;
                 item.TimeStampTable = DateTime.Now;
 
                 //task della parte del prodotto
-                var pptask = item.ProductPartTasks.OrderBy(y => y.CodProductPartTask).ToList();
+                var pptask = item.ProductPartTasks.OrderBy(y => y.CodProductPartTask,new EmptyStringsAreLast()).ToList();
                 foreach (var item2 in item.ProductPartTasks)
                 {
                     item2.ProductPart = item;
@@ -314,7 +331,7 @@ namespace PapiroMVC.Models
                     item2.TimeStampTable = DateTime.Now;
                     item2.CodProductPartTask = item.CodProductPart + "-" + pptask.IndexOf(item2).ToString().PadLeft(3, '0');
 
-                    var pptaskOpt = item2.ProductPartTaskOptions.OrderBy(y => y.CodProductPartTaskOption).ToList();
+                    var pptaskOpt = item2.ProductPartTaskOptions.OrderBy(y => y.CodProductPartTaskOption, new EmptyStringsAreLast()).ToList();
                     foreach (var item3 in item2.ProductPartTaskOptions)
                     {
                         item3.ProductPartTask = item2;
@@ -326,7 +343,7 @@ namespace PapiroMVC.Models
                 }
 
                 //articoli della parte del prodotto
-                var pppart = item.ProductPartPrintableArticles.OrderBy(z => z.CodProductPartPrintableArticle).ToList();
+                var pppart = item.ProductPartPrintableArticles.OrderBy(z => z.CodProductPartPrintableArticle, new EmptyStringsAreLast()).ToList();
                 foreach (var item2 in item.ProductPartPrintableArticles)
                 {
                     item2.ProductPart = item;
@@ -338,7 +355,7 @@ namespace PapiroMVC.Models
             }
 
             //task del prodotto
-            var pt = this.ProductTasks.OrderBy(pp => pp.CodProductTask).ToList();
+            var pt = this.ProductTasks.OrderBy(pp => pp.CodProductTask, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.ProductTasks)
             {
                 item.Product = this;
@@ -408,6 +425,9 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("Product.CodProduct", this.CodProduct));
             doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductName", this.ProductName.Replace("@", Environment.NewLine)));
             doc.AddCustomProperty(new Novacode.CustomProperty("Product.ProductRefName", this.ProductRefName));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CodProduct", this.CodProduct));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductName", this.ProductName.Replace("@", Environment.NewLine)));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductRefName", this.ProductRefName));
             //doc.AddCustomProperty(new Novacode.CustomProperty("Product.Format", "ciao"));
         }
 

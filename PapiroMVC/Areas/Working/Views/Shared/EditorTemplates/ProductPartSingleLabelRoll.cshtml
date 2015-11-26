@@ -3,6 +3,9 @@
 
 @{
     string strings = "~/Areas/Working/Views/Product/Strings";
+    string stringsGrid = "~/Areas/Working/Views/Product/ArticleStrings";
+
+    string url = Url.Action("DieList", new { controller = "Article", area = "DataBase" });
 
 
     //Controllo del formato se è presente nell'elenco dei formati
@@ -30,13 +33,23 @@
 }
 
 
+@if (Model.FormatType != -1)
+{
+    <div class="controls col-sm-9 col-sm-offset-3">
+        <a class="dialogRef" href="javascript:void(0)" id="staticDialog">@Html.T(strings, "DieDialogTitle")</a>
+    </div>
+}
+
 <div id="ProductPartsPerView_@(ViewBag.IndexPart)__FormatDiv">
     @if (ViewBag.FormatsName == null || ViewBag.FormatsName.Count == 0)
-    {
+    {        
         @Html.AlgolaEditorFor(model => model.Format)
+        @*@Html.AlgolaEditorFor(model => model.Formatmm)*@
+
     }
     else
     {
+
         @Html.LabelFor(model => model.Format, new { @class = "col-sm-3 control-label no-padding-right" })
 
         <div class="controls col-sm-9">
@@ -48,6 +61,10 @@
 
     }
 </div>
+
+
+
+
 
 @if (Model.ShowDCut)
 {
@@ -120,5 +137,260 @@ else
             $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__FormatPersonalized').focus();
         }
     });
+
+</script>
+
+
+
+<div id="dialog-message" class="hide">
+
+    <table id="gridArticle">
+        <tr>
+            <td />
+        </tr>
+    </table>
+    <div id="pagerArticle" class="hide"></div>
+
+</div>
+
+<script type="text/javascript">
+
+    var lastSel = -1;
+    var myGrid = null;
+
+
+    $(document).ready(
+        function () {
+            loadRigidGrid();
+        });
+
+
+    function loadRigidGrid() {
+
+        myGrid = $("#gridArticle").jqGrid({
+            url: '@url',
+            datatype: 'json',
+            colModel: [
+
+                    { name: 'Id', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "OperationsCaption")', width: '@(Html.T(stringsGrid, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(Html.T(stringsGrid, "OperationsCaptionWidth")))', sortable: false, hidden: true },
+
+                    //{ name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodArticleCaption")', width: 80, search: true, sortable: true },
+                    { name: 'CodDie', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "CodDieCaption")', width: 100, search: true, sortable: true },
+                    { name: 'Format', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatCaption")', width: 150, search: true, sortable: true, align: 'right' },
+                    { name: 'FormatB', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatBCaption")', width: 150, search: true, sortable: true, align: 'right', hidden: true },
+
+                    { name: 'TypeOfArticle', label: '@Html.T(stringsGrid, "TypeOfArticle")', width: 60, editable: false, hidden: false, formatter: typeOfArticle },
+
+                    { name: 'Description', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "DescriptionCaption")', width: 150, search: true, sortable: true },
+                    { name: 'PrintingFormat', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "PrintingFormatCaption")', width: 150, search: true, sortable: true, align: 'right' },
+                    { name: 'FormatType', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatType")', width: 150, search: true, sortable: true, align: 'right', formatter: formatType },
+                    { name: 'Width', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "WidthCaption")', width: 100, search: true, sortable: true, align: 'right' },
+                    { name: 'Z', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "ZCaption")', width: 80, search: true, sortable: true, align: 'right' },
+
+                 //   { name: 'DCut1', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "DCut1Caption")', width: 100, search: true, sortable: true, align: 'right' },
+                 //   { name: 'DCut2', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "DCut2Caption")', width: 100, search: true, sortable: true, align: 'right' },
+                    { name: 'MaxGain1', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "MaxGain1Caption")', width: 100, search: true, sortable: true, align: 'right' },
+                    { name: 'MaxGain2', label: '@HttpContext.GetLocalResourceObject(stringsGrid, "MaxGain2Caption")', width: 100, search: true, sortable: true, align: 'right' },
+
+            ],
+
+            pager: '#pagerArticle',
+
+            rowNum: 15,
+            rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
+            shrinkToFit: true,
+
+            loadComplete: function () {
+
+                var $this = $(this);
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+
+            },
+
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    myGrid.jqGrid('restoreRow', lastSel);
+                    lastSel = id;
+                }
+            },
+
+            ondblClickRow: function (id, ri, ci) {
+                myGrid.jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridArticle").trigger("reloadGrid");
+                    },
+                    url: 'editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            }
+
+        });
+
+        myGrid.jqGrid('navGrid', '#pagerArticle', { edit: false, add: false, del: false, search: false });
+        myGrid.jqGrid('filterToolbar', { stringResult: true, searchOnEnter: false, defaultSearch: "cn" });
+
+    }
+
+    function reloadRigidArticle() {
+        $("#gridArticle").trigger("reloadGrid");
+    }
+
+    $("#staticDialog").on('click', function (e) {
+        e.preventDefault();
+        hideProcessingMsg();
+
+        //enterkey on dialog
+        $('#gridArticle').keypress(function (e) {
+            if (e.keyCode == $.ui.keyCode.ENTER) {
+                putDataDie();
+                $(this).closest(".ui-dialog-content").dialog("close");
+            }
+        });
+
+        //copy data from jqgrid to page
+        function putDataDie() {
+
+            if (lastSel != -1) {
+
+                var myGrid = $('#gridArticle'),
+                    selRowId = myGrid.jqGrid('getGridParam', 'selrow'),
+                    celFormat = myGrid.jqGrid('getCell', lastSel, 'Format');
+
+                $('#Product_ProductPartsPerView_@(ViewBag.IndexPart)__Format').val(celFormat);
+
+            }
+        };
+
+        loadRigidGrid();
+
+        $("#dialog-message").removeClass("hide");
+        resizeGrid();
+
+        var dialog = $("#dialog-message").removeClass("hide").dialog({
+            width: 'auto',
+            height: 'auto',
+            resizable: false,
+            modal: true,
+            title: '@Html.T(stringsGrid, "DialogTitleDie")',
+            title_html: true,
+            buttons: [
+                {
+                    text: '@Html.T(stringsGrid, "Cancel")',
+                    "class": "btn btn-mini",
+                    click: function () {
+
+                        reloadRigidArticle();
+                        $(this).dialog("close");
+                    }
+                },
+                {
+                    text: '@Html.T(stringsGrid, "Ok")',
+                    "class": "btn btn-primary btn-mini",
+                    click: function () {
+                        putDataDie();
+                        reloadRigidArticle();
+                        $(this).dialog("close");
+                    }
+                }
+            ]
+        });
+
+        /**
+        dialog.data( "uiDialog" )._title = function(title) {
+            title.html( this.options.title );
+        };
+        **/
+    });
+
+
+
+    function resizeGrid() {
+        $("#gridArticle").setGridWidth($(window).innerWidth() * 0.7);
+        $("#gridArticle").setGridHeight(($(window).height() * 0.5));
+        $("#dialog-message").outerWidth($("#gridArticle").outerWidth() + 40);
+    }
+
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+
+        try {
+            resizeGrid();
+            $("#dialog-message").dialog('option', 'position', { my: "center", at: "center", of: window });
+
+        } catch (e) {
+
+        }
+
+    }).trigger('resize');
+
+
+
+
+    function typeOfArticle(cellvalue, options, rowobject) {
+
+        var link = "type";
+
+        var dieSheet = '@HttpContext.GetLocalResourceObject(stringsGrid, "DieSheetType")';
+        var dieFlat = '@HttpContext.GetLocalResourceObject(stringsGrid, "DieFlatRollType")'
+        var dieFlexo = '@HttpContext.GetLocalResourceObject(stringsGrid, "DieFlexoType")';
+
+
+        if (cellvalue == "DieSheet")
+            return link.replace("type", dieSheet);
+
+        if (cellvalue == "DieFlatRoll")
+            return link.replace("type", dieFlat);
+
+        if (cellvalue == "DieFlexo")
+            return link.replace("type", dieFlexo);
+
+        return link;
+    }
+
+    function formatType(cellvalue, options, rowobject) {
+
+        var link = "FormatType";
+
+        //following string has to be located in view and in validation (metadata)
+        var quadrata = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName0")';
+        var ovale = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName1")';
+        var sagomata = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName2")';
+        var rettangolare = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName3")';
+        var triangolare = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName4")';
+        var rotonda = '@HttpContext.GetLocalResourceObject(stringsGrid, "FormatTypeName5")';
+
+        if (cellvalue == "0")
+            return link.replace("FormatType", quadrata);
+
+        if (cellvalue == "1")
+            return link.replace("FormatType", ovale);
+
+        if (cellvalue == "2")
+            return link.replace("FormatType", sagomata);
+
+        if (cellvalue == "3")
+            return link.replace("FormatType", rettangolare);
+
+        if (cellvalue == "4")
+            return link.replace("FormatType", triangolare);
+
+        if (cellvalue == "5")
+            return link.replace("FormatType", rotonda);
+
+        return link;
+    }
 
 </script>

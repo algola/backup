@@ -53,7 +53,7 @@ namespace PapiroMVC.Models
                 part.FormatType = 2; //sagomata 
             }
 
-            if (CodMenuProduct == "FasceGommateRotolo")
+            if (CodMenuProduct.StartsWith("FasceGommateRotolo"))
             {
                 part.HaveDCutLimit = true;
                 part.MaxDCut = 0;
@@ -85,7 +85,7 @@ namespace PapiroMVC.Models
 
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "SERIGRAFIAROTOLO_NO");
             partTask.Hidden = false;
-            partTask.ImplantHidden = false; //impant is visibile only if task is visibile
+            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
             partTask.IndexOf = 30;
 
             partTask.CodItemGraph = "SE";

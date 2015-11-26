@@ -14,10 +14,17 @@ namespace PapiroMVC.Models
 
     //se è un articolo--> ?? decider
 
+            
+
     //    [MetadataType(typeof(TaskCostDetail_MetaData))]
     public partial class CostDetail : ICloneable, IPrintDocX
     {
 
+        protected IQueryable<Article> _articles;
+
+        public bool JustUpdated {get;set;}
+        protected bool justInited = false;
+        public bool JustPrintedInOrder { get; set; }
 
         /// <summary>
         /// Elenco dei possibili formati di acquisto 
@@ -41,11 +48,16 @@ namespace PapiroMVC.Models
             return new List<CostDetail>();
         }
 
+        public virtual ImplantCostDetail CreatorImplantCostDetail()
+    {
+        return new ImplantCostDetail();
+    }
+
         public virtual List<CostDetail> GetRelatedImplantCostDetail(string codProductPartTask, IQueryable<Cost> costs)
         {
             List<CostDetail> lst = new List<CostDetail>();
 
-            var x = new ImplantCostDetail();
+            var x = CreatorImplantCostDetail();
 
             x.ComputedBy = this;
             x.ProductPart = this.ProductPart;
@@ -225,11 +237,13 @@ namespace PapiroMVC.Models
             PrintedRigidArticleCostDetail = 12,
 
             ImplantCostDetail = 100,
+            ImplantMeshCostDetail=101,
+            ImplantHotPrintingCostDetail = 102,
+
             PrePostPressCostDetail = 200,
             ControlTableCostDetail = 201,
 
             RepassRollCostDetail = 202
-
         }
 
         public CostDetailType TypeOfCostDetail
@@ -237,7 +251,6 @@ namespace PapiroMVC.Models
             get;
             protected set;
         }
-
 
         //codTaskExecutor 
         public void SetTaskexecutor(IQueryable<TaskExecutor> tskExecs, string codTaskExecutor)
@@ -252,7 +265,6 @@ namespace PapiroMVC.Models
                 TaskexEcutorSelected = tsk;
             }
         }
-
 
 
         //TEMPORANEO forse e' meglio salvarlo??
@@ -292,26 +304,40 @@ namespace PapiroMVC.Models
 
         public virtual void UpdateCoeff()
         {
+            if (TaskExecutors != null)
+            {
+                TaskexEcutorSelected = TaskExecutors.Where(x => x.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();                
+            }
             Console.WriteLine("");
         }
 
         IQueryable<TaskExecutor> tskExec;
         IQueryable<Article> articles;
+        IQueryable<OptionTypeOfTask> optionTypeOfTasks;
 
         public virtual void InitCostDetail(IQueryable<TaskExecutor> _tskExec, IQueryable<Article> _articles)
         {
-            if (ComputedBy != null)
+            if (!justInited)
             {
-                ComputedBy.InitCostDetail(_tskExec, _articles);
+
+                articles = _articles;
+                tskExec = _tskExec;
+
+
+                if (ComputedBy != null)
+                {
+                    ComputedBy.InitCostDetail(_tskExec, _articles);
+                }
+                //     TaskCost = taskCost;
+
+                tskExec = _tskExec;
+                articles = _articles;
+
+                //reset error
+                Error = 0;
+
+                justInited = true;
             }
-            //     TaskCost = taskCost;
-
-            tskExec = _tskExec;
-            articles = _articles;
-
-            //reset error
-            Error = 0;
-
         }
 
         public ProductPartPrintingGain GainPrintingOnBuying
@@ -325,10 +351,7 @@ namespace PapiroMVC.Models
                 GainPrintingOnBuyings.Clear();
                 GainPrintingOnBuyings.Add(value);
             }
-
         }
-
-
 
 
         public virtual void CostDetailCostCodeRigen()
@@ -468,7 +491,7 @@ namespace PapiroMVC.Models
 
         public virtual void MergeField(DocX doc)
         {
-
+            TaskCost.MergeField(doc);
 
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Starts", this.Starts ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.GainForRun", this.GainForRun ?? 0));
@@ -486,8 +509,8 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedRun", this.CalculatedRun ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedTime", (this.CalculatedTime ?? new TimeSpan(0, 0, 0)).ToString()));
 
-
         }
+
 
 
     }

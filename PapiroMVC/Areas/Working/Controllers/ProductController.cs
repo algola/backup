@@ -134,30 +134,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
-        public ActionResult TypeOfTaskSerigraphyAutoComplete(string term)
-        {
-            OptionTypeOfTask[] typeOfSerigraphy = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask=="SERIGRAFIASOLOTIPI").ToArray();
-
-            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
-            foreach(var x in typeOfSerigraphy)
-            {
-                var res = resman.GetString(x.CodOptionTypeOfTask);
-                x.OptionName = res!=null?res:"" ;
-            }
-
-            var filteredItems = typeOfSerigraphy.Where(
-            item => item.OptionName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
-            );
-
-            var projection = from art in filteredItems
-                             select new
-                             {
-                                 id = art.OptionName,
-                                 label = art.OptionName,
-                                 value = art.OptionName
-                             };
-            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
-        }
 
         public ActionResult WarmUp()
         {
@@ -582,8 +558,13 @@ namespace PapiroMVC.Areas.Working.Controllers
                 d.Customer = doc.Customer;
             }
 
+            c.ProductNameGenerator = p.ProductRepository.GetProductNameGenerator(c.CodMenuProduct).Generator;
+            c.ProductName = "";
             d.Product = c;
+            Console.WriteLine(d.ProductRefName);
 
+
+           
 
             var product = c;
 

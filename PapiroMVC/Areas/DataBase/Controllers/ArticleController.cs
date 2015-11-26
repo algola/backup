@@ -143,15 +143,100 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ds.ReadXml(xmlreader);
                     xmlreader.Close();
                 }
-
+                
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-
+                    
                     var a = new DieFlexo();
-                    a.CodArticle = (ds.Tables[0].Rows[i][0].ToString()).PadLeft(6, '0');
-                    a.ArticleName = ds.Tables[0].Rows[i][1].ToString();
-                    a.CodDie = "Vuoto";
+                    //a.CodArticle = (ds.Tables[0].Rows[i][0].ToString()).PadLeft(6, '0');
+                    //a.ArticleName = ds.Tables[0].Rows[i][1].ToString();
+                    //a.CodDie = "Vuoto";
+                    
+                    var str = ds.Tables[0].Rows[i][0].ToString();
+                    string format=String.Empty;
+                    var leftstr = str.IndexOf(" ");
+                    format = str.Substring(0, leftstr);
+                    try
+                    {
+                        format = ((Convert.ToDouble(format.GetSide1()) / 10).ToString("0.##")) + "x" + ((Convert.ToDouble(format.GetSide2()) / 10).ToString("0.##"));
+                    }
+                    catch (Exception)
+                    {
+                        format = "0x0";
+                    }                    
 
+                    a.Format = format;
+                    a.Description = (ds.Tables[0].Rows[i][1].ToString()) + "-" + (ds.Tables[0].Rows[i][2].ToString());
+                    a.ArticleName = a.Description;
+
+                    try
+                    {
+                        a.Width = Convert.ToDouble(ds.Tables[0].Rows[i][3])/10;
+                    }
+                    catch (Exception)
+                    {
+                        a.Width = 0;
+                    }
+
+                    try
+                    {
+                        if ((ds.Tables[0].Rows[i][4].ToString()).Contains("Z")) a.Z = Convert.ToInt32((ds.Tables[0].Rows[i][4].ToString()).Remove(0, 1));
+                        else a.Z = Convert.ToInt32(ds.Tables[0].Rows[i][4]);
+                    }
+                    catch (Exception)
+                    {
+                        a.Z = 0;
+                    }
+
+                    a.PrintingFormat = a.Width + "x" + a.GetCmFromZ(Convert.ToInt32(a.Z ?? 0));
+
+                    a.MaxGain1 = Convert.ToInt32(ds.Tables[0].Rows[i][5]);
+                    a.TaskExecutorName = "GALLUS";
+
+                    int resatot = 0;
+                    string str2= ds.Tables[0].Rows[i][6].ToString();
+                    try
+                    {
+                        if (str2.Contains(" "))
+                        {
+                            str2 = str2.Remove(str2.IndexOf(" "), str2.Length - str2.IndexOf(" "));
+                            resatot = Convert.ToInt32(str2);
+                        }
+
+                        else
+                        {
+                            resatot = Convert.ToInt32(ds.Tables[0].Rows[i][6]);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        resatot = 0;
+                    }
+                    
+
+                    a.MaxGain2 = resatot / a.MaxGain1;
+
+                    if (ds.Tables[0].Rows[i][0].ToString().Contains("F"))
+                    {
+                        int index = (ds.Tables[0].Rows[i][0].ToString()).IndexOf("F");
+                        a.CodDie = (ds.Tables[0].Rows[i][0].ToString()).Substring(index);
+                    }
+                    else
+                    {
+                        (ds.Tables[0].Rows[i][0].ToString()).Replace(" ", "");
+                        a.CodDie= ds.Tables[0].Rows[i][0].ToString();
+                    }
+                    var typeFormat = ds.Tables[0].Rows[i][0].ToString();
+
+                    if (typeFormat.ToLower().Contains("sag")) a.FormatType = 2;
+                    if (typeFormat.ToLower().Contains("ret")) a.FormatType = 3;
+                    if (typeFormat.ToLower().Contains("tonda") || typeFormat.ToLower().Contains("roto")) a.FormatType = 5;
+                    if (typeFormat.ToLower().Contains("ova")) a.FormatType = 1;
+                    if (typeFormat.ToLower().Contains("quad")) a.FormatType = 0;
+                    if (typeFormat.ToLower().Contains("trian")) a.FormatType = 4;
+
+
+                    a.CodArticle = articleRepository.GetNewCode(a,customerSupplierRepository,"Die","Die");
                     var b = articleRepository.GetSingle(a.CodArticle);
                     if (b == null)
                     {
@@ -176,6 +261,234 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        public ActionResult ExcelDie2(HttpPostedFileBase file)
+        {
+            DataSet ds = new DataSet();
+            if (Request.Files["file"].ContentLength > 0)
+            {
+                string fileExtension =
+                                     System.IO.Path.GetExtension(Request.Files["file"].FileName);
+
+                if (fileExtension == ".xls" || fileExtension == ".xlsx")
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["file"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+
+                        System.IO.File.Delete(fileLocation);
+                    }
+                    Request.Files["file"].SaveAs(fileLocation);
+                    string excelConnectionString = string.Empty;
+                    excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                    fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    //connection String for xls file format.
+                    if (fileExtension == ".xls")
+                    {
+                        excelConnectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 8.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //connection String for xlsx file format.
+                    else if (fileExtension == ".xlsx")
+                    {
+                        excelConnectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" +
+                        fileLocation + ";Extended Properties=\"Excel 12.0;HDR=Yes;IMEX=2\"";
+                    }
+                    //Create Connection to Excel work book and add oledb namespace
+                    OleDbConnection excelConnection = new OleDbConnection(excelConnectionString);
+                    excelConnection.Open();
+                    DataTable dt = new DataTable();
+
+                    dt = excelConnection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+                    if (dt == null)
+                    {
+                        return null;
+                    }
+
+                    String[] excelSheets = new String[dt.Rows.Count];
+                    int t = 0;
+                    //excel data saves in temp file here.
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        excelSheets[t] = row["TABLE_NAME"].ToString();
+                        t++;
+                    }
+                    OleDbConnection excelConnection1 = new OleDbConnection(excelConnectionString);
+
+
+                    string query = string.Format("Select * from [{0}]", excelSheets[0]);
+                    using (OleDbDataAdapter dataAdapter = new OleDbDataAdapter(query, excelConnection1))
+                    {
+                        dataAdapter.Fill(ds);
+                    }
+
+                    excelConnection.Close();
+                    excelConnection1.Close();
+                }
+                if (fileExtension.ToString().ToLower().Equals(".xml"))
+                {
+                    string fileLocation = Server.MapPath("~/Content/") + Request.Files["FileUpload"].FileName;
+                    if (System.IO.File.Exists(fileLocation))
+                    {
+                        System.IO.File.Delete(fileLocation);
+                    }
+
+                    Request.Files["FileUpload"].SaveAs(fileLocation);
+                    XmlTextReader xmlreader = new XmlTextReader(fileLocation);
+                    // DataSet ds = new DataSet();
+                    ds.ReadXml(xmlreader);
+                    xmlreader.Close();
+                }
+
+                for (int i = 2; i <= ds.Tables[0].Rows.Count-1; i++)
+                {
+                    Die a;
+
+                    if ((ds.Tables[0].Rows[i][6].ToString()).Equals("")) 
+                    {
+                        a = new DieFlatRoll();
+                    }
+                    else 
+                    {
+                        a = new DieFlexo(); 
+                    }
+
+                    if (a.TypeOfArticle.ToString().Equals("DieFlexo"))
+                    {
+                        string format = String.Empty;
+                        try
+                        {
+                            format = ((Convert.ToDouble(ds.Tables[0].Rows[i][0]) / 10).ToString()) + "x" + ((Convert.ToDouble(ds.Tables[0].Rows[i][1]) / 10).ToString());
+                        }
+                        catch (Exception)
+                        {
+                            format = "0x0";
+                        }
+                        a.Format = format;
+                        a.MaxGain1 = Convert.ToInt32(ds.Tables[0].Rows[i][2]);
+                        a.MaxGain2 = Convert.ToInt32(ds.Tables[0].Rows[i][3]);
+
+                        try
+                        {
+                            a.Width = Convert.ToDouble(ds.Tables[0].Rows[i][5]) / 10;
+                        }
+                        catch (Exception)
+                        {
+                            a.Width = 0;
+                        }
+
+                        a.Z = Convert.ToInt32(ds.Tables[0].Rows[i][6]);
+                        a.PrintingFormat = a.Width + "x" + a.GetCmFromZ(Convert.ToInt32(a.Z ?? 0));
+                        a.TaskExecutorName = ds.Tables[0].Rows[i][11].ToString();
+                        a.CodDie = ds.Tables[0].Rows[i][13].ToString();
+                        a.Description = ds.Tables[0].Rows[i][0].ToString() + "x" + ds.Tables[0].Rows[i][1].ToString();
+                  //      a.ArticleName = a.Description;
+
+                        var typeFormat = ds.Tables[0].Rows[i][0].ToString();
+
+                        try
+                        {
+                            if (typeFormat.ToLower().Contains("tonda") || typeFormat.ToLower().Contains("roto"))
+                            {
+                                a.FormatType = 5;
+                            }
+                            else
+                            {
+                                if (typeFormat.ToLower().Contains("ova"))
+                                {
+                                    a.FormatType = 1;
+                                }
+                                else
+                                {
+                                    a.FormatType = 3;
+                                }
+                            }
+                            
+                        }
+                        catch (Exception)
+                        {
+                            a.FormatType = 3;
+                        }
+                    }
+                    else
+                    {
+                        string format = String.Empty;
+                        try
+                        {
+                            format = ((Convert.ToDouble(ds.Tables[0].Rows[i][0]) / 10).ToString()) + "x" + ((Convert.ToDouble(ds.Tables[0].Rows[i][1]) / 10).ToString());
+                        }
+                        catch (Exception)
+                        {
+                            format = "0x0";
+                        }
+                        a.Format = format;
+                        a.MaxGain1 = Convert.ToInt32(ds.Tables[0].Rows[i][2]);
+                        a.MaxGain2 = Convert.ToInt32(ds.Tables[0].Rows[i][3]);
+
+                        try
+                        {
+                            a.Width = Convert.ToDouble(ds.Tables[0].Rows[i][5]) / 10;
+                        }
+                        catch (Exception)
+                        {
+                            a.Width = 0;
+                        }
+                        a.PrintingFormat = a.Width + "x" + (Convert.ToInt32(ds.Tables[0].Rows[i][7])/10);
+                        a.TaskExecutorName = ds.Tables[0].Rows[i][11].ToString();
+                        a.CodDie = ds.Tables[0].Rows[i][13].ToString();
+                        a.Description = ds.Tables[0].Rows[i][0].ToString() + "x" + ds.Tables[0].Rows[i][1].ToString();
+                  //      a.ArticleName = a.Description;
+
+                        var typeFormat = ds.Tables[0].Rows[i][0].ToString();
+
+                        try
+                        {
+                            if (typeFormat.ToLower().Contains("tonda") || typeFormat.ToLower().Contains("roto"))
+                            {
+                                a.FormatType = 5;
+                            }
+                            else
+                            {
+                                if (typeFormat.ToLower().Contains("ova"))
+                                {
+                                    a.FormatType = 1;
+                                }
+                                else
+                                {
+                                    a.FormatType = 3;
+                                }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+                            a.FormatType = 3;
+                        }
+                    }
+                    
+                    
+                    a.CodArticle = articleRepository.GetNewCode(a, customerSupplierRepository, "Die", "Die");
+                    var b = articleRepository.GetSingle(a.CodArticle);
+                    if (b == null)
+                    {
+                        articleRepository.Add(a);
+                    }
+                    else
+                    {
+                        //b.ProductName = a.ProductName;
+                        //b.CodMenuProduct = "Vuoto";
+                        articleRepository.Edit(b);
+                    }
+
+                    articleRepository.Save();
+
+                }
+
+            }
+
+
+
+            return View();
+        }
 
 
         [HttpGet]
@@ -216,6 +529,19 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             return View();
         }
+
+        public ActionResult IndexMesh()
+        {
+            return View();
+        }
+
+
+        public ActionResult IndexAnilox()
+        {
+            return View();
+        }
+
+
 
         public ActionResult IndexFoil()
         {
@@ -441,6 +767,238 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
+        public ActionResult CreateMesh()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateMesh";
+            return View(new MeshViewModel());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateMesh(MeshViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                    //   c.Article.ArticleName =  c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexMesh") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateMesh";
+            return PartialView("_EditAndCreateMesh", c);
+
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditMesh(MeshViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    articleRepository.SincroSupplier(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexMesh") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditMesh";
+            return PartialView("_EditAndCreateMesh", c);
+        }
+
+        public ActionResult EditMesh(string id)
+        {
+            MeshViewModel viewModel = new MeshViewModel();
+            viewModel.Article = (Mesh)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditMesh";
+            return View("EditMesh", viewModel);
+        }
+
+        public ActionResult MeshAutoComplete(string term)
+        {
+            Article[] typeOfSerigraphy = articleRepository.GetAll().OfType<Mesh>().ToArray();
+
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            var filteredItems = typeOfSerigraphy.Where(
+            item => item.ArticleName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.ArticleName,
+                                 label = art.ArticleName,
+                                 value = art.ArticleName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
+        public ActionResult CreateAnilox()
+        {
+            //used to understand default actionmethod  when there are more then one submit button
+            ViewBag.ActionMethod = "CreateAnilox";
+            return View(new AniloxViewModel());
+        }
+
+        [HttpParamAction]
+        [AuthorizeUser]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult CreateAnilox(AniloxViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    c.Article.CodArticle = articleRepository.GetNewCode(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+
+                    //   c.Article.ArticleName =  c.Article.ToString();
+                    articleRepository.Add(c.Article);
+
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexAnilox") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
+            ViewBag.ActionMethod = "CreateAnilox";
+            return PartialView("_EditAndCreateAnilox", c);
+
+        }
+
+        [HttpParamAction]
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult EditAnilox(AniloxViewModel c)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    articleRepository.SincroSupplier(c.Article, customerSupplierRepository, c.SupplierMaker, c.SupplyerBuy);
+                    articleRepository.Edit(c.Article);
+                    articleRepository.Save();
+                    return Json(new { redirectUrl = Url.Action("IndexAnilox") });
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            foreach (ModelState modelState in ViewData.ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+            }
+
+            //If we come here, something went wrong. Return it back. 
+            //multi submit
+            ViewBag.ActionMethod = "EditAnilox";
+            return PartialView("_EditAndCreateAnilox", c);
+        }
+
+        public ActionResult EditAnilox(string id)
+        {
+            AniloxViewModel viewModel = new AniloxViewModel();
+            viewModel.Article = (Anilox)articleRepository.GetSingle(id);
+
+            //get producer and maker
+
+            if (viewModel.Article.CodArticle == "")
+                return HttpNotFound();
+
+            //is used to know where we are from and go
+            ViewBag.ActionMethod = "EditAnilox";
+            return View("EditAnilox", viewModel);
+        }
+
+        public ActionResult AniloxAutoComplete(string term)
+        {
+            Article[] typeOfSerigraphy = articleRepository.GetAll().OfType<Anilox>().ToArray();
+
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            var filteredItems = typeOfSerigraphy.Where(
+            item => item.ArticleName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.ArticleName,
+                                 label = art.ArticleName,
+                                 value = art.ArticleName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+
+
+
+
+
+
+
+
+
+
+        [AuthorizeUser]
+        [HttpParamAction]
+        [HttpGet]
         public ActionResult CreateInk()
         {
             //used to understand default actionmethod  when there are more then one submit button
@@ -531,9 +1089,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ActionMethod = "EditInk";
             return View("EditInk", viewModel);
         }
-
-
-
 
 
         [AuthorizeUser]
@@ -1087,6 +1642,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(new { redirectUrl = Url.Action(urlBack, "Article", new { area = "Database" }) });
         }
 
+ 
         [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
@@ -1109,7 +1665,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
                     //c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
 
-                    c.PrintingFormat = c.Width + "x" + (Convert.ToDouble(c.Z) / 8) * 2.54;
+                    c.PrintingFormat = c.Width + "x" + c.GetCmFromZ(Convert.ToInt32(c.Z??0));
 
                     //CHECK IF TASKEXECUTOR EXIST
                     var resTask = taskExecutorRepository.GetAll().FirstOrDefault(x => x.TaskExecutorName == c.TaskExecutorName);
@@ -1401,12 +1957,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
 
+
         public ActionResult InkAutoComplete(string term)
         {
             Article[] typeOfSerigraphy = articleRepository.GetAll().OfType<Ink>().ToArray();
 
             var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
-            
+
             var filteredItems = typeOfSerigraphy.Where(
             item => item.ArticleName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
             );

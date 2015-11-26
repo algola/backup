@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Novacode;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,17 +12,26 @@ namespace PapiroMVC.Models
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
 
-            String codTypeOfTask = String.Empty;
-            //Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
-            codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
-            tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-            TaskExecutors = tskExec.ToList();
-
-            //            if (TaskexEcutorSelected == null && CodTaskExecutorSelected != "")
-            if (CodTaskExecutorSelected != "")
+            if (!justInited)
             {
-                TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+                base.InitCostDetail(tskExec, articles);
+
+                _articles = articles.ToList().AsQueryable();
+
+                String codTypeOfTask = String.Empty;
+                //Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
+                codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+                TaskExecutors = tskExec.ToList();
+
+                //            if (TaskexEcutorSelected == null && CodTaskExecutorSelected != "")
+
+                if (CodTaskExecutorSelected != "")
+                {
+                    TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+                }
             }
+
         }
 
 
@@ -81,7 +91,6 @@ namespace PapiroMVC.Models
                 foreach (var item in Printers)
                 {
                     quantita += item.TaskCost.QuantityMaterial ?? 0;
-
                     this.TypeOfQuantity = item.TypeOfQuantity;
                 }
 
@@ -105,9 +114,14 @@ namespace PapiroMVC.Models
             TypeOfCostDetail = CostDetailType.PrePostPressCostDetail;
         }
 
-        protected IQueryable<Article> _articles;
 
 
+
+    
     }
+
+
+    
+
 
 }

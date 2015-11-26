@@ -24,6 +24,10 @@ namespace PapiroMVC.Validation
             );
             var model = Activator.CreateInstance(type);
             bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(() => model, type);
+
+
+
+
             return model;
         }
     }

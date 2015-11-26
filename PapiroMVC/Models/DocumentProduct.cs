@@ -48,6 +48,18 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string TotalAmount { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> Markup { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> UnitPriceLocked { get; set; }
+    	
+    	[DataMember] 		
+        public string UnitPriceCalculated { get; set; }
+    	
+    	[DataMember] 		
+        public string UnitPriceAfterMarkup { get; set; }
     
     	[DataMember]
         public virtual ICollection<Cost> Costs { get; set; }

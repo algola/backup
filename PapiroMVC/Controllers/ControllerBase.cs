@@ -21,6 +21,31 @@ namespace PapiroMVC.Controllers
     public class ControllerAlgolaBase : AsyncController
     {
 
+        protected bool disposable = true;
+
+
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            disposable = true;
+            base.OnException(filterContext);
+        }
+
+        public static string PartialView(Controller controller, string viewName, object model)
+        {
+            controller.ViewData.Model = model;
+
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);                
+                var viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
+
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(controller.ControllerContext, viewResult.View);
+
+                return sw.ToString();
+            }
+        }
 
 
         public enum PropertyTypes : int
@@ -137,17 +162,18 @@ namespace PapiroMVC.Controllers
 
             var tables = new List<IDDL>();
 
-            tables.Add(new DataBaseDDL(dbName));
-            tables.Add(new CustomerSupplierDLL(dbName));
-            tables.Add(new TaskExecutorsDDL(dbName));
-            tables.Add(new ArticlesDDL(dbName));
-            tables.Add(new ProductsDDL(dbName));
-            tables.Add(new DocumentsDDL(dbName));
-            tables.Add(new MenuProductDDL(dbName));
+            //tables.Add(new DataBaseDDL(dbName));
+            //tables.Add(new CustomerSupplierDLL(dbName));
+            //tables.Add(new TaskExecutorsDDL(dbName));
+            //tables.Add(new ArticlesDDL(dbName));
+            //tables.Add(new ProductsDDL(dbName));
+            //tables.Add(new DocumentsDDL(dbName));
+            //tables.Add(new MenuProductDDL(dbName));
+            //tables.Add(new CostDetailDDL(dbName));
+            //tables.Add(new WarehouseArticlesDDL(dbName));
 
-            tables.Add(new CostDetailDDL(dbName));
-
-            tables.Add(new WarehouseArticlesDDL(dbName));
+            tables.Add(new TaskCentersDDL(dbName));
+            tables.Add(new UpdateDDL(dbName));
 
             foreach (var item in tables)
             {
@@ -250,9 +276,9 @@ namespace PapiroMVC.Controllers
 
         private void longJob(string userName)
         {
-            
-                UpdateDatabase(userName);                
-            
+
+            UpdateDatabase(userName);
+
         }
 
 
@@ -313,6 +339,12 @@ namespace PapiroMVC.Controllers
         /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
+
+            while (!disposable)
+            {
+                
+            }
+
             if (disposables != null)
             {
                 foreach (var disp in disposables)

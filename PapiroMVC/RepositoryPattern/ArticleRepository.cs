@@ -18,7 +18,6 @@ namespace Services
             ICustomerSupplierRepository customerSupplierRepository,
             string supplierMaker,
             string supplyerBuy)
-
         {
 
 
@@ -70,9 +69,9 @@ namespace Services
 
 
         }
-        public string GetNewCode(Article a, 
-            ICustomerSupplierRepository customerSupplierRepository, 
-            string supplierMaker, 
+        public string GetNewCode(Article a,
+            ICustomerSupplierRepository customerSupplierRepository,
+            string supplierMaker,
             string supplyerBuy)
         {
 
@@ -203,11 +202,14 @@ namespace Services
 
                         standardCost.CostPerMq = standardCost.CostPerMq == null ?
                             null : Convert.ToDouble(standardCost.CostPerMq,
-                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
 
                         standardCost.CostPerMl = standardCost.CostPerMl == null ?
-                        null :
-                        Convert.ToDouble(standardCost.CostPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
+                            null : Convert.ToDouble(standardCost.CostPerMl, Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
+
+                        standardCost.CostPerKg = standardCost.CostPerKg == null ?
+                            null : Convert.ToDouble(standardCost.CostPerKg,
+                            Thread.CurrentThread.CurrentUICulture).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture);
 
                         standardCost.CodArticle = c.CodArticle;
                         standardCost.CodArticleCost = c.CodArticle + "_STC";
@@ -285,6 +287,8 @@ namespace Services
                     #endregion
                     break;
                 case Article.ArticleType.Foil:
+                case Article.ArticleType.Mesh:
+                case Article.ArticleType.Anilox:
                     #region Standard
                     try
                     {
@@ -336,10 +340,28 @@ namespace Services
 
         public override IQueryable<Article> GetAll()
         {
+
+
+            //We have to fix NoUseInEstimateCalculation
+            var toFix = Context.articles.OfType<Printable>().Where(x => x.NoUseInEstimateCalculation == null).ToList();
+
+            foreach (var item in toFix)
+            {
+                item.NoUseInEstimateCalculation = false;
+                Edit(item);
+            }
+            if (toFix.Count() > 0)
+            {
+                Save();
+            }
+
+
+
+
             var numWare = Context.warehouseSpec.Count();
 
             //update with new warehouse
-            var lstProd = Context.articles.Include("articlecosts").Where(x => x.WarehouseArticles.Count < numWare).ToList();
+            var lstProd = Context.articles.AsNoTracking().Include("articlecosts").Where(x => x.WarehouseArticles.Count < numWare).ToList();
 
             foreach (var article in lstProd)
             {
@@ -359,11 +381,14 @@ namespace Services
                             };
 
                             article.WarehouseArticles.Add(newP);
-                            this.Context.Set<WarehouseArticle>().Add(newP);
+                            //this.Context.Set<WarehouseArticle>().Add(newP);
                         }
                     }
                 }
                 this.ArticleCostCodeRigen(article);
+
+                this.Edit(article);
+
                 Save();
             }
 
@@ -381,7 +406,6 @@ namespace Services
         public override void Edit(Article entity)
         {
             ArticleCostCodeRigen(entity);
-
 
             var fromBD = Context.articles.SingleOrDefault(p => p.CodArticle == entity.CodArticle);
             if (fromBD != null)
@@ -451,6 +475,13 @@ namespace Services
         public new Article GetSingle(string codArticle)
         {
             var article = Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").Include("warehousearticles").FirstOrDefault(x => x.CodArticle == codArticle);
+
+
+
+            if (article == null)
+            {
+                return null;
+            }
 
 
             var numWare = Context.warehouseSpec.Count();

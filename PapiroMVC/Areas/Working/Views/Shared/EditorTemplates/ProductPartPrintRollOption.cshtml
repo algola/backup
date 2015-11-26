@@ -1,0 +1,63 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductPartPrintRollOption
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+}
+
+
+@*header*@
+<div class="">
+
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-4">
+            @Html.T(strings, "HeadPrintRollType")
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.T(strings, "HeadPrintRollInk")
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.T(strings, "HeadPrintRollOverlay")
+        </div>
+
+    </div>
+    <div class="col-sm-3 control-label no-padding-right"></div>
+
+</div>
+
+<div class="todelete form-group ">
+    <div class="col-sm-9">
+        <div class=" no-padding controls col-md-4">
+            @Html.TextBoxFor(model => model.TypeOfTaskPrint, new { autocomplete = "off", data_autocomplete_url = Url.Action("AniloxAutoComplete", "Article", null) })*
+            @Html.ValidationMessageFor(model => model.TypeOfTaskPrint)
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.TextBoxFor(model => model.Ink, new { autocomplete = "off", data_autocomplete_url = Url.Action("InkAutoComplete", "Article", null) })*
+            @Html.ValidationMessageFor(model => model.Ink)
+        </div>
+        <div class="no-padding controls col-md-4">
+            @Html.EditorFor(model => model.Overlay)*
+            @Html.ValidationMessageFor(model => model.Overlay)
+        </div>
+    </div>
+    <div class="col-sm-3 control-label no-padding-right">
+
+        <button type="submit" form="addOption" value="Submit">@Html.T(strings,"Addoption")</button>
+
+    </div>
+</div>
+
+@Html.HiddenFor(model => model.CodProductPartTask)
+
+@Html.HiddenFor(model => model.TypeOfProductPartTaskOption)
+
+
+
+
+
+
+
+

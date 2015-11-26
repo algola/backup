@@ -314,41 +314,45 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-            base.InitCostDetail(tskExec, articles);
-
-            String codTypeOfTask = String.Empty;
-            Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
-            codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
-            tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
-            TaskExecutors = tskExec.ToList();
-
-            ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
-            productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
-
-            #region Format
-            List<string> formats = new List<string>();
-            var widthList = new List<Nullable<double>>();
-
-            //
-            //voglio sapere quali sono i formati degli articoli ma gli articoli che posso stampare dipendono dal tipo di macchina!!!!
-            foreach (var item in productPartPrintabelArticles)
+            if (!justInited)
             {
-                widthList = articles.OfType<RollPrintableArticle>()
-                           .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
-                               x.Color == item.Color &&
-                               x.Adhesive == item.Adhesive &&
-                               x.Weight == item.Weight &&
-                               x.NameOfMaterial == item.NameOfMaterial)
-                                   .Select(x => x.Width).ToList();
-            }
+                base.InitCostDetail(tskExec, articles);
 
-            foreach (var width in widthList)
-            {
-                if (BuyingWidths == null) BuyingWidths = new List<double>();
-                BuyingWidths.Add(width ?? 0);
-            }
+                String codTypeOfTask = String.Empty;
+                Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
+                codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+                TaskExecutors = tskExec.ToList();
 
-            #endregion
+                ICollection<ProductPartsPrintableArticle> productPartPrintabelArticles = new List<ProductPartsPrintableArticle>();
+                productPartPrintabelArticles = TaskCost.ProductPartTask.ProductPart.ProductPartPrintableArticles;
+
+                #region Format
+                List<string> formats = new List<string>();
+                var widthList = new List<Nullable<double>>();
+
+                //
+                //voglio sapere quali sono i formati degli articoli ma gli articoli che posso stampare dipendono dal tipo di macchina!!!!
+                foreach (var item in productPartPrintabelArticles)
+                {
+                    widthList = articles.OfType<RollPrintableArticle>()
+                               .Where(x => x.TypeOfMaterial == item.TypeOfMaterial &&
+                                   x.Color == item.Color &&
+                                   x.Adhesive == item.Adhesive &&
+                                   x.Weight == item.Weight &&
+                                   x.NameOfMaterial == item.NameOfMaterial)
+                                       .Select(x => x.Width).ToList();
+                }
+
+                foreach (var width in widthList)
+                {
+                    if (BuyingWidths == null) BuyingWidths = new List<double>();
+                    BuyingWidths.Add(width ?? 0);
+                }
+
+                #endregion
+                
+            }
         }
 
         public override List<CostDetail> CreateRelatedPrintedCostDetail(IQueryable<Article> articles, IQueryable<Cost> costs)

@@ -18,5 +18,10 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResProductPartTask), "Vernice")]
         [Tooltip(typeof(ResProductPartTask), "VerniceToolTip")]
         public bool Vernice { get; set; }
+
+        [DisplayNameLocalized(typeof(ResProductPartTask), "PrintSide")]
+        [Tooltip(typeof(ResProductPartTask), "PrintSideToolTip")]
+        public Nullable<int> PrintSide { get; set; }
+
     }
 }

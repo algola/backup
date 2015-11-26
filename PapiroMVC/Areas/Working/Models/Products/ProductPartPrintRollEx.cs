@@ -26,6 +26,25 @@ namespace PapiroMVC.Models
             get;
             set;
         }
+
+        public object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            ProductPartPrintRoll copyOfObject = (ProductPartPrintRoll)Activator.CreateInstance(kindOfObject);
+            this.Copy(copyOfObject);
+
+            return copyOfObject;
+        }
+
+        public override void Copy(ProductPartTask to)
+        {
+            base.Copy(to);
+            ((ProductPartPrintRoll)to).PrintSide = this.PrintSide;
+        }
+
         private bool _retro;
         public bool Retro
         {
@@ -40,7 +59,7 @@ namespace PapiroMVC.Models
         }
 
         private bool _vernice;
-        public bool Vernice 
+        public bool Vernice
         {
             get
             {
@@ -52,8 +71,16 @@ namespace PapiroMVC.Models
             }
         }
 
+        public override string ToString()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
+            var ext = (string)t.GetProperty("PrintSide" + (this.PrintSide ?? 0).ToString()).GetValue(null, null);
+
+            return base.ToString() + (ext == "" ? ext : " " + ext);
+        }
 
     }
+
 
 
 }

@@ -13,6 +13,13 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(TaskExecutor_MetaData))]
     public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated , IAlgolaEdit
     {
+
+        public bool CheckFormat(string format)
+        {
+            return SheetCut.IsValid(this.FormatMax, this.FormatMin, format);
+        }
+
+
         /// <summary>
         /// filters whitch taskexecutor can run codTypeOfTask task
         /// </summary>
@@ -60,6 +67,7 @@ namespace PapiroMVC.Models
 
             }
 
+
             //CodTypeOfTask
             if (codTypeOfTask == "SERIGRAFIAROTOLO")
             {
@@ -68,6 +76,17 @@ namespace PapiroMVC.Models
 
                 tskExecList = tskExecList.OfType<FlatRoll>().Where(x => x.Serigraphy ?? false);
             }
+
+
+            //CodTypeOfTask
+            if (codTypeOfTask == "STAMPAACALDOROTOLO")
+            {
+                //   var tskExec1 = tskExecList.OfType<Flexo>();
+                //   var tskExec2 = tskExecList.OfType<ControlTableRoll>();
+
+                tskExecList = tskExecList.OfType<FlatRoll>().Where(x => x.FoilStamping ?? false);
+            }
+
 
             //Created for Editor Machines
             if (codTypeOfTask == "STAMPAETICHROTOLO_LIST")

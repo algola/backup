@@ -23,7 +23,6 @@
     <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
 
-
     <div class="control-group">
 
         <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDieFlexo", "Article", new { Area = "Database" })');">
@@ -34,12 +33,12 @@
         @*<button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDieSheet", "Article", new { Area = "Database" })');">
                 <i class="icon-plus"></i>
                 @Html.T(strings, "CreateDieSheet")
-            </button>
-
-            <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDieFlatRoll", "Article", new { Area = "Database" })');">
-                <i class="icon-plus"></i>
-                @Html.T(strings, "CreateDieFlatRoll")
             </button>*@
+
+        <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateDieFlatRoll", "Article", new { Area = "Database" })');">
+            <i class="icon-plus"></i>
+            @Html.T(strings, "CreateDieFlatRoll")
+        </button>
 
         <button class="btn btn-danger" type="button" id="delete">
             <i class="icon-trash bigger-125"></i>
@@ -142,17 +141,24 @@
             },
             cm = [
                 { name: 'Id', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: '@(Html.T(strings, "OperationsCaptionWidth") == null ? 60 : Convert.ToInt32(Html.T(strings, "OperationsCaptionWidth")))', sortable: false, formatter: editArticle },
+
                 //{ name: 'CodArticle', label: '@HttpContext.GetLocalResourceObject(strings, "CodArticleCaption")', width: 80, search: true, sortable: true },
                 { name: 'CodDie', label: '@HttpContext.GetLocalResourceObject(strings, "CodDieCaption")', width: 100, search: true, sortable: true },
-                { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "DescriptionCaption")', width: 150, search: true },
-                { name: 'PrintingFormat', label: '@HttpContext.GetLocalResourceObject(strings, "PrintingFormatCaption")', width: 150, search: true, align: 'right' },
-                { name: 'Width', label: '@HttpContext.GetLocalResourceObject(strings, "WidthCaption")', width: 100, search: true, align: 'right' },
-                { name: 'Z', label: '@HttpContext.GetLocalResourceObject(strings, "ZCaption")', width: 80, search: true, align: 'right' },
-                { name: 'Format', label: '@HttpContext.GetLocalResourceObject(strings, "FormatCaption")', width: 150, search: true, align: 'right' },
-                { name: 'DCut1', label: '@HttpContext.GetLocalResourceObject(strings, "DCut1Caption")', width: 100, search: true, align: 'right' },
-                { name: 'DCut2', label: '@HttpContext.GetLocalResourceObject(strings, "DCut2Caption")', width: 100, search: true, align: 'right' },
-                { name: 'MaxGain1', label: '@HttpContext.GetLocalResourceObject(strings, "MaxGain1Caption")', width: 100, search: true, align: 'right' },
-                { name: 'MaxGain2', label: '@HttpContext.GetLocalResourceObject(strings, "MaxGain2Caption")', width: 100, search: true, align: 'right' },
+                { name: 'Format', label: '@HttpContext.GetLocalResourceObject(strings, "FormatCaption")', width: 150, search: true, sortable: true, align: 'right' },
+                { name: 'FormatB', label: '@HttpContext.GetLocalResourceObject(strings, "FormatBCaption")', width: 150, search: true, sortable: true, align: 'right' },
+
+                { name: 'TypeOfArticle', label: '@Html.T(strings, "TypeOfArticle")', width: 60, editable: false, hidden: false, formatter: typeOfArticle },
+
+                { name: 'Description', label: '@HttpContext.GetLocalResourceObject(strings, "DescriptionCaption")', width: 150, search: true, sortable: true },
+                { name: 'PrintingFormat', label: '@HttpContext.GetLocalResourceObject(strings, "PrintingFormatCaption")', width: 150, search: true, sortable: true, align: 'right' },
+                { name: 'FormatType', label: '@HttpContext.GetLocalResourceObject(strings, "FormatType")', width: 150, search: true, sortable: true, align: 'right', formatter: formatType },
+                { name: 'Width', label: '@HttpContext.GetLocalResourceObject(strings, "WidthCaption")', width: 100, search: true, sortable: true, align: 'right' },
+                { name: 'Z', label: '@HttpContext.GetLocalResourceObject(strings, "ZCaption")', width: 80, search: true, sortable: true, align: 'right' },
+
+             //   { name: 'DCut1', label: '@HttpContext.GetLocalResourceObject(strings, "DCut1Caption")', width: 100, search: true, sortable: true, align: 'right' },
+             //   { name: 'DCut2', label: '@HttpContext.GetLocalResourceObject(strings, "DCut2Caption")', width: 100, search: true, sortable: true, align: 'right' },
+                { name: 'MaxGain1', label: '@HttpContext.GetLocalResourceObject(strings, "MaxGain1Caption")', width: 100, search: true, sortable: true, align: 'right' },
+                { name: 'MaxGain2', label: '@HttpContext.GetLocalResourceObject(strings, "MaxGain2Caption")', width: 100, search: true, sortable: true, align: 'right' },
 
             ],
             saveObjectInLocalStorage = function (storageItemName, object) {
@@ -298,7 +304,7 @@
             closeAfterSearch: true,
             overlay: 0
         });
-     //   $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        //   $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
         //$grid.jqGrid('navButtonAdd', '#pager', {
         //    caption: "",
         //    buttonicon: "ui-icon-calculator",

@@ -17,10 +17,6 @@ namespace PapiroMVC.Models
             TypeOfArticle = ArticleType.DieFlexo;
         }
 
-        #region Added Properties
-        public string TaskExecutorName { get; set; }
-        #endregion
-
         public override string ToString()
         {
             return base.ToString() + this.ArticleName;

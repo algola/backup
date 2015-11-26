@@ -21,8 +21,6 @@ namespace PapiroMVC.Models
 
         }
 
-
-
         public virtual void GetCostFromList()
         {
             //throw new NotImplementedException();
@@ -110,6 +108,12 @@ namespace PapiroMVC.Models
             TimeSpan time = new TimeSpan(0, 0, 0);
             CostAndTime totalCT = new CostAndTime();
 
+            //try to relink taskexecutor
+            if (TaskexEcutorSelected == null)
+            {
+                TaskexEcutorSelected = TaskExecutors.SingleOrDefault(x=>x.CodTaskExecutor == CodTaskExecutorSelected);
+            }
+
             try
             {
                 try
@@ -143,9 +147,17 @@ namespace PapiroMVC.Models
                 return 0;
             }
 
-
         }
 
+        public override void Update()
+        {
+
+
+            TaskexEcutorSelected = TaskExecutors.SingleOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+
+            base.Update();
+            this.UpdateCoeff();
+        }
 
     }
 }

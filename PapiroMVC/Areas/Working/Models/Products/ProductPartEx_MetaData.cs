@@ -31,7 +31,16 @@ namespace PapiroMVC.Models
         [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
-       
+
+
+
+        [DisplayNameLocalized(typeof(ResProductPart), "Formatmm")]
+        [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
+        [Tooltip(typeof(ResProductPart), "FormatmmToolTip")]
+        public string Formatmm { get; set; }
+
+
+
         [DisplayNameLocalized(typeof(ResProductPart), "ServicesNumber")]
         [Tooltip(typeof(ResProductPart), "ServicesNumberToolTip")]
         public Nullable<int> ServicesNumber { get; set; }
@@ -71,7 +80,6 @@ namespace PapiroMVC.Models
         [DisplayNameLocalized(typeof(ResProductPart), "MinDCut")]
         [Tooltip(typeof(ResProductPart), "MinDCutToolTip")]
         public Nullable<double> MinDCut { get; set; }
-
 
 
     }

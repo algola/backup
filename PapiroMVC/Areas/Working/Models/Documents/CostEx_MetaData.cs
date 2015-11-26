@@ -65,5 +65,6 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResCost), "UnitCostToolTip")]
         public string UnitCost { get; set; }
 
+
     }
 }

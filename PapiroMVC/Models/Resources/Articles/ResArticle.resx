@@ -199,7 +199,7 @@
     <value>Quantità potenziale (Stoccaggio + Ordinato)</value>
   </data>
   <data name="PrintingFormat" xml:space="preserve">
-    <value>Formato di stampa</value>
+    <value>Formato stampa</value>
   </data>
   <data name="QuantityOnHand" xml:space="preserve">
     <value>Quantità</value>
@@ -266,5 +266,38 @@
   </data>
   <data name="CodProductToolTip" xml:space="preserve">
     <value>Codice identificativo del prodotto</value>
+  </data>
+  <data name="GainMqPerLt" xml:space="preserve">
+    <value>Resa mq/lt</value>
+  </data>
+  <data name="GainMqPerLtToolTip" xml:space="preserve">
+    <value>Resa mq/lt</value>
+  </data>
+  <data name="MeshRow" xml:space="preserve">
+    <value>Numero fili telaio</value>
+  </data>
+  <data name="MeshRowToolTip" xml:space="preserve">
+    <value>Numero dei fili telaio</value>
+  </data>
+  <data name="TaskExecutorName" xml:space="preserve">
+    <value>Rif. macchina</value>
+  </data>
+  <data name="FormatType" xml:space="preserve">
+    <value>Tipo Fustella</value>
+  </data>
+  <data name="FormatB" xml:space="preserve">
+    <value>F.to controetichetta</value>
+  </data>
+  <data name="FormatBValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$|^$</value>
+  </data>
+  <data name="FormatDieValidationError" xml:space="preserve">
+    <value>formato fustella non valido (es. valido:35x50)</value>
+  </data>
+  <data name="AniloxRow" xml:space="preserve">
+    <value>Numero celle</value>
+  </data>
+  <data name="AniloxRowToolTip" xml:space="preserve">
+    <value>Numero di celle/cm2</value>
   </data>
 </root>

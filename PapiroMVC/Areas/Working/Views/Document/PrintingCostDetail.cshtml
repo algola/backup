@@ -141,7 +141,6 @@ else
     }
 }
 
-
 <script type="text/javascript">
     function save() {
 
@@ -315,6 +314,7 @@ else
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
 
 
+
     <style type="text/css">
         #dialog {
             width: 100% !important;
@@ -328,8 +328,27 @@ else
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
+
+    <script src="~/Scripts/jqgridHelper.js"></script>
+
 }
+
+
+
 
 @section ScriptS{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script language="javascript" type="text/javascript">
+    $(function () {
+        setInterval(KeepSessionAlive, 10000);
+    });
+
+    function KeepSessionAlive() {
+
+        $.post("/Helper/KeepSessionAlive.ashx", null, function () {
+
+        });
+    }
+</script>

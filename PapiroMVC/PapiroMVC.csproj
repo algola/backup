@@ -251,6 +251,7 @@
     <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\CustomerSupplierController_Ex_AutoComplete.cs" />
     <Compile Include="Areas\DataBase\Controllers\HomeDbController.cs" />
+    <Compile Include="Areas\DataBase\Controllers\TaskCenterController.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex.cs" />
     <Compile Include="Areas\DataBase\Controllers\TaskExecutorController_Ex_Auto_Complete.cs" />
@@ -268,6 +269,10 @@
     <Compile Include="Areas\DataBase\Models\Articles\DieFlexo_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\DieSheet_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\FoilEx.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\Anilox.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\AniloxEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\MeshEx_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\Articles\MeshEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\InkEx.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\FoilEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\Articles\InkEx_MetaData.cs" />
@@ -323,6 +328,7 @@
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\NewProductCommand_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskCenterEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\BindingAvarageRunPerRunStepEx.cs" />
@@ -385,6 +391,8 @@
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrinterMachineEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\PrintingColor.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlatRollEstimatedOnTimeEx.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\FlatRollEstimatedOnTimeEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\StepEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\RollEstimatedOnTimeEx.cs" />
@@ -424,6 +432,11 @@
     <Compile Include="Areas\DataBase\ViewModels\CustomerSupplierViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\PrePostPressViewModel.cs" />
     <Compile Include="Areas\DataBase\ViewModels\TaskExecutorNewCostViewModel.cs" />
+    <Compile Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Strings.resx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
     <Compile Include="Areas\HelpPage\App_Start\HelpPageConfig.cs" />
     <Compile Include="Areas\HelpPage\Controllers\HelpController.cs" />
@@ -474,6 +487,7 @@
     <Compile Include="Areas\Warehouse\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Warehouse\WarehouseAreaRegistration.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController.cs" />
+    <Compile Include="Areas\Working\Controllers\DocumentController_Planning.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController2.cs" />
     <Compile Include="Areas\Working\Controllers\DocumentController_Ex.cs" />
     <Compile Include="Areas\Working\Controllers\ProductController.cs" />
@@ -481,7 +495,8 @@
     <Compile Include="Areas\Working\Controllers\ProductController_Ex.cs" />
     <Compile Include="Areas\Working\Models\Cost\CostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\CostDetail_Ex2.cs" />
-    <Compile Include="Areas\Working\Models\Cost\ICostDetailCreator.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Implant-Cost\ImplantHotStampingCostDetailEx.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Implant-Cost\ImplantMeshCostDetailEx.cs" />
     <Compile Include="Areas\Working\Models\Cost\Implant-Cost\ImplantCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\PrePostPress-Cost\RepassRollCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\PrePostPress-Cost\ControlTableCostDetail.cs" />
@@ -490,6 +505,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRigidArticleCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedRollArticleCostDetail.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printed-Cost\PrintedSheetArticleCostDetail.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ZValid.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\PrintingHint.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainSingle.cs" />
@@ -513,8 +529,7 @@
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartPrintingSheetGainBook.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSoftPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartRigidPrinting.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleLabelRollPrinting.cs" />
-    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartSingleSheetPrinting.cs" />
+    <Compile Include="Areas\Working\Models\Cost\Printing-Cost\ProductPartDoubleSheetPrinting.cs" />
     <Compile Include="Areas\Working\Models\Cost\Printing-Cost\SheetCut.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\CostEx_MetaData.cs" />
@@ -551,10 +566,14 @@
     <Compile Include="Areas\Working\Models\Products\ProductPartLabelRollArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidArticleEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollOptionEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartPrintRollOption_Metadata.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyOptionEx_Metadata.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphyOptionEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartHotPrinting_Metadata.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSerigraphy_Metadata.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartDoubleLabelRollEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductPartDoubleLabelRollEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartRigidEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartSoftEx_MetaData.cs" />
@@ -575,6 +594,8 @@
     <Compile Include="Areas\Working\Models\Products\ProductEmpty.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskOptionEx_Metadata.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductPartTaskOptionEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductDoubleLabelRollEx.cs" />
+    <Compile Include="Areas\Working\Models\Products\ProductDoubleLabelRollEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSoftEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductSingleLabelRollEx.cs" />
@@ -601,6 +622,9 @@
       <DependentUpon>KeepSessionAlive.ashx</DependentUpon>
     </Compile>
     <Compile Include="Hubs\Registrer.cs" />
+    <Compile Include="Models\Anilox.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Article.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -703,6 +727,9 @@
     <Compile Include="Models\DocumentState.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DocumentTaskCenter.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Estimate.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -710,6 +737,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FlatRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\FlatRollEstimatedOnTime.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Flexo.cs">
@@ -720,6 +750,12 @@
     </Compile>
     <Compile Include="Models\IDeleteRelated.cs" />
     <Compile Include="Models\ImplantCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImplantHotPrintingCostDetail.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImplantMeshCostDetail.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Ink.cs">
@@ -747,6 +783,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MenuProduct.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mesh.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model1.cs">
@@ -887,6 +926,9 @@
     <Compile Include="Models\ProductBookSheet.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductDoubleLabelRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductEmpty.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -912,6 +954,12 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartCoverSheetPrinting.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartDoubleLabelRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartDoubleSheetPrinting.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartHotPrinting.cs">
@@ -946,6 +994,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartPrintRoll.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPartPrintRollOption.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductPartRigid.cs">
@@ -1494,6 +1545,7 @@
     <Compile Include="Models\RollPrintableArticleStandardCost.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Schema\TaskCenterDDL.cs" />
     <Compile Include="Models\Schema\WarehouseDDL.cs" />
     <Compile Include="Models\Schema\ArticlesDDL.cs" />
     <Compile Include="Models\Schema\CostDetailDDL.cs" />
@@ -1527,6 +1579,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Supplier.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TaskCenter.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TaskEstimatedOn.cs">
@@ -1579,6 +1634,8 @@
     <Compile Include="Models\WebApi\ProductApi.cs" />
     <Compile Include="Models\WebApi\RigidProductApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryPattern\TaskCenterRepository.cs" />
+    <Compile Include="RepositoryPattern\GenericAndInterface\ITaskCenterRepository.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIASOLOTIPI.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIAROTOLO.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIA.cs" />
@@ -1992,6 +2049,15 @@
     <Content Include="Content\acetheme\assets\js\markdown\markdown.min.js" />
     <Content Include="Content\acetheme\assets\js\markdown\to-markdown.min.js" />
     <Content Include="Content\acetheme\assets\js\pace.min.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\grid.addons.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\grid.postext.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\grid.setcolumns.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\jquery.contextmenu.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\jquery.searchFilter.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\jquery.tablednd.js" />
+    <Content Include="Content\acetheme\assets\js\plugins\searchFilter.css" />
+    <Content Include="Content\acetheme\assets\js\plugins\ui.multiselect.css" />
+    <Content Include="Content\acetheme\assets\js\plugins\ui.multiselect.js" />
     <Content Include="Content\acetheme\assets\js\prettify.js" />
     <Content Include="Content\acetheme\assets\js\prettify.min.js" />
     <Content Include="Content\acetheme\assets\js\respond.min.js" />
@@ -2094,6 +2160,8 @@
     <Content Include="Content\Carousel\Stampabili.JPG" />
     <Content Include="Content\Carousel\Consumabili.JPG" />
     <Content Include="Content\Carousel\Clienti.png" />
+    <Content Include="Content\font-awesome-3.css" />
+    <Content Include="Content\font-awesome.min-4.css" />
     <Content Include="Content\jquery.jqGrid\ellipsis-xbl.xml" />
     <Content Include="Content\jquery.jqGrid\ui.jqgrid.css" />
     <Content Include="Content\ProductImage\AltriFormati.png">
@@ -2124,6 +2192,9 @@
     <Content Include="Content\ProductImage\EtichetteCartellini.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\ProductImage\EtichetteRotoloDouble.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\ProductImage\EtichetteRotolo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2131,6 +2202,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ProductImage\FasceGommateRotolo.png" />
+    <Content Include="Content\ProductImage\FasceGommateRotolo2.png" />
     <Content Include="Content\ProductImage\FogliMacchina.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2588,7 +2660,7 @@
     <Content Include="Areas\Working\Views\Document\_DCutSheet.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductSoft.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSoft.cshtml" />
-    <Content Include="Areas\Working\Views\Document\_RepassRollCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_RepassRollCostDetail_.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\RollEstimatedOnTime.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_ListCostPerColorStep.cshtml" />
     <Content Include="Areas\Working\Views\Document\NotImplementedCostDetail.cshtml" />
@@ -2667,10 +2739,6 @@
     <Content Include="Areas\DataBase\Views\Article\IndexFoil.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\_FoilCostMq.cshtml" />
     <Content Include="Areas\DataBase\Views\Article\EditFoil.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\IndexOptionTypeOfTaskSerigraphy.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_ListTypeOfTaskSerigraphy.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\EditSerigraphyOption.cshtml" />
-    <Content Include="Areas\DataBase\Views\TaskExecutor\_EditSerigraphyOption.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\CreateFlatRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\EditFlatRoll.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_EditAndCreateFlatRoll.cshtml" />
@@ -2699,6 +2767,40 @@
     <Content Include="Areas\Working\Views\Document\_DCutLabel.cshtml" />
     <Content Include="Areas\Working\Views\Document\_PrintingRollCostDetail.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartRepass.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_RepassRollCostDetail.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateMesh.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_MeshCostMq.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateMesh.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditMesh.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexMesh.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListMesh.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\FlatRollEstimatedOnTime.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_SaveDieFlexo.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartDoubleSheetPrinting.cshtml" />
+    <Content Include="Areas\Working\Views\Document\ControlTableCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ControlTableCostDetail.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_EditAndCreateAnilox.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListAnilox.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_AniloxCostMq.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\CreateAnilox.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\EditAnilox.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\IndexAnilox.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartPrintRollOptions.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartPrintRollOption.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskCenter\_EditAndCreateTaskCenter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskCenter\_List.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskCenter\CreateTaskCenter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskCenter\EditTaskCenter.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskCenter\Index.cshtml" />
+    <Content Include="Areas\Working\Views\Document\Planning.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListPlanning.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartHotPrintingOptions.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartHotPrintingOption.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartPrintRollOptionError.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartHotPrintingOptionError.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOption.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptionError.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptions.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -2718,6 +2820,13 @@
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartHotPrintingOption.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphy.cshtml" />
     <Content Include="Helper\KeepSessionAlive.ashx" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartDoubleLabelRoll.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductDoubleLabelRoll.cshtml" />
+    <Content Include="Content\ProductImage\ProductSingleLabelRoll.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PricePartial.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartPrintRollOption.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartHotPrintingOption_CostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphyOption_CostDetail.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2743,11 +2852,18 @@
     <Content Include="Report\ExternalCostHeader.docx" />
     <Content Include="Report\PrintedRollArticleCostDetail.docx" />
     <Content Include="Report\PrintingZRollCostDetail.docx" />
-    <Content Include="Report\OrderHead - Copy.docx" />
     <Content Include="Report\ExternalCost.docx" />
     <Content Include="Report\ControlTableCostDetail.docx" />
     <Content Include="Report\LabelRollHead.docx" />
     <Content Include="Report\DeliveryHeader.docx" />
+    <Content Include="Report\LabelRollHeadcanepa.docx" />
+    <Content Include="Report\ExternalCostCanepa.docx" />
+    <Content Include="Report\DeliveryHeaderCanepa.docx" />
+    <Content Include="Report\DocumentProduct.docx" />
+    <Content Include="Report\OfferHead.docx" />
+    <Content Include="Report\ExternalCostOfferHeader.docx" />
+    <Content Include="Report\RepassRollCostHeader.docx" />
+    <Content Include="Report\RepassRollCostDetail.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2907,6 +3023,8 @@
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </Content>
     <Content Include="Areas\DataBase\Views\CustomerSupplier\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2937,6 +3055,7 @@
     </Content>
     <Content Include="Areas\Working\Views\Product\App_LocalResources\ArticleStrings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings.en-us.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -2955,12 +3074,19 @@
       <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>gestionestampa.com1.designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Warehouse\Views\Warehouse\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Areas\Working\Views\Product\App_LocalResources\Strings-document.resx">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\TaskCenter\App_LocalResources\Strings.en-us.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Areas\DataBase\Views\TaskCenter\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Models\Resources\Account\AccountVuoto.resx">
@@ -3128,6 +3254,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResDocumentProduct.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Document\ResDocuments.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

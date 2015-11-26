@@ -27,5 +27,7 @@ namespace PapiroMVC.Models
         public Nullable<int> MaxGain2 { get; set; }
         [DisplayNameLocalized(typeof(ResArticle), "Description")]
         public string Description { get; set; }
+        [DisplayNameLocalized(typeof(ResArticle), "TaskExecutorName")]
+        public string TaskExecutorName { get; set; }
     }
 }

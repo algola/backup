@@ -1,0 +1,42 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.DocumentProduct
+
+
+@Html.AlgolaEditorFor(model => model.Markup, new { @class = "col-xs-12 input-mini", id = "markup" + Model.CodDocumentProduct })
+
+
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right" for="">
+        Cad.
+    </label>
+    <div class="controls col-sm-9">
+
+        @if (Model.UnitPriceLocked ?? false)
+        {
+            <span class="input-icon block">
+                <i class="ace-icon fa fa-lock grey"></i>
+                <input class="col-xs-10 col-sm-5 text-box single-line" id="unitPrice@(Model.CodDocumentProduct)" type="text"
+                       value="@Model.UnitPrice">
+            </span>
+            <span class="grey">&nbsp;&nbsp;</span>
+            <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-html="true" data-delay="{&quot;show&quot;:&quot;0&quot;, &quot;hide&quot;:&quot;3000&quot;}"
+                  data-content="Calcolato: @(Model.UnitPriceCalculated) Per sbloccare il prezzo cancellarlo e dare 'invio' " title="" data-original-title="">?</span>
+
+        }
+        else
+        {
+            <span class="input-icon block">
+                <i class="ace-icon fa fa-unlock grey"></i>
+                <input class="col-xs-10 col-sm-5 text-box single-line" id="unitPrice@(Model.CodDocumentProduct)" type="text"
+                       value="@Model.UnitPrice">
+            </span>
+            <span class="grey">&nbsp;&nbsp;</span>
+            <span class="help-button" data-rel="popover" data-trigger="hover" data-placement="right" data-html="true" data-delay="{&quot;show&quot;:&quot;0&quot;, &quot;hide&quot;:&quot;3000&quot;}"
+                  data-content="Per modificare il prezzo e bloccarlo entrare nel campo e premere 'invio'. " title="" data-original-title="">?</span>
+        }
+
+    </div>
+</div>
+
+
+@Html.AlgolaEditorFor(model => model.TotalAmount)

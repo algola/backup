@@ -32,12 +32,44 @@
 
     }
 
-    function drawPrinting(context, printingFormatV, printingFormatH, SheetV, SheetH, offsety, offsetx, zoom, sideOnside, gainOnSide1, gainOnSide2, maxGain, dCut1, dCut2) {
+
+    function drawRepass(context, buyingFormatV, buyingFormatH, offsety, offsetx, zoom) {
+
+        buyingFormatH *= zoom;
+        buyingFormatV *= zoom;
+
+
+        context.beginPath();
+
+        context.strokeStyle = "#eee";
+        context.stroke();
+
+        context.beginPath();
+
+        context.rect(offsetx + 0, offsety + 0, buyingFormatH, buyingFormatV);
+        context.strokeStyle = "#b0c2f7";
+        context.stroke();
+
+        context.beginPath();
+        context.fillStyle = "#b0c2f7";
+        context.globalAlpha = 0.5; // Half opacity
+        context.fillRect(offsetx + 0, offsety + 0, buyingFormatH, buyingFormatV);
+        context.stroke();
+
+        //alert(buyingFormatH + " " + buyingFormatV);
+    }
+
+
+    function drawPrinting(context, printingFormatV, printingFormatH, SheetV, SheetH, pOffsetx, pOffsety, zoom, sideOnside, gainOnSide1, gainOnSide2, maxGain, dCut1, dCut2) {
 
         if (maxGain == 0) {
             maxGain = gainOnSide1 * gainOnSide2;
         }
 
+
+        var offsetx = pOffsetx;
+        var offsety = pOffsety;
+        
         printingFormatH *= zoom;
         printingFormatV *= zoom;
 
@@ -46,6 +78,9 @@
 
         SheetH *= zoom;
         SheetV *= zoom;
+
+        pOffsetx *= zoom;
+        pOffsety *= zoom;
 
         var passo = 10 * zoom;
 
@@ -65,6 +100,9 @@
             offsetx = (SheetH + dCut2 - ((printingFormatH + dCut2) * gainOnSide2)) / 2
             offsety = (SheetV + dCut1 - ((printingFormatV + dCut1) * gainOnSide1)) / 2
 
+            offsetx = offsetx + pOffsetx;
+            offsety = offsety + pOffsety;
+
             for (var j = 0, countShape = 0; j < gainOnSide1 && countShape < maxGain; j++) {
                 for (var i = 0; i < gainOnSide2 && countShape < maxGain; i++, countShape++) {
                     context.rect(offsetx + (printingFormatH + dCut2) * i, offsety + (printingFormatV + dCut1) * j, printingFormatH, printingFormatV);
@@ -75,6 +113,9 @@
 
             offsetx = (SheetH + dCut1 - ((printingFormatV + dCut1) * gainOnSide2)) / 2
             offsety = (SheetV + dCut2 - ((printingFormatH + dCut2) * gainOnSide1)) / 2
+
+            offsetx = offsetx + pOffsetx;
+            offsety = offsety + pOffsety;
 
             for (var j = 0, countShape = 0; j < gainOnSide2 && countShape < maxGain; j++) {
                 for (var i = 0; i < gainOnSide1 && countShape < maxGain; i++, countShape++) {

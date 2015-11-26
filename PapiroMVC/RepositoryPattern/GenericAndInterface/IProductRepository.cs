@@ -15,5 +15,10 @@ namespace Services
          IQueryable<ProductNameGenerator> GetAllProductNameGenerator();
          void SaveProductNameGenerator(ProductNameGenerator a);
 
+
+         IQueryable<ProductPartTaskOption> GetProductPartTaskOptions(string codProductPartTask);
+         void AddProductPartTaskOption(ProductPartTaskOption p);
+         string DeleteProductPartTaskOption(string codProductPartTaskOption);
+
     }
 }

@@ -24,5 +24,8 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CostPerMq { get; set; }
+    	
+    	[DataMember] 		
+        public string CostPerKg { get; set; }
     }
 }

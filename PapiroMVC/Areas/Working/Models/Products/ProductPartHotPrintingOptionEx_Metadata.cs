@@ -15,10 +15,10 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPartTask), "FoilToolTip")]
         public string Foil { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ResProductPartTask), ErrorMessageResourceName = "RequiredFieldSimple"), 
-        DisplayNameLocalized(typeof(ResProductPartTask), "Format")]
-        [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
-        [Tooltip(typeof(ResProductPartTask), "FormatToolTip")]
+        //[Required(ErrorMessageResourceType = typeof(ResProductPartTask), ErrorMessageResourceName = "RequiredFieldSimple"), 
+        //DisplayNameLocalized(typeof(ResProductPartTask), "Format")]
+        //[RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
+        //[Tooltip(typeof(ResProductPartTask), "FormatToolTip")]
         public string Format { get; set; }
     }
 }

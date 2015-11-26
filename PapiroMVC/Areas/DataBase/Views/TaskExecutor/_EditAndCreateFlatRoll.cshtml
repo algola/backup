@@ -11,28 +11,25 @@
         item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
     }
 
-    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
+        int[] printingUnitName = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
+    Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
 }
 
 <div id="status">
 
-    @Scripts.Render("~/bundles/autocomplete")
-    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl },
-        new AjaxOptions
-        {
-            UpdateTargetId = "status",
-            OnBegin = "showProcessingMsg",
-            OnComplete = "initFlatRollPage",
-            OnSuccess = "OnSuccess"
-        },
-            new { @class = "form-horizontal" }))
-    {
 
+    @ViewBag.ReturnUrl
+
+    @Scripts.Render("~/bundles/autocomplete")
+    @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
+    {
         <div class="row">
             <div class="col-xs-12">
 
                 @Html.ValidationSummary(true)
+
+                @Html.Hidden("returnUrl", TempData["TaskExecutorIndex"])
 
 
                 @Html.HiddenFor(x => x.CodTypeOfTask)
@@ -61,6 +58,26 @@
 
                 @Html.HiddenFor(model => model.TimeStampTable)
                 @Html.HiddenFor(model => model.CodTaskExecutor)
+
+                <h3>@Html.T(strings, "PrintSection")</h3>
+
+                <div>
+                    <div class="form-group">
+                        <div class="col-sm-3 control-label no-padding-right">
+                            @Html.LabelFor(model => model.PrintingUnit)
+                        </div>
+
+                        <div class="controls col-sm-9">
+                            @Html.DropDownListFor(model => model.PrintingUnit,
+                    new SelectList(printingUnitName))
+                        </div>
+                    </div>
+                </div>
+
+
+                @Html.AlgolaEditorFor(model => model.CostImplant)
+                @Html.AlgolaEditorFor(model => model.ProofSheetFirstStart)
+                @Html.AlgolaEditorFor(model => model.ProofSheetSecondsStart)
 
 
                 <div id="divSerigraphy">
@@ -99,19 +116,14 @@
 
                 </div>
 
-                <h3>@Html.T(strings, "WasteSection")</h3>
 
 
-                @Html.AlgolaEditorFor(model => model.PaperFirstStartLenght)
-                @Html.AlgolaEditorFor(model => model.PaperSecondStartLenght)
 
 
-                <h3>@Html.T(strings, "ImplantSectionMq")</h3>
-                @Html.AlgolaEditorFor(model => model.CostImplant)
 
                 <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
 
-                <p>
+                <div class="controls col-sm-9 col-sm-offset-3">
                     <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                         <i class="icon-arrow-left"></i>
                         @HttpContext.GetLocalResourceObject(strings, "Cancel")
@@ -130,7 +142,7 @@
                         </button>
                     }
 
-                </p>
+                </div>
 
 
             </div>

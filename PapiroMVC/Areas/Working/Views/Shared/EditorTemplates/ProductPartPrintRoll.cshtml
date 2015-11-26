@@ -7,7 +7,13 @@
     //we want ot use different resource only to share it between areas and parts
     string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
 
+    
+    Dictionary<int, string> printSideList = new Dictionary<int, string>();
 
+    printSideList.Add(0, Html.T(strings, "PrintSide0"));
+    printSideList.Add(1, Html.T(strings, "PrintSide1"));
+    printSideList.Add(2, Html.T(strings, "PrintSide2"));         
+       
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
     List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.Where(y => !y.CodOptionTypeOfTask.ToLower().Contains("retro") && !y.CodOptionTypeOfTask.ToLower().Contains("vernice")).OrderBy(x => x.IdexOf).ToList();
     
@@ -41,12 +47,20 @@
             new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
         </div>
     </div>
-    
-    
-    
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.PrintSide, new { @class = "col-sm-3 control-label no-padding-right" })
+
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor((model => model.PrintSide),
+            new SelectList(printSideList, "Key", "Value"), new { @class = "col-xs-10 col-sm-5" })
+        </div>
+    </div>
+
     @Html.EditorFor(x=>x.Retro)
     @Html.EditorFor(x=>x.Vernice)
-    
+
     @*<div class="form-group">
 
         <div class="col-sm-3 control-label no-padding-right">

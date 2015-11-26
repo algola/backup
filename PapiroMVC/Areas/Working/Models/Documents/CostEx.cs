@@ -14,6 +14,28 @@ namespace PapiroMVC.Models
     public partial class Cost : ICloneable, IPrintDocX
     {
 
+
+        /// <summary>
+        /// use it in PrintingZRollCostDetail to get 
+        /// </summary>
+        public ProductPartPrintRoll ProductPartPrintRoll
+        {
+            get
+            {
+                if (ProductPartTask.TypeOfProductPartTask == Models.ProductPartTask.ProductPartTasksType.ProductPartPrintRoll)
+                {
+                    return (ProductPartPrintRoll)ProductPartTask;
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+
+        }
+
+
         public object Clone()
         {
             //creo una copia dell'oggetto da utilizzare per le modifiche
@@ -65,6 +87,8 @@ namespace PapiroMVC.Models
             //    to.CostDetails.Add(cd);
             //}
 
+            to.Manual = this.Manual;
+
         }
 
         /// <summary>
@@ -86,10 +110,11 @@ namespace PapiroMVC.Models
             {
                 this.Quantity = cd.Quantity((double)this.DocumentProduct.Quantity);
                 this.QuantityMaterial = cd.QuantityMaterial((double)this.DocumentProduct.Quantity);
-                this.UnitCost = cd.UnitCost((double)this.DocumentProduct.Quantity).ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
 
-                var xx = Convert.ToDouble(UnitCost, Thread.CurrentThread.CurrentUICulture);
-                var tot = xx * Quantity;
+                double unitCost = cd.UnitCost((double)this.DocumentProduct.Quantity);
+                this.UnitCost = unitCost.ToString("#,0.000", Thread.CurrentThread.CurrentUICulture);
+
+                var tot = unitCost * Quantity;
 
                 this.TotalCost = (tot ?? 0).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
@@ -115,6 +140,15 @@ namespace PapiroMVC.Models
                     }
                 }
 
+                if (ProductPartImplantTask != null)
+                {
+                    if (ProductPartImplantTask.CodOptionTypeOfTask.Contains("_NO"))
+                    {
+                        Hidden = true;
+                        ForceZero = true;
+                    }                    
+                }
+
                 if (ProductPartTask != null)
                 {
                     if (ProductPartTask.CodOptionTypeOfTask.Contains("_NO"))
@@ -123,7 +157,6 @@ namespace PapiroMVC.Models
                         ForceZero = true;
                     }
                 }
-
             }
 
         }
@@ -219,7 +252,7 @@ namespace PapiroMVC.Models
 
 
             #region serigrafia rotolo!!! ripasso!!!
-            if (codTypeOfTask == "SERIGRAFIAROTOLO")
+            if (codTypeOfTask == "SERIGRAFIAROTOLO" || codTypeOfTask == "STAMPAACALDOROTOLO")
             {
                 Console.WriteLine("Serigrafia rotolo");
                 String codParte = String.Empty;
@@ -232,7 +265,7 @@ namespace PapiroMVC.Models
                     switch (tskExecs.FirstOrDefault().TypeOfExecutor)
                     {
                         case TaskExecutor.ExecutorType.FlatRoll:
-                            cv = new  RepassRollCostDetail();
+                            cv = new RepassRollCostDetail();
 
                             cv.TaskCost = this;
                             cv.InitCostDetail(tskExecs, articles);
@@ -255,6 +288,8 @@ namespace PapiroMVC.Models
             }
             #endregion
 
+            
+            
             #region tavolo di controllo rotolo
             if (codTypeOfTask == "FUSTELLATURA")
             {
@@ -304,7 +339,7 @@ namespace PapiroMVC.Models
                  * etichette in rotolo, manifesti etc...
                  * per ora carico.
                  */
-                
+
                 tskExecs = TaskExecutor.FilterByTask(tskExecs, codTypeOfTask);
 
                 //search selected taskexecutor
@@ -312,7 +347,7 @@ namespace PapiroMVC.Models
 
                 if (tskExecs.Count() > 0)
                 {
-                    switch ((tskFirst!=null?tskFirst:tskExecs.FirstOrDefault()).TypeOfExecutor)
+                    switch ((tskFirst != null ? tskFirst : tskExecs.FirstOrDefault()).TypeOfExecutor)
                     {
                         case TaskExecutor.ExecutorType.LithoSheet:
                             cv = new PrintingSheetCostDetail();

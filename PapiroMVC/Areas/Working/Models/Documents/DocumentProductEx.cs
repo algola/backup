@@ -24,6 +24,10 @@ namespace PapiroMVC.Models
         public string AmountDescription { get; set; }
         public string QtyDescription { get; set; }
 
+
+        public int IndexOf { get; set; }
+
+
         string _documentProductNameGenerator = "";
         public String DocumentProductNameGenerator
         {
@@ -172,11 +176,17 @@ namespace PapiroMVC.Models
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
                     total += (!(item.ForceZero ?? false)) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
-
+                    total += total * (Markup / 100 ?? 0);
                     //      total = Math.Round(total / 100) * 100;
                 }
             }
-            UnitPrice = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
+
+            UnitPriceCalculated = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
+
+            if (!(UnitPriceLocked??false))
+            {
+                UnitPrice = UnitPriceCalculated;                
+            }
             TotalAmount = (Convert.ToDouble(UnitPrice, Thread.CurrentThread.CurrentCulture) * (Quantity ?? 0)).ToString("#,0.00", Thread.CurrentThread.CurrentUICulture);
 
         }
@@ -314,6 +324,27 @@ namespace PapiroMVC.Models
         //}
 
         //#endregion
+
+
+        public void NewManualCost(string description)
+        {
+            Cost cost;
+
+            cost = new Cost();
+            cost.CodItemGraph = "FF";
+
+            cost.DocumentProduct = this;
+            cost.CodDocumentProduct = this.CodDocumentProduct;
+
+            cost.Description = description;
+            cost.Manual = true;
+            cost.Hidden = false;
+            cost.ForceZero = false;
+
+            cost.IndexOf = this.Costs.Max(x => x.IndexOf) + 1;
+            this.Costs.Add(cost);
+
+        }
 
         public void InitCost()
         {
@@ -461,7 +492,7 @@ namespace PapiroMVC.Models
                 doc.AddCustomProperty(new Novacode.CustomProperty("ProductRefName", ""));
             }
 
-            doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", (this.Quantity ?? 0).ToString()));
+            doc.AddCustomProperty(new Novacode.CustomProperty("Quantity", string.Format("{0:n0}",(this.Quantity ?? 0))));
             doc.AddCustomProperty(new Novacode.CustomProperty("UnitPrice", this.UnitPrice));
             doc.AddCustomProperty(new Novacode.CustomProperty("TotalAmount", this.TotalAmount));
 

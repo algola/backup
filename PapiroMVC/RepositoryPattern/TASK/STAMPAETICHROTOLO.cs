@@ -185,25 +185,85 @@ namespace Services
             optTk.IdexOf = 23;
             this.OptionTypeOfTasks.Add(optTk);
 
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_7";
+            optTk.OptionName = "Stampa a 7 colori";
+            optTk.IdexOf = 24;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_7RETRO";
+            optTk.OptionName = "Stampa a 7 colori con retro";
+            optTk.IdexOf = 25;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_7VERNICE";
+            optTk.OptionName = "Stampa a 7 colori con vernice";
+            optTk.IdexOf = 26;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_7RETROVERNICE";
+            optTk.OptionName = "Stampa a 7 colori con retro e vernice";
+            optTk.IdexOf = 27;
+            this.OptionTypeOfTasks.Add(optTk);
+
+
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_8";
+            optTk.OptionName = "Stampa a 8 colori";
+            optTk.IdexOf = 28;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_8RETRO";
+            optTk.OptionName = "Stampa a 8 colori con retro";
+            optTk.IdexOf = 29;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_8VERNICE";
+            optTk.OptionName = "Stampa a 8 colori con vernice";
+            optTk.IdexOf = 30;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_8RETROVERNICE";
+            optTk.OptionName = "Stampa a 8 colori con retro e vernice";
+            optTk.IdexOf = 31;
+            this.OptionTypeOfTasks.Add(optTk);
+
+
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NORETROVERNICE";
             optTk.OptionName = "Stampa con retro e vernice";
-            optTk.IdexOf = 24;
+            optTk.IdexOf = 32;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NORETRO";
             optTk.OptionName = "Stampa con retro";
-            optTk.IdexOf = 25;
+            optTk.IdexOf = 33;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_NOVERNICE";
             optTk.OptionName = "Stampa con vernice";
-            optTk.IdexOf = 26;
+            optTk.IdexOf = 34;
             this.OptionTypeOfTasks.Add(optTk);
 
             optTk = new OptionTypeOfTask();

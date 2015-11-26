@@ -10,10 +10,6 @@ namespace PapiroMVC.Models
     public partial class FlatRoll_MetaData : Litho_MetaData
     {
 
-        [DisplayNameLocalized(typeof(ResFlexo), "PrintingUnit")]
-        [Tooltip(typeof(ResFlexo), "PrintingUnitToolTip")]
-        public Nullable<short> PrintingUnit { get; set; }
-
         [DisplayNameLocalized(typeof(ResFlexo), "PaperFirstStartLenght")]
         [Tooltip(typeof(ResFlexo), "PaperFirstStartLenghtToolTip")]
         public Nullable<long> PaperFirstStartLenght { get; set; }
@@ -23,10 +19,9 @@ namespace PapiroMVC.Models
         public Nullable<long> PaperSecondStartLenght { get; set; }
 
         [RegularExpressionLocalized(typeof(ResFlexo), "CurrencyValidation", "CurrencyValidationError")]
-        [DisplayNameLocalized(typeof(ResFlexo), "CostImplant")]
-        [Tooltip(typeof(ResFlexo), "CostImplantToolTip")]
+        [DisplayNameLocalized(typeof(ResFlexo), "CostImplantFlat")]
+        [Tooltip(typeof(ResFlexo), "CostImplantFlatToolTip")]
         public string CostImplant { get; set; }
-
 
         [DisplayNameLocalized(typeof(ResFlexo), "Serigraphy")]
         [Tooltip(typeof(ResFlexo), "SerigraphyToolTip")]

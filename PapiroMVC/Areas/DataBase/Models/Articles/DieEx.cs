@@ -22,7 +22,7 @@ namespace PapiroMVC.Models
     }
 
     [Serializable]
-    // [MetadataType(typeof(Die_MetaData))]
+    [MetadataType(typeof(Die_MetaData))]
     public partial class Die : NoPrintable
     {
         public Die()
@@ -36,7 +36,7 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-            return base.ToString() + this.ArticleName;
+            return "";
         }
 
 
@@ -57,6 +57,7 @@ namespace PapiroMVC.Models
 
             return ret;
         }
+
 
         public double GetCmFromZ(int z)
         {

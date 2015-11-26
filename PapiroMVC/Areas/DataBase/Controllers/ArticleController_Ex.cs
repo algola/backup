@@ -11,6 +11,7 @@ using System.Web.Security;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
 using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -555,6 +556,194 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+        public ActionResult MeshList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string articleNameFilter = string.Empty;
+
+            string supplierNameFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
+
+            }
+
+            var q = articleRepository.GetAll().OfType<Mesh>();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
+            {
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(articleNameFilter))
+            {
+                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
+                    break;
+                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+                default:
+                    q = q.OrderBy(c => c.ArticleName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.CodArticle,
+                            a.ArticleName,
+                            a.CustomerSupplierMaker.BusinessName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult AniloxList(GridSettings gridSettings)
+        {
+            string codArticleFilter = string.Empty;
+            string articleNameFilter = string.Empty;
+
+            string supplierNameFilter = string.Empty;
+
+            if (gridSettings.isSearch)
+            {
+                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+
+                articleNameFilter = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                supplierNameFilter = gridSettings.where.rules.Any(r => r.field == "SupplierName") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "SupplierName").data : string.Empty;
+
+            }
+
+            var q = articleRepository.GetAll().OfType<Anilox>();
+
+            if (!string.IsNullOrEmpty(codArticleFilter))
+            {
+                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(articleNameFilter))
+            {
+                q = q.Where(c => c.ArticleName.ToLower().Contains(articleNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(supplierNameFilter))
+            {
+                q = q.Where(c => c.CustomerSupplierMaker.BusinessName.ToLower().Contains(supplierNameFilter.ToLower()));
+            }
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "CodArticle":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CodArticle) : q.OrderBy(c => c.CodArticle);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.ArticleName) : q.OrderBy(c => c.ArticleName);
+                    break;
+                case "SupplierName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.CustomerSupplierMaker.BusinessName) : q.OrderBy(c => c.CustomerSupplierMaker.BusinessName);
+                    break;
+                default:
+                    q = q.OrderBy(c => c.ArticleName);
+                    break;
+            }
+
+            var q2 = q.ToList();
+            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3
+                    select new
+                    {
+                        id = a.CodArticle,
+                        cell = new string[] 
+                        {                       
+                            a.CodArticle,
+                            a.CodArticle,
+                            a.ArticleName,
+                            a.CustomerSupplierMaker.BusinessName,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
         public ActionResult InkList(GridSettings gridSettings)
         {
             string codArticleFilter = string.Empty;
@@ -745,22 +934,33 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         public ActionResult DieList(GridSettings gridSettings)
         {
-            string codArticleFilter = string.Empty;
+            string codDieFilter = string.Empty;
             string articleDieFilter = string.Empty;
             string descriptionFilter = string.Empty;
             string printingFormatFilter = string.Empty;
+            string formatTypeFilter = string.Empty;
             string zFilter = string.Empty;
             string widthFilter = string.Empty;
             string formatFilter = string.Empty;
+            string formatBFilter = string.Empty;
             string dCut1Filter = string.Empty;
             string dCut2Filter = string.Empty;
             string maxGain1Filter = string.Empty;
             string maxGain2Filter = string.Empty;
 
+            //format type
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string quad = resman.GetString("FormatTypeName0");
+            string ovale = resman.GetString("FormatTypeName1");
+            string sago = resman.GetString("FormatTypeName2");
+            string rett = resman.GetString("FormatTypeName3");
+            string triang = resman.GetString("FormatTypeName4");
+            string roto = resman.GetString("FormatTypeName5");
+
             if (gridSettings.isSearch)
             {
-                codArticleFilter = gridSettings.where.rules.Any(r => r.field == "CodArticle") ?
-                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodArticle").data : string.Empty;
+                codDieFilter = gridSettings.where.rules.Any(r => r.field == "CodDie") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "CodDie").data : string.Empty;
 
                 articleDieFilter = gridSettings.where.rules.Any(r => r.field == "ArticleDie") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleDie").data : string.Empty;
@@ -771,6 +971,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 printingFormatFilter = gridSettings.where.rules.Any(r => r.field == "PrintingFormat") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "PrintingFormat").data : string.Empty;
 
+                formatTypeFilter = gridSettings.where.rules.Any(r => r.field == "FormatType") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "FormatType").data : string.Empty;
+
                 zFilter = gridSettings.where.rules.Any(r => r.field == "Z") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Z").data : string.Empty;
 
@@ -779,6 +982,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                 formatFilter = gridSettings.where.rules.Any(r => r.field == "Format") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Format").data : string.Empty;
+
+                formatBFilter = gridSettings.where.rules.Any(r => r.field == "FormatB") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "FormatB").data : string.Empty;
 
                 dCut1Filter = gridSettings.where.rules.Any(r => r.field == "DCut1") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "DCut1").data : string.Empty;
@@ -791,15 +997,13 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                 maxGain2Filter = gridSettings.where.rules.Any(r => r.field == "MaxGain2") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "MaxGain2").data : string.Empty;
-
-
             }
 
             var q = (IQueryable<Die>)articleRepository.GetAll().OfType<Die>();
 
-            if (!string.IsNullOrEmpty(codArticleFilter))
+            if (!string.IsNullOrEmpty(codDieFilter))
             {
-                q = q.Where(c => c.CodArticle.ToLower().Contains(codArticleFilter.ToLower()));
+                q = q.Where(c => c.CodDie.ToLower().Contains(codDieFilter.ToLower()));
             }
 
             if (!string.IsNullOrEmpty(articleDieFilter))
@@ -815,6 +1019,30 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             if (!string.IsNullOrEmpty(printingFormatFilter))
             {
                 q = q.Where(c => c.PrintingFormat.ToLower().Contains(printingFormatFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(formatTypeFilter))
+            {
+                Boolean isQuad = false, isOva = false, isSago = false, isRett = false, isTriang = false, isRoto = false;
+
+                //to match with language we have to compare filter with resource
+                isQuad = (quad.ToLower().Contains(formatTypeFilter.ToLower()));
+                isOva = (ovale.ToLower().Contains(formatTypeFilter.ToLower()));
+                isSago = (sago.ToLower().Contains(formatTypeFilter.ToLower()));
+                isRett = (rett.ToLower().Contains(formatTypeFilter.ToLower()));
+                isTriang = (triang.ToLower().Contains(formatTypeFilter.ToLower()));
+                isRoto = (roto.ToLower().Contains(formatTypeFilter.ToLower()));
+
+
+                var a = isQuad ? q.Where(x => x.FormatType==0) : q.Where(x => x.FormatType==-1);
+                var b = isOva ? q.Where(x => x.FormatType == 1) : q.Where(x => x.FormatType == -1);
+                var c = isSago ? q.Where(x => x.FormatType == 2) : q.Where(x => x.FormatType == -1);
+                var d = isRett ? q.Where(x => x.FormatType == 3) : q.Where(x => x.FormatType == -1);
+                var e = isTriang ? q.Where(x => x.FormatType == 4) : q.Where(x => x.FormatType == -1);
+                var f = isRoto ? q.Where(x => x.FormatType == 5) : q.Where(x => x.FormatType == -1);
+
+                var res = (a.Union(b.Union(c.Union(d.Union(e.Union(f))))));
+                q = res;
             }
 
             if (!string.IsNullOrEmpty(zFilter))
@@ -845,7 +1073,74 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (!string.IsNullOrEmpty(formatFilter))
             {
-                q = q.Where(c => c.Format.ToLower().Contains(formatFilter.ToLower()));
+
+                //validation of format input --> ok --> search with tollerance
+                string strings = "~/Views/Shared/Strings";
+                var regex = (string)HttpContext.GetLocalResourceObject(strings, "FormatValidation");
+                var match = Regex.Match(formatFilter, regex, RegexOptions.IgnoreCase);
+
+                if (!match.Success)
+                {
+                    q = q.Where(c => c.Format.ToLower().Contains(formatFilter.ToLower()));
+                }
+                else
+                {
+                    //now I can extract side1 and side2 from valid format
+                    var side1 = formatFilter.GetSide1();
+                    var side2 = formatFilter.GetSide2();
+
+                    var dies = q.ToList();
+                    List<Die> toFill = new List<Die>();
+
+                    foreach (var die in dies)
+                    {
+
+                        if (Math.Abs(die.Format.GetSide1() - side1) <= 1.5 &&
+                            Math.Abs(die.Format.GetSide2() - side2) <= 1.5)
+                        {
+                            toFill.Add(die);
+                        }
+                    }
+
+                    q = toFill.AsQueryable<Die>();
+
+                }
+            }
+
+            if (!string.IsNullOrEmpty(formatBFilter))
+            {
+
+                //validation of format input --> ok --> search with tollerance
+                string strings = "~/Views/Shared/Strings";
+                var regex = (string)HttpContext.GetLocalResourceObject(strings, "FormatValidation");
+                var match = Regex.Match(formatFilter, regex, RegexOptions.IgnoreCase);
+
+                if (!match.Success)
+                {
+                    q = q.Where(c => c.FormatB.ToLower().Contains(formatBFilter.ToLower()));
+                }
+                else
+                {
+                    //now I can extract side1 and side2 from valid format
+                    var side1 = formatBFilter.GetSide1();
+                    var side2 = formatBFilter.GetSide2();
+
+                    var dies = q.ToList();
+                    List<Die> toFill = new List<Die>();
+
+                    foreach (var die in dies)
+                    {
+
+                        if (Math.Abs(die.FormatB.GetSide1() - side1) <= 1.5 &&
+                            Math.Abs(die.FormatB.GetSide2() - side2) <= 1.5)
+                        {
+                            toFill.Add(die);
+                        }
+                    }
+
+                    q = toFill.AsQueryable<Die>();
+
+                }
             }
 
             if (!string.IsNullOrEmpty(dCut1Filter))
@@ -970,13 +1265,16 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         {                       
                             a.CodArticle,
                             a.CodDie,
+                            a.Format,
+                            a.FormatB,
+                            a.TypeOfArticle.ToString(),
                             a.Description,
                             a.PrintingFormat,
+                            a.FormatType.ToString(),
                             a.Width.ToString(),
                             a.Z.ToString(),
-                            a.Format,
-                            a.DCut1.ToString(),
-                            a.DCut2.ToString(),
+                           // a.DCut1.ToString(),
+                           // a.DCut2.ToString(),
                             a.MaxGain1.ToString(),
                             a.MaxGain2.ToString(),                           
                         }
@@ -1097,20 +1395,30 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+        //use to put correct typed results
+        internal class ResClass
+        { 
+           public string TypeOfMaterial{get;set;}
+           public string NameOfMaterial {get;set;}
+           public string Adhesive  {get;set;}
+           public Nullable<bool> NoUseInEstimateCalculation {get;set;}
+           public string Color{get;set;}
+           public double Weight { get; set; }
+        }
 
         public ActionResult RollPrintableArticleListPerProduct(GridSettings gridSettings)
         {
-            var q = PrintableList(gridSettings).OfType<RollPrintableArticle>().Select(p => new
+            List<ResClass> res = PrintableList(gridSettings).OfType<RollPrintableArticle>().Select(p => new ResClass
             {
                 TypeOfMaterial = p.TypeOfMaterial,
                 NameOfMaterial = p.NameOfMaterial,
                 Color = p.Color,
                 Adhesive = p.Adhesive,
                 NoUseInEstimateCalculation = p.NoUseInEstimateCalculation,
-                Weight = p.Weight,
-            }).Where(x => x.NoUseInEstimateCalculation == false || x.NoUseInEstimateCalculation == null).Distinct();
+                Weight = p.Weight??0,
+            }).AsQueryable().Where(x => x.NoUseInEstimateCalculation == false || x.NoUseInEstimateCalculation == null).Distinct().ToList();
 
-            q = q.OrderBy(c => c.TypeOfMaterial);
+            var q = res.AsQueryable().OrderBy(c => c.TypeOfMaterial);
 
             var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
@@ -1140,7 +1448,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         a.NameOfMaterial,
                         a.Color,
                         a.Adhesive,
-                        a.Weight,
+                        Weight = a.Weight.ToString()
                     }
                 ).ToArray()
             };
@@ -1540,7 +1848,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
                                 x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMq,
                             ((RollPrintableArticleStandardCost)a.ArticleCosts.First(x => 
-                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerMl,            
+                                x.TypeOfArticleCost == ArticleCost.ArticleCostType.RollPrintableArticleStandardCost)).CostPerKg,            
                         }
                     }
                 ).ToArray()

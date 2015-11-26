@@ -47,15 +47,14 @@ namespace PapiroMVC.Models
 
         public enum ProductPartPrintingType : int
         {
-            ProductPartSingleSheetPrinting = 0,
+           
             ProductPartCoverSheetPrinting = 1,
             ProductPartBookSheetPrinting = 2,
-            ProductPartSingleRollPrinting = 3,
+            
+            ProductPartDoubleSheetPrinting=8,
             ProductPartRigidPrinting = 5,
-
-            ProductPartSingleLabelRollPrinting = 6,
-            ProductPartSoftPrinting = 7,
-
+            ProductPartSingleSheetPrinting = 0,
+            ProductPartSoftPrinting=3,
         }
 
         public ProductPartPrintingType TypeOfProductPartPrinting
@@ -73,8 +72,8 @@ namespace PapiroMVC.Models
         //prova
         public int ForceSide { get; set; }
 
-
         public bool AutoCutParameter { get; set; }
+        public bool LateralMinDCut { get; set; }
 
         //    public virtual ProductPartPrintingGain GainPartOnPrinting { get; set; }
 
@@ -221,6 +220,18 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("PPP.DCut2", this.CalculatedDCut2));
             doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Gain1", this.CalculatedSide1Gain));
             doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Gain2", this.CalculatedSide2Gain));
+
+
+            if (Part != null)
+            {
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.FormatOpened", this.Part.FormatOpened));
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Format", this.Part.Format));                
+            }
+            else
+            {
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.FormatOpened", ""));
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Format", this.Part.Format));
+            }
 
 
         }

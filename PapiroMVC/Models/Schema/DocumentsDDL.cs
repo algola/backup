@@ -97,14 +97,17 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("documentproducts", "Quantity", SchemaDb.Long, "0");
             dbS.AddColumnToTable("documentproducts", "UnitPrice", SchemaDb.String, "20");
-            dbS.AddColumnToTable("documentproducts", "TotalAmount", SchemaDb.String, "20");
 
-            //dbS.AddColumnToTable("documentproducts", "Markup", SchemaDb.Double, "0");
-            //dbS.AddColumnToTable("documentproducts", "GranTotalAmount", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documentproducts", "Markup", SchemaDb.Double, "0");
+            dbS.AddColumnToTable("documentproducts", "UnitPriceAfterMarkup", SchemaDb.String, "20");
+
+
+            dbS.AddColumnToTable("documentproducts", "UnitPriceLocked", SchemaDb.Bool, "0");
+            dbS.AddColumnToTable("documentproducts", "UnitPriceCalculated", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documentproducts", "TotalAmount", SchemaDb.String, "20");
 
 
             //Costi
-
             //---------------------------------------------------------------------------------------------
 
             //This costs rappresent 
@@ -158,6 +161,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("costs", "Hidden", SchemaDb.Bool, "0");
             //Locked
             dbS.AddColumnToTable("costs", "Locked", SchemaDb.Bool, "0");
+            //Manual
+            dbS.AddColumnToTable("costs", "Manual", SchemaDb.Bool, "0");
 
 
 

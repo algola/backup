@@ -31,7 +31,6 @@
     @Html.T(strings, "DeleteMessageEstimate")
 </div>
 
-
 <script type="text/javascript">
     //<![CDATA[
     /*global $ */
@@ -114,7 +113,9 @@
             },
 
         cm = [
-            { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "OperationsCaption")', width: 60, align: 'right', editable: false, hidden: false, formatter: editProduct, search: false },
+            { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DescOpen")', width: 90, align: 'right', editable: false, hidden: false, formatter: editProduct, search: false },
+            { name: 'Operation2', label: '@HttpContext.GetLocalResourceObject(strings, "DescClone")', width: 60, align: 'right', editable: false, hidden: false, formatter: cloneProduct, search: false },
+            { name: 'Operation3', label: '@HttpContext.GetLocalResourceObject(strings, "DescPrint")', width: 60, align: 'right', editable: false, hidden: false, formatter: printProduct, search: false },
             { name: 'ProductRefName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductRefName")', width: 100, align: 'left', editable: false, search: false },
             { name: 'ProductName', label: '@HttpContext.GetLocalResourceObject(strings, "ProductName")', width: 200, align: 'left', editable: false, search: false }
         ],
@@ -204,7 +205,7 @@
             shrinkToFit: false,
 
             print: true,
-            rowNum: 15,
+            rowNum: 100,
 
             rowList: [10, 20, 50],
             gridview: true,
@@ -343,14 +344,18 @@
 
 
     function editProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "DescOpen"), "EditDocumentProducts", "Document", new { id = "-1" }, "fa fa-book fa-fw")';
+        return link.replace("-1", cellvalue);
+    }
 
+    function cloneProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "NewFromCodProduct"), "NewFromCodProduct", "Product", new { area = "Working", id = "-1" }, "fa fa-tags fa-fw")';
+        return link.replace("-1", cellvalue);
+    }
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocumentProducts", new { id = "-1" }, new { @class = "tbutton smalledit" })';
-        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "NewFromCodProduct"), "NewFromCodProduct", "Product", new { area="Working", id = "-1" }, new { @class = "tbutton smalledit" })';
-
-        return link.replace("-1", cellvalue) + " | " + link2.replace("-1", cellvalue);
-
-//        return link.replace("-1", cellvalue);
+    function printProduct(cellvalue, options, rowobject) {
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "DescPrint"), "PrintOffer", "Document", new { area = "Working", codProduct = "-1" }, "fa fa-print fa-fw")';
+        return link.replace("-1", cellvalue)
     }
 
     function reloadCostPerMqStep() {
@@ -401,6 +406,7 @@
             hideProcessingMsg();
         }
     });
+
 
 
 </script>

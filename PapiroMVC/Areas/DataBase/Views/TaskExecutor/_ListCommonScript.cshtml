@@ -48,14 +48,6 @@
             return link;
         }
 
-    function editSerigraphyRow(cellvalue, options, rowobject) {
-        
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditSerigraphyOption", new { id = "-1", returnUrl = ViewBag.ReturnUrl }, new { @class = "" })';
-
-        
-        return link.replace("-1", cellvalue);
-
-    }
 
     function editRow(cellvalue, options, rowobject) {
 

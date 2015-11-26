@@ -51,5 +51,11 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string Format { get; set; }
+    	
+    	[DataMember] 		
+        public string FormatB { get; set; }
+    	
+    	[DataMember] 		
+        public string TaskExecutorName { get; set; }
     }
 }

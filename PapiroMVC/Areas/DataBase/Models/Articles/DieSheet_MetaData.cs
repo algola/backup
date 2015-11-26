@@ -10,6 +10,7 @@ namespace PapiroMVC.Models
 {
     public partial class DieSheet_MetaData : Die_MetaData
     {
-
+        [DisplayNameLocalized(typeof(ResArticle), "TaskExecutorName")]
+        public string TaskExecutorName { get; set; }
     }
 }

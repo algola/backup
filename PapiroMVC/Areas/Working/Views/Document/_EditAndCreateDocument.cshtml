@@ -40,6 +40,11 @@
 
 
                     @Html.HiddenFor(model => model.CodDocument)
+                    
+                    @if (Model.DateDocument==null)
+                    {
+                        Model.DateDocument = DateTime.Now;
+                    }
                     @Html.AlgolaEditorFor(model => model.DateDocument, new { @Value = ((DateTime)Model.DateDocument).ToString("d") }, inTheCol: 2)
 
                     @Html.AlgolaTextAreaFor(model => model.DocumentName, new { @style = "overflow: hidden; word-wrap: break-word; resize: horizontal; height: 50px;" })
@@ -62,33 +67,33 @@
                     @*empty div*@
                     <div class="form-group no-padding-bottom no-padding-top"></div>
 
-                        <!-- states -->
-                        @for (int i = 0; i < Model.DocumentStatesPerView.Count; i++)
+                    <!-- states -->
+                    @for (int i = 0; i < Model.DocumentStatesPerView.Count; i++)
                     {
-                            @*@Html.EditorFor(model => model.DocumentStatesPerView[i])*@
+                        @*@Html.EditorFor(model => model.DocumentStatesPerView[i])*@
 
-                            @*@Html.LabelFor(model => model.DocumentStatesPerView[i].TimeStampTable, new { @class = "control-label col-md-2" })*@
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].TimeStampTable)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocumentState)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocument)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateName)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumber)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumberPrev)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].Completed)
-                            @Html.HiddenFor(model => model.DocumentStatesPerView[i].ResetLinkedStates)
+                        @*@Html.LabelFor(model => model.DocumentStatesPerView[i].TimeStampTable, new { @class = "control-label col-md-2" })*@
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].TimeStampTable)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocumentState)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocument)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateName)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumber)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumberPrev)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].Completed)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].ResetLinkedStates)
 
-                            <div class="form-group no-padding-bottom no-padding-top">
-                                <div class="controls col-xs-12 col-sm-2">
-                                    @Html.CheckBoxFor(m => m.DocumentStatesPerView[i].Selected)
-                                    @*@Html.CheckBox(" ", Model.DocumentStatesPerView[i].Selected.GetValueOrDefault())*@
-                                </div>
-                                <div class="col-xs-12 col-sm-10 no-padding-right">
-                                    @Html.T(strings, Model.DocumentStatesPerView[i].StateName)
-                                </div>
+                        <div class="form-group no-padding-bottom no-padding-top">
+                            <div class="controls col-xs-12 col-sm-2">
+                                @Html.CheckBoxFor(m => m.DocumentStatesPerView[i].Selected)
+                                @*@Html.CheckBox(" ", Model.DocumentStatesPerView[i].Selected.GetValueOrDefault())*@
                             </div>
+                            <div class="col-xs-12 col-sm-10 no-padding-right">
+                                @Html.T(strings, Model.DocumentStatesPerView[i].StateName)
+                            </div>
+                        </div>
 
                     }
-                    </div>
+                </div>
                 <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
                     <i class="icon-save bigger-160"></i>
                     @HttpContext.GetLocalResourceObject(strings, "Save")

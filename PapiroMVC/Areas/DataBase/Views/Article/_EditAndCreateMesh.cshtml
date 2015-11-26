@@ -1,0 +1,71 @@
+﻿@model PapiroMVC.Models.MeshViewModel
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+}
+
+<div id="status">
+
+    @Scripts.Render("~/bundles/autocomplete")
+
+    @using (Ajax.BeginForm("Action", "Article", new AjaxOptions
+{
+    UpdateTargetId = "status",
+    OnBegin = "showProcessingMsg",
+    OnComplete = "hideProcessingMsg",
+    OnSuccess = "OnSuccess"
+}, new { @class = "form-horizontal" }))
+    {
+
+        <div class="row">
+            <div class="col-xs-12">
+
+                @Html.ValidationSummary(true)
+
+
+                @Html.HiddenFor(model => model.Article.TimeStampTable)
+
+                @Html.HiddenFor(model => model.Article.CodArticle)
+                @Html.AlgolaEditorFor(model => model.Article.ArticleName)
+
+
+                @Html.AlgolaAutocompleteFor(model => model.SupplierMaker, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+                @Html.AlgolaAutocompleteFor(model => model.SupplyerBuy, "SupplierBusinessNameAutoComplete", "CustomerSupplier")
+
+                @Html.HiddenFor(model => model.Article.UnitOfMeasure)
+
+                @Html.AlgolaEditorFor(model => model.Article.MeshRow)
+                @Html.AlgolaEditorFor(model => model.Article.GainMqPerLt)
+
+                <div id='_MeshArticleCostStandard'>
+                    @Html.Partial("_MeshCostMq", Model)
+                </div>
+
+                <br />
+                <div class="controls col-sm-9 col-sm-offset-3">
+
+                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexMesh", "Article", new { Area = "Database" })');">
+                        <i class="icon-arrow-left"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                    </button>
+
+                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                        <i class="icon-save"></i>
+                        @HttpContext.GetLocalResourceObject(strings, "Save")
+                    </button>
+
+                    @if (ViewBag.ActionMethod != "CreateMesh")
+                    {
+                        <input class="btn" type="submit" name="CreateMesh" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                    }
+
+                </div>
+
+
+            </div>
+        </div>
+
+    }
+
+</div>

@@ -5,12 +5,16 @@ using System.Web;
 using PapiroMVC.Validation;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Novacode;
 
 namespace PapiroMVC.Models
 {
 
-    public partial class CostDetail 
+    public class CostDetailGrouped
     {
-
+        public List<CostDetail> CostDetails { get; set; }
+        public string CodTaskExecutorSelected { get; set; }
     }
+
+
 }

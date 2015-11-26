@@ -15,5 +15,6 @@ namespace PapiroMVC.Models
         public string CodArticleCost { get; set; }
         [DisplayNameLocalized(typeof(ResArticleCost), "CodArticle")]
         public string CodArticle { get; set; }
+
     }
 }

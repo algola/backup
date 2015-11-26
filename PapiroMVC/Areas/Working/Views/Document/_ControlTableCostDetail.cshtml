@@ -1,0 +1,61 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ControlTableCostDetail
+@{
+
+    string strings = "~/Areas/Working/Views/Document/Strings";
+
+}
+
+<div id="sheetCostDetail">
+
+    <div class="container-fluid">
+        <!-- div che contiene tutto il formato di acquisto -->
+
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        //unbind and bind ensure that is fired one time only
+        $("#tsk").unbind('change').bind('change', function () {
+
+            event.preventDefault();
+
+            var codTaskExecutor = "";
+            $("#tsk option:selected").each(function () {
+                codTaskExecutor += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codTaskExecutor: codTaskExecutor,
+                codCost: '@(Model.TaskCost.CodCost)'
+            };
+
+            $.ajax({
+                url: '@(Url.Action("GetPartialCost", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+
+                    $('#partial').html(data);
+                    save();
+
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+
+        });
+    });
+
+
+</script>
+

@@ -24,7 +24,18 @@ namespace PapiroMVC.Models
         public override string ToString()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
-            return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+
+            string x= String.Empty;
+            try
+            {
+                x = (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return x;
         }
 
         public virtual string ToName()
@@ -48,7 +59,7 @@ namespace PapiroMVC.Models
                     x = x.Replace("%TASKS", "" + "%XX");
                     x = x.Replace("%XX", "%TASKS");
                 }
-                
+
                 Product.ProductNameGenerator = x;
             }
 

@@ -87,6 +87,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> FormatType { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> TypeOfDCut2 { get; set; }
     
     	[DataMember]
         public virtual Product Product { get; set; }

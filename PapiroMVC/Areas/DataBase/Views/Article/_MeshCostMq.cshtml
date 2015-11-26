@@ -1,0 +1,23 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.MeshViewModel
+
+@{
+    string strings = "~/Areas/DataBase/Views/Article/Strings";
+    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "MeshArticleCostStandardTitle");
+}
+
+<br />
+<h3></h3>
+
+    <fieldset>
+            <legend>
+                            </legend>
+        @Html.ValidationMessageFor(model => model.NoPrintableArticleCostMq)
+
+        @Html.AlgolaEditorFor(model => model.NoPrintableArticleCostMq.CostPerMq)
+
+        @Html.HiddenFor(model => model.NoPrintableArticleCostMq.TimeStampTable)
+        @Html.HiddenFor(model => model.NoPrintableArticleCostMq.CodArticleCost)
+        @Html.HiddenFor(model => model.NoPrintableArticleCostMq.CodArticle)
+
+    </fieldset>

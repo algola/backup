@@ -42,7 +42,8 @@ namespace PapiroMVC.Models
             DigitalOnRun,
             PlotterOnMq,
             RollEstimatedOnTime,
-            ControlTableRollEstimatedOnTime
+            ControlTableRollEstimatedOnTime,
+            FlatRollEstimatedOnTime
         }
 
         public EstimatedOnType TypeOfEstimatedOn

@@ -120,6 +120,12 @@
   <data name="CostImplant" xml:space="preserve">
     <value>Costo impianto / mq</value>
   </data>
+  <data name="CostImplantFlat" xml:space="preserve">
+    <value>Costo impianto (cad.)</value>
+  </data>
+  <data name="CostImplantFlatToolTip" xml:space="preserve">
+    <value>indicare un costo di impnto per lastre, clichè, etc..</value>
+  </data>
   <data name="CostImplantToolTip" xml:space="preserve">
     <value>indicare un costo di impnto al mq</value>
   </data>

@@ -29,7 +29,17 @@ namespace Services
         {
 //            var query = Context.Profiles.Include("Modules").FirstOrDefault(x => x.Name == codProfile);
             var query = Context.Profiles.FirstOrDefault(x => x.Name == codProfile);
-            query.Modules = Context.Modules.Where(x => x.Name == codProfile).ToList();
+
+
+            try
+            {
+                query.Modules = Context.Modules.Where(x => x.Name == codProfile).ToList();
+            }
+            catch (Exception e)
+            {
+                query = null;
+            }
+            
             return query;
         }
 

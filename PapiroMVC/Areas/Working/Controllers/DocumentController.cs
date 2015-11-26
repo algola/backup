@@ -31,6 +31,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly IArticleRepository articleRepository;
         private readonly ICustomerSupplierRepository customerSupplierRepository;
         private readonly ICostDetailRepository costDetailRepository;
+        private readonly ITaskCenterRepository taskCenterRepository;
+
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
@@ -44,6 +46,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             articleRepository.SetDbName(CurrentDatabase);
             customerSupplierRepository.SetDbName(CurrentDatabase);
             costDetailRepository.SetDbName(CurrentDatabase);
+
+            taskCenterRepository.SetDbName(CurrentDatabase);
 
             //nel view bag voglio il CodDocument corrente!!! questo serve per avere nel menu l'accesso al documento corrente 
             //oppure per crearne uno nuovo vuoto
@@ -65,7 +69,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             IArticleRepository _articleRepository,
             ICustomerSupplierRepository _customerSupplierRepository,
             IMenuProductRepository _menuProduct,
-            ICostDetailRepository _costDetailRepository)
+            ICostDetailRepository _costDetailRepository,
+            ITaskCenterRepository _taskCenterRepository)
         {
             typeOfTaskRepository = _typeOfTaskRepository;
             documentRepository = _documentRepository;
@@ -75,6 +80,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             customerSupplierRepository = _customerSupplierRepository;
             menu = _menuProduct;
             costDetailRepository = _costDetailRepository;
+            taskCenterRepository = _taskCenterRepository;
 
             this.Disposables.Add(typeOfTaskRepository);
             this.Disposables.Add(documentRepository);
@@ -84,6 +90,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(customerSupplierRepository);
             this.Disposables.Add(menu);
             this.Disposables.Add(costDetailRepository);
+            this.Disposables.Add(taskCenterRepository);
 
         }
 
@@ -122,6 +129,88 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(res, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult SaveDieFlatRoll(DieFlatRoll Die)
+        {
+            string status = "ok";
+            if (ModelState.IsValid)
+            {
+                try
+                {
+
+                    Die.CodArticle = articleRepository.GetNewCode(Die, customerSupplierRepository, Die.SupplierMaker, Die.SupplierMaker);
+
+
+                    articleRepository.Add(Die);
+
+                    articleRepository.Save();
+                    status = "ok";
+                    var obj = new
+                    {
+                        textStatus = status,
+                    };
+                    return Json(obj, JsonRequestBehavior.AllowGet);
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            status = "err";
+            var retPW = PartialView(this, "~/Areas/Working/Views/Document/_SaveDieFlatRoll.cshtml", (Die)Die);
+
+            var obj2 = new
+            {
+                textStatus = status,
+                view = retPW
+            };
+
+            return Json(obj2, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public ActionResult SaveDieFlexo(DieFlexo Die)
+        {
+            string status = "ok";
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    Die.CodArticle = articleRepository.GetNewCode(Die, customerSupplierRepository, Die.SupplierMaker, Die.SupplierMaker);
+
+                    articleRepository.Add(Die);
+
+                    articleRepository.Save();
+                    status = "ok";
+                    var obj = new
+                    {
+                        textStatus = status,
+                    };
+                    return Json(obj, JsonRequestBehavior.AllowGet);
+
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
+                }
+            }
+
+            status = "err";
+            var retPW = PartialView(this, "~/Areas/Working/Views/Document/_SaveDieFlexo.cshtml", (Die)Die);
+
+            var obj2 = new
+            {
+                textStatus = status,
+                view = retPW
+            };
+
+            return Json(obj2, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         /// <summary>
         /// This command invokes the cloning of DocumentProduct in the same Document with a new quantity
@@ -135,9 +224,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             Document doc = documentRepository.GetSingle(codDocument);
 
-
             var codProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct).CodProduct;
-
 
             var prod = documentRepository.GetDocumentProductsByCodProduct(codProduct).First();
 
@@ -201,12 +288,11 @@ namespace PapiroMVC.Areas.Working.Controllers
                 //save all changes
                 p.CostDetailRepository.Save();
 
-
                 //Updating
                 //reset contentx
                 p.CostDetailRepository.SetDbName(CurrentDatabase);
 
-                foreach (var c in newProdDoc.Costs.OrderBy(x=>x.CodCost))
+                foreach (var c in newProdDoc.Costs.OrderBy(x => x.CodCost))
                 {
                     var cost = p.CostDetailRepository.GetSingle(c.CodCost);
 
@@ -218,7 +304,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //this for PrePressCost
                         if (cost.TypeOfCostDetail == CostDetail.CostDetailType.ControlTableCostDetail ||
                             cost.TypeOfCostDetail == CostDetail.CostDetailType.PrePostPressCostDetail ||
-                            cost.TypeOfCostDetail == CostDetail.CostDetailType.RepassRollCostDetail                             
+                            cost.TypeOfCostDetail == CostDetail.CostDetailType.RepassRollCostDetail
                             )
                         {
                             //get ST codCost
@@ -248,7 +334,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                             cost.TaskCost.CostDetails.Add(cost);
                         }
                         //********
-                    
+
                         cost.Update();
                         cost.TaskCost.Update();
 
@@ -289,14 +375,14 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             Document doc = documentRepository.GetSingle(codDocument);
 
+            var documentProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+            var codProduct = documentProduct.CodProduct;
 
             if (doc.DocumentProducts.Count > 1)
             {
-                var documentProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
-                var codProduct = documentProduct.CodProduct;
 
                 documentRepository.DeleteDocumentProduct(documentProduct);
-                documentRepository.Save();                
+                documentRepository.Save();
             }
 
             return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { area = "Working", id = codProduct }) });
@@ -304,7 +390,166 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
+        /// <summary>
+        /// use it for update CodDocumentProduct to solve proble in Cloning 
+        /// in old DocumentProduct before using of PadLeft with "0" in CodDocumentProduct
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UpdateAllCodDocumentProduct()
+        {
+            //Per tutti i DocumentProduct del Prodotto
+            var docs = documentRepository.GetAll().Select(x => x.CodDocument).ToList();
 
+            foreach (var d in docs)
+            {
+                UpdateCodDocumentProduct(d);
+            }
+
+            return View();
+        }
+
+
+        /// <summary>
+        /// Add manual cost to a document product
+        /// </summary>
+        /// <param name="codProduct"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult AddManualCostToDocumentProduct(string codProduct, string description)
+        {
+            //Per tutti i DocumentProduct del Documento
+            var docsProduct = documentRepository.GetDocumentProductsByCodProduct(codProduct).ToList();
+            var doc = documentRepository.GetSingle(docsProduct.First().CodDocument);
+
+            foreach (var dp in doc.DocumentProducts.Where(x=>x.CodProduct == codProduct))
+            {
+                dp.NewManualCost(description);
+            }
+
+            documentRepository.Edit(doc);
+            documentRepository.Save();
+
+
+
+
+            return Json(new { redirectUrl = Url.Action("EditDocumentProducts", "Document", new { area = "Working", id = codProduct }) });
+
+        }
+
+        /// <summary>
+        /// id = CodCodument
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult UpdateCodDocumentProduct(string id)
+        {
+            //Per tutti i DocumentProduct del Documento
+            var docsProduct = documentRepository.GetAllDocumentProducts().Where(x => x.CodDocument == id).ToList();
+            var ctx = documentRepository.GetContext();
+
+            foreach (var dp in docsProduct)
+            {
+                //ricreo il CodDocumentProduct
+                var codDocument = dp.CodDocument;
+                var rigth = dp.CodDocumentProduct.Substring(dp.CodDocumentProduct.IndexOf('-') + 1);
+                var newCodDocumentProduct = codDocument + "-" + rigth.PadLeft(3, '0');
+                var oldCodDocumentProduct = dp.CodDocumentProduct;
+
+                //eseguo un aggiornamento
+                var sql = @"UPDATE DocumentProducts SET CodDocumentProduct='" +
+                    newCodDocumentProduct + "' where CodDocumentProduct ='" +
+                    oldCodDocumentProduct + "';";
+                try
+                {
+                    ctx.Database.ExecuteSqlCommand(sql);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+
+                //devo aggiornare anche i costi ora!!!
+
+                foreach (var c in dp.Costs)
+                {
+                    var newCodCost = c.CodCost.Replace(oldCodDocumentProduct, newCodDocumentProduct);
+                    var oldCodCost = c.CodCost;
+
+                    //eseguo un aggiornamento COST
+                    var sql2 = @"UPDATE Costs SET CodCost='" +
+                        newCodCost + "' where CodCost ='" +
+                        oldCodCost + "';";
+                    try
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql2);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    //eseguo un aggiornamento costdetails
+                    var sql3 = @"UPDATE costdetails SET CodCostDetail='" +
+                        newCodCost + "' where CodCostDetail ='" +
+                        oldCodCost + "';";
+                    try
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql3);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    //eseguo un aggiornamento costdetails
+                    sql3 = @"UPDATE costdetails SET CodComputedBy='" +
+                        newCodCost + "' where CodComputedBy ='" +
+                        oldCodCost + "';";
+                    try
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql3);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+
+                    //CodProductPartPrintingGain
+                    //eseguo un aggiornamento costdetails
+                    sql3 = @"UPDATE ProductPartPrintingGain SET CodProductPartPrintingGain=
+                        REPLACE(CodProductPartPrintingGain, '" + oldCodCost + "', '" + newCodCost + "');";
+                    try
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql3);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                    //CodProductPartPrintingGain
+                    //eseguo un aggiornamento costdetails
+                    sql3 = @"UPDATE makereadies SET CodMakeready=
+                        REPLACE(CodMakeready, '" + oldCodCost + "', '" + newCodCost + "');";
+                    try
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql3);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+
+                }
+            }
+
+            return View();
+
+        }
 
         //
         // GET: /Working/Document/
@@ -322,7 +567,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult ListEstimate()
         {
             //passo questo elenco alla view per poter implementare una ricerca mediante dropdown nella jqgrid
-            ViewBag.States = documentRepository.GetAllStates().Where(x => x.UseInEstimate??false).OrderBy(x=>x.StateNumber);
+            ViewBag.States = documentRepository.GetAllStates().Where(x => x.UseInEstimate ?? false).OrderBy(x => x.StateNumber);
             return View();
         }
 
@@ -353,6 +598,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
+
         /// <summary>
         /// Delete DocumentProduct 
         /// </summary>
@@ -368,7 +614,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 foreach (var item in c)
                 {
-                    documentRepository.DeleteDocumentProduct(item);                    
+                    documentRepository.DeleteDocumentProduct(item);
                 }
             }
 
@@ -437,26 +683,26 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <returns></returns>
         private Estimate NewEstimate()
         {
-            
+
             var c = new Estimate();
             c.EstimateNumberSerie = DateTime.Now.Year.ToString();
             c.CodDocument = documentRepository.GetNewCode(c);
             c.EstimateNumber = documentRepository.GetNewEstimateNumber(c);
             c.DateDocument = DateTime.Now;
 
-           var allStates = documentRepository.GetAllStates().Where(x => (x.UseInEstimate??false));
+            var allStates = documentRepository.GetAllStates().Where(x => (x.UseInEstimate ?? false));
 
-           foreach (var s in allStates)
-           {
-               c.DocumentStates.Add(new DocumentState
-               {
-                   CodDocument = c.CodDocument,
-                   StateNumber = s.StateNumber,
-                   StateName = s.StateName,
-                   ResetLinkedStates = s.ResetLinkedStates,
-                   Selected = false                   
-               });
-           }
+            foreach (var s in allStates)
+            {
+                c.DocumentStates.Add(new DocumentState
+                {
+                    CodDocument = c.CodDocument,
+                    StateNumber = s.StateNumber,
+                    StateName = s.StateName,
+                    ResetLinkedStates = s.ResetLinkedStates,
+                    Selected = false
+                });
+            }
 
             documentRepository.Add(c);
             documentRepository.Save();
@@ -499,7 +745,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             c.DateDocument = DateTime.Now;
 
-            var allStates = documentRepository.GetAllStates().Where(x => (x.UseInOrder ?? false)).OrderBy(x=>x.StateNumber);
+            var allStates = documentRepository.GetAllStates().Where(x => (x.UseInOrder ?? false)).OrderBy(x => x.StateNumber);
 
             foreach (var s in allStates)
             {
@@ -516,6 +762,29 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Add(c);
             documentRepository.Save();
 
+
+            //se ci sono dei TaskCenter inizio a buttare i taskcenter nel primo taskcenter (IndexOf==0)
+            var taskCenter = taskCenterRepository.GetAll().Where(y => y.IndexOf == 0).FirstOrDefault();
+
+            if (taskCenter != null)
+            {
+                DocumentTaskCenter dtc = new DocumentTaskCenter();
+                dtc.CodTaskCenter = taskCenter.CodTaskCenter;
+                dtc.CodDocument = c.CodDocument;
+
+                if (docProd.Product.ProductRefName == null)
+                {
+                    dtc.DocumentName = docProd.ProductName;
+                }
+                else
+                {
+                    dtc.DocumentName = docProd.Product.ProductRefName;
+                }
+
+                taskCenterRepository.AddNewDocumentTaskCenter(dtc);
+                taskCenterRepository.Save();
+
+            }
             return c;
         }
 
@@ -528,16 +797,15 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult CreateOrder(string codDocumentProduct)
         {
             var c = NewOrder(codDocumentProduct);
-            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName();
+            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName(CurrentDatabase);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditOrder";
             if (Request.IsAjaxRequest())
             {
-                return Json(new { redirectUrl = Url.Action("EditOrder", new { id = c.CodDocument})}, JsonRequestBehavior.AllowGet);
+                return Json(new { redirectUrl = Url.Action("EditOrder", new { id = c.CodDocument }) }, JsonRequestBehavior.AllowGet);
             }
             return View("EditOrder", c);
         }
-
     }
 }

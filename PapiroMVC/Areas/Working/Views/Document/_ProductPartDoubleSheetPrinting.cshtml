@@ -1,0 +1,130 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ProductPartDoubleSheetPrinting
+
+@{
+
+    //string strings = "~/Areas/Working/Views/Document/Strings";
+    //string stringsCod = "~/Views/Shared/Cuts";
+
+    MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPartOnPrinting.Makereadies.FirstOrDefault();
+    var dCut = Model.GainPartOnPrinting.DCut ?? 0;
+
+    var dCut1 = Model.GainPartOnPrinting.DCut1 ?? 0;
+    var dCut2 = Model.GainPartOnPrinting.DCut2 ?? 0;
+    var side1pr = Model.Part.FormatOpened.GetSide1();
+    var side2pr = Model.Part.FormatOpened.GetSide2();
+
+    var side1Apr = (((ProductPartDoubleLabelRoll)Model.Part).FormatA.GetSide1());
+    var side2Apr = (((ProductPartDoubleLabelRoll)Model.Part).FormatA.GetSide2());
+    var side1Bpr = (((ProductPartDoubleLabelRoll)Model.Part).FormatB.GetSide1());
+    var side2Bpr = (((ProductPartDoubleLabelRoll)Model.Part).FormatB.GetSide2());
+
+    double dCut2New1 = side2pr - side2Apr + dCut2;
+    double dCut2New2 = side2pr - side2Bpr + dCut2;
+
+    double offsetX1 = (Math.Abs(side2pr - side2Apr) + dCut2 / 2) / 2;
+    double offsetX2 = (Math.Abs(side2pr - side2Bpr) + dCut2 / 2) / 2;
+    Console.Write(offsetX2);
+    Console.Write(offsetX1);
+
+    double dCut1New1 = dCut1;
+    double dCut1New2 = dCut1;
+
+    double offsetY1 = 0;
+    double offsetY2 = 0;
+
+    if (side1Bpr > side1Apr)
+    {
+//        offsetY2 = (Math.Abs(side1pr - side1Apr)) / 2;
+        dCut1New1 = side1pr - side1Apr + dCut1;
+    }
+    else
+    {
+//        offsetY1 = (Math.Abs(side1pr - side1Bpr)) / 2;
+        dCut1New2 = side1pr - side1Bpr + dCut1;
+    }
+
+    Console.Write(dCut1New2);
+    Console.Write(dCut1New1);
+
+}
+
+<script type="text/javascript">
+
+    //this event is fired only the first time
+    $(document).ready(function () {
+        //        drawPrintingAndSheet(); //draw printing and work
+    });
+
+
+    function drawPrintingAndSheet() {
+
+        var side1 = '@Model.PrintingFormat.GetSide1()';
+        var side2 = '@Model.PrintingFormat.GetSide2()';
+
+        side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var c_canvas = document.getElementById("printingSingleSheet");
+        var context = c_canvas.getContext("2d");
+
+        var zoom = 2.5;
+        zoom = zoomGlo;
+
+        var offsetX = 0;
+        var offsetY = 0;
+
+        var bv = '@g.TypeOfPerfecting';
+        var maxG = '@g.PrintedShapes';
+
+        drawSheet(context, side1, side2, offsetX, offsetY, zoom, 0, bv);
+
+        var side1pr = '@Model.Part.FormatOpened.GetSide1()';
+        var side2pr = '@Model.Part.FormatOpened.GetSide2()';
+
+        var side1Apr = '@(((ProductPartDoubleLabelRoll)Model.Part).FormatA.GetSide1())';
+        var side2Apr = '@(((ProductPartDoubleLabelRoll)Model.Part).FormatA.GetSide2())';
+        var side1Bpr = '@(((ProductPartDoubleLabelRoll)Model.Part).FormatB.GetSide1())';
+        var side2Bpr = '@(((ProductPartDoubleLabelRoll)Model.Part).FormatB.GetSide2())';
+
+
+
+
+        side1pr = side1pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2pr = side2pr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        side1Apr = side1Apr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2Apr = side2Apr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        side1Bpr = side1Bpr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        side2Bpr = side2Bpr.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var sideOnSide = '@g.SideOnSide';
+
+        var gain1 = parseInt('@g.ShapeOnSide1');
+        var gain2 = parseInt('@g.ShapeOnSide2');
+
+        var dCut = '@dCut'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut1 = '@dCut1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut2 = '@dCut2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var dCut2New1 = '@dCut2New1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut2New2 = '@dCut2New2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var offsetX2 = '@offsetX2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var offsetX1 = '@offsetX1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+        var dCut1New1 = '@dCut1New1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var dCut1New2 = '@dCut1New2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var offsetY2 = '@offsetY2'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+        var offsetY1 = '@offsetY1'.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
+
+
+
+        drawPrinting(context, side1Apr, side2Apr, side1, side2, offsetX - offsetX1, offsetY + offsetY1, zoom, sideOnSide, gain1, gain2, maxG, dCut1New1, dCut2New1);
+        drawPrinting(context, side1Bpr, side2Bpr, side1, side2, offsetX + offsetX2, offsetY + offsetY2, zoom, sideOnSide, gain1, gain2, maxG, dCut1New2, dCut2New2);
+
+    }
+
+</script>
+@Html.Partial("_CommonScriptDraw")

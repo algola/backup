@@ -23,7 +23,7 @@ namespace PapiroMVC.Models
         public string TypeOfMaterial { get; set; }
     	
     	[DataMember] 		
-        public Nullable<long> Weight { get; set; }
+        public Nullable<double> Weight { get; set; }
     	
     	[DataMember] 		
         public string Color { get; set; }

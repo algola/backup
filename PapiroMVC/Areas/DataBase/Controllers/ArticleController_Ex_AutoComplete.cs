@@ -38,6 +38,24 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult TaskExecutorNameAutoComplete(string term)
+        {
+            Die[] taskExecutorNames = articleRepository.GetAll().OfType<Die>().ToArray();
+
+            var filteredItems = taskExecutorNames.Where(
+            item => item.TaskExecutorName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.TaskExecutorName,
+                                 label = art.TaskExecutorName,
+                                 value = art.TaskExecutorName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         /// <summary>
         /// AutoComplete
         /// </summary>

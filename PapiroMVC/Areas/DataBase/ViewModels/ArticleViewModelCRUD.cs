@@ -285,6 +285,82 @@ namespace PapiroMVC.Models
 
     }
 
+    public class MeshViewModel : NoPrintableViewModel
+    {
+
+        public MeshViewModel()
+        {
+            Console.Write("");
+        }
+        public Mesh Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new Mesh();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+                    article.ArticleCosts.Add(new NoPrintableArticleCostMq());
+
+                }
+                return (Mesh)article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+        }
+
+        public NoPrintableArticleCostMq NoPrintableArticleCostMq
+        {
+            get
+            {
+                return (NoPrintableArticleCostMq)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostMq);
+            }
+        }
+    }
+
+
+    public class AniloxViewModel : NoPrintableViewModel
+    {
+
+        public AniloxViewModel()
+        {
+            Console.Write("");
+        }
+        public Anilox Article
+        {
+            get
+            {
+                if (article == null)
+                {
+                    article = new Anilox();
+                    SupplierMaker = "";
+                    SupplyerBuy = "";
+                    article.ArticleCosts.Add(new NoPrintableArticleCostMq());
+
+                }
+                return (Anilox)article;
+            }
+            set
+            {
+                article = value;
+                SupplierMaker = article.CustomerSupplierMaker == null ? null : article.CustomerSupplierMaker.BusinessName;
+                SupplyerBuy = article.CustomerSupplierBuy == null ? null : article.CustomerSupplierBuy.BusinessName;
+            }
+        }
+
+        public NoPrintableArticleCostMq NoPrintableArticleCostMq
+        {
+            get
+            {
+                return (NoPrintableArticleCostMq)this.Article.ArticleCosts.First(x => x.TypeOfArticleCost == ArticleCost.ArticleCostType.NoPrintableArticleCostMq);
+            }
+        }
+    }
     public class InkViewModel : NoPrintableViewModel
     {
 

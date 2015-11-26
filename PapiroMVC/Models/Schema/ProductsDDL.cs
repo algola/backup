@@ -25,7 +25,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("products", "id", SchemaDb.String, "100");
             dbS.AddColumnToTable("products", "Format", SchemaDb.String, "50");
 
-
             ////customer
             //dbS.AddColumnToTable("products", "CodCustomer", SchemaDb.String, "50");
             //dbS.AddColumnToTable("products", "Customer", SchemaDb.String, "50");
@@ -64,7 +63,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparts", "PrintingType", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparts", "Format", SchemaDb.String, "20");
 
-
             //only per label
             dbS.AddColumnToTable("productparts", "LabelsPerRoll", SchemaDb.Int, "0");
             //mm
@@ -73,7 +71,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productparts", "MaxDiameter", SchemaDb.Double, "0");
 
             dbS.AddColumnToTable("productparts", "CodProductPart_", SchemaDb.String, "50");
-
 
             // 0 = ProductPartSingleSheet // 1 =  ProductPartCoverSheet // 2 = ProductPartBookSheet // 3 = ProductPartBlockSheet // etc... 
             dbS.AddColumnToTable("productparts", "SelectorProductPart", SchemaDb.Int, "0");
@@ -107,13 +104,23 @@ namespace PapiroMVC.Model
             //2 = must be = 0
             dbS.AddColumnToTable("productparts", "TypeOfDCut1", SchemaDb.Int, "0");
 
+            //IF 1 --> DCUT2 = DOUBLE etichetta e controetichetta
+            dbS.AddColumnToTable("productparts", "TypeOfDCut2", SchemaDb.Int, "0");
+
             //0 or Null --> Free //1 = SideOnSide //2 = !SideOnSide
             dbS.AddColumnToTable("productparts", "SideOnSide", SchemaDb.Int, "0");
 
             // 0 = Quadrato // 1 = Ovale // 2 = Sagomato
             dbS.AddColumnToTable("productparts", "FormatType", SchemaDb.Int, "0");
 
+
+            //Etichetta e controetichetta
+            dbS.AddColumnToTable("productparts", "FormatA", SchemaDb.String, "50");
+            dbS.AddColumnToTable("productparts", "FormatB", SchemaDb.String, "50");
             //ProductPartBlockSheet
+
+//non si usa non usare!!!!!!!!
+            dbS.AddColumnToTable("productparts", "PrintSide", SchemaDb.Int, "0");
 
             //---------------------------------------------------------------------------------------------
 
@@ -132,7 +139,12 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("productpartsprintablearticle", "Color", SchemaDb.String, "100");
             dbS.AddColumnToTable("productpartsprintablearticle", "Adhesive", SchemaDb.String, "100");
-            dbS.AddColumnToTable("productpartsprintablearticle", "Weight", SchemaDb.IntUS, "0");
+
+            dbS.AddColumnToTable("productpartsprintablearticle", "Weight", SchemaDb.Double, "0");
+
+            //UPDATE TO DOUBLE
+            //"productpartsprintablearticle", "Weight"
+            dbS.ChangeColumnToDouble("productpartsprintablearticle", "Weight");
 
             dbS.AddColumnToTable("productpartsprintablearticle", "RoundTo", SchemaDb.Bool, "0");
 
@@ -189,6 +201,13 @@ namespace PapiroMVC.Model
             //selettore --> 0 = serigrafia
             dbS.AddColumnToTable("productparttasks", "Selector", SchemaDb.Int, "0");
 
+
+            //Used in label
+            //used with ShowPrintSide
+            // 0 = non specificato 1 = interno film 2 = esterno film
+            dbS.AddColumnToTable("productparttasks", "PrintSide", SchemaDb.Int, "0");
+
+
             //foreign key
             dbS.AddColumnToTable("productparttasks", "CodProductPart", SchemaDb.String, "50");
             dbS.AddForeignKey("productparttasks", "CodProductPart", "productparts", "CodProductPart");
@@ -233,12 +252,18 @@ namespace PapiroMVC.Model
             dbS.AddTable("productparttaskoptions");
             dbS.AddColumnToTable("productparttaskoptions", "CodProductPartTaskOption", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("productparttaskoptions", "CodProductPartTask", SchemaDb.String, "50");
+
+
             dbS.AddColumnToTable("productparttaskoptions", "TypeOfTaskSerigraphy", SchemaDb.String, "100");
             dbS.AddColumnToTable("productparttaskoptions", "InkSerigraphy", SchemaDb.String, "100");
             dbS.AddColumnToTable("productparttaskoptions", "Foil", SchemaDb.String, "100");
             dbS.AddColumnToTable("productparttaskoptions", "Overlay", SchemaDb.Double, "0");
             dbS.AddColumnToTable("productparttaskoptions", "Format", SchemaDb.String, "20");
             dbS.AddColumnToTable("productparttaskoptions", "Selector", SchemaDb.Int, "0");
+
+            dbS.AddColumnToTable("productparttaskoptions", "TypeOfTaskPrint", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productparttaskoptions", "Ink", SchemaDb.String, "100");
+
 
             dbS.AddForeignKey("productparttaskoptions", "CodProductPartTask", "productparttasks", "CodProductPartTask");
         }

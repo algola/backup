@@ -26,6 +26,30 @@ namespace PapiroMVC.Models
             set;
         }
 
+
+
+        public override object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            ProductPartHotPrinting copyOfObject = (ProductPartHotPrinting)Activator.CreateInstance(kindOfObject);
+            //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
+            this.Copy(copyOfObject);
+
+
+            return copyOfObject;
+        }
+
+                
+        public override void Copy(ProductPartTask to)
+        {
+            base.Copy(to);
+        }
+
+
+
     }
 
 }

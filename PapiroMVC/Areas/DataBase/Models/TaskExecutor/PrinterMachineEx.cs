@@ -104,6 +104,29 @@ namespace PapiroMVC.Models
                     ret.cToPrintF = 6;
                     ret.cToPrintR = 1;
                     break;
+
+
+                case "STAMPAETICHROTOLO_7":
+                    ret.cToPrintF = 7;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_7RETRO":
+                    ret.cToPrintF = 7;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_8":
+                    ret.cToPrintF = 8;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_8RETRO":
+                    ret.cToPrintF = 8;
+                    ret.cToPrintR = 1;
+                    break;
+
+                
                 case "STAMPAETICHROTOLO_NORETRO":
                     ret.cToPrintF = 0;
                     ret.cToPrintR = 1;
@@ -151,6 +174,36 @@ namespace PapiroMVC.Models
                     ret.cToPrintR = 0;
                     break;
 
+                case "SERIGRAFIAROTOLO_1":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "SERIGRAFIAROTOLO_2":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "SERIGRAFIAROTOLO_3":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 0;
+                    break;
+                                    
+                case "STAMPAACALDOROTOLO_1":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAACALDOROTOLO_2":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAACALDOROTOLO_3":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 0;
+                    break;
+
                 default:
                     ret.cToPrintF = 0;
                     ret.cToPrintR = 0;
@@ -164,8 +217,6 @@ namespace PapiroMVC.Models
             return ret;
 
         }
-
-
 
     }
 }

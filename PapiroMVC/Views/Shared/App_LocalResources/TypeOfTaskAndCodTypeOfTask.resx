@@ -411,9 +411,6 @@
   <data name="CodSTAMPARIGIDO" xml:space="preserve">
     <value>Stampa Materiale Rigido</value>
   </data>
-  <data name="CodSTAMPAETICHROTOLO_6" xml:space="preserve">
-    <value>6 colori</value>
-  </data>
   <data name="CodSTAMPAMORBIDO_ALTA" xml:space="preserve">
     <value>Stampa UV alta qualità</value>
   </data>
@@ -474,9 +471,25 @@
   <data name="CodSTAMPAETICHROTOLO_5RETRO" xml:space="preserve">
     <value>5 colori e retro</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_6" xml:space="preserve">
+    <value>6 colori</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_6RETRO" xml:space="preserve">
     <value>6 colori e retro</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_7" xml:space="preserve">
+    <value>7 colori</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_7RETRO" xml:space="preserve">
+    <value>7 colori e retro</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8" xml:space="preserve">
+    <value>8 colori</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_8RETRO" xml:space="preserve">
+    <value>8 colori e retro</value>
+  </data>
+
   <data name="CodSERIGRAFIAROTOLO_1" xml:space="preserve">
     <value>Stampa Serigrafica 1 colore</value>
   </data>

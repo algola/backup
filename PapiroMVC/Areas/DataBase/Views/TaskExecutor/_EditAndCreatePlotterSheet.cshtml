@@ -80,7 +80,7 @@
 
                 <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
 
-                <p>
+                <div class="controls col-sm-9 col-sm-offset-3">
 
                     <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action(ViewBag.ReturnUrl, "TaskExecutor", new { Area = "Database", codTypeOfTask = ViewBag.ReturnCodTypeOfTask })');">
                         <i class="icon-arrow-left"></i>
@@ -99,14 +99,15 @@
                             @HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")
                         </button>
             }
-                </p>
+                </div>
 
 
-                }
+                
 
 
             </div>
         </div>
+    }
 
     </div>
 

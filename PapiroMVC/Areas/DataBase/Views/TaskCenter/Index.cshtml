@@ -1,0 +1,56 @@
+﻿@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskCenter/Strings";
+    ViewBag.MetaTitle = Html.T(strings, "MetaTitleTaskCenter");
+
+}
+
+<div id='taskcentersupplierlist'>
+    @Html.Partial("_List")
+</div>
+
+@section title{
+    @Html.T(strings, "TaskCenters")
+}
+
+@section description{
+    @Html.T(strings, "TitleIndex")
+}
+
+@section breadcrumb {
+
+}
+
+
+@section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
+
+    <link href="~/Content/acetheme/assets/js/plugins/ui.multiselect.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
+
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
+
+}
+
+@section specificPluginScript {
+    <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/date-time/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
+    <script src="~/Scripts/jqgridHelper.js"></script>
+    <script type="text/javascript">
+        $.jgrid.no_legacy_api = true;
+        $.jgrid.useJSON = true;
+    </script>
+    <script src="~/Content/acetheme/assets/js/plugins/ui.multiselect.js"></script>
+    <script src="~/Content/acetheme/assets/js/plugins/jquery.tablednd.js"></script>
+
+}
+
+
+<script>
+    $(function () {
+        document.getElementById("taskcenterSidebar").className = "active open";
+    });
+</script>

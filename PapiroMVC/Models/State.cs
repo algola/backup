@@ -18,6 +18,11 @@ namespace PapiroMVC.Models
     [DataContract] 
     public partial class State
     {
+        public State()
+        {
+            this.taskcenters = new HashSet<TaskCenter>();
+        }
+    
     	
     	[DataMember] 		
         public System.DateTime TimeStampTable { get; set; }
@@ -42,5 +47,8 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string ResetLinkedStates { get; set; }
+    
+    	[DataMember]
+        public virtual ICollection<TaskCenter> taskcenters { get; set; }
     }
 }

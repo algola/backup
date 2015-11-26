@@ -169,7 +169,7 @@
     <value>Costo al Foglio</value>
   </data>
   <data name="CreateDieFlexo" xml:space="preserve">
-    <value>Aggiungi flexo</value>
+    <value>Aggiungi lamierino magnetico</value>
   </data>
   <data name="CreateDieFlatRoll" xml:space="preserve">
     <value>Aggiungi semirotativa</value>
@@ -426,13 +426,52 @@
   <data name="InkGridCaption" xml:space="preserve">
     <value>Anagrafica inchiosti serigrafici</value>
   </data>
+  <data name="MeshGridCaption" xml:space="preserve">
+    <value>Anagrafica serigrafia e telai</value>
+  </data>
   <data name="CreateInk" xml:space="preserve">
     <value>Crea nuovo inchiostro</value>
+  </data>
+  <data name="CreateMesh" xml:space="preserve">
+    <value>Crea nuova serigrafia</value>
   </data>
   <data name="CreateFoil" xml:space="preserve">
     <value>Crea nuovo foil</value>
   </data>
   <data name="FoilGridCaption" xml:space="preserve">
     <value>Anagrafica foil</value>
+  </data>
+  <data name="FormatTypeName3" xml:space="preserve">
+    <value>Rettangolare</value>
+  </data>
+  <data name="FormatTypeName4" xml:space="preserve">
+    <value>Triangolare</value>
+  </data>
+  <data name="FormatTypeName5" xml:space="preserve">
+    <value>Rotonda</value>
+  </data>
+  <data name="DieFlatRollType" xml:space="preserve">
+    <value>Semirotativa</value>
+  </data>
+  <data name="DieFlexoType" xml:space="preserve">
+    <value>Lamierino magnetico</value>
+  </data>
+  <data name="DieSheetType" xml:space="preserve">
+    <value>Piana</value>
+  </data>
+  <data name="FormatType" xml:space="preserve">
+    <value>Tipo Formato</value>
+  </data>
+  <data name="TypeOfArticle" xml:space="preserve">
+    <value>Tipo Articolo</value>
+  </data>
+  <data name="FormatBCaption" xml:space="preserve">
+    <value>F.to controetichetta</value>
+  </data>
+  <data name="AniloxGridCaption" xml:space="preserve">
+    <value>Anagrafica anilox e consumi</value>
+  </data>
+  <data name="CreateAnilox" xml:space="preserve">
+    <value>Nuovo Anilox</value>
   </data>
 </root>

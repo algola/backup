@@ -1,0 +1,129 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.Die
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    Console.Write(Model);
+
+}
+
+@{
+
+    List<FormatTypeForDropDown> formatTypes = new List<FormatTypeForDropDown>();
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 0 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 1 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 2 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 3 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 4 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 5 });
+
+    foreach (var item in formatTypes)
+    {
+        item.FormatTypeName = (string)HttpContext.GetLocalResourceObject(strings, "FormatTypeName" + item.FormatType.ToString());
+    }
+}
+
+@*this is used by set label dcut*@
+<div id="dialog-confirm">
+
+    <div id="saveDie" class="well">
+
+        @*<h3>Salva Fustella in archivio***</h3>*@
+        <h3>@Html.T(strings, "SaveDie")</h3>
+
+        @Scripts.Render("~/bundles/autocomplete")
+
+        @using (Html.BeginForm("Action", "xxx", FormMethod.Post,
+                             new { id = "formToPost", enctype = "multipart/form-data" }))
+        {
+
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.Format, new { id = "formatDie" }, inTheCol: 2)
+            </div>
+
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="FormatType"></label>
+                    <div class="controls col-sm-9">
+                        @Html.DropDownListFor(x => x.FormatType, new SelectList(formatTypes, "FormatType", "FormatTypeName"), new { id = "formatType", @class = "col-xs-10 col-sm-7 text-box single-line" })
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.PrintingFormat, new { id = "printingFormatDie" }, inTheCol: 2)
+            </div>
+
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.MaxGain1, new { id = "gain1Die" }, inTheCol: 2)
+            </div>
+
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.MaxGain2, new { id = "gain2Die" }, inTheCol: 2)
+            </div>
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.CodDie, new { id = "codDie" }, inTheCol: 2)
+            </div>
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.Description, new { id = "descriptionDie" }, inTheCol: 2)
+            </div>
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.Z, new { id = "zDie" }, inTheCol: 2)
+            </div>
+            <div class="col-xs-12">
+                @Html.AlgolaEditorFor(x => x.Width, new { id = "widthDie" }, inTheCol: 2)
+            </div>
+
+            @Html.HiddenFor(x => x.ZMetric, new { id = "zMetricDie" })
+
+
+        }
+
+        <button class="default btn btn-primary" type="submit" name="ciao" onclick="saveDieFlexo();">
+            <i class="icon-save"></i>
+            @HttpContext.GetLocalResourceObject(strings, "Save")
+        </button>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+    function saveDieFlexo() {
+
+        event.preventDefault();
+
+        //data are collected into
+        var dataToPass = {
+
+            formatType: $("#formatType option:selected")[0].value,
+            format: $("#formatDie").val(),
+            printingFormat: $("#printingFormatDie").val(),
+            maxGain1: $("#gain1Die").val(),
+            maxGain2: $("#gain2Die").val(),
+            //formatType: $("#typeformat").val(),
+            description: $("#descriptionDie").val(),
+            codDie: $("#codDie").val(),
+            z: $("#zDie").val(),
+            width: $("#widthDie").val(),
+            zMetric: $("#zMetricDie").val()
+        };
+
+        var div = $("#saveDie");
+
+        $.post('@(Url.Action("SaveDieFlexo", "Document", new { area = "DataBase" }))', dataToPass)
+        .done(function (x) {
+            if (x.textStatus != "ok") {
+                div.html(x.view);
+                div.hide();
+            } else {
+                div.html('');
+            }
+        });
+        return false;
+    }
+
+
+</script>

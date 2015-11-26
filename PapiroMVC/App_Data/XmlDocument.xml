@@ -4317,7 +4317,12 @@
               Looks up a localized string similar to Etichette quadrate in bobina.
             </summary>
         </member>
-        <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteSagRotolo">
+      <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteRotoloDouble">
+        <summary>
+          Looks up a localized string similar to Etichetta e controetichetta.
+        </summary>
+      </member>
+      <member name="P:PapiroMVC.Models.Resources.Products.ResProduct.CodMenuProductEtichetteSagRotolo">
             <summary>
               Looks up a localized string similar to Etichette sagomate in bobina.
             </summary>
@@ -9284,7 +9289,7 @@
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.InkMenu">
             <summary>
-              Looks up a localized string similar to Inchiostri serigrafici.
+              Looks up a localized string similar to Inchiostri.
             </summary>
         </member>
         <member name="P:PapiroMVC.Views.Shared.App_LocalResources.Strings.ItalianMenu">

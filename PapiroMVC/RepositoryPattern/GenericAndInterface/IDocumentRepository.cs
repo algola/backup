@@ -15,19 +15,28 @@ namespace Services
         DocumentProduct GetDocumentProductByCodDocumentProduct(string codDocumentProduct);
 
 
+
+        dbEntities GetContext();
+
         Document GetFromSession();
         void SaveOnSession(Document a);
         IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct);
+        IQueryable<Cost> GetCostsByCodDocumentProductNoT(string codDocumentProduct);
+
         Cost GetCost(string codCost);
+        Cost GetCostNoT(string codCost);
+
         void EditCost(Cost c);
         void Edit(Document entity, bool deep);
         IQueryable<DocumentProduct> GetAllDocumentProducts();
+        IQueryable<DocumentProduct> GetAllDocumentProductsSimply();
+        
         IQueryable<Product> GetAllProducts();
 
         IQueryable<State> GetAllStates();
         IQueryable<DocumentState> GetAllDocumentStates(string codDocument);
 
-        IQueryable<ReportOrderName> GetAllReportOrderName();
+        IQueryable<ReportOrderName> GetAllReportOrderName(string databaseName);
 
         Document GetEstimateEcommerce(string codCustomerSupplier);
 

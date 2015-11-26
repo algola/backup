@@ -1,0 +1,322 @@
+﻿@using Mvc.HtmlHelpers
+@using PapiroMVC.Validation
+@model PapiroMVC.Models.TaskCenter
+@using System.Web.Script.Serialization
+
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    string[] codTaskCenters = Model.TaskCenters;
+
+    Console.Write(codTaskCenters);
+
+}
+
+<table id="list@(Model.CodTaskCenter)"><tr><td /></tr></table>
+
+<script type="text/javascript">
+
+    //<![CDATA[
+    /*global $ */
+    /*jslint devel: true, browser: true, plusplus: true */
+    //$.jgrid.formatter.integer.thousandsSeparator = ',';
+    //$.jgrid.formatter.number.thousandsSeparator = ',';
+    //$.jgrid.formatter.currency.thousandsSeparator = ',';
+    $(document).ready(function () {
+
+
+        'use strict';
+
+        var // myData = [],
+            $grid@(Model.CodTaskCenter) = $("#list@(Model.CodTaskCenter)"),
+
+           numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
+           numberTemplate = {
+               formatter: 'number', align: 'right', sorttype: 'number',
+               searchoptions: { sopt: numberSearchOptions }
+           },
+            myDefaultSearch = 'cn',
+            getColumnIndex = function (grid, columnIndex) {
+                var cm = grid.jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+                for (i = 0; i < l; i++) {
+                    if ((cm[i].index || cm[i].name) === columnIndex) {
+                        return i; // return the colModel index
+                    }
+                }
+                return -1;
+            },
+            refreshSerchingToolbar = function ($grid@(Model.CodTaskCenter), myDefaultSearch) {
+                var postData = $grid@(Model.CodTaskCenter).jqGrid('getGridParam', 'postData'), filters, i, l,
+                    rules, rule, iCol, cm = $grid@(Model.CodTaskCenter).jqGrid('getGridParam', 'colModel'),
+                    cmi, control, tagName;
+
+                for (i = 0, l = cm.length; i < l; i++) {
+                    control = $("#gs_" + $.jgrid.jqID(cm[i].name));
+                    if (control.length > 0) {
+                        tagName = control[0].tagName.toUpperCase();
+                        if (tagName === "SELECT") { // && cmi.stype === "select"
+                            control.find("option[value='']")
+                                .attr('selected', 'selected');
+                        } else if (tagName === "INPUT") {
+                            control.val('');
+                        }
+                    }
+                }
+
+                if (typeof (postData.filters) === "string" &&
+                        typeof ($grid@(Model.CodTaskCenter)[0].ftoolbar) === "boolean" && $grid@(Model.CodTaskCenter)[0].ftoolbar) {
+
+                    filters = $.parseJSON(postData.filters);
+                    if (filters && filters.groupOp === "AND" && typeof (filters.groups) === "undefined") {
+                        // only in case of advance searching without grouping we import filters in the
+                        // searching toolbar
+                        rules = filters.rules;
+                        for (i = 0, l = rules.length; i < l; i++) {
+                            rule = rules[i];
+                            iCol = getColumnIndex($grid@(Model.CodTaskCenter), rule.field);
+                            if (iCol >= 0) {
+                                cmi = cm[iCol];
+                                control = $("#gs_" + $.jgrid.jqID(cmi.name));
+                                if (control.length > 0 &&
+                                        (((typeof (cmi.searchoptions) === "undefined" ||
+                                        typeof (cmi.searchoptions.sopt) === "undefined")
+                                        && rule.op === myDefaultSearch) ||
+                                          (typeof (cmi.searchoptions) === "object" &&
+                                              $.isArray(cmi.searchoptions.sopt) &&
+                                              cmi.searchoptions.sopt.length > 0 &&
+                                              cmi.searchoptions.sopt[0] === rule.op))) {
+                                    tagName = control[0].tagName.toUpperCase();
+                                    if (tagName === "SELECT") { // && cmi.stype === "select"
+                                        control.find("option[value='" + $.jgrid.jqID(rule.data) + "']")
+                                            .attr('selected', 'selected');
+                                    } else if (tagName === "INPUT") {
+                                        control.val(rule.data);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            cm = [
+
+                        { name: 'DocumentName', label: '@Model.TaskCenterName', width: 80, sortable: false },
+                        { name: 'CodDocumentTask', label: '', width: 1, sortable: false, hidden:true }
+
+            ],
+
+            saveObjectInLocalStorage = function (storageItemName, object) {
+                if (typeof window.localStorage !== 'undefined') {
+                    window.localStorage.setItem(storageItemName, JSON.stringify(object));
+                }
+            },
+            removeObjectFromLocalStorage = function (storageItemName) {
+                if (typeof window.localStorage !== 'undefined') {
+                    window.localStorage.removeItem(storageItemName);
+                }
+            },
+            getObjectFromLocalStorage = function (storageItemName) {
+                if (typeof window.localStorage !== 'undefined') {
+                    return JSON.parse(window.localStorage.getItem(storageItemName));
+                }
+            },
+            myColumnStateName = 'listPlanning.colState',
+            saveColumnState = function (perm) {
+                var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
+                    postData = this.jqGrid('getGridParam', 'postData'),
+                    columnsState = {
+                        search: this.jqGrid('getGridParam', 'search'),
+                        page: this.jqGrid('getGridParam', 'page'),
+                        sortname: this.jqGrid('getGridParam', 'sortname'),
+                        sortorder: this.jqGrid('getGridParam', 'sortorder'),
+                        permutation: perm,
+                        colStates: {}
+                    },
+                    colStates = columnsState.colStates;
+
+                if (typeof (postData.filters) !== 'undefined') {
+                    columnsState.filters = postData.filters;
+                }
+
+                for (i = 0; i < l; i++) {
+                    colItem = colModel[i];
+                    cmName = colItem.name;
+                    if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                        colStates[cmName] = {
+                            width: colItem.width,
+                            hidden: colItem.hidden
+                        };
+                    }
+                }
+                saveObjectInLocalStorage(myColumnStateName, columnsState);
+            },
+            myColumnsState,
+            isColState,
+            restoreColumnState = function (colModel) {
+                var colItem, i, l = colModel.length, colStates, cmName,
+                    columnsState = getObjectFromLocalStorage(myColumnStateName);
+
+                if (columnsState) {
+                    colStates = columnsState.colStates;
+                    for (i = 0; i < l; i++) {
+                        colItem = colModel[i];
+                        cmName = colItem.name;
+                        if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                            colModel[i] = $.extend(true, {}, colModel[i], colStates[cmName]);
+                        }
+                    }
+                }
+                return columnsState;
+            },
+            firstLoad = true;
+
+        myColumnsState = restoreColumnState(cm);
+        isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
+
+        $grid@(Model.CodTaskCenter).jqGrid({
+            url: '@(Url.Action("DocumentTaskCenter", "Document", new { codTaskCenter = Model.CodTaskCenter }))',
+            datatype: 'json',
+            colModel: cm,
+            loadtext: '',
+            viewrecords: true,
+            autowidth: true,
+            shrinkToFit: false,
+            print: true,
+            rowNum: 20,
+
+            scrollOffset: 0,
+            gridview: true,
+            page: isColState ? myColumnsState.page : 1,
+            search: isColState ? myColumnsState.search : false,
+            postData: isColState ? { filters: myColumnsState.filters } : {},
+            sortname: isColState ? myColumnsState.sortname : 'invdate',
+            sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            ignoreCase: true,
+            caption: '',
+            height: $(window).height() * 0.53,
+            loaderror: '@(Html.T(strings, "ErrorLoading"))',
+            loadComplete: function () {
+
+                var $this = $(this);
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (isColState) {
+                        $this.jqGrid("remapColumns", myColumnsState.permutation, true);
+                    }
+                    if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                        // create toolbar if needed
+                        //$this.jqGrid('filterToolbar',
+                        //    { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
+                    }
+                }
+                refreshSerchingToolbar($this, myDefaultSearch);
+                saveColumnState.call($this, this.p.remapColumns);
+                //filters check************************************************
+                var $this = $(this);
+                var filters = $this.jqGrid('getGridParam', 'postData').filters;
+
+
+
+                if ((filters === '{"groupOp":"AND","rules":[]}') ||
+                    (filters === '{"groupOp":"AND","rules":[{"field":"Category","op":"eq","data":"0"}]}')) {
+                    $("#checkFilterMessage").hide();
+                }
+                //filters check************************************************
+            },
+            resizeStop: function () {
+                saveColumnState.call($grid@(Model.CodTaskCenter), $grid@(Model.CodTaskCenter)[0].p.remapColumns);
+            }
+        });
+        $.extend($.jgrid.search, {
+            multipleSearch: true,
+            multipleGroup: true,
+            recreateFilter: true,
+            closeOnEscape: true,
+            closeAfterSearch: true,
+            overlay: 0
+        });
+
+
+        var myArray = @Html.Raw(new JavaScriptSerializer().Serialize(codTaskCenters));
+
+        var conc = '';
+        for (var k = 0; k < myArray.length; k++) {
+
+            //   if (i!=k) {
+            if (conc=='')
+                conc = '#list' + myArray[k];
+            else
+                conc = conc + ',' + '#list' + myArray[k];
+        }
+
+
+        $grid@(Model.CodTaskCenter).jqGrid('gridDnD', { connectWith:  conc
+
+            @*
+                ,
+
+            ondrop:
+                function (ev, ui) {
+
+                   var codTaskCenter = $(this).getGridParam("id").replace('list','');
+                   var url = '@Url.Action("ChangeTaskCenterOrder", "Document", new { area = "Working"})';
+                   var data = $(this).jqGrid("getDataIDs");
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        data: {
+                            'ids': JSON.stringify(data),
+                            'codTaskCenter' : codTaskCenter
+                        }
+                    });
+                }*@
+        });
+
+
+    });
+    //]]>
+
+
+
+
+</script>
+
+
+<script type="text/javascript">
+
+    function save()
+    {
+
+        var myArray = @Html.Raw(new JavaScriptSerializer().Serialize(codTaskCenters));
+        for (var k = 0; k < myArray.length; k++) {
+
+            conc = '#list' + myArray[k];
+            var $grid = $('#list' + myArray[k]);
+
+            var codTaskCenter = myArray[k];
+            var url = '@Url.Action("ChangeTaskCenterOrder", "Document", new { area = "Working"})';
+            var data1 = $grid.jqGrid("getDataIDs");
+
+            var data = $grid.jqGrid('getCol', 'CodDocumentTask', false);
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    'ids': JSON.stringify(data),
+                    'codTaskCenter' : codTaskCenter
+                }
+            });
+        }
+    }
+
+</script>

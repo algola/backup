@@ -1,0 +1,381 @@
+﻿@model List<PapiroMVC.Models.TaskCenter>
+@using Mvc.HtmlHelpers
+@using PapiroMVC.Validation
+
+@{
+    string strings = "~/Areas/DataBase/Views/TaskCenter/Strings";
+}
+
+
+<div id="containerbox">
+    <!-- Main Page -->
+    @*filters check************************************************@
+    <div id="checkFilterMessage" class="alert alert-block alert-error" hidden="hidden">
+        <button type="button" class="close" data-dismiss="alert">
+            <i class="icon-remove"></i>
+        </button>
+
+        <i class="icon-ok red"></i>
+        @Html.T(strings, "FilterCheckMessage")
+    </div>
+    @*filters check************************************************@
+
+    <table id="listTaskCenter"><tr><td /></tr></table>
+    <div id="pager"></div>
+
+
+
+
+
+    <button class="btn btnLink btn-primary" type="button" onclick="Javascript:window.location.replace('@Url.Action("CreateTaskCenter", "TaskCenter", new { Area = "Database" })');">
+        <i class="icon-plus"></i>
+        @Html.T(strings, "CreateTaskCenter")
+    </button>
+
+
+</div>
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    //<![CDATA[
+    /*global $ */
+    /*jslint devel: true, browser: true, plusplus: true */
+    //$.jgrid.formatter.integer.thousandsSeparator = ',';
+    //$.jgrid.formatter.number.thousandsSeparator = ',';
+    //$.jgrid.formatter.currency.thousandsSeparator = ',';
+    $(document).ready(function () {
+        'use strict';
+        var // myData = [],
+            $grid = $("#listTaskCenter"),
+
+            numberSearchOptions = ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
+            numberTemplate = {
+                formatter: 'number', align: 'right', sorttype: 'number',
+                searchoptions: { sopt: numberSearchOptions }
+            },
+            myDefaultSearch = 'cn',
+            getColumnIndex = function (grid, columnIndex) {
+                var cm = grid.jqGrid('getGridParam', 'colModel'), i, l = cm.length;
+                for (i = 0; i < l; i++) {
+                    if ((cm[i].index || cm[i].name) === columnIndex) {
+                        return i; // return the colModel index
+                    }
+                }
+                return -1;
+            },
+            refreshSerchingToolbar = function ($grid, myDefaultSearch) {
+                var postData = $grid.jqGrid('getGridParam', 'postData'), filters, i, l,
+                    rules, rule, iCol, cm = $grid.jqGrid('getGridParam', 'colModel'),
+                    cmi, control, tagName;
+
+                for (i = 0, l = cm.length; i < l; i++) {
+                    control = $("#gs_" + $.jgrid.jqID(cm[i].name));
+                    if (control.length > 0) {
+                        tagName = control[0].tagName.toUpperCase();
+                        if (tagName === "SELECT") { // && cmi.stype === "select"
+                            control.find("option[value='']")
+                                .attr('selected', 'selected');
+                        } else if (tagName === "INPUT") {
+                            control.val('');
+                        }
+                    }
+                }
+
+                if (typeof (postData.filters) === "string" &&
+                        typeof ($grid[0].ftoolbar) === "boolean" && $grid[0].ftoolbar) {
+
+                    filters = $.parseJSON(postData.filters);
+                    if (filters && filters.groupOp === "AND" && typeof (filters.groups) === "undefined") {
+                        // only in case of advance searching without grouping we import filters in the
+                        // searching toolbar
+                        rules = filters.rules;
+                        for (i = 0, l = rules.length; i < l; i++) {
+                            rule = rules[i];
+                            iCol = getColumnIndex($grid, rule.field);
+                            if (iCol >= 0) {
+                                cmi = cm[iCol];
+                                control = $("#gs_" + $.jgrid.jqID(cmi.name));
+                                if (control.length > 0 &&
+                                        (((typeof (cmi.searchoptions) === "undefined" ||
+                                        typeof (cmi.searchoptions.sopt) === "undefined")
+                                        && rule.op === myDefaultSearch) ||
+                                          (typeof (cmi.searchoptions) === "object" &&
+                                              $.isArray(cmi.searchoptions.sopt) &&
+                                              cmi.searchoptions.sopt.length > 0 &&
+                                              cmi.searchoptions.sopt[0] === rule.op))) {
+                                    tagName = control[0].tagName.toUpperCase();
+                                    if (tagName === "SELECT") { // && cmi.stype === "select"
+                                        control.find("option[value='" + $.jgrid.jqID(rule.data) + "']")
+                                            .attr('selected', 'selected');
+                                    } else if (tagName === "INPUT") {
+                                        control.val(rule.data);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+
+             cm = [
+                   { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', sortable: false, formatter: editTaskCenter },  //formatter: editTaskCenter
+                   { name: 'CodTaskCenter', index: 'CodTaskCenter', label: '@Html.T(strings, "CodTaskCenterCaption")', width: 80, sortable: true },
+                   { name: 'TaskCenterName', label: '@Html.T(strings, "TaskCenterNameCaption")', width: 200, sortable: true }
+             ],
+saveObjectInLocalStorage = function (storageItemName, object) {
+    if (typeof window.localStorage !== 'undefined') {
+        window.localStorage.setItem(storageItemName, JSON.stringify(object));
+    }
+},
+       removeObjectFromLocalStorage = function (storageItemName) {
+           if (typeof window.localStorage !== 'undefined') {
+               window.localStorage.removeItem(storageItemName);
+           }
+       },
+       getObjectFromLocalStorage = function (storageItemName) {
+           if (typeof window.localStorage !== 'undefined') {
+               return JSON.parse(window.localStorage.getItem(storageItemName));
+           }
+       },
+       myColumnStateName = 'List.colState',
+       saveColumnState = function (perm) {
+           var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
+               postData = this.jqGrid('getGridParam', 'postData'),
+               columnsState = {
+                   search: this.jqGrid('getGridParam', 'search'),
+                   page: this.jqGrid('getGridParam', 'page'),
+                   sortname: this.jqGrid('getGridParam', 'sortname'),
+                   sortorder: this.jqGrid('getGridParam', 'sortorder'),
+                   permutation: perm,
+                   colStates: {}
+               },
+               colStates = columnsState.colStates;
+
+           if (typeof (postData.filters) !== 'undefined') {
+               columnsState.filters = postData.filters;
+           }
+
+           for (i = 0; i < l; i++) {
+               colItem = colModel[i];
+               cmName = colItem.name;
+               if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                   colStates[cmName] = {
+                       width: colItem.width + 1,
+                       hidden: colItem.hidden
+                   };
+               }
+           }
+           saveObjectInLocalStorage(myColumnStateName, columnsState);
+       },
+       myColumnsState,
+       isColState,
+       restoreColumnState = function (colModel) {
+           var colItem, i, l = colModel.length, colStates, cmName,
+               columnsState = getObjectFromLocalStorage(myColumnStateName);
+
+           if (columnsState) {
+               colStates = columnsState.colStates;
+               for (i = 0; i < l; i++) {
+                   colItem = colModel[i];
+                   cmName = colItem.name;
+                   if (cmName !== 'rn' && cmName !== 'cb' && cmName !== 'subgrid') {
+                       colModel[i] = $.extend(true, {}, colModel[i], colStates[cmName]);
+                   }
+               }
+           }
+           return columnsState;
+       },
+       firstLoad = true;
+
+        myColumnsState = restoreColumnState(cm);
+        isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
+
+
+
+        $grid.jqGrid({
+            url: '@(Url.Action("TaskCenterList", "TaskCenter", new { onlyCustomer=false }))',
+            datatype: 'json',
+            colModel: cm,
+
+            loadtext: '',
+            viewrecords: true,
+
+            // print: true,
+            rowNum: 10,
+
+            caption: '',
+            rowList: [15, 20, 50, 100],
+            gridview: true,
+            // multiselect: true,
+            pager: '#pager',
+            page: isColState ? myColumnsState.page : 1,
+            //search: isColState ? myColumnsState.search : false,
+            //postData: isColState ? { filters: myColumnsState.filters } : {},
+            //sortname: isColState ? myColumnsState.sortname : 'invdate',
+            //sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            //sortable: true,
+            ignoreCase: true,
+            autowidth: true,
+            shrinkToFit: false,
+            altRows: true,
+            //viewrecords: true,
+            height: $(window).height() * 0.53,
+            loaderror: '@(Html.T(strings, "ErrorLoading"))',
+            loadComplete: function () {
+
+                var $this = $(this);
+
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+
+
+                if (firstLoad) {
+                    firstLoad = false;
+                    if (isColState) {
+                        $this.jqGrid("remapColumns", myColumnsState.permutation, true);
+                    }
+                    if (typeof (this.ftoolbar) !== "boolean" || !this.ftoolbar) {
+                        // create toolbar if needed
+                        $this.jqGrid('filterToolbar',
+                            { stringResult: true, searchOnEnter: true, defaultSearch: myDefaultSearch });
+                    }
+                }
+                refreshSerchingToolbar($this, myDefaultSearch);
+                saveColumnState.call($this, this.p.remapColumns);
+                //filters check************************************************
+                var $this = $(this);
+                var filters = $this.jqGrid('getGridParam', 'postData').filters;
+
+                if (filters === '{"groupOp":"AND","rules":[]}') {
+                    $("#checkFilterMessage").hide();
+                }
+                //filters check************************************************
+            },
+            resizeStop: function () {
+                saveColumnState.call($grid, $grid[0].p.remapColumns);
+            }
+        });
+        $.extend($.jgrid.search, {
+            multipleSearch: true,
+            multipleGroup: true,
+            recreateFilter: true,
+            closeOnEscape: true,
+            closeAfterSearch: true,
+            overlay: 0
+        });
+        $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-calculator",
+            title: "choose columns",
+            onClickButton: function () {
+                $(this).jqGrid('columnChooser', {
+                    done: function (perm) {
+                        if (perm) {
+                            this.jqGrid("remapColumns", perm, true);
+                            saveColumnState.call(this, perm);
+                        }
+                    }
+                });
+            }
+        });
+        $grid.jqGrid('navButtonAdd', '#pager', {
+            caption: "",
+            buttonicon: "ui-icon-closethick",
+            title: "clear saved grid's settings",
+            onClickButton: function () {
+                removeObjectFromLocalStorage(myColumnStateName);
+                window.location.reload();
+            }
+        });
+
+
+
+        $grid.jqGrid('sortableRows', {
+            update: function (ev, ui) {
+
+                var data = $grid.jqGrid("getCol", "CodTaskCenter");
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ChangeTaskCenterOrder", "TaskCenter", new { area = "DataBase" })',
+                    data: {
+                        'ids': JSON.stringify(data)
+                    }
+                });
+
+            }
+        });
+
+        $grid.jqGrid('gridDnD');
+
+
+        function editTaskCenter(cellvalue, options, rowobject) {
+            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditTaskCenter", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+
+            return link.replace("-1", cellvalue);
+        }
+
+    });
+    //]]>
+
+
+
+</script>
+
+<script type="text/javascript">
+
+    //resize jqgrid after windows resize
+    $(window).bind('resize', function () {
+
+        var myGrid = $("#list");
+        var width = $("#page-header").width();
+        try {
+            myGrid.jqGrid('setGridWidth', width, true);
+
+        } catch (e) {
+
+        }
+
+    }).trigger('resize');
+
+    //filters check************************************************
+    $(window).load(function () {
+        var myGrid = $("#listTaskCenter");
+        var filters = myGrid.jqGrid('getGridParam', 'postData').filters;
+
+        if ((!(filters === '{"groupOp":"AND","rules":[]}')) &&
+            ((filters != undefined))) {
+            $("#checkFilterMessage").show();
+        }
+
+
+    });
+    //filters check************************************************
+
+</script>
+
+<script type="text/javascript">
+
+    /*
+
+    javascript molto utile per associare un'azione alla riga selezionata
+
+    //click function on jqGrid selectedRow
+    jQuery("#a1").click(function () {
+        var id = jQuery("#CustomGrid").jqGrid('getGridParam', 'selrow');
+        if (id) {
+            var ret = jQuery("#CustomGrid").jqGrid('getRowData', id);
+            alert("id=" + ret.CodTaskCenter + " invdate=" + ret.BusinessName + "...");
+        } else { alert("Please select row"); }
+    });
+
+    */
+</script>
+

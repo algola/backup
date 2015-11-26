@@ -15,20 +15,6 @@ namespace PapiroMVC.Models
             TypeOfProductPartPrinting = ProductPartPrintingType.ProductPartRigidPrinting;
         }
 
-        public override void Update()
-        {
-            if (GainPartOnPrinting == null)
-            {
-                GainPartOnPrinting = new ProductPartPrintingSheetGainSingle();            
-            }
-
-            base.Update();
-
-            ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartRigid)Part).SubjectNumber ?? 1;
-
-            ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
-            GainPartOnPrinting.CalculateGain();
-        }
     }
 
 }

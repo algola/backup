@@ -1,0 +1,17 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ProductPartHotPrintingOption
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+    var newOption = new ProductPartHotPrintingOption();
+    newOption = Model;
+
+}
+
+<script src="/Scripts/autocomplete.js"></script>
+
+
+<form action="/" id="addOption">
+    @Html.EditorFor(model => newOption, "ProductPartHotPrintingOption_CostDetail")
+</form>

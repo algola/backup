@@ -1,0 +1,14 @@
+﻿@using PapiroMVC.Validation
+@using PapiroMVC.Models
+@model PapiroMVC.Models.ProductPartPrintRollOption
+
+@{
+    string strings = "~/Areas/Working/Views/Document/Strings";
+}
+
+<script src="/Scripts/autocomplete.js"></script>
+
+<form action="/" id="addOption">
+    @Html.EditorFor(x=>x, "ProductPartPrintRollOption")
+</form>
+

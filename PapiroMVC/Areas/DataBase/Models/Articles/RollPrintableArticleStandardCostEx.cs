@@ -18,6 +18,8 @@ namespace PapiroMVC.Models
             this.TypeOfArticleCost = ArticleCost.ArticleCostType.RollPrintableArticleStandardCost;
         }
 
+
+
         #region Added Properties
 
         #endregion

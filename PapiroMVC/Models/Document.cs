@@ -22,6 +22,7 @@ namespace PapiroMVC.Models
         {
             this.DocumentProducts = new HashSet<DocumentProduct>();
             this.DocumentStates = new HashSet<DocumentState>();
+            this.documenttaskcenters = new HashSet<DocumentTaskCenter>();
         }
     
     	
@@ -72,5 +73,7 @@ namespace PapiroMVC.Models
         public virtual DocumentProduct OrderProduct { get; set; }
     	[DataMember]
         public virtual ICollection<DocumentState> DocumentStates { get; set; }
+    	[DataMember]
+        public virtual ICollection<DocumentTaskCenter> documenttaskcenters { get; set; }
     }
 }

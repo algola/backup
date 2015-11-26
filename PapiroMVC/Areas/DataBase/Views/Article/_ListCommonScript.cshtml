@@ -53,6 +53,10 @@
         var object = '@HttpContext.GetLocalResourceObject(strings, "ObjectPrintableArticleType")';
         var rigid = '@HttpContext.GetLocalResourceObject(strings, "RigidPrintableArticleType")';
 
+        var dieSheet = '@HttpContext.GetLocalResourceObject(strings, "DieSheetType")';
+        var dieFlat = '@HttpContext.GetLocalResourceObject(strings, "DieFlatRollType")'
+        var dieFlexo = '@HttpContext.GetLocalResourceObject(strings, "DieFlexoType")';
+
         if (cellvalue == "SheetPrintableArticle")
             return link.replace("type", sheet);
 
@@ -64,6 +68,48 @@
 
         if (cellvalue == "RigidPrintableArticle")
             return link.replace("type", rigid);
+
+        if (cellvalue == "DieSheet")
+            return link.replace("type", dieSheet);
+
+        if (cellvalue == "DieFlatRoll")
+            return link.replace("type", dieFlat);
+
+        if (cellvalue == "DieFlexo")
+            return link.replace("type", dieFlexo);
+
+        return link;
+    }
+
+    function formatType(cellvalue, options, rowobject) {
+
+        var link = "FormatType";
+
+        //following string has to be located in view and in validation (metadata)
+        var quadrata = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName0")';
+        var ovale = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName1")';
+        var sagomata = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName2")';
+        var rettangolare = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName3")';
+        var triangolare = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName4")';
+        var rotonda = '@HttpContext.GetLocalResourceObject(strings, "FormatTypeName5")';
+
+        if (cellvalue == "0")
+            return link.replace("FormatType", quadrata);
+
+        if (cellvalue == "1")
+            return link.replace("FormatType", ovale);
+
+        if (cellvalue == "2")
+            return link.replace("FormatType", sagomata);
+
+        if (cellvalue == "3")
+            return link.replace("FormatType", rettangolare);
+
+        if (cellvalue == "4")
+            return link.replace("FormatType", triangolare);
+
+        if (cellvalue == "5")
+            return link.replace("FormatType", rotonda);
 
         return link;
     }

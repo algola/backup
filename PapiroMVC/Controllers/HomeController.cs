@@ -1,6 +1,7 @@
 ﻿using Braintree;
 using Microsoft.AspNet.SignalR;
 using PapiroMVC.Hubs;
+using Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,17 @@ using System.Web.Mvc;
 
 namespace PapiroMVC.Controllers
 {
-    public class HomeController : ControllerAlgolaBase    
+    public class HomeController : ControllerAlgolaBase
     {
-        
+
+        private readonly IProfileRepository profDataRep;
+
+        public HomeController(IProfileRepository _profDataRep)
+        {
+            profDataRep = _profDataRep;
+            this.Disposables.Add(profDataRep);
+        }
+
         /// <summary>
         /// Publish error in a specific page
         /// </summary>
@@ -39,7 +48,7 @@ namespace PapiroMVC.Controllers
             {
                 Amount = 1000.0M,
                 CreditCard = new TransactionCreditCardRequest
-                {                   
+                {
                     Number = collection["number"],
                     CVV = collection["cvv"],
                     ExpirationMonth = collection["month"],
@@ -66,7 +75,7 @@ namespace PapiroMVC.Controllers
 
             return View("PaymentResult");
         }
-    
+
         public ActionResult Price()
         {
             return View("Price");
@@ -104,13 +113,13 @@ namespace PapiroMVC.Controllers
         {
             HttpCookie cultureCookie = Request.Cookies["_culture"];
             var langCookie = new HttpCookie("_culture", id)
-            {                               
-//                HttpOnly = true
+            {
+                //                HttpOnly = true
             };
             this.ControllerContext.HttpContext.Response.Cookies.Add(langCookie);
 
-//            Response.AppendCookie(langCookie);
-//            return Redirect(Request.UrlReferrer.AbsolutePath);
+            //            Response.AppendCookie(langCookie);
+            //            return Redirect(Request.UrlReferrer.AbsolutePath);
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
@@ -123,6 +132,18 @@ namespace PapiroMVC.Controllers
 
         public async Task<ActionResult> Index()
         {
+
+            var profile = 
+            profDataRep.GetSingle(CurrentDatabase);
+
+            if (profile !=null)
+            {
+                foreach (var item in profile.Modules.Where(x=>x.IsValid))
+                {
+                    Console.WriteLine(item.CodModule);
+                }
+            }
+
             ViewBag.Message = "Modify this template to kick-start your ASP.NET MVC application.";
             return View();
         }
@@ -144,9 +165,9 @@ namespace PapiroMVC.Controllers
             return base.UpdateAs();
 
             //call update schema!!!
-//            base.UpdateDatabase("db");
+            //            base.UpdateDatabase("db");
 
-//            return View();
+            //            return View();
         }
     }
 }

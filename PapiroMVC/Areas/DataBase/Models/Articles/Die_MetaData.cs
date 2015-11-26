@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
         public string CodDie { get; set; }
         [Required(ErrorMessageResourceType = typeof(ResArticle), ErrorMessageResourceName = "RequiredField"),
         DisplayNameLocalized(typeof(ResArticle), "PrintingFormat"),
-        RegularExpressionLocalizedAttribute(typeof(ResArticle), "FormatValidation", "FormatValidationError")]
+        RegularExpressionLocalizedAttribute(typeof(ResArticle), "FormatValidation", "FormatDieValidationError")]
         public string PrintingFormat { get; set; }
         [DisplayNameLocalized(typeof(ResArticle), "Width")]
         public Nullable<double> Width { get; set; }
@@ -23,8 +23,13 @@ namespace PapiroMVC.Models
         public Nullable<double> Z { get; set; }
         [Required(ErrorMessageResourceType = typeof(ResArticle), ErrorMessageResourceName = "RequiredField"),
         DisplayNameLocalized(typeof(ResArticle), "Format"),
-        RegularExpressionLocalizedAttribute(typeof(ResArticle), "FormatValidation", "FormatValidationError")]
+        RegularExpressionLocalizedAttribute(typeof(ResArticle), "FormatValidation", "FormatDieValidationError")]
         public string Format { get; set; }
+
+        
+        [DisplayNameLocalized(typeof(ResArticle), "FormatB"),
+        RegularExpressionLocalizedAttribute(typeof(ResArticle), "FormatBValidation", "FormatDieValidationError")]
+        public string FormatB { get; set; }
         [DisplayNameLocalized(typeof(ResArticle), "DCut1")]
         public Nullable<double> DCut1 { get; set; }
         [DisplayNameLocalized(typeof(ResArticle), "DCut2")]
@@ -35,5 +40,7 @@ namespace PapiroMVC.Models
         public Nullable<int> MaxGain2 { get; set; }
         [DisplayNameLocalized(typeof(ResArticle), "Description")]
         public string Description { get; set; }
+        [DisplayNameLocalized(typeof(ResArticle), "FormatType")]
+        public int FormatType { get; set; }
     }
 }

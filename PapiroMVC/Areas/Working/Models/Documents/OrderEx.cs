@@ -33,7 +33,6 @@ namespace PapiroMVC.Models
 
             doc.AddCustomProperty(new Novacode.CustomProperty("CustomerBusinessName", this.CustomerSupplier.BusinessName));
 
-
             doc.AddCustomProperty(new Novacode.CustomProperty("OrderNumber", OrderNumber));
             doc.AddCustomProperty(new Novacode.CustomProperty("OrderNumberSerie", OrderNumberSerie));
 

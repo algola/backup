@@ -31,10 +31,50 @@ namespace PapiroMVC.Models
             }
         }
 
+        public override string GetEditMethod()
+        {
+            return "EditFlatRoll";
+        }
+
 
         #region Added Properties
 
         #endregion
+
+
+        /// <summary>
+        /// get printing color (task vs machine)
+        /// </summary>
+        /// <param name="codOptionTypeOfTask"></param>
+        /// <returns></returns>
+        public override double GetStarts(string codOptionTypeOfTask)
+        {
+            var colors = GetColorFR(codOptionTypeOfTask);
+            double total = 0;
+            total = (colors.cToPrintT + colors.cToPrintTNoImplant) == 0 ? 1 : (colors.cToPrintT + colors.cToPrintTNoImplant);
+
+            double ret = 0;
+
+            if (codOptionTypeOfTask.Contains("SERIGRAFIA"))
+            {
+                ret = Math.Ceiling(total / this.SerigraphyPrintingUnit ?? 1);                
+            }
+
+            if (codOptionTypeOfTask.Contains("STAMPAACALDO"))
+            {
+                ret = Math.Ceiling(total / this.FoilStampingPrintingUnit ?? 1);
+            }
+
+
+            if (codOptionTypeOfTask.Contains("STAMPAETICHROTOLO"))
+            {
+                ret = total;
+            }
+
+            //Starts is used with printerFormat to have
+            return ret;
+        }
+
 
     }
 }

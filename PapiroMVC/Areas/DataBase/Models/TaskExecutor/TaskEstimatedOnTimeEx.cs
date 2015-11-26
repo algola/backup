@@ -15,7 +15,7 @@ namespace PapiroMVC.Models
     public partial class TaskEstimatedOnTime : TaskEstimatedOn
     {
 
-        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadis, double running)
+        public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadies, double running)
         {
             TimeSpan totalTimeR = new TimeSpan(0,0,0);
             var totalTimeA = this.StartingTime1 ?? TimeSpan.Zero;

@@ -16,6 +16,9 @@ namespace PapiroMVC.Models
         public string Format { get; set; }
 
         public string Description { get; set; }
+        public string FormatType { get; set; }
+
+        public bool IsDie { get; set; }
 
         [DisplayNameLocalized(typeof(ResProductPart), "DCut1")]
         [Tooltip(typeof(ResProductPart), "DCut1ToolTip")]
@@ -68,6 +71,7 @@ namespace PapiroMVC.Models
             }
         }
 
+        public int TypeOfDCut2 {get; set;}
 
     }
 

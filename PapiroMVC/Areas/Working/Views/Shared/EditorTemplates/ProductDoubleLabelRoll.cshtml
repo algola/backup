@@ -1,0 +1,37 @@
+﻿@using PapiroMVC.Validation
+@model PapiroMVC.Models.ProductDoubleLabelRoll
+
+@{
+    string strings = "~/Areas/Working/Views/Product/Strings";        
+}
+
+
+    <!-- grafo -->
+    @for (int i = 0; i < Model.ProductGraphLinksPerView.Count; i++)
+    {
+        ViewBag.IndexPart = i;
+        @Html.EditorFor(model => model.ProductGraphLinksPerView[i])           
+    }
+
+    @Html.HiddenFor(model => model.ProductName)
+    @Html.HiddenFor(model => model.TimeStampTable)
+    @Html.HiddenFor(model => model.CodProduct)
+    @Html.HiddenFor(model => model.ProductName)
+    @Html.HiddenFor(model => model.CodMenuProduct)
+    @Html.HiddenFor(model => model.TypeOfProduct)
+
+    @Html.HiddenFor(model => model.ProductNameGenerator)
+
+
+    <!-- parts -->
+    @for (int i = 0; i < Model.ProductPartsPerView.Count; i++)
+    {
+        ViewBag.IndexPart = i;
+        @Html.EditorFor(model => model.ProductPartsPerView[i])           
+    }
+
+    <!-- ProductTasks -->
+    @for (int i = 0; i < Model.ProductTasks.Count; i++)
+    {
+        @Html.EditorFor(model => model.ProductTasksPerView[i])           
+    }

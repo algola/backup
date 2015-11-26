@@ -213,11 +213,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnTime?"CostTime":
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
-                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
+                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
+                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.FlatRollEstimatedOnTime?"CostTime":
                                                     a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"CostMq":                                            
                                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
                                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":
-                                                            a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime?"CostTime":"",
+                                                                a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime?"CostTime":"",
                                                             
                                                             
                             a.CodTaskExecutor,
@@ -483,58 +484,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.FormatMax,
                             a.PrintingUnit.ToString(),
                             a.SheetwiseAfterPrintingUnit.ToString()
-
-                        }
-                    }
-                ).ToArray()
-            };
-
-            return Json(jsonData, JsonRequestBehavior.AllowGet);
-
-        }
-
-        public ActionResult TypeOfTaskSerigraphyList(GridSettings gridSettings)
-        {
-            //common serarch and order
-            //            var q = this.LithoList(gridSettings).OfType<LithoSheet>();
-            var q = typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x => x.CodTypeOfTask == "SERIGRAFIASOLOTIPI");
-
-            //read from validation's language file
-            //this resource has to be the same as view's resource
-            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
-
-            //Console.WriteLine(y);
-
-            var q2 = q.ToList();
-            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
-
-            int totalRecords = q.Count();
-
-            // create json data
-            int pageIndex = gridSettings.pageIndex;
-            int pageSize = gridSettings.pageSize;
-
-            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
-
-            int startRow = (pageIndex - 1) * pageSize;
-            int endRow = startRow + pageSize;
-
-            var jsonData = new
-            {
-                total = totalPages,
-                page = pageIndex,
-                records = totalRecords,
-                rows =
-                (
-                    from a in q3
-                    select new
-                    {
-                        id = a.CodOptionTypeOfTask,
-                        cell = new string[] 
-                        {                         
-                            a.CodOptionTypeOfTask,
-                            resman.GetString(a.CodOptionTypeOfTask),
-                            a.OptionName
 
                         }
                     }

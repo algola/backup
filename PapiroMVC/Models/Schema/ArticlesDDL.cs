@@ -2,8 +2,30 @@
 using System.Data.Entity;
 
 namespace PapiroMVC.Model
-{    
-    class ArticlesDDL :IDDL
+{
+
+
+    class UpdateDDL : IDDL
+    {
+        SchemaDb dbS;
+
+        public UpdateDDL(string dbName)
+        {
+            dbS = new SchemaDb();
+            dbS.DatabaseName = dbName;
+        }
+
+        public void UpdateSchema(DbContext ctx)
+        {
+            dbS.Ctx = ctx;
+
+            dbS.AddColumnToTable("productparttaskoptions", "TypeOfTaskPrint", SchemaDb.String, "100");
+            dbS.AddColumnToTable("productparttaskoptions", "Ink", SchemaDb.String, "100");
+
+        }
+
+    }
+    class ArticlesDDL : IDDL
     {
         SchemaDb dbS;
 
@@ -15,7 +37,7 @@ namespace PapiroMVC.Model
 
         public void UpdateSchema(DbContext ctx)
         {
-            
+
             dbS.Ctx = ctx;
 
             //First Table
@@ -41,17 +63,23 @@ namespace PapiroMVC.Model
             //Printable            
             dbS.AddColumnToTable("articles", "TypeOfMaterial", SchemaDb.String, "200");
             dbS.AddColumnToTable("articles", "NameOfMaterial", SchemaDb.String, "200");
-            
+
             dbS.AddColumnToTable("articles", "Color", SchemaDb.String, "100");
-
             dbS.AddColumnToTable("articles", "Adhesive", SchemaDb.String, "100");
-            
-            dbS.AddColumnToTable("articles", "Weight", SchemaDb.IntUS, "0");
+
+            dbS.AddColumnToTable("articles", "Weight", SchemaDb.Double, "0");
+            //UPDATE TO DOUBLE
+            //"articles", "Weight"
+            //"articles", "SuppWeight"
+            dbS.ChangeColumnToDouble("articles", "Weight");
+            dbS.ChangeColumnToDouble("articles", "SuppWeight");
+
+
+
+
             dbS.AddColumnToTable("articles", "Hand", SchemaDb.Double, "0");
-
-
             dbS.AddColumnToTable("articles", "SuppOfMaterial", SchemaDb.String, "100");
-            dbS.AddColumnToTable("articles", "SuppWeight", SchemaDb.IntUS, "0");
+            dbS.AddColumnToTable("articles", "SuppWeight", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articles", "SuppHand", SchemaDb.Double, "0");
 
 
@@ -64,7 +92,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "NoBv", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("articles", "SheetPerPacked", SchemaDb.IntUS, "0");
             dbS.AddColumnToTable("articles", "SheetPerPallet", SchemaDb.IntUS, "0");
-            
+
             //Roll
             dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articles", "Tags", SchemaDb.String, "255");
@@ -72,7 +100,7 @@ namespace PapiroMVC.Model
             //Rigid
             dbS.AddColumnToTable("articles", "Thikness", SchemaDb.Double, "0"); //mm
             dbS.AddColumnToTable("articles", "ToNexMq", SchemaDb.Bool, "0");
-            dbS.AddColumnToTable("articles", "FromMinFormat",  SchemaDb.String, "9"); //quadratura minima
+            dbS.AddColumnToTable("articles", "FromMinFormat", SchemaDb.String, "9"); //quadratura minima
 
             //Object
             dbS.AddColumnToTable("articles", "Size", SchemaDb.String, "50");
@@ -93,6 +121,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "Width", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articles", "PrintingFormat", SchemaDb.String, "20");
             dbS.AddColumnToTable("articles", "Format", SchemaDb.String, "20");
+            dbS.AddColumnToTable("articles", "FormatB", SchemaDb.String, "20");
+
             dbS.AddColumnToTable("articles", "DCut1", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articles", "DCut2", SchemaDb.Double, "0");
             dbS.AddColumnToTable("articles", "MaxGain1", SchemaDb.Int, "0");
@@ -102,8 +132,14 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articles", "FormatType", SchemaDb.Int, "0");
 
             dbS.AddColumnToTable("articles", "CodTaskExecutor", SchemaDb.String, "50");
-            dbS.AddForeignKey("articles", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
+            dbS.AddColumnToTable("articles", "TaskExecutorName", SchemaDb.String, "50");
 
+            //serigraphy
+            dbS.AddColumnToTable("articles", "MeshRow", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("articles", "GainMqPerLt", SchemaDb.Int, "0");
+            // dbS.ChangeColumnToDouble("articles", "GainMqPerLt");
+
+            dbS.AddForeignKey("articles", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
 
 
             //Index
@@ -115,10 +151,10 @@ namespace PapiroMVC.Model
             //ArticleCost
             dbS.AddTable("articlecost");
             //primary key
-            dbS.AddColumnToTable("articlecost", "CodArticleCost", SchemaDb.StringPK, "50"); 
+            dbS.AddColumnToTable("articlecost", "CodArticleCost", SchemaDb.StringPK, "50");
 
             //foreign key
-            dbS.AddColumnToTable("articlecost", "CodArticle", SchemaDb.String, "50"); 
+            dbS.AddColumnToTable("articlecost", "CodArticle", SchemaDb.String, "50");
             dbS.AddForeignKey("articlecost", "CodArticle", "articles", "CodArticle");
 
             //Selector             // 0 = Sheet // 1 = Roll // 2 = Wide 
@@ -129,7 +165,7 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("articlecost", "CostPerKg", SchemaDb.String, "20");
             dbS.AddColumnToTable("articlecost", "CostPerSheet", SchemaDb.String, "20");
             dbS.AddColumnToTable("articlecost", "CostPerUnit", SchemaDb.String, "20");
-            
+
             // 0 = SheetPrintableArticlePakedCost // 1 = SheetPrintableArticleCuttedCost // 2 = SheetPrintableArticlePalletCost
             //selector typeof cost sheet
             dbS.AddColumnToTable("articlecost", "SelectorArticleSheetPrintableCost", SchemaDb.Int, "0");
@@ -137,7 +173,7 @@ namespace PapiroMVC.Model
             // SheetPrintableArticleCuttedCost
             dbS.AddColumnToTable("articlecost", "UseTheSameCostOfPalletAfterKg", SchemaDb.Bool, "0");
             dbS.AddColumnToTable("articlecost", "UseTheSameCostOfSheetAfterSheet", SchemaDb.Bool, "0");
-            
+
             dbS.AddColumnToTable("articlecost", "KgPallet", SchemaDb.Long, "0");
             dbS.AddColumnToTable("articlecost", "KgSheet", SchemaDb.Long, "0");
 

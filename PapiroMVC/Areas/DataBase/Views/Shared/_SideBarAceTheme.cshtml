@@ -40,12 +40,14 @@
             </a>
 
             <ul class="submenu">
-                <li id="SerigraphyOptionSlidebar">
-                    @Html.ActionLinkImageSpan(Html.T(strings, "SerigraphyMenu"), "IndexOptionTypeOfTaskSerigraphy", "TaskExecutor", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
-                </li>
-
                 <li id="InkSlidebar">
                     @Html.ActionLinkImageSpan(Html.T(strings, "InkMenu"), "IndexInk", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+                </li>
+                <li id="MeshSlidebar">
+                    @Html.ActionLinkImageSpan(Html.T(strings, "SerigraphyMenu"), "IndexMesh", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
+                </li>
+                <li id="AniloxSlidebar">
+                    @Html.ActionLinkImageSpan(Html.T(strings, "AniloxMenu"), "IndexAnilox", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")
                 </li>
             </ul>
         </li>
@@ -120,6 +122,12 @@
 
             </ul>
         </li>
+
+
+        <li id="taskcenterSidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "TaskCenterMenu"), "Index", "TaskCenter", new { area = "DataBase" }, "fa fa-fw fa-lg fa-male", "menu-text")
+        </li>
+
 
         <li id="warehouseSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseArticleMenu"), "IndexWarehouse", "Article", new { area = "DataBase" }, "fa fa-fw fa-lg fa-stack-overflow", "menu-text")

@@ -15,6 +15,12 @@ namespace Services
     {
         private Dictionary<string, Document> cacheDoc;
 
+
+        public dbEntities GetContext()
+        {
+            return this.Context;
+        }
+
         public Document GetEstimateEcommerce(string codCustomerSupplier)
         {
             var estEcom = Context.Documents.OfType<EstimateEcommerce>().SingleOrDefault(x => x.CodCustomer == codCustomerSupplier);
@@ -32,9 +38,20 @@ namespace Services
             return estEcom;
         }
 
-        public void EditCost(Cost c)
+        public void EditCost(Cost entity)
         {
-            this.Context.Entry(c).State = System.Data.Entity.EntityState.Modified;
+
+            var fromBD = Context.Costs.SingleOrDefault(p => p.CodCost == entity.CodCost);
+            if (fromBD != null)
+            {
+                Context.Entry(fromBD).CurrentValues.SetValues(entity);
+                Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
+            }
+            else
+            {
+                Context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+                //                Context.Set<Cost>().Add(entity);
+            }
         }
 
         public Cost GetCost(string codCost)
@@ -56,6 +73,9 @@ namespace Services
                 if (cost.ProductPartTask != null)
                 {
                     cost.ProductPartTask.OptionTypeOfTask = Context.OptionTypeOfTasks.SingleOrDefault(y => y.CodOptionTypeOfTask == cost.ProductPartTask.CodOptionTypeOfTask);
+
+                    //Option of serigraphy / hotprinting
+                    cost.ProductPartTask.ProductPartTaskOptions = Context.ProductPartTaskOptions.AsNoTracking().Where(x => x.CodProductPartTask == cost.ProductPartTask.CodProductPartTask).ToList();
 
                     var ppTask = cost.ProductPartTask;
                     ppTask.ProductPart = Context.ProductParts.SingleOrDefault(h => h.CodProductPart == ppTask.CodProductPart);
@@ -112,6 +132,88 @@ namespace Services
             return cost;
         }
 
+        public Cost GetCostNoT(string codCost)
+        {
+            var inizio = DateTime.Now;
+            var cost = Context.Costs.AsNoTracking().SingleOrDefault(x => x.CodCost == codCost);
+            cost.DocumentProduct = Context.DocumentProducts.AsNoTracking().SingleOrDefault(x => x.CodDocumentProduct == cost.CodDocumentProduct);
+
+            if (cost != null)
+            {
+
+                cost.ProductTask = Context.ProductTasks.AsNoTracking().SingleOrDefault(x => x.CodProductTask == cost.CodProductTask);
+                if (cost.ProductTask != null)
+                {
+                    cost.ProductTask.OptionTypeOfTask = Context.OptionTypeOfTasks.AsNoTracking().SingleOrDefault(y => y.CodOptionTypeOfTask == cost.ProductTask.CodOptionTypeOfTask);
+                }
+
+                cost.ProductPartTask = Context.ProductPartTasks.AsNoTracking().SingleOrDefault(x => x.CodProductPartTask == cost.CodProductPartTask);
+                if (cost.ProductPartTask != null)
+                {
+                    cost.ProductPartTask.OptionTypeOfTask = Context.OptionTypeOfTasks.AsNoTracking().SingleOrDefault(y => y.CodOptionTypeOfTask == cost.ProductPartTask.CodOptionTypeOfTask);
+
+                    //Option of serigraphy / hotprinting
+                    cost.ProductPartTask.ProductPartTaskOptions = Context.ProductPartTaskOptions.AsNoTracking().Where(x => x.CodProductPartTask == cost.ProductPartTask.CodProductPartTask).ToList();
+
+                    var ppTask = cost.ProductPartTask;
+                    ppTask.ProductPart = Context.ProductParts.AsNoTracking().SingleOrDefault(h => h.CodProductPart == ppTask.CodProductPart);
+
+                    ppTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.AsNoTracking().Where(pp => pp.CodProductPart == ppTask.ProductPart.CodProductPart).ToList();
+
+                    foreach (var item in ppTask.ProductPart.ProductPartPrintableArticles)
+                    {
+                        item.Costs = Context.Costs.AsNoTracking().Where(nn => nn.CodProductPartPrintableArticle == item.CodProductPartPrintableArticle).ToList();
+                    }
+
+
+                }
+
+                cost.ProductPartImplantTask = Context.ProductPartTasks.AsNoTracking().SingleOrDefault(x => x.CodProductPartTask == cost.CodProductPartImplantTask);
+                if (cost.ProductPartImplantTask != null)
+                {
+                    cost.ProductPartImplantTask.OptionTypeOfTask = Context.OptionTypeOfTasks.AsNoTracking().SingleOrDefault(y => y.CodOptionTypeOfTask == cost.ProductPartImplantTask.CodOptionTypeOfTask);
+
+                    var ppTask = cost.ProductPartImplantTask;
+                    ppTask.ProductPart = Context.ProductParts.AsNoTracking().SingleOrDefault(h => h.CodProductPart == ppTask.CodProductPart);
+
+                    ppTask.ProductPart.ProductPartTasks = Context.ProductPartTasks.AsNoTracking().Where(pp => pp.CodProductPart == ppTask.ProductPart.CodProductPart).ToList();
+
+                    foreach (var item in ppTask.ProductPart.ProductPartTasks)
+                    {
+                        item.Costs = Context.Costs.AsNoTracking().Where(nn => nn.CodProductPartTask == item.CodProductPartTask).ToList();
+                    }
+                }
+
+
+            }
+
+            cost.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.AsNoTracking().FirstOrDefault(x => x.CodProductPartPrintableArticle == cost.CodProductPartPrintableArticle);
+
+            if (cost.ProductPartsPrintableArticle != null)
+            {
+                cost.ProductPartsPrintableArticle.ProductPart = Context.ProductParts.AsNoTracking().SingleOrDefault(x => x.CodProductPart == cost.ProductPartsPrintableArticle.CodProductPart);
+                var part = cost.ProductPartsPrintableArticle.ProductPart;
+                if (part != null)
+                {
+                    part.ProductPartTasks = Context.ProductPartTasks.AsNoTracking().Where(x => x.CodProductPart == part.CodProductPart).ToList();
+                    foreach (var item in part.ProductPartTasks)
+                    {
+                        item.OptionTypeOfTask = Context.OptionTypeOfTasks.AsNoTracking().SingleOrDefault(y => y.CodOptionTypeOfTask == item.CodOptionTypeOfTask);
+                        item.Costs = Context.Costs.AsNoTracking().Where(x => x.CodProductPartTask == item.CodProductPartTask).ToList();
+                    }
+                }
+            }
+
+
+            var tempo = DateTime.Now.Subtract(inizio);
+
+            Console.Write(tempo);
+
+            return cost;
+        }
+
+
+
         public IQueryable<Cost> GetCostsByCodDocumentProduct(string codDocumentProduct)
         {
             var inizio = DateTime.Now;
@@ -121,13 +223,26 @@ namespace Services
 
             ret = Context.Costs.Include("CostDetails").Include("DocumentProduct").Include("DocumentProduct.Document").Where(x => x.CodDocumentProduct == codDocumentProduct);
 
-
             var tempo = DateTime.Now.Subtract(inizio);
 
             Console.Write(tempo + " " + passatoDaDb.ToString());
             return ret;
         }
 
+        public IQueryable<Cost> GetCostsByCodDocumentProductNoT(string codDocumentProduct)
+        {
+            var inizio = DateTime.Now;
+
+            IQueryable<Cost> ret;
+            bool passatoDaDb = false;
+
+            ret = Context.Costs.AsNoTracking().Include("CostDetails").Include("DocumentProduct").Include("DocumentProduct.Document").Where(x => x.CodDocumentProduct == codDocumentProduct);
+
+            var tempo = DateTime.Now.Subtract(inizio);
+
+            Console.Write(tempo + " " + passatoDaDb.ToString());
+            return ret;
+        }
         public string GetNewCode(Document a)
         {
             //il trucco è di avere un pad left per poter utilizzare il Max per ottenere il maggiore nell'insieme
@@ -252,6 +367,9 @@ namespace Services
             foreach (var item in modOrAdded.OfType<ProductPartTask>())
                 Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
+            foreach (var item in modOrAdded.OfType<ProductPartTaskOption>())
+                Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+
             foreach (var item in modOrAdded.OfType<ProductPartsPrintableArticle>())
                 Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
 
@@ -342,11 +460,19 @@ namespace Services
                     if (fromBD3 != null)
                     {
                         Context.Entry(fromBD3).CurrentValues.SetValues(cost);
-                        Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
+                        Context.Entry(fromBD3).State = System.Data.Entity.EntityState.Modified;
                     }
                     else
                     {
-                        Context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                        List<Object> added = Context.ChangeTracker.Entries().Where(x => x.State == System.Data.Entity.EntityState.Added).Select(x => x.Entity).ToList();
+                        Console.Write(added);
+
+                        item2.DocumentProduct = null;
+                        Context.Entry(item2).State = System.Data.Entity.EntityState.Added;
+
+                        List<Object> added2 = Context.ChangeTracker.Entries().Where(x => x.State == System.Data.Entity.EntityState.Added).Select(x => x.Entity).ToList();
+                        Console.Write(added2);
+
                     }
 
 
@@ -360,6 +486,10 @@ namespace Services
             var fromBD = Context.Documents.Single(p => p.CodDocument == doc.CodDocument);
             Context.Entry(fromBD).CurrentValues.SetValues(doc);
             Context.Entry(fromBD).State = System.Data.Entity.EntityState.Modified;
+
+
+
+
         }
 
 
@@ -371,7 +501,7 @@ namespace Services
 
         public void DeleteDocumentProduct(DocumentProduct documentProduct)
         {
-            this.Context.Set<DocumentProduct>().Remove(documentProduct);        
+            this.Context.Set<DocumentProduct>().Remove(documentProduct);
         }
 
 
@@ -380,6 +510,13 @@ namespace Services
             var query = Context.Documents.Include("DocumentProducts").Include("DocumentProducts.Costs").FirstOrDefault(x => x.CodDocument == codDocument);
             return query;
         }
+
+        public IQueryable<DocumentProduct> GetAllDocumentProductsSimply()
+        {
+            var query = Context.DocumentProducts.Include("Document");
+            return query;
+        }
+
         public IQueryable<DocumentProduct> GetAllDocumentProducts()
         {
             try
@@ -646,17 +783,24 @@ namespace Services
         /// LIst of report installed for orders
         /// </summary>
         /// <returns></returns>
-        public IQueryable<ReportOrderName> GetAllReportOrderName()
-        {
-            var p = new ReportOrderName { Name = "LabelRollHead", Description = "Etichette in rotolo" };
 
+        public IQueryable<ReportOrderName> GetAllReportOrderName(string databaseName)
+        {
             var ret = new List<ReportOrderName>();
-            ret.Add(p);
+
+
+            if (databaseName.ToLower() == "canepa")
+            {
+                var p = new ReportOrderName { Name = "LabelRollHeadCanepa", Description = "Etichette in rotolo" };
+                ret.Add(p);
+            }
+            else
+            {
+                var p = new ReportOrderName { Name = "LabelRollHead", Description = "Etichette in rotolo" };
+                ret.Add(p);
+            }
 
             return ret.AsQueryable();
         }
-
-
-
     }
 }

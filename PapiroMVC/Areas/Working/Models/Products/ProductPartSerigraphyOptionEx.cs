@@ -17,5 +17,30 @@ namespace PapiroMVC.Models
 
             TypeOfProductPartTaskOption = ProductPartTaskOptionType.ProductPartSerigraphyOption;
         }
+
+        public override object Clone()
+        {
+            //creo una copia dell'oggetto da utilizzare per le modifiche
+            var kindOfObject = this.GetType();
+
+            //istanzio una copia che sarà gestita dall'invio
+            ProductPartSerigraphyOption copyOfObject = (ProductPartSerigraphyOption)Activator.CreateInstance(kindOfObject);
+            //l'oggetto copia sarà una copia del contenuto dell'oggetto originale
+            this.Copy(copyOfObject);
+
+
+            return copyOfObject;
+        }
+
+        public override void Copy(ProductPartTaskOption to)
+        {
+            base.Copy(to);
+
+            ((ProductPartSerigraphyOption)to).TypeOfTaskSerigraphy = TypeOfTaskSerigraphy;
+            ((ProductPartSerigraphyOption)to).InkSerigraphy = InkSerigraphy;
+            ((ProductPartSerigraphyOption)to).Overlay = Overlay;
+        }
+
+
     }
 }

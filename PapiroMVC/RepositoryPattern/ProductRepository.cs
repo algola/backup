@@ -18,9 +18,47 @@ namespace Services
         {
 
             SincroAllProductNameGenerator();
-            var l = Context.ProductNameGenerators.OrderBy(x=>x.CodMenuProduct);
+            var l = Context.ProductNameGenerators.OrderBy(x => x.CodMenuProduct);
             return l;
 
+        }
+
+        public void AddProductPartTaskOption(ProductPartTaskOption p)
+        {
+            var pz = Context.ProductPartTasks.Include("ProductPart").Include("ProductPart.Product").Include("ProductPartTaskOptions").FirstOrDefault(x => x.CodProductPartTask == p.CodProductPartTask);
+            Console.Write(pz);
+
+            var product = this.GetSingle(pz.ProductPart.Product.CodProduct);
+            product.ProductParts.Where(x => x.CodProductPart == pz.CodProductPart).FirstOrDefault().ProductPartTasks.Where(y => y.CodProductPartTask == pz.CodProductPartTask).FirstOrDefault().ProductPartTaskOptions.Add(p);
+            product.ProductCodeRigen();
+
+            Edit(product);
+
+            var lstAdded = Context.ChangeTracker.Entries()
+             .Where(x => x.State == System.Data.Entity.EntityState.Added).ToList();
+
+            Console.WriteLine(lstAdded);
+
+
+        }
+
+        public string DeleteProductPartTaskOption(string codProductPartTaskOption)
+        {
+            var pz = Context.ProductPartTaskOptions.FirstOrDefault(x => x.CodProductPartTaskOption == codProductPartTaskOption);
+
+            var ret = pz.CodProductPartTask;
+            this.Context.Set<ProductPartTaskOption>().Remove(pz);     
+   
+            return ret;
+        }
+
+        /// <summary>
+        /// get all product description generator
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<ProductPartTaskOption> GetProductPartTaskOptions(string codProductPartTask)
+        {
+            return Context.ProductPartTaskOptions.Where(x => x.CodProductPartTask == codProductPartTask);
         }
 
         public void SaveProductNameGenerator(ProductNameGenerator a)
@@ -34,7 +72,7 @@ namespace Services
                 this.Context.Set<ProductNameGenerator>().Add(a);
                 this.Context.SaveChanges();
             }
-            else 
+            else
             {
                 a.TimeStampTable = DateTime.Now;
 
@@ -42,16 +80,16 @@ namespace Services
                 Context.Entry(res).State = System.Data.Entity.EntityState.Modified;
                 this.Context.SaveChanges();
             }
-        
-        
+
+
         }
-        
+
         private void SincroAllProductNameGenerator()
         {
 
             //GENERO L'ELECO RUNTIME
             var runTime = new List<ProductNameGenerator>();
-            
+
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Vuoto", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Buste", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteCartellini", Generator = "" });
@@ -77,24 +115,26 @@ namespace Services
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "RivistePostalizzazione", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "SchedeNonRilegate", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteRotolo", Generator = "Etichette a bobina 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM o similare in ns possesso previo Vs. conferma @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS" });
+            runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteRotoloDouble", Generator = "Etichette 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @Etichetta f.to mm %PARTFORMATOPENAMM Controetichetta f.to mm %PARTFORMATOPENBMM o similari previo Vs. conferma " });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteSagRotolo", Generator = "Etichette sagomate a bobina 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @F.to mm sagomato %PARTFORMATOPENMM @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "FasceGommateRotolo", Generator = "" });
+            runTime.Add(new ProductNameGenerator { CodMenuProduct = "FasceGommateRotolo2", Generator = "Etichette a bobina 1 pista '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL Adesivo: %ADESHIVEMATERIAL @F.to mm %PARTFORMATOPENMM o similare in ns possesso previo Vs. conferma @Uscita lato %PARTFORMATOPENMMSIDE1 @%PARTTASKS" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Inciso", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Fotopolimero", Generator = "" });
             //CARICO I DATI DAL DATABASE
-            var db = Context.ProductNameGenerators;          
+            var db = Context.ProductNameGenerators;
             //PER OGNI ELEMENTO A RUNTIME CONTROLLO SE ESISTE NEL DATABASE
 
             foreach (var item in runTime)
             {
                 var res = db.FirstOrDefault(x => x.CodMenuProduct == item.CodMenuProduct);
                 //SE NON ESISTE LO AGGIUNGO E SALVO
-                if (res == null) 
+                if (res == null)
                 {
                     //add and save
                     item.TimeStampTable = DateTime.Now;
                     this.Context.Set<ProductNameGenerator>().Add(item);
-                    this.Context.SaveChanges();                
+                    this.Context.SaveChanges();
                 }
             }
 
@@ -176,6 +216,7 @@ namespace Services
             var notAll = modOrAdded.Except(modOrAdded.OfType<Product>())
                .Except(modOrAdded.OfType<ProductPart>())
                .Except(modOrAdded.OfType<ProductPartTask>())
+               .Except(modOrAdded.OfType<ProductPartTaskOption>())
                .Except(modOrAdded.OfType<ProductTask>())
                .Except(modOrAdded.OfType<ProductPartsPrintableArticle>())
                .Except(modOrAdded.OfType<ProductGraphLink>())
@@ -198,32 +239,71 @@ namespace Services
 
             ProductPartCodeRigen(entity);
 
+            var fromData = Context.Products.SingleOrDefault(x => x.CodProduct == entity.CodProduct);
+            Context.Entry(fromData).CurrentValues.SetValues(entity);
+            Context.Entry(fromData).State = System.Data.Entity.EntityState.Modified;
+
             foreach (var item in entity.ProductParts)
             {
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                var fromDB = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == item.CodProductPart);
+                Context.Entry(fromDB).CurrentValues.SetValues(item);
+                Context.Entry(fromDB).State = System.Data.Entity.EntityState.Modified;
 
                 foreach (var item2 in item.ProductPartPrintableArticles)
                 {
-                    Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;
+                    var fromDB2 = Context.ProductPartsPrintableArticles.SingleOrDefault(x => x.CodProductPartPrintableArticle == item2.CodProductPartPrintableArticle);
+                    Context.Entry(fromDB2).CurrentValues.SetValues(item2);
+                    Context.Entry(fromDB2).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 foreach (var item2 in item.ProductPartTasks)
                 {
-                    Context.Entry(item2).State = System.Data.Entity.EntityState.Modified;
+                    var fromDB2 = Context.ProductPartTasks.SingleOrDefault(x => x.CodProductPartTask == item2.CodProductPartTask);
+                    Context.Entry(fromDB2).CurrentValues.SetValues(item2);
+                    Context.Entry(fromDB2).State = System.Data.Entity.EntityState.Modified;
+
+                    var lst = item2.ProductPartTaskOptions.ToList();
+                    foreach (var item3 in lst)
+                    {
+
+                        var fromDataDB3 = Context.ProductPartTaskOptions.SingleOrDefault(x => x.CodProductPartTaskOption == item3.CodProductPartTaskOption);
+
+                        if (fromDataDB3 != null)
+                        {
+                            Context.Entry(fromData).CurrentValues.SetValues(item);
+                            Context.Entry(fromData).State = System.Data.Entity.EntityState.Modified;
+                        }
+                        else
+                        {
+
+                        //    this.Context.Set<ProductPartTaskOption>().Add(item3);
+                            Context.Entry(item3).State = System.Data.Entity.EntityState.Added;
+
+                        }
+
+                        Console.Write(item3.CodProductPartTaskOption);
+
+                    }
+
+
                 }
             }
 
             foreach (var item in entity.ProductTasks)
             {
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                var fromDB = Context.ProductTasks.SingleOrDefault(x => x.CodProductTask == item.CodProductTask);
+                Context.Entry(fromDB).CurrentValues.SetValues(item);
+                Context.Entry(fromDB).State = System.Data.Entity.EntityState.Modified;
             }
 
             foreach (var item in entity.ProductGraphLinks)
             {
-                Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                var fromDB = Context.ProductGraphLinks.SingleOrDefault(x => x.CodProductGraph == item.CodProductGraph);
+                Context.Entry(fromDB).CurrentValues.SetValues(item);
+                Context.Entry(fromDB).State = System.Data.Entity.EntityState.Modified;
             }
 
-            base.Edit(entity);
+            //            base.Edit(entity);
         }
 
         public Product GetSingle(string codProduct)

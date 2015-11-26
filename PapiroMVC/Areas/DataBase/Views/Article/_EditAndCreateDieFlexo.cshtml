@@ -8,6 +8,10 @@
     formatTypes.Add(new FormatTypeForDropDown { FormatType = 0 });
     formatTypes.Add(new FormatTypeForDropDown { FormatType = 1 });
     formatTypes.Add(new FormatTypeForDropDown { FormatType = 2 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 3 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 4 });
+    formatTypes.Add(new FormatTypeForDropDown { FormatType = 5 });
+
 
     foreach (var item in formatTypes)
     {
@@ -25,7 +29,8 @@
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg",
     OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+},
+new { @class = "form-horizontal" }))
     {
 
         <div class="row">
@@ -48,6 +53,8 @@
 
                 <div class="well no-padding-left no-padding-right">
                     @Html.AlgolaEditorFor(model => model.Format)
+                    @Html.AlgolaEditorFor(model => model.FormatB)
+
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="FormatType"></label>
@@ -61,30 +68,29 @@
                     @Html.AlgolaEditorFor(model => model.MaxGain1)
                     @Html.AlgolaEditorFor(model => model.MaxGain2)
 
+
+                    @Html.AlgolaAutocompleteFor(model => model.TaskExecutorName, "TaskExecutorNameAutoComplete", "Article")
+
+                    <br />
+                    <div class="controls col-sm-9 col-sm-offset-3">
+                        <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexDie", "Article", new { Area = "Database" })');">
+                            <i class="icon-arrow-left"></i>
+                            @HttpContext.GetLocalResourceObject(strings, "Cancel")
+                        </button>
+
+                        <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
+                            <i class="icon-save"></i>
+                            @HttpContext.GetLocalResourceObject(strings, "Save")
+                        </button>
+
+                        @if (ViewBag.ActionMethod != "CreateDieFlexo")
+                        {
+                            <input class="btn" type="submit" name="CreateDieFlexo" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
+                        }
+
+                    </div>
+
                 </div>
-
-
-                <br />
-                <p>
-
-                    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("IndexDie", "Article", new { Area = "Database" })');">
-                        <i class="icon-arrow-left"></i>
-                        @HttpContext.GetLocalResourceObject(strings, "Cancel")
-                    </button>
-
-                    <button class="default btn btn-primary" type="submit" name="@ViewBag.ActionMethod">
-                        <i class="icon-save"></i>
-                        @HttpContext.GetLocalResourceObject(strings, "Save")
-                    </button>
-
-                    @if (ViewBag.ActionMethod != "CreateDieFlexo")
-                    {
-                        <input class="btn" type="submit" name="CreateDieFlexo" value='@HttpContext.GetLocalResourceObject(strings, "SaveNewBasedOn")' />
-                    }
-
-                </p>
-
-
             </div>
         </div>
     }

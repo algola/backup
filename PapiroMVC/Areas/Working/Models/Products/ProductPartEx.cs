@@ -16,6 +16,53 @@ namespace PapiroMVC.Models
     public partial class ProductPart : ICloneable, IPrintDocX
     {
 
+        public virtual List<PrintingHint> SelectValidpHint(List<PrintingHint> pHint, double smallerCalculatedDCutLessZero, double smallerCalculatedDCut)
+        {
+            List<PrintingHint> pHint1;
+
+            pHint1 = pHint.Where(x=>x.IsDie || ( x.DCut2 >= this.MinDCut
+                    && x.DCut2 <= this.MaxDCut && (x.DCut1 >= x.DCut2 || (x.DCut1 == 0 && x.MaxGain1 == 1)))).ToList();
+
+
+            if (pHint1.Count <= 1)
+            {
+                //fascette gommate
+                if (MinDCut == 0)
+                {
+                    var pHint2 = pHint.Where(x=>x.IsDie ||( x.DCut2 == smallerCalculatedDCutLessZero * -1));
+                    pHint1 = pHint.Where(x=>x.IsDie || (x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0))).ToList();
+                    var pHint3 = pHint1.Union(pHint2);
+                    pHint1 = pHint3.ToList();
+                }
+                else
+                {
+                    var smaller = pHint.Where(x => x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1).Select(x => x.DeltaDCut2).Min();
+                    var pHintLast1 = pHint.Where(x=>x.IsDie || (x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
+
+                    try
+                    {
+                        var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
+                        var pHintLast2 = pHint.Where(x=>x.IsDie ||( x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
+
+
+                        pHint1 = pHintLast1.Union(pHintLast2).ToList();
+
+                    }
+                    catch (Exception)
+                    {
+                        pHint1 = pHintLast1.ToList();
+
+                    }
+                    //                    pHint1 = pHint.Where(x => x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0)).ToList();
+                }
+            }
+
+            var pRemove = pHint1.Select(x => x.BuyingFormat.GetSide1() == 0);
+            Console.WriteLine(pRemove);
+
+            return pHint1.Where(x => x.BuyingFormat.GetSide1() != 0).ToList();
+        }
+
         public object Clone()
         {
             //creo una copia dell'oggetto da utilizzare per le modifiche
@@ -49,8 +96,11 @@ namespace PapiroMVC.Models
             to.MaxDCut = this.MaxDCut;
             to.MinDCut = this.MinDCut;
             to.TypeOfDCut1 = this.TypeOfDCut1;
+            to.TypeOfDCut2 = this.TypeOfDCut2;
+
+            //***RIGUARDARE
             to.FormatType = this.FormatType;
-        
+
         }
 
 
@@ -58,8 +108,10 @@ namespace PapiroMVC.Models
         { get { return ((MinDCut ?? 0) + (MaxDCut ?? 0)) / 2; } }
 
 
+
+
         //formato in mm
-        public String Formatmm
+        public virtual String Formatmm
         {
             get
             {
@@ -88,12 +140,17 @@ namespace PapiroMVC.Models
         }
 
 
+
+
+
+
         public virtual void UpdateOpenedFormat()
         {
             this.FormatOpened = this.Format;
         }
 
         public bool ShowDCut { get; set; }
+        public bool ShowPrintKinds { get; set; }
 
         protected List<ProductPartsPrintableArticle> productPartPrintableArticles;
         public List<ProductPartsPrintableArticle> ProductPartsPrintableArticlePerView
@@ -149,6 +206,7 @@ namespace PapiroMVC.Models
             ProductPartRigid = 5,
             ProductPartSingleLabelRoll = 6,
             ProductPartSoft = 7,
+            ProductPartDoubleLabelRoll = 8,
         }
 
         public ProductPartType TypeOfProductPart
@@ -209,13 +267,20 @@ namespace PapiroMVC.Models
         public virtual void ToName()
         {
             var x = Product.ProductNameGenerator;
-            x = x.Replace("%PARTFORMATOPENMMSIDE1", this.Formatmm.GetSide1().ToString());
-            x = x.Replace("%PARTFORMATOPENMMSIDE2", this.Formatmm.GetSide2().ToString());
-            x = x.Replace("%PARTFORMATOPENMM", this.Formatmm);
 
-            x = x.Replace("%PARTFORMATOPENSIDE1", this.Format.GetSide1().ToString());
-            x = x.Replace("%PARTFORMATOPENSIDE2", this.Format.GetSide2().ToString());
-            x = x.Replace("%PARTFORMATOPEN", this.Format);
+            if (Formatmm != "")
+            {
+                x = x.Replace("%PARTFORMATOPENMMSIDE1", this.Formatmm.GetSide1().ToString());
+                x = x.Replace("%PARTFORMATOPENMMSIDE2", this.Formatmm.GetSide2().ToString());
+                x = x.Replace("%PARTFORMATOPENMM", this.Formatmm);
+            }
+
+            if (!Format.Contains("+"))
+            {
+                x = x.Replace("%PARTFORMATOPENSIDE1", this.Format.GetSide1().ToString());
+                x = x.Replace("%PARTFORMATOPENSIDE2", this.Format.GetSide2().ToString());
+                x = x.Replace("%PARTFORMATOPEN", this.Format);
+            }
 
             Product.ProductNameGenerator = x;
 
@@ -235,17 +300,17 @@ namespace PapiroMVC.Models
 
 
 
-        public virtual void MergeField(DocX doc) 
+        public virtual void MergeField(DocX doc)
         {
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.ProductPartName", this.ProductPartName));
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.Format", this.Format));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.ServicesNumber", this.ServicesNumber??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.ServicesNumber", this.ServicesNumber ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.FormatOpened", this.FormatOpened));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.SubjectNumber", this.SubjectNumber??0));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut", this.DCut??0));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.IsDCut", this.IsDCut??false));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut1", this.DCut1??0));
-            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut2", this.DCut2??0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.SubjectNumber", this.SubjectNumber ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut", this.DCut ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.IsDCut", this.IsDCut ?? false));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut1", this.DCut1 ?? 0));
+            doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.DCut2", this.DCut2 ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.HaveDCutLimit", this.HaveDCutLimit ?? false));
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.MaxDCut", this.MaxDCut ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("ProductPart.MinDCut", this.MinDCut ?? 0));

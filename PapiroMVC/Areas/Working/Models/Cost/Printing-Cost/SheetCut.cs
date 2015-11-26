@@ -31,19 +31,32 @@ namespace PapiroMVC.Models
         public Cut(String desc, double cutOnSide2, double cutOnSide1)
         {
             this.CodCut = desc;
-            CutOnSide2 = cutOnSide2;
-            CutOnSide1 = cutOnSide1;
+            PartsOnSide2 = cutOnSide2;
+            PartsOnSide1 = cutOnSide1;
+
+            if (PartsOnSide1==0)
+            {
+                PartsOnSide1 = 1;
+            }
+
+            if (PartsOnSide2 == 0)
+            {
+                PartsOnSide2 = 1;
+            }
+
         }
 
-        double CutOnSide2 { get; set; }
-        double CutOnSide1 { get; set; }
+        public double PartsOnSide2 { get; set; }
+        public double PartsOnSide1 { get; set; }
         public String ManualFormat { get; set; }
 
         public double Gain
         {
             get
             {
-                return (CutOnSide1 + 1) * (CutOnSide2 + 1);
+                var den = (PartsOnSide1) * (PartsOnSide2);
+                var res = den != 0 ? 1 / den : 1;
+                return   res;
             }
         }
 
@@ -56,8 +69,8 @@ namespace PapiroMVC.Models
 
             //if (side1 < side2)
             //{
-            var s1 = CutOnSide1 > 0 ? side1 / CutOnSide1 : side1;
-            var s2 = CutOnSide2 > 0 ? side2 / CutOnSide2 : side2;
+            var s1 = PartsOnSide1 > 0 ? side1 / PartsOnSide1 : side1;
+            var s2 = PartsOnSide2 > 0 ? side2 / PartsOnSide2 : side2;
 
             result = s1.ToString("0.##") + "x" + s2.ToString("0.##");
 
@@ -81,10 +94,10 @@ namespace PapiroMVC.Models
         static SheetCut()
         {
             cuts = new Dictionary<String, Cut>();
-            cuts.Add("ct0-0", new Cut("ct1-0", 0, 0)); //70x100
-            cuts.Add("ct2-0", new Cut("ct1-1", 2, 0)); //50x70
+            cuts.Add("ct1-1", new Cut("ct1-0", 1, 1)); //70x100
+            cuts.Add("ct2-1", new Cut("ct1-1", 2, 1)); //50x70
             cuts.Add("ct2-2", new Cut("ct2-0", 2, 2)); //35x50
-            cuts.Add("ct3-0", new Cut("ct3-0", 3, 0)); //33,3x70
+            cuts.Add("ct3-0", new Cut("ct3-0", 3, 1)); //33,3x70
             cuts.Add("ct3-2", new Cut("ct3-2", 3, 2)); //33,3x35
             cuts.Add("ct3-3", new Cut("ct3-3", 3, 3)); //23,3x33,3
 
@@ -103,8 +116,26 @@ namespace PapiroMVC.Models
 
         public static bool IsValid(string maxFormat, string minFormat, string ftoRes)
         {
+
+            if ((maxFormat.GetSide1() +maxFormat.GetSide2()) == 0 && (minFormat.GetSide1()+minFormat.GetSide2())==0)
+            {
+                return true;
+            }
+
             return (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2()) &&
                 (ftoRes.GetSide1() >= minFormat.GetSide1() && ftoRes.GetSide2() >= minFormat.GetSide2());
+        }
+
+
+        public static bool IsValidOnMax(string maxFormat, string minFormat, string ftoRes)
+        {
+
+            if ((maxFormat.GetSide1() + maxFormat.GetSide2()) == 0 && (minFormat.GetSide1() + minFormat.GetSide2()) == 0)
+            {
+                return true;
+            }
+
+            return (ftoRes.GetSide1() <= maxFormat.GetSide1() && ftoRes.GetSide2() <= maxFormat.GetSide2());
         }
 
         public static List<Cut> Cuts(string buyingFormat, string maxFormat, string minFormat, bool noCuts = false, int gain = 0)
@@ -118,7 +149,7 @@ namespace PapiroMVC.Models
                 {
                     var res = (double)gain / (double)i;
                     cuts.Add("ct0-" + i.ToString(), 
-                        new Cut("ct1-0-" + i.ToString(), res, 0));
+                        new Cut("ct1-0-" + i.ToString(), res, 1));
                 }
             }
 

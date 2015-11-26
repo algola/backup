@@ -23,6 +23,9 @@ namespace PapiroMVC.Models
 
         }
 
+
+     //   public Die Die {get;set;}
+
         //some coeff depend on Quntity... so when quantity changes... we want to recalulate
         double quantity;
         public double QuantityProp
@@ -37,7 +40,7 @@ namespace PapiroMVC.Models
 
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
-            base.InitCostDetail(tskExec, articles);
+            base.InitCostDetail(tskExec, articles);        
         }
 
         public override void CostDetailCostCodeRigen()
@@ -53,7 +56,6 @@ namespace PapiroMVC.Models
             base.UpdateCoeff();
 
             //l'esecutore ci dirà quale tipo di quantità mostrare 
-            TaskexEcutorSelected = TaskExecutors.Where(x => x.CodTaskExecutor == CodTaskExecutorSelected).FirstOrDefault();
             TypeOfQuantity = (int)TaskexEcutorSelected.TypeOfQuantity;
 
             if (ProductPartPrinting.CalculatedGain == 0)

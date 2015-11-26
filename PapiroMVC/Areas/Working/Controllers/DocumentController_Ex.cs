@@ -159,6 +159,145 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
+        
+
+        public ActionResult ProductPartPrintRollOptionList(GridSettings gridSettings, string codProductPartTask)
+        {
+
+
+//            var q = productRepository.GetProductPartTaskOptions(id).OfType<ProductPartPrintRollOption>().OrderBy(x=>x.CodProductPartTaskOption);
+
+            var q2 = productRepository.GetProductPartTaskOptions(codProductPartTask).OrderBy(x => x.CodProductPartTaskOption);
+
+            var q = q2.OfType<ProductPartPrintRollOption>();
+            
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3.ToList()
+                    select new
+                    {
+                        id = a.CodProductPartTaskOption,
+                        cell = new string[] 
+                        {                       
+                            a.CodProductPartTaskOption,
+                            a.TypeOfTaskPrint,
+                            a.Ink,
+                            a.Overlay.ToString()
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult ProductPartHotPrintingOptionList(GridSettings gridSettings, string codProductPartTask)
+        {
+
+            var q2 = productRepository.GetProductPartTaskOptions(codProductPartTask).OrderBy(x => x.CodProductPartTaskOption);
+            var q = q2.OfType<ProductPartHotPrintingOption>();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3.ToList()
+                    select new
+                    {
+                        id = a.CodProductPartTaskOption,
+                        cell = new string[] 
+                        {                       
+                            a.CodProductPartTaskOption,
+                            a.Foil,
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public ActionResult ProductPartSerigraphyOptionList(GridSettings gridSettings, string codProductPartTask)
+        {
+
+            var q2 = productRepository.GetProductPartTaskOptions(codProductPartTask).OrderBy(x => x.CodProductPartTaskOption);
+            var q = q2.OfType<ProductPartSerigraphyOption>();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
+
+            int totalRecords = q.Count();
+
+            // create json data
+            int pageIndex = gridSettings.pageIndex;
+            int pageSize = gridSettings.pageSize;
+
+            int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
+
+            int startRow = (pageIndex - 1) * pageSize;
+            int endRow = startRow + pageSize;
+
+            var jsonData = new
+            {
+                total = totalPages,
+                page = pageIndex,
+                records = totalRecords,
+                rows =
+                (
+                    from a in q3.ToList()
+                    select new
+                    {
+                        id = a.CodProductPartTaskOption,
+                        cell = new string[] 
+                        {                       
+                            a.CodProductPartTaskOption,
+                            a.TypeOfTaskSerigraphy,
+                            a.InkSerigraphy,
+                            a.Overlay.ToString()
+                        }
+                    }
+                ).ToArray()
+            };
+
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         private IQueryable<Document> DocumentList(GridSettings gridSettings)
         {
@@ -428,6 +567,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                             cell = new string[] 
                             {
                                 a.CodProduct,
+                                a.CodProduct,
+                                a.CodProduct,
                                 a.ProductRefName,
                                 a.ProductName   //attributo derivato
                             }
@@ -457,6 +598,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             string quantityFilter = string.Empty;
             string unitPriceFilter = string.Empty;
             string totalAmountFilter = string.Empty;
+            string markupFilter = string.Empty;
+                
 
             if (gridSettings.isSearch)
             {
@@ -480,6 +623,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 totalAmountFilter = gridSettings.where.rules.Any(r => r.field == "TotalAmount") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "TotalAmount").data : string.Empty;
+
+                markupFilter = gridSettings.where.rules.Any(r => r.field == "Markup") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "Markup").data : string.Empty;
             }
 
             var q = documentRepository.GetAllDocumentProducts().OrderByDescending(x => x.TimeStampTable).AsQueryable();
@@ -522,6 +668,12 @@ namespace PapiroMVC.Areas.Working.Controllers
                 q = q.Where(c => c.TotalAmount != null && c.TotalAmount.ToLower().Contains(totalAmountFilter.ToLower()));
             }
 
+            if (!string.IsNullOrEmpty(markupFilter))
+            {
+                q = q.Where(c => c.Markup != null && (c.Markup??0).ToString().ToLower().Contains(markupFilter.ToLower()));
+            }
+
+
             switch (gridSettings.sortColumn)
             {
                 case "CodProduct":
@@ -539,10 +691,13 @@ namespace PapiroMVC.Areas.Working.Controllers
                 case "TotalAmount":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.TotalAmount) : q.OrderBy(c => c.TotalAmount);
                     break;
+                case "Markup":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Markup) : q.OrderBy(c => c.Markup);
+                    break;
             }
 
-            var q2 = q.ToList();
-            var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
+            //var q2 = q.ToList();
+            var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
 
             int totalRecords = q.Count();
 
@@ -574,6 +729,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 a.Document.DocumentName + " - " + a.Product.ProductRefName,
                                 a.ProductName,  //attributo derivato
                                 (a.Quantity??0).ToString(),
+                                (a.Markup??0).ToString(),
                                 a.UnitPrice??"0",
                                 a.TotalAmount??"0"
                             }
@@ -617,8 +773,9 @@ namespace PapiroMVC.Areas.Working.Controllers
                             a.CodDocumentProduct,
                             a.CodProduct,      
                             a.Quantity.ToString(),
-                            a.UnitPrice,
-                            a.TotalAmount
+                            (a.Markup??0).ToString(),
+                            a.UnitPrice??"0",
+                            a.TotalAmount??"0"
                         }
                     }
                 ).Distinct().ToArray()

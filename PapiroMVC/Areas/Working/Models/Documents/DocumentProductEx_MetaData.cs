@@ -29,10 +29,13 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResDocumentProduct), "UnitPriceToolTip")]
         public string UnitPrice { get; set; }
 
+        [DisplayNameLocalized(typeof(ResDocumentProduct), "Markup")]
+        [Tooltip(typeof(ResDocumentProduct), "MarkupToolTip")]
+        public string Markup { get; set; }
+
         [DisplayNameLocalized(typeof(ResDocumentProduct), "TotalAmount")]
         [Tooltip(typeof(ResDocumentProduct), "TotalAmountToolTip")]
         public string TotalAmount { get; set; }
-
 
     }
 }

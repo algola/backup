@@ -17,6 +17,7 @@ using PapiroMVC.ServiceLayer;
 using System.Threading;
 using Microsoft.Office.Interop.Word;
 using DocumentFormat.OpenXml.Packaging;
+using System.Threading.Tasks;
 
 
 namespace PapiroMVC.Areas.Working.Controllers
@@ -25,6 +26,8 @@ namespace PapiroMVC.Areas.Working.Controllers
     {
 
         static Assembly g_assembly;
+
+
 
         //public ActionResult PrintOrder(string codDocument)
         //{
@@ -146,6 +149,10 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         public ActionResult PrintOrder(string codDocument, string reportName)
         {
+            int id;
+
+            var dbName = reportName.Replace("LabelRollHead", "");
+
             //carico l'ordine
             Order order = documentRepository.GetAll().OfType<Order>().FirstOrDefault(x => x.CodDocument == codDocument);
 
@@ -157,15 +164,21 @@ namespace PapiroMVC.Areas.Working.Controllers
             order.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(order.CodDocumentProduct);
 
             //estimate
-            order.OrderProduct.Document = (Estimate)documentRepository.GetSingle(order.OrderProduct.CodDocument);
+            order.OrderProduct.Document = documentRepository.GetSingle(order.OrderProduct.CodDocument);
 
             string fileNameMain = Path.Combine(Server.MapPath(@"~/Report"), (reportName == "" || reportName == null) ? "OrderHead.docx" : (reportName + ".docx"));
-            string fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost.docx");
+
+            string fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost" + dbName + ".docx");
+            if (!System.IO.File.Exists(fileNameCost))
+            {
+                fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost" + ".docx");
+            }
+
 
             string retName = order.OrderNumberSerie + "-" + order.OrderNumber;
             retName = retName.PurgeFileName();
 
-            string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), retName + ".docx");
+            string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), retName + dbName + ".docx");
             string fileNameSaveAsAfterRepair = fileNameSaveAs;// Path.Combine(Server.MapPath(@"~/Report"), retName + "AfterRepair.docx");
 
             // Store a global reference to the executing assembly.
@@ -178,6 +191,10 @@ namespace PapiroMVC.Areas.Working.Controllers
             Queue<string> files = new Queue<string>();
             //questo array mi serve per il merge
             Queue<string> filesExtCost = new Queue<string>();
+
+            //questo array mi serve per il merge
+            Queue<string> RepassCost = new Queue<string>();
+
             //questo array mi serve per il merge
             Queue<string> filesDelivery = new Queue<string>();
 
@@ -187,12 +204,41 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var product = productRepository.GetSingle(order.OrderProduct.Product.CodProduct);
             product.ProductParts.FirstOrDefault().MergeField(docMain);
+            try
+            {
+                product.ProductParts.FirstOrDefault().productpartprintings.FirstOrDefault().MergeField(docMain);
+            }
+            catch (Exception)
+            {
+            }
 
             //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
 
             var costs = order.OrderProduct.Costs.OrderBy(x => x.IndexOf);
-
             Console.WriteLine(costs);
+
+
+
+            //group costdetails by taskexecutor
+            List<CostDetail> costDetails = new List<CostDetail>();
+            foreach (var item in costs)
+            {
+                costDetails.AddRange(item.CostDetails);
+            }
+
+            var TaskExecutorGroups = costDetails.GroupBy(p => p.CodTaskExecutorSelected,
+                p => p,
+                (key, g) => new CostDetailGrouped
+                {
+                    CodTaskExecutorSelected = key,
+                    CostDetails = g.ToList()
+                });
+
+            Console.WriteLine(TaskExecutorGroups);
+            //end grouping
+
+
+
 
             foreach (var cost in costs)
             {
@@ -212,15 +258,25 @@ namespace PapiroMVC.Areas.Working.Controllers
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingZRollCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
                     {
-                        var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
+                        #region SingleCostDetail
+                        var cDFileName = Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + dbName + ".docx");
+                        if (!System.IO.File.Exists(cDFileName))
+                        {
+                            cDFileName = Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx");
+                        }
+
+                        var docPrintCD = DocX.Load(cDFileName);
+
                         cd.MergeField(docPrintCD);
                         cd.TaskCost.MergeField(docPrintCD);
-                        //il merge con il cost
+
+                        cd.MergeField(docMain);
+                        cd.TaskCost.MergeField(docMain);
 
                         try
                         {
                             cd.TaskCost.ProductPartTask.ProductPart.MergeField(docPrintCD);
-
+                            cd.TaskCost.ProductPartTask.ProductPart.MergeField(docMain);
                         }
                         catch
                         { }
@@ -235,10 +291,111 @@ namespace PapiroMVC.Areas.Working.Controllers
                         //docPrintCD.Dispose();
                         //xxx.Dispose();
                         #endregion
-
+                        #endregion
                     }
                     else
                     {
+                        if (!cost.CostDetails.FirstOrDefault().JustPrintedInOrder)
+                        {
+
+                            if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "RepassRollCostDetail")
+                            {
+                                //il ripasso potrebbe includere diverse lavorazioni!!!
+                                //ripassi con macchine uguali ---> unisco e salvo
+                                #region RepassRollCostDetail
+
+                                //apro l'header dei costi supplementari e lo salvo
+                                var nomeRepass = Path.Combine(Server.MapPath(@"~/Report"), "RepassCostHeader" + order.CodDocument + ".docx");
+
+                                var docRepassHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCostHeader" + dbName + ".docx");
+                                if (!System.IO.File.Exists(docRepassHeaderFile))
+                                {
+                                    docRepassHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCostHeader.docx");
+                                }
+
+                                var docRepassHeader = DocX.Load(docRepassHeaderFile);
+
+                                //estraggo per macchina
+                                var relatedCostDetails = TaskExecutorGroups.Where(x => x.CodTaskExecutorSelected == cost.CostDetails.FirstOrDefault().CodTaskExecutorSelected).FirstOrDefault().CostDetails;
+
+                                docRepassHeader.SaveAs(nomeRepass);
+                                files.Enqueue(nomeRepass);
+
+                                foreach (var i in relatedCostDetails)
+                                {
+                                    var docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCostDetail" + dbName + ".docx");
+                                    if (!System.IO.File.Exists(docPrePressFile))
+                                    {
+                                        docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCostDetail.docx");
+                                    }
+
+                                    var docPrePress = DocX.Load(docPrePressFile);
+                                    var cv = costDetailRepository.GetSingle(i.CodCost);
+
+                                    var print = true;
+                                    if (cv.TaskCost.ProductPartTask != null)
+                                    {
+                                        print = !cv.TaskCost.ProductPartTask.OptionTypeOfTask.CodOptionTypeOfTask.Contains("_NO");
+                                    }
+
+                                    if (cv.TaskCost.ProductTask != null)
+                                    {
+                                        print = !cv.TaskCost.ProductTask.OptionTypeOfTask.CodOptionTypeOfTask.Contains("_NO");
+                                    }
+
+
+                                    if (print)
+                                    {
+                                        cv.MergeField(docPrePress);
+                                        docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCost" + i.CodCost + ".docx"));
+                                        RepassCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "RepassRollCost" + i.CodCost + ".docx"));
+                                    }
+
+                                    i.JustPrintedInOrder = true;
+
+                                }
+
+                                id = 0;
+                                foreach (var file in RepassCost.Reverse())
+                                {
+                                    using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeRepass, true))
+                                    {
+                                        var altChunkId = "AltChunkId" + id++;
+                                        Console.WriteLine(altChunkId);
+                                        var mainPart = myDoc.MainDocumentPart;
+                                        var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+                                        using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+                                        {
+                                            chunk.FeedData(fileStream);
+                                        }
+                                        var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+                                        altChunk.Id = altChunkId;
+
+                                        var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+                                        mainPart.Document.Body.InsertAfter(altChunk, last);
+                                        mainPart.Document.Save();
+                                    }
+                                }
+
+
+                                #endregion
+
+
+
+
+
+
+
+
+
+
+                            }
+
+
+
+                        }
+
                         var res = cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString();
                         Console.WriteLine(res);
 
@@ -251,9 +408,15 @@ namespace PapiroMVC.Areas.Working.Controllers
             #region costi supplementari
 
             //apro l'header dei costi supplementari e lo salvo
-
             var nomeExt = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + order.CodDocument + ".docx");
-            var docECHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx"));
+
+            var docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader" + dbName + ".docx");
+            if (!System.IO.File.Exists(docECHeaderFile))
+            {
+                docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx");
+            }
+            var docECHeader = DocX.Load(docECHeaderFile);
+
             docECHeader.SaveAs(nomeExt);
             files.Enqueue(nomeExt);
 
@@ -262,13 +425,19 @@ namespace PapiroMVC.Areas.Working.Controllers
             //prestampa
             foreach (var cost in extCost)
             {
-                var docPrePress = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost.docx"));
+                var docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost" + dbName + ".docx");
+                if (!System.IO.File.Exists(docPrePressFile))
+                {
+                    docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost.docx");
+                }
+                var docPrePress = DocX.Load(docPrePressFile);
+
                 cost.MergeField(docPrePress);
                 docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
                 filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
             }
 
-            int id = 0;
+            id = 0;
             foreach (var file in filesExtCost.Reverse())
             {
                 using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
@@ -299,7 +468,14 @@ namespace PapiroMVC.Areas.Working.Controllers
             //apro l'header dei costi supplementari e lo salvo
 
             var nomeDelivery = Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader" + order.CodDocument + ".docx");
-            var docDHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader.docx"));
+
+            var docDHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader" + dbName + ".docx");
+            if (!System.IO.File.Exists(docDHeaderFile))
+            {
+                docDHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader.docx");
+            }
+            var docDHeader = DocX.Load(docDHeaderFile);
+
             docDHeader.SaveAs(nomeDelivery);
             files.Enqueue(nomeDelivery);
 
@@ -380,6 +556,397 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+        public ActionResult PrintOffer(string codProduct)
+        {
+
+            var reportName = "";
+            var dbName = "";
+            int id = 0;
+
+            //carico i documentProduct in preventivo
+            var docsProduct = documentRepository.GetDocumentProductsByCodProduct(codProduct);
+
+            //carico l'ordine
+            var estimate = documentRepository.GetAll().OfType<Estimate>().FirstOrDefault(x => x.CodDocument == docsProduct.FirstOrDefault().CodDocument);
+
+            //cliente dell'ordine
+            Customer cust = (Customer)customerSupplierRepository.GetSingle(estimate.CodCustomer);
+            estimate.CustomerSupplier = cust;
+
+            string fileNameMain = Path.Combine(Server.MapPath(@"~/Report"), (reportName == "" || reportName == null) ? "OfferHead.docx" : (reportName + ".docx"));
+
+            string retName = estimate.EstimateNumberSerie + "-" + estimate.EstimateNumber;
+            retName = retName.PurgeFileName();
+
+            string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), retName + dbName + ".docx");
+            string fileNameSaveAsAfterRepair = fileNameSaveAs;// Path.Combine(Server.MapPath(@"~/Report"), retName + "AfterRepair.docx");
+
+            // Store a global reference to the executing assembly.
+            g_assembly = Assembly.GetExecutingAssembly();
+
+            //// Create the document in memory:
+            var docMain = DocX.Load(fileNameMain);
+
+            //questo array mi serve per il merge
+            Queue<string> files = new Queue<string>();
+
+            estimate.MergeField(docMain);
+
+            var product = productRepository.GetSingle(codProduct);
+            product.MergeField(docMain);
+
+            //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
+
+            var documentProducts = estimate.DocumentProducts.Where(x => x.CodProduct == codProduct).OrderBy(x => x.Quantity);
+
+            foreach (var docProd in documentProducts)
+            {
+                var dProdFileName = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + dbName + ".docx");
+                if (!System.IO.File.Exists(dProdFileName))
+                {
+                    dProdFileName = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + ".docx");
+                }
+
+                docProd.Product = product;
+                var docPrint = DocX.Load(dProdFileName);
+
+                docProd.MergeField(docPrint);
+
+                docPrint.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "DocPro" + docProd.CodDocumentProduct + ".docx"));
+                files.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "DocPro" + docProd.CodDocumentProduct + ".docx"));
+
+                #region costi supplementari
+
+                //questo array mi serve per il merge
+                Queue<string> filesExtCost = new Queue<string>();
+
+                //apro l'header dei costi supplementari e lo salvo
+                var nomeExt = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + estimate.CodDocument + ".docx");
+
+                var docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader" + dbName + ".docx");
+                if (!System.IO.File.Exists(docECHeaderFile))
+                {
+                    docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx");
+                }
+                var docECHeader = DocX.Load(docECHeaderFile);
+
+                docECHeader.SaveAs(nomeExt);
+                files.Enqueue(nomeExt);
+
+                var costs = docProd.Costs;
+
+                //0=incluso, 1=Aux, 2=escluso
+                var extCost = costs.Where(x => x.TypeOfCalcolous == 1 && (x.Quantity ?? 0) != 0);
+                //prestampa
+                foreach (var cost in extCost)
+                {
+                    var docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost" + dbName + ".docx");
+                    if (!System.IO.File.Exists(docPrePressFile))
+                    {
+                        docPrePressFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost.docx");
+                    }
+                    var docPrePress = DocX.Load(docPrePressFile);
+
+                    cost.MergeField(docPrePress);
+                    docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+                    filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+                }
+
+                id = 0;
+                foreach (var file in filesExtCost.Reverse())
+                {
+                    using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
+                    {
+                        var altChunkId = "AltChunkId" + id++;
+                        Console.WriteLine(altChunkId);
+                        var mainPart = myDoc.MainDocumentPart;
+                        var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+                        using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+                        {
+                            chunk.FeedData(fileStream);
+                        }
+                        var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+                        altChunk.Id = altChunkId;
+
+                        var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+                        mainPart.Document.Body.InsertAfter(altChunk, last);
+                        mainPart.Document.Save();
+                    }
+                }
+
+
+                #endregion
+
+            }
+
+            docMain.SaveAs(fileNameSaveAs);
+            docMain.Dispose();
+
+            id = 0;
+            foreach (var file in files.Reverse())
+            {
+                using (WordprocessingDocument myDoc = WordprocessingDocument.Open(fileNameSaveAs, true))
+                {
+                    var altChunkId = "AltChunkId" + id++;
+                    Console.WriteLine(altChunkId);
+                    var mainPart = myDoc.MainDocumentPart;
+                    var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+                    using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+                    {
+                        chunk.FeedData(fileStream);
+                    }
+                    var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+                    altChunk.Id = altChunkId;
+
+                    var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+                    mainPart.Document.Body.InsertAfter(altChunk, last);
+                    mainPart.Document.Save();
+                }
+            }
+
+
+            return File(fileNameSaveAsAfterRepair, "application/file", retName + ".docx");
+
+        }
+
+
+        //public ActionResult PrintOrder(string codDocument, string reportName)
+        //{
+        //    //carico l'ordine
+        //    Order order = documentRepository.GetAll().OfType<Order>().FirstOrDefault(x => x.CodDocument == codDocument);
+
+        //    //cliente dell'ordine
+        //    Customer cust = (Customer)customerSupplierRepository.GetSingle(order.CodCustomer);
+        //    order.CustomerSupplier = cust;
+
+        //    //il suo prodotto con la sua quantità
+        //    order.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(order.CodDocumentProduct);
+
+        //    //estimate
+        //    order.OrderProduct.Document = (Estimate)documentRepository.GetSingle(order.OrderProduct.CodDocument);
+
+        //    string fileNameMain = Path.Combine(Server.MapPath(@"~/Report"), (reportName == "" || reportName == null) ? "OrderHead.docx" : (reportName + ".docx"));
+        //    string fileNameCost = Path.Combine(Server.MapPath(@"~/Report"), "Cost.docx");
+
+        //    string retName = order.OrderNumberSerie + "-" + order.OrderNumber;
+        //    retName = retName.PurgeFileName();
+
+        //    string fileNameSaveAs = Path.Combine(Server.MapPath(@"~/Report"), retName + ".docx");
+        //    string fileNameSaveAsAfterRepair = fileNameSaveAs;// Path.Combine(Server.MapPath(@"~/Report"), retName + "AfterRepair.docx");
+
+        //    // Store a global reference to the executing assembly.
+        //    g_assembly = Assembly.GetExecutingAssembly();
+
+        //    //// Create the document in memory:
+        //    var docMain = DocX.Load(fileNameMain);
+
+        //    //questo array mi serve per il merge
+        //    Queue<string> files = new Queue<string>();
+        //    //questo array mi serve per il merge
+        //    Queue<string> filesExtCost = new Queue<string>();
+        //    //questo array mi serve per il merge
+        //    Queue<string> filesDelivery = new Queue<string>();
+
+        //    order.MergeField(docMain);
+        //    order.OrderProduct.MergeField(docMain);
+        //    order.OrderProduct.Product.MergeField(docMain);
+
+        //    var product = productRepository.GetSingle(order.OrderProduct.Product.CodProduct);
+        //    product.ProductParts.FirstOrDefault().MergeField(docMain);
+
+        //    //    product.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault().MergeField(docMain);
+
+        //    var costs = order.OrderProduct.Costs.OrderBy(x => x.IndexOf);
+
+        //    Console.WriteLine(costs);
+
+        //    foreach (var cost in costs)
+        //    {
+        //        // Create the document in memory:
+        //        //var docCost = DocX.Load(fileNameCost);
+        //        //                cost.MergeField(docCost);
+
+        //        //try
+        //        //{
+        //        var cd = cost.CostDetails.FirstOrDefault();
+        //        if (cd != null)
+        //        {
+        //            cd = costDetailRepository.GetSingle(cd.CodCostDetail);
+        //            cd.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+
+        //            if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
+        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingZRollCostDetail" ||
+        //                cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
+        //            {
+        //                var docPrintCD = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() + ".docx"));
+        //                cd.MergeField(docPrintCD);
+        //                cd.TaskCost.MergeField(docPrintCD);
+        //                //il merge con il cost
+
+        //                try
+        //                {
+        //                    cd.TaskCost.ProductPartTask.ProductPart.MergeField(docPrintCD);
+        //                }
+        //                catch
+        //                { }
+
+        //                docPrintCD.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+        //                files.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+
+        //                #region Merge con Docx     (vecchio metodo)
+        //                //var xxx = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "Cost" + cost.CodCost + ".docx"));
+
+        //                //docMain.InsertDocument(xxx);
+        //                //docPrintCD.Dispose();
+        //                //xxx.Dispose();
+        //                #endregion
+
+        //            }
+        //            else
+        //            {
+        //                var res = cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString();
+        //                Console.WriteLine(res);
+
+        //            }
+        //            // docMain.InsertDocument(docCost);
+
+        //        }
+        //    }
+
+        //    #region costi supplementari
+
+        //    //apro l'header dei costi supplementari e lo salvo
+
+        //    var nomeExt = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + order.CodDocument + ".docx");
+        //    var docECHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx"));
+        //    docECHeader.SaveAs(nomeExt);
+        //    files.Enqueue(nomeExt);
+
+        //    //0=incluso, 1=Aux, 2=escluso
+        //    var extCost = costs.Where(x => x.TypeOfCalcolous == 1 && (x.Quantity ?? 0) != 0);
+        //    //prestampa
+        //    foreach (var cost in extCost)
+        //    {
+        //        var docPrePress = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "ExternalCost.docx"));
+        //        cost.MergeField(docPrePress);
+        //        docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+        //        filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+        //    }
+
+        //    int id = 0;
+        //    foreach (var file in filesExtCost.Reverse())
+        //    {
+        //        using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
+        //        {
+        //            var altChunkId = "AltChunkId" + id++;
+        //            Console.WriteLine(altChunkId);
+        //            var mainPart = myDoc.MainDocumentPart;
+        //            var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+        //            using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+        //            {
+        //                chunk.FeedData(fileStream);
+        //            }
+        //            var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+        //            altChunk.Id = altChunkId;
+
+        //            var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+        //            mainPart.Document.Body.InsertAfter(altChunk, last);
+        //            mainPart.Document.Save();
+        //        }
+        //    }
+
+
+        //    #endregion
+
+        //    #region consegne
+
+        //    //apro l'header dei costi supplementari e lo salvo
+
+        //    var nomeDelivery = Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader" + order.CodDocument + ".docx");
+        //    var docDHeader = DocX.Load(Path.Combine(Server.MapPath(@"~/Report"), "DeliveryHeader.docx"));
+        //    docDHeader.SaveAs(nomeDelivery);
+        //    files.Enqueue(nomeDelivery);
+
+        //    #endregion
+
+        //    #region Immagine
+        //    //using (MemoryStream ms = new MemoryStream())
+        //    //{
+        //    //    System.Drawing.Image myImg = System.Drawing.Image.FromFile(Path.Combine(Server.MapPath(@"~/Report"), "montaggio.png"));
+
+        //    //    myImg.Save(ms, myImg.RawFormat);  // Save your picture in a memory stream.
+        //    //    ms.Seek(0, SeekOrigin.Begin);
+
+        //    //    Novacode.Image img = docMain.AddImage(ms); // Create image.
+
+        //    //    // Insert an emptyParagraph into this document.
+        //    //    Novacode.Paragraph p = docMain.InsertParagraph("", false);
+
+        //    //    Picture pic1 = img.CreatePicture();     // Create picture.
+        //    //    //   pic1.SetPictureShape(BasicShapes.cube); // Set picture shape (if needed)
+
+        //    //    p.InsertPicture(pic1, 0); // Insert picture into paragraph.
+
+        //    //}
+        //    #endregion
+
+        //    docMain.SaveAs(fileNameSaveAs);
+        //    docMain.Dispose();
+
+        //    id = 0;
+        //    foreach (var file in files.Reverse())
+        //    {
+        //        using (WordprocessingDocument myDoc = WordprocessingDocument.Open(fileNameSaveAs, true))
+        //        {
+        //            var altChunkId = "AltChunkId" + id++;
+        //            Console.WriteLine(altChunkId);
+        //            var mainPart = myDoc.MainDocumentPart;
+        //            var chunk = mainPart.AddAlternativeFormatImportPart(DocumentFormat.OpenXml.Packaging.AlternativeFormatImportPartType.WordprocessingML, altChunkId);
+        //            using (System.IO.FileStream fileStream = System.IO.File.Open(file, System.IO.FileMode.Open))
+        //            {
+        //                chunk.FeedData(fileStream);
+        //            }
+        //            var altChunk = new DocumentFormat.OpenXml.Wordprocessing.AltChunk();
+        //            altChunk.Id = altChunkId;
+
+        //            var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
+
+        //            mainPart.Document.Body.InsertAfter(altChunk, last);
+        //            mainPart.Document.Save();
+        //        }
+        //    }
+
+        //    //// Open a doc file.
+        //    //Application application = new Application();
+        //    //Microsoft.Office.Interop.Word.Document document = application.Documents.Open(fileNameSaveAs, OpenAndRepair: true);
+
+
+        //    //Object fnsa = (Object)fileNameSaveAsAfterRepair;
+        //    //// Object of Missing "Null Value".
+        //    //Object oMissing = System.Reflection.Missing.Value;
+
+        //    //// Object of false.
+        //    //Object oFalse = false;
+        //    //// Save the document.
+        //    //document.SaveAs
+        //    //(
+        //    //    ref fnsa, ref oMissing, ref oMissing, ref oMissing,
+        //    //    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+        //    //    ref oMissing, ref oMissing, ref oMissing, ref oMissing, ref oMissing,
+        //    //    ref oMissing, ref oMissing
+        //    //);            // Close word.
+
+        //    //document.Close();
+        //    //application.Quit();
+
+
+        //    return File(fileNameSaveAsAfterRepair, "application/file", retName + ".docx");
+
+        //}
+
         /// <summary>
         /// This Action returns partial view of CosteDetail
         /// </summary>
@@ -415,15 +982,62 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.Update();
             Session["CostDetail"] = cv;
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
         [HttpPost]
+        public ActionResult ChangeDocumentProductMarkup(Double markup, String codDocumentProduct)
+        {
+            var docProduct = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+
+            var doc = documentRepository.GetSingle(docProduct.CodDocument);
+            docProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+
+            docProduct.Markup = markup;
+            docProduct.UpdateTotal();
+
+            documentRepository.Edit(doc);
+            documentRepository.Save();
+
+            return PartialView("_PricePartial", docProduct);
+        }
+
+
+        [HttpPost]
+        public ActionResult ChangeDocumentProductUnitPrice(string unitPrice, String codDocumentProduct)
+        {
+            var docProduct = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+
+            var doc = documentRepository.GetSingle(docProduct.CodDocument);
+            docProduct = doc.DocumentProducts.FirstOrDefault(x => x.CodDocumentProduct == codDocumentProduct);
+
+            docProduct.UnitPriceLocked = !(unitPrice == "" || unitPrice == null);
+
+            docProduct.UnitPrice = unitPrice;
+            docProduct.UpdateTotal();
+
+            documentRepository.Edit(doc);
+            documentRepository.Save();
+
+            return PartialView("_PricePartial", docProduct);
+        }
+
+
+
+
+        [HttpPost]
         public ActionResult GetPartialCost(String codTaskExecutor, String codCost)
         {
-            PrintingSheetCostDetail cv = (PrintingSheetCostDetail)Session["CostDetail"];
+            CostDetail cv = (CostDetail)Session["CostDetail"];
+
             cv.CodTaskExecutorSelected = codTaskExecutor;
             cv.Update();
+
+            costDetailRepository.Edit(cv);
+            costDetailRepository.Save();
+
             Session["CostDetail"] = cv;
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
@@ -465,7 +1079,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     x.BuyingFormat = item;
                     x.PrintingFormat = item;
 
-
                 }
 
             }
@@ -473,6 +1086,198 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return null;
         }
+
+
+        [HttpPost]
+        public ActionResult AddProductPartPrintRollOption(ProductPartPrintRollOption op)
+        {
+
+            var status = "err";
+
+            if (ModelState.IsValid)
+            {
+                status = "ok";
+                var obj = new
+                {
+                    textStatus = status,
+                };
+
+                productRepository.AddProductPartTaskOption(op);
+                productRepository.Save();
+
+
+                PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+                cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == op.CodProductPartTask).ProductPartTaskOptions = productRepository.GetProductPartTaskOptions(op.CodProductPartTask).ToList();
+                
+                cv.Update();
+                Session["CostDetail"] = cv;
+
+                SaveCostDetail();
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                //this is error
+                status = "err";
+                var retPW = PartialView(this, "_ProductPartPrintRollOptionError", op);
+
+                var obj = new
+                {
+                    textStatus = status,
+                    view = retPW
+                };
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult DeleteProductPartTaskOption(string ids)
+        {
+
+            string[] strings = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(ids);
+
+            var status = "err";
+
+            try
+            {
+                status = "ok";
+                var obj = new
+                {
+                    textStatus = status,
+                };
+
+                CostDetail cv = (CostDetail)Session["CostDetail"];
+
+                string codProductPartTask = "";
+
+                foreach (var id in strings.ToList())
+                {
+                    codProductPartTask=productRepository.DeleteProductPartTaskOption(id);
+                    productRepository.Save();
+                }
+
+                var x= productRepository.GetProductPartTaskOptions(codProductPartTask).ToList();
+                var productPartTask = cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == codProductPartTask);
+
+
+                productPartTask.ProductPartTaskOptions = x; 
+
+                cv.Update();
+                Session["CostDetail"] = cv;
+
+                SaveCostDetail();
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+
+
+            }
+            catch (Exception)
+            {
+
+                //this is error
+                status = "err";
+                var obj = new
+                {
+                    textStatus = status,
+                };
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult AddProductPartHotPrintingOption(ProductPartHotPrintingOption op)
+        {
+
+            var status = "err";
+
+            if (ModelState.IsValid)
+            {
+                status = "ok";
+                var obj = new
+                {
+                    textStatus = status,
+                };
+
+                productRepository.AddProductPartTaskOption(op);
+                productRepository.Save();
+
+                RepassRollCostDetail cv = (RepassRollCostDetail)Session["CostDetail"];
+                cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == op.CodProductPartTask).ProductPartTaskOptions = productRepository.GetProductPartTaskOptions(op.CodProductPartTask).ToList();
+
+                cv.Update();
+                Session["CostDetail"] = cv;
+
+                SaveCostDetail();
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                //this is error
+                status = "err";
+
+                var retPW = PartialView(this, "_ProductPartHotPrintingOptionError", op);
+
+                var obj = new
+                {
+                    textStatus = status,
+                    view = retPW
+                };
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult AddProductPartSerigraphyOption(ProductPartSerigraphyOption op)
+        {
+
+            var status = "err";
+
+            if (ModelState.IsValid)
+            {
+                status = "ok";
+                var obj = new
+                {
+                    textStatus = status,
+                };
+
+                productRepository.AddProductPartTaskOption(op);
+                productRepository.Save();
+
+                RepassRollCostDetail cv = (RepassRollCostDetail)Session["CostDetail"];
+                cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == op.CodProductPartTask).ProductPartTaskOptions = productRepository.GetProductPartTaskOptions(op.CodProductPartTask).ToList();
+
+                cv.Update();
+                Session["CostDetail"] = cv;
+
+                SaveCostDetail();
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+            {
+                //this is error
+                status = "err";
+                var retPW = PartialView(this, "_ProductPartSerigraphyOptionError", op);
+
+                var obj = new
+                {
+                    textStatus = status,
+                    view = retPW
+                };
+
+                return Json(obj, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         /// <summary>
         /// This Action modifies buyingFormat and Update Cost.
@@ -505,10 +1310,13 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.PrintingFormat = buyingFormat;
             cv.Update();
 
-
             Session["CostDetail"] = cv;
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
             return PartialView(cv.PartialViewName, cv);
         }
+
+
 
         [HttpGet]
         public ActionResult GetPrintingZRollCostDetailResult()
@@ -541,6 +1349,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.Update();
             Session["CostDetail"] = cv;
 
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
+
             return PartialView(cv.PartialViewName, cv);
         }
 
@@ -562,7 +1373,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
-            var inizio = DateTime.Now;
+            var inizio1 = DateTime.Now;
 
             if (ModelState.IsValid)
             {
@@ -593,8 +1404,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 if (TryValidateModel(prodPart))
                 {
-                    productRepository.Edit(prod);
-                    productRepository.Save();
 
                     cv.ProductPart.IsDCut = true;
 
@@ -602,6 +1411,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                     cv.ProductPart.DCut2 = Convert.ToDouble(dCut2 == "" ? "0" : dCut2);
                     cv.ProductPart.Format = format;
                     cv.ProductPart.UpdateOpenedFormat();
+
+                    productRepository.Edit(prod);
+                    productRepository.Save();
+
                 }
                 else
                 {
@@ -627,8 +1440,17 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.Update();
             Session["CostDetail"] = cv;
 
-            var tempo = DateTime.Now.Subtract(inizio);
-            Console.WriteLine(tempo.TotalSeconds);
+            var inizio2 = DateTime.Now;
+
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
+
+            var tempo1 = DateTime.Now.Subtract(inizio1);
+            var tempo2 = DateTime.Now.Subtract(inizio2);
+
+
+            Console.WriteLine(tempo1.TotalSeconds);
+            Console.WriteLine(tempo2.TotalSeconds);
 
             return PartialView(cv.PartialViewName, cv);
 
@@ -649,6 +1471,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             cv.PrintingFormat = PrintingFormat;
             Session["CostDetail"] = cv;
+
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
             return ChangePPartFormat(format, dCut1, dCut2);
         }
 
@@ -680,6 +1505,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.PrintingFormat = buyingFormat;
             Session["CostDetail"] = cv;
+
+            //   var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
             return ChangePPartFormat(format, dCut1, dCut2, maxGain1, maxGain2);
         }
 
@@ -695,6 +1523,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.PrintingFormat = PrintingFormat;
             cv.Update();
             Session["CostDetail"] = cv;
+
+            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+
             return PartialView(cv.PartialViewName, cv);
         }
 
@@ -702,12 +1533,31 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult ChangePrintingFormatRepass(string PrintingFormat)
         {
             RepassRollCostDetail cv = (RepassRollCostDetail)Session["CostDetail"];
+            PapiroService p = (PapiroService)Session["PapiroService"];
+
             cv.WorkingFormat = PrintingFormat;
             cv.Update();
             Session["CostDetail"] = cv;
 
-            costDetailRepository.Edit(cv);
-            costDetailRepository.Save();
+            SaveCostDetail();
+
+            var lst = p.CostDetailsDic.Select(x => x.Value).OfType<RepassRollCostDetail>().Where(y => y.CodTaskExecutorSelected == cv.CodTaskExecutorSelected);
+
+            foreach (var item in lst.Where(x=>x.CodCostDetail != cv.CodCostDetail))
+            {
+                item.WorkingFormat = PrintingFormat;
+                item.Update();
+                Session["CostDetail" + item.CodCostDetail] = item;
+
+                SaveCostDetail(item.CodCostDetail);
+
+                //System.Threading.Tasks.Task.Factory.StartNew(() => {
+                ////var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail(item.CodCostDetail));
+                //});
+
+            }
+
+//            
 
             return PartialView(cv.PartialViewName, cv);
         }
@@ -740,7 +1590,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return cv;
         }
-
 
         ///// <summary>
         ///// Action load Cost and generates related CosteDetail if it doesn't exist
@@ -822,6 +1671,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             p.CostDetailRepository = costDetailRepository;
             p.TaskExecutorRepository = taskExecutorRepository;
             p.ArticleRepository = articleRepository;
+            p.TypeOfTaskRepository = typeOfTaskRepository;
+
             p.CurrentDatabase = CurrentDatabase;
 
             p.EditOrCreateAllCost(id);
@@ -839,7 +1690,10 @@ namespace PapiroMVC.Areas.Working.Controllers
             p.CostDetailRepository = costDetailRepository;
             p.TaskExecutorRepository = taskExecutorRepository;
             p.ArticleRepository = articleRepository;
+            p.TypeOfTaskRepository = typeOfTaskRepository;
             p.CurrentDatabase = CurrentDatabase;
+
+            p.InitCostDocumentProduct(costDetailRepository.GetSingle(id).TaskCost.CodDocumentProduct);
 
             var cv = p.EditCostAutomatically(id, new Guid());
             //Console.WriteLine(cv.GainForRun);
@@ -849,8 +1703,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                 return View("NotImplementedCostDetail");
             }
 
-            Session["CodCost"] = id;
             Session["CostDetail"] = cv;
+            Session["PapiroService"] = p;
 
             Console.Write(cv.Error);
 
@@ -884,8 +1738,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                     viewName = "ControlTableCostDetail";
                     break;
 
-                case CostDetail.CostDetailType.RepassRollCostDetail:
 
+                case CostDetail.CostDetailType.ImplantMeshCostDetail:
+                case CostDetail.CostDetailType.ImplantHotPrintingCostDetail:
+                case CostDetail.CostDetailType.RepassRollCostDetail:
 
                     //get ST codCost
                     cv.CodPartPrintingCostDetail = p.DocumentRepository.GetCostsByCodDocumentProduct(cv.TaskCost.CodDocumentProduct).Where(y1 => y1.CodItemGraph == "ST").Select(z => z.CodCost);
@@ -897,22 +1753,26 @@ namespace PapiroMVC.Areas.Working.Controllers
                         foreach (var item in cv.CodPartPrintingCostDetail)
                         {
                             var cv2 = p.CostDetailRepository.GetSingle(item);
-                            cv.Printers.Add(cv2);
-                            cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
+                            if (!cv.Printers.Select(x=>x.CodCostDetail).Contains(cv2.CodCostDetail))
+                            {
+                                cv.Printers.Add(cv2);
+                                cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());                                
+                            }
                         }
                     }
 
-                    
+
                     viewName = "PrintingCostDetail";
                     break;
 
                 default:
+                    viewName = "ControlTableCostDetail";
+
                     break;
             }
 
             return View(viewName, cv);
         }
-
 
         [HttpGet]
         public ActionResult EditCostTroggleLock(string id)
@@ -1099,19 +1959,29 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         [HttpParamAction]
         [HttpGet]
-        public ActionResult SaveCostDetail()
+        public ActionResult SaveCostDetail(string optCod = "")
         {
-            CostDetail cv = (CostDetail)Session["CostDetail"];
+
+            disposable = false;
+
+            CostDetail cv = (CostDetail)Session["CostDetail" + optCod];
 
             PapiroService p = new PapiroService();
             p.DocumentRepository = documentRepository;//new DocumentRepository();
             p.CostDetailRepository = costDetailRepository;
             p.TaskExecutorRepository = taskExecutorRepository;
             p.ArticleRepository = articleRepository;
+            p.TypeOfTaskRepository = typeOfTaskRepository;
             p.CurrentDatabase = CurrentDatabase;
-            p.SaveCostDetailAutomatically(cv);
+
+            p.InitCostDocumentProduct(costDetailRepository.GetSingle(cv.CodCost).TaskCost.CodDocumentProduct);
+
+            var cvRet = p.SaveCostDetailFromController(cv);
 
             var idRet = (string)Session["codProduct"];
+            Session["CostDetail"+optCod] = cvRet;
+
+            disposable = true;
 
             if (idRet != null)
             {
@@ -1121,6 +1991,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 return Json(new { redirectUrl = Url.Action("Index", new { area = "" }) }, JsonRequestBehavior.AllowGet);
             }
+
         }
 
         [HttpParamAction]
@@ -1214,7 +2085,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 throw new NotFoundResException();
             }
 
-            ((Order)prod).ReportOrderNames = documentRepository.GetAllReportOrderName();
+            ((Order)prod).ReportOrderNames = documentRepository.GetAllReportOrderName(CurrentDatabase);
             prod.DocumentStates = documentRepository.GetAllDocumentStates(id).ToList();
             prod.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(prod.CodDocumentProduct);
 
@@ -1562,7 +2433,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult EditOrder(PapiroMVC.Models.Order c)
         {
             var taskList = this.typeOfTaskRepository.GetAll();
-            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName();
+            ((Order)c).ReportOrderNames = documentRepository.GetAllReportOrderName(CurrentDatabase);
 
             if (ModelState.IsValid)
             {

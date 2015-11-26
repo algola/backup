@@ -120,6 +120,24 @@
   <data name="AvarageRunPerHour" xml:space="preserve">
     <value>Metri/min.</value>
   </data>
+  <data name="AvarageRunPerHourFlat" xml:space="preserve">
+    <value>Tiratura oraria media</value>
+  </data>
+  <data name="AvarageRunPerHourFlatToolTip" xml:space="preserve">
+    <value>Indica in caso di stampa la tiratura media oraria</value>
+  </data>
+  <data name="AvarageRunPerHourFoilStamping" xml:space="preserve">
+    <value>Tiratura oraria media</value>
+  </data>
+  <data name="AvarageRunPerHourFoilStampingToolTip" xml:space="preserve">
+    <value>Indica le battute orarie in produzione nella Laminazione</value>
+  </data>
+  <data name="AvarageRunPerHourSerigraphy" xml:space="preserve">
+    <value>Tiratura oraria media</value>
+  </data>
+  <data name="AvarageRunPerHourSerigraphyToolTip" xml:space="preserve">
+    <value>Indica le battute in produzione nella Serigrafia</value>
+  </data>
   <data name="AvarageRunPerHourToolTip" xml:space="preserve">
     <value>Indica i metri al minuto in produzione</value>
   </data>
@@ -132,6 +150,18 @@
   <data name="CostPerHourRunningBWToolTip" xml:space="preserve">
     <value>E' possibile indicare un costo orario della lavorazione/macchina quando la stampa è in Bianco e Nero</value>
   </data>
+  <data name="CostPerHourRunningFoilStamping" xml:space="preserve">
+    <value>Costo all'ora (tiratura) Laminazione</value>
+  </data>
+  <data name="CostPerHourRunningFoilStampingToolTip" xml:space="preserve">
+    <value>E' possibile indicare un costo orario per la tiratura della Laminazione</value>
+  </data>
+  <data name="CostPerHourRunningSerigraphy" xml:space="preserve">
+    <value>Costo all'ora (tiratura) Serigrafia</value>
+  </data>
+  <data name="CostPerHourRunningSerigraphyToolTip" xml:space="preserve">
+    <value>E' possibile indicare un costo orario per la tiratura della Serigrafia</value>
+  </data>
   <data name="CostPerHourRunningToolTip" xml:space="preserve">
     <value>Indica il costo orario della lavorazione/macchina</value>
   </data>
@@ -143,6 +173,18 @@
   </data>
   <data name="CostPerHourStartingBWToolTip" xml:space="preserve">
     <value>E' possibile indicare un costo orario per l'avviamento quando la stampa è in Bianco e Nero</value>
+  </data>
+  <data name="CostPerHourStartingFoilStamping" xml:space="preserve">
+    <value>Costo all'ora (avviamento) Laminazione</value>
+  </data>
+  <data name="CostPerHourStartingFoilStampingToolTip" xml:space="preserve">
+    <value>E' possibile indicare un costo orario per l'avviamento per la Laminazione</value>
+  </data>
+  <data name="CostPerHourStartingSerigraphy" xml:space="preserve">
+    <value>Costo all'ora (avviamento) Serigrafia</value>
+  </data>
+  <data name="CostPerHourStartingSerigraphyToolTip" xml:space="preserve">
+    <value>E' possibile indicare un costo orario per l'avviamento della Serigrafia</value>
   </data>
   <data name="CostPerHourStartingToolTip" xml:space="preserve">
     <value>Indica il costo orario in avviamento</value>
@@ -168,6 +210,12 @@
   <data name="StartingTime2ToolTip" xml:space="preserve">
     <value>Indica il tempo in hh:mm degli avviamenti successivi al primo per il cambio del rotolo</value>
   </data>
+  <data name="StartingTimeFoilStamping" xml:space="preserve">
+    <value>Tempo avviamento Laminazione</value>
+  </data>
+  <data name="StartingTimeFoilStampingToolTip" xml:space="preserve">
+    <value>Indica il tempo in hh:mm relativo all'avviamento per la Laminazione</value>
+  </data>
   <data name="StartingTimePerColor" xml:space="preserve">
     <value>Avv. per colore</value>
   </data>
@@ -179,6 +227,12 @@
   </data>
   <data name="StartingTimeRetroToolTip" xml:space="preserve">
     <value>Indica il tempo in hh:mm relativo all'avviamento per la voltura</value>
+  </data>
+  <data name="StartingTimeSerigraphy" xml:space="preserve">
+    <value>Tempo avviamento Serigrafia</value>
+  </data>
+  <data name="StartingTimeSerigraphyToolTip" xml:space="preserve">
+    <value>Indica il tempo in hh:mm relativo all'avviamento per la Serigrafia</value>
   </data>
   <data name="TimeForfait" xml:space="preserve">
     <value>Tempo minimale</value>

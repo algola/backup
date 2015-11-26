@@ -16,9 +16,9 @@
                 @Html.T(strings, "HeadSerigraphyType")
             </div>
             <div class=" no-padding controls col-sm-9">
-                @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new {autocomplete="off", data_autocomplete_url= Url.Action("TypeOfTaskSerigraphyAutoComplete","Product",null) })*
+                @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("MeshAutoComplete", "Article", null) })*
                 @*@Html.AlgolaAutocompleteFor(model => model.TypeOfTaskSerigraphy,  "TypeOfTaskSerigraphyAutoComplete", "Product")**@
-                @Html.ValidationMessageFor(model=>model.TypeOfTaskSerigraphy)
+                @Html.ValidationMessageFor(model => model.TypeOfTaskSerigraphy)
             </div>
         </div>
         <div class="row">
@@ -46,7 +46,7 @@
     <div class="col-sm-3 control-label no-padding-right"></div>
     <div class="col-sm-9">
         <div class=" no-padding controls col-md-4">
-            @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("TypeOfTaskSerigraphyAutoComplete", "Product", null) })*
+            @Html.TextBoxFor(model => model.TypeOfTaskSerigraphy, new { autocomplete = "off", data_autocomplete_url = Url.Action("MeshAutoComplete", "Article", null) })*
             @Html.ValidationMessageFor(model => model.TypeOfTaskSerigraphy)
         </div>
         <div class="no-padding controls col-md-4">

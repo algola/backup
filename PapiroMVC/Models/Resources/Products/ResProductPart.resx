@@ -162,6 +162,12 @@
   <data name="Format" xml:space="preserve">
     <value>F.to chiuso lavoro</value>
   </data>
+  <data name="FormatA" xml:space="preserve">
+    <value>F.to etichetta</value>
+  </data>
+  <data name="FormatB" xml:space="preserve">
+    <value>F.to controetichetta</value>
+  </data>
   <data name="FormatLabel" xml:space="preserve">
     <value>F.to etichetta</value>
   </data>
@@ -219,6 +225,12 @@
   <data name="PrintingTypeToolTip" xml:space="preserve">
     <value>Tipo di Stampa</value>
   </data>
+  <data name="PrintSide" xml:space="preserve">
+    <value>Indicazioni di stampa</value>
+  </data>
+  <data name="PrintSideToolTip" xml:space="preserve">
+    <value>Indicazioni del lato interno o esterno di stampa</value>
+  </data>
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
   </data>
@@ -263,5 +275,11 @@
   </data>
   <data name="SubjectNumberToolTip" xml:space="preserve">
     <value>il numero di soggetti differti in stampa con lo stesso formato e caratteristiche </value>
+  </data>
+  <data name="Formatmm" xml:space="preserve">
+    <value>F.to mm</value>
+  </data>
+  <data name="FormatmmToolTip" xml:space="preserve">
+    <value>Formato in mm</value>
   </data>
 </root>

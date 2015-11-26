@@ -64,7 +64,6 @@ namespace PapiroMVC.Models
             return ret;
         }
 
-
         protected List<ProductPartTaskOption> productPartTaskOptions;
         public List<ProductPartTaskOption> ProductPartTaskOptionsPerView
         {
@@ -86,8 +85,6 @@ namespace PapiroMVC.Models
             }
 
         }
-
-
 
         public virtual void ToName()
         {
@@ -167,9 +164,25 @@ namespace PapiroMVC.Models
             to.CodProductPartTask = this.CodProductPartTask;
             to.OptionTypeOfTask = this.OptionTypeOfTask;
             to.CodOptionTypeOfTask = this.CodOptionTypeOfTask;
+
+
+            foreach (var mk in ProductPartTaskOptions)
+            {
+                var mk2 = (ProductPartTaskOption)mk.Clone();
+                //                mk2.ProductPartPrintingGain = to;
+                if (to.ProductPartTaskOptions == null)
+                {
+                    to.ProductPartTaskOptions = new HashSet<ProductPartTaskOption>();
+                }
+
+                to.ProductPartTaskOptions.Add(mk2);
+
+            }
+
+
         }
 
-        public object Clone()
+        public virtual object Clone()
         {
             //creo una copia dell'oggetto da utilizzare per le modifiche
             var kindOfObject = this.GetType();

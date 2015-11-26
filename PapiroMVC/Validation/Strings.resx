@@ -381,4 +381,25 @@
   <data name="SERIGRAFIASOLOTIPI_UVOPACO" xml:space="preserve">
     <value>UV Opaca</value>
   </data>
+  <data name="FormatValidation" xml:space="preserve">
+    <value>^(\d{1,4})((\,\d{0,5}){0,1})[xX](\d{1,4})((\,\d{0,5}){0,1})?$</value>
+  </data>
+  <data name="FormatTypeName0" xml:space="preserve">
+    <value>Quadrata</value>
+  </data>
+  <data name="FormatTypeName1" xml:space="preserve">
+    <value>Ovale</value>
+  </data>
+  <data name="FormatTypeName2" xml:space="preserve">
+    <value>Sagomata</value>
+  </data>
+  <data name="FormatTypeName3" xml:space="preserve">
+    <value>Rettangolare</value>
+  </data>
+  <data name="FormatTypeName4" xml:space="preserve">
+    <value>Triangolare</value>
+  </data>
+  <data name="FormatTypeName5" xml:space="preserve">
+    <value>Rotonda</value>
+  </data>
 </root>

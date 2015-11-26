@@ -200,7 +200,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateProduct(ProductViewModel pv)
         {
-           // var qts = pv.Quantities;
+            // var qts = pv.Quantities;
             var product = pv.Product;
 
             foreach (var item in product.ProductParts)
@@ -227,8 +227,57 @@ namespace PapiroMVC.Areas.Working.Controllers
                 }
             }
 
+
+            var ok = true;
+
+            var taskList = typeOfTaskRepository.GetAll().ToList();
+            var productParts = pv.Product.ProductParts;
+            foreach (var pPart in productParts)
+            {
+                //per tutte le lavorazioni voglio controllare che esista almeno una macchina e almeno il formato giusto
+                var lstTask = pPart.ProductPartTasks.Where(x => !x.CodOptionTypeOfTask.Contains("_NO"));
+                var lstTaskExecutor = taskExecuteRepository.GetAll().ToList();
+
+
+                foreach (var item in lstTask)
+                {
+                    var t = taskList.FirstOrDefault(y => y.OptionTypeOfTasks.Where(x => x.CodOptionTypeOfTask == item.CodOptionTypeOfTask).Count() > 0);
+                    var s = TaskExecutor.FilterByTask(lstTaskExecutor.AsQueryable(), t.CodTypeOfTask);
+                    Console.WriteLine(s);
+
+                    //controllo se esiste una macchina
+                    ok = ok && (s.Count() > 0);
+
+                    foreach (var tsk in s)
+                    {
+                        ok = ok || SheetCut.IsValidOnMax(tsk.FormatMax, tsk.FormatMin, pPart.Format);
+                    }
+
+                    if (t.CodTypeOfTask.StartsWith("STAMPA"))
+                    {
+                        Console.WriteLine("");
+                    }
+
+                }
+
+                if (!ok)
+                {
+                    ModelState.AddModelError("PersError", "FormatOrTaskExecutorError");                    
+                }
+
+
+            }
+
+
+
+
+
+            //END CHECK
+
+
             if (ModelState.IsValid)
             {
+
                 //               try
                 {
                     //il cliente
@@ -245,7 +294,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     product.ProductRefName = pv.ProductRefName;
                     product.CodProduct = productRepository.GetNewCode(product);
-
 
                     product.CheckConsistency();
                     //save the product
@@ -331,7 +379,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             product.SystemTaskList = typeOfTaskRepository.GetAll().ToList();
 
             //reload option object for productTask and productPartTask
-            var taskList = this.typeOfTaskRepository.GetAll();
+            //            var taskList = this.typeOfTaskRepository.GetAll();
             foreach (var item in product.ProductTasks)
             {
                 item.OptionTypeOfTask = typeOfTaskRepository.GetSingleOptionTypeOfTask(item.CodOptionTypeOfTask);
@@ -371,7 +419,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult OnlyMov()
         {
-            return View();        
+            return View();
         }
 
 
