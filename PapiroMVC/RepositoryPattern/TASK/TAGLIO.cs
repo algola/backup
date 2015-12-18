@@ -35,13 +35,13 @@ namespace Services
             this.OptionTypeOfTasks.Add(optTk);
 
 
-            optTk = new OptionTypeOfTask();
-            optTk.CodTypeOfTask = "TAGLIO";
-            optTk.CodOptionTypeOfTask = "TAGLIO_DOPPIO";
-            optTk.OptionName = "Doppio taglio";
-            optTk.IdexOf = 2;
-            //Doppio taglio
-            this.OptionTypeOfTasks.Add(optTk);
+            //optTk = new OptionTypeOfTask();
+            //optTk.CodTypeOfTask = "TAGLIO";
+            //optTk.CodOptionTypeOfTask = "TAGLIO_DOPPIO";
+            //optTk.OptionName = "Doppio taglio";
+            //optTk.IdexOf = 2;
+            ////Doppio taglio
+            //this.OptionTypeOfTasks.Add(optTk);
 
         }
     }

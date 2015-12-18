@@ -159,18 +159,18 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
-        
+
 
         public ActionResult ProductPartPrintRollOptionList(GridSettings gridSettings, string codProductPartTask)
         {
 
 
-//            var q = productRepository.GetProductPartTaskOptions(id).OfType<ProductPartPrintRollOption>().OrderBy(x=>x.CodProductPartTaskOption);
+            //            var q = productRepository.GetProductPartTaskOptions(id).OfType<ProductPartPrintRollOption>().OrderBy(x=>x.CodProductPartTaskOption);
 
             var q2 = productRepository.GetProductPartTaskOptions(codProductPartTask).OrderBy(x => x.CodProductPartTaskOption);
 
             var q = q2.OfType<ProductPartPrintRollOption>();
-            
+
             var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
             int totalRecords = q.Count();
@@ -306,7 +306,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             string codDocumentFilter = string.Empty;
             string documentNameFilter = string.Empty;
             string dateDocumentFilter = string.Empty;
-            
+
 
             string categoryFilter = string.Empty;
 
@@ -315,7 +315,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 categoryFilter = gridSettings.where.rules.Any(r => r.field == "Category") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Category").data : string.Empty;
-
 
                 customerFilter = gridSettings.where.rules.Any(r => r.field == "Customer") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "Customer").data : string.Empty;
@@ -332,14 +331,20 @@ namespace PapiroMVC.Areas.Working.Controllers
                 documentNameFilter = gridSettings.where.rules.Any(r => r.field == "DocumentName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "DocumentName").data : string.Empty;
 
-               
             }
 
             var q = documentRepository.GetAll();
 
+            ////read from validation's language file
+            ////this resource has to be the same as view's resource
+            //var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            //string customerType = resman.GetString("CustomerType");
+            //string supplierType = resman.GetString("SupplierType");
+
+            //sarebbe da tradurre da StateName a codState!!!!
             if (!string.IsNullOrEmpty(categoryFilter))
             {
-                q = q.Where(c => c.DocumentStates.Where(y=>y.StateName == categoryFilter && y.Selected).Count() > 0);
+                q = q.Where(c => c.DocumentStates.Where(y => y.CodState == categoryFilter && y.Selected).Count() > 0);
             }
 
 
@@ -379,7 +384,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 q = q.Where(c => c.DocumentName != null && c.DocumentName.ToLower().Contains(documentNameFilter.ToLower()));
             }
 
-           
+
 
             switch (gridSettings.sortColumn)
             {
@@ -471,15 +476,15 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
             switch (gridSettings.sortColumn)
             {
-            case "OrderNumberSerie":
+                case "OrderNumberSerie":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.OrderNumberSerie) : q.OrderBy(c => c.OrderNumberSerie);
                     break;
                 default:
                     q = q.OrderByDescending(c => c.CodDocument);
                     break;
             }
-           
-        
+
+
 
             // create json data
             int pageIndex = gridSettings.pageIndex;
@@ -516,6 +521,39 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
 
+        }
+
+
+
+        public ActionResult StateAutoComplete(string term)
+        {
+            State[] typeOfSerigraphy = documentRepository.GetAllStates().ToArray();
+
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            var filteredItems = typeOfSerigraphy.Where(
+            item => item.StateName.IndexOf(term, StringComparison.InvariantCultureIgnoreCase) >= 0
+            );
+
+            var projection = from art in filteredItems
+                             select new
+                             {
+                                 id = art.StateName,
+                                 label = art.StateName,
+                                 value = art.StateName
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult OrderListColum()
+        {
+            var states =  documentRepository.GetAllStates().OfType<DocumentState>();            
+            var xx = new { name = "Ciso", label = "Ciao", width = 200, search = true, sortable = true };
+
+            var jsonData = new {GetInfoResult=xx};           
+            return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -599,7 +637,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             string unitPriceFilter = string.Empty;
             string totalAmountFilter = string.Empty;
             string markupFilter = string.Empty;
-                
+
 
             if (gridSettings.isSearch)
             {
@@ -635,7 +673,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 q = q.Where(c => c.CodProduct != null && c.CodProduct.ToLower().Contains(codProductFilter.ToLower()));
             }
 
-             if (!string.IsNullOrEmpty(serialFilter))
+            if (!string.IsNullOrEmpty(serialFilter))
             {
                 q = q.Where(c => (c.Document.EstimateNumberSerie != null && c.Document.EstimateNumberSerie.ToLower().Contains(serialFilter.ToLower())) ||
                     (c.Document.EstimateNumber != null && c.Document.EstimateNumber.ToLower().Contains(serialFilter.ToLower())) ||
@@ -649,7 +687,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (!string.IsNullOrEmpty(documentAndProductRefNameFilter))
             {
-                q = q.Where(c => (c.Document.DocumentName != null && c.Document.DocumentName.ToLower().Contains(documentAndProductRefNameFilter.ToLower())) || 
+                q = q.Where(c => (c.Document.DocumentName != null && c.Document.DocumentName.ToLower().Contains(documentAndProductRefNameFilter.ToLower())) ||
                     (c.Product.ProductRefName != null && c.Product.ProductRefName.ToLower().Contains(documentAndProductRefNameFilter.ToLower())));
             }
 
@@ -670,7 +708,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             if (!string.IsNullOrEmpty(markupFilter))
             {
-                q = q.Where(c => c.Markup != null && (c.Markup??0).ToString().ToLower().Contains(markupFilter.ToLower()));
+                q = q.Where(c => c.Markup != null && (c.Markup ?? 0).ToString().ToLower().Contains(markupFilter.ToLower()));
             }
 
 

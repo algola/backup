@@ -75,6 +75,17 @@ namespace PapiroMVC.Models
         {
             base.MergeField(doc);
 
+            //voglio stampare i dati relativi al materiale di stampa
+            //questo dovrebbe far ottenere il costo!!!!!!
+            var art = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
+            if (art != null)
+            {
+                art.MergeField(doc);
+            }
+
+            ComputedBy.MergeField(doc);
+
+
         }
 
 

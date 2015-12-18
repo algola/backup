@@ -36,6 +36,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> SelectorCostBW { get; set; }
+    	
+    	[DataMember] 		
+        public string Format { get; set; }
     
     	[DataMember]
         public virtual TaskEstimatedOn taskexecutorestimatedon { get; set; }

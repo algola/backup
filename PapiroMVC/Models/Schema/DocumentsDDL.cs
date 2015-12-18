@@ -173,6 +173,8 @@ namespace PapiroMVC.Model
             dbS.AddForeignKey("documentstate", "CodDocument", "documents", "CodDocument");
 
             dbS.AddColumnToTable("documentstate", "StateName", SchemaDb.String, "100");
+            dbS.AddColumnToTable("documentstate", "CodState", SchemaDb.String, "100");
+
             dbS.AddColumnToTable("documentstate", "StateNumber", SchemaDb.Int, "0");
             dbS.AddColumnToTable("documentstate", "StateNumberPrev", SchemaDb.Int, "0");
 

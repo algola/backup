@@ -109,7 +109,7 @@ namespace PapiroMVC.Models
 
             ProductPartTask pt;
 
-            String[] codTypeOfTasks = { "STAMPAOFFeDIGITALE", "PLASTIFICATURA", "FUSTELLATURA" };
+            String[] codTypeOfTasks = { "STAMPANEW", "PLASTIFICATURA" };
 
             foreach (var item in codTypeOfTasks)
             {

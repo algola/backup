@@ -77,18 +77,19 @@
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocumentState)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocument)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateName)
+                        @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodState)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumber)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumberPrev)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].Completed)
                         @Html.HiddenFor(model => model.DocumentStatesPerView[i].ResetLinkedStates)
-
                         <div class="form-group no-padding-bottom no-padding-top">
                             <div class="controls col-xs-12 col-sm-2">
                                 @Html.CheckBoxFor(m => m.DocumentStatesPerView[i].Selected)
                                 @*@Html.CheckBox(" ", Model.DocumentStatesPerView[i].Selected.GetValueOrDefault())*@
                             </div>
                             <div class="col-xs-12 col-sm-10 no-padding-right">
-                                @Html.T(strings, Model.DocumentStatesPerView[i].StateName)
+                                @*@Html.T(strings, Model.DocumentStatesPerView[i].StateName)*@
+                                @Model.DocumentStatesPerView[i].StateName
                             </div>
                         </div>
 

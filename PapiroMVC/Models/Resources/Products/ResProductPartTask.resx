@@ -245,6 +245,12 @@
   </data>
   <data name="CodSTAMPADIGITALE_FRONTE_BN" xml:space="preserve">
     <value>stampa fronte in bianco e nero</value>
+  </data> 
+  <data name="CodSTAMPANEW1" xml:space="preserve">
+    <value>stampa un colore</value>
+  </data>
+  <data name="CodSTAMPANEWS" xml:space="preserve">
+    <value>stampa XXX colori</value>
   </data>
   <data name="CodSTAMPADIGITALE_FRONTE_COL" xml:space="preserve">
     <value>stampa fronte a colori</value>
@@ -429,6 +435,9 @@
   <data name="CodSTAMPAMORBIDO_NO" xml:space="preserve">
     <value />
   </data>
+  <data name="CodSTAMPANEW_NO" xml:space="preserve">
+    <value>Nessuna stampa</value>
+  </data>
   <data name="CodSTAMPAACALDOROTOLO_1" xml:space="preserve">
     <value>laminazione 1 colore</value>
   </data>
@@ -461,6 +470,9 @@
   </data>
   <data name="CodSTAMPAOFFeDIGITALE_Implant" xml:space="preserve">
     <value>Impianti Stampa</value>
+  </data>
+  <data name="CodSTAMPANEW_Implant" xml:space="preserve">
+    <value>Lastre</value>
   </data>
   <data name="CodSERIGRAFIA_NO" xml:space="preserve">
     <value>Nessuna serigrafia</value>

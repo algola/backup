@@ -1087,6 +1087,42 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lastre.
+        /// </summary>
+        public static string CodSTAMPANEW_Implant {
+            get {
+                return ResourceManager.GetString("CodSTAMPANEW_Implant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nessuna stampa.
+        /// </summary>
+        public static string CodSTAMPANEW_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPANEW_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa un colore.
+        /// </summary>
+        public static string CodSTAMPANEW1 {
+            get {
+                return ResourceManager.GetString("CodSTAMPANEW1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa XXX colori.
+        /// </summary>
+        public static string CodSTAMPANEWS {
+            get {
+                return ResourceManager.GetString("CodSTAMPANEWS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to stampa fronte retro in bianco e nero.
         /// </summary>
         public static string CodSTAMPAOFF_FR_BN {

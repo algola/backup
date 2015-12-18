@@ -55,7 +55,6 @@ namespace PapiroMVC.Models
             }
         }
 
-
         /// <summary>
         /// this cuts returns a plausible format by 
         /// </summary>
@@ -98,12 +97,12 @@ namespace PapiroMVC.Models
                     for (int i = 0; i < x.Count &&
                         !SheetCut.IsValid(tsk.FormatMax, tsk.FormatMin, WorkingFormat);
                         i++,
-                        WorkingFormat = x[k].GetCuttedFormat(BuyingFormat)) ;
+                        WorkingFormat = x[k].GetCuttedFormat(BuyingFormat,false)) ;
                 }
 
                 foreach (var item in x)
                 {
-                    item.CutName = item.GetCuttedFormat(BuyingFormat);
+                    item.CutName = item.GetCuttedFormat(BuyingFormat,false);
                 }
 
                 //Controllo del formato se è presente nell'elenco dei formati
@@ -117,7 +116,7 @@ namespace PapiroMVC.Models
                     {
                         var toAdd = new Cut("manual", 0, 0);
                         toAdd.ManualFormat = WorkingFormat;
-                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat,false);
                         x.Add(toAdd);
                     }
                 }
@@ -159,50 +158,30 @@ namespace PapiroMVC.Models
         {
             Error = 0;
             base.InitCostDetail(tskExec, articles);
-
-           
-
         }
 
-        public override void CostDetailCostCodeRigen()
+        double gain = 1;
+        double gainForRun = 1;
+
+        double gainOnSide1 = 1;
+        double gainOnSide2 = 1;
+
+        private void reDoneGains()
         {
-            this.TimeStampTable = DateTime.Now;
-        }
-
-        //lo voglio prendere dalla stampa!!! che deve esserci SEMPRE (per ora)
-        public string BuyingFormat
-        {
-            get
-            {
-                string ret = String.Empty;
-
-                foreach (var fromP in this.Printers)
-                {
-                    ret = fromP.PrintingFormat;
-                }
-                return ret;
-
-            }
-        }
-
-        public override void UpdateCoeff()
-        {
-            base.UpdateCoeff();
-            //a questo punto vorrei arrivare ad avere
-
-            //devo capire quale tipo quantità usare e che moltiplicatore usare!!!!
-            //lo devo salvare in una proprietà del dettaglio costo
-
             var x = Cuts;
+            double gainSide1Printer = 1;
+            double gainSide2Printer = 1;
 
-            Cut currentCut = new Cut("manuale",1,1);
-            double gain = 1;
+            Cut currentCut = new Cut("manuale", 1, 1);
 
             foreach (var item in Cuts)
             {
-                var res = item.GetCuttedFormat(BuyingFormat);
+                var res = item.GetCuttedFormat(BuyingFormat, false);
                 if (res == WorkingFormat)
                 {
+                    gainOnSide1 = item.PartsOnSide1;
+                    gainOnSide2 = item.PartsOnSide2;
+
                     gain = item.Gain;
                     currentCut = item;
                 }
@@ -210,11 +189,8 @@ namespace PapiroMVC.Models
 
             Console.WriteLine(Cuts);
 
-            double gainSide1 = 1;
-            double gainSide2 = 1;
-            double gainForRun = 1;
 
-            double dCut1=0, dCut2 = 0;
+            double dCut1 = 0, dCut2 = 0;
             string format = "1x1";
 
             if (Printers != null)
@@ -223,8 +199,8 @@ namespace PapiroMVC.Models
                 {
                     //                    Starts = fromP.GainOnSide1;
                     gainForRun *= fromP.GainForRunForPrintableArticle ?? 1;
-                    gainSide1 *= fromP.ProductPartPrinting.CalculatedSide1Gain;
-                    gainSide2 *= fromP.ProductPartPrinting.CalculatedSide2Gain;
+                    gainSide1Printer *= fromP.ProductPartPrinting.CalculatedSide1Gain;
+                    gainSide2Printer *= fromP.ProductPartPrinting.CalculatedSide2Gain;
 
                     dCut1 = fromP.ProductPartPrinting.CalculatedDCut1;
                     dCut2 = fromP.ProductPartPrinting.CalculatedDCut2;
@@ -233,14 +209,54 @@ namespace PapiroMVC.Models
                 }
             }
 
-            gainSide1 = gainSide1 / currentCut.PartsOnSide1;
-            gainSide2 = gainSide2 / currentCut.PartsOnSide2;
+            gainSide1Printer = gainSide1Printer / currentCut.PartsOnSide1;
+            gainSide2Printer = gainSide2Printer / currentCut.PartsOnSide2;
 
-            double side1 = 1+ format.GetSide1() * gainSide1 + dCut1 * (gainSide1 - 1);
-            double side2 = 1+ format.GetSide2() * gainSide2 + dCut2 * (gainSide2 - 1);
+            double side1 = 2 + format.GetSide1() * gainSide1Printer + dCut1 * (gainSide1Printer - 1);
+            double side2 = 2 + format.GetSide2() * gainSide2Printer + dCut2 * (gainSide2Printer - 1);
 
             _calculateMqImplant = side1 * side2 / 10000;
 
+        
+        }
+
+
+        public override double GainOnSide1
+        {
+            get
+            {
+                reDoneGains();
+                return gainOnSide1;
+            }
+            set
+            {
+                base.GainOnSide1 = value;
+            }
+        }
+
+
+        public override double GainOnSide2
+        {
+            get
+            {
+                reDoneGains();
+                return gainOnSide2;
+            }
+            set
+            {
+                base.GainOnSide2 = value;
+            }
+        }
+
+
+        public override void UpdateCoeff()
+        {
+            base.UpdateCoeff();
+            //a questo punto vorrei arrivare ad avere
+
+            //devo capire quale tipo quantità usare e che moltiplicatore usare!!!!
+            //lo devo salvare in una proprietà del dettaglio costo
+            reDoneGains();
 
             //calcolo di quanti impianti sono necessari!!!!
             Implants = TaskexEcutorSelected.GetImplants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
@@ -357,15 +373,15 @@ namespace PapiroMVC.Models
             {
                 try
                 {
-                    var x = TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                    var x = TaskExecutor.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
                     var costCalcolous = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault();
 
                     totalCT = costCalcolous.GetCost(
-                        TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, x.cToPrintR, RollChanges ?? 0, (int)(x.cToPrintT + x.cToPrintTNoImplant), Quantity(qta));
+                        TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, x.cToPrintR, RollChanges ?? 0, (int)(x.cToPrintT + x.cToPrintTNoImplant), running: Quantity(qta));
                 }
                 catch (NotImplementedException)
                 {
-                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1,  Quantity(qta));
                 }
                 Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
 

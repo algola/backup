@@ -48,7 +48,7 @@ namespace PapiroMVC.Models
                 tskExecList = tskExecList.OfType<LithoSheet>();
             }
 
-            if (codTypeOfTask == "STAMPAOFFeDIGITALE")
+            if (codTypeOfTask == "STAMPAOFFeDIGITALE" || codTypeOfTask == "STAMPANEW")
             {
                 var tskExec1 = tskExecList.OfType<LithoSheet>();
                 var tskExec2 = tskExecList.OfType<DigitalSheet>();
@@ -103,19 +103,21 @@ namespace PapiroMVC.Models
                 tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
             }
 
+            if (codTypeOfTask == "TAGLIO")
+            {
+                tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "TAGLIO");
+            }
 
             if (codTypeOfTask == "INPIANO")
             {
                 var tskExec1 = tskExecList.OfType<LithoSheet>();
                 var tskExec2 = tskExecList.OfType<DigitalSheet>();
                 var tskExec3 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
+                var tskExec4 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "TAGLIO");
 
-                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3);
+                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3).Union<TaskExecutor>(tskExec4);
 
             }
-
-
-
 
             return tskExecList;
 
@@ -131,9 +133,201 @@ namespace PapiroMVC.Models
             return 0;
         }
 
-        public virtual PrintingColor GetColorFR(string codOptionTypeOfTask)
+        public static PrintingColor GetColorFR(string codOptionTypeOfTask)
         {
-            throw new NotImplementedException();
+            var ret = new PrintingColor();
+            if (codOptionTypeOfTask.Contains("VERNICE"))
+            {
+                ret.cToPrintFNoImplant = 1;
+                ret.cToPrintTNoImplant = 1;
+
+                codOptionTypeOfTask = codOptionTypeOfTask.Replace("VERNICE", "");
+            }
+            switch (codOptionTypeOfTask)
+            {
+
+                //4 colori offset fronte e retro
+                case "STAMPAETICHROTOLO_1":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_1RETRO":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_2":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_2RETRO":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_3":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_3RETRO":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_4":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_4RETRO":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_5":
+                    ret.cToPrintF = 5;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_5RETRO":
+                    ret.cToPrintF = 5;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_6":
+                    ret.cToPrintF = 6;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_6RETRO":
+                    ret.cToPrintF = 6;
+                    ret.cToPrintR = 1;
+                    break;
+
+
+                case "STAMPAETICHROTOLO_7":
+                    ret.cToPrintF = 7;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_7RETRO":
+                    ret.cToPrintF = 7;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAETICHROTOLO_8":
+                    ret.cToPrintF = 8;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_8RETRO":
+                    ret.cToPrintF = 8;
+                    ret.cToPrintR = 1;
+                    break;
+
+
+                case "STAMPAETICHROTOLO_NORETRO":
+                    ret.cToPrintF = 0;
+                    ret.cToPrintR = 1;
+                    break;
+
+
+                //4 colori offset fronte e retro
+                case "STAMPAOFF_FR_COL":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 4;
+                    break;
+
+                case "STAMPAOFF_FR_BN":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAOFF_FRONTE_COL":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAOFF_FRONTE_BN":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FR_COL":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 4;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FR_BN":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 1;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FRONTE_COL":
+                    ret.cToPrintF = 4;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAOFFeDIGITALE_FRONTE_BN":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "SERIGRAFIAROTOLO_1":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "SERIGRAFIAROTOLO_2":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "SERIGRAFIAROTOLO_3":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAACALDOROTOLO_1":
+                    ret.cToPrintF = 1;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAACALDOROTOLO_2":
+                    ret.cToPrintF = 2;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAACALDOROTOLO_3":
+                    ret.cToPrintF = 3;
+                    ret.cToPrintR = 0;
+                    break;
+
+                default:
+                    ret.cToPrintF = 0;
+                    ret.cToPrintR = 0;
+                    //  throw new Exception();
+                    break;
+
+            }
+
+            if (codOptionTypeOfTask.Contains("STAMPANEW"))
+            {
+                var x = codOptionTypeOfTask;
+                var plusPos = x.IndexOf("+");
+
+                ret.cToPrintF = Convert.ToInt32(x.Substring(plusPos - 1, 1));
+                ret.cToPrintR = Convert.ToInt32(x.Substring(plusPos + 1, 1));
+            }
+
+            ret.cToPrintT = ret.cToPrintF + ret.cToPrintR;
+            ret.cToPrintTNoImplant = ret.cToPrintFNoImplant + ret.cToPrintRNoImplant;
+
+            return ret;
+
         }
 
         public virtual double GetImplants(string codOptionTypeOfTask)

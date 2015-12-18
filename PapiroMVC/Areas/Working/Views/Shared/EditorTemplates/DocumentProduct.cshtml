@@ -162,16 +162,6 @@
             }
         });
 
-
-
-
-
-
-
-
-
-
-
         //
         $("#markup@(Model.CodDocumentProduct)").keypress(function (event) {
             if (event.which == 13) {
@@ -364,17 +354,6 @@
             };
             **/
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -574,7 +553,7 @@
                         hideProcessingMsg();
                         $('#printvideo@(Model.CodDocumentProduct)').val(data).trigger('autosize.resize');
 
-
+                        hideProcessingMsg();
 
                         var dialogPrint = $("#printvideo-message@(Model.CodDocumentProduct)").removeClass("hide").dialog({
                             width: 'auto',
@@ -592,6 +571,7 @@
                             ]
                         });
 
+                        hideProcessingMsg();
 
                     }
 

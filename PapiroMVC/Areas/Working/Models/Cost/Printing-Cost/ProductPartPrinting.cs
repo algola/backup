@@ -43,8 +43,6 @@ namespace PapiroMVC.Models
 
         }
 
-
-
         public enum ProductPartPrintingType : int
         {
            
@@ -71,6 +69,9 @@ namespace PapiroMVC.Models
 
         //prova
         public int ForceSide { get; set; }
+
+        //prova
+        public bool ForceGain { get; set; }
 
         public bool AutoCutParameter { get; set; }
         public bool LateralMinDCut { get; set; }

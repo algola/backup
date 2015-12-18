@@ -33,6 +33,13 @@ namespace Services
                             new ProductFormatName {CodFormat= "8x5", FormatName="8x5"}, 
                             new ProductFormatName {CodFormat= "0x0", FormatName="0x0"}};
                     break;
+                case "EtichetteCartelliniSago":
+                    ret = new ProductFormatName[4] {  
+                            new ProductFormatName {CodFormat= "5x5", FormatName="5x5"}, 
+                            new ProductFormatName {CodFormat= "9,5x5", FormatName="9,5x5" },
+                            new ProductFormatName {CodFormat= "8x5", FormatName="8x5"}, 
+                            new ProductFormatName {CodFormat= "0x0", FormatName="0x0"}};
+                    break;
                 case "BigliettiVisita":
                     ret = new ProductFormatName[3] {  
                             new ProductFormatName {CodFormat= "8,5x5", FormatName="8,5x5"}, 

@@ -727,23 +727,22 @@ namespace Services
 
             var tbCode = new State[14];
 
-            tbCode[0] = new State { CodState = "AttInformazioni", StateName = "AttInformazioni", StateNumber = 10, UseInEstimate = true };
-            tbCode[1] = new State { CodState = "InElaborazione", StateName = "InElaborazione", StateNumber = 30, UseInEstimate = true };
-            tbCode[2] = new State { CodState = "Inviato", StateName = "Inviato", StateNumber = 40, UseInEstimate = true, ResetLinkedStates = "10+30" };
-            tbCode[3] = new State { CodState = "Commessa", StateName = "Commessa", StateNumber = 50, UseInEstimate = true, ResetLinkedStates = "10+30" };
+            tbCode[0] = new State { CodState = "AttInformazioni", StateName = "Attendo Informazioni", StateNumber = 10, UseInEstimate = true };
+            tbCode[1] = new State { CodState = "InElaborazione", StateName = "In Elaborazione", StateNumber = 30, UseInEstimate = true };
+            tbCode[2] = new State { CodState = "Inviato", StateName = "Preventivo Inviato", StateNumber = 40, UseInEstimate = true, ResetLinkedStates = "10+30" };
+            tbCode[3] = new State { CodState = "Commessa", StateName = "E' Commessa", StateNumber = 50, UseInEstimate = true, ResetLinkedStates = "10+30" };
             tbCode[4] = new State { CodState = "Annullato", StateName = "Annullato", StateNumber = 60, UseInEstimate = true };
 
 
-            tbCode[5] = new State { CodState = "AttConfermaDordine", StateName = "AttConfermaDordine", StateNumber = 110, UseInOrder = true };
-            tbCode[6] = new State { CodState = "AttAnticipo", StateName = "AttAnticipo", StateNumber = 120, UseInOrder = true };
-            tbCode[7] = new State { CodState = "AttMateriali", StateName = "AttMateriali", StateNumber = 130, UseInOrder = true };
-            tbCode[8] = new State { CodState = "AttImpianti", StateName = "AttImpianti", StateNumber = 140, UseInOrder = true };
-            tbCode[9] = new State { CodState = "InStampa", StateName = "InStampa", StateNumber = 150, UseInOrder = true };
-            tbCode[10] = new State { CodState = "LavEsterna", StateName = "LavEsterna", StateNumber = 160, UseInOrder = true };
-            tbCode[11] = new State { CodState = "InConfezione", StateName = "InConfezione", StateNumber = 170, UseInOrder = true };
-            tbCode[12] = new State { CodState = "InSpedizione", StateName = "InSpedizione", StateNumber = 180, UseInOrder = true };
-            tbCode[13] = new State { CodState = "Concluso", StateName = "Concluso", StateNumber = 190, UseInOrder = true };
-
+            tbCode[5] = new State { CodState = "AttConfermaDordine", StateName = "Attesa Conferma D'ordine", StateNumber = 110, UseInOrder = true };
+            tbCode[6] = new State { CodState = "AttAnticipo", StateName = "Attesa Anticipo", StateNumber = 120, UseInOrder = true };
+            tbCode[7] = new State { CodState = "AttMateriali", StateName = "Attesa Materiali", StateNumber = 130, UseInOrder = true };
+            tbCode[8] = new State { CodState = "AttImpianti", StateName = "Attesa Impianti", StateNumber = 140, UseInOrder = true };
+            tbCode[9] = new State { CodState = "InStampa", StateName = "In Stampa", StateNumber = 150, UseInOrder = true };
+            tbCode[10] = new State { CodState = "LavEsterna", StateName = "Da Lavorante", StateNumber = 160, UseInOrder = true };
+            tbCode[11] = new State { CodState = "InConfezione", StateName = "In Confezione", StateNumber = 170, UseInOrder = true };
+            tbCode[12] = new State { CodState = "InSpedizione", StateName = "In Spedizione", StateNumber = 180, UseInOrder = true };
+            tbCode[13] = new State { CodState = "Concluso", StateName = "Ordine Concluso", StateNumber = 190, UseInOrder = true };
 
             foreach (var item in tbCode)
             {
@@ -799,6 +798,9 @@ namespace Services
                 var p = new ReportOrderName { Name = "LabelRollHead", Description = "Etichette in rotolo" };
                 ret.Add(p);
             }
+
+            var g = new ReportOrderName { Name = "LabelHead", Description = "Etichette in piano" };
+            ret.Add(g);
 
             return ret.AsQueryable();
         }

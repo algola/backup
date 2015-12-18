@@ -14,11 +14,13 @@
 @Html.HiddenFor(model => model.StateNumber)
 @Html.HiddenFor(model => model.StateNumberPrev)
 @Html.HiddenFor(model => model.Completed)
+@Html.HiddenFor(model => model.CodState)
 @Html.HiddenFor(model => model.ResetLinkedStates)
 
 <div class="form-group no-padding-bottom no-padding-top">
     <div class="col-sm-3 control-label no-padding-right">
-        @Html.Label(Html.T(strings, Model.StateName))
+        @*@Html.Label(Html.T(strings, Model.StateName))*@
+        @Html.LabelFor(model => model.StateName)
     </div>
     <div class="controls col-sm-9">
         @Html.CheckBox("", Model.Selected.GetValueOrDefault())        

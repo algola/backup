@@ -934,6 +934,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nessuna stampa.
+        /// </summary>
+        public static string CodSTAMPANEW_NO {
+            get {
+                return ResourceManager.GetString("CodSTAMPANEW_NO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa offset.
         /// </summary>
         public static string CodSTAMPAOFF {

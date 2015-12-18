@@ -25,5 +25,10 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResStep), "ToUnitToolTip")]
         public Nullable<double> ToUnit { get; set; }
 
+        [DisplayNameLocalized(typeof(ResStep), "Format")]
+        [Tooltip(typeof(ResStep), "FormatToolTip")]
+        public string Format { get; set; }
+
+
     }
 }

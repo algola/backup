@@ -226,7 +226,10 @@
     <value>Cartoline postali</value>
   </data>
   <data name="CodMenuProductEtichetteCartellini" xml:space="preserve">
-    <value>Etichette e cartellini</value>
+    <value>Etichette in piano</value>
+  </data>
+  <data name="CodMenuProductEtichetteCartelliniSago" xml:space="preserve">
+    <value>Etichette sagomate in piano</value>
   </data>
   <data name="CodMenuProductFogliMacchina" xml:space="preserve">
     <value>Fogli macchina</value>

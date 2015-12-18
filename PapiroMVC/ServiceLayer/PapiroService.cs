@@ -243,6 +243,7 @@ namespace PapiroMVC.ServiceLayer
             if (id == "Buste" ||
                 id == "Volantini" ||
                 id == "Pieghevoli" ||
+                id == "EtichetteCartellini" ||
                 id == "CartaIntestata" ||
                 id == "Locandine" ||
                 id == "FogliMacchina")
@@ -252,7 +253,7 @@ namespace PapiroMVC.ServiceLayer
 
             if (
                 id == "BigliettiVisita" ||
-                id == "EtichetteCartellini" ||
+                id == "EtichetteCartelliniSago" ||
                 id == "CartolineInviti" ||
                 id == "CartolinePostali" ||
                 id == "AltriFormati")
@@ -634,6 +635,7 @@ namespace PapiroMVC.ServiceLayer
                     case CostDetail.CostDetailType.PrintingSheetCostDetail:
                     case CostDetail.CostDetailType.PrintingRollCostDetail:
                     case CostDetail.CostDetailType.RepassRollCostDetail:
+                    case CostDetail.CostDetailType.PrePostPressCostDetail:
 
                         if (cv.Computes.Count == 0)
                         {
@@ -669,7 +671,6 @@ namespace PapiroMVC.ServiceLayer
 
                         break;
 
-                    case CostDetail.CostDetailType.PrePostPressCostDetail:
                     case CostDetail.CostDetailType.ControlTableCostDetail:
 
 

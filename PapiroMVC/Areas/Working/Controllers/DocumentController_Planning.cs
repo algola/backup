@@ -134,21 +134,31 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ChangeTaskCenterOrder(string ids, string codTaskCenter)
         {
-            string[] strings = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(ids);
+            string[] stringsIds = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(ids);
 
             //IDS are codDocumentTaskCenter
-
             int i = 0;
-            foreach (var x in strings)
+            foreach (var x in stringsIds)
             {
                 var c = this.taskCenterRepository.GetDocumentTaskCenter(x);
                 c.IndexOf = i++;
                 c.CodTaskCenter = codTaskCenter;
                 taskCenterRepository.EditDocumentTaskCenter(c);
+
+                var taskCenter = taskCenterRepository.GetSingle(codTaskCenter);
+                var doc = documentRepository.GetSingle(x);
+                doc.DocumentStates = documentRepository.GetAllDocumentStates(x).ToList();
+
+                foreach (var item in doc.DocumentStates)
+                {
+                    item.Selected = (item.CodState == taskCenter.CodState);
+                }
+
+                documentRepository.Edit(doc);
             }
 
+            documentRepository.Save();
             taskCenterRepository.Save();
-
             return null;
         }
 

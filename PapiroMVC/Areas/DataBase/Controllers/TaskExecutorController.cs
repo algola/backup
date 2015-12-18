@@ -1235,7 +1235,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //Load each type of base
             ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "PREPOST");
 
-
             ViewBag.ActionMethod = "CreatePrePostPress";
             return View(new PrePostPress());
         }
@@ -1738,9 +1737,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-        public ActionResult EditPrePostPress(string id, string resultUrl)
+        public ActionResult EditPrePostPress(string id, string returnUrl)
         {
-            ViewBag.ResultUrl = resultUrl;
+            ViewBag.ReturnUrl = returnUrl;
             ViewBag.returnCodTypeOfTask = "INPIANO";
 
             PrePostPress tskEx = new PrePostPress();
@@ -1987,6 +1986,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
 
         public ActionResult EditPrePostPress(PrePostPress c, string returnUrl, string returnCodTypeOfTask)
+
         {
             if (ModelState.IsValid)
             {
@@ -2006,6 +2006,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     taskExecutorRepository.Edit(c);
                     taskExecutorRepository.Save();
+
+                    //hooray it passed - go back to index
                     return Json(new { redirectUrl = Url.Action(returnUrl, new { codTypeOfTask = returnCodTypeOfTask }) });
                 }
                 catch (Exception ex)
@@ -2122,6 +2124,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                         if (chkStep != null)
                         {
+
+                            chkStep.Format = c.Format;
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.AvarageRunPerHour = c.AvarageRunPerHour;

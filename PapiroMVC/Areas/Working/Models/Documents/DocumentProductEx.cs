@@ -176,10 +176,11 @@ namespace PapiroMVC.Models
                 if (item.TypeOfCalcolous == null || item.TypeOfCalcolous == 0)
                 {
                     total += (!(item.ForceZero ?? false)) ? Convert.ToDouble(item.GranTotalCost, Thread.CurrentThread.CurrentUICulture) : 0;
-                    total += total * (Markup / 100 ?? 0);
                     //      total = Math.Round(total / 100) * 100;
                 }
             }
+
+            total += total * (Markup / 100 ?? 0);
 
             UnitPriceCalculated = ((total / Quantity ?? 0).ToString("#,0.00000", Thread.CurrentThread.CurrentUICulture));
 

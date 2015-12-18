@@ -290,8 +290,8 @@ namespace PapiroMVC.Models
 
             
             
-            #region tavolo di controllo rotolo
-            if (codTypeOfTask == "FUSTELLATURA")
+            #region fustellatura
+            if (codTypeOfTask == "FUSTELLATURA" || codTypeOfTask == "TAGLIO")
             {
                 Console.WriteLine("Fustellatura");
                 String codParte = String.Empty;
@@ -330,6 +330,7 @@ namespace PapiroMVC.Models
                 codTypeOfTask == "STAMPARIGIDO" ||
                 codTypeOfTask == "STAMPAMORBIDO" ||
                 codTypeOfTask == "STAMPAOFFeDIGITALE" ||
+                codTypeOfTask == "STAMPANEW" ||
                 codTypeOfTask == "STAMPAETICHROTOLO")
             {
                 String codParte = String.Empty;

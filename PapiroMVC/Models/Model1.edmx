@@ -244,6 +244,7 @@
           <Property Name="Selected" Type="bit" Nullable="false" />
           <Property Name="ResetLinkedStates" Type="char" MaxLength="100" />
           <Property Name="Completed" Type="bit" />
+          <Property Name="CodState" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="documenttaskcenter">
           <Key>
@@ -349,6 +350,7 @@
           <Property Name="DCut1" Type="double" />
           <Property Name="DCut2" Type="double" />
           <Property Name="ForceSideOnSide" Type="int" />
+          <Property Name="ForceGain" Type="bit" />
         </EntityType>
         <EntityType Name="productparts">
           <Key>
@@ -531,6 +533,7 @@
           <Property Name="CostPerUnit32" Type="char" MaxLength="20" />
           <Property Name="StartingCost32" Type="char" MaxLength="20" />
           <Property Name="BindingCost" Type="char" MaxLength="20" />
+          <Property Name="Format" Type="char" MaxLength="15" />
         </EntityType>
         <EntityType Name="taskcenters">
           <Key>
@@ -2061,6 +2064,7 @@
           <Property Type="Double" Name="FromUnit" />
           <Property Type="Double" Name="ToUnit" />
           <Property Type="Int32" Name="SelectorCostBW" />
+          <Property Name="Format" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Steps_CodTaskEstimatedOn">
           <End Type="dbModel.TaskEstimatedOn" Role="TaskEstimatedOn" Multiplicity="0..1" />
@@ -3108,6 +3112,7 @@
           <Property Name="DCut1" Type="Double" />
           <Property Name="DCut2" Type="Double" />
           <Property Name="ForceSideOnSide" Type="Int32" />
+          <Property Name="ForceGain" Type="Boolean" />
         </EntityType>
         <Association Name="FK_productpartprintinggain_CodProductPartPrintingGain">
           <End Type="dbModel.ProductPartPrinting" Role="ProductPartPrinting" Multiplicity="1">
@@ -3412,6 +3417,7 @@
           <NavigationProperty Name="Document" Relationship="dbModel.FK_documentstate_CodDocument" FromRole="documentstate" ToRole="Document" />
           <Property Name="Selected" Type="Boolean" Nullable="false" />
           <Property Name="ResetLinkedStates" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CodState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_documentstate_CodDocument">
           <End Type="dbModel.Document" Role="Document" Multiplicity="0..1">
@@ -4030,6 +4036,7 @@
           <EntitySetMapping Name="steps">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Step)">
               <MappingFragment StoreEntitySet="steps">
+                <ScalarProperty Name="Format" ColumnName="Format" />
                 <ScalarProperty Name="SelectorCostBW" ColumnName="SelectorCostBW" />
                 <ScalarProperty Name="ToUnit" ColumnName="ToUnit" />
                 <ScalarProperty Name="FromUnit" ColumnName="FromUnit" />
@@ -5062,6 +5069,7 @@
           <EntitySetMapping Name="ProductPartPrintingGain">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrintingGain)">
               <MappingFragment StoreEntitySet="productpartprintinggain">
+                <ScalarProperty Name="ForceGain" ColumnName="ForceGain" />
                 <ScalarProperty Name="ForceSideOnSide" ColumnName="ForceSideOnSide" />
                 <ScalarProperty Name="DCut2" ColumnName="DCut2" />
                 <ScalarProperty Name="DCut1" ColumnName="DCut1" />
@@ -5172,6 +5180,7 @@
           <EntitySetMapping Name="DocumentStates">
             <EntityTypeMapping TypeName="dbModel.DocumentState">
               <MappingFragment StoreEntitySet="documentstate">
+                <ScalarProperty Name="CodState" ColumnName="CodState" />
                 <ScalarProperty Name="ResetLinkedStates" ColumnName="ResetLinkedStates" />
                 <ScalarProperty Name="Selected" ColumnName="Selected" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
@@ -5335,8 +5344,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="True" />
         <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />

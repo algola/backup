@@ -45,6 +45,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string ResetLinkedStates { get; set; }
+    	
+    	[DataMember] 		
+        public string CodState { get; set; }
     
     	[DataMember]
         public virtual Document Document { get; set; }

@@ -256,6 +256,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     if (cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedRollArticleCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingZRollCostDetail" ||
+                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintedSheetArticleCostDetail" ||
+                        cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "PrintingSheetCostDetail" ||
                         cost.CostDetails.FirstOrDefault().TypeOfCostDetail.ToString() == "ControlTableCostDetail")
                     {
                         #region SingleCostDetail
@@ -380,15 +382,6 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
                                 #endregion
-
-
-
-
-
-
-
-
-
 
                             }
 
@@ -522,10 +515,11 @@ namespace PapiroMVC.Areas.Working.Controllers
                     altChunk.Id = altChunkId;
 
                     var last = mainPart.Document.Body.Elements<DocumentFormat.OpenXml.Wordprocessing.Paragraph>().Last();
-
                     mainPart.Document.Body.InsertAfter(altChunk, last);
                     mainPart.Document.Save();
-                }
+
+                }            
+            
             }
 
             //// Open a doc file.
@@ -652,7 +646,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
                 }
 
-                id = 0;
                 foreach (var file in filesExtCost.Reverse())
                 {
                     using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
@@ -683,7 +676,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             docMain.SaveAs(fileNameSaveAs);
             docMain.Dispose();
 
-            id = 0;
             foreach (var file in files.Reverse())
             {
                 using (WordprocessingDocument myDoc = WordprocessingDocument.Open(fileNameSaveAs, true))
@@ -1311,8 +1303,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.Update();
 
             Session["CostDetail"] = cv;
-            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
             return PartialView(cv.PartialViewName, cv);
         }
 
@@ -1349,8 +1342,38 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.Update();
             Session["CostDetail"] = cv;
 
-            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
+            return PartialView(cv.PartialViewName, cv);
+        }
 
+
+        /// <summary>
+        /// Change the max gain and update cost
+        /// </summary>
+        /// <param name="maxGain1"></param>
+        /// <param name="maxGain2"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangeGain(string maxGain1, string maxGain2, string forceSide)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+            var inizio = DateTime.Now;
+
+            if (ModelState.IsValid)
+            {
+                cv.ProductPartPrinting.MaxGain1 = Convert.ToInt32(maxGain1);
+                cv.ProductPartPrinting.MaxGain2 = Convert.ToInt32(maxGain2);
+
+                cv.ProductPartPrinting.ForceGain = true;
+                cv.ProductPartPrinting.ForceSide = Convert.ToInt32(forceSide);
+            }
+
+            cv.Update();
+            Session["CostDetail"] = cv;
+
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
 
             return PartialView(cv.PartialViewName, cv);
         }
@@ -1442,8 +1465,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var inizio2 = DateTime.Now;
 
-            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
-
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
 
             var tempo1 = DateTime.Now.Subtract(inizio1);
             var tempo2 = DateTime.Now.Subtract(inizio2);
@@ -1524,15 +1547,15 @@ namespace PapiroMVC.Areas.Working.Controllers
             cv.Update();
             Session["CostDetail"] = cv;
 
-            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
-
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
             return PartialView(cv.PartialViewName, cv);
         }
 
         [HttpPost]
         public ActionResult ChangePrintingFormatRepass(string PrintingFormat)
         {
-            RepassRollCostDetail cv = (RepassRollCostDetail)Session["CostDetail"];
+            PrePostPressCostDetail cv = (PrePostPressCostDetail)Session["CostDetail"];
             PapiroService p = (PapiroService)Session["PapiroService"];
 
             cv.WorkingFormat = PrintingFormat;
@@ -1541,7 +1564,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             SaveCostDetail();
 
-            var lst = p.CostDetailsDic.Select(x => x.Value).OfType<RepassRollCostDetail>().Where(y => y.CodTaskExecutorSelected == cv.CodTaskExecutorSelected);
+            var lst = p.CostDetailsDic.Select(x => x.Value).OfType<PrePostPressCostDetail>().Where(y => y.CodTaskExecutorSelected == cv.CodTaskExecutorSelected);
 
             foreach (var item in lst.Where(x=>x.CodCostDetail != cv.CodCostDetail))
             {
@@ -1561,6 +1584,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             return PartialView(cv.PartialViewName, cv);
         }
+
 
         /// <summary>
         /// Uptate cost in Cost from CostDetail
@@ -1738,7 +1762,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                     viewName = "ControlTableCostDetail";
                     break;
 
-
+                case CostDetail.CostDetailType.PrePostPressCostDetail:
                 case CostDetail.CostDetailType.ImplantMeshCostDetail:
                 case CostDetail.CostDetailType.ImplantHotPrintingCostDetail:
                 case CostDetail.CostDetailType.RepassRollCostDetail:
@@ -1760,7 +1784,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                             }
                         }
                     }
-
 
                     viewName = "PrintingCostDetail";
                     break;
@@ -2067,6 +2090,20 @@ namespace PapiroMVC.Areas.Working.Controllers
                 throw new NotFoundResException();
             }
 
+
+            var state = documentRepository.GetAllStates().ToArray();
+
+            foreach (var item in prod.DocumentStates)
+            {
+                if (item.CodState == null && !item.StateName.Contains(" "))
+                {
+                    item.CodState = item.StateName;
+                }
+
+                item.StateName = state.FirstOrDefault(z => z.CodState == item.CodState).StateName;
+            }
+
+
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
             ViewBag.ActionMethod = "EditEstimate";
             return View(prod);
@@ -2087,6 +2124,20 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             ((Order)prod).ReportOrderNames = documentRepository.GetAllReportOrderName(CurrentDatabase);
             prod.DocumentStates = documentRepository.GetAllDocumentStates(id).ToList();
+            //aggiorno il nome dello stato
+
+            var state = documentRepository.GetAllStates().ToArray();
+
+            foreach (var item in prod.DocumentStates)
+            {
+                if (item.CodState == null && !item.StateName.Contains(" "))
+                {
+                    item.CodState = item.StateName;
+                }
+
+                item.StateName = state.FirstOrDefault(z => z.CodState == item.CodState).StateName;
+            }
+            
             prod.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(prod.CodDocumentProduct);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name
@@ -2439,6 +2490,9 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 try
                 {
+
+                    Console.Write(c.DocumentStates);
+
                     documentRepository.Edit(c);
                     //rigeneration name of article
                     //c.OrderSingleSheet.OrderName = c.OrderSingleSheet.ToString();

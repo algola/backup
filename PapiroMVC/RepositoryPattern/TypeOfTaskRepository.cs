@@ -38,7 +38,7 @@ namespace Services
                 }
             }
 
-            var tbCode = new TypeOfTask[25];
+            var tbCode = new TypeOfTask[26];
 
             tbCode[0] = new PIEGA() { CodCategoryOfTask = "PREPOST" };
             tbCode[1] = new PLASTIFICATURA() { CodCategoryOfTask = "PREPOST" };
@@ -54,26 +54,31 @@ namespace Services
             tbCode[11] = new FORO() { CodCategoryOfTask = "PREPOST" };
             tbCode[12] = new RILIEVO_A_SECCO() { CodCategoryOfTask = "PREPOST" };
             tbCode[13] = new STAMPARIGIDO() { CodCategoryOfTask = "STAMPARIGIDO" };
+            
             tbCode[14] = new STAMPAOFF() { CodCategoryOfTask = "STAMPA" };
             tbCode[15] = new STAMPAOFFeDIGITALE() { CodCategoryOfTask = "STAMPA" };
             tbCode[16] = new STAMPADIGITALE() { CodCategoryOfTask = "STAMPA" };
+
             tbCode[17] = new STAMPAETICHROTOLO() { CodCategoryOfTask = "STAMPAETICHROTOLO" };
 
             tbCode[18] = new STAMPAMORBIDO() { CodCategoryOfTask = "STAMPAMORBIDO" };
 
             tbCode[19] = new TAVOLOCONTROLLO() { CodCategoryOfTask = "TAVOLOCONTROLLO" };
-            tbCode[20] = new STAMPAACALDOROTOLO() { CodCategoryOfTask = "PREPOST" };
-            tbCode[21] = new FUSTELLATURAROTOLO() { CodCategoryOfTask = "PREPOST" };
+            tbCode[20] = new STAMPAACALDOROTOLO() { CodCategoryOfTask = "PREPOSTROLL" };
+            tbCode[21] = new FUSTELLATURAROTOLO() { CodCategoryOfTask = "PREPOSTROLL" };
 
             tbCode[22] = new SERIGRAFIA() { CodCategoryOfTask = "STAMPA" };
             tbCode[23] = new SERIGRAFIAROTOLO() { CodCategoryOfTask = "STAMPA" };
 
             tbCode[24] = new SERIGRAFIASOLOTIPI() { CodCategoryOfTask = "STAMPA" };
 
+            tbCode[25] = new STAMPANEW() { CodCategoryOfTask = "STAMPA" };
+
             foreach (var item in tbCode)
             {
 
                 var typeOfTaskDb = typeOfTasksDb.FirstOrDefault(x => x.CodTypeOfTask == item.CodTypeOfTask);
+
 
                 if (typeOfTaskDb == null)
                 {
@@ -89,8 +94,11 @@ namespace Services
                     this.Add(typeOfTaskDb);
                 }
                 else
-                {                    
-                    //this.Edit(trv);                    
+                {
+                    item.TimeStampTable = DateTime.Now;
+
+                    Context.Entry(typeOfTaskDb).CurrentValues.SetValues(item);
+                    Context.Entry(typeOfTaskDb).State = System.Data.Entity.EntityState.Modified;
                 }
 
                 var opt = item.OptionTypeOfTasks;
@@ -122,10 +130,22 @@ namespace Services
             try
             {
                 var X = Context.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO_STACCO");
-                Context.Entry(X).State = System.Data.Entity.EntityState.Deleted;
+                if (X!=null)
+                {
+                    Context.Entry(X).State = System.Data.Entity.EntityState.Deleted;                    
+                }
 
                 var Y = Context.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == "FUSTELLATURA_STACCO");
-                Context.Entry(Y).State = System.Data.Entity.EntityState.Deleted;
+                if (Y!=null)
+                {
+                    Context.Entry(Y).State = System.Data.Entity.EntityState.Deleted;                    
+                }
+
+                var Z = Context.OptionTypeOfTasks.FirstOrDefault(x => x.CodOptionTypeOfTask == "TAGLIO_DOPPIO");
+                if (Z!=null)
+                {
+                    Context.Entry(Z).State = System.Data.Entity.EntityState.Deleted;
+                }
 
                 Context.SaveChanges();
             }

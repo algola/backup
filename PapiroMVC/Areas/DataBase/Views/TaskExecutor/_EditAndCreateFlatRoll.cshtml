@@ -18,9 +18,6 @@
 
 <div id="status">
 
-
-    @ViewBag.ReturnUrl
-
     @Scripts.Render("~/bundles/autocomplete")
     @using (Ajax.BeginForm("Action", "TaskExecutor", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { UpdateTargetId = "status", OnBegin = "showProcessingMsg", OnComplete = "hideProcessingMsg", OnSuccess = "OnSuccess" }, new { @class = "form-horizontal" }))
     {
@@ -115,11 +112,6 @@
                     </div>
 
                 </div>
-
-
-
-
-
 
                 <input type="hidden" name="returnCodTypeOfTask" value="@ViewBag.ReturnCodTypeOfTask" />
 

@@ -1639,6 +1639,7 @@
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIASOLOTIPI.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIAROTOLO.cs" />
     <Compile Include="RepositoryPattern\TASK\SERIGRAFIA.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPA - Copy.cs" />
     <Compile Include="RepositoryPattern\WarehouseRepository.cs" />
     <Compile Include="RepositoryPattern\ArticleRepository.cs" />
     <Compile Include="RepositoryPattern\CostDetailRepository.cs" />
@@ -1680,7 +1681,7 @@
     <Compile Include="RepositoryPattern\TASK\RILEGATURA_PM.cs" />
     <Compile Include="RepositoryPattern\TASK\RILEGATURA_SPIRALE.cs" />
     <Compile Include="RepositoryPattern\TASK\RILIEVO_A_SECCO.cs" />
-    <Compile Include="RepositoryPattern\TASK\STAMPA.cs" />
+    <Compile Include="RepositoryPattern\TASK\STAMPANEW.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPAMORBIDO.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPARIGIDO.cs" />
     <Compile Include="RepositoryPattern\TASK\STAMPA_DIGITALE.cs" />
@@ -2187,6 +2188,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ProductImage\CartolinePostali.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\ProductImage\EtichetteCartelliniSago.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\ProductImage\EtichetteCartellini.png">
@@ -2801,6 +2805,7 @@
     <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOption.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptionError.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptions.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_PrePostPressCostDetail.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -2864,6 +2869,9 @@
     <Content Include="Report\ExternalCostOfferHeader.docx" />
     <Content Include="Report\RepassRollCostHeader.docx" />
     <Content Include="Report\RepassRollCostDetail.docx" />
+    <Content Include="Report\LabelHead.docx" />
+    <Content Include="Report\PrintingSheetCostDetail.docx" />
+    <Content Include="Report\PrintedSheetArticleCostDetail.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -3556,7 +3564,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49450</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49452/</IISUrl>
+          <IISUrl>http://localhost:49453/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

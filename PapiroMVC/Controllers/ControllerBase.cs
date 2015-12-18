@@ -37,7 +37,7 @@ namespace PapiroMVC.Controllers
 
             using (var sw = new StringWriter())
             {
-                var viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);                
+                var viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);
                 var viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
 
                 viewResult.View.Render(viewContext, sw);
@@ -148,62 +148,62 @@ namespace PapiroMVC.Controllers
 
         public void UpdateDatabase(string dbName)
         {
-            //  profilesEntities ctxProfiles = new profilesEntities();
-            ProfilesDDL tblProfile = new ProfilesDDL("profiles");
-            dbEntities ctx = new dbEntities();
+                //  profilesEntities ctxProfiles = new profilesEntities();
+                ProfilesDDL tblProfile = new ProfilesDDL("profiles");
+                dbEntities ctx = new dbEntities();
 
-            tblProfile.UpdateSchema(ctx);
+                tblProfile.UpdateSchema(ctx);
 
-            if (CurrentDatabase != null)
-            {
-                //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
-                ctx.Database.Connection.Open();
-            }
+                if (CurrentDatabase != null)
+                {
+                    //ctx.Database.Connection.ConnectionString = ctx.Database.Connection.ConnectionString.Replace("db", CurrentDatabase);
+                    ctx.Database.Connection.Open();
+                }
 
-            var tables = new List<IDDL>();
+                var tables = new List<IDDL>();
 
-            //tables.Add(new DataBaseDDL(dbName));
-            //tables.Add(new CustomerSupplierDLL(dbName));
-            //tables.Add(new TaskExecutorsDDL(dbName));
-            //tables.Add(new ArticlesDDL(dbName));
-            //tables.Add(new ProductsDDL(dbName));
-            //tables.Add(new DocumentsDDL(dbName));
-            //tables.Add(new MenuProductDDL(dbName));
-            //tables.Add(new CostDetailDDL(dbName));
-            //tables.Add(new WarehouseArticlesDDL(dbName));
+                tables.Add(new DataBaseDDL(dbName));
+                tables.Add(new CustomerSupplierDLL(dbName));
+                tables.Add(new TaskExecutorsDDL(dbName));
+                tables.Add(new ArticlesDDL(dbName));
+                tables.Add(new ProductsDDL(dbName));
+                tables.Add(new DocumentsDDL(dbName));
+                tables.Add(new MenuProductDDL(dbName));
+                tables.Add(new CostDetailDDL(dbName));
+                tables.Add(new WarehouseArticlesDDL(dbName));
 
-            tables.Add(new TaskCentersDDL(dbName));
-            tables.Add(new UpdateDDL(dbName));
+                tables.Add(new TaskCentersDDL(dbName));
+                tables.Add(new UpdateDDL(dbName));
 
-            foreach (var item in tables)
-            {
-                item.UpdateSchema(ctx);
-            }
+                foreach (var item in tables)
+                {
+                    item.UpdateSchema(ctx);
+                }
 
-            var sql = "CALL RemoveTimeStampTable('param1','param2');";
-            sql = sql.Replace("param1", dbName);
-            sql = sql.Replace("param2", "costdetailrelations");
-            try
-            {
-                ctx.Database.ExecuteSqlCommand(sql);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                var sql = "CALL RemoveTimeStampTable('param1','param2');";
+                sql = sql.Replace("param1", dbName);
+                sql = sql.Replace("param2", "costdetailrelations");
+                try
+                {
+                    ctx.Database.ExecuteSqlCommand(sql);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
 
-            sql = "CALL FixCostDetailRelation('param1');";
-            sql = sql.Replace("param1", dbName);
-            try
-            {
-                ctx.Database.ExecuteSqlCommand(sql);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                sql = "CALL FixCostDetailRelation('param1');";
+                sql = sql.Replace("param1", dbName);
+                try
+                {
+                    ctx.Database.ExecuteSqlCommand(sql);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
 
-            ctx.Dispose();
+                ctx.Dispose();
         }
 
         // This method helps to render a partial view into html string.
@@ -342,7 +342,7 @@ namespace PapiroMVC.Controllers
 
             while (!disposable)
             {
-                
+
             }
 
             if (disposables != null)

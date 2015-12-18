@@ -17,6 +17,7 @@
         var flexo = '@HttpContext.GetLocalResourceObject(strings, "FlexoType")';
         var flatRoll = '@HttpContext.GetLocalResourceObject(strings, "FlatRollType")';
         var ctrlTblRoll = '@HttpContext.GetLocalResourceObject(strings, "ControlTableRollType")';
+        var prePostPress = '@HttpContext.GetLocalResourceObject(strings, "PrePostPressType")';
 
             if (cellvalue == "LithoSheet")
                 return link.replace("type", sheet);
@@ -45,6 +46,9 @@
             if (cellvalue == "ControlTableRoll")
                 return link.replace("type", ctrlTblRoll);
 
+            if (cellvalue == "PrePostPress")
+                return link.replace("type", prePostPress);
+
             return link;
         }
 
@@ -57,7 +61,7 @@
                                           "TaskExecutor",
                                       (object)new { id = -1, returnUrl = ViewBag.ReturnUrl, returnCodTypeOfTask = ViewBag.ReturnCodTypeOfTask },
                                           new {@class=""})';
-       
+
         if (rowobject[0] === 'CostError') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Costs"),
                                           "TaskExecutorCost",
@@ -72,7 +76,7 @@
                                           "TaskExecutor",
                                   (object)new { id = -1, returnUrl = ViewBag.ReturnUrl, returnCodTypeOfTask = ViewBag.ReturnCodTypeOfTask },
                                           new {@class=""})';
-                }
+        }
 
         if (rowobject[0] === 'CostRun') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnRun"),
@@ -80,7 +84,7 @@
                                           "TaskExecutor",
                                   (object)new { id = -1, returnUrl = ViewBag.ReturnUrl, returnCodTypeOfTask = ViewBag.ReturnCodTypeOfTask },
                                           new {@class=""})';
-                }
+        }
 
         if (rowobject[0] === 'CostTime') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnTime"),
@@ -88,7 +92,7 @@
                                           "TaskExecutor",
                                   (object)new { id = -1, returnUrl = ViewBag.ReturnUrl, returnCodTypeOfTask = ViewBag.ReturnCodTypeOfTask },
                                           new {@class=""})';
-                }
+        }
 
         if (rowobject[0] === 'PlotterOnMq') {
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CostsOnMq"),
@@ -100,18 +104,18 @@
 
         var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1", returnUrl = ViewBag.ReturnUrl }, new { @class = "" })';
 
-    @* var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), 
-                 "Edit", 
-                 new {id= "-1"}, 
-                 new AjaxOptions { HttpMethod = "GET", 
-                 InsertionMode = InsertionMode.InsertBefore, 
+        @* var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"),
+                 "Edit",
+                 new {id= "-1"},
+                 new AjaxOptions { HttpMethod = "GET",
+                 InsertionMode = InsertionMode.InsertBefore,
                  UpdateTargetId = "",
                  OnBegin="showProcessingMsg();",
                  OnComplete = "hideProcessingMsg();"
                  },
                  new {@class=""})' *@
 
-        
+
         return link.replace("-1", cellvalue) + " | " + link2.replace("-1", cellvalue);
 
     }

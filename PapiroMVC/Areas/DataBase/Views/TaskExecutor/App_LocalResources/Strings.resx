@@ -429,6 +429,9 @@
   <data name="ControlTableRollType" xml:space="preserve">
     <value>Tavolo Controllo Bobina</value>
   </data>
+  <data name="PrePostPressType" xml:space="preserve">
+    <value>Pre o Post Stampa</value>
+  </data>
   <data name="STAMPAETICHROTOLOGridCaption" xml:space="preserve">
     <value>Stampa etichette a bobina</value>
   </data>
@@ -476,5 +479,8 @@
   </data>
   <data name="FoilStampingSection" xml:space="preserve">
     <value>Laminazione</value>
+  </data>
+  <data name="Format" xml:space="preserve">
+    <value>Format</value>
   </data>
 </root>

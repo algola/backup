@@ -32,10 +32,6 @@ namespace PapiroMVC.Models
             base.InitCostDetail(tskExec, articles);
         }
 
-        public override void CostDetailCostCodeRigen()
-        {
-            this.TimeStampTable = DateTime.Now;
-        }
 
         public override void UpdateCoeff()
         {

@@ -56,6 +56,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> ForceSideOnSide { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> ForceGain { get; set; }
     
     	[DataMember]
         public virtual ProductPartPrinting ProductPartPrinting___ { get; set; }

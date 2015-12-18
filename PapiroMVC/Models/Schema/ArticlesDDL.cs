@@ -18,9 +18,7 @@ namespace PapiroMVC.Model
         public void UpdateSchema(DbContext ctx)
         {
             dbS.Ctx = ctx;
-
-            dbS.AddColumnToTable("productparttaskoptions", "TypeOfTaskPrint", SchemaDb.String, "100");
-            dbS.AddColumnToTable("productparttaskoptions", "Ink", SchemaDb.String, "100");
+            dbS.AddColumnToTable("documentstate", "CodState", SchemaDb.String, "100");
 
         }
 

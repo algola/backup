@@ -162,4 +162,10 @@
   <data name="RequiredField" xml:space="preserve">
     <value>richiesto per completare l'operazione</value>
   </data>
+  <data name="Format" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="FormatToolTip" xml:space="preserve">
+    <value>Formato</value>
+  </data>
 </root>

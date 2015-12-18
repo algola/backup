@@ -142,6 +142,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string ctrlTblType = resman.GetString("ControlTableRollType");
             string flexoType = resman.GetString("FlexoType");
             string flatRollType = resman.GetString("FlatRollType");
+            string prePostPressType = resman.GetString("PrePostPressType");
 
             if (gridSettings.isSearch)
             {
@@ -157,7 +158,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     isPlotterR,
                     isCrtlTab = false,
                     isFlexo = false,
-                    isFlatRoll = false;
+                    isFlatRoll = false,
+                    isPrePostPress = false;
 
                 //to match with language we have to compare filter with resource
                 isSheet = (sheetType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
@@ -167,6 +169,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 isFlexo = (flexoType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
                 isCrtlTab = (ctrlTblType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
                 isFlatRoll = (flatRollType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
+
+                isPrePostPress = (prePostPressType.ToLower().Contains(typeOfTaskExecutorFilter.ToLower()));
 
 
                 var s1 = isSheet ? (IQueryable<TaskExecutor>)q.OfType<LithoSheet>() : q.Where(x => x.CodTaskExecutor == "");
@@ -178,7 +182,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 var p1 = isPlotterS ? (IQueryable<TaskExecutor>)q.OfType<PlotterSheet>() : q.Where(x => x.CodTaskExecutor == "");
                 var p2 = isPlotterR ? (IQueryable<TaskExecutor>)q.OfType<PlotterRoll>() : q.Where(x => x.CodTaskExecutor == "");
 
-                var res = (((((s1.Union(s2)).Union(r1)).Union(r2)).Union(p1)).Union(p2));
+                var g1 = isPrePostPress ? (IQueryable<TaskExecutor>)q.OfType<PrePostPress>() : q.Where(x => x.CodTaskExecutor == "");
+
+                var res = ((((((s1.Union(s2)).Union(r1)).Union(r2)).Union(p1)).Union(p2)).Union(g1));
                 q = (IQueryable<PapiroMVC.Models.TaskExecutor>)res;
             }
 
@@ -859,7 +865,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             //read all
             var z = taskExecutorRepository.GetSingleEstimatedOn(codTaskExecutorOn);
             var z2 = z.steps;
-            return z2.OrderBy(x => x.FromUnit).AsQueryable();
+            return z2.OrderBy(x => x.Format, new EmptyStringsAreLast()).ThenBy(x => x.FromUnit).AsQueryable();
         }
 
         public ActionResult AvarageRunPerRunStepList(string codTaskExecutorOn, GridSettings gridSettings)
@@ -896,6 +902,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.IdStep.ToString(),
                             a.IdStep.ToString(),
                             a.CodTaskEstimatedOn.ToString(),
+                            a.Format,
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
                             a.AvarageRunPerHour.ToString()

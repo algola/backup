@@ -142,11 +142,20 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Etichette e cartellini.
+        ///   Looks up a localized string similar to Etichette in piano.
         /// </summary>
         public static string CodMenuProductEtichetteCartellini {
             get {
                 return ResourceManager.GetString("CodMenuProductEtichetteCartellini", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etichette sagomate in piano.
+        /// </summary>
+        public static string CodMenuProductEtichetteCartelliniSago {
+            get {
+                return ResourceManager.GetString("CodMenuProductEtichetteCartelliniSago", resourceCulture);
             }
         }
         

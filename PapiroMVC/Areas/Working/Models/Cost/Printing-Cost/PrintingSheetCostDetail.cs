@@ -48,6 +48,8 @@ namespace PapiroMVC.Models
                 List<Cut> x = new List<Cut>();
                 x = y.Where(k => k.Valid).ToList();
 
+                Console.Write(x);
+
                 if (PrintingFormat != null && PrintingFormat != "")
                 {
                     var k = 0;
@@ -66,13 +68,18 @@ namespace PapiroMVC.Models
                 //Se non è presente lo aggiungo
 
                 //da controllare solo se l'elenco non è vuoto    
-                if (x.Count > 0)
+                if (x.Count == 0)
                 {
                     var ele = x.Find(z => z.CutName == PrintingFormat);
                     if (ele == null && PrintingFormat != null)
                     {
                         var toAdd = new Cut("manual", 0, 0);
                         toAdd.ManualFormat = PrintingFormat;
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
+                        x.Add(toAdd);
+
+                        toAdd = new Cut("manual2", 0, 0);
+                        toAdd.ManualFormat = tsk.FormatMax;
                         toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
                         x.Add(toAdd);
                     }
@@ -246,6 +253,92 @@ namespace PapiroMVC.Models
         }
 
 
+
+
+        public override double UnitCost(double qta)
+        {
+            if (!IsValid)
+            {
+                return 0;
+            }
+
+
+            double totCostInk = 0;
+
+            double quantita = 0;
+            quantita = Math.Ceiling(qta * (GainForRun ?? 1));
+
+            var mqTot = CalculatedMq ?? 0;
+
+            //List<ProductPartPrintRollOption> optSeris = new List<ProductPartPrintRollOption>();
+            ////serigraphy options where we can find the inks and types
+            //foreach (var item in this.TaskCost.ProductPartTask.ProductPartTaskOptions.OfType<ProductPartPrintRollOption>())
+            //{
+            //    optSeris.Add((ProductPartPrintRollOption)item);
+            //}
+
+            //foreach (var item in optSeris)
+            //{
+            //    int mqPrint = 0;
+            //    mqPrint = Convert.ToInt32(Math.Ceiling(mqTot * (item.Overlay ?? 0) / 100));
+
+            //    //var seriSpec = option
+            //    var inkSpec = _articles.OfType<Ink>().FirstOrDefault(x => x.ArticleName == item.Ink);
+            //    var typeSeri = (Anilox)_articles.OfType<Anilox>().FirstOrDefault(x => x.ArticleName == item.TypeOfTaskPrint);
+
+            //    if (inkSpec != null && typeSeri != null)
+            //    {
+            //        int ltTot = Convert.ToInt32(Math.Ceiling(mqPrint / Convert.ToDouble(typeSeri.GainMqPerLt ?? 1)));
+            //        totCostInk += ltTot * Convert.ToDouble(inkSpec.ArticleCosts.OfType<NoPrintableArticleCostKg>().FirstOrDefault().CostPerKg, Thread.CurrentThread.CurrentUICulture);
+            //    }
+            //}
+
+
+            //devo usare gli avvimaneti, la tiratura totale e i mq
+            //passarli ad un metodo della macchina corrente e mi restituisce il costo totale che dividerò per
+            //la quantità!!!!
+
+            double total = 0;
+            TimeSpan time = new TimeSpan(0, 0, 0);
+            CostAndTime totalCT = new CostAndTime();
+            try
+            {
+                try
+                {
+                    var colors = TaskExecutor.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(
+                        TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, colors, 0, Quantity(qta),0);
+                }
+
+                catch (NotImplementedException)
+                {
+                    totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, Quantity(qta));
+                }
+
+                Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
+                //calcolo del tempo e del costo
+
+                total = totalCT.Cost;
+
+                total += totCostInk;
+                CalculatedTime = totalCT.Time;
+            }
+            catch (NullReferenceException)
+            {
+                total = 0;
+                Error = 2;
+            }
+
+            return (total) / Quantity(qta);
+
+        }
+
+
+
+
+
+
         public override void InitCostDetail(IQueryable<TaskExecutor> tskExec, IQueryable<Article> articles)
         {
             if (!justInited)
@@ -361,6 +454,16 @@ namespace PapiroMVC.Models
             }
 
             return lst;
+        }
+
+
+        public override void MergeField(Novacode.DocX doc)
+        {
+            base.MergeField(doc);
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.BuyingFormat", this.BuyingFormat));
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.PrintingFormat", this.PrintingFormat));
+
         }
 
     }

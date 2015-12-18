@@ -267,19 +267,8 @@ namespace PapiroMVC.Models
         }
 
 
-        //TEMPORANEO forse e' meglio salvarlo??
-        public virtual int GainOnSide1
-        {
-            get;
-            set;
-        }
-
-        //TEMPORANEO forse è meglio salvarlo nel db??
-        public virtual int GainOnSide2
-        {
-            get;
-            set;
-        }
+        public virtual double GainOnSide1 { get; set; }
+        public virtual double GainOnSide2 { get; set; }
 
         public bool IsValid
         {
@@ -398,6 +387,12 @@ namespace PapiroMVC.Models
                 }
             }
 
+
+            if (this.TypeOfCostDetail == CostDetailType.PrePostPressCostDetail || this.TypeOfCostDetail == CostDetailType.RepassRollCostDetail)
+            {
+                Console.Write("ciao");
+            }
+
             if (this.ProductPartPrinting != null)
             {
                 ProductPartPrinting.CodProductPartPrinting = CodCostDetail;
@@ -508,6 +503,14 @@ namespace PapiroMVC.Models
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedKg", this.CalculatedKg ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedRun", this.CalculatedRun ?? 0));
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.CalculatedTime", (this.CalculatedTime ?? new TimeSpan(0, 0, 0)).ToString()));
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.Implants", this.Implants ?? 0));            
+
+            if (ProductPartPrinting != null)
+            {
+                TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+                ProductPartPrinting.MergeField(doc);
+            }
 
         }
 

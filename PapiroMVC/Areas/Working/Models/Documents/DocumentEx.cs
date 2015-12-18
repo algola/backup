@@ -70,7 +70,9 @@ namespace PapiroMVC.Models
             var dstates = this.DocumentStates.OrderBy(y => y.CodDocumentState, new EmptyStringsAreLast()).ToList();
             foreach (var item in this.DocumentStates.OrderBy(y => y.CodDocumentState, new EmptyStringsAreLast()))
             {
+
                 item.CodDocumentState = this.CodDocument + "-" + dstates.IndexOf(item).ToString().PadLeft(3, '0');
+                
                 item.CodDocument = this.CodDocument;
                 item.TimeStampTable = DateTime.Now;
             }

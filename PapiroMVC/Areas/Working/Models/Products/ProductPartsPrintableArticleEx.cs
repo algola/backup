@@ -68,7 +68,6 @@ namespace PapiroMVC.Models
 
         public virtual void MergeField(DocX doc)
         {
-
             doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.TypeOfMaterial", this.TypeOfMaterial));
             doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.NameOfMaterial", this.NameOfMaterial));
             doc.AddCustomProperty(new Novacode.CustomProperty("PPPA.Color", this.Color));

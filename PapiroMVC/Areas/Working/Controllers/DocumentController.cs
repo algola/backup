@@ -422,7 +422,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             var docsProduct = documentRepository.GetDocumentProductsByCodProduct(codProduct).ToList();
             var doc = documentRepository.GetSingle(docsProduct.First().CodDocument);
 
-            foreach (var dp in doc.DocumentProducts.Where(x=>x.CodProduct == codProduct))
+            foreach (var dp in doc.DocumentProducts.Where(x => x.CodProduct == codProduct))
             {
                 dp.NewManualCost(description);
             }
@@ -463,19 +463,23 @@ namespace PapiroMVC.Areas.Working.Controllers
                     oldCodDocumentProduct + "';";
                 try
                 {
-                    ctx.Database.ExecuteSqlCommand(sql);
+                    if (newCodDocumentProduct != oldCodDocumentProduct)
+                    {
+                        ctx.Database.ExecuteSqlCommand(sql);
+                    }
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }
 
-
                 //devo aggiornare anche i costi ora!!!
-
                 foreach (var c in dp.Costs)
                 {
+                    var rigthCostRest = c.CodCost.Replace(oldCodDocumentProduct + "-", "").PadLeft(3, '0');
                     var newCodCost = c.CodCost.Replace(oldCodDocumentProduct, newCodDocumentProduct);
+                    newCodCost = newCodCost.Substring(0, newCodCost.LastIndexOf("-")) + "-" + rigthCostRest;
+
                     var oldCodCost = c.CodCost;
 
                     //eseguo un aggiornamento COST
@@ -484,33 +488,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                         oldCodCost + "';";
                     try
                     {
-                        ctx.Database.ExecuteSqlCommand(sql2);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-
-                    //eseguo un aggiornamento costdetails
-                    var sql3 = @"UPDATE costdetails SET CodCostDetail='" +
-                        newCodCost + "' where CodCostDetail ='" +
-                        oldCodCost + "';";
-                    try
-                    {
-                        ctx.Database.ExecuteSqlCommand(sql3);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
-
-                    //eseguo un aggiornamento costdetails
-                    sql3 = @"UPDATE costdetails SET CodComputedBy='" +
-                        newCodCost + "' where CodComputedBy ='" +
-                        oldCodCost + "';";
-                    try
-                    {
-                        ctx.Database.ExecuteSqlCommand(sql3);
+                        if (newCodCost != oldCodCost)
+                        {
+                            ctx.Database.ExecuteSqlCommand(sql2);
+                        }
                     }
                     catch (Exception e)
                     {
@@ -518,32 +499,79 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
 
 
-                    //CodProductPartPrintingGain
-                    //eseguo un aggiornamento costdetails
-                    sql3 = @"UPDATE ProductPartPrintingGain SET CodProductPartPrintingGain=
-                        REPLACE(CodProductPartPrintingGain, '" + oldCodCost + "', '" + newCodCost + "');";
-                    try
-                    {
-                        ctx.Database.ExecuteSqlCommand(sql3);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
 
-                    //CodProductPartPrintingGain
-                    //eseguo un aggiornamento costdetails
-                    sql3 = @"UPDATE makereadies SET CodMakeready=
-                        REPLACE(CodMakeready, '" + oldCodCost + "', '" + newCodCost + "');";
-                    try
-                    {
-                        ctx.Database.ExecuteSqlCommand(sql3);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e.Message);
-                    }
+                    string oldCodCostDetail = String.Empty;
 
+                    if (c.CostDetails.FirstOrDefault() != null)
+                    {
+                        oldCodCostDetail = c.CostDetails.FirstOrDefault().CodCostDetail;
+
+                        //eseguo un aggiornamento costdetails
+                        var sql3 = @"UPDATE costdetails SET CodCostDetail='" +
+                            newCodCost + "' where CodCostDetail ='" +
+                            oldCodCostDetail + "';";
+                        try
+                        {
+                            if (newCodCost != oldCodCostDetail)
+                            {
+                                ctx.Database.ExecuteSqlCommand(sql3);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+                        //eseguo un aggiornamento costdetails
+                        sql3 = @"UPDATE costdetails SET CodComputedBy='" +
+                            newCodCost + "' where CodComputedBy ='" +
+                            oldCodCostDetail + "';";
+                        try
+                        {
+                            if (newCodCost != oldCodCostDetail)
+                            {
+                                ctx.Database.ExecuteSqlCommand(sql3);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+
+                        //CodProductPartPrintingGain
+                        //eseguo un aggiornamento costdetails
+                        sql3 = @"UPDATE ProductPartPrintingGain SET CodProductPartPrintingGain=
+                        REPLACE(CodProductPartPrintingGain, '" + oldCodCostDetail + "', '" + newCodCost + "');";
+                        try
+                        {
+                            if (newCodCost != oldCodCostDetail)
+                            {
+                                ctx.Database.ExecuteSqlCommand(sql3);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+                        //CodProductPartPrintingGain
+                        //eseguo un aggiornamento costdetails
+                        sql3 = @"UPDATE makereadies SET CodMakeready=
+                        REPLACE(CodMakeready, '" + oldCodCostDetail + "', '" + newCodCost + "');";
+                        try
+                        {
+                            if (newCodCost != oldCodCostDetail)
+                            {
+                                ctx.Database.ExecuteSqlCommand(sql3);
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+                    }
                 }
             }
 
@@ -575,6 +603,38 @@ namespace PapiroMVC.Areas.Working.Controllers
         {
             //passo questo elenco alla view per poter implementare una ricerca mediante dropdown nella jqgrid
             ViewBag.States = documentRepository.GetAllStates().Where(x => x.UseInOrder ?? false).OrderBy(x => x.StateNumber);
+
+            //var d = documentRepository.GetAll().ToList();
+
+            //foreach (var item in d)
+            //{
+            //    item.DocumentStates = documentRepository.GetAllDocumentStates(item.CodDocument).ToList();
+
+            //    var allStates = documentRepository.GetAllStates().Where(x => (x.UseInOrder ?? false)).ToArray();
+
+            //    if (item.TypeOfDocument == Document.DocumentType.Estimate)
+            //    {
+            //        allStates = documentRepository.GetAllStates().Where(x => (x.UseInEstimate ?? false)).ToArray();
+            //    }
+
+            //    foreach (var s in allStates)
+            //    {
+            //        item.DocumentStates.Add(new DocumentState
+            //        {
+            //            CodDocument = item.CodDocument,
+            //            StateNumber = s.StateNumber,
+            //            CodState = s.CodState,
+            //            ResetLinkedStates = s.ResetLinkedStates,
+            //            Selected = false
+            //        });
+            //    }
+
+            //    documentRepository.Edit(item);
+            //}
+
+            //documentRepository.Save();
+
+            Console.Write(ViewBag.States);
             return View();
         }
 
@@ -698,7 +758,7 @@ namespace PapiroMVC.Areas.Working.Controllers
                 {
                     CodDocument = c.CodDocument,
                     StateNumber = s.StateNumber,
-                    StateName = s.StateName,
+                    CodState = s.CodState,
                     ResetLinkedStates = s.ResetLinkedStates,
                     Selected = false
                 });
@@ -753,7 +813,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                 {
                     CodDocument = c.CodDocument,
                     StateNumber = s.StateNumber,
-                    StateName = s.StateName,
+                    CodState = s.CodState,
+                    //                    StateName = s.StateName, //derivated!!!
                     ResetLinkedStates = s.ResetLinkedStates,
                     Selected = false
                 });

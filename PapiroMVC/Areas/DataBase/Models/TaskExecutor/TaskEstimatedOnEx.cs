@@ -70,6 +70,12 @@ namespace PapiroMVC.Models
             throw new NotImplementedException();
         }
 
+        public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, PrintingColor colors, int makereadis, double running, double weight)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public virtual CostAndTime GetCost(string codOptionTypeOfTask, double starts, double mq)
         {
             throw new NotImplementedException();

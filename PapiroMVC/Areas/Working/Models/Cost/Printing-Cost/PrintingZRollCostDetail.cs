@@ -247,7 +247,7 @@ namespace PapiroMVC.Models
         //    }
         //}
 
-        public override int GainOnSide1
+        public override double GainOnSide1
         {
             get
             {
@@ -259,7 +259,7 @@ namespace PapiroMVC.Models
             }
         }
 
-        public override int GainOnSide2
+        public override double GainOnSide2
         {
             get
             {
@@ -294,8 +294,10 @@ namespace PapiroMVC.Models
 
         //se esiste almeno una resa e non ho formati validi... provo ad aumentare il range dell'interspazio
         protected bool haveAlmostOne = false;
-        //voglio sapere anche qual'è interspazio minore calcolato
-        protected double smallerCalculatedDCut = 100;
+
+
+        //voglio sapere anche qual'è interspazio che si avvicina dipiù al minimo e al massimo
+        protected double smallestDeltaCalculatedDCut = 100;
         //interspazio negativo
         protected double smallerCalculatedDCutLessZero = 100;
 
@@ -377,7 +379,7 @@ namespace PapiroMVC.Models
                             GainOnSide1 = die.MaxGain1 ?? 0,
                             GainOnSide2 = die.MaxGain2 ?? 0,
 
-                            IsDie=true,
+                            IsDie = true,
 
                             DeltaDCut2 = 0
                         };
@@ -389,7 +391,7 @@ namespace PapiroMVC.Models
 
             foreach (var buyingFormat in BuyingFormats)
             {
-                if (buyingFormat.GetSide2() == 36.83)
+                if (buyingFormat.GetSide2() == 43.18)
                 {
                     if (buyingFormat.GetSide1() == 20)
                     {
@@ -435,7 +437,7 @@ namespace PapiroMVC.Models
                             //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
                             if (ppP.CalculatedGain > 0)
                             {
-                                smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
+                                smallestDeltaCalculatedDCut = ppP.CalculatedDCut2 < smallestDeltaCalculatedDCut ? ppP.CalculatedDCut2 : smallestDeltaCalculatedDCut;
                             }
 
 
@@ -551,7 +553,7 @@ namespace PapiroMVC.Models
             }
 
             //qui inizio a togliere un po di pHint            
-            var pHint1 = ProductPart.SelectValidpHint(pHint, smallerCalculatedDCutLessZero, smallerCalculatedDCut);
+            var pHint1 = ProductPart.SelectValidpHint(pHint, smallerCalculatedDCutLessZero, smallestDeltaCalculatedDCut);
 
             pHint = pHint1.ToList();
 
@@ -1010,8 +1012,7 @@ namespace PapiroMVC.Models
             //            var fto = this.TaskCost.ProductPartTask.ProductPart.FormatOpened;
             //            var mqTot = (fto.GetSide1() * fto.GetSide2() / 10000) * qta;
 
-
-            var mqTot = CalculatedMq??0;
+            var mqTot = CalculatedMq ?? 0;
 
             List<ProductPartPrintRollOption> optSeris = new List<ProductPartPrintRollOption>();
             //serigraphy options where we can find the inks and types
@@ -1051,7 +1052,7 @@ namespace PapiroMVC.Models
                 try
                 {
 
-                    var x = TaskexEcutorSelected.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+                    var x = TaskExecutor.GetColorFR(TaskCost.ProductPartTask.CodOptionTypeOfTask);
 
                     totalCT = TaskexEcutorSelected.SetTaskExecutorEstimatedOn.FirstOrDefault().GetCost(
                         TaskCost.ProductPartTask.CodOptionTypeOfTask, Starts ?? 1, x.cToPrintR, RollChanges ?? 0, (int)(x.cToPrintT + x.cToPrintTNoImplant), Quantity(qta));
@@ -1065,7 +1066,7 @@ namespace PapiroMVC.Models
 
                 Error = (Error != null && Error != 0 && Error != 2) ? 0 : Error;
                 //calcolo del tempo e del costo
-            
+
                 total = totalCT.Cost;
 
                 total += totCostInk;
@@ -1084,11 +1085,16 @@ namespace PapiroMVC.Models
         public override void MergeField(Novacode.DocX doc)
         {
             base.MergeField(doc);
-            if (ProductPartPrinting != null)
+
+            var description = String.Empty;
+            List<ProductPartPrintRollOption> optSeris = new List<ProductPartPrintRollOption>();
+            //serigraphy options where we can find the inks and types
+            foreach (var item in this.TaskCost.ProductPartTask.ProductPartTaskOptions.OfType<ProductPartPrintRollOption>())
             {
-                TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
-                ProductPartPrinting.MergeField(doc);
+                description += item.TypeOfTaskPrint  + " " + item.Ink + " " + item.Overlay + "%\n";
             }
+
+            doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.OptionTask", description));
         }
 
         private void FuzzyAlgoFlat()
@@ -1149,7 +1155,7 @@ namespace PapiroMVC.Models
                             GainOnSide1 = die.MaxGain1 ?? 0,
                             GainOnSide2 = die.MaxGain2 ?? 0,
 
-                            IsDie=true,
+                            IsDie = true,
 
                             DeltaDCut2 = 0
                         };
@@ -1211,7 +1217,7 @@ namespace PapiroMVC.Models
                                 //mi calcolo l'interspazio più piccolo... mi servirà se non ho formati validi per ricavarne almeno uno
                                 if (ppP.CalculatedGain > 0)
                                 {
-                                    smallerCalculatedDCut = ppP.CalculatedDCut2 < smallerCalculatedDCut ? ppP.CalculatedDCut2 : smallerCalculatedDCut;
+                                    smallestDeltaCalculatedDCut = ppP.CalculatedDCut2 < smallestDeltaCalculatedDCut ? ppP.CalculatedDCut2 : smallestDeltaCalculatedDCut;
                                 }
 
 
@@ -1323,7 +1329,7 @@ namespace PapiroMVC.Models
             }
 
             //qui inizio a togliere un po di pHint            
-            var pHint1 = ProductPart.SelectValidpHint(pHint, smallerCalculatedDCutLessZero, smallerCalculatedDCut);
+            var pHint1 = ProductPart.SelectValidpHint(pHint, smallerCalculatedDCutLessZero, smallestDeltaCalculatedDCut);
 
             pHint = pHint1.ToList();
 

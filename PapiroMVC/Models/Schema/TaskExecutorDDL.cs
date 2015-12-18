@@ -267,6 +267,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("steps", "FromUnit", SchemaDb.Double, "0");
             dbS.AddColumnToTable("steps", "ToUnit", SchemaDb.Double, "0");
 
+            dbS.AddColumnToTable("steps", "Format", SchemaDb.String, "15");
+
             //0 step per run //1 cost per run //2 percentage for Weight // 3 binding time // 4 binding cost
             dbS.AddColumnToTable("steps", "Selector", SchemaDb.Int, "0");
             dbS.AddColumnToTable("steps", "AvarageRunPerHour", SchemaDb.IntUS, "0");
@@ -313,7 +315,6 @@ namespace PapiroMVC.Model
 
             //FK
             dbS.AddForeignKey("steps", "CodTaskEstimatedOn", "taskexecutorestimatedon", "CodTaskEstimatedOn");
-
             
             //typeoftask
             dbS.AddTable("typeoftask");
@@ -330,8 +331,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("optiontypeoftask", "OptionName", SchemaDb.String, "100");
             dbS.AddColumnToTable("optiontypeoftask", "IdexOf ", SchemaDb.Int, "0");
 
-
-
             //FK
             dbS.AddForeignKey("optiontypeoftask", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
 
@@ -344,7 +343,6 @@ namespace PapiroMVC.Model
             //FK
             dbS.AddForeignKey("taskexecutortypeoftask", "CodTypeOfTask", "typeoftask", "CodTypeOfTask");
             dbS.AddForeignKey("taskexecutortypeoftask", "CodTaskExecutor", "taskexecutors", "CodTaskExecutor");
-
 
 
             //FK IN TASKEXECUTORS

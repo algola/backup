@@ -1,6 +1,6 @@
 ﻿@using PapiroMVC.Validation
 @using PapiroMVC.Models
-@model PapiroMVC.Models.RepassRollCostDetail
+@model PapiroMVC.Models.PrePostPressCostDetail
 @{
 
     string strings = "~/Areas/Working/Views/Document/Strings";
@@ -56,7 +56,6 @@
 
         </div>
 
-
         <div class="space"></div>
 
         <div class="row">
@@ -76,7 +75,7 @@
             </div>
         </div>
 
-        @if (Model.TypeOfRepass == 0)
+        @*@if (Model.TypeOfRepass == 0)
         {
             @Html.Partial("_ProductPartSerigraphyOptions", Model)
         }
@@ -84,7 +83,7 @@
         @if (Model.TypeOfRepass == 1)
         {
             @Html.Partial("_ProductPartHotPrintingOptions", Model)
-        }
+        }*@
 
     </div>
 
@@ -389,30 +388,14 @@
         side1 = side1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
         side2 = side2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
 
-        var bside1 = '@Model.BuyingFormat.GetSide1()';
-        var bside2 = '@Model.BuyingFormat.GetSide2()';
-
-        bside1 = bside1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
-        bside2 = bside2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
-
-        var gain1 = '@Model.GainOnSide1';
-        var gain2 = '@Model.GainOnSide2';
-
-        gain1 = gain1.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
-        gain2 = gain2.replace(/[\.,]/g, function (m) { return m == '.' ? ',' : '.' });
-
-        var offsetY = (side1 - (bside1 / gain1));
-        var offsetX = (side2 -(bside2 / gain2));
-
-
         var c_canvas = document.getElementById("printingSingleSheet");
         var context = c_canvas.getContext("2d");
 
         var zoom = 2.5;
         zoom = zoomGlo;
 
-        //var offsetX = 0;
-        //var offsetY = 0;
+        var offsetX = 0;
+        var offsetY = 0;
 
         drawRepass(context, side1, side2, offsetX, offsetY, zoom, 0);
     }

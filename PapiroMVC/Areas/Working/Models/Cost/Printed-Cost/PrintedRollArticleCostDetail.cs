@@ -29,34 +29,39 @@ namespace PapiroMVC.Models
         public override void GetCostFromList(IQueryable<Article> articles)
         {
 
-            var p = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
-            //questo dovrebbe far ottenere il costo!!!!!!
-            var extract = articles.GetArticlesByProductPartPrintableArticle(p);
+            List<Article> extract;
 
-            if (extract.FirstOrDefault() == null)
+            try
             {
-                //se non trovo il
-                //    throw (new NullReferenceException());
-                TypeOfQuantity = 3;
-                var article = extract.FirstOrDefault();
-
-                CostPerMq = "0";
-                CostPerMl = "0";
-            }
-            else
-            {
+                var p = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
+                //questo dovrebbe far ottenere il costo!!!!!!
+                extract = articles.GetArticlesByProductPartPrintableArticle(p).ToList();
+                if (extract.FirstOrDefault() == null)
+                {
+                    throw new Exception();
+                }
 
                 TypeOfQuantity = (int)extract.FirstOrDefault().TypeOfQuantity;
-                var article = extract.FirstOrDefault();
+                var art = extract.FirstOrDefault();
 
-                var aCost = article.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
+                var aCost = art.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
                 CostPerMq = ((RollPrintableArticleCost)aCost).GetCostPerMq();   //.CostPerMq;
                 CostPerMl = ((RollPrintableArticleCost)aCost).CostPerMl;
 
             }
-        }
+            catch (Exception)
+            {
+             
+                //se non trovo il
+                //    throw (new NullReferenceException());
+                TypeOfQuantity = 3;
 
-        public override void CostDetailCostCodeRigen()
+                CostPerMq = "0";
+                CostPerMl = "0";
+            }
+
+        }
+                public override void CostDetailCostCodeRigen()
         {
             base.CostDetailCostCodeRigen();
         }
@@ -82,10 +87,20 @@ namespace PapiroMVC.Models
         {
             double ret;
 
+
+
+            try
+            {
+                var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
+                var article = (RollPrintableArticle)extract.FirstOrDefault();
+
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
             //var ret = base.Quantity(qta);
             //questo dovrebbe far ottenere il costo!!!!!!
-            var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
-            var article = (RollPrintableArticle)extract.FirstOrDefault();
 
             double mqMat = 0;
             double mlMat = 0;
@@ -140,16 +155,6 @@ namespace PapiroMVC.Models
         public override void MergeField(DocX doc)
         {
             base.MergeField(doc);
-
-            //voglio stampare i dati relativi al materiale di stampa
-            //questo dovrebbe far ottenere il costo!!!!!!
-
-            var art = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
-            if (art!=null)
-            {
-                art.MergeField(doc);
-            }
-
         }
 
     }

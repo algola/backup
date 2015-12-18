@@ -23,8 +23,9 @@ namespace PapiroMVC.Models
             pHint1 = pHint.Where(x=>x.IsDie || ( x.DCut2 >= this.MinDCut
                     && x.DCut2 <= this.MaxDCut && (x.DCut1 >= x.DCut2 || (x.DCut1 == 0 && x.MaxGain1 == 1)))).ToList();
 
+            var c = pHint1.Where(y => !y.IsDie);
 
-            if (pHint1.Count <= 1)
+            if (c.Count()==0)
             {
                 //fascette gommate
                 if (MinDCut == 0)
@@ -103,12 +104,8 @@ namespace PapiroMVC.Models
 
         }
 
-
         public double AvarageDCut
         { get { return ((MinDCut ?? 0) + (MaxDCut ?? 0)) / 2; } }
-
-
-
 
         //formato in mm
         public virtual String Formatmm
@@ -138,11 +135,6 @@ namespace PapiroMVC.Models
 
             }
         }
-
-
-
-
-
 
         public virtual void UpdateOpenedFormat()
         {

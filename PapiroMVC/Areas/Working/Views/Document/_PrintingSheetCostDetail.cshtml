@@ -8,7 +8,9 @@
     string stringsCod = "~/Views/Shared/Cuts";
 
     var x = Model.Cuts;
-
+    Console.WriteLine(x);
+    
+    
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
 }
 
@@ -116,18 +118,18 @@
         //  alert("foceside");
 
         $.ajax({
-            url: '@(Url.Action("ChangeMaxGain", "Document", new { area = "Working" }))',
+            url: '@(Url.Action("ChangeGain", "Document", new { area = "Working" }))',
             type: 'POST',
             data: JSON.stringify(dataToPass),
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-                reloadFormat();
-                initAndPosition();
+         //       reloadFormat();
+         //       initAndPosition();
             },
             error: function () {
                 alert("error");
-            },
+            }
 
         });
     });
@@ -154,7 +156,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
-                    reloadFormat();
+                //    reloadFormat();
                 },
                 error: function () {
                     alert("error");
@@ -181,13 +183,13 @@
             };
 
             $.ajax({
-                url: '@(Url.Action("ChangeMaxGain", "Document", new { area = "Working" }))',
+                url: '@(Url.Action("ChangeGain", "Document", new { area = "Working" }))',
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
-                    reloadFormat();
+                   // reloadFormat();
                 },
                 error: function () {
                     alert("error");
@@ -250,7 +252,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-                reloadFormat();
+              //  reloadFormat();
             },
             error: function () {
                 alert("error");

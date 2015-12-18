@@ -411,6 +411,9 @@
   <data name="CodSTAMPARIGIDO" xml:space="preserve">
     <value>Stampa Materiale Rigido</value>
   </data>
+  <data name="CodSTAMPANEW_NO" xml:space="preserve">
+    <value>Nessuna stampa</value>
+  </data>
   <data name="CodSTAMPAMORBIDO_ALTA" xml:space="preserve">
     <value>Stampa UV alta qualità</value>
   </data>

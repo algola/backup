@@ -19,7 +19,6 @@
 
             @Html.Hidden("returnUrl", TempData["TaskExecutorIndex"])
 
-
             @Html.HiddenFor(model => model.TimeStampTable)
             @Html.HiddenFor(model => model.CodTaskExecutor)
             @Html.HiddenFor(model => model.CodTaskEstimatedOn)
@@ -27,6 +26,7 @@
             <div class="editor-field">
                 @Html.AlgolaEditorFor(model => model.StartingTime1)
                 @Html.AlgolaEditorFor(model => model.StartingTime2)
+                @Html.AlgolaEditorFor(model => model.StartingTimePerColor)
                 @*deprecated  @Html.AlgolaEditorFor(model => model.TimeForfait) *@
             </div>
         </fieldset>
@@ -35,7 +35,6 @@
             <legend>@HttpContext.GetLocalResourceObject(strings, "AvarageRunPerRunLabel")</legend>
 
             @Html.AlgolaEditorFor(model => model.AvarageRunPerHour)
-
             @Html.EditorFor(model => model.UseDifferentRunPerHour)
 
             <div id="_listAvarageRunPerRunStep">

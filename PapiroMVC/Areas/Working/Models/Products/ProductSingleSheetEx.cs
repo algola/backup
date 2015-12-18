@@ -9,7 +9,7 @@ using Novacode;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductSingleSheet))]
     [MetadataType(typeof(ProductSingleSheet_MetaData))]
     public partial class ProductSingleSheet : Product, IDataErrorInfo, ICloneable, IDeleteRelated
@@ -31,7 +31,7 @@ namespace PapiroMVC.Models
 
             part.DCut1 = DCut1;
             part.DCut2 = DCut2;
-            
+
             part.ShowDCut = ShowDCut;
             part.IsDCut = ShowDCut;
 
@@ -39,7 +39,7 @@ namespace PapiroMVC.Models
 
             ProductPartTask partTask;
 
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPAOFFeDIGITALE_NO");
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPANEW_NO");
             partTask.Hidden = false;
             partTask.ImplantHidden = false;
             partTask.IndexOf = 10;
@@ -47,12 +47,40 @@ namespace PapiroMVC.Models
 
             partTask.CodItemGraph = "ST";
 
-            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
-            partTask.Hidden = false;
-            partTask.ImplantHidden = null; //impant is visibile only if task is visibile
-            partTask.IndexOf = 20;
+            if (CodMenuProduct.Contains("Sago"))
+            {
+                partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_SI");
+                partTask.Hidden = false;
+                partTask.ImplantHidden = null; //impant is visibile only if task is visibile
+                partTask.IndexOf = 20;
 
-            partTask.CodItemGraph = "FS";
+                partTask.CodItemGraph = "FS";
+
+                partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAGLIO_NO");
+                partTask.Hidden = true;
+                partTask.ImplantHidden = true;
+                partTask.IndexOf = 30;
+
+                partTask.CodItemGraph = "TG";
+
+            }
+            else
+            {
+                partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "FUSTELLATURA_NO");
+                partTask.Hidden = true;
+                partTask.ImplantHidden = null; //impant is visibile only if task is visibile
+                partTask.IndexOf = 20;
+
+                partTask.CodItemGraph = "FS";
+
+                partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "TAGLIO_AL_VIVO");
+                partTask.Hidden = false;
+                partTask.ImplantHidden = true; //impant is visibile only if task is visibile
+                partTask.IndexOf = 20;
+
+                partTask.CodItemGraph = "TG";
+
+            }
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
@@ -61,8 +89,39 @@ namespace PapiroMVC.Models
             ProductGraphLinks.Clear();
 
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "TG" });
 
         }
+
+        public override List<ProductPartTask> GetInitalizedPartTask()
+        {
+            var tsksInPart = base.GetInitalizedPartTask();
+
+            ProductPartTask pt;
+
+            String[] codTypeOfTasks = {"FUSTELLATURA","TAGLIO" };
+
+            foreach (var item in codTypeOfTasks)
+            {
+
+                pt = new ProductPartTask();
+                //default selection
+                pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_NO");
+
+                if (item == "FUSTELLATURA" && CodMenuProduct.Contains("Sago"))
+                    pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_SI");
+
+                if (item == "TAGLIO" && !CodMenuProduct.Contains("Sago"))
+                    pt.OptionTypeOfTask = SystemTaskList.FirstOrDefault(x => x.CodTypeOfTask == item).OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item + "_AL_VIVO");
+                
+                pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
+                pt.Hidden = true;
+                tsksInPart.Add(pt);
+            }
+
+            return tsksInPart;
+        }
+
 
         public override string ToString()
         {

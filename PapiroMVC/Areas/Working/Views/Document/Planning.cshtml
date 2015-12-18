@@ -9,8 +9,6 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsProd = "~/Views/Shared/Strings";
 
-    //Prendo il titolo dal menù
-    ViewBag.Title = Html.T(strings, "Planning");
 }
 
 <div class="row">
@@ -50,7 +48,7 @@
 }
 
 @section description{
-    @Html.T(strings, "DocumentsDesc")
+    @Html.T(strings, "Planning")
 }
 
 

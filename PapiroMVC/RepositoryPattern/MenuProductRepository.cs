@@ -20,7 +20,8 @@ namespace Services
 
             ////Fogli Singoli
             //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 0, CodMenuProduct = "Buste", IndexOfCategory = 1 });
-            //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 1, CodMenuProduct = "EtichetteCartellini", IndexOfCategory = 1 });
+            tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 11, CodMenuProduct = "EtichetteCartelliniSago", IndexOfCategory = 1 });
             //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 2, CodMenuProduct = "BigliettiVisita", IndexOfCategory = 1 });
             //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 3, CodMenuProduct = "CartolineInviti", IndexOfCategory = 1 });
             //tbCode.Add(new MenuProduct { CodCategory = "FogliSingoli", IndexOf = 4, CodMenuProduct = "Volantini", IndexOfCategory = 1 });

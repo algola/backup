@@ -73,6 +73,7 @@
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocumentState)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodDocument)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateName)
+                    @Html.HiddenFor(model => model.DocumentStatesPerView[i].CodState)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumber)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].StateNumberPrev)
                     @Html.HiddenFor(model => model.DocumentStatesPerView[i].Completed)
@@ -80,7 +81,7 @@
 
                     <div class="row no-padding-bottom no-padding-top">
                         <div class="col-sm-3 control-label no-padding-right no-padding-bottom no-padding-top">
-                            @Html.Label(Html.T(strings, Model.DocumentStatesPerView[i].StateName))
+                            @Model.DocumentStatesPerView[i].StateName
                         </div>
                         <div class="controls col-sm-9 no-padding-bottom no-padding-top">
                             @Html.CheckBoxFor(m => m.DocumentStatesPerView[i].Selected)
@@ -88,6 +89,8 @@
 
                         </div>
                     </div>
+                    
+                    
                 }
             </div>
 

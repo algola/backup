@@ -10,98 +10,99 @@
 }
 
 <table id="gridAvarageRunPerRunStep"><tr><td/></tr></table> 
-<div id="pagerAvarageRunPerRunStep"></div> 
+@*<div id="pagerAvarageRunPerRunStep"></div>*@ 
 
     <script type="text/javascript">
 
-        $(function () {
+    $(function () {
 
-            var lastSel = -1;
+        var lastSel = -1;
 
-            var myGrid = $("#gridAvarageRunPerRunStep").jqGrid({
-                url: '@url',
-                editUrl: '@editUrl',
-                datatype: 'json',
-                colModel: [
-                    { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
-                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepAvarageRunPerRunStep },
-                    { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
-                    { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromMtCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
-                    { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToMtCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
-                    { name: 'AvarageRunPerHour', label: '@HttpContext.GetLocalResourceObject(strings, "AvarageMeterPerSecCaption")', width: 100, align: 'right', editable: true }],
+        var myGrid = $("#gridAvarageRunPerRunStep").jqGrid({
+            url: '@url',
+            editUrl: '@editUrl',
+            datatype: 'json',
+            colModel: [
+                { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
+                { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepAvarageRunPerRunStep },
+                { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
+                { name: 'Format', label: '@HttpContext.GetLocalResourceObject(strings, "FormatCaption")', hidden:true, width: 80, align: 'right', editable: true },
+                { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromMtCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToMtCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
+                { name: 'AvarageRunPerHour', label: '@HttpContext.GetLocalResourceObject(strings, "AvarageMeterPerSecCaption")', width: 100, align: 'right', editable: true }],
 
-                pager: '#pagerAvarageRunPerRunStep',
-                
-                rowNum: 15,
-                //rowList: [15, 20, 50],
-                viewrecords: true,
-                autowidth: false,
-                width: 375,
-                shrinkToFit: false,
+            //pager: '#pagerAvarageRunPerRunStep',
 
-                loadComplete: function () {
+            rowNum: 10000,
+            ////rowList: [15, 20, 50],
+            viewrecords: true,
+            autowidth: false,
+            width: 400,
+            shrinkToFit: false,
 
-                    var table = this;
-                    setTimeout(function () {
-                        updateActionIcons(table);
-                        updatePagerIcons(table);
-                        enableTooltips(table);
-                    }, 0);
-                },
-                onSelectRow: function (id) {
-                    if (id && id !== lastSel) {
-                        myGrid.jqGrid('restoreRow', lastSel);
-                        lastSel = id;
-                    }
-                },
+            loadComplete: function () {
 
-                ondblClickRow: function (id, ri, ci) {
-                    myGrid.jqGrid('editRow', id, {
-                        keys: true,
-                        oneditfunc: function () {
-                            //...
-                        },
-                        aftersavefunc: function(){
-                            $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
-                        },
-                        url: '@editUrl'
-                    });
-                    //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
-                    return;
-                },
-
-                beforeSelectRow: function (rowid, e) {
-                    var iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]);
-
-
-                    //alert(this.p.colModel[iCol].name);
-                    if (this.p.colModel[iCol].name === 'cfgName') {
-                        alert("GO!!!");
-                        return false;
-                    }
+                var table = this;
+                setTimeout(function () {
+                    updateActionIcons(table);
+                    updatePagerIcons(table);
+                    enableTooltips(table);
+                }, 0);
+            },
+            onSelectRow: function (id) {
+                if (id && id !== lastSel) {
+                    myGrid.jqGrid('restoreRow', lastSel);
+                    lastSel = id;
                 }
-                
+            },
 
-            });
+            ondblClickRow: function (id, ri, ci) {
+                myGrid.jqGrid('editRow', id, {
+                    keys: true,
+                    oneditfunc: function () {
+                        //...
+                    },
+                    aftersavefunc: function () {
+                        $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
+                    },
+                    url: '@editUrl'
+                });
+                //editRow(rowid, keys, oneditfunc, successfunc, url, extraparam, aftersavefunc, errorfunc, afterrestorefunc);
+                return;
+            },
 
-            myGrid.jqGrid('navGrid', '#pagerAvarageRunPerRunStep', { edit: false, add: false, del: false, search: false });
+            beforeSelectRow: function (rowid, e) {
+                var iCol = $.jgrid.getCellIndex($(e.target).closest("td")[0]);
+
+
+                //alert(this.p.colModel[iCol].name);
+                if (this.p.colModel[iCol].name === 'cfgName') {
+                    alert("GO!!!");
+                    return false;
+                }
+            }
+
 
         });
 
-        function insFmatter(cellvalue, options, rowobject) {
-            if (cellvalue == 9999999999)
-                return '';
-            else
-                return cellvalue;
-        }
+        myGrid.jqGrid('navGrid', '#pagerAvarageRunPerRunStep', { edit: false, add: false, del: false, search: false });
 
-        function delStepAvarageRunPerRunStep(cellvalue, options, rowobject) {
-            var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadAvarageRunPerRunStep" }, new {@class="tbutton smalldelete"})';
-            return link.replace("-1", cellvalue) 
-        }
+    });
 
-        function reloadAvarageRunPerRunStep() {
-            $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
-        }
+    function insFmatter(cellvalue, options, rowobject) {
+        if (cellvalue == 9999999999)
+            return '';
+        else
+            return cellvalue;
+    }
+
+    function delStepAvarageRunPerRunStep(cellvalue, options, rowobject) {
+        var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "DeletingStep"), "DeletingStep", new {id= "-1"}, new AjaxOptions { HttpMethod = "Delete", OnComplete = "reloadAvarageRunPerRunStep" }, new {@class="tbutton smalldelete"})';
+        return link.replace("-1", cellvalue)
+    }
+
+    function reloadAvarageRunPerRunStep() {
+        $("#gridAvarageRunPerRunStep").trigger("reloadGrid");
+    }
 
     </script>

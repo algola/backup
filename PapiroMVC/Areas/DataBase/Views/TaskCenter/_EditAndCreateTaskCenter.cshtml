@@ -14,11 +14,13 @@
 
                 @Html.ValidationSummary(true)
 
-
                 @Html.HiddenFor(model => model.TimeStampTable)
                 @Html.HiddenFor(model => model.CodTaskCenter)
                 @Html.HiddenFor(model => model.IndexOf)
                 @Html.AlgolaEditorFor(model => model.TaskCenterName)
+
+                @Html.AlgolaAutocompleteFor(model => model.StateName, "StateAutoComplete", "Document")
+
                 <br />
                 <div class="controls col-sm-9 col-sm-offset-3">
 

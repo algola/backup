@@ -21,9 +21,9 @@ namespace PapiroMVC.Models
         public enum ProductPartTasksType : int
         {
             ProductPartTask = 0,
-            ProductPartSerigraphy = 1, 
-            ProductPartPrintRoll=2,
-            ProductPartHotPrinting=3
+            ProductPartSerigraphy = 1,
+            ProductPartPrintRoll = 2,
+            ProductPartHotPrinting = 3
         }
 
         public ProductPartTasksType TypeOfProductPartTask
@@ -43,7 +43,31 @@ namespace PapiroMVC.Models
         public override string ToString()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
-            return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+
+            if (this.CodOptionTypeOfTask.Contains("STAMPANEW"))
+            {
+                if (CodOptionTypeOfTask.Contains("_NO"))
+                {
+                    return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+                }
+                else
+                {
+                    PrintingColor colors = TaskExecutor.GetColorFR(CodOptionTypeOfTask);
+                    if (colors.cToPrintT == 1)
+                    {
+                        return (string)t.GetProperty("CodSTAMPANEW1").GetValue(null, null);
+                    }
+                    else
+                    {
+                        return (string)t.GetProperty("CodSTAMPANEWS").GetValue(null, null).ToString().Replace("XXX", colors.cToPrintF.ToString() + "+" + colors.cToPrintR.ToString());
+                    }
+                }
+            }
+            else
+                return (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null);
+
+
+
         }
 
         public virtual string ImplantToString()
@@ -57,8 +81,8 @@ namespace PapiroMVC.Models
                 ret = (string)t.GetProperty("Cod" + extract).GetValue(null, null);
             }
             catch
-            { 
-            
+            {
+
             }
 
             return ret;
@@ -97,11 +121,11 @@ namespace PapiroMVC.Models
 
                 if (x.Contains("%PRINTPARTTASK") && this.CodOptionTypeOfTask.Contains("STAMPA"))
                 {
-                    x = x.Replace("%PRINTPARTTASK", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null));
+                    x = x.Replace("%PRINTPARTTASK", this.ToString());
                 }
                 else
                 {
-                    x = x.Replace("%PARTTASKS", (string)t.GetProperty("Cod" + this.CodOptionTypeOfTask).GetValue(null, null) + " %PARTTASKS");
+                    x = x.Replace("%PARTTASKS", this.ToString() + " %PARTTASKS");
                 }
 
                 ProductPart.Product.ProductNameGenerator = x;

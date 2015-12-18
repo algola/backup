@@ -101,7 +101,7 @@ namespace PapiroMVC.Models
                     )));
 
                 //LIMITO LA RESA
-                if (MaxGain1 != 0 && gain1_1 > MaxGain1)
+                if (MaxGain1 != 0 && (gain1_1 > MaxGain1 || (ForceGain??false)))
                 {
                     gain1_1 = MaxGain1;
                     gain1_1WoLat = MaxGain1;
@@ -141,7 +141,7 @@ namespace PapiroMVC.Models
 
 
                 //LIMITO LA RESA
-                if (MaxGain2 != 0 && gain2_2 > MaxGain2)
+                if (MaxGain2 != 0 && (gain2_2 > MaxGain2 || (ForceGain??false)))
                 {
                     gain2_2 = MaxGain2;
                 }
@@ -150,7 +150,6 @@ namespace PapiroMVC.Models
                 //doppio taglio calcolato su SideOnSide 2
                 double dCut2_2Res = ((LargerFormat.GetSide2() - minusSide2) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2);
                 double dCut2_2ResDouble = dCut2_2Res / 2;
-
 
 
                 //TODO: controllare la pinza e doppia pinza!!!!!
@@ -165,7 +164,7 @@ namespace PapiroMVC.Models
 
 
                 //LIMITO LA RESA
-                if (MaxGain1 != 0 && gain1_2 > MaxGain1)
+                if (MaxGain1 != 0 && (gain1_2 > MaxGain1 || (ForceGain??false)))
                 {
                     gain1_2 = MaxGain1;
                 }
@@ -179,7 +178,7 @@ namespace PapiroMVC.Models
                 var gain2_1 = (int)decimal.Truncate(((decimal)((LargerFormat.GetSide2() - minusSide2 + dCut1) / (SmallerFormat.GetSide1() + dCut1))));
 
                 //LIMITO LA RESA
-                if (MaxGain2 != 0 && gain2_1 > MaxGain2)
+                if (MaxGain2 != 0 && (gain2_1 > MaxGain2 || (ForceGain ?? false)))
                 {
                     gain2_1 = MaxGain2;
                 }
@@ -372,10 +371,6 @@ namespace PapiroMVC.Models
             }
             return gr;
         }
-
-
-
-
 
     }
 }

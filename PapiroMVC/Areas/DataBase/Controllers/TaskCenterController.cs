@@ -19,6 +19,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
     {
 
         private readonly ITaskCenterRepository taskCenterRepository;
+        private readonly IDocumentRepository documentRepository;
 
         protected dbEntities db;
 
@@ -26,11 +27,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         {
             base.Initialize(requestContext);
             taskCenterRepository.SetDbName(CurrentDatabase);
+            documentRepository.SetDbName(CurrentDatabase);
         }
 
-        public TaskCenterController(ITaskCenterRepository _tskExDataRep)
+        public TaskCenterController(ITaskCenterRepository _tskExDataRep,
+            IDocumentRepository _docDataRep)
         {
             taskCenterRepository = _tskExDataRep;
+            documentRepository = _docDataRep;
 
             this.Disposables.Add(taskCenterRepository);
         }
@@ -57,10 +61,22 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 {
                     {
                         c.CodTaskCenter = taskCenterRepository.GetNewCode(c);
-                    }
+
+                        var state = documentRepository.GetAllStates().FirstOrDefault(x => x.StateName == c.StateName);
+
+                        if (state != null)
+                        {
+                            c.CodState = state.CodState;
+                        }
+                        else
+                        {
+                            c.CodState = null;
+                        }
 
                     taskCenterRepository.Add(c);
                     taskCenterRepository.Save();
+
+                    }
                     //hooray it passed - go back to index
                     return Json(new { redirectUrl = Url.Action("Index") });
                 }
@@ -89,6 +105,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             TaskCenter tskEx = new TaskCenter();
             tskEx = (TaskCenter)taskCenterRepository.GetSingle(id);
 
+            if (tskEx.State != null)
+            {
+                tskEx.StateName = tskEx.State.StateName;
+            }
+
+
             if (tskEx == null)
                 return HttpNotFound();
 
@@ -97,9 +119,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
-
-        
-            
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult ChangeTaskCenterOrder(string ids)
@@ -130,6 +149,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
+                    var state = documentRepository.GetAllStates().FirstOrDefault(x => x.StateName == c.StateName);
+
+                    if (state != null)
+                    {
+                        c.CodState = state.CodState;
+                    }
+                    else
+                    {
+                        c.CodState = null;
+                    }
+
                     taskCenterRepository.Edit(c);
                     taskCenterRepository.Save();
                     return Json(new { redirectUrl = Url.Action("Index") });
@@ -139,7 +169,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ModelState.AddModelError(string.Empty, "Something went wrong. Message: " + ex.Message);
                 }
             }
-
             ViewBag.ActionMethod = "EditTaskCenter";
             return PartialView("_EditAndCreateTaskCenter", c);
         }
@@ -165,7 +194,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
 
             //read all
-            var q = taskCenterRepository.GetAll().OrderBy(x=>x.IndexOf).AsQueryable();
+            var q = taskCenterRepository.GetAll().OrderBy(x => x.IndexOf).AsQueryable();
 
             //execute filter
             if (!string.IsNullOrEmpty(codTaskCenterFilter))

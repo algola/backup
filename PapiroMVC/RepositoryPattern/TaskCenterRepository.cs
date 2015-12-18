@@ -77,7 +77,7 @@ namespace Services
         public override IQueryable<TaskCenter> GetAll()
         {
 
-            var tcs = Context.TaskCenters.ToList();
+            var tcs = Context.TaskCenters.Include("State").ToList();
 
             foreach (var c in tcs)
             {

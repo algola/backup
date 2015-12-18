@@ -92,7 +92,8 @@ namespace Services
 
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Vuoto", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Buste", Generator = "" });
-            runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteCartellini", Generator = "" });
+            runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteCartellini", Generator = "Etichette '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL @F.to mm %PARTFORMATOPENMM @%PARTTASKS" });
+            runTime.Add(new ProductNameGenerator { CodMenuProduct = "EtichetteCartelliniSago", Generator = "Etichette sagomate '%PRODNAME' @%PRINTPARTTASK @%TYPEMATERIAL %NAMEMATERIAL @F.to mm %PARTFORMATOPENMM @%PARTTASKS" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "BigliettiVisita", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "CartolineInviti", Generator = "" });
             runTime.Add(new ProductNameGenerator { CodMenuProduct = "Volantini", Generator = "" });

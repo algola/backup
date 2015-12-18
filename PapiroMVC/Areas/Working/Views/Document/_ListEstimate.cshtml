@@ -8,7 +8,8 @@
     string searchState = ":" + Html.T(strings, "All") + ";";
     foreach (var s in ViewBag.States)
     {
-        searchState += s.StateName + ":" + Html.T(strings, (string)s.StateName) + ";";
+       // searchState += s.StateName + ":" + Html.T(strings, (string)s.StateName) + ";";
+        searchState += s.CodState +":" + s.StateName + ";";
     }
 
     Console.Write(searchState);
