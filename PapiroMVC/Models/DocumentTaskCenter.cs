@@ -36,6 +36,51 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> IndexOf { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Selected { get; set; }
+    	
+    	[DataMember] 		
+        public string FieldA { get; set; }
+    	
+    	[DataMember] 		
+        public string FieldB { get; set; }
+    	
+    	[DataMember] 		
+        public string FieldC { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Finished { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.DateTime> AssignedAt { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.DateTime> AlarmStartingAt { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Started { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.DateTime> StartedAt { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<System.DateTime> AlarmFinishingAt { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> Quantity { get; set; }
+    	
+    	[DataMember] 		
+        public string AssignedAtString { get; set; }
+    	
+    	[DataMember] 		
+        public string AlarmStartingAtString { get; set; }
+    	
+    	[DataMember] 		
+        public string StartedAtString { get; set; }
+    	
+    	[DataMember] 		
+        public string AlarmFinishingAtString { get; set; }
     
     	[DataMember]
         public virtual Document document { get; set; }

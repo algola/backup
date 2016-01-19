@@ -754,6 +754,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Planning Monitor.
+        /// </summary>
+        public static string PlannigViewMenu {
+            get {
+                return ResourceManager.GetString("PlannigViewMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Planning.
+        /// </summary>
+        public static string PlanningMenu {
+            get {
+                return ResourceManager.GetString("PlanningMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stampa Plotter.
         /// </summary>
         public static string PlotterMenu {

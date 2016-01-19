@@ -174,6 +174,11 @@ namespace PapiroMVC.Models
                 {
                     var res2 = i != 0 ? (double)gain2 / (double)i : 1;
 
+                    if (gain1 == 0)
+                    {
+                        gain1 = 1;
+                    }
+
                     for (int k = gain1; k > 0; k--)
                     {
                         if (!wantOnlyPair || ((k == 0 || gain1 % k == 0) && ((i == 0) || gain2 % i == 0)))
@@ -184,6 +189,8 @@ namespace PapiroMVC.Models
                                 new Cut("ct1-" + k.ToString() + "-" + i.ToString(), res2 != 0 ? res2 : 1, res1 != 0 ? res1 : 1));
                         }
                     }
+
+
                 }
             }
 

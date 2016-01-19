@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AlarmFinishAfterDays" xml:space="preserve">
+    <value>Avverti se non termina entro giorni</value>
+  </data>
+  <data name="AlarmFinishAfterDaysToolTip" xml:space="preserve">
+    <value>Avverti con la presenza di un allarme se la commessa non termina o rientra dal fornitore entro giorni</value>
+  </data>
+  <data name="AlarmStartAfterDays" xml:space="preserve">
+    <value>Avverti se non inizia entro giorni</value>
+  </data>
+  <data name="AlarmStartAfterDaysToolTip" xml:space="preserve">
+    <value>Avverti con la presenza di un allarme se la commessa non è presa in carico entro un numero di giorni</value>
+  </data>
   <data name="CodTaskExecutor" xml:space="preserve">
     <value>Codice</value>
   </data>
@@ -159,6 +171,12 @@
   <data name="FormatValidationError" xml:space="preserve">
     <value>formato non valido (es. valido: 70x100)</value>
   </data>
+  <data name="IndexOf" xml:space="preserve">
+    <value>Numero d'ordine</value>
+  </data>
+  <data name="IndexOfToolTip" xml:space="preserve">
+    <value>Ordine di esecuzione</value>
+  </data>
   <data name="IsEstimatedOnMq" xml:space="preserve">
     <value>Costo in base ai Mq</value>
   </data>
@@ -197,6 +215,18 @@
   </data>
   <data name="SetTaskExecutorEstimatedOnToolTip" xml:space="preserve">
     <value>xxxxxx</value>
+  </data>
+  <data name="StateName" xml:space="preserve">
+    <value>Stato della commessa</value>
+  </data>
+  <data name="StateNameToolTip" xml:space="preserve">
+    <value>Collegato allo stato della commessa</value>
+  </data>
+  <data name="TaskCenterName" xml:space="preserve">
+    <value>Centro di lavorazione</value>
+  </data>
+  <data name="TaskCenterNameToolTip" xml:space="preserve">
+    <value>Nome del centro di lavorazione / lavorazione esterna</value>
   </data>
   <data name="TaskExecutorName" xml:space="preserve">
     <value>Nome macchina</value>

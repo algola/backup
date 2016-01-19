@@ -591,4 +591,43 @@
   <data name="SaveDie" xml:space="preserve">
     <value>Salva Fustella in archivio</value>
   </data>
+  <data name="EditPlanning" xml:space="preserve">
+    <value>Modifica elenco</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Fine</value>
+  </data>
+  <data name="PrintPlanning" xml:space="preserve">
+    <value>Stampa elenco</value>
+  </data>
+  <data name="FieldA" xml:space="preserve">
+    <value>Libero1</value>
+  </data>
+  <data name="FieldB" xml:space="preserve">
+    <value>Libero2</value>
+  </data>
+  <data name="FieldC" xml:space="preserve">
+    <value>Libero3</value>
+  </data>
+  <data name="AlarmFinishingAt" xml:space="preserve">
+    <value>Finire entro</value>
+  </data>
+  <data name="AlarmStartingAt" xml:space="preserve">
+    <value>Iniziare entro</value>
+  </data>
+  <data name="AssignedAt" xml:space="preserve">
+    <value>Assegnato il</value>
+  </data>
+  <data name="Started" xml:space="preserve">
+    <value>Iniziato</value>
+  </data>
+  <data name="StartedAt" xml:space="preserve">
+    <value>Iniziato il</value>
+  </data>
+  <data name="PlanningMenu" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="PlanningViewMenu" xml:space="preserve">
+    <value>Vedi Planning</value>
+  </data>
 </root>

@@ -256,6 +256,21 @@
           <Property Name="CodDocument" Type="char" MaxLength="100" />
           <Property Name="DocumentName" Type="char" MaxLength="255" />
           <Property Name="IndexOf" Type="int" />
+          <Property Name="Selected" Type="bit" />
+          <Property Name="FieldA" Type="char" MaxLength="100" />
+          <Property Name="FieldB" Type="char" MaxLength="100" />
+          <Property Name="FieldC" Type="char" MaxLength="100" />
+          <Property Name="Finished" Type="bit" />
+          <Property Name="AssignedAt" Type="date" />
+          <Property Name="AlarmStartingAt" Type="date" />
+          <Property Name="Started" Type="bit" />
+          <Property Name="StartedAt" Type="date" />
+          <Property Name="AlarmFinishingAt" Type="date" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="AssignedAtString" Type="char" MaxLength="20" />
+          <Property Name="AlarmStartingAtString" Type="char" MaxLength="20" />
+          <Property Name="StartedAtString" Type="char" MaxLength="20" />
+          <Property Name="AlarmFinishingAtString" Type="char" MaxLength="20" />
         </EntityType>
         <EntityType Name="makereadies">
           <Key>
@@ -494,7 +509,7 @@
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="CodTaskEstimatedOn" Type="char" MaxLength="50" />
-          <Property Name="IdStep" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdStep" Type="uint" Nullable="false" />
           <Property Name="FromUnit" Type="double" />
           <Property Name="ToUnit" Type="double" />
           <Property Name="Selector" Type="int" />
@@ -544,6 +559,8 @@
           <Property Name="TaskCenterName" Type="char" MaxLength="100" />
           <Property Name="CodState" Type="char" MaxLength="100" />
           <Property Name="IndexOf" Type="int" />
+          <Property Name="AlarmStartAfterDays" Type="int" />
+          <Property Name="AlarmFinishAfterDays" Type="int" />
         </EntityType>
         <EntityType Name="taskexecutorcylinders">
           <Key>
@@ -3666,6 +3683,21 @@
           <NavigationProperty Name="document" Relationship="dbModel.FK_documenttaskcenter_CodDocument" FromRole="documenttaskcenter" ToRole="Document" />
           <NavigationProperty Name="taskcenter" Relationship="dbModel.FK_documenttaskcenter_CodTaskCenter" FromRole="documenttaskcenter" ToRole="taskcenter" />
           <Property Name="IndexOf" Type="Int32" />
+          <Property Name="Selected" Type="Boolean" />
+          <Property Name="FieldA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FieldB" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FieldC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Finished" Type="Boolean" />
+          <Property Name="AssignedAt" Type="DateTime" />
+          <Property Name="AlarmStartingAt" Type="DateTime" />
+          <Property Name="Started" Type="Boolean" />
+          <Property Name="StartedAt" Type="DateTime" />
+          <Property Name="AlarmFinishingAt" Type="DateTime" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="AssignedAtString" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AlarmStartingAtString" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="StartedAtString" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="AlarmFinishingAtString" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="TaskCenter">
           <Key>
@@ -3678,6 +3710,8 @@
           <NavigationProperty Name="DocumentTaskCenters" Relationship="dbModel.FK_documenttaskcenter_CodTaskCenter" FromRole="taskcenter" ToRole="documenttaskcenter" />
           <NavigationProperty Name="State" Relationship="dbModel.FK_taskcenters_CodState" FromRole="taskcenter" ToRole="State" />
           <Property Name="IndexOf" Type="Int32" />
+          <Property Name="AlarmStartAfterDays" Type="Int32" />
+          <Property Name="AlarmFinishAfterDays" Type="Int32" />
         </EntityType>
         <Association Name="FK_documenttaskcenter_CodDocument">
           <End Type="dbModel.Document" Role="Document" Multiplicity="0..1">
@@ -5310,6 +5344,21 @@
           <EntitySetMapping Name="DocumentTaskCenters">
             <EntityTypeMapping TypeName="dbModel.DocumentTaskCenter">
               <MappingFragment StoreEntitySet="documenttaskcenter">
+                <ScalarProperty Name="AlarmFinishingAtString" ColumnName="AlarmFinishingAtString" />
+                <ScalarProperty Name="StartedAtString" ColumnName="StartedAtString" />
+                <ScalarProperty Name="AlarmStartingAtString" ColumnName="AlarmStartingAtString" />
+                <ScalarProperty Name="AssignedAtString" ColumnName="AssignedAtString" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="AlarmFinishingAt" ColumnName="AlarmFinishingAt" />
+                <ScalarProperty Name="StartedAt" ColumnName="StartedAt" />
+                <ScalarProperty Name="Started" ColumnName="Started" />
+                <ScalarProperty Name="AlarmStartingAt" ColumnName="AlarmStartingAt" />
+                <ScalarProperty Name="AssignedAt" ColumnName="AssignedAt" />
+                <ScalarProperty Name="Finished" ColumnName="Finished" />
+                <ScalarProperty Name="FieldC" ColumnName="FieldC" />
+                <ScalarProperty Name="FieldB" ColumnName="FieldB" />
+                <ScalarProperty Name="FieldA" ColumnName="FieldA" />
+                <ScalarProperty Name="Selected" ColumnName="Selected" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
                 <ScalarProperty Name="DocumentName" ColumnName="DocumentName" />
                 <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
@@ -5322,6 +5371,8 @@
           <EntitySetMapping Name="TaskCenters">
             <EntityTypeMapping TypeName="dbModel.TaskCenter">
               <MappingFragment StoreEntitySet="taskcenters">
+                <ScalarProperty Name="AlarmFinishAfterDays" ColumnName="AlarmFinishAfterDays" />
+                <ScalarProperty Name="AlarmStartAfterDays" ColumnName="AlarmStartAfterDays" />
                 <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
                 <ScalarProperty Name="CodState" ColumnName="CodState" />
                 <ScalarProperty Name="TaskCenterName" ColumnName="TaskCenterName" />
@@ -5902,7 +5953,7 @@
         <EntityTypeShape EntityType="dbModel.Anilox" Width="1.5" PointX="89.5" PointY="14.875" />
         <InheritanceConnector EntityType="dbModel.Anilox" />
         <EntityTypeShape EntityType="dbModel.DocumentTaskCenter" Width="1.5" PointX="34.5" PointY="23.625" />
-        <EntityTypeShape EntityType="dbModel.TaskCenter" Width="1.5" PointX="32.25" PointY="17.875" />
+        <EntityTypeShape EntityType="dbModel.TaskCenter" Width="1.5" PointX="32.25" PointY="17.125" />
         <AssociationConnector Association="dbModel.FK_documenttaskcenter_CodDocument" />
         <AssociationConnector Association="dbModel.FK_documenttaskcenter_CodTaskCenter" />
         <AssociationConnector Association="dbModel.FK_taskcenters_CodState" />

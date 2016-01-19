@@ -216,6 +216,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 case "TaskCenterName":
                     q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.TaskCenterName) : q.OrderBy(c => c.TaskCenterName);
                     break;
+                case "IndexOf":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.IndexOf) : q.OrderBy(c => c.IndexOf);
+                    break;
             }
 
             var q2 = q.ToList();
@@ -248,6 +251,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodTaskCenter,
                              a.CodTaskCenter,
                             a.TaskCenterName,
+                            (a.IndexOf??0).ToString(),
 
                         }
                     }

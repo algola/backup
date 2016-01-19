@@ -117,7 +117,7 @@ namespace PapiroMVC.Models
                     break;
                 case QuantityType.NumberTypeOfQuantity:
                 case QuantityType.RunTypeOfQuantity:
-                    ret = runMat;
+                    ret = Math.Ceiling(runMat);
                     break;
                 default:
                     ret = base.Quantity(qta);

@@ -9,37 +9,50 @@
     string strings = "~/Areas/Working/Views/Document/Strings";
     string stringsProd = "~/Views/Shared/Strings";
 
+    bool isView = (bool)ViewBag.isView;
+    var groupName = (string) ViewBag.groupName;
 }
 
-<div class="row">
+<div class="row ">
 
-    <div class="col-xs-12">
-        @{foreach (var item in Model)
-        {
-        <div class="col-xs-4 col-sm-3">
-            @Html.Partial("_ListPlanning", item)
-        </div>
+    <div class="toHide">
+        <button class="btn btn-primary" type="button" onclick="save('complete');">
+            <i class="icon-save bigger-125"></i>
+            @Html.T(strings, "Save")
+        </button>
 
-        }
-        }
+        <button class="btn btn-danger" type="button" onclick="clearFirst();">
+            <i class="icon-step-backward  bigger-125"></i>
+            @Html.T(strings, "ClearFirst")
+        </button>
+
+        <button class="btn btn-danger" type="button" onclick="clearLast();">
+            <i class="icon-step-forward bigger-125"></i>
+            @Html.T(strings, "ClearLast")
+        </button>
     </div>
 
+    <div class="container-fluid">
 
-    <button class="btn btn-primary" type="button" onclick="save();">
-        <i class="icon-home bigger-125"></i>
-        @Html.T(strings, "Save")
-    </button>
+        <div class="col-xs-12">
+            <div class="row"></div>
+        </div>
 
-    <button class="btn btn-primary" type="button" onclick="clearFirst();">
-        <i class="icon-home bigger-125"></i>
-        @Html.T(strings, "ClearFirst")
-    </button>
+        <div class="container-fluid">
+            <div class="col-xs-12">
+                @{foreach (var item in Model)
+                {
+                    <div class="col-xs-2 col-sm-2 no-padding-left no-padding-right">
+                        @Html.Partial("_ListPlanning", item)
+                    </div>
 
-    <button class="btn btn-primary" type="button" onclick="clearLast();">
-        <i class="icon-home bigger-125"></i>
-        @Html.T(strings, "ClearLast")
-    </button>
+                }
+                }
+            </div>
+        </div>
 
+
+    </div>
 
 </div>
 
@@ -54,12 +67,9 @@
 
 @section specificPlugInStyle {
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
-
     <link href="~/Content/acetheme/assets/js/plugins/ui.multiselect.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
-
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
-
 }
 
 @section specificPluginScript {
@@ -74,23 +84,21 @@
     </script>
     <script src="~/Content/acetheme/assets/js/plugins/ui.multiselect.js"></script>
     <script src="~/Content/acetheme/assets/js/plugins/jquery.tablednd.js"></script>
-
-}
-
-@section ScriptS{
-    @Scripts.Render("~/bundles/jqueryval")
 }
 
 <script>
 
 
-
     $(function () {
         document.getElementById("createEstimateSlidebar").className = "active open";
 
+        if ('@isView' == 'True') {
+            $(".page-header").hide();
+            $(".navbar").hide();
+            $(".toHide").hide();
+        }
+
     });
-
-
 
     function clearFirst() {
         var url = '@Url.Action("ClearFirstTaskCenter", "Document", new { area = "Working" })';
@@ -98,8 +106,8 @@
             type: "GET",
             url: url,
             success: function (data) {
-                alert(data.codTaskCenter);
-                $("#list"+data.codTaskCenter).trigger("reloadGrid");
+                //alert(data.codTaskCenter);
+                $("#list" + data.codTaskCenter).trigger("reloadGrid");
             }
         });
     }
@@ -110,12 +118,81 @@
             type: "GET",
             url: url,
             success: function (data) {
-                alert(data.codTaskCenter);
+                //alert(data.codTaskCenter);
                 $("#list" + data.codTaskCenter).trigger("reloadGrid");
             }
         });
     }
 
+    function getGridRowHeight(targetGrid) {
+        var height = null; // Default
 
+        try {
+            height = jQuery(targetGrid).find('tbody').find('tr:first').outerHeight();
+        }
+        catch (e) {
+            //catch and just suppress error
+        }
+
+        return height;
+    }
+
+    function scrollToRow(targetGrid, id) {
+        var rowHeight = getGridRowHeight(targetGrid) || 23; // Default height
+        var index = jQuery(targetGrid).getInd(id);
+
+        if (index == 1) {
+            index = 0;
+        }
+
+        if ('@isView' == 'True') {
+            jQuery(targetGrid).closest(".ui-jqgrid-bdiv").animate({
+                scrollTop: rowHeight * index
+            }, 10000);
+        }
+    }
+
+
+</script>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <!--Script references. -->
+    <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
+    <!--Reference the SignalR library. -->
+    <script src="~/Scripts/jquery.signalR-2.1.0.min.js"></script>
+    <!--Reference the autogenerated SignalR hub script. -->
+    <script src="~/signalr/hubs"></script>
+    <!--SignalR script to update the planning page and send messages.-->
+}
+
+<script>
+
+    var updateOtherClient;
+
+    $(function () {
+        // Reference the auto-generated proxy for the hub.
+        var planning = $.connection.planningHub;
+
+
+        // Create a function that the hub can call back to display messages.
+        planning.client.addNewMessageToPage = function (message) {
+            // Add the message to the page.
+            location.reload();
+        };
+
+        updateOtherClient = function () {
+            planning.server.send('@groupName',"");
+        }
+
+        $.connection.hub.start().done(function () {
+
+            planning.server.joinRoom('@groupName');
+
+        });
+    });
 
 </script>

@@ -423,4 +423,10 @@
   <data name="TaskCenterMenu" xml:space="preserve">
     <value>Centri di lavoro</value>
   </data>
+  <data name="PlannigViewMenu" xml:space="preserve">
+    <value>Planning Monitor</value>
+  </data>
+  <data name="PlanningMenu" xml:space="preserve">
+    <value>Planning</value>
+  </data>
 </root>

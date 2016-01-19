@@ -328,6 +328,7 @@
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\MenuProductEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\MenuProduct\NewProductCommand_MetaData.cs" />
+    <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskCenterEx_MetaData.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\TaskCenterEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx.cs" />
     <Compile Include="Areas\DataBase\Models\TaskExecutor\AvarageRunPerRunStepEx_MetaData.cs" />
@@ -540,6 +541,7 @@
     <Compile Include="Areas\Working\Models\Documents\DocumentProductEx_MetaData.cs" />
     <Compile Include="Areas\Working\Models\Documents\OrderEx.cs" />
     <Compile Include="Areas\Working\Models\Documents\EstimateEx.cs" />
+    <Compile Include="Areas\Working\Models\DocumentTaskCenter\DocumentTaskCenter.cs" />
     <Compile Include="Areas\Working\Models\Products\FactoryPattern\ProductCreator.cs" />
     <Compile Include="Areas\Working\Models\Products\FormatNameEx.cs" />
     <Compile Include="Areas\Working\Models\Products\ProductBlockSheetEx.cs" />
@@ -2806,6 +2808,8 @@
     <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptionError.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ProductPartSerigraphyOptions.cshtml" />
     <Content Include="Areas\Working\Views\Document\_PrePostPressCostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\_ListPlanningDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Document\PlanningDetail.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -2832,6 +2836,7 @@
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartPrintRollOption.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartHotPrintingOption_CostDetail.cshtml" />
     <Content Include="Areas\Working\Views\Shared\EditorTemplates\ProductPartSerigraphyOption_CostDetail.cshtml" />
+    <Content Include="Areas\Working\Views\Shared\_LayoutAceTheme - Copy buona prima di dragdrop.cshtml" />
     <None Include="Models\Model1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.cs</LastGenOutput>
@@ -2872,6 +2877,8 @@
     <Content Include="Report\LabelHead.docx" />
     <Content Include="Report\PrintingSheetCostDetail.docx" />
     <Content Include="Report\PrintedSheetArticleCostDetail.docx" />
+    <Content Include="Report\DocumentsTaskCenter.docx" />
+    <Content Include="Report\DocumentTaskCenter.docx" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

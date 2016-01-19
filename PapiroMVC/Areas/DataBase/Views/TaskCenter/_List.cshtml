@@ -122,7 +122,8 @@
              cm = [
                    { name: 'Id', label: '@Html.T(strings, "OperationsCaption")', sortable: false, formatter: editTaskCenter },  //formatter: editTaskCenter
                    { name: 'CodTaskCenter', index: 'CodTaskCenter', label: '@Html.T(strings, "CodTaskCenterCaption")', width: 80, sortable: true },
-                   { name: 'TaskCenterName', label: '@Html.T(strings, "TaskCenterNameCaption")', width: 200, sortable: true }
+                   { name: 'TaskCenterName', label: '@Html.T(strings, "TaskCenterNameCaption")', width: 200, sortable: true },
+                   { name: 'IndexOf', label: '@Html.T(strings, "IndexOfCaption")', width: 50, sortable: true }
              ],
 saveObjectInLocalStorage = function (storageItemName, object) {
     if (typeof window.localStorage !== 'undefined') {

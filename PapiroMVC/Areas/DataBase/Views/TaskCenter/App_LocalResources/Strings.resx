@@ -129,6 +129,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
+  <data name="IndexOfCaption" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
   <data name="MetaTitleTaskCenter" xml:space="preserve">
     <value>Lista dei centri di lavoro</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
+  </data>
+  <data name="TaskCenterNameCaption" xml:space="preserve">
+    <value>Centro di lavorazione</value>
   </data>
   <data name="TaskCenterNameCaptionr" xml:space="preserve">
     <value>Nome</value>

@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using PapiroMVC.Models;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
+using System.Xml;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
@@ -87,8 +88,8 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             int totalPages = (int)Math.Ceiling((float)totalRecords / (float)pageSize);
 
-            int startRow = (pageIndex - 1) * pageSize;
-            int endRow = startRow + pageSize;
+            long startRow = (pageIndex - 1) * pageSize;
+            long endRow = startRow + pageSize;
 
             var jsonData = new
             {
@@ -105,8 +106,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {                       
                             a.CodProduct,
                             a.CodProduct,
-                            a.WarehouseSpec.WarehouseName,
-                            a.Product.ProductName,
+                            a.WarehouseSpec!=null?a.WarehouseSpec.WarehouseName:"",
+                            a.Product!=null?a.Product.ProductName:"",
                             ((a.QuantityOnHand??0) <= (a.MinQuantity??0))?"Sotto Scorta":"",
                             a.QuantityOnHand==null?"0":a.QuantityOnHand.ToString()
                         }
@@ -117,6 +118,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             return Json(jsonData, JsonRequestBehavior.AllowGet);
         }
 
+     
         public ActionResult ProductNameGeneratorList(GridSettings gridSettings)
         {
             //read from validation's language file

@@ -38,6 +38,12 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<int> IndexOf { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> AlarmStartAfterDays { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> AlarmFinishAfterDays { get; set; }
     
     	[DataMember]
         public virtual ICollection<DocumentTaskCenter> DocumentTaskCenters { get; set; }

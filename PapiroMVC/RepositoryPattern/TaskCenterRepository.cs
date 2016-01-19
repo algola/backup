@@ -66,7 +66,14 @@ namespace Services
 
         public IQueryable<DocumentTaskCenter> GetDocumentsTaskCenter(string codTaskCenter)
         {
-            return Context.DocumentTaskCenters.Where(x => x.CodTaskCenter == codTaskCenter);
+            if (codTaskCenter != String.Empty)
+            {
+                return Context.DocumentTaskCenters.Where(x => x.CodTaskCenter == codTaskCenter);                
+            }
+            else
+            {
+                return Context.DocumentTaskCenters;
+            }
         }
 
         public DocumentTaskCenter GetDocumentTaskCenter(string codDocumentTaskCenter)

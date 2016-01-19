@@ -623,7 +623,6 @@ namespace PapiroMVC.ServiceLayer
         {
             if (cv != null)
             {
-
                 var pPart = cv.ProductPart;
 
                 switch (cv.TypeOfCostDetail)

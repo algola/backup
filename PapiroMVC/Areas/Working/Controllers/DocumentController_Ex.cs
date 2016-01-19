@@ -767,8 +767,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                                 a.Document.DocumentName + " - " + a.Product.ProductRefName,
                                 a.ProductName,  //attributo derivato
                                 (a.Quantity??0).ToString(),
-                                (a.Markup??0).ToString(),
                                 a.UnitPrice??"0",
+//                                (a.Markup??0).ToString(),
                                 a.TotalAmount??"0"
                             }
                     }

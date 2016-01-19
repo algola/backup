@@ -18,7 +18,14 @@ namespace PapiroMVC.Model
         public void UpdateSchema(DbContext ctx)
         {
             dbS.Ctx = ctx;
-            dbS.AddColumnToTable("documentstate", "CodState", SchemaDb.String, "100");
+
+            dbS.AddColumnToTable("documenttaskcenter", "AssignedAtString", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documenttaskcenter", "AlarmStartingAtString", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documenttaskcenter", "StartedAtString", SchemaDb.String, "20");
+            dbS.AddColumnToTable("documenttaskcenter", "AlarmFinishingAtString", SchemaDb.String, "20");
+
+            dbS.AddColumnToTable("taskcenters", "AlarmStartAfterDays", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskcenters", "AlarmFinishAfterDays", SchemaDb.Int, "0");
 
         }
 

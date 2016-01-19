@@ -43,6 +43,16 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "ProductNameGeneratorMenu"), "ListProductNameGenerator", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-tags", "menu-text")
         </li>
 
+        <li id="planningSlideBar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "PlanningMenu"), "Planning", "Document", new { area = "Working", isView = false }, "fa fa-fw fa-lg fa-sort-amount-desc", "menu-text")
+        </li>
+
+        <li id="planningSlideBar2">
+            @Html.ActionLinkImageSpan(Html.T(strings, "PlannigViewMenu"), "Planning", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-tasks", "menu-text")
+        </li>
+
+
+
 @*
     <li id="ProductSlidebar">
         @Html.ActionLinkImageSpan(Html.T(strings, "ProductMenu"), "ListProducts", "Document", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")

@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html lang="@ViewBag.Lang">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="description" content="overview &amp; stats" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/papiro.png" rel="shortcut icon" type="image/x-icon" />
+
+    <title>@TempData["MetaTitle"]</title>
+    <meta name="description" content="@TempData["MetaDescription"]" />
+    <meta name="keyword" content="@TempData["MetaKeyword"]" />
+    <meta name="robots" content="@TempData["MetaRobots"]" />
+
+    @*    <script src="~/Scripts/jquery-2.1.0.min.js"></script>*@
+
+    <!--[if !IE]> -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <![endif]-->
+    <!--[if !IE]> -->
+    <script type="text/javascript">
+        window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery.min.js'>" + "<" + "/script>");
+    </script>
+
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script type="text/javascript">
+     window.jQuery || document.write("<script src='~/Content/acetheme/assets/js/jquery1x.min.js'>"+"<"+"/script>");
+    </script>
+    <![endif]-->
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='~/Content/acetheme/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+
+
+    <!-- bootstrap & fontawesome -->
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+
+    @*usiamo questa versione perchè quella referenziata sopra usa le classi che iniziano con fa- e all'interno del programma spesso sono state usate delle classi senza fa-*@
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+
+    <!-- page specific plugin styles -->
+    @RenderSection("specificPlugInStyle", required: false)
+    <!-- text fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:400,300" />
+
+    <!-- ace styles -->
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace.min.css" class="ace-main-stylesheet" id="main-ace-style" />
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
+    <![endif]-->
+    <!--[if lte IE 9]>
+      <link rel="stylesheet" href="~/Content/acetheme/assets/css/ace-ie.min.css" />
+    <![endif]-->
+    <!-- inline styles related to this page -->
+    @RenderSection("inlineStyle", required: false)
+    <!-- ace settings handler -->
+    <script src="~/Content/acetheme/assets/js/ace-extra.min.js"></script>
+
+    <!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
+    <!--[if lte IE 8]>
+    <script src="~/Content/acetheme/assets/js/html5shiv.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-29766054-1', 'gestionestampa.com');
+        ga('send', 'pageview');
+
+    </script>
+
+
+</head>
+
+<body class="no-skin">
+
+    @Html.Partial("_TopBarAceTheme")
+
+    <div class="main-container" id="main-container">
+        <script type="text/javascript">
+            try { ace.settings.check('main-container', 'fixed') } catch (e) { }
+        </script>
+
+        <!-- renderizzo la toolbar a sx richiudibile (sidebar)-->
+        @Html.Partial("_SideBarAceTheme")
+
+        <div class="main-content">
+            <div class="main-content-inner">
+                @RenderSection("breadcrumb", required: false)
+
+                <div class="page-content">
+
+
+                    <div id="page-header" class="page-header">
+                        <h1>
+                            @RenderSection("title")
+                            <small>
+                                <i class="ace-icon fa fa-angle-double-right"></i>
+                                @RenderSection("description")
+                            </small>
+                        </h1>
+                    </div><!-- /.page-header -->
+                    <!--/.page-header-->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                @RenderSection("featured", required: false)
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.main-container-inner -->
+
+        <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+            <i class="icon-double-angle-up icon-only bigger-110"></i>
+        </a>
+
+    </div>
+    <!-- /.main-container -->
+    <!-- basic scripts -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <!-- inline scripts related to this page -->
+    <!-- page specific plugin scripts -->
+    @RenderSection("specificPluginScript", required: false)
+    <!-- ace scripts -->
+    <script src="~/Content/acetheme/assets/js/ace-elements.min.js"></script>
+    <script src="~/Content/acetheme/assets/js/ace.min.js"></script>
+
+    <script src="~/Scripts/spin.js"></script>
+    @Html.Partial("_loading")
+
+    <!-- inline scripts related to this page -->
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+</html>

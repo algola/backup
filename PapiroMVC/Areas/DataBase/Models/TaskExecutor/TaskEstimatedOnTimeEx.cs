@@ -98,7 +98,6 @@ namespace PapiroMVC.Models
             return ct;
         }
 
-
         public override CostAndTime GetCost(string codOptionTypeOfTask, double starts, int makereadies, double running)
         {
             return GetCost(codOptionTypeOfTask, starts, new PrintingColor(), makereadies, running,0);

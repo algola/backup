@@ -150,7 +150,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         public ActionResult PrintOrder(string codDocument, string reportName)
         {
             int id;
-
             var dbName = reportName.Replace("LabelRollHead", "");
 
             //carico l'ordine
@@ -1709,6 +1708,17 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult EditCost(string id)
         {
+
+
+            var cd = costDetailRepository.GetSingle(id);
+
+            if (cd == null)
+            {
+                var cost = documentRepository.GetCost(id);
+                EditAndCreateAllCost(cost.CodDocumentProduct);
+                cd = costDetailRepository.GetSingle(id);
+            }
+
             PapiroService p = new PapiroService();
             p.DocumentRepository = documentRepository;//new DocumentRepository();
             p.CostDetailRepository = costDetailRepository;
@@ -1717,7 +1727,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             p.TypeOfTaskRepository = typeOfTaskRepository;
             p.CurrentDatabase = CurrentDatabase;
 
-            p.InitCostDocumentProduct(costDetailRepository.GetSingle(id).TaskCost.CodDocumentProduct);
+            p.InitCostDocumentProduct(cd.TaskCost.CodDocumentProduct);
 
             var cv = p.EditCostAutomatically(id, new Guid());
             //Console.WriteLine(cv.GainForRun);
@@ -1984,7 +1994,6 @@ namespace PapiroMVC.Areas.Working.Controllers
         [HttpGet]
         public ActionResult SaveCostDetail(string optCod = "")
         {
-
             disposable = false;
 
             CostDetail cv = (CostDetail)Session["CostDetail" + optCod];

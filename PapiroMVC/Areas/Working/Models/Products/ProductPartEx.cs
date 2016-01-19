@@ -25,7 +25,7 @@ namespace PapiroMVC.Models
 
             var c = pHint1.Where(y => !y.IsDie);
 
-            if (c.Count()==0)
+            if (c.Count()==0 || MinDCut==0)
             {
                 //fascette gommate
                 if (MinDCut == 0)

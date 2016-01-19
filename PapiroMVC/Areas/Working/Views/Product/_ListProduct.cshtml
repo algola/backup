@@ -21,15 +21,17 @@
     <table id="list"><tr><td /></tr></table>
     <div id="pager"></div>
 
-
-    
-
     <button class="btn btn-danger" type="button" id="delete">
         <i class="icon-trash bigger-125"></i>
         @HttpContext.GetLocalResourceObject(strings, "DeleteCommand")
         <span class="badge badge-transparent">
             <i class="light-red icon-asterisk"></i>
         </span>
+    </button>
+
+    <button class="btn btn-danger" type="button" id="excelExport">
+        <i class="icon-exchange bigger-125"></i>
+        Excel
     </button>
 
 </div>
@@ -209,11 +211,11 @@
             autowidth: true,
             shrinkToFit: false,
             print: true,
-            rowNum: 20,
+            rowNum: 100,
 
             scrollOffset: 0,
 
-            rowList: [10, 20, 50, 100],
+            rowList: [100, 200, 500, 10000, 50000],
             gridview: true,
             multiselect: true,
             pager: '#pager',
@@ -262,7 +264,7 @@
                 //filters check************************************************
             },
             resizeStop: function () {
-                saveColumnState.call($grid, $grid[0].p.remapColumns);
+                saveColumnStbate.call($grid, $grid[0].p.remapColumns);
             }
         });
         $.extend($.jgrid.search, {
@@ -274,6 +276,9 @@
             overlay: 0
         });
         $grid.jqGrid('navGrid', '#pager', { edit: false, add: false, del: false });
+
+        //    $grid.jqGrid('navGrid', '#pager', { "edit": false, "add": false, "del": false, "search": true, "refresh": true, "view": false, "excel": true, "pdf": false, "csv": false, "columns": false }, { "drag": true, "resize": true, "closeOnEscape": true, "dataheight": 150, "errorTextFormat": function (r) { return r.responseText; } }, { "drag": true, "resize": true, "closeOnEscape": true, "dataheight": 150, "errorTextFormat": function (r) { return r.responseText; } }, { "errorTextFormat": function (r) { return r.responseText; } }, { "drag": true, "closeAfterSearch": true, "multipleSearch": true }, { "drag": true, "resize": true, "closeOnEscape": true, "dataheight": 150 });
+
         $grid.jqGrid('navButtonAdd', '#pager', {
             caption: "",
             buttonicon: "ui-icon-calculator",
@@ -338,8 +343,10 @@
     });
     //filters check***********************************************
 
+    $("#excelExport").click(function () {
+        $("#list").jqGrid('excelExport', { tag: 'excel', url: '@(Url.Action("ProductList", "Product"))' });
 
-
+    });
 
 
     $("#delete").click(function () {
@@ -385,14 +392,6 @@
             hideProcessingMsg();
         }
     });
-
-
-
-
-
-
-
-
 
 
 </script>

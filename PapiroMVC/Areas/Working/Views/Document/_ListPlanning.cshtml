@@ -7,12 +7,14 @@
 @{
     string strings = "~/Areas/Working/Views/Document/Strings";
     string[] codTaskCenters = Model.TaskCenters;
+    string editUrl = Url.Action("EditDocumentTaskCenter", new { controller = "Document", area = "Working" });
 
     Console.Write(codTaskCenters);
 
 }
 
 <table id="list@(Model.CodTaskCenter)"><tr><td /></tr></table>
+<div id="pager@(Model.CodTaskCenter)"></div>
 
 <script type="text/javascript">
 
@@ -100,8 +102,27 @@
             },
             cm = [
 
-                        { name: 'DocumentName', label: '@Model.TaskCenterName', width: 80, sortable: false },
-                        { name: 'CodDocumentTask', label: '', width: 1, sortable: false, hidden:true }
+                        { name: 'DocumentName', label: '@Model.TaskCenterName', width: 80},
+                        { name: 'CodDocumentTask', label: '', width: 1, hidden:true },
+//                        { name: 'Finished', label: '@Html.T(strings, "Finished")', width: 30, align: 'center', editable: false, search: false, formatter: finishFormatter }
+
+                        { name: 'FieldA', label: '@Html.T(strings, "FieldA")', width: 1, hidden: true, align: 'left', editable: false, search: false },
+                        { name: 'FieldB', label: '@Html.T(strings, "FieldA")', width: 1, hidden: true, align: 'left', editable: false, search: false },
+                        { name: 'FieldC', label: '@Html.T(strings, "FieldB")', width: 1, hidden: true,align: 'left', editable: false, search: false },
+
+                        { name: 'AssignedAtString', label: '@Html.T(strings, "AssignedAt")', width: 50,hidden: true, formatoptions: { disabled: true }, editable: true, editoptions: { dataInit: function (el) { setTimeout(function () { $(el).datepicker(); }, 200); } } },
+                        { name: 'AlarmStartingAtString', label: '@Html.T(strings, "AlarmStartingAt")', width: 50,hidden: true, formatoptions: { disabled: true }, editable: true, editoptions: { dataInit: function (el) { setTimeout(function () { $(el).datepicker(); }, 200); } } },
+
+                        { name: 'Started', label: '@Html.T(strings, "Started")', width: 50, editable: true,hidden: true, edittype: 'checkbox', editoptions: { value: "True:False" }, formatter: "checkbox", formatoptions: { disabled: true } },
+
+                        { name: 'StartedAtString', label: '@Html.T(strings, "StartedAt")', width: 50,hidden: true, formatoptions: { disabled: true }, editable: true, editoptions: { dataInit: function (el) { setTimeout(function () { $(el).datepicker(); }, 200); } } },
+                        { name: 'AlarmFinishingAtString', label: '@Html.T(strings, "AlarmFinishingAt")', width: 50,hidden: true, formatoptions: { disabled: true }, editable: true, editoptions: { dataInit: function (el) { setTimeout(function () { $(el).datepicker(); }, 200); } } },
+
+                        { name: 'Finished', label: '@Html.T(strings, "Finished")', width: 50,hidden: true, editable: true, edittype: 'checkbox', editoptions: { value: "True:False" }, formatter: "checkbox", formatoptions: { disabled: true } },
+
+            { name: 'Alert1', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertStart },
+            { name: 'Alert2', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertFinish },
+            { name: 'FinishedColor', label: '', hidden:true, width: 50, formatter: rowColorFormatterFinished }
 
             ],
 
@@ -120,7 +141,7 @@
                     return JSON.parse(window.localStorage.getItem(storageItemName));
                 }
             },
-            myColumnStateName = 'listPlanning.colState',
+            myColumnStateName = 'listPlanning@(Model.CodTaskCenter).colState',
             saveColumnState = function (perm) {
                 var colModel = this.jqGrid('getGridParam', 'colModel'), i, l = colModel.length, colItem, cmName,
                     postData = this.jqGrid('getGridParam', 'postData'),
@@ -168,13 +189,23 @@
                 }
                 return columnsState;
             },
-            firstLoad = true;
+
+
+        firstLoad = true;
+
+        var rowsToAlarmStart = [];
+        var rowsToAlarmFinish = [];
+        var rowsFinished = [];
+
+        var lastId@(Model.CodTaskCenter) = '';
+        var firstId@(Model.CodTaskCenter) = '';
 
         myColumnsState = restoreColumnState(cm);
         isColState = typeof (myColumnsState) !== 'undefined' && myColumnsState !== null;
 
         $grid@(Model.CodTaskCenter).jqGrid({
             url: '@(Url.Action("DocumentTaskCenter", "Document", new { codTaskCenter = Model.CodTaskCenter }))',
+            editUrl: '@editUrl',
             datatype: 'json',
             colModel: cm,
             loadtext: '',
@@ -182,8 +213,8 @@
             autowidth: true,
             shrinkToFit: false,
             print: true,
-            rowNum: 20,
-
+            rowNum: 1000,
+         //   pager: '#pager@(Model.CodTaskCenter)',
             scrollOffset: 0,
             gridview: true,
             page: isColState ? myColumnsState.page : 1,
@@ -193,10 +224,9 @@
             sortorder: isColState ? myColumnsState.sortorder : 'desc',
             ignoreCase: true,
             caption: '',
-            height: $(window).height() * 0.53,
+            height: $(window).height() * 0.90,
             loaderror: '@(Html.T(strings, "ErrorLoading"))',
             loadComplete: function () {
-
                 var $this = $(this);
 
                 var table = this;
@@ -231,10 +261,84 @@
                 }
                 //filters check************************************************
             },
+
+
+            gridComplete: function () {
+                for (var i = 0; i < rowsToAlarmStart.length; i++) {
+                    //   var status = $("#" + rowsToColor[i]).find("td").eq(7).html();
+                    //  if (status == "Complete") {
+                    $("#" + rowsToAlarmStart[i]).find("td").css("background-color", "gold");
+                    //  $("#" + rowsToColor[i]).find("td").css("color", "silver");
+                    //                    }
+                }
+                for (var i = 0; i < rowsToAlarmFinish.length; i++) {
+                    $("#" + rowsToAlarmFinish[i]).find("td").css("background-color", "tomato");
+                    //                    $("#" + rowsToAlarmFinish[i]).find("td").css("color", "silver");
+                }
+
+                for (var i = 0; i < rowsFinished.length; i++) {
+                    $("#" + rowsFinished[i]).find("td").css("background-color", "dimgray");
+                    $("#" + rowsFinished[i]).find("td").css("color", "silver");
+                }
+
+                ////scroll
+                var ids = jQuery("#list@(Model.CodTaskCenter)").jqGrid('getDataIDs');
+
+                if (ids.length>0) {
+                    firstId@(Model.CodTaskCenter) = ids[0];
+                    lastId@(Model.CodTaskCenter) = ids[ids.length-1];
+
+                    var toggle=false;
+
+                    var myTimer = setInterval(function() {
+
+                        if (toggle)
+                            scrollToRow("#list@(Model.CodTaskCenter)",firstId@(Model.CodTaskCenter));
+                        else
+                            scrollToRow("#list@(Model.CodTaskCenter)",lastId@(Model.CodTaskCenter));
+                                
+                        toggle = !toggle;
+
+                    }, 15000);
+
+                }
+
+
+            },
+
             resizeStop: function () {
                 saveColumnState.call($grid@(Model.CodTaskCenter), $grid@(Model.CodTaskCenter)[0].p.remapColumns);
+            },
+            ondblClickRow: function(rowid) {
+
+                showProcessingMsg();
+                save();
+                hideProcessingMsg();
+                $(window.location).attr('href', "@(Url.Action("PlanningDetail", "Document", new { id = Model.CodTaskCenter }))");
+
             }
         });
+
+
+
+        function rowColorFormatterAlertStart(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsToAlarmStart[rowsToAlarmStart.length] = options.rowId;
+            return cellValue;
+        }
+
+        function rowColorFormatterAlertFinish(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsToAlarmFinish[rowsToAlarmFinish.length] = options.rowId;
+            return cellValue;
+        }
+
+        function rowColorFormatterFinished(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsFinished[rowsFinished.length] = options.rowId;
+            return cellValue;
+        }
+
         $.extend($.jgrid.search, {
             multipleSearch: true,
             multipleGroup: true,
@@ -244,79 +348,162 @@
             overlay: 0
         });
 
+        //        $grid@(Model.CodTaskCenter).jqGrid('navGrid', '#pager@(Model.CodTaskCenter)', { edit: false, add: false, del: false });
+
+
+
+        var getColumnIndexByName = function (columnName) {
+            var cm = $(this).jqGrid("getGridParam", "colModel"), l = cm.length, i;
+            for (i = 0; i < l; i++) {
+                if (cm[i].name === columnName) {
+                    return i; // return the index
+                }
+            }
+            return -1;
+        };
 
         var myArray = @Html.Raw(new JavaScriptSerializer().Serialize(codTaskCenters));
 
         var conc = '';
         for (var k = 0; k < myArray.length; k++) {
 
-            //   if (i!=k) {
-            if (conc=='')
-                conc = '#list' + myArray[k];
-            else
-                conc = conc + ',' + '#list' + myArray[k];
+            if ('@(Model.CodTaskCenter)'!=myArray[k]) {
+                if (conc=='')
+                    conc = '#list' + myArray[k];
+                else
+                    conc = conc + ',' + '#list' + myArray[k];
+            }
         }
 
+        //        $grid@(Model.CodTaskCenter).jqGrid('sortableRows', { connectWith:  conc });
+        $grid@(Model.CodTaskCenter).jqGrid('gridDnD', { connectWith:  conc ,
 
-        $grid@(Model.CodTaskCenter).jqGrid('gridDnD', { connectWith:  conc
+            beforedrop: function (ev, ui, getdata, $source, $target) {
+                getdata.Finished = 0;
+                getdata.Started = 0;
+                getdata.FinishedColor = 0;
+            },
 
-            @*
-                ,
+            ondrop: function (ev, ui, getdata, $source, $target) {
+                // alert(getdata.CodDocumentTask);
+                var url = '@Url.Action("ResetFinishedDocumentTask", "Document", new { area = "Working"})';
 
-            ondrop:
-                function (ev, ui) {
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        'id': getdata.CodDocumentTask
+                    }
+                }).complete(function(){
 
-                   var codTaskCenter = $(this).getGridParam("id").replace('list','');
-                   var url = '@Url.Action("ChangeTaskCenterOrder", "Document", new { area = "Working"})';
-                   var data = $(this).jqGrid("getDataIDs");
+                });
 
-                    $.ajax({
-                        type: "POST",
-                        url: url,
-                        data: {
-                            'ids': JSON.stringify(data),
-                            'codTaskCenter' : codTaskCenter
-                        }
-                    });
-                }*@
+            }
+
         });
 
 
     });
     //]]>
 
-
-
-
 </script>
 
 
 <script type="text/javascript">
 
-    function save()
+
+
+    function finishFormatter(cellvalue, options, rowobject) {
+
+        var link = '<i class="icon"></i>';
+
+        if (cellvalue == "False")
+            return link.replace("icon", "icon-unlock");
+
+        if (cellvalue == "True")
+            return link.replace("icon", "icon-lock");
+
+        return link;
+
+    }
+
+
+    var save;
+    var canStar;
+
+    $(document).ready( function()
     {
 
-        var myArray = @Html.Raw(new JavaScriptSerializer().Serialize(codTaskCenters));
-        for (var k = 0; k < myArray.length; k++) {
+        canStar=true;
+        save = function (complete)
+        {
 
-            conc = '#list' + myArray[k];
-            var $grid = $('#list' + myArray[k]);
+            if (complete === undefined) {
+                complete = false;
+            }
 
-            var codTaskCenter = myArray[k];
-            var url = '@Url.Action("ChangeTaskCenterOrder", "Document", new { area = "Working"})';
-            var data1 = $grid.jqGrid("getDataIDs");
+            var myArray = @Html.Raw(new JavaScriptSerializer().Serialize(codTaskCenters));
+            showProcessingMsg();
 
-            var data = $grid.jqGrid('getCol', 'CodDocumentTask', false);
+            for (var k = 0; k < myArray.length; k++) {
 
-            $.ajax({
-                type: "POST",
-                url: url,
-                data: {
-                    'ids': JSON.stringify(data),
-                    'codTaskCenter' : codTaskCenter
+                conc = '#list' + myArray[k];
+                var $grid = $('#list' + myArray[k]);
+
+                var codTaskCenter = myArray[k];
+                var url = '@Url.Action("ChangeTaskCenterOrder", "Document", new { area = "Working"})';
+                var data1 =$grid.jqGrid("getDataIDs");
+
+                var data = $grid.jqGrid('getCol', 'CodDocumentTask', false);
+                var data2 = $grid.jqGrid('getCol', 'Finished', false);
+                var data3 = $grid.jqGrid('getCol', 'Started', false);
+
+                var canStart = true;
+
+                while (!canStart)
+                {
+
                 }
-            });
+
+                canStart=false;
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        'ids': JSON.stringify(data),
+                        'finisheds': JSON.stringify(data2),
+                        'starteds': JSON.stringify(data3),
+                        'codTaskCenter' : codTaskCenter
+                    }
+                }).complete(function(){
+                    canStart=true;
+                });
+            }
+
+            hideProcessingMsg();
+
+
+            if (complete) {
+                showProcessingMsg();
+                url = '@Url.Action("SaveTaskCenterOrderState", "Document", new { area = "Working" })';
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        'ids': JSON.stringify(data),
+                        'codTaskCenter' : codTaskCenter
+                    }
+                }).complete(function(){
+                    hideProcessingMsg();
+                    updateOtherClient();
+                });
+            }else
+            {
+                updateOtherClient();
+            }
         }
-    }
+
+    });
+
 
 </script>

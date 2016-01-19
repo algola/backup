@@ -189,6 +189,9 @@ namespace PapiroMVC.Models
 
             Console.WriteLine(Cuts);
 
+            gainForRun = 1;
+            gainSide1Printer = 1;
+            gainSide2Printer = 1;
 
             double dCut1 = 0, dCut2 = 0;
             string format = "1x1";

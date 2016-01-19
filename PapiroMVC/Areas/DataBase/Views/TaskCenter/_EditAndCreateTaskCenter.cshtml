@@ -19,7 +19,12 @@
                 @Html.HiddenFor(model => model.IndexOf)
                 @Html.AlgolaEditorFor(model => model.TaskCenterName)
 
+                @Html.AlgolaEditorFor(model => model.AlarmStartAfterDays)
+                @Html.AlgolaEditorFor(model => model.AlarmFinishAfterDays)
+
                 @Html.AlgolaAutocompleteFor(model => model.StateName, "StateAutoComplete", "Document")
+
+                @Html.AlgolaEditorFor(model => model.IndexOf)
 
                 <br />
                 <div class="controls col-sm-9 col-sm-offset-3">
