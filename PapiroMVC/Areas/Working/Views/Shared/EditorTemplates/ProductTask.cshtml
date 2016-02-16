@@ -4,7 +4,6 @@
 @{
     string strings = "~/Areas/Working/Views/Product/Strings";
     string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
-
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
 
     List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).ToList();

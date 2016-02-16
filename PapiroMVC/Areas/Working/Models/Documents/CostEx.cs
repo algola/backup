@@ -291,7 +291,10 @@ namespace PapiroMVC.Models
             
             
             #region fustellatura
-            if (codTypeOfTask == "FUSTELLATURA" || codTypeOfTask == "TAGLIO")
+            if (codTypeOfTask == "FUSTELLATURA" 
+                || codTypeOfTask == "TAGLIO"
+                || codTypeOfTask == "PLASTIFICATURA"                
+                )
             {
                 Console.WriteLine("Fustellatura");
                 String codParte = String.Empty;

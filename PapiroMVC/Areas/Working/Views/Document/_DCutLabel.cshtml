@@ -16,27 +16,44 @@
 
             <div class="container-fluid">
 
-
-
-
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
                         <h6 class="col-xs-12 control-label no-padding-right no-padding-bottom">@Html.T(strings, "FormatoEtichetta")</h6>
-                        @Html.TextBoxFor(y => y.ProductPart.Format, new { @class = "col-xs-12 input-mini", id = "ddPartFormat" })
+                        @Html.HiddenFor(y => y.ProductPart.Format, new { @class = "col-xs-12 input-mini", id = "ddPartFormatToShow" })
 
+                        @Html.TextBoxFor(y => y.ProductPart.FormatDesc, new { @class = "col-xs-12 input-mini", id = "ddPartFormat" })
                     </div>
 
-                    <div class="col-xs-4">
+
+                    <div class="col-xs-3">
                         <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "InterspazioBanda")</h6>
                         @Html.TextBoxFor(y => y.ProductPart.DCut1, new { @class = "col-xs-12 input-mini", id = "ddPartDCut1" })
 
                     </div>
 
-                    <div class="col-xs-4">
+                    <div class="col-xs-3">
                         <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "InterspazioPasso")</h6>
                         @Html.TextBoxFor(y => y.ProductPart.DCut2, new { @class = "input-mini col-xs-12", id = "ddPartDCut2" })
                     </div>
                 </div>
+
+
+                <div class="row">
+                    <div class="col-xs-3">
+                    </div>
+
+                    <div class="col-xs-3">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "MinDCut")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.MinDCut, new { @class = "col-xs-12 input-mini", id = "ddPartMinDCut" })
+
+                    </div>
+
+                    <div class="col-xs-3">
+                        <h6 class="col-xs-12 control-label no-padding-left no-padding-bottom">@Html.T(strings, "MaxDCut")</h6>
+                        @Html.TextBoxFor(y => y.ProductPart.MaxDCut, new { @class = "input-mini col-xs-12", id = "ddPartMaxDCut" })
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

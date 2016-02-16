@@ -28,7 +28,7 @@ namespace PapiroMVC.Models
             if (c.Count()==0 || MinDCut==0)
             {
                 //fascette gommate
-                if (MinDCut == 0)
+                if (MinDCut == 0 && MaxDCut == 0)
                 {
                     var pHint2 = pHint.Where(x=>x.IsDie ||( x.DCut2 == smallerCalculatedDCutLessZero * -1));
                     pHint1 = pHint.Where(x=>x.IsDie || (x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0))).ToList();
@@ -106,6 +106,17 @@ namespace PapiroMVC.Models
 
         public double AvarageDCut
         { get { return ((MinDCut ?? 0) + (MaxDCut ?? 0)) / 2; } }
+
+
+        //used to have format and doubleLabel format!!!
+        public virtual String FormatDesc
+        {
+            get 
+            {
+                return Format;
+            }        
+        }
+
 
         //formato in mm
         public virtual String Formatmm
@@ -290,6 +301,12 @@ namespace PapiroMVC.Models
             }
         }
 
+
+        //public double DCut1Calc
+        //{ get; set; }
+
+        //public double DCut2Calc
+        //{ get; set; }
 
 
         public virtual void MergeField(DocX doc)

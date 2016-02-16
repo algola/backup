@@ -9,13 +9,10 @@ namespace PapiroMVC.Models
     public partial class PrePostPressCostDetail : CostDetail, ICloneable
     {
 
-
         public override void CostDetailCostCodeRigen()
         {
             this.TimeStampTable = DateTime.Now;
         }
-
-
 
         public override void UpdateCoeff()
         {
@@ -26,7 +23,6 @@ namespace PapiroMVC.Models
             //lo devo salvare in una proprietà del dettaglio costo
 
             double gain = 1;
-
 
             if (ProductPart != null)
             {
@@ -210,16 +206,27 @@ namespace PapiroMVC.Models
                 _articles = articles.ToList().AsQueryable();
 
                 String codTypeOfTask = String.Empty;
+                String taskExecutorSecondName = String.Empty;
                 //Console.WriteLine(ProductPart); //= TaskCost.ProductPartTask.ProductPart;
                 codTypeOfTask = TaskCost.ProductPartTask.OptionTypeOfTask.CodTypeOfTask;
-                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask);
+                taskExecutorSecondName = TaskCost.ProductPartTask.OptionTypeOfTask.OptionName;
+
+                tskExec = TaskExecutor.FilterByTask(tskExec, codTypeOfTask, taskExecutorSecondName);
                 TaskExecutors = tskExec.ToList();
 
                 //            if (TaskexEcutorSelected == null && CodTaskExecutorSelected != "")
 
-                if (CodTaskExecutorSelected != "")
+                if ((CodTaskExecutorSelected??"") != "")
                 {
                     TaskexEcutorSelected = TaskExecutors.FirstOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+                }
+                else
+                {
+                    TaskexEcutorSelected = TaskExecutors.FirstOrDefault();
+                    if (TaskexEcutorSelected != null)
+                    {
+                        CodTaskExecutorSelected = TaskexEcutorSelected.CodTaskExecutor;
+                    }
                 }
             }
 
@@ -268,10 +275,13 @@ namespace PapiroMVC.Models
         }
 
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
+            double ret;
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+
             double quantita = 0;
-            int typeOfQ = 0;
 
             if (Printers != null)
             {

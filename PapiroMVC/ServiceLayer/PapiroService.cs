@@ -331,9 +331,8 @@ namespace PapiroMVC.ServiceLayer
         {
             var inizio1 = DateTime.Now;
 
-
             var tskExecs = TaskExecutorRepository.GetAll().ToList().AsQueryable();
-            var articles = ArticleRepository.GetAll().ToList().AsQueryable();
+            var articles = ArticleRepository.GetAll();//.ToList().AsQueryable();
 
             if (!justInited)
             {

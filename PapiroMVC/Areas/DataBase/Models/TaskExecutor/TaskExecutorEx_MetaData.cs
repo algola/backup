@@ -24,6 +24,10 @@ namespace PapiroMVC.Models
         [Required(ErrorMessageResourceType = typeof(ResTaskExecutor), ErrorMessageResourceName = "RequiredField")]
         public string TaskExecutorName { get; set; }
 
+        [DisplayNameLocalized(typeof(ResTaskExecutor), "TaskExecutorSecondName")]
+        [Tooltip(typeof(ResTaskExecutor), "TaskExecutorSecondNameToolTip")]
+        public string TaskExecutorSecondName { get; set; }
+
         [DisplayNameLocalized(typeof(ResTaskExecutor), "Version")]
         [Tooltip(typeof(ResTaskExecutor), "VersionToolTip")]
         public string Version { get; set; }

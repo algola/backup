@@ -718,6 +718,42 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to stampate neutre.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to neutre con retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa neutre con vernice più retrotacca.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0RETROVERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0RETROVERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to stampa neutre più vernice.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0VERNICE {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0VERNICE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to stampa a 1 colore.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_1 {

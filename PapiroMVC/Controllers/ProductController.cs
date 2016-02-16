@@ -11,6 +11,9 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using System.Web.Http.ModelBinding;
 using PapiroMVC.Validation;
+using System.Threading.Tasks;
+using System.Web.Http.Filters;
+using System.Threading;
 
 namespace PapiroMVC.Controllers
 {
@@ -21,17 +24,102 @@ namespace PapiroMVC.Controllers
     [EnableCors("*", "*", "*")]
     public class ProductApiController : ApiController
     {
-        IArticleRepository articleRepository;
-        public ProductApiController(IArticleRepository _articleRepository)
+        private IDocumentRepository documentRepository;
+        private ITypeOfTaskRepository typeOfTaskRepository;
+        private IProductRepository productRepository;
+        protected IMenuProductRepository menu;
+        private ITaskExecutorRepository taskExecutorRepository;
+
+        private IArticleRepository articleRepository;
+        private ICustomerSupplierRepository customerSupplierRepository;
+        private ICostDetailRepository costDetailRepository;
+        private ITaskCenterRepository taskCenterRepository;
+        /// <summary>
+        /// I want to track each disposable object and dispose them when controller will be dispose
+        /// </summary>
+        private IList<IDisposable> disposables;
+
+        public IList<IDisposable> Disposables
         {
+            get
+            {
+                disposables = disposables == null ? new List<IDisposable>() : disposables;
+                return disposables;
+            }
+            set
+            {
+                disposables = value;
+            }
+        }
+
+        /// <summary>
+        /// Dispose each object that expone IDisposable Interface
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected override void Dispose(bool disposing)
+        {
+
+            if (disposables != null)
+            {
+                foreach (var disp in disposables)
+                {
+                    disp.Dispose();
+                }
+            }
+
+            base.Dispose(disposing);
+        }
+
+
+        public ProductApiController(IDocumentRepository _documentRepository,
+            ITypeOfTaskRepository _typeOfTaskRepository,
+            IFormatsNameRepository _formatsName,
+            IProductRepository _productRepository,
+            ITaskExecutorRepository _taskExecutorRepository,
+            IArticleRepository _articleRepository,
+            ICustomerSupplierRepository _customerSupplierRepository,
+            IMenuProductRepository _menuProduct,
+            ICostDetailRepository _costDetailRepository,
+            ITaskCenterRepository _taskCenterRepository)
+        {
+            typeOfTaskRepository = _typeOfTaskRepository;
+            documentRepository = _documentRepository;
+            productRepository = _productRepository;
+            taskExecutorRepository = _taskExecutorRepository;
             articleRepository = _articleRepository;
+            customerSupplierRepository = _customerSupplierRepository;
+            menu = _menuProduct;
+            costDetailRepository = _costDetailRepository;
+            taskCenterRepository = _taskCenterRepository;
+
+            this.Disposables.Add(typeOfTaskRepository);
+            this.Disposables.Add(documentRepository);
+            this.Disposables.Add(productRepository);
+            this.Disposables.Add(taskExecutorRepository);
+            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(menu);
+            this.Disposables.Add(costDetailRepository);
+            this.Disposables.Add(taskCenterRepository);
+
+        }
+
+
+        public ProductApiController(IDocumentRepository _documentRepository, IProductRepository _productRepository, ITaskCenterRepository _taskCenterRepository)
+        {
+            documentRepository = _documentRepository;
+            productRepository = _productRepository;
+            taskCenterRepository = _taskCenterRepository;
+            this.Disposables.Add(documentRepository);
+            this.Disposables.Add(productRepository);
+            this.Disposables.Add(taskCenterRepository);
         }
 
         public ProductApiController()
         {
 
         }
-        
+
         /// <summary>
         /// get empty product initialized by id
         /// </summary>
@@ -49,7 +137,7 @@ namespace PapiroMVC.Controllers
 
                 var prod = new ProductRigidApi();
                 prod.Id = id;
-                
+
                 Projection.MakeProjection(prodIntero, prod);
 
                 return Request.CreateResponse<ProductRigidApi>(HttpStatusCode.OK, prod);
@@ -58,6 +146,33 @@ namespace PapiroMVC.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
+        }
+
+
+        private void Init()
+        {
+
+            typeOfTaskRepository = new TypeOfTaskRepository();
+            documentRepository = new DocumentRepository();
+            productRepository = new ProductRepository();
+            taskExecutorRepository = new TaskExecutorRepository();
+            articleRepository = new ArticleRepository();
+            customerSupplierRepository = new CustomerSupplierRepository();
+            costDetailRepository = new CostDetailRepository();
+            taskCenterRepository = new TaskCenterRepository();
+
+            this.Disposables.Add(typeOfTaskRepository);
+            this.Disposables.Add(documentRepository);
+            this.Disposables.Add(productRepository);
+            this.Disposables.Add(taskExecutorRepository);
+            this.Disposables.Add(articleRepository);
+            this.Disposables.Add(customerSupplierRepository);
+            this.Disposables.Add(menu);
+            this.Disposables.Add(costDetailRepository);
+            this.Disposables.Add(taskCenterRepository);
+
+
+
         }
 
         /// <summary>
@@ -91,6 +206,136 @@ namespace PapiroMVC.Controllers
             }
         }
 
+        [Route("api/test")]
+        [HttpPost]
+        public HttpResponseMessage Test(
+            string username,
+            string nCom,
+            string nPrev,
+            string desc,
+            string field1,
+            string field2,
+            string field3,
+            string quantity,
+            string price)
+        {
+
+            this.Init();
+
+
+            taskCenterRepository.SetDbName(username);
+            productRepository.SetDbName(username);
+            documentRepository.SetDbName(username);
+
+            //cerco il prodotto ---> se c'è ok
+            //altrimenti lo creo come generico!!!
+
+            //cerco la commessa ---> se c'è ok
+            //altrimenti la creo
+
+            var prod = productRepository.GetAll().Where(x => x.PapiroPrev == nPrev).FirstOrDefault();
+
+            if (prod == null)
+            {
+                prod = new ProductEmpty();
+                prod.CodProduct = productRepository.GetNewCode(prod);
+                prod.CodMenuProduct = "Vuoto";
+                prod.PapiroPrev = nPrev;
+                prod.ProductName = desc;
+
+                productRepository.Add(prod);
+                productRepository.Save();
+            }
+
+            var docProd = documentRepository.GetAllDocumentProducts().Where(x => x.CodProduct == prod.CodProduct).FirstOrDefault();
+
+            if (docProd == null)
+            {
+                docProd = new DocumentProduct();
+                docProd.CodProduct = prod.CodProduct;
+                docProd.UnitPrice = Convert.ToDouble(price).ToString();
+                docProd.Quantity = Convert.ToInt16(quantity);
+
+                Estimate e = new Estimate();
+                e.CodDocument = documentRepository.GetNewCode(e);
+                e.EstimateNumberSerie = DateTime.Now.Year.ToString();
+                e.EstimateNumber = documentRepository.GetNewEstimateNumber(e);
+
+                //var docProd = documentRepository.GetDocumentProductByCodDocumentProduct(codDocumentProduct);
+                e.DocumentProducts.Add(docProd);
+
+                documentRepository.Add(e);
+                documentRepository.Save();
+
+                docProd.Product = prod;
+            }
+
+
+            var c = (Order)documentRepository.GetAll().Where(x => x.PapiroCom == nCom).FirstOrDefault();
+
+            if (c == null)
+            {
+                c = new Order();
+                c.CodDocument = documentRepository.GetNewCode(c);
+                c.OrderNumberSerie = DateTime.Now.Year.ToString();
+                c.OrderNumber = documentRepository.GetNewOrderNumber(c);
+                c.PapiroCom = nCom;
+
+                c.OrderProduct = docProd;
+                //c.CodCustomer = docProd.Document.CodCustomer;
+                //c.Customer = docProd.Document.Customer;
+
+                c.DateDocument = DateTime.Now;
+
+                var allStates = documentRepository.GetAllStates().Where(x => (x.UseInOrder ?? false)).OrderBy(x => x.StateNumber);
+
+                foreach (var s in allStates)
+                {
+                    c.DocumentStates.Add(new DocumentState
+                    {
+                        CodDocument = c.CodDocument,
+                        StateNumber = s.StateNumber,
+                        CodState = s.CodState,
+                        //                    StateName = s.StateName, //derivated!!!
+                        ResetLinkedStates = s.ResetLinkedStates,
+                        Selected = false
+                    });
+                }
+
+                documentRepository.Add(c);
+                documentRepository.Save();
+
+                //se ci sono dei TaskCenter inizio a buttare i taskcenter nel primo taskcenter (IndexOf==0)
+                var taskCenter = taskCenterRepository.GetAll().Where(y => y.IndexOf == 0).FirstOrDefault();
+
+                if (taskCenter != null)
+                {
+                    DocumentTaskCenter dtc = new DocumentTaskCenter();
+                    dtc.CodTaskCenter = taskCenter.CodTaskCenter;
+                    dtc.CodDocument = c.CodDocument;
+
+                    if (docProd.Product.ProductRefName == null)
+                    {
+                        dtc.DocumentName = docProd.Product.ProductName;
+                    }
+                    else
+                    {
+                        dtc.DocumentName = docProd.Product.ProductRefName;
+                    }
+
+                    dtc.DocumentName = nCom + " " + dtc.DocumentName;
+
+                    dtc.FieldA = field1;
+                    dtc.FieldB = field2;
+                    dtc.FieldC = field3;
+
+                    taskCenterRepository.AddNewDocumentTaskCenter(dtc);
+                    taskCenterRepository.Save();
+                }
+
+            }
+            return Request.CreateResponse<string>(HttpStatusCode.OK, username);
+        }
 
 
         /// <summary>
@@ -124,7 +369,7 @@ namespace PapiroMVC.Controllers
             }
         }
 
-        
+
 
         /// <summary>
         /// return Rigid Material

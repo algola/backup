@@ -19,13 +19,12 @@ namespace PapiroMVC.Model
         {
             dbS.Ctx = ctx;
 
-            dbS.AddColumnToTable("documenttaskcenter", "AssignedAtString", SchemaDb.String, "20");
-            dbS.AddColumnToTable("documenttaskcenter", "AlarmStartingAtString", SchemaDb.String, "20");
-            dbS.AddColumnToTable("documenttaskcenter", "StartedAtString", SchemaDb.String, "20");
-            dbS.AddColumnToTable("documenttaskcenter", "AlarmFinishingAtString", SchemaDb.String, "20");
+            dbS.AddColumnToTable("products", "PapiroPrev", SchemaDb.String, "50");
+            dbS.AddIndex("products", "PapiroPrev");
 
-            dbS.AddColumnToTable("taskcenters", "AlarmStartAfterDays", SchemaDb.Int, "0");
-            dbS.AddColumnToTable("taskcenters", "AlarmFinishAfterDays", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("documents", "PapiroCom", SchemaDb.String, "50");
+            dbS.AddIndex("documents", "PapiroCom");
+
 
         }
 

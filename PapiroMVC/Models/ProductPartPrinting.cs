@@ -35,6 +35,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CodProductPart { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> Perfecting { get; set; }
     
     	[DataMember]
         public virtual CostDetail CostDetail { get; set; }

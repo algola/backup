@@ -45,14 +45,14 @@ namespace PapiroMVC.Models
 
         public enum ProductPartPrintingType : int
         {
-           
+
             ProductPartCoverSheetPrinting = 1,
             ProductPartBookSheetPrinting = 2,
-            
-            ProductPartDoubleSheetPrinting=8,
+
+            ProductPartDoubleSheetPrinting = 8,
             ProductPartRigidPrinting = 5,
             ProductPartSingleSheetPrinting = 0,
-            ProductPartSoftPrinting=3,
+            ProductPartSoftPrinting = 3,
         }
 
         public ProductPartPrintingType TypeOfProductPartPrinting
@@ -75,6 +75,32 @@ namespace PapiroMVC.Models
 
         public bool AutoCutParameter { get; set; }
         public bool LateralMinDCut { get; set; }
+
+        public virtual double ImplantRate
+        {
+            get
+            {
+                double rate = 1;
+
+                if (GainPartOnPrinting != null)
+                {
+                    foreach (var item in GainPartOnPrinting.Makereadies)
+                    {
+
+                    }
+                    if (Perfecting??false)
+                    {
+                        rate = 0.5;
+                    }
+                }
+                else
+                {
+                    rate = 1;
+                }
+                return rate;
+            }
+        }
+
 
         //    public virtual ProductPartPrintingGain GainPartOnPrinting { get; set; }
 
@@ -226,7 +252,7 @@ namespace PapiroMVC.Models
             if (Part != null)
             {
                 doc.AddCustomProperty(new Novacode.CustomProperty("PPP.FormatOpened", this.Part.FormatOpened));
-                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Format", this.Part.Format));                
+                doc.AddCustomProperty(new Novacode.CustomProperty("PPP.Format", this.Part.Format));
             }
             else
             {

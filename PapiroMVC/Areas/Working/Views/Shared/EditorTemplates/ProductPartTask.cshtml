@@ -6,8 +6,6 @@
 
     //we want ot use different resource only to share it between areas and parts
     string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
-
-
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
 
     List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).ToList();
@@ -21,32 +19,31 @@
         {
             optItem.OptionName = Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask);
         }
-
     }
-    }
+}
 
-    @if ((Model.Hidden == null) || (Model.Hidden != true))
-    {
-        <div class="form-group">
-            @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName, new { @class = "col-sm-3 control-label no-padding-right" })
+@if ((Model.Hidden == null) || (Model.Hidden != true))
+{
+    <div class="form-group">
+        @Html.Label(Model.OptionTypeOfTask.TypeOfTask.TaskName, new { @class = "col-sm-3 control-label no-padding-right" })
 
-            <div class="controls col-sm-9">
-                @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
             new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
-            </div>
         </div>
-    }
-    else
-    {
-        @Html.HiddenFor(model => model.CodOptionTypeOfTask)
-    }
-    @Html.HiddenFor(model => model.IsSelected)
-    @Html.HiddenFor(model => model.TimeStampTable)
-    @Html.HiddenFor(model => model.CodProductPartTask)
-    @Html.HiddenFor(model => model.CodProductPart)
-    @Html.HiddenFor(model => model.Hidden)
-    @Html.HiddenFor(model => model.ImplantHidden)
-    @Html.HiddenFor(model => model.TypeOfProductPartTask)
-    @Html.HiddenFor(model => model.CodItemGraph)
-    @Html.HiddenFor(model => model.IndexOf)
-    @Html.HiddenFor(model => model.IfSelectedResetOtherCodItemGraph)
+    </div>
+}
+else
+{
+    @Html.HiddenFor(model => model.CodOptionTypeOfTask)
+}
+@Html.HiddenFor(model => model.IsSelected)
+@Html.HiddenFor(model => model.TimeStampTable)
+@Html.HiddenFor(model => model.CodProductPartTask)
+@Html.HiddenFor(model => model.CodProductPart)
+@Html.HiddenFor(model => model.Hidden)
+@Html.HiddenFor(model => model.ImplantHidden)
+@Html.HiddenFor(model => model.TypeOfProductPartTask)
+@Html.HiddenFor(model => model.CodItemGraph)
+@Html.HiddenFor(model => model.IndexOf)
+@Html.HiddenFor(model => model.IfSelectedResetOtherCodItemGraph)

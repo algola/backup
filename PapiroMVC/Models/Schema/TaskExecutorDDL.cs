@@ -21,6 +21,10 @@ namespace PapiroMVC.Model
             dbS.AddTable("taskexecutors");
             dbS.AddColumnToTable("taskexecutors", "CodTaskExecutor", SchemaDb.StringPK, "50");
             dbS.AddColumnToTable("taskexecutors", "TaskExecutorName", SchemaDb.String, "100");
+          
+            //this is used for select type ...> plastificatura --> lucida 1 lato et...
+            dbS.AddColumnToTable("taskexecutors", "TaskExecutorSecondName", SchemaDb.String, "100");
+
             dbS.AddColumnToTable("taskexecutors", "CodTask", SchemaDb.String, "50");
             dbS.AddColumnToTable("taskexecutors", "Version", SchemaDb.String, "4");
             dbS.AddColumnToTable("taskexecutors", "Dismissed", SchemaDb.Bool, "0");

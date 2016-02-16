@@ -74,8 +74,9 @@ namespace PapiroMVC.Models
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain2 = MaxGain2;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).MaxGain1 = MaxGain1;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceSideOnSide = ForceSide;
-
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).ForceGain = ForceGain;
+
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).UsePerfecting = Perfecting;
 
 
                     break;
@@ -129,7 +130,7 @@ namespace PapiroMVC.Models
                     break;
             }
 
-            ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = false;
+            ((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).UsePerfecting = Perfecting;
             GainPartOnPrinting.CalculateGain();
 
             //if (((ProductPartPrintingSheetGainSingle)GainPartOnPrinting).AutoDCut)

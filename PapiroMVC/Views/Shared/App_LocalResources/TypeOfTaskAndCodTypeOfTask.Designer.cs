@@ -745,6 +745,24 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to neutre.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0 {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to neutre con retro.
+        /// </summary>
+        public static string CodSTAMPAETICHROTOLO_0RETRO {
+            get {
+                return ResourceManager.GetString("CodSTAMPAETICHROTOLO_0RETRO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1 colore.
         /// </summary>
         public static string CodSTAMPAETICHROTOLO_1 {

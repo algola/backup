@@ -24,7 +24,7 @@
                 datatype: 'json',
                 colModel: [
                     { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
-                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepCostPerColorStep },
+                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 55, align: 'right', editable: false, hidden: false, formatter: delStepCostPerColorStep },
                     { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
                     { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromColorCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
                     { name: 'CostPerUnit', label: '@HttpContext.GetLocalResourceObject(strings, "CostPerHourCaption")', width: 100, align: 'right', editable: true }],
@@ -36,6 +36,7 @@
                 viewrecords: true,
                 autowidth: false,
                 width: 400,
+                height: '100%',
                 shrinkToFit: false,
                 loadComplete: function () {
 

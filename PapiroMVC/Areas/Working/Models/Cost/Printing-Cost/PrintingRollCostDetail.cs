@@ -58,12 +58,12 @@ namespace PapiroMVC.Models
                     for (int i = 0; i < x.Count &&
                         !SheetCut.IsValid(tsk.FormatMax, tsk.FormatMin, PrintingFormat);
                         i++,
-                        PrintingFormat = x[k].GetCuttedFormat(BuyingFormat)) ;
+                        PrintingFormat = x[k].GetCuttedFormat(BuyingFormat,false)) ;
                 }
 
                 foreach (var item in x)
                 {
-                    item.CutName = item.GetCuttedFormat(BuyingFormat);
+                    item.CutName = item.GetCuttedFormat(BuyingFormat,false);
                 }
 
                 //Controllo del formato se è presente nell'elenco dei formati
@@ -77,7 +77,7 @@ namespace PapiroMVC.Models
                     {
                         var toAdd = new Cut("manual", 0, 0);
                         toAdd.ManualFormat = PrintingFormat;
-                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat,false);
                         x.Add(toAdd);
                     }
                 }
@@ -294,8 +294,11 @@ namespace PapiroMVC.Models
 
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+
             double ret = 0;
 
             switch ((QuantityType)(TypeOfQuantity ?? 0))

@@ -200,6 +200,8 @@ namespace PapiroMVC.Areas.Working.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult CreateProduct(ProductViewModel pv)
         {
+            bool doControl = true;
+
             // var qts = pv.Quantities;
             var product = pv.Product;
 
@@ -213,6 +215,12 @@ namespace PapiroMVC.Areas.Working.Controllers
                 {
                     item.Format = String.Empty;
                 }
+
+                if (item.TypeOfProductPart == ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                {
+                    doControl = false;
+                }
+
             }
 
             //CHECK IF EACH PRINTABLE ARTICLE IS IN LIST
@@ -226,7 +234,6 @@ namespace PapiroMVC.Areas.Working.Controllers
                     }
                 }
             }
-
 
             var ok = true;
 
@@ -257,27 +264,19 @@ namespace PapiroMVC.Areas.Working.Controllers
                     {
                         Console.WriteLine("");
                     }
-
                 }
 
-                if (!ok)
+
+                if (!ok && doControl)
                 {
-                    ModelState.AddModelError("PersError", "FormatOrTaskExecutorError");                    
+                    ModelState.AddModelError("PersError", "FormatOrTaskExecutorError");
                 }
-
 
             }
 
-
-
-
-
             //END CHECK
-
-
             if (ModelState.IsValid)
             {
-
                 //               try
                 {
                     //il cliente

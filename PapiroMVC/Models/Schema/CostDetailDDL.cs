@@ -129,6 +129,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("productpartprinting", "SelectorSheet", SchemaDb.Int, "0");
             dbS.AddColumnToTable("productpartprinting", "SelectorPlotter", SchemaDb.Int, "0");
 
+            dbS.AddColumnToTable("productpartprinting", "Perfecting", SchemaDb.Bool, "0");
+
 
             dbS.AddForeignKey("productpartprinting", "CodProductPartPrinting", "costdetails", "CodCostDetail");
 

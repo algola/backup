@@ -267,6 +267,9 @@
   <data name="CodSTAMPAETICHROTOLO_1" xml:space="preserve">
     <value>stampa a 1 colore</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_0" xml:space="preserve">
+    <value>stampate neutre</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_2" xml:space="preserve">
     <value>stampa a 2 colori</value>
   </data>
@@ -495,6 +498,9 @@
   <data name="CodSTAMPAETICHROTOLO_1RETRO" xml:space="preserve">
     <value>stampa a 1 colore con retrotacca</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_0RETRO" xml:space="preserve">
+    <value>neutre con retrotacca</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_2RETRO" xml:space="preserve">
     <value>stampa a 2 colori con retrotacca</value>
   </data>
@@ -575,6 +581,12 @@
   </data>
   <data name="CodSTAMPAETICHROTOLO_1VERNICE" xml:space="preserve">
     <value>stampa a 1 colore più vernice</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_0RETROVERNICE" xml:space="preserve">
+    <value>stampa neutre con vernice più retrotacca</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_0VERNICE" xml:space="preserve">
+    <value>stampa neutre più vernice</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_2RETROVERNICE" xml:space="preserve">
     <value>stampa a 2 colori con vernice più retrotacca</value>

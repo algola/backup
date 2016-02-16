@@ -246,6 +246,11 @@ namespace PapiroMVC.Areas.Account.Controllers
                 var xx = Membership.GetUser(model.UserName);
 
 
+                System.Web.HttpContext.Current.Session["artsSession"] = null;
+                System.Web.HttpContext.Current.Session["tsksSession"] = null;
+
+
+
                 if (Membership.ValidateUser(model.UserName, model.Password))
                 {
                     //   base.UpdateDatabase(model.UserName);

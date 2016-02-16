@@ -630,4 +630,10 @@
   <data name="PlanningViewMenu" xml:space="preserve">
     <value>Vedi Planning</value>
   </data>
+  <data name="MaxDCut" xml:space="preserve">
+    <value>I. Spazio Max</value>
+  </data>
+  <data name="MinDCut" xml:space="preserve">
+    <value>I. Spazio Min</value>
+  </data>
 </root>

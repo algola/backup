@@ -327,6 +327,9 @@
   <data name="CodSTAMPAETICHROTOLO" xml:space="preserve">
     <value>Stampa</value>
   </data>
+  <data name="CodSTAMPAETICHROTOLO_0" xml:space="preserve">
+    <value>neutre</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_1" xml:space="preserve">
     <value>1 colore</value>
   </data>
@@ -458,6 +461,9 @@
   </data>
   <data name="CodSERIGRAFIAROTOLO_UVSPESSORATA" xml:space="preserve">
     <value>Serigrafia UV spessorata</value>
+  </data>
+  <data name="CodSTAMPAETICHROTOLO_0RETRO" xml:space="preserve">
+    <value>neutre con retro</value>
   </data>
   <data name="CodSTAMPAETICHROTOLO_1RETRO" xml:space="preserve">
     <value>1 colore e retro</value>

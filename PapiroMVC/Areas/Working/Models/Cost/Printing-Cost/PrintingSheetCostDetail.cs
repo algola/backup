@@ -190,13 +190,18 @@ namespace PapiroMVC.Models
 
             //calcolo di quanti impianti sono necessari!!!!
             Implants = TaskexEcutorSelected.GetImplants(TaskCost.ProductPartTask.CodOptionTypeOfTask);
+            Implants *= this.ProductPartPrinting.ImplantRate;
+
 
             var fgWaste = paperFirstStartL + (RollChanges * 0 ?? 0); //lo zero va sostituito con i cambi lastra!!!!
 
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+
 
             //mi serve calcolare la quantità con gli scarti!!!
 

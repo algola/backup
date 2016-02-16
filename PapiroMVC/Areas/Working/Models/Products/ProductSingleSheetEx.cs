@@ -42,10 +42,16 @@ namespace PapiroMVC.Models
             partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "STAMPANEW_NO");
             partTask.Hidden = false;
             partTask.ImplantHidden = false;
-            partTask.IndexOf = 10;
             partTask.IndexOf = 1;
 
             partTask.CodItemGraph = "ST";
+
+            partTask = part.ProductPartTasks.First(x => x.CodOptionTypeOfTask == "PLASTIFICATURA_NO");
+            partTask.Hidden = false;
+            partTask.ImplantHidden = true;
+            partTask.IndexOf = 10;
+
+            partTask.CodItemGraph = "PL";
 
             if (CodMenuProduct.Contains("Sago"))
             {
@@ -79,8 +85,9 @@ namespace PapiroMVC.Models
                 partTask.IndexOf = 20;
 
                 partTask.CodItemGraph = "TG";
-
             }
+
+
 
             part.ProductPartPrintableArticles.Add(p);
             ProductParts.Add(part);
@@ -88,7 +95,8 @@ namespace PapiroMVC.Models
             //grafo diretto del prodotto
             ProductGraphLinks.Clear();
 
-            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "FS" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "ST", CodItemGraphLink = "PL" });
+            ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "PL", CodItemGraphLink = "FS" });
             ProductGraphLinks.Add(new ProductGraphLink { CodItemGraph = "FS", CodItemGraphLink = "TG" });
 
         }

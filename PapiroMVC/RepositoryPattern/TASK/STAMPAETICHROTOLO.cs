@@ -18,6 +18,36 @@ namespace Services
 
             optTk = new OptionTypeOfTask();
             optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_0";
+            optTk.OptionName = "Stampa neutre";
+            optTk.IdexOf = -4;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_0RETRO";
+            optTk.OptionName = "Stampa a 1 colore con retro";
+            optTk.IdexOf = -3;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_0VERNICE";
+            optTk.OptionName = "Stampa a 1 colore con vernice";
+            optTk.IdexOf = -2;
+            this.OptionTypeOfTasks.Add(optTk);
+
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
+            optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_0RETROVERNICE";
+            optTk.OptionName = "Stampa a 1 colore con retro e vernice";
+            optTk.IdexOf = -1;
+            this.OptionTypeOfTasks.Add(optTk); 
+
+            
+            
+            optTk = new OptionTypeOfTask();
+            optTk.CodTypeOfTask = "STAMPAETICHROTOLO";
             optTk.CodOptionTypeOfTask = "STAMPAETICHROTOLO_1";
             optTk.OptionName = "Stampa a 1 colore";
             optTk.IdexOf = 0;

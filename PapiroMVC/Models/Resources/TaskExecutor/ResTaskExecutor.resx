@@ -229,10 +229,16 @@
     <value>Nome del centro di lavorazione / lavorazione esterna</value>
   </data>
   <data name="TaskExecutorName" xml:space="preserve">
-    <value>Nome macchina</value>
+    <value>macchina / fornitore lavorazione</value>
   </data>
   <data name="TaskExecutorNameToolTip" xml:space="preserve">
     <value>Nome della macchina o chi esegue una lavorazione</value>
+  </data>
+  <data name="TaskExecutorSecondName" xml:space="preserve">
+    <value>Specifica lavorazione</value>
+  </data>
+  <data name="TaskExecutorSecondNameToolTip" xml:space="preserve">
+    <value>Specifica della lavorazione, ad esempio: Lavorazione: Plastificatura; Specifica: Lucida 1 Lato </value>
   </data>
   <data name="TimeStampTable" xml:space="preserve">
     <value>xxxxxx</value>

@@ -1749,8 +1749,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 return HttpNotFound();
 
             //Load each type of base
-            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
-
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "PREPOST");
+            ViewBag.typeOfTaskRepository = typeOfTaskRepository;
 
             //is used to know where we are from and go
             ViewBag.ActionMethod = "EditPrePostPress";
@@ -2019,10 +2019,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             ViewBag.ReturnUrl = returnUrl;
             ViewBag.ReturnCodTypeOfTask = returnCodTypeOfTask;
 
-
-
             //Load each type of base
-            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll();
+            ViewBag.TypeOfTaskList = typeOfTaskRepository.GetAll().Where(y => y.CodCategoryOfTask == "PREPOST");
 
             //If we come here, something went wrong. Return it back. 
 
@@ -2319,6 +2317,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                         if (chkStep != null)
                         {
+                            chkStep.Format = c.Format;
                             chkStep.FromUnit = c.FromUnit;
                             chkStep.ToUnit = c.ToUnit;
                             chkStep.CostPerUnit = c.CostPerUnit;

@@ -32,14 +32,10 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
 
-
-
         [DisplayNameLocalized(typeof(ResProductPart), "Formatmm")]
         [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
         [Tooltip(typeof(ResProductPart), "FormatmmToolTip")]
         public string Formatmm { get; set; }
-
-
 
         [DisplayNameLocalized(typeof(ResProductPart), "ServicesNumber")]
         [Tooltip(typeof(ResProductPart), "ServicesNumberToolTip")]

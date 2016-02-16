@@ -75,6 +75,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string CostImplant { get; set; }
+    	
+    	[DataMember] 		
+        public string TaskExecutorSecondName { get; set; }
     
     	[DataMember]
         public virtual ICollection<TaskEstimatedOn> SetTaskExecutorEstimatedOn { get; set; }

@@ -1,5 +1,6 @@
 ﻿@model PapiroMVC.Models.PrePostPress
 @using PapiroMVC.Validation
+@using Services
 
 @{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
@@ -10,6 +11,16 @@
         item.TaskName = Html.T(stringsCod, "Cod" + item.CodTypeOfTask);
     }
 
+    var typeOfTaskRepository = (ITypeOfTaskRepository)ViewBag.typeOfTaskRepository;
+    var optList = typeOfTaskRepository.GetAllOptionTypeOfTask().ToList();
+
+    foreach (var item in optList)
+    {
+        item.OptionName = Html.T(stringsCod, "Cod" + item.CodOptionTypeOfTask);
+        typeOfTaskRepository.EditOptionTypeOfTask(item);
+    }
+
+    typeOfTaskRepository.Save();
 
     Model.CodTypeOfTask = Model.CodTypeOfTask == null ? "0001" : Model.CodTypeOfTask;
 
@@ -25,11 +36,16 @@
                 @Html.ValidationSummary(true)
 
                 <div class="form-group">
+                    <div class="controls col-sm-3"></div>
+
                     <div class="controls col-sm-9">
                         @Html.DropDownListFor(y => y.CodTypeOfTask,
-                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"))
+                new SelectList(ViewBag.TypeOfTaskList, "CodTypeOfTask", "TaskName"), new { id = "ddBuyingFormat" })
+
                     </div>
-                </div>
+               </div>
+
+                @Html.AlgolaEditorFor(model => model.TaskExecutorSecondName)
 
                 @Html.HiddenFor(model => model.TimeStampTable)
 
@@ -89,6 +105,52 @@
 </div>
 
 
+<script>
+
+
+
+    $(function() {
+
+        var updateOptions = function ()
+        {
+
+            var buyingFormat = "";
+            $("#ddBuyingFormat option:selected").each(function () {
+                buyingFormat += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codTypeOfTask: buyingFormat,
+            };
+
+            $.ajax({
+                url: '@(Url.Action("GetOptionTypeOfTask", "TaskExecutor", new { area = "DataBase" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    availableTags = data;
+                    $("#TaskExecutorSecondName").autocomplete("option", { source: availableTags });
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+
+        }
+        
+        updateOptions();
+
+        $("#ddBuyingFormat").change(function () {
+            updateOptions();
+        });
+
+    });
+
+
+</script>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -230,6 +230,7 @@
           <Property Name="OrderNumberSerie" Type="char" MaxLength="20" />
           <Property Name="CodDocumentProduct" Type="char" MaxLength="50" />
           <Property Name="ReportOrderName" Type="char" MaxLength="255" />
+          <Property Name="PapiroCom" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="documentstate">
           <Key>
@@ -346,6 +347,7 @@
           <Property Name="SelectorSheet" Type="int" />
           <Property Name="SelectorPlotter" Type="int" />
           <Property Name="CodProductPart" Type="char" MaxLength="50" />
+          <Property Name="Perfecting" Type="bit" />
         </EntityType>
         <EntityType Name="productpartprintinggain">
           <Key>
@@ -473,6 +475,7 @@
           <Property Name="Format" Type="char" MaxLength="50" />
           <Property Name="SelectorProduct" Type="int" />
           <Property Name="ProductRefName" Type="char" MaxLength="255" />
+          <Property Name="PapiroPrev" Type="char" MaxLength="50" />
         </EntityType>
         <EntityType Name="producttasks">
           <Key>
@@ -509,7 +512,7 @@
           </Key>
           <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="CodTaskEstimatedOn" Type="char" MaxLength="50" />
-          <Property Name="IdStep" Type="uint" Nullable="false" />
+          <Property Name="IdStep" Type="uint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FromUnit" Type="double" />
           <Property Name="ToUnit" Type="double" />
           <Property Name="Selector" Type="int" />
@@ -725,6 +728,7 @@
           <Property Name="ProofSheetFirstStartDieCutting" Type="uint" />
           <Property Name="CostImplantFoilStamping" Type="char" MaxLength="20" />
           <Property Name="CostImplantDieCutting" Type="char" MaxLength="20" />
+          <Property Name="TaskExecutorSecondName" Type="char" MaxLength="100" />
         </EntityType>
         <EntityType Name="taskexecutortypeoftask">
           <Key>
@@ -1993,6 +1997,7 @@
           <Property Name="HasImplant" Type="Boolean" />
           <Property Name="CostImplant" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="articles" Relationship="dbModel.FK_articles_CodTaskExecutor" FromRole="TaskExecutor" ToRole="Article" />
+          <Property Name="TaskExecutorSecondName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           </EntityType>
         <EntityType Name="Litho" Abstract="true" BaseType="dbModel.PrinterMachine">
           <Property Type="Int16" Name="PrintingUnit" />
@@ -2491,6 +2496,7 @@
           <NavigationProperty Name="ProductGraphLinks" Relationship="dbModel.FK_productgraphs_CodProduct" FromRole="Product" ToRole="productgraph" />
           <Property Name="ProductRefName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="WarehouseArticles" Relationship="dbModel.FK_warehousearticles_CodProduct" FromRole="Product" ToRole="warehousearticle" />
+          <Property Name="PapiroPrev" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ProductTask">
           <Key>
@@ -2819,6 +2825,7 @@
           <NavigationProperty Name="DocumentStates" Relationship="dbModel.FK_documentstate_CodDocument" FromRole="Document" ToRole="documentstate" />
           <Property Name="ReportOrderName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="documenttaskcenters" Relationship="dbModel.FK_documenttaskcenter_CodDocument" FromRole="Document" ToRole="documenttaskcenter" />
+          <Property Name="PapiroCom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
@@ -3087,6 +3094,7 @@
           <Property Type="String" Name="CodProductPart" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Part" Relationship="dbModel.FK_productpartprinting_CodProductPart" FromRole="ProductPartPrinting" ToRole="ProductPart" />
           <NavigationProperty Name="GainPartOnPrintings" Relationship="dbModel.FK_productpartprintinggain_CodProductPartPrinting" FromRole="ProductPartPrinting" ToRole="ProductPartPrintingGain" />
+          <Property Name="Perfecting" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductPartSheetPrinting" BaseType="dbModel.ProductPartPrinting" />
         <EntityType Name="ProductPartRollPrinting" BaseType="dbModel.ProductPartPrinting" >
@@ -3764,6 +3772,7 @@
           <EntitySetMapping Name="taskexecutors">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.TaskExecutor)">
               <MappingFragment StoreEntitySet="taskexecutors">
+                <ScalarProperty Name="TaskExecutorSecondName" ColumnName="TaskExecutorSecondName" />
                 <ScalarProperty Name="CostImplant" ColumnName="CostImplant" />
                 <ScalarProperty Name="HasImplant" ColumnName="HasImplant" />
                 <ScalarProperty Name="UniversalCodPapiro" ColumnName="UniversalCodPapiro" />
@@ -4642,6 +4651,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Product)">
               <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="PapiroPrev" ColumnName="PapiroPrev" />
                 <ScalarProperty Name="ProductRefName" ColumnName="ProductRefName" />
                 <ScalarProperty Name="CodMenuProduct" ColumnName="id" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -4811,6 +4821,7 @@
           <EntitySetMapping Name="Documents">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.Document)">
               <MappingFragment StoreEntitySet="documents">
+                <ScalarProperty Name="PapiroCom" ColumnName="PapiroCom" />
                 <ScalarProperty Name="ReportOrderName" ColumnName="ReportOrderName" />
                 <ScalarProperty Name="CodDocumentProduct" ColumnName="CodDocumentProduct" />
                 <ScalarProperty Name="EstimateNumberSerie" ColumnName="EstimateNumberSerie" />
@@ -5057,6 +5068,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartPrinting)">
               <MappingFragment StoreEntitySet="productpartprinting">
+                <ScalarProperty Name="Perfecting" ColumnName="Perfecting" />
                 <ScalarProperty Name="CodProductPart" ColumnName="CodProductPart" />
                 <ScalarProperty Name="CodProductPartPrinting" ColumnName="CodProductPartPrinting" />
                 <ScalarProperty Name="PrintingFormat" ColumnName="PrintingFormat" />

@@ -394,7 +394,7 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nome macchina.
+        ///   Looks up a localized string similar to macchina / fornitore lavorazione.
         /// </summary>
         public static string TaskExecutorName {
             get {
@@ -408,6 +408,24 @@ namespace PapiroMVC.Models.Resources.TaskExecutor {
         public static string TaskExecutorNameToolTip {
             get {
                 return ResourceManager.GetString("TaskExecutorNameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specifica lavorazione.
+        /// </summary>
+        public static string TaskExecutorSecondName {
+            get {
+                return ResourceManager.GetString("TaskExecutorSecondName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specifica della lavorazione, ad esempio: Lavorazione: Plastificatura; Specifica: Lucida 1 Lato .
+        /// </summary>
+        public static string TaskExecutorSecondNameToolTip {
+            get {
+                return ResourceManager.GetString("TaskExecutorSecondNameToolTip", resourceCulture);
             }
         }
         

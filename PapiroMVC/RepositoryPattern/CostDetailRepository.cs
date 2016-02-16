@@ -85,6 +85,8 @@ namespace Services
         public override void Edit(CostDetail entity)
         {
 
+            entity.CostDetailCostCodeRigen();
+
             if (entity.TaskCost != null)
             {
 
@@ -175,6 +177,7 @@ namespace Services
                     var fromBD3 = Context.ProductPartPrintingGain.Single(p => p.CodProductPartPrintingGainBuying == prtGain.CodProductPartPrintingGainBuying);
                     Context.Entry(fromBD3).CurrentValues.SetValues(prtGain);
                     Context.Entry(fromBD3).State = System.Data.Entity.EntityState.Modified;
+
 
                     foreach (var mkr in prtGain.Makereadies)
                     {
@@ -376,10 +379,6 @@ namespace Services
         public override void Save()
         {
 
-
-
-
-
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
                 .Where(x => x.State == System.Data.Entity.EntityState.Modified
                 || x.State == System.Data.Entity.EntityState.Added)
@@ -438,132 +437,6 @@ namespace Services
             }
         }
 
-        public CostDetail OGetSingleOld(string Cod)
-        {
-            try
-            {
-                return Cache[Cod];
-            }
-
-            catch (Exception)
-            {
-
-                var codProduct = String.Empty;
-
-                var inizio = DateTime.Now;
-                var ret = Context.CostDetail.Include(x => x.Computes).SingleOrDefault(x => x.CodCostDetail == Cod);
-
-                if (ret != null)
-                {
-                    ret.GainPrintingOnBuyings = Context.ProductPartPrintingGain.Where(x => x.CodProductPartPrintingGainBuying == ret.CodCost).Include("Makereadies").ToList();
-                    ret.ComputedBy = Context.CostDetail.SingleOrDefault(x => x.CodCost == ret.CodComputedBy);
-
-                    ret.ProductPart = Context.ProductParts
-                        .SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
-
-                    codProduct = ret.ProductPart != null ? ret.ProductPart.CodProduct : "";
-
-                    #region ProductPartPrinting
-                    //cerco il productPartPrinting nella cache
-                    try
-                    {
-                        var retPartPrinting = CacheProductPartPrinting[ret.CodCostDetail];
-                        ret.ProductPartPrinting = retPartPrinting;
-                    }
-                    catch (Exception)
-                    {
-                        ret.ProductPartPrinting = Context.ProductPartPrinting.SingleOrDefault(x => x.CodProductPartPrinting == ret.CodCostDetail);
-
-                        if (ret.ProductPartPrinting != null)
-                        {
-                            ret.ProductPartPrinting.Part = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == ret.ProductPartPrinting.CodProductPart);
-                            ret.ProductPartPrinting.GainPartOnPrintings = Context.ProductPartPrintingGain.Where(x => x.CodProductPartPrinting == ret.ProductPartPrinting.CodProductPartPrinting).Include("Makereadies").ToList();
-                            CacheProductPartPrinting.Add(ret.CodCost, ret.ProductPartPrinting);
-                        }
-
-                    }
-                    #endregion
-
-
-                    ret.TaskCost = Context.Costs        //.SingleOrDefault(x => x.CodCost == ret.CodCostDetail)
-                        .SingleOrDefault(x => x.CodCost == ret.CodCostDetail);
-
-                    if (ret.TaskCost != null)
-                    {
-                        var c = ret.TaskCost;
-                        c.ProductPartTask = Context.ProductPartTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductPartTask == c.CodProductPartTask);
-                        if (c.ProductPartTask != null)
-                        {
-                            c.ProductPartTask.ProductPart = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == c.ProductPartTask.CodProductPart);
-                            if (c.ProductPartTask.ProductPart != null)
-                            {
-                                c.ProductPartTask.ProductPart.ProductPartPrintableArticles = Context.ProductPartsPrintableArticles.Include("Costs").Where(x => x.CodProductPart == c.ProductPartTask.ProductPart.CodProductPart).ToList();
-                            }
-
-
-
-                        }
-
-                        c.ProductTask = Context.ProductTasks.Include("OptionTypeOfTask").SingleOrDefault(x => x.CodProductTask == c.CodProductTask);
-
-                        if (codProduct == "")
-                            codProduct = c.ProductTask != null ? c.ProductTask.CodProduct : "";
-
-                        c.ProductPartsPrintableArticle = Context.ProductPartsPrintableArticles.SingleOrDefault(x => x.CodProductPartPrintableArticle == c.CodProductPartPrintableArticle);
-                        c.DocumentProduct = Context.DocumentProducts.SingleOrDefault(x => x.CodDocumentProduct == c.CodDocumentProduct);
-                        if (c.DocumentProduct != null)
-                        {
-                            c.DocumentProduct.Document = Context.Documents.SingleOrDefault(x => x.CodDocument == c.DocumentProduct.CodDocument);
-                            if (c.DocumentProduct.Document != null)
-                            {
-                            }
-                            c.DocumentProduct.Costs = Context.Costs.Where(x => x.CodDocumentProduct == c.DocumentProduct.CodDocumentProduct).ToList();
-                            //                    .Include(x => x.DocumentProduct.Document.DocumentProducts)
-                            //                    .Include("DocumentProduct.Document.DocumentProducts.Costs")
-                        }
-                    }
-
-                    if (ret.ComputedBy != null)
-                    {
-                        try
-                        {
-                            ret.ComputedBy = CacheComputedBy[ret.ComputedBy.CodCostDetail];
-                            Console.WriteLine("ciao");
-                        }
-                        catch (Exception)
-                        {
-                            ret.ComputedBy = this.GetSingle(ret.ComputedBy.CodCost);
-                        }
-                    }
-
-                    ////voglio caricare tutti i costi precedenti ed assegnarli a Previouses
-                    //var gra = Context.ProductGraphLinks.Where(x => x.CodProduct == codProduct && x.CodItemGraphLink == ret.TaskCost.CodItemGraph);
-                    //foreach (var item in gra)
-                    //{
-                    //    Console.WriteLine(item.CodItemGraphLink);
-                    //}
-
-                    ret.CodPartPrintingCostDetail = Context.Costs.Where(x => x.CodDocumentProduct == ret.TaskCost.CodDocumentProduct && x.CodItemGraph == "ST").Select(y => y.CodCost);
-                    ret.TaskexEcutorSelected = Context.taskexecutors.Where(x => x.CodTaskExecutor == ret.CodTaskExecutorSelected).FirstOrDefault();
-
-                }
-
-                try
-                {
-                    CacheComputedBy.Add(ret.CodCost, ret);
-                }
-                catch (Exception)
-                {
-
-                }
-
-                Console.Write(codProduct);
-                var tempo = DateTime.Now.Subtract(inizio);
-                Console.Write(tempo);
-
-                return ret;
-            }
-        }
 
         public override CostDetail GetSingle(string Cod)
         {
@@ -578,8 +451,26 @@ namespace Services
                 ret.GainPrintingOnBuyings = Context.ProductPartPrintingGain.Where(x => x.CodProductPartPrintingGainBuying == ret.CodCost).Include("Makereadies").ToList();
                 ret.ComputedBy = Context.CostDetail.SingleOrDefault(x => x.CodCost == ret.CodComputedBy);
 
-                ret.ProductPart = Context.ProductParts
-                    .SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
+                Product prSession = null; // (Product)(System.Web.HttpContext.Current.Session["prSession"]);
+
+                if (prSession == null)
+                {
+                    ret.ProductPart = Context.ProductParts
+                        .SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
+                }
+                else
+                {
+                    ret.ProductPart = prSession.ProductParts.SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
+
+                    if (ret.ProductPart == null)
+                    {
+                        ret.ProductPart = Context.ProductParts
+                            .SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
+                    }
+                }
+
+                //ret.ProductPart = Context.ProductParts
+                //    .SingleOrDefault(x => x.CodProductPart == ret.CodProductPart);
 
                 codProduct = ret.ProductPart != null ? ret.ProductPart.CodProduct : "";
 
@@ -596,7 +487,9 @@ namespace Services
 
                     if (ret.ProductPartPrinting != null)
                     {
-                        ret.ProductPartPrinting.Part = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == ret.ProductPartPrinting.CodProductPart);
+//                        ret.ProductPartPrinting.Part = Context.ProductParts.SingleOrDefault(x => x.CodProductPart == ret.ProductPartPrinting.CodProductPart);
+                        ret.ProductPartPrinting.Part = ret.ProductPart; 
+
                         ret.ProductPartPrinting.GainPartOnPrintings = Context.ProductPartPrintingGain.Where(x => x.CodProductPartPrinting == ret.ProductPartPrinting.CodProductPartPrinting).Include("Makereadies").ToList();
 
                         if (ret.ProductPartPrinting.Part != null)

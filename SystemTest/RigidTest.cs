@@ -5,6 +5,11 @@ using Services;
 using System.Linq;
 using System.Collections.Generic;
 using PapiroMVC.ServiceLayer;
+using PapiroMVC.Controllers;
+using System.Web.Http;
+using System.Web.Http.Routing;
+using System.Net.Http;
+using System.Web.Http.Results;
 
 namespace UnitTestPapiroMVC
 {
@@ -84,77 +89,46 @@ namespace UnitTestPapiroMVC
         //}
 
         [TestMethod]
-        public void NewProductJustDocument()
+        public void TestApi()
         {
             var inizio = DateTime.Now;
 
             IDocumentRepository docRep = new DocumentRepository();
             IProductRepository prodRep = new ProductRepository();
+            ITaskCenterRepository tskRep = new TaskCenterRepository();
 
-            PapiroService p = new PapiroService();
-            p.DocumentRepository = docRep;
-            p.CostDetailRepository = new CostDetailRepository();
-            p.TaskExecutorRepository = new TaskExecutorRepository();
-            p.ArticleRepository = new ArticleRepository();
+            // Arrange
+            ProductApiController controller = new ProductApiController(docRep,prodRep,tskRep);
 
-            Document doc = docRep.GetEstimateEcommerce("000001");
-            doc.EstimateNumber = "0";
+            controller.Request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("http://localhost/api/test")
+            };
+            controller.Configuration = new HttpConfiguration();
+            controller.Configuration.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional });
 
-            //work with product
-            Product prod = p.InitProduct("SuppRigidi", new ProductTaskNameRepository(), new FormatsNameRepository(), new TypeOfTaskRepository());
+            controller.RequestContext.RouteData = new HttpRouteData(
+                route: new HttpRoute(),
+                values: new HttpRouteValueDictionary { { "ProductApi", "Test" } });
 
-            //------passaggio del prodotto inizializzato all'ecommerce o alla view
-            prod.CodProduct = prodRep.GetNewCode(prod);
-            prod.ProductParts.FirstOrDefault().Format = "15x21";
-            prod.ProductParts.FirstOrDefault().SubjectNumber = 1;
+            var response = controller.Test(
+                "lamarina",
+                "10/2016",
+                "234/2015",
+                "Opuscolo punto metallico",
+                "colori",
+                "carta",
+                "",
+                "1000",
+                "0.10");
 
-            var art = prod.ProductParts.FirstOrDefault().ProductPartPrintableArticles.FirstOrDefault();
+            // Assert
+            Assert.AreEqual(true, response.IsSuccessStatusCode);
 
-            #region Printable Article
 
-            IArticleRepository artRep = new ArticleRepository();
-            var artFormList = artRep.GetAll().OfType<RigidPrintableArticle>().FirstOrDefault();
-
-            art.TypeOfMaterial = artFormList.TypeOfMaterial;
-            art.NameOfMaterial = artFormList.NameOfMaterial;
-            art.Weight = artFormList.Weight;
-            art.Color = artFormList.Color;
-            #endregion
-
-            //------ritorno del prodotto modificato!!!!
-
-            //rigenero
-            prodRep.Add(prod);
-            prodRep.Save();
-
-            #region ViewModel
-            ProductViewModel pv = new ProductViewModel();
-            pv.Product = prod;
-//            prod.ProductCodeRigen();
-
-            pv.Quantity =10;
-            #endregion
-
-            DocumentProduct dp = new DocumentProduct();
-            dp.Document = null;
-            dp.CodProduct = pv.Product.CodProduct;
-            dp.Product = pv.Product;
-            dp.Quantity = pv.Quantity;
-
-            dp.InitCost();
-
-            doc.DocumentProducts.Add(dp);
-
-            docRep.Edit(doc);
-            docRep.Save();
-
-            var step = DateTime.Now;
-
-            p.EditOrCreateAllCost(dp.CodDocumentProduct);
-
-            var fine = DateTime.Now.Subtract(inizio).TotalSeconds;
-
-            Assert.IsTrue(fine < 4);
         }
 
         [TestMethod]
@@ -208,7 +182,7 @@ namespace UnitTestPapiroMVC
             pv.Product = prod;
             //            prod.ProductCodeRigen();
 
-            pv.Quantity=10;
+            pv.Quantity = 10;
             #endregion
 
             p.EditOrCreateAllCost(dp.CodDocumentProduct);

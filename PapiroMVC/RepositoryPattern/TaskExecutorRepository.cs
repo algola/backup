@@ -18,12 +18,12 @@ namespace Services
                 Context.Entry(fromBD2).CurrentValues.SetValues(tskEst);
                 Context.Entry(fromBD2).State = System.Data.Entity.EntityState.Modified;
             }
-
         }
-
 
         public override void Save()
         {
+            System.Web.HttpContext.Current.Session["tsksSession"] = null;
+
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
                .Where(x => x.State == System.Data.Entity.EntityState.Modified
                || x.State == System.Data.Entity.EntityState.Added)
@@ -31,7 +31,7 @@ namespace Services
 
             Console.Write(modOrAdded);
 
-                base.Save();
+            base.Save();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Services
             TaskExecutorCostCodeRigen(entity);
 
             //cehck if name is just inserted
-            var taskExecutor = (from ART in this.GetAll() where ART.TaskExecutorName == entity.TaskExecutorName select ART);
+            var taskExecutor = (from ART in this.GetAll() where ART.TaskExecutorName == entity.TaskExecutorName && ART.TaskExecutorSecondName == entity.TaskExecutorSecondName select ART);
             if (taskExecutor.Count() > 0)
             {
                 //this.Edit(entity);
@@ -112,48 +112,61 @@ namespace Services
         public override IQueryable<TaskExecutor> GetAll()
         {
 
-            var tsks = Context.taskexecutors.Where(x => x.CodTypeOfTask != "STAMPAETICHROTOLO" &&
-                x.CodTypeOfTask != "STAMPAOFFeDIGITALE" &&
-                x.CodTypeOfTask != "STAMPAMORBIDO" &&
-                x.CodTypeOfTask != "STAMPARIGIDO").ToList();
+            IQueryable<TaskExecutor> tsksSession = (IQueryable<TaskExecutor>) (System.Web.HttpContext.Current.Session["tsksSession"]);
 
-            foreach (var tsk in tsks)
+            if (tsksSession == null)
             {
-                switch (tsk.TypeOfExecutor)
-                {
-                    case TaskExecutor.ExecutorType.LithoSheet:
-                    case TaskExecutor.ExecutorType.DigitalSheet:
-                        tsk.CodTypeOfTask = "STAMPAOFFeDIGITALE";
-                        break;
-                    case TaskExecutor.ExecutorType.Flexo:
-                        tsk.CodTypeOfTask = "STAMPAETICHROTOLO";
-                        break;
-                    case TaskExecutor.ExecutorType.LithoRoll:
-                    case TaskExecutor.ExecutorType.DigitalRoll:
-                        break;
-                    case TaskExecutor.ExecutorType.PlotterSheet:
-                        tsk.CodTypeOfTask = "STAMPARIGIDO";
-                        break;
-                    case TaskExecutor.ExecutorType.PlotterRoll:
-                        tsk.CodTypeOfTask = "STAMPAMORBIDO";
-                        break;
-                    case TaskExecutor.ExecutorType.Binding:
-                    case TaskExecutor.ExecutorType.FlatRoll:
-                    case TaskExecutor.ExecutorType.ControlTableRoll:
-                    case TaskExecutor.ExecutorType.PrePostPress:
-                        Console.WriteLine(tsk.CodTypeOfTask);
-                        break;
-                    default:
-                        break;
+                var tsks = Context.taskexecutors.Where(x => x.CodTypeOfTask != "STAMPAETICHROTOLO" &&
+                    x.CodTypeOfTask != "STAMPAOFFeDIGITALE" &&
+                    x.CodTypeOfTask != "STAMPAMORBIDO" &&
+                    x.CodTypeOfTask != "STAMPARIGIDO").ToList();
 
+                foreach (var tsk in tsks)
+                {
+                    switch (tsk.TypeOfExecutor)
+                    {
+                        case TaskExecutor.ExecutorType.LithoSheet:
+                        case TaskExecutor.ExecutorType.DigitalSheet:
+                            tsk.CodTypeOfTask = "STAMPAOFFeDIGITALE";
+                            break;
+                        case TaskExecutor.ExecutorType.Flexo:
+                            tsk.CodTypeOfTask = "STAMPAETICHROTOLO";
+                            break;
+                        case TaskExecutor.ExecutorType.LithoRoll:
+                        case TaskExecutor.ExecutorType.DigitalRoll:
+                            break;
+                        case TaskExecutor.ExecutorType.PlotterSheet:
+                            tsk.CodTypeOfTask = "STAMPARIGIDO";
+                            break;
+                        case TaskExecutor.ExecutorType.PlotterRoll:
+                            tsk.CodTypeOfTask = "STAMPAMORBIDO";
+                            break;
+                        case TaskExecutor.ExecutorType.Binding:
+                        case TaskExecutor.ExecutorType.FlatRoll:
+                        case TaskExecutor.ExecutorType.ControlTableRoll:
+                        case TaskExecutor.ExecutorType.PrePostPress:
+                            Console.WriteLine(tsk.CodTypeOfTask);
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                    Edit(tsk);
+
+                    tsk.TypeOfTask = Context.TypeOfTasks.FirstOrDefault(x => x.CodTypeOfTask == tsk.CodTypeOfTask);
+                    Console.Write(tsk);
+
+                    Save();
                 }
-                Edit(tsk);
-                Save();
+
+                System.Web.HttpContext.Current.Session["tsksSession"] = Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders").ToList().AsQueryable();
+                tsksSession = (IQueryable<TaskExecutor>) (System.Web.HttpContext.Current.Session["tsksSession"]);
+
             }
 
-
-
-            return Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders");
+            return tsksSession;
+        
         }
 
         public override void Edit(TaskExecutor entity)

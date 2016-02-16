@@ -184,6 +184,7 @@ namespace PapiroMVC.Models
             RunLengthMlTypeOfQuantity = 4, //ml di stampa
             NumberTypeOfQuantity = 5, //numero generico
             NOTypeOfQuantity = 10, //numero generico
+
         }
 
         private List<CostDetail> _previous;
@@ -421,11 +422,12 @@ namespace PapiroMVC.Models
 
         Double _quantity;
 
-        public virtual double Quantity(double qta)
+        public virtual double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
             double ret;
 
-            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+            switch ((QuantityType)(typeOfQuantity ?? 0))
             {
                 case QuantityType.RunTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRun ?? 0);
@@ -449,11 +451,14 @@ namespace PapiroMVC.Models
             return ret;
         }
 
-        public virtual double QuantityMaterial(double qta)
+
+        public virtual double QuantityMaterial(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
             double ret;
 
-            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            var typeOfQuantity = type==CostDetail.QuantityType.NOTypeOfQuantity? TypeOfQuantity:(Nullable<int>)type;
+
+            switch ((QuantityType)(typeOfQuantity ?? 0))
             {
                 case QuantityType.RunTypeOfQuantity:
                     ret = Math.Ceiling(qta * this.GainForRunForPrintableArticle ?? 0);

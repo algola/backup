@@ -25,6 +25,9 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("products", "id", SchemaDb.String, "100");
             dbS.AddColumnToTable("products", "Format", SchemaDb.String, "50");
 
+            //used to sincro papiro
+            dbS.AddColumnToTable("products", "PapiroPrev", SchemaDb.String, "50");
+
             ////customer
             //dbS.AddColumnToTable("products", "CodCustomer", SchemaDb.String, "50");
             //dbS.AddColumnToTable("products", "Customer", SchemaDb.String, "50");
@@ -34,7 +37,9 @@ namespace PapiroMVC.Model
             //Index
             dbS.AddIndex("products", "ProductName");
             dbS.AddIndex("products", "ProductRefName");
+            dbS.AddIndex("products", "PapiroPrev");
 
+            
             // 0 = ProductSingleSheet // 1 = ProductBookSheet // 2 = ProductBlockSheet
             dbS.AddColumnToTable("products", "SelectorProduct", SchemaDb.Int, "0");
 

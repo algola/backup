@@ -137,6 +137,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -221,6 +222,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>gestionestampa.com.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypeOfTaskAndCodTypeOfTask.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -1757,12 +1763,6 @@
       <DependentUpon>Strings.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TypeOfTaskAndCodTypeOfTask.resx</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\XmlDocument.xml">
@@ -2810,6 +2810,7 @@
     <Content Include="Areas\Working\Views\Document\_PrePostPressCostDetail.cshtml" />
     <Content Include="Areas\Working\Views\Document\_ListPlanningDetail.cshtml" />
     <Content Include="Areas\Working\Views\Document\PlanningDetail.cshtml" />
+    <Content Include="Areas\DataBase\Views\TaskExecutor\_OptionTypeOfTasks.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -3012,10 +3013,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>TypeOfTaskAndCodTypeOfTask.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TypeOfTaskAndCodTypeOfTask.Designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

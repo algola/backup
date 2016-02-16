@@ -15,6 +15,9 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPart), "FormatToolTip")]
         public string Format { get; set; }
 
+        [DisplayNameLocalized(typeof(ResProductPart), "Format")]
+        public string FormatDesc { get; set; }
+
         public string Description { get; set; }
         public string FormatType { get; set; }
 
@@ -84,7 +87,7 @@ namespace PapiroMVC.Models
         {
 
             var ret = p1.BuyingFormat == p2.BuyingFormat &&
-                p1.Format == p2.Format &&
+                p1.FormatDesc == p2.FormatDesc &&
                 p1.DCut1 == p2.DCut1 &&
                 p1.DCut2 == p2.DCut2;
 

@@ -83,11 +83,11 @@ namespace PapiroMVC.Models
             return (Convert.ToDouble(CostPerMq));
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
             double ret;
 
-
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
 
             try
             {

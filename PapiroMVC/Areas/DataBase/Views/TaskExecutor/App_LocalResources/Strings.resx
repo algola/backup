@@ -483,4 +483,13 @@
   <data name="Format" xml:space="preserve">
     <value>Format</value>
   </data>
+  <data name="TaskExecutorSecondName" xml:space="preserve">
+    <value>Specifica</value>
+  </data>
+  <data name="TaskExecutorSecondNameCaption" xml:space="preserve">
+    <value>Specifica</value>
+  </data>
+  <data name="TypeOfTaskCaption" xml:space="preserve">
+    <value>Lavorazione</value>
+  </data>
 </root>

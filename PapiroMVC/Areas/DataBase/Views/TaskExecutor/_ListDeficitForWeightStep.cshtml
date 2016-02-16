@@ -24,7 +24,7 @@
                 datatype: 'json',
                 colModel: [
                     { name: 'IdStep', label: 'IdStep', key: true, width: 80, editable: true, hidden: true },
-                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 80, align: 'right', editable: false, hidden: false, formatter: delStepDeficitForWeight },
+                    { name: 'Operation', label: '@HttpContext.GetLocalResourceObject(strings, "DelCaption")', width: 55, align: 'right', editable: false, hidden: false, formatter: delStepDeficitForWeight },
                     { name: 'CodTaskEstimatedOn', width: 60, align: 'right', editable: true, hidden: true },
                     { name: 'FromUnit', label: '@HttpContext.GetLocalResourceObject(strings, "FromWeightCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },
                     { name: 'ToUnit', label: '@HttpContext.GetLocalResourceObject(strings, "ToWeightCaption")', width: 80, align: 'right', editable: true, formatter: insFmatter },    

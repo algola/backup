@@ -172,16 +172,43 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveDieFlexo(DieFlexo Die)
+        public ActionResult SaveDieFlexo(DieFlexo die)
         {
             string status = "ok";
+
+
+
+            try
+            {
+                string[] formats = new string[2];
+                formats = die.Format.Split('+');
+
+                for (int i = 0; i < formats.Length; i++)
+                {
+                    formats[i] = formats[i].Trim();
+                }
+
+                die.Format = formats[0];
+                die.FormatB = formats[1];
+
+            }
+            catch (Exception)
+            {
+
+            }
+
+            ModelState.Clear();
+            TryValidateModel(die); 
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Die.CodArticle = articleRepository.GetNewCode(Die, customerSupplierRepository, Die.SupplierMaker, Die.SupplierMaker);
 
-                    articleRepository.Add(Die);
+
+                    die.CodArticle = articleRepository.GetNewCode(die, customerSupplierRepository, die.SupplierMaker, die.SupplierMaker);
+
+                    articleRepository.Add(die);
 
                     articleRepository.Save();
                     status = "ok";
@@ -199,7 +226,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
             status = "err";
-            var retPW = PartialView(this, "~/Areas/Working/Views/Document/_SaveDieFlexo.cshtml", (Die)Die);
+            var retPW = PartialView(this, "~/Areas/Working/Views/Document/_SaveDieFlexo.cshtml", (Die)die);
 
             var obj2 = new
             {

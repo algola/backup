@@ -111,7 +111,7 @@ namespace Services
                         if (y != null)
                         {
                             optItem.TimeStampTable = DateTime.Now;
-                            this.EditOptionTypeOfTask(optItem);
+                //            this.EditOptionTypeOfTask(optItem);
                         }
                         else
                         {
@@ -196,7 +196,7 @@ namespace Services
 
             if (dbEnt !=null)
             {
-                if (dbEnt.CodTypeOfTask == "STAMPAETICHROTOLO")
+                if (dbEnt.CodTypeOfTask == "PLASTIFICATURA")
                 {
                     Console.Write(dbEnt.CodOptionTypeOfTask);
                     Console.Write(dbEnt.IdexOf);

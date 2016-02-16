@@ -77,7 +77,7 @@ namespace PapiroMVC.Models
         }
 
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
             double ret;
 

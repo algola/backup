@@ -56,6 +56,8 @@ namespace PapiroMVC.Model
 
             dbS.AddColumnToTable("documents", "Selector", SchemaDb.String, "50");
 
+            dbS.AddColumnToTable("documents", "PapiroCom", SchemaDb.String, "50");
+
             //foreign key
             dbS.AddForeignKey("documents", "CodCustomer", "CustomerSuppliers", "CodCustomerSupplier");
 
@@ -77,6 +79,7 @@ namespace PapiroMVC.Model
 
             //Index
             dbS.AddIndex("documents", "DocumentName");
+            dbS.AddIndex("documents", "PapiroCom");
 
             //---------------------------------------------------------------------------------------------
 

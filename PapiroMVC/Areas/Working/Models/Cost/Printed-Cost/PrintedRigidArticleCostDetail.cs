@@ -61,9 +61,12 @@ namespace PapiroMVC.Models
             return (Convert.ToDouble(CostPerMq));
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
-            var ret = base.Quantity(qta);
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+            var ret = base.Quantity(qta, type);
+
             //questo dovrebbe far ottenere il costo!!!!!!
             var extract = _articles.GetArticlesByProductPartPrintableArticle(ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle));
             var article = (RigidPrintableArticle)extract.FirstOrDefault();

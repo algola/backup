@@ -9,10 +9,11 @@
 
     var x = Model.Cuts;
     Console.WriteLine(x);
-    
-    
+
+
     MakereadyPrintingSingleSheet g = (MakereadyPrintingSingleSheet)Model.GainPrintingOnBuying.Makereadies.FirstOrDefault();
 }
+
 
 <div id="sheetCostDetail">
 
@@ -80,10 +81,15 @@
     </div>
 </div>
 
+
 <div id="partialPrinting">
 
     @if (Model.ProductPartPrinting != null)
     {
+        <div id="toDelete">
+            @Html.EditorFor(y => y.ProductPartPrinting.Perfecting)
+        </div>
+
         switch (Model.ProductPartPrinting.TypeOfProductPartPrinting) //TODO: fare il tipo TypeOfPartPrinting
         {
             case ProductPartSheetPrinting.ProductPartPrintingType.ProductPartSingleSheetPrinting:
@@ -106,6 +112,41 @@
 
 <script type="text/javascript">
 
+
+    $('#ProductPartPrinting_Perfecting').change(function () {
+
+
+        alert('ciaociao');
+        //data are collected into
+        var dataToPass = {
+            perfecting: $('#ProductPartPrinting_Perfecting').prop('checked')
+        };
+
+        $('#toDelete').remove();
+
+        //  alert("foceside");
+
+        showProcessingMsg();
+
+        $.ajax({
+            url: '@(Url.Action("ChangePerfecting", "Document", new { area = "Working" }))',
+            type: 'POST',
+            data: JSON.stringify(dataToPass),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                hideProcessingMsg();
+                $('#sheetCostDetail').replaceWith(data);
+            },
+            error: function () {
+                hideProcessingMsg();
+                alert("error");
+            }
+        });
+    });
+
+
+
+
     $("#forceSide").change(function () {
 
         //data are collected into
@@ -124,8 +165,8 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-         //       reloadFormat();
-         //       initAndPosition();
+                //       reloadFormat();
+                //       initAndPosition();
             },
             error: function () {
                 alert("error");
@@ -133,9 +174,6 @@
 
         });
     });
-
-
-
 
 
     $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2").keypress(function (event) {
@@ -146,7 +184,10 @@
             var dataToPass = {
                 format: $("#ddPartFormat").val(),
                 dCut1: $("#ddPartDCut1").val(),
-                dCut2: $("#ddPartDCut2").val()
+                dCut2: $("#ddPartDCut2").val(),
+                //minDCut: $("#ddPartMinDCut").val(),
+                //maxDCut: $("#ddPartMaxDCut").val(),
+
             };
 
             $.ajax({
@@ -156,7 +197,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
-                //    reloadFormat();
+                    //    reloadFormat();
                 },
                 error: function () {
                     alert("error");
@@ -189,7 +230,7 @@
                 contentType: 'application/json; charset=utf-8',
                 success: function (data) {
                     $('#sheetCostDetail').html(data);
-                   // reloadFormat();
+                    // reloadFormat();
                 },
                 error: function () {
                     alert("error");
@@ -252,7 +293,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data) {
                 $('#sheetCostDetail').html(data);
-              //  reloadFormat();
+                //  reloadFormat();
             },
             error: function () {
                 alert("error");
@@ -400,7 +441,7 @@
                 success: function (data) {
                     $('#partial').html(data);
 
-             //       alert("xx");
+                    //       alert("xx");
                     //ributto i risultati nella pagina
                     reloadFormat();
 

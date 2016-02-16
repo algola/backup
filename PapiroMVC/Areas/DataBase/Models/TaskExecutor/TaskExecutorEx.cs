@@ -11,8 +11,15 @@ namespace PapiroMVC.Models
 {
     [Serializable]
     [MetadataType(typeof(TaskExecutor_MetaData))]
-    public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated , IAlgolaEdit
+    public abstract partial class TaskExecutor : IDataErrorInfo, ICloneable, IDeleteRelated, IAlgolaEdit
     {
+
+
+        public TypeOfTask TypeOfTask
+        {
+            get;
+            set;
+        }
 
         public bool CheckFormat(string format)
         {
@@ -98,14 +105,12 @@ namespace PapiroMVC.Models
                 tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union(tskExec3);
             }
 
-            if (codTypeOfTask == "FUSTELLATURA")
-            {
-                tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
-            }
 
-            if (codTypeOfTask == "TAGLIO")
+
+            if (codTypeOfTask == "FUSTELLATURA" || codTypeOfTask == "TAGLIO" ||
+            codTypeOfTask == "PLASTIFICATURA" || codTypeOfTask == "VERNICIATURA")
             {
-                tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "TAGLIO");
+                tskExecList = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == codTypeOfTask);
             }
 
             if (codTypeOfTask == "INPIANO")
@@ -115,11 +120,41 @@ namespace PapiroMVC.Models
                 var tskExec3 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "FUSTELLATURA");
                 var tskExec4 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "TAGLIO");
 
-                tskExecList = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3).Union<TaskExecutor>(tskExec4);
+                var tskExec5 = tskExec1.Union<TaskExecutor>(tskExec2).Union<TaskExecutor>(tskExec3).Union<TaskExecutor>(tskExec4);
+
+                var tskExec6 = tskExecList.OfType<TaskExecutor>().Where(x => x.CodTypeOfTask == "PLASTIFICATURA");
+
+                tskExecList = tskExec5.Union<TaskExecutor>(tskExec6);
 
             }
 
             return tskExecList;
+
+        }
+
+        public static IQueryable<TaskExecutor> FilterByTask(IQueryable<TaskExecutor> tskExecList, string codTypeOfTask, string taskExecutorSecondName)
+        {
+
+            try
+            {
+                tskExecList = TaskExecutor.FilterByTask(tskExecList, codTypeOfTask);
+
+                IQueryable<TaskExecutor> tskExecList2 = tskExecList.Where(x => (x.TaskExecutorSecondName ?? "").ToLower() == taskExecutorSecondName.ToLower());
+
+                if (tskExecList2.Count() != 0)
+                {
+                    return tskExecList2;
+                }
+                else
+                {
+                    return tskExecList;
+                }
+
+            }
+            catch (Exception)
+            {
+                return tskExecList;
+            }
 
         }
 
@@ -145,6 +180,16 @@ namespace PapiroMVC.Models
             }
             switch (codOptionTypeOfTask)
             {
+
+                case "STAMPAETICHROTOLO_0":
+                    ret.cToPrintF = 0;
+                    ret.cToPrintR = 0;
+                    break;
+
+                case "STAMPAETICHROTOLO_0RETRO":
+                    ret.cToPrintF = 0;
+                    ret.cToPrintR = 1;
+                    break;
 
                 //4 colori offset fronte e retro
                 case "STAMPAETICHROTOLO_1":
@@ -558,7 +603,7 @@ namespace PapiroMVC.Models
 
         public virtual string GetEditMethod()
         {
-             throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
 

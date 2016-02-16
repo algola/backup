@@ -342,60 +342,88 @@ namespace Services
         {
 
 
-            //We have to fix NoUseInEstimateCalculation
-            var toFix = Context.articles.OfType<Printable>().Where(x => x.NoUseInEstimateCalculation == null).ToList();
+            IQueryable<Article> artsSession = (IQueryable<Article>) (System.Web.HttpContext.Current.Session["artsSession"]);
 
-            foreach (var item in toFix)
+            if (artsSession == null)
             {
-                item.NoUseInEstimateCalculation = false;
-                Edit(item);
-            }
-            if (toFix.Count() > 0)
-            {
-                Save();
-            }
 
 
+                //We have to fix NoUseInEstimateCalculation
+                var toFix = Context.articles.OfType<Printable>().Where(x => x.NoUseInEstimateCalculation == null).ToList();
 
-
-            var numWare = Context.warehouseSpec.Count();
-
-            //update with new warehouse
-            var lstProd = Context.articles.AsNoTracking().Include("articlecosts").Where(x => x.WarehouseArticles.Count < numWare).ToList();
-
-            foreach (var article in lstProd)
-            {
-                if (numWare != article.WarehouseArticles.Count())
+                foreach (var item in toFix)
                 {
-                    foreach (var warehouse in Context.warehouseSpec)
-                    {
-                        //Does article esist in Warehouse?
-                        var res = article.WarehouseArticles.Where(x => x.CodWarehouse == warehouse.CodWarehouse);
-                        //no warehouse
-                        if (res.Count() == 0)
-                        {
-                            var newP = new WarehouseArticle
-                            {
-                                CodWarehouse = warehouse.CodWarehouse,
-                                CodArticle = article.CodArticle
-                            };
+                    item.NoUseInEstimateCalculation = false;
+                    Edit(item);
+                }
+                if (toFix.Count() > 0)
+                {
+                    Save();
+                }
 
-                            article.WarehouseArticles.Add(newP);
-                            //this.Context.Set<WarehouseArticle>().Add(newP);
+                int numWare=0;
+
+                try
+                {
+                    numWare = Context.warehouseSpec.Count();
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e.Message);
+                    throw;
+                }
+
+
+                //update with new warehouse
+                var lstProd = Context.articles.AsNoTracking().Include("articlecosts").Where(x => x.WarehouseArticles.Count < numWare).ToList();
+
+                foreach (var article in lstProd)
+                {
+                    if (numWare != article.WarehouseArticles.Count())
+                    {
+                        foreach (var warehouse in Context.warehouseSpec)
+                        {
+                            //Does article esist in Warehouse?
+                            var res = article.WarehouseArticles.Where(x => x.CodWarehouse == warehouse.CodWarehouse);
+                            //no warehouse
+                            if (res.Count() == 0)
+                            {
+                                var newP = new WarehouseArticle
+                                {
+                                    CodWarehouse = warehouse.CodWarehouse,
+                                    CodArticle = article.CodArticle
+                                };
+
+                                article.WarehouseArticles.Add(newP);
+                                //this.Context.Set<WarehouseArticle>().Add(newP);
+                            }
                         }
                     }
+                    this.ArticleCostCodeRigen(article);
+
+                    this.Edit(article);
+
+                    Save();
                 }
-                this.ArticleCostCodeRigen(article);
 
-                this.Edit(article);
+                Console.WriteLine(Context.Database.Connection.ConnectionString);
 
-                Save();
+                System.Web.HttpContext.Current.Session["artsSession"] = Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").Include("warehousearticles").ToList().AsQueryable();
+                artsSession = (IQueryable<Article>)(System.Web.HttpContext.Current.Session["artsSession"]);
+
             }
 
+            return artsSession;
 
-            Console.WriteLine(Context.Database.Connection.ConnectionString);
-            return Context.articles.Include("articlecosts").Include("CustomerSupplierMaker").Include("CustomerSupplierBuy").Include("warehousearticles");
         }
+
+
+        public override void Save()
+        {
+            System.Web.HttpContext.Current.Session["artsSession"] = null;
+            base.Save();
+        }
+
 
         public virtual IQueryable<Article> GetForImport()
         {

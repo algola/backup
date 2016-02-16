@@ -517,8 +517,8 @@ namespace PapiroMVC.Areas.Working.Controllers
                     mainPart.Document.Body.InsertAfter(altChunk, last);
                     mainPart.Document.Save();
 
-                }            
-            
+                }
+
             }
 
             //// Open a doc file.
@@ -973,8 +973,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             cv.Update();
             Session["CostDetail"] = cv;
-            var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
+            SaveCostDetail();
             return PartialView("_" + cv.TypeOfCostDetail.ToString(), cv);
         }
 
@@ -1099,7 +1100,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
                 cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == op.CodProductPartTask).ProductPartTaskOptions = productRepository.GetProductPartTaskOptions(op.CodProductPartTask).ToList();
-                
+
                 cv.Update();
                 Session["CostDetail"] = cv;
 
@@ -1147,15 +1148,15 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 foreach (var id in strings.ToList())
                 {
-                    codProductPartTask=productRepository.DeleteProductPartTaskOption(id);
+                    codProductPartTask = productRepository.DeleteProductPartTaskOption(id);
                     productRepository.Save();
                 }
 
-                var x= productRepository.GetProductPartTaskOptions(codProductPartTask).ToList();
+                var x = productRepository.GetProductPartTaskOptions(codProductPartTask).ToList();
                 var productPartTask = cv.ProductPart.ProductPartTasks.FirstOrDefault(z => z.CodProductPartTask == codProductPartTask);
 
 
-                productPartTask.ProductPartTaskOptions = x; 
+                productPartTask.ProductPartTaskOptions = x;
 
                 cv.Update();
                 Session["CostDetail"] = cv;
@@ -1308,6 +1309,27 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView(cv.PartialViewName, cv);
         }
 
+        /// <summary>
+        /// This Action modifies buyingFormat and Update Cost.
+        /// Is needed  Session["CostDetail"]
+        /// </summary>
+        /// <param name="buyingFormat"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangePerfecting(bool perfecting)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            cv.ProductPartPrinting.Perfecting = perfecting;
+            cv.Update();
+
+            Session["CostDetail"] = cv;
+
+            //var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
+            SaveCostDetail();
+            return PartialView(cv.PartialViewName, cv);
+        }
+
 
 
         [HttpGet]
@@ -1379,9 +1401,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
         [HttpPost]
-        public ActionResult ChangePPartFormatAndFuzzy(string format, string dCut1, string dCut2, string maxGain1 = "", string maxGain2 = "")
+        public ActionResult ChangePPartFormatAndFuzzy(string format, string dCut1, string dCut2, string minDCut, string maxDCut, string maxGain1 = "", string maxGain2 = "")
         {
-            var x = ChangePPartFormat(format, dCut1, dCut2, maxGain1, maxGain2);
+            var x = ChangePPartFormat(format, dCut1, dCut2, minDCut,maxDCut, maxGain1, maxGain2 );
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             return GetPrintingZRollCostDetailPartial(cv.CodTaskExecutorSelected, cv.CodCostDetail);
         }
@@ -1391,8 +1413,17 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string maxGain1 = "", string maxGain2 = "")
+        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string minDCut, string maxDCut,  string maxGain1 = "", string maxGain2 = "")
         {
+
+            string[] formats = new string[2];
+            formats = format.Split('+');
+
+            for (int i = 0; i < formats.Length; i++)
+            {
+                formats[i] = formats[i].Trim();
+            }
+
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
 
             var inizio1 = DateTime.Now;
@@ -1401,13 +1432,33 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 //catch ProductPart from repository and save it with canges
                 var prod = productRepository.GetSingle(cv.ProductPart.CodProduct);
-
                 var prodPart = prod.ProductParts.Where(x => x.CodProductPart == cv.CodProductPart).FirstOrDefault();
 
                 try
                 {
                     prodPart.DCut1 = dCut1 == "" ? 0 : Convert.ToDouble(dCut1);
                     prodPart.DCut2 = dCut2 == "" ? 0 : Convert.ToDouble(dCut2);
+
+                    prodPart.MinDCut = minDCut == "" ? prodPart.MinDCut : Convert.ToDouble(minDCut);
+                    prodPart.MaxDCut = maxDCut == "" ? prodPart.MaxDCut : Convert.ToDouble(maxDCut);
+
+                    ////NUOVODCUT
+                    //var max = Math.Max(prodPart.DCut1??0, prodPart.DCut2??0);
+                    //var min = Math.Min(prodPart.DCut1 ?? 0, prodPart.DCut2 ?? 0);
+
+                    //max = Math.Max(max, prodPart.MaxDCut??0);
+                    //min = Math.Min(min, prodPart.MinDCut??0);
+
+                    //if ((prodPart.MinDCut??0)>min)
+                    //{
+                    //    prodPart.MinDCut = min;                
+                    //}
+
+                    //if ((prodPart.MaxDCut ?? 0) < max)
+                    //{
+                    //    prodPart.MaxDCut = max;
+                    //}
+
                     prodPart.IsDCut = true;
 
                 }
@@ -1422,16 +1473,64 @@ namespace PapiroMVC.Areas.Working.Controllers
                     prodPart.IsDCut = true;
                 }
 
-                prodPart.Format = format;
+                prodPart.Format = formats[0];
+
+                if (prodPart.TypeOfProductPart == ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                {
+                    ((ProductPartDoubleLabelRoll)prodPart).FormatA = formats[0];
+                    ((ProductPartDoubleLabelRoll)prodPart).FormatB = formats[1];
+                }
+
 
                 if (TryValidateModel(prodPart))
                 {
 
                     cv.ProductPart.IsDCut = true;
+                    try
+                    {
+                        cv.ProductPart.DCut1 = Convert.ToDouble(dCut1.Trim() == "" ? "0" : dCut1);
+                    }
+                    catch (Exception)
+                    {
+                        cv.ProductPart.DCut1 = 0;
+                    }
 
-                    cv.ProductPart.DCut1 = Convert.ToDouble(dCut1 == "" ? "0" : dCut1);
-                    cv.ProductPart.DCut2 = Convert.ToDouble(dCut2 == "" ? "0" : dCut2);
-                    cv.ProductPart.Format = format;
+                    try
+                    {
+                        cv.ProductPart.DCut2 = Convert.ToDouble(dCut2.Trim() == "" ? "0" : dCut2);
+                    }
+                    catch (Exception)
+                    {
+                        cv.ProductPart.DCut2 = 0;
+                    }
+
+                    cv.ProductPart.MinDCut = minDCut == "" ? cv.ProductPart.MinDCut : Convert.ToDouble(minDCut);
+                    cv.ProductPart.MaxDCut = maxDCut == "" ? cv.ProductPart.MaxDCut : Convert.ToDouble(maxDCut);
+
+                    //var max = Math.Max(cv.ProductPart.DCut1 ?? 0, cv.ProductPart.DCut2 ?? 0);
+                    //var min = Math.Min(cv.ProductPart.DCut1 ?? 0, cv.ProductPart.DCut2 ?? 0);
+
+                    //max = Math.Max(max, cv.ProductPart.MaxDCut??0);
+                    //min = Math.Min(min, cv.ProductPart.MinDCut??0);
+
+                    //if ((cv.ProductPart.MinDCut ?? 0) > min)
+                    //{
+                    //    cv.ProductPart.MinDCut = min;
+                    //}
+
+                    //if ((cv.ProductPart.MaxDCut ?? 0) < max)
+                    //{
+                    //    cv.ProductPart.MaxDCut = max;
+                    //}
+
+                    cv.ProductPart.Format = formats[0];
+
+                    if (cv.ProductPart.TypeOfProductPart == ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                    {
+                        ((ProductPartDoubleLabelRoll)cv.ProductPart).FormatA = formats[0];
+                        ((ProductPartDoubleLabelRoll)cv.ProductPart).FormatB = formats[1];
+                    }
+
                     cv.ProductPart.UpdateOpenedFormat();
 
                     productRepository.Edit(prod);
@@ -1488,7 +1587,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="PrintingFormat"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePrintingFormatAndPPartFormat(string PrintingFormat, string format, string dCut1, string dCut2)
+        public ActionResult ChangePrintingFormatAndPPartFormat(string PrintingFormat, string format, string dCut1, string dCut2, string minDCut, string maxDCut)
         {
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             cv.PrintingFormat = PrintingFormat;
@@ -1496,7 +1595,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
-            return ChangePPartFormat(format, dCut1, dCut2);
+            return ChangePPartFormat(format, dCut1, dCut2, minDCut, maxDCut );
         }
 
         /// <summary>
@@ -1530,7 +1629,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //   var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
-            return ChangePPartFormat(format, dCut1, dCut2, maxGain1, maxGain2);
+            return ChangePPartFormat(format, dCut1, dCut2, "","", maxGain1, maxGain2);
         }
 
         /// <summary>
@@ -1565,7 +1664,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var lst = p.CostDetailsDic.Select(x => x.Value).OfType<PrePostPressCostDetail>().Where(y => y.CodTaskExecutorSelected == cv.CodTaskExecutorSelected);
 
-            foreach (var item in lst.Where(x=>x.CodCostDetail != cv.CodCostDetail))
+            foreach (var item in lst.Where(x => x.CodCostDetail != cv.CodCostDetail))
             {
                 item.WorkingFormat = PrintingFormat;
                 item.Update();
@@ -1579,7 +1678,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             }
 
-//            
+            //            
 
             return PartialView(cv.PartialViewName, cv);
         }
@@ -1787,10 +1886,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                         foreach (var item in cv.CodPartPrintingCostDetail)
                         {
                             var cv2 = p.CostDetailRepository.GetSingle(item);
-                            if (!cv.Printers.Select(x=>x.CodCostDetail).Contains(cv2.CodCostDetail))
+                            if (!cv.Printers.Select(x => x.CodCostDetail).Contains(cv2.CodCostDetail))
                             {
                                 cv.Printers.Add(cv2);
-                                cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());                                
+                                cv2.InitCostDetail(taskExecutorRepository.GetAll(), articleRepository.GetAll());
                             }
                         }
                     }
@@ -2011,7 +2110,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             var cvRet = p.SaveCostDetailFromController(cv);
 
             var idRet = (string)Session["codProduct"];
-            Session["CostDetail"+optCod] = cvRet;
+            Session["CostDetail" + optCod] = cvRet;
 
             disposable = true;
 
@@ -2146,7 +2245,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                 item.StateName = state.FirstOrDefault(z => z.CodState == item.CodState).StateName;
             }
-            
+
             prod.OrderProduct = documentRepository.GetDocumentProductByCodDocumentProduct(prod.CodDocumentProduct);
 
             //view name is needed for reach right view because to using more than one submit we have to use "Action" in action method name

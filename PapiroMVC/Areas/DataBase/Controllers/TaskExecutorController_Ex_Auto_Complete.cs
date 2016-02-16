@@ -10,12 +10,30 @@ using Ninject.Planning.Bindings;
 using System.Web.Security;
 using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
+using System.Web.Script.Serialization;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
     public partial class TaskExecutorController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-       
+
+
+        //example of autocpmplete
+        public ActionResult GetOptionTypeOfTask(string codTypeOfTask)
+        {
+            //All optiosn
+            String[] opts = this.typeOfTaskRepository.GetAllOptionTypeOfTask().Where(x=>x.CodTypeOfTask==codTypeOfTask).Select(y=>y.OptionName).ToArray();
+            var projection = from art in opts
+                             select new
+                             {
+                                 id = art,
+                                 label = art,
+                                 value = art
+                             };
+            return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+
         //example of autocpmplete
         public ActionResult FormatMaxAutoComplete(string term)
         {
@@ -57,7 +75,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                              };
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
-       
+
         public ActionResult ProofSheetFirstStartAutoComplete(string term)
         {
             DigitalSheet[] proofSheetFirstStart = taskExecutorRepository.GetAll().OfType<DigitalSheet>().ToArray();
@@ -84,12 +102,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
             var projection2 = from art in filteredItems2
-                             select new
-                             {
-                                 id = art.ProofSheetFirstStart,
-                                 label = art.ProofSheetFirstStart,
-                                 value = art.ProofSheetFirstStart
-                             };
+                              select new
+                              {
+                                  id = art.ProofSheetFirstStart,
+                                  label = art.ProofSheetFirstStart,
+                                  value = art.ProofSheetFirstStart
+                              };
             var p = projection.Union(projection2);
 
             return Json(p.Distinct().ToList(), JsonRequestBehavior.AllowGet);
@@ -197,8 +215,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        
-        
+
+
     }
 
 

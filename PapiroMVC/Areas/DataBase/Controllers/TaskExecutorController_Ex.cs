@@ -24,7 +24,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             string taskExecutorNameFilter = string.Empty;
             string formatMaxFilter = string.Empty;
 
-
             //if gridsetting is a search option
             if (gridSettings.isSearch)
             {
@@ -213,7 +212,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     select new
                     {
                         id = a.CodTaskExecutor,
-                        cell = new string[] 
+                        cell = new string[]
                         {
                             a.SetTaskExecutorEstimatedOn.Count()==0?"CostError":
                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnMq?"CostMq":
@@ -221,17 +220,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                         a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.OnRun?"CostRun":
                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.RollEstimatedOnTime?"CostTime":
                                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.FlatRollEstimatedOnTime?"CostTime":
-                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"CostMq":                                            
-                                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":                                           
+                                                    a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.PlotterOnMq?"CostMq":
+                                                        a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnTime?"CostTime":
                                                             a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.DigitalOnRun?"CostRun":
                                                                 a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn==TaskEstimatedOn.EstimatedOnType.ControlTableRollEstimatedOnTime?"CostTime":"",
-                                                            
-                                                            
                             a.CodTaskExecutor,
                             a.CodTaskExecutor,
                             a.TypeOfExecutor.ToString(),
                             a.TaskExecutorName,
-                         a.SetTaskExecutorEstimatedOn.Count()==0?"":a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn.ToString()
+                            a.TypeOfTask!=null?a.TypeOfTask.TaskName:"",
+                            a.TaskExecutorSecondName,
+                            a.SetTaskExecutorEstimatedOn.Count()==0?"":a.SetTaskExecutorEstimatedOn.FirstOrDefault().TypeOfEstimatedOn.ToString()
                         }
                     }
                 ).ToArray()
@@ -1090,6 +1089,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.IdStep.ToString(),
                             a.IdStep.ToString(),
                             a.CodTaskEstimatedOn.ToString(),
+                            a.Format,
                             a.FromUnit.ToString(),
                             a.ToUnit.ToString(),
                             a.CostPerUnit
