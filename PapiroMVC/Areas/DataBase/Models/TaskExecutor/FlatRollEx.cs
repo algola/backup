@@ -68,7 +68,8 @@ namespace PapiroMVC.Models
 
             if (codOptionTypeOfTask.Contains("STAMPAETICHROTOLO"))
             {
-                ret = total;
+                ret = Math.Ceiling(total / this.PrintingUnit ?? 1);
+//                ret = total;
             }
 
             //Starts is used with printerFormat to have

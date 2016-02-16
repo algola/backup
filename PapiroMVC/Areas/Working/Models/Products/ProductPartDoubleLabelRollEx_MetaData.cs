@@ -21,5 +21,10 @@ namespace PapiroMVC.Models
         [RegularExpressionLocalizedAttribute(typeof(ResProductPart), "FormatValidation", "FormatValidationError")]
         [Tooltip(typeof(ResProductPart), "FormatBToolTip")]
         public string FormatB { get; set; }
+
+        public string Format { get; set; }
+        public string Formatmm { get; set; }
+
+
     }
 }

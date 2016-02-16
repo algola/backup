@@ -9,7 +9,7 @@ using Novacode;
 
 namespace PapiroMVC.Models
 {
-    
+
     [KnownType(typeof(ProductPartDoubleLabelRoll))]
     [MetadataType(typeof(ProductPartDoubleLabelRoll_MetaData))]
     public partial class ProductPartDoubleLabelRoll : ProductPart, IPrintDocX
@@ -25,22 +25,22 @@ namespace PapiroMVC.Models
             if (pHint1.Count <= 1)
             {
                 //fascette gommate
-                if (MinDCut == 0)
+                if (MinDCut == 0 && MaxDCut == 0)
                 {
-                    var pHint2 = pHint.Where(x => x.DCut2/2 == smallerCalculatedDCutLessZero * -1);
-                    pHint1 = pHint.Where(x => x.DCut2/2 >= 0 && x.DCut2/2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2/2 || x.DCut1 == 0)).ToList();
+                    var pHint2 = pHint.Where(x => x.DCut2 / 2 == smallerCalculatedDCutLessZero * -1);
+                    pHint1 = pHint.Where(x => x.DCut2 / 2 >= 0 && x.DCut2 / 2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 / 2 || x.DCut1 == 0)).ToList();
                     var pHint3 = pHint1.Union(pHint2);
                     pHint1 = pHint3.ToList();
                 }
                 else
                 {
-                    var smaller = pHint.Where(x => (x.DCut1 >= x.DCut2/2) || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();      
-                    var pHintLast1 = pHint.Where(x => x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2/2 || x.DCut1 == 0));
+                    var smaller = pHint.Where(x => (x.DCut1 >= x.DCut2 / 2) || x.DCut1 == 0).Select(x => x.DeltaDCut2).Min();
+                    var pHintLast1 = pHint.Where(x => x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 / 2 || x.DCut1 == 0));
 
                     try
                     {
-                        var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2/2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
-                        var pHintLast2 = pHint.Where(x => x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2/2 || x.DCut1 == 0));
+                        var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 / 2 || x.DCut1 == 0) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
+                        var pHintLast2 = pHint.Where(x => x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 / 2 || x.DCut1 == 0));
 
                         pHint1 = pHintLast1.Union(pHintLast2).ToList();
 
@@ -54,12 +54,20 @@ namespace PapiroMVC.Models
                 }
             }
 
-
-
-
             return pHint1;
-       
+
         }
+
+
+        public override string FormatDesc
+        {
+            get
+            {
+               return FormatA + " + " + FormatB;
+            }
+        }
+
+
 
         public override string Formatmm
         {
@@ -146,7 +154,7 @@ namespace PapiroMVC.Models
             //merge FormatA and FormatB
             FormatOpened = Math.Max(aSide1, bSide1).ToString("0.##") + "x" + (aSide2 + bSide2).ToString("0.##");
 
-            Format = FormatA + " + " + FormatB; 
+            Format = FormatA + " + " + FormatB;
 
 
         }
@@ -160,9 +168,9 @@ namespace PapiroMVC.Models
 
             String s = String.Empty;
 
-           s = (string)t.GetProperty("FormatA").GetValue(null, null) + " " + FormatA;
-           s +=  " " + (string)t.GetProperty("FormatB").GetValue(null, null) + " " + FormatB;
-           
+            s = (string)t.GetProperty("FormatA").GetValue(null, null) + " " + FormatA;
+            s += " " + (string)t.GetProperty("FormatB").GetValue(null, null) + " " + FormatB;
+
             return s + " " +
                 base.ToString();
         }

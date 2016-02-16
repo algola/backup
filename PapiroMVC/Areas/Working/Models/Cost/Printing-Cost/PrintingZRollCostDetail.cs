@@ -74,7 +74,7 @@ namespace PapiroMVC.Models
                     for (int i = 0; i < x.Count &&
                         !SheetCut.IsValid(tsk.FormatMax, tsk.FormatMin, PrintingFormat);
                         i++,
-                        PrintingFormat = x[k].GetCuttedFormat(BuyingFormat)) ;
+                        PrintingFormat = x[k].GetCuttedFormat(BuyingFormat, false)) ;
                 }
 
                 foreach (var item in x)
@@ -93,7 +93,7 @@ namespace PapiroMVC.Models
                     {
                         var toAdd = new Cut("manual", 0, 0);
                         toAdd.ManualFormat = PrintingFormat;
-                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat);
+                        toAdd.CutName = toAdd.GetCuttedFormat(BuyingFormat, false);
                         x.Add(toAdd);
                     }
                 }
@@ -340,14 +340,47 @@ namespace PapiroMVC.Models
             if (ProductPart.FormatType != -1)
             {
 
+                double side1, side2, side1B, side2B;
+                side1 = side2 = side1B = side2B = 0;
+                string format = "";
 
                 foreach (var die in Dies.OfType<DieFlexo>())
                 {
-                    var side1 = ppP.Part.FormatOpened.GetSide1();
-                    var side2 = ppP.Part.FormatOpened.GetSide2();
 
-                    if (Math.Abs(die.Format.GetSide1() - side1) <= DieTollerance &&
-                        Math.Abs(die.Format.GetSide2() - side2) <= DieTollerance)
+                    bool toInsert = false;
+
+                    if (ppP.Part.TypeOfProductPart == Models.ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                    {
+
+                        ProductPartDoubleLabelRoll p;
+                        p = (ProductPartDoubleLabelRoll)ppP.Part;
+
+                        side1 = p.FormatA.GetSide1();
+                        side2 = p.FormatA.GetSide2();
+
+                        side1B = p.FormatB.GetSide1();
+                        side2B = p.FormatB.GetSide2();
+
+                        toInsert = (Math.Abs(die.Format.GetSide1() - side1) <= DieTollerance &&
+                                    Math.Abs(die.Format.GetSide2() - side2) <= DieTollerance);
+
+                        toInsert = toInsert && (Math.Abs(die.FormatB.GetSide1() - side1B) <= DieTollerance &&
+                                    Math.Abs(die.FormatB.GetSide2() - side2B) <= DieTollerance);
+                    }
+                    else
+                    {
+                        side1 = ppP.Part.FormatOpened.GetSide1();
+                        side2 = ppP.Part.FormatOpened.GetSide2();
+
+
+                        toInsert = (Math.Abs(die.Format.GetSide1() - side1) <= DieTollerance &&
+                            Math.Abs(die.Format.GetSide2() - side2) <= DieTollerance);
+
+                    }
+
+
+
+                    if (toInsert)
                     {
 
                         ppP.PrintingFormat = die.PrintingFormat;
@@ -361,6 +394,8 @@ namespace PapiroMVC.Models
                         var pHDie = new PrintingHint
                         {
                             Format = die.Format,
+                            FormatDesc = die.FormatB != null ? die.Format + " + " + die.FormatB : die.Format,
+
                             //DCut1 = ppP.CalculatedDCut1,
                             //DCut1 = die.DCut1,
                             //DCut2 = die.DCut2,
@@ -446,6 +481,8 @@ namespace PapiroMVC.Models
                             {
                                 ZMetric = zMetric,
                                 Format = ppP.Part.FormatOpened,
+                                FormatDesc = ppP.Part.Format,
+
                                 DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                                 DCut2 = ppP.CalculatedDCut2,
                                 TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -484,6 +521,8 @@ namespace PapiroMVC.Models
                                     {
                                         ZMetric = zMetric,
                                         Format = ppP.Part.FormatOpened,
+                                        FormatDesc = ppP.Part.Format,
+
                                         DCut1 = 0, // DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                                         DCut2 = lessZero * (-1),
                                         TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -525,6 +564,8 @@ namespace PapiroMVC.Models
                     {
                         ZMetric = zMetric,
                         Format = ppP.Part.FormatOpened,
+                        FormatDesc = ppP.Part.Format,
+
                         DCut1 = ProductPartPrinting.CalculatedDCut1,
                         DCut2 = ProductPartPrinting.CalculatedDCut2,
                         TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -608,6 +649,8 @@ namespace PapiroMVC.Models
                     {
                         ZMetric = zMetric,
                         Format = ppP.Part.FormatOpened,
+                        FormatDesc = ppP.Part.Format,
+
                         DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                         DCut2 = item.DCut2 ?? ppP.CalculatedDCut2,
                         TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -676,9 +719,10 @@ namespace PapiroMVC.Models
 
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
-            //mi serve calcolare la quantità con gli scarti!!!
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
 
 
             if (TaskexEcutorSelected == null)
@@ -722,7 +766,7 @@ namespace PapiroMVC.Models
 
             CalculatedRun = runs;
 
-            switch ((QuantityType)(TypeOfQuantity ?? 0))
+            switch ((QuantityType)(typeOfQuantity ?? 0))
             {
                 case QuantityType.MqWorkTypeOfQuantity:
                     ret = Math.Ceiling(base.Quantity(qta));
@@ -734,7 +778,7 @@ namespace PapiroMVC.Models
                     break;
 
                 default:
-                    ret = base.Quantity(qta);
+                    ret = base.Quantity(qta, type);
                     break;
             }
 
@@ -944,6 +988,8 @@ namespace PapiroMVC.Models
                     case 2:
                         dCut2_2Res = 0;
                         break;
+
+
                     default:
 
                         var temp = (Math.Truncate(((z) - (SmallerFormat.GetSide2() * (gain2_2))) / (gain2_2) * 1000) / 1000);
@@ -994,6 +1040,53 @@ namespace PapiroMVC.Models
             }
             return res;
         }
+
+
+        public List<double> GetOptimizedWidthsFlat(double z, int maxGain2, string SmallerFormat, ref double DCut1, ref double DCut2, double maxSide1)
+        {
+
+            var taskexEcutorSelected = TaskExecutors.SingleOrDefault(x => x.CodTaskExecutor == CodTaskExecutorSelected);
+
+            double pinza = taskexEcutorSelected.Pinza ?? 0;
+            double controPinza = taskexEcutorSelected.ControPinza ?? 0;
+            double laterale = taskexEcutorSelected.Laterale ?? 0;
+
+            var GiraVerso = true;
+
+
+            double minusSide1 = GiraVerso ? laterale * 2 : pinza + controPinza;
+            double minusSide1WoLat = GiraVerso ? 0 : pinza + controPinza;
+
+
+            var ddpminusSide1 = GiraVerso ? laterale * 2 : pinza * 2;
+            var minusSide2 = GiraVerso ? pinza + controPinza : laterale * 2;
+
+
+            var res = new List<double>();
+
+            int gain1_1 = 1;
+            while (
+
+                Math.Ceiling(
+                (gain1_1 * SmallerFormat.GetSide1() +
+                (gain1_1 - 1) * DCut1 +
+                minusSide1) * 10
+                ) / 10
+
+                <= maxSide1)
+            {
+                res.Add(Math.Ceiling(
+                (gain1_1 * SmallerFormat.GetSide1() +
+                (gain1_1 - 1) * DCut1 +
+                minusSide1) * 100
+                ) / 100);
+
+                gain1_1++;
+            }
+
+            return res;
+        }
+
 
         public override double UnitCost(double qta)
         {
@@ -1091,7 +1184,7 @@ namespace PapiroMVC.Models
             //serigraphy options where we can find the inks and types
             foreach (var item in this.TaskCost.ProductPartTask.ProductPartTaskOptions.OfType<ProductPartPrintRollOption>())
             {
-                description += item.TypeOfTaskPrint  + " " + item.Ink + " " + item.Overlay + "%\n";
+                description += item.TypeOfTaskPrint + " " + item.Ink + " " + item.Overlay + "%\n";
             }
 
             doc.AddCustomProperty(new Novacode.CustomProperty("CostDetail.OptionTask", description));
@@ -1109,8 +1202,6 @@ namespace PapiroMVC.Models
 
             ppP.CostDetail = this;
             ppP.Part = this.ProductPart;
-
-
 
             if (ProductPart.FormatType != -1)
             {
@@ -1137,6 +1228,7 @@ namespace PapiroMVC.Models
                         var pHDie = new PrintingHint
                         {
                             Format = die.Format,
+                            FormatDesc = die.Format,
                             //DCut1 = ppP.CalculatedDCut1,
                             //DCut1 = die.DCut1,
                             //DCut2 = die.DCut2,
@@ -1188,8 +1280,10 @@ namespace PapiroMVC.Models
 
                         ppP.Part = this.ProductPart;
                         ppP.PrintingFormat = buyingFormat;
-                        ppP.AutoCutParameter = true;
+                        //   ppP.AutoCutParameter = true;
+                        ppP.AutoCutParameter = false;
                         ppP.LateralMinDCut = true;
+
                         ppP.MaxGain1 = 0;
                         ppP.MaxGain2 = 0;
                         ppP.Update();
@@ -1225,6 +1319,8 @@ namespace PapiroMVC.Models
                                     new PrintingHint
                                     {
                                         Format = ppP.Part.FormatOpened,
+                                        FormatDesc = ppP.Part.Format,
+
                                         DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                                         DCut2 = ppP.CalculatedDCut2,
                                         TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -1261,6 +1357,8 @@ namespace PapiroMVC.Models
                                         new PrintingHint
                                         {
                                             Format = ppP.Part.FormatOpened,
+                                            FormatDesc = ppP.Part.Format,
+
                                             DCut1 = 0, // DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                                             DCut2 = lessZero * (-1),
                                             TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -1300,6 +1398,8 @@ namespace PapiroMVC.Models
                 var pH = new PrintingHint
                 {
                     Format = ppP.Part.FormatOpened,
+                    FormatDesc = ppP.Part.Format,
+
                     DCut1 = ProductPartPrinting.CalculatedDCut1,
                     DCut2 = ProductPartPrinting.CalculatedDCut2,
                     TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
@@ -1350,9 +1450,9 @@ namespace PapiroMVC.Models
             //bande di carta calcolate semplicemente con la resa, dati gli z validi e il maxWidth della macchina Flexo
             foreach (var item in widthValids)
             {
-                double dCut1 = 0;
-                double dCut2 = 0;
-                var newBands = this.GetOptimizedWidths(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.FormatOpened, ref dCut1, ref  dCut2, 34, ProductPart.TypeOfDCut1 ?? 0);
+                double dCut1 = ppP.Part.DCut1 ?? 0;
+                double dCut2 = ppP.Part.DCut2 ?? 0;
+                var newBands = this.GetOptimizedWidthsFlat(item.PrintingFormat.GetSide2(), item.MaxGain2, ppP.Part.FormatOpened, ref dCut1, ref  dCut2, 34);
                 foreach (var nB in newBands)
                 {
 
@@ -1379,8 +1479,10 @@ namespace PapiroMVC.Models
                     var pH = new PrintingHint
                     {
                         Format = ppP.Part.FormatOpened,
-                        DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
-                        DCut2 = item.DCut2 ?? ppP.CalculatedDCut2,
+                        FormatDesc = ppP.Part.Format,
+
+                        DCut1 = dCut1,// DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                        DCut2 = dCut2, //item.DCut2 ?? ppP.CalculatedDCut2,
                         TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
 
                         BuyingFormat = ppP.PrintingFormat,

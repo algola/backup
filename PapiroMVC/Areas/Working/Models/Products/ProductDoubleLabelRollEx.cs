@@ -27,6 +27,10 @@ namespace PapiroMVC.Models
             var p = new ProductPartLabelRollArticle();
             var part = new ProductPartDoubleLabelRoll();
 
+
+            part.Format = "1x1";
+            part.FormatPersonalized = "1x1";
+
             part.DCut = DCut;
 
             part.DCut1 = DCut1;

@@ -1,0 +1,35 @@
+﻿@model PapiroMVC.Models.PrePostPress
+@using PapiroMVC.Validation
+
+@{
+    //we want ot use different resource only to share it between areas and parts
+    string stringsCod = "~/Views/Shared/TypeOfTaskAndCodTypeOfTask";
+
+    var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)ViewBag.TypeOfTaskList; // (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
+
+    List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.OrderBy(x => x.IdexOf).ToList();
+    foreach (PapiroMVC.Models.OptionTypeOfTask optItem in c)
+    {
+        if (Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask) == null)
+        {
+            optItem.OptionName = optItem.OptionName;
+        }
+        else
+        {
+            optItem.OptionName = Html.T(stringsCod, "Cod" + optItem.CodOptionTypeOfTask);
+        }
+    }
+}
+
+<div class="form-group">
+    <div class="col-sm-3"></div>
+    <div class="controls col-sm-9">
+        @Html.DropDownListFor((model => model.CodOptionTypeOfTask),
+            new SelectList(c, "CodOptionTypeOfTask", "OptionName"), new { @class = "col-xs-10 col-sm-5" })
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

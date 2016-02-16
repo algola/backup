@@ -22,7 +22,65 @@ namespace PapiroMVC.Models
             TimeSpan totalTimeR = TimeSpan.Zero;
 
             double costA =0;
-            
+
+            var totalA = (totalTimeA.TotalMinutes) / 60 * costA;
+
+            Nullable<long> avrR = AvarageRunPerHour ?? 0;
+            string costH = CostPerHourRunning;
+
+
+            if (codOptionTypeOfTask.Contains("STAMPAETIC"))
+            {
+                totalTimeA = this.StartingTime1 ?? TimeSpan.Zero;
+
+                for (int i = 0; i < rollChanges; i++)
+                {
+                    totalTimeA += (StartingTime2 ?? TimeSpan.Zero);
+                }
+
+                for (int i = 0; i < colors; i++)
+                {
+                    totalTimeA += (StartingTimePerColor ?? TimeSpan.Zero);
+                }
+
+                for (int i = 0; i < retroStarts; i++)
+                {
+                    totalTimeA += (StartingTimeRetro ?? TimeSpan.Zero);
+                }
+
+                costA = Convert.ToDouble(CostPerHourStarting, Thread.CurrentThread.CurrentUICulture);
+//                var totalA = (totalTimeA.TotalMinutes) / 60 * Convert.ToDouble(costA, Thread.CurrentThread.CurrentUICulture);
+
+                var stepR = this.steps.OfType<AvarageRunPerRunStep>().Where(x => x.FromUnit <= running && x.ToUnit >= running).FirstOrDefault();
+
+                if (stepR != null)
+                {
+                    //leggo il costo differente per ciascun colore
+                    avrR = stepR.AvarageRunPerHour == null ? avrR : stepR.AvarageRunPerHour;
+                }
+
+                if (avrR == null)
+                {
+                    totalTimeR = TimeSpan.Zero;
+                }
+                else
+                {
+                    //minuti //nella flexo AvarageRunPerHour = m/sec
+                    var tot = (running / avrR ?? 1);
+                    totalTimeR += TimeSpan.FromMinutes(tot);
+                }
+
+                var step = this.steps.OfType<CostPerColorStep>().Where(x => x.FromUnit == colors).FirstOrDefault();
+
+                if (step != null)
+                {
+                    //leggo il costo differente per ciascun colore
+                    costH = step.CostPerUnit == null ? costH : step.CostPerUnit.ToString();
+                }
+
+            }
+
+
             if (codOptionTypeOfTask.Contains("SERIGRAFIA"))
             {
                 totalTimeA = TimeSpan.Zero;
@@ -47,10 +105,6 @@ namespace PapiroMVC.Models
             }
 
 
-            var totalA = (totalTimeA.TotalMinutes) / 60 * costA;
-
-            Nullable<long> avrR = AvarageRunPerHour ?? 0;
-            string costH = CostPerHourRunning;
 
 
             if (codOptionTypeOfTask.Contains("SERIGRAFIA"))

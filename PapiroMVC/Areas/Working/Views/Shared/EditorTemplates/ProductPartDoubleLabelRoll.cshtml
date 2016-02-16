@@ -7,7 +7,8 @@
 
     string url = Url.Action("DieList", new { controller = "Article", area = "DataBase" });
 
-    Model.Format = "0x0";   
+    Model.Format = "1x1";
+       
 }
 
 
@@ -21,9 +22,6 @@
         @Html.AlgolaEditorFor(model => model.FormatB)
        
 </div>
-
-
-
 
 
 @if (Model.ShowDCut)

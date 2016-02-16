@@ -188,10 +188,17 @@ namespace PapiroMVC.Areas.Working.Controllers
                             (a.Finished??false).ToString(),
 
                             //used to color
+                            //yellow --> to start today
+                            ((a.Started??false)?false:(a.AlarmStartingAt??DateTime.Now).ToString("d")==DateTime.Now.ToString("d")).ToString(),                            
+                            //red!!!
                             ((a.Started??false)?false:(a.AlarmStartingAt??DateTime.Now)<DateTime.Now).ToString(),
+                            //yellow
+                            (((a.Finished??false)?false:(a.AlarmFinishingAt??DateTime.Now).ToString("d")==DateTime.Now.ToString("d"))&&(a.Started??false)).ToString(),
+                            //red
                             (((a.Finished??false)?false:(a.AlarmFinishingAt??DateTime.Now)<DateTime.Now)&&(a.Started??false)).ToString(),
 
                             (a.Finished??false).ToString(),
+                            (a.Started??false).ToString(),
 
                         }
                     }

@@ -120,9 +120,12 @@
 
                         { name: 'Finished', label: '@Html.T(strings, "Finished")', width: 50,hidden: true, editable: true, edittype: 'checkbox', editoptions: { value: "True:False" }, formatter: "checkbox", formatoptions: { disabled: true } },
 
-            { name: 'Alert1', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertStart },
-            { name: 'Alert2', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertFinish },
-            { name: 'FinishedColor', label: '', hidden:true, width: 50, formatter: rowColorFormatterFinished }
+                        { name: 'StartToday', label: '', hidden:true, width: 50, formatter: rowColorFormatterStartToday },
+                        { name: 'Alert1', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertStart },          
+                        { name: 'FinishToday', label: '', hidden:true, width: 50, formatter: rowColorFormatterFinishToday },
+                        { name: 'Alert2', label: '', hidden:true, width: 50, formatter: rowColorFormatterAlertFinish },
+                        { name: 'FinishedColor', label: '', hidden:true, width: 50, formatter: rowColorFormatterFinished },
+                        { name: 'StartedColor', label: '', hidden:true, width: 50, formatter: rowColorFormatterStarted }
 
             ],
 
@@ -193,9 +196,12 @@
 
         firstLoad = true;
 
-        var rowsToAlarmStart = [];
-        var rowsToAlarmFinish = [];
+        var rowsToAlarmStart = []; //red
+        var rowsToStartToday = []; //gold
+        var rowsToAlarmFinish = []; //red
+        var rowsToFinishToday = []; //gold
         var rowsFinished = [];
+        var rowsStarted = [];
 
         var lastId@(Model.CodTaskCenter) = '';
         var firstId@(Model.CodTaskCenter) = '';
@@ -265,11 +271,8 @@
 
             gridComplete: function () {
                 for (var i = 0; i < rowsToAlarmStart.length; i++) {
-                    //   var status = $("#" + rowsToColor[i]).find("td").eq(7).html();
-                    //  if (status == "Complete") {
-                    $("#" + rowsToAlarmStart[i]).find("td").css("background-color", "gold");
-                    //  $("#" + rowsToColor[i]).find("td").css("color", "silver");
-                    //                    }
+                    $("#" + rowsToAlarmStart[i]).find("td").css("background-color", "tomato");
+                    
                 }
                 for (var i = 0; i < rowsToAlarmFinish.length; i++) {
                     $("#" + rowsToAlarmFinish[i]).find("td").css("background-color", "tomato");
@@ -280,6 +283,20 @@
                     $("#" + rowsFinished[i]).find("td").css("background-color", "dimgray");
                     $("#" + rowsFinished[i]).find("td").css("color", "silver");
                 }
+
+                for (var i = 0; i < rowsStarted.length; i++) {
+                    $("#" + rowsStarted[i]).find("td").css("background-color", "green");
+                    $("#" + rowsStarted[i]).find("td").css("color", "silver");
+                }
+
+                for (var i = 0; i < rowsToStartToday.length; i++) {
+                    $("#" + rowsToStartToday[i]).find("td").css("background-color", "gold");                    
+                }
+
+                for (var i = 0; i < rowsToFinishToday.length; i++) {
+                    $("#" + rowsToFinishToday[i]).find("td").css("background-color", "gold");                    
+                }
+
 
                 ////scroll
                 var ids = jQuery("#list@(Model.CodTaskCenter)").jqGrid('getDataIDs');
@@ -320,6 +337,17 @@
         });
 
 
+        function rowColorFormatterStartToday(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsToStartToday[rowsToStartToday.length] = options.rowId;
+            return cellValue;
+        }
+
+        function rowColorFormatterFinishToday(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsToFinishToday[rowsToFinishToday.length] = options.rowId;
+            return cellValue;
+        }
 
         function rowColorFormatterAlertStart(cellValue, options, rowObject) {
             if (cellValue == "True")
@@ -338,6 +366,14 @@
                 rowsFinished[rowsFinished.length] = options.rowId;
             return cellValue;
         }
+
+
+        function rowColorFormatterStarted(cellValue, options, rowObject) {
+            if (cellValue == "True")
+                rowsStarted[rowsStarted.length] = options.rowId;
+            return cellValue;
+        }
+
 
         $.extend($.jgrid.search, {
             multipleSearch: true,

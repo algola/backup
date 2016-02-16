@@ -208,7 +208,7 @@ namespace PapiroMVC.Models
                     dCut1 = fromP.ProductPartPrinting.CalculatedDCut1;
                     dCut2 = fromP.ProductPartPrinting.CalculatedDCut2;
 
-                    format = fromP.ProductPart.Format;
+                    format = fromP.ProductPart.FormatOpened;
                 }
             }
 
@@ -277,9 +277,13 @@ namespace PapiroMVC.Models
             this.UpdateCoeff();                
             //voglio fare l'update dei dostdetail simili che hanno la stessa macchina        
         }
-        
-        public override double Quantity(double qta)
+
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
+            double ret;
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+
             double quantita = 0;
             quantita = Math.Ceiling(qta * (GainForRun ?? 1));
             return quantita;

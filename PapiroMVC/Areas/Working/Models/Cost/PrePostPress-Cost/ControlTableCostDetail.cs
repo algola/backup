@@ -57,8 +57,11 @@ namespace PapiroMVC.Models
             TypeOfQuantity = 5;  //TaskexEcutorSelected.TypeOfImplantQuantity;
         }
 
-        public override double Quantity(double qta)
+        public override double Quantity(double qta, CostDetail.QuantityType type = CostDetail.QuantityType.NOTypeOfQuantity)
         {
+
+            var typeOfQuantity = type == CostDetail.QuantityType.NOTypeOfQuantity ? TypeOfQuantity : (Nullable<int>)type;
+
             double quantita = 0;
             int typeOfQ = 0;
 
@@ -66,8 +69,9 @@ namespace PapiroMVC.Models
             {
                 foreach (var item in Printers)
                 {
-                    quantita += item.TaskCost.Quantity ?? 0;
-                    this.TypeOfQuantity = item.TypeOfQuantity;
+                    quantita = item.Quantity(qta, CostDetail.QuantityType.RunLengthMlTypeOfQuantity);
+                    //quantita += item.TaskCost.Quantity ?? 0;
+                    this.TypeOfQuantity = (Nullable<int>) CostDetail.QuantityType.RunLengthMlTypeOfQuantity; //TaskexEcutorSelected.TypeOfQuantity??0;  //item.TypeOfQuantity;
                 }
 
             }

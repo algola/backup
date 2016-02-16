@@ -97,6 +97,8 @@
                         {
                             <tr>
                                 <td class="padding-2 no-padding-bottom">@i.Format</td>
+                                <td class="padding-2 no-padding-bottom">@i.FormatDesc</td>
+
                                 <td class="padding-2 no-padding-bottom">
                                     @i.Description @if (i.FormatType != null && i.FormatType != "")
                                     {
@@ -110,6 +112,8 @@
                                 <td class="padding-2 no-padding-bottom">@i.GainOnSide1</td>
                                 <td class="padding-2 no-padding-bottom">@i.GainOnSide2</td>
                                 <td class="padding-2 no-padding-bottom">@i.DCut2</td>
+                                <td class="padding-2 no-padding-bottom">@(i.TypeOfDCut2)</td>
+
                             </tr>
                         }
 
@@ -160,7 +164,7 @@
 
 <script type="text/javascript">
 
-    $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2").keypress(function (event) {
+    $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2, #ddPartMinDCut, #maxGain1 #maxGain2, #ddPartMaxDCut").keypress(function (event) {
         if (event.which == 13) {
             event.preventDefault();
 
@@ -169,7 +173,8 @@
                 format: $("#ddPartFormat").val(),
                 dCut1: $("#ddPartDCut1").val(),
                 dCut2: $("#ddPartDCut2").val(),
-
+                minDCut: $("#ddPartMinDCut").val(),
+                maxDCut: $("#ddPartMaxDCut").val(),
                 maxGain1: $("#maxGain1").val(),
                 maxGain2: $("#maxGain2").val()
 
@@ -212,6 +217,11 @@
             format: $("#ddPartFormat").val(),
             dCut1: $("#ddPartDCut1").val(),
             dCut2: $("#ddPartDCut2").val(),
+
+            minDCut: $("#ddPartMinDCut").val(),
+            maxDCut: $("#ddPartMaxDCut").val(),
+
+
             maxGain1: $("#maxGain1").val(),
             maxGain2: $("#maxGain2").val()
 
@@ -416,10 +426,12 @@
         ////sposto la tabella a dx
         //myDiv1Para.appendTo('#printingHintTable');
 
-        $('#htmlTable td:nth-child(3)').toggle();
-        $('#htmlTable td:nth-child(7)').toggle();
+        $('#htmlTable td:nth-child(1)').toggle();
+        $('#htmlTable td:nth-child(4)').toggle();
         $('#htmlTable td:nth-child(8)').toggle();
         $('#htmlTable td:nth-child(9)').toggle();
+        $('#htmlTable td:nth-child(10)').toggle();
+        $('#htmlTable td:nth-child(11)').toggle();
         $('#ddBuyingFormat').toggle();
 
 
@@ -428,21 +440,30 @@
             $(this).addClass("highlight");
 
             var format = $(this).closest('tr').find('td:eq(0)').text();
-            var pFormat = $(this).closest('tr').find('td:eq(2)').text();
-            var dCut1 = $(this).closest('tr').find('td:eq(3)').text();
+            var formatAB = $(this).closest('tr').find('td:eq(1)').text();
 
-            var dCut2 = $(this).closest('tr').find('td:eq(4)').text();
+            var pFormat = $(this).closest('tr').find('td:eq(3)').text();
+            var dCut1 = $(this).closest('tr').find('td:eq(4)').text();
 
-            //new dCud2 ---> for Etichette e controetichette (real double DCut2)
-            var dCut2 = $(this).closest('tr').find('td:eq(8)').text();
+            var dCut2 = $(this).closest('tr').find('td:eq(5)').text();
+
+            //new dCut2 ---> for Etichette e controetichette (real double DCut2)
+            var dCut2 = $(this).closest('tr').find('td:eq(9)').text();
             //            var gain = $(this).closest('tr').find('td:eq(4)').text();
 
-            //     alert(dCut2);
+            var max1 = $(this).closest('tr').find('td:eq(7)').text();
+            var max2 = $(this).closest('tr').find('td:eq(8)').text();
 
-            var max1 = $(this).closest('tr').find('td:eq(6)').text();
-            var max2 = $(this).closest('tr').find('td:eq(7)').text();
+            var typeOfDCut = $(this).closest('tr').find('td:eq(10)').text();
 
-            $("#ddPartFormat").val(format)
+            if (typeOfDCut == 1) {
+                $("#ddPartFormat").val(formatAB);
+                $("#formatDie").val(formatAB);
+            } else {
+                $("#ddPartFormat").val(format);
+                $("#formatDie").val(format);
+            }
+
             $('#ddBuyingFormat').val(pFormat);
             $('#ddPartDCut1').val(dCut1);
             $('#ddPartDCut2').val(dCut2);
@@ -450,21 +471,21 @@
             $('#maxGain1').val(max1);
             $('#maxGain2').val(max2);
 
-            $("#formatDie").val(format)
             $('#printingFormatDie').val(pFormat);
             $('#gain1Die').val(max1);
             $('#gain2Die').val(max2);
-
 
             //submit with dropdown change event
             $('#ddBuyingFormat').trigger('change');
 
         });
 
-        var searchTextWF = '@(Model.ProductPart.Format)';
+        var searchTextWF = '@(Model.ProductPart.FormatDesc)';
         var searchTextBF = '@(Model.BuyingFormat)';
         var searchTextIB = '@(Model.ProductPart.DCut1)';
-        var searchTextIP = '@((Model.ProductPart.TypeOfDCut2 ?? 0)==0 ? Model.ProductPart.DCut2 : Model.ProductPart.DCut2/2)';
+        //        var searchTextIP = '@((Model.ProductPart.TypeOfDCut2 ?? 0)==0 ? Model.ProductPart.DCut2 : Model.ProductPart.DCut2/2)';
+
+        var searchTextIP = '@(Model.ProductPart.DCut2)';
 
         $("tr").removeClass("highlight");
 
@@ -473,10 +494,10 @@
             //var val = $("td:eq(" + '1' + ")", this).text().indexOf(searchTextBF) !== -1;
             //val = val && $("td:eq(" + '2' + ")", this).text().indexOf(searchTextIB) !== -1;
 
-            var val = $("td:eq(" + '2' + ")", this).text() == searchTextBF;
-            val = val && $("td:eq(" + '0' + ")", this).text() == searchTextWF;
-            val = val && $("td:eq(" + '3' + ")", this).text() == searchTextIB;
-            val = val && $("td:eq(" + '4' + ")", this).text() == searchTextIP;
+            var val = $("td:eq(" + '3' + ")", this).text() == searchTextBF;
+            val = val && $("td:eq(" + '1' + ")", this).text() == searchTextWF;
+            val = val && $("td:eq(" + '4' + ")", this).text() == searchTextIB;
+            val = val && $("td:eq(" + '9' + ")", this).text() == searchTextIP;
 
             return val;
         }).closest("tr").addClass("highlight");

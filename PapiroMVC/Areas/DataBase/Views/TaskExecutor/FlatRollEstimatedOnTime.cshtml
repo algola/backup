@@ -42,8 +42,17 @@
 
         @Html.AlgolaEditorFor(model => model.AvarageRunPerHour)
         @Html.AlgolaEditorFor(model => model.CostPerHourStarting)
-        @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
-        @Html.AlgolaEditorFor(model => model.CostForfait)
+        
+        
+
+            @Html.AlgolaEditorFor(model => model.CostPerHourRunning)
+
+            <div class="span1"></div>
+            <div class="form-group span9" id="_listCostPerColorStep">
+                @Html.Partial("_ListCostPerColorStep", Model)
+            </div>
+
+            @Html.AlgolaEditorFor(model => model.CostForfait)
 
 
         @*deprecated            @Html.AlgolaEditorFor(model => model.CostForfaitForSheet)
