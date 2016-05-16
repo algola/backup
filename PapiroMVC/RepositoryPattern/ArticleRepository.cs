@@ -420,7 +420,16 @@ namespace Services
 
         public override void Save()
         {
-            System.Web.HttpContext.Current.Session["artsSession"] = null;
+            try
+            {
+ System.Web.HttpContext.Current.Session["artsSession"] = null;
+            }
+            catch (Exception)
+            {
+                
+               
+            }
+           
             base.Save();
         }
 
@@ -428,7 +437,14 @@ namespace Services
         public virtual IQueryable<Article> GetForImport()
         {
             Console.WriteLine(Context.Database.Connection.ConnectionString);
-            return Context.articles.Include("articlecosts");
+
+            var x = Context.articles.ToList();
+            foreach (var item in x)
+            {
+                item.ArticleCosts = Context.articlecost.Where(y => y.CodArticle == item.CodArticle).ToList();
+            }
+            
+            return x.AsQueryable();
         }
 
         public override void Edit(Article entity)
@@ -510,7 +526,6 @@ namespace Services
             {
                 return null;
             }
-
 
             var numWare = Context.warehouseSpec.Count();
 

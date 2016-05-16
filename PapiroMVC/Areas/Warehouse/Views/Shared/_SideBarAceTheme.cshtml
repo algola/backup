@@ -23,6 +23,11 @@
             @Html.ActionLinkImageSpan(Html.T(strings, "NewMovArticleMenu"), "NewMovArticle", "Article", new { area = "Database", CodProduct = "NULL" }, "fa fa-fw fa-lg fa-plus", "menu-text")
         </li>
 
+        <li id="movsProductSlidebar">
+            @Html.ActionLinkImageSpan(Html.T(strings, "MovArticleMenu"), "OnlyMov", "Article", new { area = "Database" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
+        </li>
+
+
         <li id="productSlidebar">
             @Html.ActionLinkImageSpan(Html.T(strings, "WarehouseProductMenu"), "Index", "Product", new { area = "Working" }, "fa fa-fw fa-lg fa-files-o", "menu-text")
         </li>

@@ -15,8 +15,8 @@
     UpdateTargetId = "status",
     OnBegin = "showProcessingMsg",
     OnComplete = "hideProcessingMsg",
-    OnSuccess = "OnSuccess"
-}, new { @class = "form-horizontal" }))
+        OnSuccess = "OnSuccess"
+    }, new { @class = "form-horizontal" }))
     {
         @Html.ValidationSummary(true)
 
@@ -31,7 +31,6 @@
 
                     <br />
                     <p>
-
                         <input class="btn" type="submit" name="NewMovArticleLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductLoad")' />
                         <input class="btn" type="submit" name="NewMovArticleUnLoad" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductUnLoad")' />
                         <input class="btn" type="submit" name="NewMovArticleReserve" value='@HttpContext.GetLocalResourceObject(strings, "NewMovProductReserve")' />

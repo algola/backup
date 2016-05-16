@@ -52,7 +52,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         [HttpParamAction]
         [HttpPost]
-        public ActionResult CreateTaskCenter(TaskCenter c)
+        public ActionResult CreateTaskCenter(TaskCenter model)
         {
 
             if (ModelState.IsValid)
@@ -60,21 +60,21 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 try
                 {
                     {
-                        c.CodTaskCenter = taskCenterRepository.GetNewCode(c);
+                        model.CodTaskCenter = taskCenterRepository.GetNewCode(model);
 
-                        var state = documentRepository.GetAllStates().FirstOrDefault(x => x.StateName == c.StateName);
+                        var state = documentRepository.GetAllStates().FirstOrDefault(x => x.StateName == model.StateName);
 
                         if (state != null)
                         {
-                            c.CodState = state.CodState;
+                            model.CodState = state.CodState;
                         }
                         else
                         {
-                            c.CodState = null;
+                            model.CodState = null;
                         }
 
-                    taskCenterRepository.Add(c);
-                    taskCenterRepository.Save();
+                        taskCenterRepository.Add(model);
+                        taskCenterRepository.Save();
 
                     }
                     //hooray it passed - go back to index
@@ -87,7 +87,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             }
 
             ViewBag.ActionMethod = "CreateTaskCenter";
-            return PartialView("_EditAndCreateTaskCenter", c);
+            return PartialView("_EditAndCreateTaskCenter", model);
         }
 
 

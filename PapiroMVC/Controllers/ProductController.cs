@@ -63,7 +63,10 @@ namespace PapiroMVC.Controllers
             {
                 foreach (var disp in disposables)
                 {
-                    disp.Dispose();
+                    if (disp != null)
+                    {
+                        disp.Dispose();
+                    }
                 }
             }
 
@@ -222,7 +225,6 @@ namespace PapiroMVC.Controllers
 
             this.Init();
 
-
             taskCenterRepository.SetDbName(username);
             productRepository.SetDbName(username);
             documentRepository.SetDbName(username);
@@ -253,8 +255,8 @@ namespace PapiroMVC.Controllers
             {
                 docProd = new DocumentProduct();
                 docProd.CodProduct = prod.CodProduct;
-                docProd.UnitPrice = Convert.ToDouble(price).ToString();
-                docProd.Quantity = Convert.ToInt16(quantity);
+                docProd.UnitPrice = "0";//Convert.ToDouble(price).ToString();
+                docProd.Quantity = 0; // Convert.ToInt16(quantity);
 
                 Estimate e = new Estimate();
                 e.CodDocument = documentRepository.GetNewCode(e);
@@ -323,17 +325,37 @@ namespace PapiroMVC.Controllers
                         dtc.DocumentName = docProd.Product.ProductRefName;
                     }
 
-                    dtc.DocumentName = nCom + " " + dtc.DocumentName;
 
                     dtc.FieldA = field1;
                     dtc.FieldB = field2;
                     dtc.FieldC = field3;
+
+                    if (username.ToLower() == "lamarina")
+                    {
+                        try
+                        {
+                            dtc.DocumentName = nCom.Substring(0,nCom.IndexOf('/')) + " " + dtc.DocumentName + " " + field1;
+                        }
+                        catch (Exception)
+                        {
+                        }
+                        dtc.FieldA = "";
+                    }
+                    else
+                    {
+                        dtc.DocumentName = nCom + " " + dtc.DocumentName;
+                    }
 
                     taskCenterRepository.AddNewDocumentTaskCenter(dtc);
                     taskCenterRepository.Save();
                 }
 
             }
+
+            taskCenterRepository.Dispose();
+            productRepository.Dispose();
+            documentRepository.Dispose();
+
             return Request.CreateResponse<string>(HttpStatusCode.OK, username);
         }
 

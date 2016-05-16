@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PapiroMVC.Models
 {
-    public partial class WarehouseProduct : Warehouse
+    public partial class WarehouseProduct : WarehouseItem
     {
 
         public WarehouseProduct()

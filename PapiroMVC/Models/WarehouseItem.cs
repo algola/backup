@@ -16,9 +16,9 @@ namespace PapiroMVC.Models
     
     	
     [DataContract] 
-    public partial class Warehouse
+    public partial class WarehouseItem
     {
-        public Warehouse()
+        public WarehouseItem()
         {
             this.WarehouseArticleMovs = new HashSet<WarehouseArticleMov>();
         }

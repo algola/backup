@@ -1,14 +1,15 @@
 ﻿using PapiroMVC.Validation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
 namespace PapiroMVC.Models
 {
+    [MetadataType(typeof(PrintingCostDetail_MetaData))]
     public partial class PrintingCostDetail : CostDetail, ICloneable
     {
-
 
         public override void Copy(CostDetail to)
         {
@@ -18,11 +19,11 @@ namespace PapiroMVC.Models
             
             to2.PrintingFormat = this.PrintingFormat;
             to2.HideBuyingInView = this.HideBuyingInView;
+            to2.ForceLateral = this.ForceLateral;
+            to2.Lateral = this.Lateral;
 
             to = to2;
-
         }
-
 
      //   public Die Die {get;set;}
 

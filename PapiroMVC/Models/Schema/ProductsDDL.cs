@@ -206,12 +206,23 @@ namespace PapiroMVC.Model
             //selettore --> 0 = serigrafia
             dbS.AddColumnToTable("productparttasks", "Selector", SchemaDb.Int, "0");
 
-
             //Used in label
             //used with ShowPrintSide
             // 0 = non specificato 1 = interno film 2 = esterno film
             dbS.AddColumnToTable("productparttasks", "PrintSide", SchemaDb.Int, "0");
 
+            //Used in label
+            //used with ShowColorFormulation
+            dbS.AddColumnToTable("productparttasks", "ColorFormulation", SchemaDb.Int, "0");
+            //
+            //0 non specificato
+            //1 CMYK
+            //2 CMYK + Pantoni
+            //3 CMYK + Bianco 
+            //4 CMYK + Pantoni + Bianco
+            //5 Pantoni
+            //6 Pantoni + Bianco
+            //7 Bianco
 
             //foreign key
             dbS.AddColumnToTable("productparttasks", "CodProductPart", SchemaDb.String, "50");

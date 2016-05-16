@@ -6,6 +6,9 @@ using System.ComponentModel;
 
 using System.Text.RegularExpressions;
 using System.ComponentModel.DataAnnotations;
+using System.Resources;
+using PapiroMVC.Validation;
+
 
 namespace PapiroMVC.Models
 {
@@ -22,15 +25,38 @@ namespace PapiroMVC.Models
 
         #endregion
 
-
         public override string ToString()
         {
-            return base.ToString() + this.Width + " ";
+
+            //LANGFILE
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+
+            // Get the resource strings for the day, year, and holiday  
+            // using the current UI culture. 
+
+
+
+            return base.ToString() + " " + resman.GetString("Height") +
+            this.Width + " ";
         }
 
         public override string GetEditMethod()
         {
             return "EditRollPrintableArticle";
         }
+
+        public override double TransformQuantity(double quantity, CostDetail.QuantityType from)
+        {
+            if (from == CostDetail.QuantityType.MqWorkTypeOfQuantity)
+            {
+                return Math.Floor(quantity / ((Width ?? 0) / 100));
+            }
+            else
+            {
+                return quantity;
+            }
+        }
+
     }
 }

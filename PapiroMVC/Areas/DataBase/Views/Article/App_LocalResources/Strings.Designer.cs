@@ -142,6 +142,15 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disponibile.
+        /// </summary>
+        public static string AvailableCaption {
+            get {
+                return ResourceManager.GetString("AvailableCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Annulla.
         /// </summary>
         public static string Cancel {
@@ -174,6 +183,15 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         public static string CodDieCaption {
             get {
                 return ResourceManager.GetString("CodDieCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Commessa.
+        /// </summary>
+        public static string CodDocumentMovCaption {
+            get {
+                return ResourceManager.GetString("CodDocumentMovCaption", resourceCulture);
             }
         }
         
@@ -376,6 +394,24 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancellare gli articoli selezionati?.
+        /// </summary>
+        public static string DeleteMessageArticle {
+            get {
+                return ResourceManager.GetString("DeleteMessageArticle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancellare i movimenti selezionati?.
+        /// </summary>
+        public static string DeleteMessageMov {
+            get {
+                return ResourceManager.GetString("DeleteMessageMov", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Conferma.
         /// </summary>
         public static string DeleteOk {
@@ -556,6 +592,15 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carico.
+        /// </summary>
+        public static string LoadType {
+            get {
+                return ResourceManager.GetString("LoadType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resa V..
         /// </summary>
         public static string MaxGain1Caption {
@@ -664,7 +709,7 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sposta in Magazzino.
+        ///   Looks up a localized string similar to Sposta in.
         /// </summary>
         public static string NewMovProductMov {
             get {
@@ -745,6 +790,15 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Movimenti.
+        /// </summary>
+        public static string OnlyMovCaption {
+            get {
+                return ResourceManager.GetString("OnlyMovCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operazioni.
         /// </summary>
         public static string OperationsCaption {
@@ -817,6 +871,33 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ordine.
+        /// </summary>
+        public static string OrderType {
+            get {
+                return ResourceManager.GetString("OrderType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potenziale disponibile.
+        /// </summary>
+        public static string PotentialAvailableCaption {
+            get {
+                return ResourceManager.GetString("PotentialAvailableCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potenziale.
+        /// </summary>
+        public static string PotentialQuantityOnHandCaption {
+            get {
+                return ResourceManager.GetString("PotentialQuantityOnHandCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sviluppo fustella.
         /// </summary>
         public static string PrintingFormatCaption {
@@ -826,11 +907,29 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantità.
+        /// </summary>
+        public static string QuantityCaption {
+            get {
+                return ResourceManager.GetString("QuantityCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantità esistente.
         /// </summary>
         public static string QuantityOnHandCaption {
             get {
                 return ResourceManager.GetString("QuantityOnHandCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Impegno.
+        /// </summary>
+        public static string ReserveType {
+            get {
+                return ResourceManager.GetString("ReserveType", resourceCulture);
             }
         }
         
@@ -1015,6 +1114,24 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Caricare il materiale in ordine?.
+        /// </summary>
+        public static string TransformDialogLoad {
+            get {
+                return ResourceManager.GetString("TransformDialogLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Carico o Scarico del materiale?.
+        /// </summary>
+        public static string TransformDialogUnload {
+            get {
+                return ResourceManager.GetString("TransformDialogUnload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tipo Articolo.
         /// </summary>
         public static string TypeOfArticle {
@@ -1047,6 +1164,33 @@ namespace PapiroMVC.Areas.DataBase.Views.Article.App_LocalResources {
         public static string TypeOfMaterialCaption {
             get {
                 return ResourceManager.GetString("TypeOfMaterialCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movimento.
+        /// </summary>
+        public static string TypeOfMov {
+            get {
+                return ResourceManager.GetString("TypeOfMov", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo.
+        /// </summary>
+        public static string TypeOfMovCaption {
+            get {
+                return ResourceManager.GetString("TypeOfMovCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scarico.
+        /// </summary>
+        public static string UnloadType {
+            get {
+                return ResourceManager.GetString("UnloadType", resourceCulture);
             }
         }
         

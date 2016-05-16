@@ -11,10 +11,10 @@ namespace Services
     /// <summary>
     /// repository magazzeno
     /// </summary>
-    public class WarehouseRepository : GenericRepository<dbEntities, Warehouse>, IWarehouseRepository
+    public class WarehouseRepository : GenericRepository<dbEntities, WarehouseItem>, IWarehouseRepository
     {
 
-        public void UpdateArticle(Warehouse entity)
+        public void UpdateArticle(WarehouseItem entity)
         {
             //object and all movments
             var obj = Context.warehousearticles.Include("warehousearticlemovs").SingleOrDefault(p => p.CodWarehouseArticle == entity.CodWarehouseArticle);
@@ -39,12 +39,12 @@ namespace Services
 
         }
 
-        public override IQueryable<Warehouse> GetAll()
+        public override IQueryable<WarehouseItem> GetAll()
         {
             return Context.warehousearticles.Include("warehousearticlemovs").Include("Article").Include("Product").Include("WarehouseSpec");
         }
 
-        public override void Edit(Warehouse entity)
+        public override void Edit(WarehouseItem entity)
         {
             var fromBD = Context.warehousearticles.SingleOrDefault(p => p.CodWarehouseArticle == entity.CodWarehouseArticle);
             if (fromBD != null)
@@ -58,17 +58,17 @@ namespace Services
             }
         }
 
-        public new Warehouse GetSingle(string codWarehouseArticle)
+        public new WarehouseItem GetSingle(string codWarehouseArticle)
         {
             return Context.warehousearticles.Include("warehousearticlemovs").Include("article").Include("Product").FirstOrDefault(x => x.CodWarehouseArticle == codWarehouseArticle);
         }
 
-        public Warehouse GetSingleProduct(string codProduct, string codWarehouse)
+        public WarehouseItem GetSingleProduct(string codProduct, string codWarehouse)
         {
             return Context.warehousearticles.Include("warehousearticlemovs").Include("article").Include("Product").FirstOrDefault(x => x.CodProduct == codProduct && x.CodWarehouse == codWarehouse);
         }
 
-        public Warehouse GetSingleArticle(string codArticle, string codWarehouse)
+        public WarehouseItem GetSingleArticle(string codArticle, string codWarehouse)
         {
             return Context.warehousearticles.Include("warehousearticlemovs").Include("article").Include("Product").FirstOrDefault(x => x.CodArticle == codArticle && x.CodWarehouse == codWarehouse);
         }
@@ -98,17 +98,34 @@ namespace Services
             }
 
             return ret;
-
         }
 
         public IQueryable<WarehouseArticleMov> GetAllMovsArticle(string codArticle)
+        {            
+            IQueryable<WarehouseArticleMov> ret = Context.warehousearticlemovs
+                .Include("WarehouseArticle")
+                .Include("WarehouseArticle.Article")
+                .Include("WarehouseArticle.WarehouseSpec")
+                .Include("Document");
+
+            if (codArticle !=null && codArticle != "")
+            {
+                ret = ret.Where(x => x.WarehouseArticle.CodArticle == codArticle);
+            }
+
+            return ret;
+        }
+
+        public void DeleteMov(WarehouseArticleMov entity)
         {
-            return Context.warehousearticlemovs.Include("WarehouseArticle").Include("WarehouseArticle.WarehouseSpec").Where(x => x.WarehouseArticle.CodArticle == codArticle);
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+            //            throw new NotImplementedException();
         }
 
         public void EditMov(WarehouseArticleMov entity)
         {
-            throw new NotImplementedException();
+            Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+//            throw new NotImplementedException();
         }
 
 

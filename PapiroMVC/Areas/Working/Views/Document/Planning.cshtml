@@ -185,12 +185,12 @@
         };
 
         updateOtherClient = function () {
-            planning.server.send('@groupName',"");
+            planning.server.send('@User.Identity.Name',"");
         }
 
         $.connection.hub.start().done(function () {
 
-            planning.server.joinRoom('@groupName');
+            planning.server.joinRoom('@User.Identity.Name');
 
         });
     });

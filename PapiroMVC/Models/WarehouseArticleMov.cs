@@ -45,8 +45,21 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> Used { get; set; }
+    	
+    	[DataMember] 		
+        public string CodDocument { get; set; }
+    	
+    	[DataMember] 		
+        public string CodProductPartPrintableArticle { get; set; }
+    	
+    	[DataMember] 		
+        public string Note { get; set; }
     
     	[DataMember]
-        public virtual Warehouse WarehouseArticle { get; set; }
+        public virtual WarehouseItem WarehouseArticle { get; set; }
+    	[DataMember]
+        public virtual Document Document { get; set; }
+    	[DataMember]
+        public virtual ProductPartsPrintableArticle ProductPartsPrintableArticle { get; set; }
     }
 }

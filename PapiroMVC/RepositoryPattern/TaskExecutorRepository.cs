@@ -22,12 +22,38 @@ namespace Services
 
         public override void Save()
         {
-            System.Web.HttpContext.Current.Session["tsksSession"] = null;
+            try
+            {
+                System.Web.HttpContext.Current.Session["tsksSession"] = null;
+            }
+            catch (Exception)
+            {
+
+            }
 
             List<Object> modOrAdded = Context.ChangeTracker.Entries()
                .Where(x => x.State == System.Data.Entity.EntityState.Modified
                || x.State == System.Data.Entity.EntityState.Added)
                .Select(x => x.Entity).ToList();
+
+            var notAll = modOrAdded
+                .Except(modOrAdded.OfType<TaskExecutor>())
+                .Except(modOrAdded.OfType<TaskEstimatedOn>())
+                .Except(modOrAdded.OfType<Step>())
+                .Except(modOrAdded.OfType<TaskExecutorCylinder>());
+
+            foreach (var item in notAll)
+            {
+                try
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                }
+                catch (Exception)
+                {
+                    Context.Entry(item).State = System.Data.Entity.EntityState.Unchanged;
+                    //throw;
+                }
+            }
 
             Console.Write(modOrAdded);
 
@@ -112,7 +138,17 @@ namespace Services
         public override IQueryable<TaskExecutor> GetAll()
         {
 
-            IQueryable<TaskExecutor> tsksSession = (IQueryable<TaskExecutor>) (System.Web.HttpContext.Current.Session["tsksSession"]);
+            IQueryable<TaskExecutor> tsksSession = null;
+
+            try
+            {
+                tsksSession = (IQueryable<TaskExecutor>)(System.Web.HttpContext.Current.Session["tsksSession"]);
+
+            }
+            catch (Exception)
+            {
+
+            }
 
             if (tsksSession == null)
             {
@@ -160,13 +196,28 @@ namespace Services
                     Save();
                 }
 
-                System.Web.HttpContext.Current.Session["tsksSession"] = Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders").ToList().AsQueryable();
-                tsksSession = (IQueryable<TaskExecutor>) (System.Web.HttpContext.Current.Session["tsksSession"]);
+                try
+                {
+                    System.Web.HttpContext.Current.Session["tsksSession"] = Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders").ToList().AsQueryable();
+                    tsksSession = (IQueryable<TaskExecutor>)(System.Web.HttpContext.Current.Session["tsksSession"]);
+
+                }
+                catch (Exception)
+                {
+                }
+
 
             }
 
-            return tsksSession;
-        
+            if (tsksSession != null)
+            {
+                return tsksSession;
+            }
+            else
+            {
+                return Context.taskexecutors.Include("SetTaskExecutorEstimatedOn").Include("SetTaskExecutorEstimatedOn.steps").Include("TaskExecutorCylinders");
+            }
+
         }
 
         public override void Edit(TaskExecutor entity)

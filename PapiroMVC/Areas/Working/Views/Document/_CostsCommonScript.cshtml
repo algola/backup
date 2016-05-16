@@ -4,7 +4,8 @@
 
 <script type="text/javascript">
     function editCost(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditCost", new {id= "-1"},new {@class=""})';
+       var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditCost", new {id= "-1"},new {@class=""})';
+
         return link.replace("-1", cellvalue);
     }
 

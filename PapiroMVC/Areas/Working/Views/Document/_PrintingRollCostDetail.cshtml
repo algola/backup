@@ -200,6 +200,60 @@
 
 </script>
 
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#tsk").change(function () {
+            var codTaskExecutor = "";
+            $("#tsk option:selected").each(function () {
+                codTaskExecutor += $(this)[0].value;
+            });
+
+            //data are collected into
+            var dataToPass = {
+                codTaskExecutor: codTaskExecutor,
+                codCost: '@(Model.TaskCost.CodCost)'
+            };
+
+            $.ajax({
+                url: '@(Url.Action("GetPartialCost", "Document", new { area = "Working" }))',
+                type: 'POST',
+                data: JSON.stringify(dataToPass),
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    $('#partial').html(data);
+
+                    //       alert("xx");
+                    //ributto i risultati nella pagina
+                    reloadFormat();
+
+                },
+                error: function () {
+                    alert("error");
+                },
+
+            });
+
+
+        });
+    });
+
+
+</script>
+
+
+
+
+
+
+
 <script type="text/javascript">
 
     function drawBuiyngFormat(context, buyingFormatV, buyingFormatH, offsety, offsetx, zoom, bv) {

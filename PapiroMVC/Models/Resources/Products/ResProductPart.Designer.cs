@@ -115,6 +115,24 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Composizione.
+        /// </summary>
+        public static string ColorFormulation {
+            get {
+                return ResourceManager.GetString("ColorFormulation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Indicazioni della composizione del colore.
+        /// </summary>
+        public static string ColorFormulationToolTip {
+            get {
+                return ResourceManager.GetString("ColorFormulationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
         /// </summary>
         public static string CurrencyValidation {

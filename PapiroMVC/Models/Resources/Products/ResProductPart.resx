@@ -231,6 +231,12 @@
   <data name="PrintSideToolTip" xml:space="preserve">
     <value>Indicazioni del lato interno o esterno di stampa</value>
   </data>
+  <data name="ColorFormulation" xml:space="preserve">
+    <value>Composizione</value>
+  </data>
+  <data name="ColorFormulationToolTip" xml:space="preserve">
+    <value>Indicazioni della composizione del colore</value>
+  </data>
   <data name="Product" xml:space="preserve">
     <value>Prodotto</value>
   </data>

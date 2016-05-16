@@ -3,7 +3,18 @@
 
 @{
     string strings = "~/Areas/Database/Views/Article/Strings";
-    ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "NewMovProductTitle");
+
+    string name = String.Empty;
+
+    if (Model.ArticleOrProduct != null)
+    {
+        ViewBag.Title = Model.ArticleOrProduct.Article.ArticleName;
+    }
+    else
+    {
+        ViewBag.Title = "";
+    }
+
 }
 
 @section title{
@@ -13,6 +24,14 @@
 @section description{
     @ViewBag.Title
 }
+
+@if(Model.ArticleOrProduct != null)
+{
+    <button class="btn btn-warning" type="button" onclick="Javascript:window.location.replace('@Url.Action("EditArticleOnlyMov", "Article", new { area = "Database", id = Model.ArticleOrProduct.Article.CodArticle})');">
+        <i class="icon-arrow-left bigger-125"></i>
+    </button>
+    }
+
 
 @Html.Partial("_NewMovArticle", Model)
 

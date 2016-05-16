@@ -76,6 +76,11 @@ namespace PapiroMVC.Models
         public bool AutoCutParameter { get; set; }
         public bool LateralMinDCut { get; set; }
 
+        //prova
+        public bool ForceLateral { get; set; }
+        public double Lateral { get; set; }
+
+
         public virtual double ImplantRate
         {
             get

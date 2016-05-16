@@ -26,8 +26,8 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("taskcenters", "CodState", SchemaDb.String, "100");
             dbS.AddForeignKey("taskcenters", "CodState", "states", "CodStates");
 
-            dbS.AddColumnToTable("taskcenters", "AlarmStartAfterDays", SchemaDb.Int, "");
-            dbS.AddColumnToTable("taskcenters", "AlarmFinishAfterDays", SchemaDb.Int, "");
+            dbS.AddColumnToTable("taskcenters", "AlarmStartAfterDays", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("taskcenters", "AlarmFinishAfterDays", SchemaDb.Int, "0");
 
 
             //First Table

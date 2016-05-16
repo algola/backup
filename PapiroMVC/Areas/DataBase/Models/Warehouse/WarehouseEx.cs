@@ -10,7 +10,7 @@ namespace PapiroMVC.Models
 {
     [Serializable]
     [MetadataType(typeof(Warehouse_MetaData))]
-    public partial class Warehouse
+    public partial class WarehouseItem
     {
         #region Proprietà aggiuntive
         public enum WarehouseType : int

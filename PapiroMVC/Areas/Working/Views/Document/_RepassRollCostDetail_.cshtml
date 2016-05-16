@@ -162,6 +162,7 @@
             url: '@(Url.Action("getPrintingZRollCostDetailResult", "Document", new { area = "Working" }))',
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
+            cache: false,
             success: function (data) {
                 $('#results').html(data);
             },

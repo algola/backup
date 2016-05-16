@@ -22,33 +22,35 @@ using Mvc.HtmlHelpers;
 using Microsoft.AspNet.SignalR;
 using PapiroMVC.Hubs;
 using System.Globalization;
-
+using System.Web.Mvc;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
 
 
 
+   // [AuthorizeAlgola(Roles = "Estimate")]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
 
         [HttpParamAction]
         [HttpGet]
-        public ActionResult Planning(bool isView=true)
+        [AuthorizeAlgola(Roles = "Planning")]
+        public ActionResult Planning(bool isView = true)
         {
             ViewBag.isView = isView;
-            ViewBag.groupName = CurrentDatabase;
             var x = taskCenterRepository.GetAll().OrderBy(i => i.IndexOf).ToList();
             return View(x);
         }
 
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult PlanningDetail(string id)
         {
-            ViewBag.groupName = CurrentDatabase;
             var tskCenter = taskCenterRepository.GetAll().FirstOrDefault(x => x.CodTaskCenter == id);
             return View(tskCenter);
         }
 
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult ClearTaskCenter(string id)
         {
             var tsks = taskCenterRepository.GetAll();
@@ -69,6 +71,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult ClearFirstTaskCenter()
         {
             var tsks = taskCenterRepository.GetAll();
@@ -98,6 +101,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult ResetFinishedDocumentTask(string id)
         {
             var lstDocumentTaskCenter = taskCenterRepository.GetDocumentsTaskCenter("");
@@ -117,6 +121,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             return null;
         }
 
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult ClearLastTaskCenter()
         {
             var tsks = taskCenterRepository.GetAll();
@@ -141,6 +146,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         }
 
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult DocumentTaskCenter(GridSettings gridSettings, string codTaskCenter)
         {
 
@@ -211,6 +217,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult ChangeTaskCenterOrder(string ids, string codTaskCenter, string finisheds, string starteds)
         {
             string[] stringsIds = Newtonsoft.Json.JsonConvert.DeserializeObject<string[]>(ids);
@@ -278,6 +285,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult SaveTaskCenterOrderState()
         {
             var tskCenters = taskCenterRepository.GetAll().ToList();
@@ -307,7 +315,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
-
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult PrintDocumentsTaskCenter(string codTaskCenter)
         {
             int id;
@@ -380,6 +388,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
         [HttpPost]
+        [AuthorizeAlgola(Roles = "Planning")]
         public ActionResult EditDocumentTaskCenter(DocumentTaskCenter c)
         {
             var toUpdate = taskCenterRepository.GetDocumentTaskCenter(c.CodDocumentTaskCenter);
@@ -415,6 +424,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         }
 
 
+        [AuthorizeAlgola(Roles = "Planning")]
         private void UpdateAndReloadPlanning()
         {
             //var hubContext = GlobalHost.ConnectionManager.GetHubContext<PlanningHub>();

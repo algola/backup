@@ -23,6 +23,8 @@ namespace PapiroMVC.Models
             this.DocumentProducts = new HashSet<DocumentProduct>();
             this.DocumentStates = new HashSet<DocumentState>();
             this.documenttaskcenters = new HashSet<DocumentTaskCenter>();
+            this.warehousearticlemovs = new HashSet<WarehouseArticleMov>();
+            this.warehousearticlemovs1 = new HashSet<WarehouseArticleMov>();
         }
     
     	
@@ -78,5 +80,9 @@ namespace PapiroMVC.Models
         public virtual ICollection<DocumentState> DocumentStates { get; set; }
     	[DataMember]
         public virtual ICollection<DocumentTaskCenter> documenttaskcenters { get; set; }
+    	[DataMember]
+        public virtual ICollection<WarehouseArticleMov> warehousearticlemovs { get; set; }
+    	[DataMember]
+        public virtual ICollection<WarehouseArticleMov> warehousearticlemovs1 { get; set; }
     }
 }

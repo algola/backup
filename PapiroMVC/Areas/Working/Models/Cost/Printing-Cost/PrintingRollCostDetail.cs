@@ -213,7 +213,7 @@ namespace PapiroMVC.Models
                 ppP.CostDetail = this;
                 ppP.Part = this.ProductPart;
                 ppP.AutoCutParameter = true;
-                ppP.PrintingFormat = item.ToString() + "x" + ProductPart.Format.GetSide1();
+                ppP.PrintingFormat =    item.ToString()+ "x" +ProductPart.Format.GetSide1();                
                 ppP.Update();
                 if (ppP.CalculatedGain > 0)
                 {

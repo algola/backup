@@ -76,6 +76,10 @@ namespace PapiroMVC.Model
             ////serve per i rigidi che non possono essere spaccati per la messa in macchina
             //dbS.AddColumnToTable("costdetails", "BuyingWidth", SchemaDb.Double, "0");
 
+            //lateral
+            dbS.AddColumnToTable("costdetails", "ForceLateral", SchemaDb.Bool, "0");
+            //forza il laterale / spalla per zroll
+            dbS.AddColumnToTable("costdetails", "Lateral", SchemaDb.Double, "0");
 
             dbS.AddColumnToTable("costdetails", "SelectorPrinting", SchemaDb.Int, "0");
             dbS.AddColumnToTable("costdetails", "SelectorPrintingRoll", SchemaDb.Int, "0");

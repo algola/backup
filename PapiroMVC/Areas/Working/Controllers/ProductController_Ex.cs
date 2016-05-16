@@ -106,9 +106,10 @@ namespace PapiroMVC.Areas.Working.Controllers
                         {                       
                             a.CodProduct,
                             a.CodProduct,
+                            a.CodProduct,
                             a.WarehouseSpec!=null?a.WarehouseSpec.WarehouseName:"",
                             a.Product!=null?a.Product.ProductName:"",
-                            ((a.QuantityOnHand??0) <= (a.MinQuantity??0))?"Sotto Scorta":"",
+                            ((a.QuantityOnHand??0) < (a.MinQuantity??0))?"Sotto Scorta":"",
                             a.QuantityOnHand==null?"0":a.QuantityOnHand.ToString()
                         }
                     }

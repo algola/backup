@@ -7,39 +7,61 @@
 
 <script type="text/javascript">
     function editArticle(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
+        // var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", "Article", new { area = "DataBase", id = "-1" }, "fa fa-book fa-fw")';
 
         return link.replace("-1", cellvalue);
     }
 
+    function openOrder(cellvalue, options, rowobject) {
+
+        var s = cellvalue.split("%");
+        var caption = s[0];
+        var codDocument = s[1];
+
+        var link = '@Html.ActionLink("-2", "EditOrder", "Document", new { area="Working", id = "-1" }, new { @class = "tbutton smalledit" })';
+
+        return link.replace("-1", codDocument).replace("-2", caption);
+    }
 
     function typeOfMov(cellvalue, options, rowobject) {
+
+        var s = cellvalue.split("%");
+
+        var value = s[0];
+        var CodWarehouseArticleMov = s[1];
+        var CodWarehouseArticle = s[2];
 
         var link = "type";
         var unload = '@HttpContext.GetLocalResourceObject(strings, "UnloadType")'; //0
         var load = '@HttpContext.GetLocalResourceObject(strings, "LoadType")'; //1
         var order = '@HttpContext.GetLocalResourceObject(strings, "OrderType")'; //2
-        var reserve = '@HttpContext.GetLocalResourceObject(strings, "ReserveType")';
+        var reserve = '@HttpContext.GetLocalResourceObject(strings, "ReserveType")'; // 3
 
-        if (cellvalue == "0")
+        if (value == "0")
             return link.replace("type", unload);
 
-        if (cellvalue == "1")
+        if (value == "1")
             return link.replace("type", load);
 
-        if (cellvalue == "2")
-            return link.replace("type", order);
+        if (value == "2") {
+            link = '<a class="nau" name="nau" onClick="transf(%' + CodWarehouseArticleMov + '%,%' + CodWarehouseArticle + '%);return false;" href="#">&&&</a>';
+            return link.replace("%", "'").replace("%", "'").replace("%", "'").replace("%", "'").replace("&&&", order);;
+        }
 
-        if (cellvalue == "3")
-            return link.replace("type", reserve);
-
+        if (value == "3") {
+            link = '<a class="nau" name="nau" onClick="transf(%' + CodWarehouseArticleMov + '%,%' + CodWarehouseArticle + '%);return false;" href="#">&&&</a>';
+            return link.replace("%", "'").replace("%", "'").replace("%", "'").replace("%", "'").replace("&&&", reserve);;
+        }
 
         return link;
     }
 
     function editWarehouse(cellvalue, options, rowobject) {
 
-        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Movments"), "EditArticleOnlyMov", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        //        var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Movments"), "EditArticleOnlyMov", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        var link2 = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Movments"), "EditArticleOnlyMov", "Article", new { area = "DataBase", id = "-1" }, "fa fa-book fa-fw")';
+
         return link2.replace("-1", cellvalue);
 
     }
@@ -158,23 +180,54 @@
 
     });
 
+    var transf;
 
+    $(function () {
 
+        transf = function (codWarehouseArticleMov, codWarehouseArticle) {
 
+            hideProcessingMsg();
 
+            $("#dialog-transform-confirm").removeClass("hide").dialog({
+                height: 250,
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
 
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("FromReserveToUnload", "Article", null)',
+                            data: {
+                                codWarehouseArticleMov: codWarehouseArticleMov,
+                                codWarehouseArticle: codWarehouseArticle
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                //if (msg.isRedirect) {
+                                //    window.location.href = msg.redirectUrl;
+                                //}
+                                $("#list").trigger("reloadGrid");
+                            },
+                            error: function (res, status, exeption) {
+                                $("#list").trigger("reloadGrid");
 
+                            }
+                        });
 
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            $("#dialog-transform-confirm").dialog('option', 'width', 500);
+            hideProcessingMsg();
 
-
-
-
-
-
-
-
-
-
+            return false;
+        };
+    });
 
     $("#delete").click(function () {
         var grid = jQuery("#list");
@@ -221,5 +274,99 @@
         }
     });
 
-</script>
 
+    $("#deleteMov").click(function () {
+        var grid = jQuery("#list");
+        var ids = grid.jqGrid('getGridParam', 'selarrrow');
+        if (ids.length > 0) {
+
+            hideProcessingMsg();
+
+            $("#dialog-confirm").removeClass("hide").dialog({
+                width: 'auto',
+                heigth: 'auto',
+                modal: true,
+                buttons: {
+                    '@Html.T(strings,"DeleteCancel")': function () {
+                        $(this).dialog('close');
+                    },
+                    '@Html.T(strings,"DeleteOk")': function () {
+                        //alert("Confirm");
+                        $.ajax({
+                            type: "POST",
+                            url: '@Url.Action("DeleteArticleMov","Article",null)',
+                            data: {
+                                ids: JSON.stringify(ids)
+                            },
+                            dataType: "json",
+                            success: function (msg) {
+                                //if (msg.isRedirect) {
+                                //    window.location.href = msg.redirectUrl;
+                                //}
+                                $("#list").trigger("reloadGrid");
+                            },
+                            error: function (res, status, exeption) {
+                                $("#list").trigger("reloadGrid");
+
+                            }
+                        });
+
+                        hideProcessingMsg();
+                        $(this).dialog('close');
+                    }
+                }
+            });
+            hideProcessingMsg();
+        }
+    });
+
+
+    $(function () {
+
+        $("#deleteWarehouseArticle").click(function () {
+            var grid = jQuery("#list");
+            var ids = grid.jqGrid('getGridParam', 'selarrrow');
+            if (ids.length > 0) {
+
+                hideProcessingMsg();
+
+                $("#dialog-confirm").removeClass("hide").dialog({
+                    width: 'auto',
+                    heigth: 'auto',
+                    modal: true,
+                    buttons: {
+                        '@Html.T(strings,"DeleteCancel")': function () {
+                            $(this).dialog('close');
+                        },
+                        '@Html.T(strings,"DeleteOk")': function () {
+                            //alert("Confirm");
+                            $.ajax({
+                                type: "POST",
+                                url: '@Url.Action("DeleteWarehouseArticle", "Article", null)',
+                                data: {
+                                    ids: JSON.stringify(ids)
+                                },
+                                dataType: "json",
+                                success: function (msg) {
+                                    //if (msg.isRedirect) {
+                                    //    window.location.href = msg.redirectUrl;
+                                    //}
+                                    $("#list").trigger("reloadGrid");
+                                },
+                                error: function (res, status, exeption) {
+                                    $("#list").trigger("reloadGrid");
+
+                                }
+                            });
+
+                            hideProcessingMsg();
+                            $(this).dialog('close');
+                        }
+                    }
+                });
+                hideProcessingMsg();
+            }
+        });
+    });
+
+</script>

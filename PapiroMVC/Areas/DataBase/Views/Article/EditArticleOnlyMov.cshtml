@@ -35,16 +35,18 @@
     </button>
 }
 
-
 @section breadcrumb {
 
 }
 
+<div id="dialog-transform-confirm" class="hide">
+    @Html.T(strings, "TransformDialogUnload")
+</div>
 
 @section specificPlugInStyle {
+    <link rel="stylesheet" href="~/Content/acetheme/assets/css/jquery-ui.min.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
     <link rel="stylesheet" href="~/Content/acetheme/assets/css/datepicker.css" />
-    <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
 }
 
 @section specificPluginScript {
@@ -52,7 +54,8 @@
     <script src="~/Content/acetheme/assets/js/jqGrid/jquery.jqGrid.min.js"></script>
     <script src="~/Content/acetheme/assets/js/jqGrid/i18n/grid.locale-en.js"></script>
     <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
-    <script src="~/Content/acetheme/assets/js/jquery.autosize-min.js"></script>
+
+    <script src="~/Scripts/jqgridHelper.js"></script>
 }
 
 @section ScriptS{

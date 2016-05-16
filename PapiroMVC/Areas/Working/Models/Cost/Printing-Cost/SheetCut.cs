@@ -183,14 +183,11 @@ namespace PapiroMVC.Models
                     {
                         if (!wantOnlyPair || ((k == 0 || gain1 % k == 0) && ((i == 0) || gain2 % i == 0)))
                         {
-
                             var res1 = k != 0 ? (double)gain1 / (double)k : 1;
                             cuts.Add("ct" + k.ToString() + "-" + i.ToString(),
                                 new Cut("ct1-" + k.ToString() + "-" + i.ToString(), res2 != 0 ? res2 : 1, res1 != 0 ? res1 : 1));
                         }
                     }
-
-
                 }
             }
 

@@ -271,7 +271,7 @@
     <value>Impegno</value>
   </data>
   <data name="NewMovProductMov" xml:space="preserve">
-    <value>Sposta in Magazzino</value>
+    <value>Sposta in</value>
   </data>
   <data name="NewMovProductTitle" xml:space="preserve">
     <value>Nuovo movimento magazzino</value>
@@ -473,5 +473,53 @@
   </data>
   <data name="CreateAnilox" xml:space="preserve">
     <value>Nuovo Anilox</value>
+  </data>
+  <data name="AvailableCaption" xml:space="preserve">
+    <value>Disponibile</value>
+  </data>
+  <data name="DeleteMessageMov" xml:space="preserve">
+    <value>Cancellare i movimenti selezionati?</value>
+  </data>
+  <data name="PotentialAvailableCaption" xml:space="preserve">
+    <value>Potenziale disponibile</value>
+  </data>
+  <data name="PotentialQuantityOnHandCaption" xml:space="preserve">
+    <value>Potenziale</value>
+  </data>
+  <data name="LoadType" xml:space="preserve">
+    <value>Carico</value>
+  </data>
+  <data name="OrderType" xml:space="preserve">
+    <value>Ordine</value>
+  </data>
+  <data name="ReserveType" xml:space="preserve">
+    <value>Impegno</value>
+  </data>
+  <data name="TypeOfMov" xml:space="preserve">
+    <value>Movimento</value>
+  </data>
+  <data name="UnloadType" xml:space="preserve">
+    <value>Scarico</value>
+  </data>
+  <data name="CodDocumentMovCaption" xml:space="preserve">
+    <value>Commessa</value>
+  </data>
+  <data name="QuantityCaption" xml:space="preserve">
+    <value>Quantità</value>
+  </data>
+  <data name="TypeOfMovCaption" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="TransformDialogLoad" xml:space="preserve">
+    <value>Caricare il materiale in ordine?</value>
+  </data>
+  <data name="TransformDialogUnload" xml:space="preserve">
+    <value>Carico o Scarico del materiale?</value>
+  </data>
+  <data name="OnlyMovCaption" xml:space="preserve">
+    <value>Movimenti</value>
+  </data>
+  <data name="DeleteMessageArticle" xml:space="preserve">
+    <value>Cancellare gli articoli selezionati?</value>
   </data>
 </root>

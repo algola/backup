@@ -709,6 +709,15 @@ namespace PapiroMVC.Views.Shared.App_LocalResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Carico/Scarico Materie.
+        /// </summary>
+        public static string MovArticleMenu {
+            get {
+                return ResourceManager.GetString("MovArticleMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Movimenti Prodotti.
         /// </summary>
         public static string MovProductMenu {

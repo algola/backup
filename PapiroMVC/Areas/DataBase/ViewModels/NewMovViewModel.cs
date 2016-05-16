@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
         public Boolean IsProduct
         { get; set; }
 
-        public Warehouse ArticleOrProduct
+        public WarehouseItem ArticleOrProduct
         { get; set; }
 
         public WarehouseArticleMov Mov

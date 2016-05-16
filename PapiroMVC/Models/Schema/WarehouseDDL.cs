@@ -24,8 +24,6 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("warehouses", "WarehouseName", SchemaDb.String, "100");
 
 
-
-
             //First Table
             dbS.AddTable("warehousearticles");
             dbS.AddColumnToTable("warehousearticles", "CodWarehouseArticle", SchemaDb.StringPK, "50");
@@ -85,6 +83,18 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("warehousearticlemovs", "TypeOfMov", SchemaDb.Int, "0");
             dbS.AddColumnToTable("warehousearticlemovs", "UnitOfMeasureMov", SchemaDb.String, "50");
             dbS.AddColumnToTable("warehousearticlemovs", "UmConversion", SchemaDb.Double, "0");
+
+            dbS.AddColumnToTable("warehousearticlemovs", "CodProductPartPrintableArticle", SchemaDb.String, "50");
+            dbS.AddForeignKey("warehousearticlemovs", "CodProductPartPrintableArticle", "productpartsprintablearticle", "CodProductPartPrintableArticle");
+
+            dbS.AddColumnToTable("warehousearticlemovs", "CodDocument", SchemaDb.String, "50");
+            dbS.AddForeignKey("warehousearticlemovs", "CodDocument", "documents", "CodDocument");
+
+            dbS.AddColumnToTable("warehousearticlemovs", "Note", SchemaDb.String, "255");
+
+            //Index
+            dbS.AddIndex("warehousearticlemovs", "TypeOfMov");
+            dbS.AddIndex("warehousearticlemovs", "CodProductPartPrintableArticle");
 
 
         }

@@ -56,7 +56,7 @@ namespace PapiroMVC.Models
         public DbSet<DocumentState> DocumentStates { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<WarehouseArticleMov> warehousearticlemovs { get; set; }
-        public DbSet<Warehouse> warehousearticles { get; set; }
+        public DbSet<WarehouseItem> warehousearticles { get; set; }
         public DbSet<WarehouseSpec> warehouseSpec { get; set; }
         public DbSet<ProductNameGenerator> ProductNameGenerators { get; set; }
         public DbSet<ProductPartTaskOption> ProductPartTaskOptions { get; set; }

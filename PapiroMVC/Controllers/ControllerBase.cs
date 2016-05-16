@@ -104,7 +104,7 @@ namespace PapiroMVC.Controllers
             set;
         }
 
-        public string CurrentUserDatabase
+        public string CurrentClient
         {
             get;
             set;
@@ -121,10 +121,12 @@ namespace PapiroMVC.Controllers
             if (requestContext.HttpContext.User.Identity.IsAuthenticated)
             {
                 string userName = requestContext.HttpContext.User.Identity.Name;
+                
                 CurrentUser = Membership.GetUser(userName);
                 ViewData["CurrentUser"] = CurrentUser;
-                CurrentDatabase = userName;
-                CurrentUserDatabase = "root";
+                               
+                CurrentDatabase = userName.GetDatabase();
+                CurrentClient = userName.GetUser();
             }
             else
                 ViewData["CurrentUser"] = null;
@@ -171,8 +173,8 @@ namespace PapiroMVC.Controllers
                 //tables.Add(new MenuProductDDL(dbName));
                 //tables.Add(new CostDetailDDL(dbName));
                 //tables.Add(new WarehouseArticlesDDL(dbName));
-
                 //tables.Add(new TaskCentersDDL(dbName));
+
                 tables.Add(new UpdateDDL(dbName));
 
                 foreach (var item in tables)

@@ -45,9 +45,6 @@ namespace PapiroMVC.Validation
 
     }
 
-
-
-
     public class AuthorizeModuleAttribute : ActionFilterAttribute
     {
 
@@ -129,4 +126,45 @@ namespace PapiroMVC.Validation
         }
 
     }
+
+
+    public class AuthorizeAlgola : AuthorizeAttribute
+    {
+        public AuthorizeAlgola(params string[] roles)
+                : base()
+            {
+                Roles = string.Join(",", roles);
+            }
+
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            //Check to make sure the user is authenticated
+            if (!httpContext.User.Identity.IsAuthenticated)
+                return false;
+    
+            return base.AuthorizeCore(httpContext);
+        }
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            filterContext.Controller.ViewBag.Module = Roles;
+            Console.Write(base.Users);
+
+            base.OnAuthorization(filterContext);
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        {
+
+            filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+            {
+                controller = "Account",
+                action = "EditProfile",
+                view = "EditProfileModule",
+                area = "Account"
+            }));
+        }
+
+    }
+
 }

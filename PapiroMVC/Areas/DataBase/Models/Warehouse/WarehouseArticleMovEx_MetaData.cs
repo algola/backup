@@ -30,6 +30,8 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResArticle), "DateMovToolTip")]
         public Nullable<DateTime> Date { get; set; }
 
+        [DisplayNameLocalized(typeof(ResArticle), "Note")]
+        public string Note { get; set; }
 
     }
 }

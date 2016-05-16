@@ -19,7 +19,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 {
 
     //  [CustomHandleErrorAttribute(ExceptionType = typeof(NotImplementedException), View = "Error2")]
-    [AuthorizeUser]
+    //[AuthorizeAlgola(Roles = "Estimate")]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
         private readonly IDocumentRepository documentRepository;
@@ -33,11 +33,13 @@ namespace PapiroMVC.Areas.Working.Controllers
         private readonly ICostDetailRepository costDetailRepository;
         private readonly ITaskCenterRepository taskCenterRepository;
 
+        private readonly IWarehouseRepository warehouseRepository;
 
         protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
             base.Initialize(requestContext);
             documentRepository.SetDbName(CurrentDatabase);
+            warehouseRepository.SetDbName(CurrentDatabase);
             productRepository.SetDbName(CurrentDatabase);
 
             typeOfTaskRepository.SetDbName(CurrentDatabase);
@@ -70,7 +72,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             ICustomerSupplierRepository _customerSupplierRepository,
             IMenuProductRepository _menuProduct,
             ICostDetailRepository _costDetailRepository,
-            ITaskCenterRepository _taskCenterRepository)
+            ITaskCenterRepository _taskCenterRepository,
+            IWarehouseRepository _warehouseDataRep)
         {
             typeOfTaskRepository = _typeOfTaskRepository;
             documentRepository = _documentRepository;
@@ -81,6 +84,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             menu = _menuProduct;
             costDetailRepository = _costDetailRepository;
             taskCenterRepository = _taskCenterRepository;
+            warehouseRepository = _warehouseDataRep;
+
 
             this.Disposables.Add(typeOfTaskRepository);
             this.Disposables.Add(documentRepository);
@@ -91,6 +96,8 @@ namespace PapiroMVC.Areas.Working.Controllers
             this.Disposables.Add(menu);
             this.Disposables.Add(costDetailRepository);
             this.Disposables.Add(taskCenterRepository);
+            this.Disposables.Add(warehouseRepository);
+
 
         }
 
@@ -198,7 +205,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             }
 
             ModelState.Clear();
-            TryValidateModel(die); 
+            TryValidateModel(die);
 
             if (ModelState.IsValid)
             {
@@ -850,9 +857,10 @@ namespace PapiroMVC.Areas.Working.Controllers
             documentRepository.Add(c);
             documentRepository.Save();
 
-
             //se ci sono dei TaskCenter inizio a buttare i taskcenter nel primo taskcenter (IndexOf==0)
             var taskCenter = taskCenterRepository.GetAll().Where(y => y.IndexOf == 0).FirstOrDefault();
+
+            var prod = productRepository.GetSingle(docProd.CodProduct);
 
             if (taskCenter != null)
             {
@@ -869,13 +877,110 @@ namespace PapiroMVC.Areas.Working.Controllers
                     dtc.DocumentName = docProd.Product.ProductRefName;
                 }
 
+                try
+                {
+                    dtc.FieldA = prod.GetColorOfPrinting();
+                }
+                catch (Exception)
+                {
+
+                }
+
                 taskCenterRepository.AddNewDocumentTaskCenter(dtc);
                 taskCenterRepository.Save();
+            }
 
+            foreach (var item in prod.ProductParts)
+            {
+                foreach (var p in item.ProductPartPrintableArticles)
+                {
+
+                    //devo caricare nel prodotto anche tutte le informazioni per il magazzino
+                    var locations = warehouseRepository.GetWarehouseList();
+                    ViewBag.Locations = locations;
+
+                    //the new movment display warehouse information
+                    //plus new movment in accord to warehouse article specify
+                    var cost = docProd.Costs.FirstOrDefault(x => x.CodProductPartPrintableArticle == p.CodProductPartPrintableArticle);
+
+                    // cost.
+                    var articles = articleRepository.GetAll();
+                    string codArticle;
+                    Article art;
+
+                    var extract = articles.GetArticlesByProductPartPrintableArticle(p);
+
+                    var warehouse = warehouseRepository.GetWarehouseList().OrderBy(x => x.CodWarehouse).FirstOrDefault();
+                    var codWarehouse = warehouse != null ? warehouse.CodWarehouse : "";
+
+                    var costDetail = cost.CostDetails.FirstOrDefault();
+
+                    try
+                    {
+
+                        if (extract.FirstOrDefault() != null)
+                        {
+                            art = extract.FirstOrDefault();
+
+                            if (costDetail != null && costDetail.TypeOfCostDetail == CostDetail.CostDetailType.PrintedRollArticleCostDetail)
+                            {
+                                //carico i dati
+                                EditCost(cost.CodCost);
+                                CostDetail temp = (CostDetail)Session["CostDetail"];
+
+
+                                var h = temp.PrintingFormat.GetSide1();
+                                art = extract.OfType<RollPrintableArticle>().FirstOrDefault(x => x.Width == h);
+
+                                if (art != null)
+                                {
+                                    codArticle = art.CodArticle;
+                                }
+                            }
+
+                            if (art != null)
+                            {
+
+                                Console.Write(art.CodArticle);
+
+                                var z = warehouseRepository.GetSingleArticle(art.CodArticle, codWarehouse);
+                                var newMov = new NewMovViewModel();
+                                newMov.ArticleOrProduct = z;
+                                newMov.IsProduct = false;
+
+                                newMov.Mov = new WarehouseArticleMov
+                                {
+                                    WarehouseArticle = z,
+                                    CodDocument = c.CodDocument,
+                                    CodProductPartPrintableArticle = p.CodProductPartPrintableArticle,
+                                    CodWarehouseArticle = z == null ? "" : z.CodWarehouseArticle,
+                                    Quantity = cost == null ? 0 : art.TransformQuantity(cost.Quantity ?? 0, (CostDetail.QuantityType)(cost.CostDetails.Count() != 0 ? (cost.CostDetails.FirstOrDefault().TypeOfQuantity ?? 10) : 10)),
+                                    TypeOfMov = 3
+                                };
+
+                                //ilNewMov.dice del movimento lo prendo dalNewMov.dice dell'articolo
+                                newMov.Mov.CodWarehouseArticle = newMov.ArticleOrProduct.CodWarehouseArticle;
+                                newMov.Mov.CodWarehouseArticleMov = warehouseRepository.GetNewMovCode(newMov.Mov);
+                                warehouseRepository.AddMov(newMov.Mov);
+                                warehouseRepository.Save();
+
+                                warehouseRepository.UpdateArticle(warehouseRepository.GetSingle(newMov.Mov.CodWarehouseArticle));
+                                warehouseRepository.Save();
+
+
+                            }
+                        }
+                    }
+
+                    catch (Exception)
+                    {
+
+                    }
+
+                }
             }
             return c;
         }
-
         /// <summary>
         /// Action to create new order
         /// </summary>
@@ -893,6 +998,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 return Json(new { redirectUrl = Url.Action("EditOrder", new { id = c.CodDocument }) }, JsonRequestBehavior.AllowGet);
             }
+
             return View("EditOrder", c);
         }
     }

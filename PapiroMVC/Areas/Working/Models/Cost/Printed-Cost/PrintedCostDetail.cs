@@ -83,8 +83,7 @@ namespace PapiroMVC.Models
                 art.MergeField(doc);
             }
 
-            ComputedBy.MergeField(doc);
-
+        //    ComputedBy.MergeField(doc);
 
         }
 

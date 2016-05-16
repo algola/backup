@@ -162,6 +162,88 @@
 
 </div>
 
+
+
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        var ischecked = $("#ForceLateral").is(':checked');
+        if (!ischecked) {
+            $("#lateral").val('');
+        }
+        $("#lateral").prop('disabled', !ischecked);
+
+
+        $("#lateral").keypress(function (event) {
+            if (event.which == 13) {
+                event.preventDefault();
+
+                //data are collected into
+                var dataToPass = {
+                    lateral: $("#lateral").val()
+                };
+
+                if ($('#ForceLateral').is(':checked')) {
+
+                    $.ajax({
+                        url: '@(Url.Action("ChangeLateralAndFuzzy", "Document", new { area = "Working" }))',
+                        type: 'POST',
+                        data: JSON.stringify(dataToPass),
+                        contentType: 'application/json; charset=utf-8',
+                        success: function (data) {
+                            $('#sheetCostDetail').html(data);
+                        },
+                        error: function () {
+                            alert("error");
+                        },
+                    });
+                }
+            }
+        });
+
+        $("#ForceLateral").change(function () {
+            var ischecked = $(this).is(':checked');
+            $("#lateral").prop('disabled', !ischecked);
+            if (!ischecked) {
+                $("#lateral").val('');
+
+                showProcessingMsg();
+
+                $.ajax({
+                    url: '@(Url.Action("RemoveLateralAndFuzzy", "Document", new { area = "Working" }))',
+                    type: 'POST',
+                    data: null,
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (data) {
+                        $('#sheetCostDetail').html(data);
+                        hideProcessingMsg();
+                    },
+                    error: function () {
+                        hideProcessingMsg();
+                        alert("error");
+                    }
+                });
+
+
+            }
+
+        });
+
+        //$('#ProductPartPrinting_Perfecting').change(function () {
+
+
+        //    alert('ciaociao');
+        //    //data are collected into
+        //    var dataToPass = {
+        //        perfecting: $('#ProductPartPrinting_Perfecting').prop('checked')
+        //    };
+    });
+
+</script>
+
+
 <script type="text/javascript">
 
     $("#ddPartFormat, #ddPartDCut1, #ddPartDCut2, #ddPartMinDCut, #maxGain1 #maxGain2, #ddPartMaxDCut").keypress(function (event) {
@@ -221,10 +303,8 @@
             minDCut: $("#ddPartMinDCut").val(),
             maxDCut: $("#ddPartMaxDCut").val(),
 
-
             maxGain1: $("#maxGain1").val(),
             maxGain2: $("#maxGain2").val()
-
         };
 
         $.ajax({
@@ -252,6 +332,7 @@
             url: '@(Url.Action("getPrintingZRollCostDetailResult", "Document", new { area = "Working" }))',
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
+            cache: false,
             success: function (data) {
                 $('#results').html(data);
             },
@@ -518,6 +599,8 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+
+
 
         //unbind and bind ensure that is fired one time only
         $("#tsk").unbind('change').bind('change', function () {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using PapiroMVC.Validation;
 
 
 namespace PapiroMVC.Models
@@ -20,8 +21,13 @@ namespace PapiroMVC.Models
 
         public override string ToString()
         {
-            return base.ToString() + this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Weight + " ";
+            //LANGFILE
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+
+            return base.ToString() + this.TypeOfMaterial + " " + this.NameOfMaterial + " " + this.Weight + " " + resman.GetString("Weight");        
         }
+
+
 
     }
 }

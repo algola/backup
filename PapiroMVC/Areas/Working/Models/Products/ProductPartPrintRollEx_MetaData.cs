@@ -23,5 +23,9 @@ namespace PapiroMVC.Models
         [Tooltip(typeof(ResProductPartTask), "PrintSideToolTip")]
         public Nullable<int> PrintSide { get; set; }
 
+        [DisplayNameLocalized(typeof(ResProductPartTask), "ColorFormulation")]
+        [Tooltip(typeof(ResProductPartTask), "ColorFormulationToolTip")]
+        public Nullable<int> ColorFormulation { get; set; }
+
     }
 }

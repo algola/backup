@@ -18,13 +18,7 @@ namespace PapiroMVC.Model
         public void UpdateSchema(DbContext ctx)
         {
             dbS.Ctx = ctx;
-
-            dbS.AddColumnToTable("products", "PapiroPrev", SchemaDb.String, "50");
-            dbS.AddIndex("products", "PapiroPrev");
-
-            dbS.AddColumnToTable("documents", "PapiroCom", SchemaDb.String, "50");
-            dbS.AddIndex("documents", "PapiroCom");
-
+            dbS.AddColumnToTable("warehousearticlemovs", "Note", SchemaDb.String, "255");
 
         }
 

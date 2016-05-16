@@ -1438,6 +1438,87 @@ namespace PapiroMVC.Models.Resources.Products {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Composizione.
+        /// </summary>
+        public static string ColorFormulation {
+            get {
+                return ResourceManager.GetString("ColorFormulation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non Specificato.
+        /// </summary>
+        public static string ColorFormulation0 {
+            get {
+                return ResourceManager.GetString("ColorFormulation0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMYK.
+        /// </summary>
+        public static string ColorFormulation1 {
+            get {
+                return ResourceManager.GetString("ColorFormulation1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMYK + Pantone/i.
+        /// </summary>
+        public static string ColorFormulation2 {
+            get {
+                return ResourceManager.GetString("ColorFormulation2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMYK + Bianco.
+        /// </summary>
+        public static string ColorFormulation3 {
+            get {
+                return ResourceManager.GetString("ColorFormulation3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CMYK + Pantone/i + Bianco.
+        /// </summary>
+        public static string ColorFormulation4 {
+            get {
+                return ResourceManager.GetString("ColorFormulation4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pantone/i.
+        /// </summary>
+        public static string ColorFormulation5 {
+            get {
+                return ResourceManager.GetString("ColorFormulation5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pantone/i + Bianco.
+        /// </summary>
+        public static string ColorFormulation6 {
+            get {
+                return ResourceManager.GetString("ColorFormulation6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bianco.
+        /// </summary>
+        public static string ColorFormulation7 {
+            get {
+                return ResourceManager.GetString("ColorFormulation7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to (^(\d{1,3}(\.\d{3})*|(\d+))(\,\d{0,5})?$)|(^$).
         /// </summary>
         public static string CurrencyValidation {

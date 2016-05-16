@@ -167,8 +167,6 @@ namespace PapiroMVC.Model
             //Manual
             dbS.AddColumnToTable("costs", "Manual", SchemaDb.Bool, "0");
 
-
-
             //Second Table
             dbS.AddTable("documentstate");
             dbS.AddColumnToTable("documentstate", "CodDocumentState", SchemaDb.StringPK, "50");

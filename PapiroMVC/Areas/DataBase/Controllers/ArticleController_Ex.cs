@@ -12,6 +12,7 @@ using Mvc.HtmlHelpers;
 using PapiroMVC.Validation;
 using System.Threading;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace PapiroMVC.Areas.DataBase.Controllers
 {
@@ -1034,7 +1035,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 isRoto = (roto.ToLower().Contains(formatTypeFilter.ToLower()));
 
 
-                var a = isQuad ? q.Where(x => x.FormatType==0) : q.Where(x => x.FormatType==-1);
+                var a = isQuad ? q.Where(x => x.FormatType == 0) : q.Where(x => x.FormatType == -1);
                 var b = isOva ? q.Where(x => x.FormatType == 1) : q.Where(x => x.FormatType == -1);
                 var c = isSago ? q.Where(x => x.FormatType == 2) : q.Where(x => x.FormatType == -1);
                 var d = isRett ? q.Where(x => x.FormatType == 3) : q.Where(x => x.FormatType == -1);
@@ -1396,15 +1397,49 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
         //use to put correct typed results
-        internal class ResClass
-        { 
-           public string TypeOfMaterial{get;set;}
-           public string NameOfMaterial {get;set;}
-           public string Adhesive  {get;set;}
-           public Nullable<bool> NoUseInEstimateCalculation {get;set;}
-           public string Color{get;set;}
-           public double Weight { get; set; }
+        internal class ResClass : IEquatable<ResClass>
+        {
+            public string TypeOfMaterial { get; set; }
+            public string NameOfMaterial { get; set; }
+            public string Adhesive { get; set; }
+            public Nullable<bool> NoUseInEstimateCalculation { get; set; }
+            public string Color { get; set; }
+            public double Weight { get; set; }
+
+
+
+
+            public bool Equals(ResClass other)
+            {
+                if (TypeOfMaterial == other.TypeOfMaterial &&
+                    NameOfMaterial == other.NameOfMaterial &&
+                    Adhesive == other.Adhesive &&
+                    Color == other.Color &&
+                    Weight == other.Weight)
+                    return true;
+
+                return false;
+            }
+
+            public override int GetHashCode()
+            {
+                int hashTypeOfMaterial = TypeOfMaterial == null ? 0 : TypeOfMaterial.GetHashCode();
+                int hashNameOfMaterial = NameOfMaterial == null ? 0 : NameOfMaterial.GetHashCode();
+                int hashAdhesive = Adhesive == null ? 0 : Adhesive.GetHashCode();
+                int hashColor = Color == null ? 0 : Color.GetHashCode();
+                int hashWeight = Weight == null ? 0 : Weight.GetHashCode();
+
+                return hashTypeOfMaterial ^
+                    hashNameOfMaterial ^
+                    hashAdhesive ^
+                    hashNameOfMaterial ^
+                    hashColor ^
+                    hashWeight;
+            }
+
+
         }
+
 
         public ActionResult RollPrintableArticleListPerProduct(GridSettings gridSettings)
         {
@@ -1415,10 +1450,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 Color = p.Color,
                 Adhesive = p.Adhesive,
                 NoUseInEstimateCalculation = p.NoUseInEstimateCalculation,
-                Weight = p.Weight??0,
-            }).AsQueryable().Where(x => x.NoUseInEstimateCalculation == false || x.NoUseInEstimateCalculation == null).Distinct().ToList();
+                Weight = p.Weight ?? 0
+            }).Distinct().Where(x => x.NoUseInEstimateCalculation == false || x.NoUseInEstimateCalculation == null).ToList();
 
-            var q = res.AsQueryable().OrderBy(c => c.TypeOfMaterial);
+
+
+            var q = res.AsQueryable().OrderBy(c => c.TypeOfMaterial).ToList();
 
             var q3 = q.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize);
 
@@ -1432,7 +1469,6 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             int startRow = (pageIndex - 1) * pageSize;
             int endRow = startRow + pageSize;
-
 
             var jsonData = new
             {
@@ -1489,6 +1525,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         //}
 
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult OnlyMov()
+        {
+            return View();
+        }
+
         public ActionResult WarehouseMovListProduct(string codProduct, GridSettings gridSettings)
         {
             var q = warehouseRepository.GetAllMovsProduct(codProduct);
@@ -1537,7 +1579,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             (a.Date??DateTime.Now).ToString(),
                             a.WarehouseArticle.WarehouseSpec.WarehouseName,
                             a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
-                            a.Quantity==null?"":a.Quantity.ToString(),       
+                            "",
+                            a.Quantity==null?"":a.Quantity.ToString()
                         }
                     }
                 ).ToArray()
@@ -1662,6 +1705,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.WarehouseArticle.Product.ProductName,
                             a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
                             a.Quantity==null?"":a.Quantity.ToString(),       
+                            a.CodWarehouseArticleMov
                         }
                     }
                 ).ToArray()
@@ -1672,22 +1716,219 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
         }
 
+
+
+        public ActionResult DeleteArticleMov(string ids, string urlBack)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
+            {
+                WarehouseArticleMov q = warehouseRepository.GetAllMovsArticle("").Where(x => x.CodWarehouseArticleMov == id).FirstOrDefault();
+
+                if (q != null)
+                {
+                    var s = q.WarehouseArticle;
+                    warehouseRepository.DeleteMov(q);
+                    warehouseRepository.UpdateArticle(s);
+                    warehouseRepository.Save();
+                }
+
+            }
+
+            return null;
+
+        }
+
+
+        public ActionResult DeleteWarehouseArticle(string ids)
+        {
+            string[] strings = JsonConvert.DeserializeObject<string[]>(ids);
+            foreach (var id in strings)
+            {
+                WarehouseItem q = warehouseRepository.GetAll().Where(x => x.CodWarehouseArticle == id).FirstOrDefault();
+                if (q != null)
+                {
+                    warehouseRepository.Delete(q);
+                    warehouseRepository.Save();
+                }
+            }
+
+            return null;
+
+        }
+
+
+        public ActionResult FromReserveToUnload(string codWarehouseArticleMov, string codWarehouseArticle)
+        {
+            WarehouseArticleMov q = warehouseRepository.GetAllMovs(codWarehouseArticle).Where(x => x.CodWarehouseArticleMov == codWarehouseArticleMov).FirstOrDefault();
+
+            if (q != null && q.TypeOfMov == 3 || q.TypeOfMov == 2)
+            {
+                if (q.TypeOfMov == 2) //order
+                {
+                    q.TypeOfMov = 1; //load
+                }
+
+                if (q.TypeOfMov == 3) //reserve
+                {
+                    q.TypeOfMov = 0; //unload
+                }
+
+                q.Date = DateTime.Today;
+                warehouseRepository.EditMov(q);
+
+
+                warehouseRepository.UpdateArticle(q.WarehouseArticle);
+                warehouseRepository.Save();
+
+
+            }
+
+            return null;
+
+
+        }
+
         public ActionResult WarehouseMovListArticle(string codArticle, GridSettings gridSettings)
         {
-            var q = warehouseRepository.GetAllMovsArticle(codArticle);
+            IQueryable<WarehouseArticleMov> q;
+
+            q = warehouseRepository.GetAllMovsArticle(codArticle);
 
             string warehouseName = string.Empty;
+            string date = string.Empty;
+            string type = string.Empty;
+            string articleName = string.Empty;
+            string codDocument = string.Empty;
+            string note = string.Empty;
+
 
             if (gridSettings.isSearch)
             {
                 warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
                         gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
+
+                date = gridSettings.where.rules.Any(r => r.field == "Date") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "Date").data : string.Empty;
+
+                type = gridSettings.where.rules.Any(r => r.field == "TypeOfMov") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfMov").data : string.Empty;
+
+                articleName = gridSettings.where.rules.Any(r => r.field == "ArticleName") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "ArticleName").data : string.Empty;
+
+                codDocument = gridSettings.where.rules.Any(r => r.field == "CodDocument") ?
+                        gridSettings.where.rules.FirstOrDefault(r => r.field == "CodDocument").data : string.Empty;
+
+                note = gridSettings.where.rules.Any(r => r.field == "Note") ?
+        gridSettings.where.rules.FirstOrDefault(r => r.field == "Note").data : string.Empty;
+
             }
 
             if (!string.IsNullOrEmpty(warehouseName))
             {
                 q = q.Where(c => c.WarehouseArticle.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
             }
+
+            if (!string.IsNullOrEmpty(articleName))
+            {
+                var names = articleName.Split(' ');
+
+                foreach (var name in names)
+                {
+                    q = q.Where(c => c.WarehouseArticle.Article.ArticleName.ToLower().Contains(name.ToLower()));
+                }
+            }
+
+
+            if (!string.IsNullOrEmpty(note))
+            {
+                var names = articleName.Split(' ');
+
+                foreach (var name in names)
+                {
+                    q = q.Where(c => c.Note.ToLower().Contains(note.ToLower()));
+                }
+            }
+
+
+            if (!string.IsNullOrEmpty(codDocument))
+            {
+                var s = q.Where(c => c.Document != null).ToList();
+                var s1 = s.Where(c => ((Order)c.Document).OrderNumber.ToLower().Contains(codDocument.ToLower())).ToList();
+                q = s1.AsQueryable();
+            }
+
+            if (!string.IsNullOrEmpty(date))
+            {
+                try
+                {
+                    DateTime dt = Convert.ToDateTime(date);
+                    q = q.Where(c => DateTime.Compare(c.Date ?? DateTime.Now, dt) == 0);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            //read from validation's language file
+            //this resource has to be the same as view's resource
+            var resman = new System.Resources.ResourceManager(typeof(Strings).FullName, typeof(Strings).Assembly);
+            string unloadType = resman.GetString("UnloadType");//0
+            string loadType = resman.GetString("LoadType");//1
+            string orderType = resman.GetString("OrderType");//2
+            string reserveType = resman.GetString("ReserveType");//3
+
+            if (!string.IsNullOrEmpty(type))
+            {
+                Boolean isLoad = false, isUnload = false, isOrder = false, isReserve = false;
+
+                //to match with language we have to compare filter with resource
+                isUnload = (unloadType.ToLower().StartsWith(type.ToLower()));
+                isLoad = (loadType.ToLower().StartsWith(type.ToLower()));
+                isOrder = (orderType.ToLower().StartsWith(type.ToLower()));
+                isReserve = (reserveType.ToLower().StartsWith(type.ToLower()));
+
+                if (isUnload)
+                {
+                    q = q.Where(x => x.TypeOfMov == 0);
+                }
+
+                if (isLoad)
+                {
+                    q = q.Where(x => x.TypeOfMov == 1);
+                    var s = q.ToList();
+                }
+
+                if (isOrder)
+                {
+                    q = q.Where(x => x.TypeOfMov == 2);
+                }
+
+                if (isReserve)
+                {
+                    q = q.Where(x => x.TypeOfMov == 3);
+                }
+            }
+
+
+            q = q.OrderByDescending(x => x.Date);
+
+
+            switch (gridSettings.sortColumn)
+            {
+                case "WarehouseName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.WarehouseArticle.WarehouseSpec.WarehouseName) : q.OrderBy(c => c.WarehouseArticle.WarehouseSpec.WarehouseName);
+                    break;
+                case "ArticleName":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.WarehouseArticle.Article.ArticleName) : q.OrderBy(c => c.WarehouseArticle.Article.ArticleName);
+                    break;
+                case "Date":
+                    q = (gridSettings.sortOrder == "desc") ? q.OrderByDescending(c => c.Date) : q.OrderBy(c => c.Date);
+                    break;
+            }
+
 
             var q2 = q.ToList();
             var q3 = q2.Skip((gridSettings.pageIndex - 1) * gridSettings.pageSize).Take(gridSettings.pageSize).ToList();
@@ -1717,10 +1958,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         cell = new string[] 
                         {              
                             a.CodWarehouseArticleMov,
-                            (a.Date??DateTime.Now).ToString(),
+                            String.Format("{0:d}",(a.Date??DateTime.Now)),
                             a.WarehouseArticle.WarehouseSpec.WarehouseName,
-                            a.TypeOfMov==null?"":a.TypeOfMov.ToString(),
-                            a.Quantity==null?"":a.Quantity.ToString(),       
+                            a.WarehouseArticle.Article.ArticleName,
+                            (a.TypeOfMov==null?"":a.TypeOfMov.ToString()) + "%" + a.CodWarehouseArticleMov + "%" + a.CodWarehouseArticle,
+                            a.Quantity==null?"":a.Quantity.ToString(),                         
+                            ((Order)(a.Document))!=null?
+                            ((Order)(a.Document)).OrderNumberSerie + "/" + ((Order)(a.Document)).OrderNumber + "%" + a.CodDocument
+                            :"",
+                            a.Note
                         }
                     }
                 ).ToArray()
@@ -1728,8 +1974,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             return Json(jsonData, JsonRequestBehavior.AllowGet);
 
-
         }
+
 
         public ActionResult SheetPrintableArticleListPerProduct(GridSettings gridSettings)
         {

@@ -402,17 +402,6 @@ namespace PapiroMVC.Areas.Working.Controllers
             return PartialView("_EditAndCreateProduct", pv);
         }
 
-
-
-
-
-
-
-
-
-
-
-
         #region Warehouse
 
         [AcceptVerbs(HttpVerbs.Get)]
@@ -514,7 +503,7 @@ namespace PapiroMVC.Areas.Working.Controllers
             {
                 try
                 {
-                    PapiroMVC.Models.Warehouse prod;
+                    PapiroMVC.Models.WarehouseItem prod;
                     //  prod = warehouseRepository.GetSingleProduct(c.ArticleOrProduct.CodProduct, c.ArticleOrProduct.CodWarehouse);
 
                     c.Mov.TypeOfMov = 0; //scarico!!!!

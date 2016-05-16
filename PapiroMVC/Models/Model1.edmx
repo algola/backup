@@ -133,6 +133,8 @@
           <Property Name="JustComputed" Type="bit" />
           <Property Name="WorkingFormat" Type="char" MaxLength="20" />
           <Property Name="SelectorImplant" Type="int" />
+          <Property Name="ForceLateral" Type="bit" />
+          <Property Name="Lateral" Type="double" />
         </EntityType>
         <EntityType Name="costs">
           <Key>
@@ -463,6 +465,7 @@
           <Property Name="IfSelectedResetOtherCodItemGraph" Type="char" MaxLength="200" />
           <Property Name="Selector" Type="int" />
           <Property Name="PrintSide" Type="int" />
+          <Property Name="ColorFormulation" Type="int" />
         </EntityType>
         <EntityType Name="products">
           <Key>
@@ -769,6 +772,9 @@
           <Property Name="UnitOfMeasureMov" Type="char" MaxLength="50" />
           <Property Name="UmConversion" Type="double" />
           <Property Name="Used" Type="bit" />
+          <Property Name="CodDocument" Type="char" MaxLength="50" />
+          <Property Name="CodProductPartPrintableArticle" Type="char" MaxLength="50" />
+          <Property Name="Note" Type="char" MaxLength="255" />
         </EntityType>
         <EntityType Name="warehousearticles">
           <Key>
@@ -1428,6 +1434,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_warehousearticlemovs_CodDocument">
+          <End Role="documents" Type="Self.documents" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticlemovs" Type="Self.warehousearticlemovs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documents">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="warehousearticlemovs">
+              <PropertyRef Name="CodDocument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_CodProductPartPrintableArticle">
+          <End Role="productpartsprintablearticle" Type="Self.productpartsprintablearticle" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticlemovs" Type="Self.warehousearticlemovs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productpartsprintablearticle">
+              <PropertyRef Name="CodProductPartPrintableArticle" />
+            </Principal>
+            <Dependent Role="warehousearticlemovs">
+              <PropertyRef Name="CodProductPartPrintableArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_warehousearticlemovs_CodWarehouseArticle">
           <End Role="warehousearticles" Type="Self.warehousearticles" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1439,6 +1473,20 @@
             </Principal>
             <Dependent Role="warehousearticlemovs">
               <PropertyRef Name="CodWarehouseArticle" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_documents">
+          <End Role="documents" Type="Self.documents" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="warehousearticlemovs" Type="Self.warehousearticlemovs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="documents">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="warehousearticlemovs">
+              <PropertyRef Name="CodDocument" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1701,8 +1749,20 @@
             <End Role="typeoftask" EntitySet="typeoftask" />
             <End Role="taskexecutortypeoftask" EntitySet="taskexecutortypeoftask" />
           </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodDocument" Association="Self.FK_warehousearticlemovs_CodDocument">
+            <End Role="documents" EntitySet="documents" />
+            <End Role="warehousearticlemovs" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodProductPartPrintableArticle" Association="Self.FK_warehousearticlemovs_CodProductPartPrintableArticle">
+            <End Role="productpartsprintablearticle" EntitySet="productpartsprintablearticle" />
+            <End Role="warehousearticlemovs" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
           <AssociationSet Name="FK_warehousearticlemovs_CodWarehouseArticle" Association="Self.FK_warehousearticlemovs_CodWarehouseArticle">
             <End Role="warehousearticles" EntitySet="warehousearticles" />
+            <End Role="warehousearticlemovs" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_documents" Association="Self.FK_warehousearticlemovs_documents">
+            <End Role="documents" EntitySet="documents" />
             <End Role="warehousearticlemovs" EntitySet="warehousearticlemovs" />
           </AssociationSet>
           <AssociationSet Name="FK_warehousearticles_CodArticle" Association="Self.FK_warehousearticles_CodArticle">
@@ -1928,7 +1988,7 @@
           </AssociationSet>
           <EntitySet Name="States" EntityType="dbModel.State" />
           <EntitySet Name="warehousearticlemovs" EntityType="dbModel.WarehouseArticleMov" />
-          <EntitySet Name="warehousearticles" EntityType="dbModel.Warehouse" />
+          <EntitySet Name="warehousearticles" EntityType="dbModel.WarehouseItem" />
           <AssociationSet Name="FK_warehousearticles_CodArticle" Association="dbModel.FK_warehousearticles_CodArticle">
             <End Role="Article" EntitySet="articles" />
             <End Role="warehousearticle" EntitySet="warehousearticles" />
@@ -1969,6 +2029,18 @@
           <AssociationSet Name="FK_taskcenters_CodState" Association="dbModel.FK_taskcenters_CodState">
             <End Role="State" EntitySet="States" />
             <End Role="taskcenter" EntitySet="TaskCenters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodDocument" Association="dbModel.FK_warehousearticlemovs_CodDocument">
+            <End Role="Document" EntitySet="Documents" />
+            <End Role="WarehouseArticleMov" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_documents" Association="dbModel.FK_warehousearticlemovs_documents">
+            <End Role="Document" EntitySet="Documents" />
+            <End Role="WarehouseArticleMov" EntitySet="warehousearticlemovs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_warehousearticlemovs_CodProductPartPrintableArticle" Association="dbModel.FK_warehousearticlemovs_CodProductPartPrintableArticle">
+            <End Role="ProductPartsPrintableArticle" EntitySet="ProductPartsPrintableArticles" />
+            <End Role="WarehouseArticleMov" EntitySet="warehousearticlemovs" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="TaskExecutor" Abstract="true">
@@ -2461,6 +2533,7 @@
           <NavigationProperty Name="Costs" Relationship="dbModel.FK_costs_CodProductPartPrintableArticle" FromRole="ProductPartsPrintableArticle" ToRole="cost" />
           <Property Name="Adhesive" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="RoundTo" Type="Boolean" />
+          <NavigationProperty Name="warehousearticlemovs" Relationship="dbModel.FK_warehousearticlemovs_CodProductPartPrintableArticle" FromRole="ProductPartsPrintableArticle" ToRole="WarehouseArticleMov" />
         </EntityType>
         <EntityType Name="ProductPartTask">
           <Key>
@@ -2481,6 +2554,7 @@
           <Property Name="PrecIndexOf" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="IfSelectedResetOtherCodItemGraph" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ProductPartTaskOptions" Relationship="dbModel.FK_productparttaskoptions_CodProductPartTask" FromRole="ProductPartTask" ToRole="productparttaskoption" />
+          <Property Name="ColorFormulation" Type="Int32" />
         </EntityType>
         <EntityType Name="Product" Abstract="true">
           <Key>
@@ -2826,6 +2900,8 @@
           <Property Name="ReportOrderName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="documenttaskcenters" Relationship="dbModel.FK_documenttaskcenter_CodDocument" FromRole="Document" ToRole="documenttaskcenter" />
           <Property Name="PapiroCom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="warehousearticlemovs" Relationship="dbModel.FK_warehousearticlemovs_CodDocument" FromRole="Document" ToRole="WarehouseArticleMov" />
+          <NavigationProperty Name="warehousearticlemovs1" Relationship="dbModel.FK_warehousearticlemovs_documents" FromRole="Document" ToRole="WarehouseArticleMov" />
           </EntityType>
         <EntityType Name="productpartstoproducttask">
           <Key>
@@ -3000,6 +3076,8 @@
           <Property Name="CalculatedTime" Type="Time" />
           <Property Name="Washes" Type="Double" />
           <Property Name="JustComputed" Type="Boolean" />
+          <Property Name="ForceLateral" Type="Boolean" />
+          <Property Name="Lateral" Type="Double" />
           </EntityType>
         <Association Name="FK_costdetails_CodCost">
           <End Type="dbModel.Cost" Role="Cost" Multiplicity="0..1">
@@ -3487,8 +3565,13 @@
           <NavigationProperty Name="WarehouseArticle" Relationship="dbModel.FK_warehousearticlemovs_CodWarehouseArticle" FromRole="warehousearticlemov" ToRole="warehousearticle" />
           <Property Name="Date" Type="DateTime" />
           <Property Name="Used" Type="Boolean" />
+          <Property Name="CodDocument" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CodProductPartPrintableArticle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Document" Relationship="dbModel.FK_warehousearticlemovs_CodDocument" FromRole="WarehouseArticleMov" ToRole="Document" />
+          <NavigationProperty Name="ProductPartsPrintableArticle" Relationship="dbModel.FK_warehousearticlemovs_CodProductPartPrintableArticle" FromRole="WarehouseArticleMov" ToRole="ProductPartsPrintableArticle" />
+          <Property Name="Note" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Warehouse">
+        <EntityType Name="WarehouseItem">
           <Key>
             <PropertyRef Name="CodWarehouseArticle" />
           </Key>
@@ -3515,7 +3598,7 @@
           <End Type="dbModel.Article" Role="Article" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="*" />
+          <End Type="dbModel.WarehouseItem" Role="warehousearticle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Article">
               <PropertyRef Name="CodArticle" />
@@ -3529,7 +3612,7 @@
           <End Type="dbModel.Product" Role="Product" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="*" />
+          <End Type="dbModel.WarehouseItem" Role="warehousearticle" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="CodProduct" />
@@ -3540,7 +3623,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_warehousearticlemovs_CodWarehouseArticle">
-          <End Type="dbModel.Warehouse" Role="warehousearticle" Multiplicity="0..1">
+          <End Type="dbModel.WarehouseItem" Role="warehousearticle" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
           <End Type="dbModel.WarehouseArticleMov" Role="warehousearticlemov" Multiplicity="*" />
@@ -3553,8 +3636,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="WarehouseArticle" BaseType="dbModel.Warehouse" />
-        <EntityType Name="WarehouseProduct" BaseType="dbModel.Warehouse" />
+        <EntityType Name="WarehouseArticle" BaseType="dbModel.WarehouseItem" />
+        <EntityType Name="WarehouseProduct" BaseType="dbModel.WarehouseItem" />
         <EntityType Name="ProductEmpty" BaseType="dbModel.Product" />
         <EntityType Name="WarehouseSpec">
           <Key>
@@ -3569,7 +3652,7 @@
           <End Type="dbModel.WarehouseSpec" Role="WarehouseSpec" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="dbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <End Type="dbModel.WarehouseItem" Role="Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="WarehouseSpec">
               <PropertyRef Name="CodWarehouse" />
@@ -3760,6 +3843,48 @@
             </Principal>
             <Dependent Role="taskcenter">
               <PropertyRef Name="CodState" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_CodDocument">
+          <End Type="dbModel.Document" Role="Document" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.WarehouseArticleMov" Role="WarehouseArticleMov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="WarehouseArticleMov">
+              <PropertyRef Name="CodDocument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_documents">
+          <End Type="dbModel.Document" Role="Document" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.WarehouseArticleMov" Role="WarehouseArticleMov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Document">
+              <PropertyRef Name="CodDocument" />
+            </Principal>
+            <Dependent Role="WarehouseArticleMov">
+              <PropertyRef Name="CodDocument" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_warehousearticlemovs_CodProductPartPrintableArticle">
+          <End Type="dbModel.ProductPartsPrintableArticle" Role="ProductPartsPrintableArticle" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="dbModel.WarehouseArticleMov" Role="WarehouseArticleMov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductPartsPrintableArticle">
+              <PropertyRef Name="CodProductPartPrintableArticle" />
+            </Principal>
+            <Dependent Role="WarehouseArticleMov">
+              <PropertyRef Name="CodProductPartPrintableArticle" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4616,6 +4741,7 @@
           <EntitySetMapping Name="ProductPartTasks">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ProductPartTask)">
               <MappingFragment StoreEntitySet="productparttasks">
+                <ScalarProperty Name="ColorFormulation" ColumnName="ColorFormulation" />
                 <ScalarProperty Name="IfSelectedResetOtherCodItemGraph" ColumnName="IfSelectedResetOtherCodItemGraph" />
                 <ScalarProperty Name="PrecIndexOf" ColumnName="PrecIndexOf" />
                 <ScalarProperty Name="CodItemGraph" ColumnName="CodItemGraph" />
@@ -4871,6 +4997,8 @@
           <EntitySetMapping Name="CostDetail">
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.CostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Lateral" ColumnName="Lateral" />
+                <ScalarProperty Name="ForceLateral" ColumnName="ForceLateral" />
                 <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
                 <ScalarProperty Name="Washes" ColumnName="Washes" />
                 <ScalarProperty Name="CalculatedTime" ColumnName="CalculatedTime" />
@@ -4959,6 +5087,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.ControlTableCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Lateral" ColumnName="Lateral" />
+                <ScalarProperty Name="ForceLateral" ColumnName="ForceLateral" />
                 <ScalarProperty Name="WorkingFormat" ColumnName="WorkingFormat" />
                 <ScalarProperty Name="JustComputed" ColumnName="JustComputed" />
                 <ScalarProperty Name="Washes" ColumnName="Washes" />
@@ -4998,6 +5128,8 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(dbModel.RepassRollCostDetail)">
               <MappingFragment StoreEntitySet="costdetails">
+                <ScalarProperty Name="Lateral" ColumnName="Lateral" />
+                <ScalarProperty Name="ForceLateral" ColumnName="ForceLateral" />
                 <ScalarProperty Name="WorkingFormat" ColumnName="WorkingFormat" />
                 <ScalarProperty Name="CodCostDetail" ColumnName="CodCostDetail" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
@@ -5256,6 +5388,9 @@
           <EntitySetMapping Name="warehousearticlemovs">
             <EntityTypeMapping TypeName="dbModel.WarehouseArticleMov">
               <MappingFragment StoreEntitySet="warehousearticlemovs">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="CodProductPartPrintableArticle" ColumnName="CodProductPartPrintableArticle" />
+                <ScalarProperty Name="CodDocument" ColumnName="CodDocument" />
                 <ScalarProperty Name="Used" ColumnName="Used" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="UmConversion" ColumnName="UmConversion" />
@@ -5269,7 +5404,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="warehousearticles">
-            <EntityTypeMapping TypeName="IsTypeOf(dbModel.Warehouse)">
+            <EntityTypeMapping TypeName="IsTypeOf(dbModel.WarehouseItem)">
               <MappingFragment StoreEntitySet="warehousearticles">
                 <ScalarProperty Name="CodWarehouse" ColumnName="CodWarehouse" />
                 <ScalarProperty Name="MinQuantity" ColumnName="MinQuantity" />
@@ -5408,7 +5543,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="False" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
         <DesignerProperty Name="UseLegacyProvider" Value="True" />
         <DesignerProperty Name="DDLGenerationTemplate" Value="$(VSEFTools)\DBGen\SSDLToMySQL.tt" />
@@ -5905,7 +6040,7 @@
         <InheritanceConnector EntityType="dbModel.ControlTableCostDetail" />
         <InheritanceConnector EntityType="dbModel.DigitalOnRun" />
         <EntityTypeShape EntityType="dbModel.WarehouseArticleMov" Width="1.5" PointX="67.875" PointY="10.375" />
-        <EntityTypeShape EntityType="dbModel.Warehouse" Width="1.5" PointX="65.625" PointY="9.625" />
+        <EntityTypeShape EntityType="dbModel.WarehouseItem" Width="1.5" PointX="65.625" PointY="9.625" />
         <AssociationConnector Association="dbModel.FK_warehousearticles_CodArticle" />
         <AssociationConnector Association="dbModel.FK_warehousearticles_CodProduct" />
         <AssociationConnector Association="dbModel.FK_warehousearticlemovs_CodWarehouseArticle" />
@@ -5969,6 +6104,9 @@
         <AssociationConnector Association="dbModel.FK_documenttaskcenter_CodDocument" />
         <AssociationConnector Association="dbModel.FK_documenttaskcenter_CodTaskCenter" />
         <AssociationConnector Association="dbModel.FK_taskcenters_CodState" />
+        <AssociationConnector Association="dbModel.FK_warehousearticlemovs_CodDocument" />
+        <AssociationConnector Association="dbModel.FK_warehousearticlemovs_documents" />
+        <AssociationConnector Association="dbModel.FK_warehousearticlemovs_CodProductPartPrintableArticle" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -101,7 +101,7 @@ namespace PapiroMVC.Models
         public string SupplierMaker { get; set; }
         public string SupplyerBuy { get; set; }
 
-        public Warehouse WarehouseArticle
+        public WarehouseItem WarehouseArticle
         {
             get
             {

@@ -226,6 +226,10 @@ namespace PapiroMVC.Models
                     this.ProductPartPrinting.Part = this.ProductPart;
                     this.ProductPartPrinting.PrintingFormat = this.PrintingFormat;
 
+
+
+                    this.ProductPartPrinting.ForceLateral = ForceLateral ?? false;
+                    this.ProductPartPrinting.Lateral = Lateral ?? (TaskexEcutorSelected != null ? TaskexEcutorSelected.Laterale ?? 0 : 0); //cm
                     this.ProductPartPrinting.Update();
                 }
 
@@ -319,7 +323,6 @@ namespace PapiroMVC.Models
             List<String> newBuyingFormats = new List<string>();
             var pHint = new List<PrintingHint>();
 
-
             //ZMetric for Flexo
             bool zMetric = false;
             if (TaskexEcutorSelected.TypeOfExecutor == TaskExecutor.ExecutorType.Flexo)
@@ -327,33 +330,55 @@ namespace PapiroMVC.Models
                 zMetric = ((Flexo)TaskexEcutorSelected).ZMetric ?? false;
             }
 
-
             var ppP = new ProductPartSingleSheetPrinting();
+
+            //forcing lateral
+            ppP.ForceLateral = this.ForceLateral ?? false;
+            ppP.Lateral = this.Lateral ?? 0;
 
             //Scorro i Dies e se rientrano nelle tolleranze!!!!
             var dies = new List<Die>();
 
-
             ppP.CostDetail = this;
-            ppP.Part = this.ProductPart;
+            ppP.Part = this.ProductPart; 
 
             if (ProductPart.FormatType != -1)
             {
 
                 double side1, side2, side1B, side2B;
                 side1 = side2 = side1B = side2B = 0;
-                string format = "";
+                string originalFormat = "";
+                string originalFormatB  = "";
+
+
+                if (ppP.Part.TypeOfProductPart == Models.ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                {
+                    ProductPartDoubleLabelRoll p;
+                    p = (ProductPartDoubleLabelRoll)ppP.Part;
+
+                    originalFormat = p.FormatA;
+                    originalFormatB = p.FormatB;
+                }
+                else
+                {
+                    originalFormat = ppP.Part.Format;
+                    originalFormatB = "";
+                }
 
                 foreach (var die in Dies.OfType<DieFlexo>())
                 {
-
                     bool toInsert = false;
 
                     if (ppP.Part.TypeOfProductPart == Models.ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
                     {
-
                         ProductPartDoubleLabelRoll p;
                         p = (ProductPartDoubleLabelRoll)ppP.Part;
+
+                        //---------------------------
+                        p.FormatA = originalFormat;
+                        p.FormatB = originalFormatB;
+                        //---------------------------
+
 
                         side1 = p.FormatA.GetSide1();
                         side2 = p.FormatA.GetSide2();
@@ -366,18 +391,28 @@ namespace PapiroMVC.Models
 
                         toInsert = toInsert && (Math.Abs(die.FormatB.GetSide1() - side1B) <= DieTollerance &&
                                     Math.Abs(die.FormatB.GetSide2() - side2B) <= DieTollerance);
+
+                        //---------------------------
+                        p.FormatA = die.Format;
+                        p.FormatB = die.FormatB;
+                        //---------------------------
+                        
                     }
                     else
                     {
-                        side1 = ppP.Part.FormatOpened.GetSide1();
-                        side2 = ppP.Part.FormatOpened.GetSide2();
-
+                        ppP.Part.Format = originalFormat;
+                        ppP.Part.FormatOpened = originalFormat;
+                        
+                        side1 = ppP.Part.Format.GetSide1();
+                        side2 = ppP.Part.Format.GetSide2();
 
                         toInsert = (Math.Abs(die.Format.GetSide1() - side1) <= DieTollerance &&
                             Math.Abs(die.Format.GetSide2() - side2) <= DieTollerance);
 
-                    }
+                        ppP.Part.FormatOpened = die.Format;
+                        ppP.Part.Format = die.Format;
 
+                    }
 
 
                     if (toInsert)
@@ -396,17 +431,12 @@ namespace PapiroMVC.Models
                             Format = die.Format,
                             FormatDesc = die.FormatB != null ? die.Format + " + " + die.FormatB : die.Format,
 
-                            //DCut1 = ppP.CalculatedDCut1,
-                            //DCut1 = die.DCut1,
-                            //DCut2 = die.DCut2,
-
                             TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
 
                             DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
                             DCut2 = ppP.CalculatedDCut2,
 
                             BuyingFormat = die.PrintingFormat,
-
                             PrintingFormat = die.PrintingFormat,
                             Description = "h" + die.PrintingFormat.GetSide1() + " z" + (die.GetZFromCm(die.PrintingFormat.GetSide2())).ToString() + "*",
                             FormatType = (die.FormatType ?? 0).ToString(),
@@ -419,24 +449,92 @@ namespace PapiroMVC.Models
                             DeltaDCut2 = 0
                         };
 
+                        Console.WriteLine(ppP.CalculatedDCut2);
+
                         pHint.Add(pHDie);
+
+                        //add in PHint new PrintingHint with each bands > die band
+                        var h = die.PrintingFormat.GetSide1();
+                        foreach (var buyingWidths in BuyingWidths)
+                        {
+                            if (Convert.ToDouble(buyingWidths) > h)
+                            {
+
+                                //voglio aggiungere le fustelle valide!!!!
+                                pHDie = new PrintingHint
+                                {
+                                    Format = die.Format,
+                                    FormatDesc = die.FormatB != null ? die.Format + " + " + die.FormatB : die.Format,
+
+                                    TypeOfDCut2 = ppP.Part.TypeOfDCut2 ?? 0,
+
+                                    DCut1 = DCut1OnDCut2AndPart(ppP.CalculatedDCut1, ppP.CalculatedDCut2, ppP.Part),
+                                    DCut2 = ppP.CalculatedDCut2,
+
+                                    BuyingFormat = die.PrintingFormat,
+                                    PrintingFormat = die.PrintingFormat,
+                                    Description = "h" + die.PrintingFormat.GetSide1() + " z" + (die.GetZFromCm(die.PrintingFormat.GetSide2())).ToString() + "*",
+                                    FormatType = (die.FormatType ?? 0).ToString(),
+                                    CalculatedGain = ppP.CalculatedGain,
+                                    GainOnSide1 = die.MaxGain1 ?? 0,
+                                    GainOnSide2 = die.MaxGain2 ?? 0,
+
+                                    IsDie = true,
+
+                                    DeltaDCut2 = 0
+                                };
+
+                                //override
+                                pHDie.BuyingFormat = buyingWidths.ToString() + "x" + die.PrintingFormat.GetSide2();
+                                pHDie.PrintingFormat = pHDie.BuyingFormat;
+                                pHDie.Description = "h" + buyingWidths.ToString() + " z" + (die.GetZFromCm(die.PrintingFormat.GetSide2())).ToString() + "*";
+
+                                pHint.Add(pHDie);
+                            }
+                        }
                     }
                 }
+
+                //restore original format
+                if (ppP.Part.TypeOfProductPart == Models.ProductPart.ProductPartType.ProductPartDoubleLabelRoll)
+                {
+                    ProductPartDoubleLabelRoll p;
+                    p = (ProductPartDoubleLabelRoll)ppP.Part;
+
+                    p.FormatA = originalFormat;
+                    p.FormatB = originalFormatB;
+                }
+                else
+                {
+                    ppP.Part.Format = originalFormat;
+                    ppP.Part.FormatOpened = originalFormat;
+                }
+            
+            
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             foreach (var buyingFormat in BuyingFormats)
             {
-                if (buyingFormat.GetSide2() == 43.18)
-                {
-                    if (buyingFormat.GetSide1() == 20)
-                    {
-                        Console.Write("ciao");
-                    }
-                }
-
 
                 if (SheetCut.IsValid(TaskexEcutorSelected.FormatMax, TaskexEcutorSelected.FormatMin, buyingFormat))
                 {
+
 
                     ppP.CostDetail = this;
 
@@ -449,10 +547,13 @@ namespace PapiroMVC.Models
                     ppP.Update();
                     haveAlmostOne = (ppP.CalculatedGain > 0) || haveAlmostOne;
 
-
                     var calc1Gain = ppP.CalculatedSide1Gain;
                     var calc2Gain = ppP.CalculatedSide2Gain;
 
+                    if (true)
+                    {
+                        
+                    }
 
                     for (int i = calc2Gain; i > 0; i--)
                     {
@@ -474,7 +575,6 @@ namespace PapiroMVC.Models
                             {
                                 smallestDeltaCalculatedDCut = ppP.CalculatedDCut2 < smallestDeltaCalculatedDCut ? ppP.CalculatedDCut2 : smallestDeltaCalculatedDCut;
                             }
-
 
                             var pH =
                                 new PrintingHint

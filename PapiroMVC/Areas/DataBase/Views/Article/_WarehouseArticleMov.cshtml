@@ -4,7 +4,9 @@
 @{
     string strings = "~/Areas/Database/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseArticleMovTitle");
-}
+
+    Console.Write(Model);
+    }
 
 <fieldset>
 
@@ -49,5 +51,8 @@
             @Html.DropDownListFor(model => model.CodWarehouseTo, new SelectList(ViewBag.Locations, "CodWarehouse", "WarehouseName"))
         </div>
     </div>
+
+    @Html.AlgolaEditorFor(model => model.Mov.Note)
+
 
 </fieldset>

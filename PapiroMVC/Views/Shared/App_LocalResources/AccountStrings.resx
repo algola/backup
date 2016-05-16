@@ -1,0 +1,475 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Cancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="ChangePassword" xml:space="preserve">
+    <value>La lunghezza dela password deve essere non inferiore a </value>
+  </data>
+  <data name="ChangePassword1" xml:space="preserve">
+    <value>caratteri alfanumerici</value>
+  </data>
+  <data name="ChangePasswordTitle" xml:space="preserve">
+    <value>Cambia Password</value>
+  </data>
+  <data name="ConfirmationMessage" xml:space="preserve">
+    <value>Per completare la registrazione cliccare sul link inviato dal sistema all'indirizzo specificato in registrazione</value>
+  </data>
+  <data name="ConfirmChangePassword" xml:space="preserve">
+    <value>Password cambiata con successo</value>
+  </data>
+  <data name="ConfirmChangePasswordTitle" xml:space="preserve">
+    <value>Cambio password</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Questa e-mail resulta già registrata. Inserire un altra e-mail per una nuova registrazione.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>User name già esistente. Inserirne un altro.</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>Riceverà un e-mail con la password all'indirizzo usato durante la registrazione.</value>
+  </data>
+  <data name="EmailWarning" xml:space="preserve">
+    <value>Per la registrazione di un nuovo utente è necessario fornire una e-mail valida e raggiungibile. A questo indirizzo verrà spedita una mail per completare la registrazione. </value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home Page</value>
+  </data>
+  <data name="InvalidAnswer" xml:space="preserve">
+    <value>La password inserita non è valida.Inserire un'altra password di caratteri alfanumerici non inferiori a 5.</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>L'e-mail inserita non è valida. Inserire un'altra e-mail.</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>La password inserita non è valida.Inserire un'altra password di caratteri alfanumerici non inferiori a 5.</value>
+  </data>
+  <data name="InvalidQuestion" xml:space="preserve">
+    <value>Le due password non combaciano.</value>
+  </data>
+  <data name="InvalidUserName" xml:space="preserve">
+    <value>Nome utente non valido. Inseriscine uno nuovo e riprova.</value>
+  </data>
+  <data name="LoginButton" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LoginMessage" xml:space="preserve">
+    <value>Introdurre nome utente e password validi per accedere al sistema</value>
+  </data>
+  <data name="LoginMessageError" xml:space="preserve">
+    <value>Nome utente o password non validi, oppure l'utente non è ancora verificato. Login non effettuato</value>
+  </data>
+  <data name="LoginTitle" xml:space="preserve">
+    <value>Pagina di login</value>
+  </data>
+  <data name="NewAccount" xml:space="preserve">
+    <value>Creazione di un  nuovo account.</value>
+  </data>
+  <data name="OldPasswordError" xml:space="preserve">
+    <value>La vecchia password non è corretta</value>
+  </data>
+  <data name="PasswordWarning1" xml:space="preserve">
+    <value>La lunghezza della password non deve essere inferiore a</value>
+  </data>
+  <data name="PasswordWarning2" xml:space="preserve">
+    <value> caratteri alfanumerici.</value>
+  </data>
+  <data name="ProviderError" xml:space="preserve">
+    <value>The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+  </data>
+  <data name="RecoveryPasswordAfterLink" xml:space="preserve">
+    <value>se non la ricordi.</value>
+  </data>
+  <data name="RecoveryPasswordLink" xml:space="preserve">
+    <value>Recupera la password </value>
+  </data>
+  <data name="RecoveryPasswordTitle" xml:space="preserve">
+    <value>Recupero Password</value>
+  </data>
+  <data name="RegisterLink" xml:space="preserve">
+    <value>Registrati</value>
+  </data>
+  <data name="RegisterMessageAfterLink" xml:space="preserve">
+    <value>se non hai ancora un account.</value>
+  </data>
+  <data name="RegisterSubmit" xml:space="preserve">
+    <value>Invia richiesta</value>
+  </data>
+  <data name="RegistrationLegend" xml:space="preserve">
+    <value>Registrazione gratuita la portale popcorn-print</value>
+  </data>
+  <data name="TitleCEmailSent" xml:space="preserve">
+    <value>e-mail inviata</value>
+  </data>
+  <data name="TitleConfirmation" xml:space="preserve">
+    <value>Registrazione di un nuovo utente</value>
+  </data>
+  <data name="TitleRegister" xml:space="preserve">
+    <value>Registrazione di un nuovo utente</value>
+  </data>
+  <data name="UnknownError" xml:space="preserve">
+    <value>Errore sconoscuto.Verificare i dati inseriti e riprovare con la registrazione.Se il problema persiste contattare l'aministratore del sistema.</value>
+  </data>
+  <data name="UserRejected" xml:space="preserve">
+    <value>The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.</value>
+  </data>
+  <data name="VerifyActivated" xml:space="preserve">
+    <value>Account attivato correttamente. Da ora  possibile operare con il software.</value>
+  </data>
+  <data name="VerifyError" xml:space="preserve">
+    <value>Si è verificato un errore durante la procedura di attivazione.</value>
+  </data>
+  <data name="VerifyJustActivated" xml:space="preserve">
+    <value>Account già attivato. Si prega di immettere nome utente e password per proseguire.</value>
+  </data>
+  <data name="VerifyTitle" xml:space="preserve">
+    <value>Verifica account</value>
+  </data>
+  <data name="ConfirmEditProfile" xml:space="preserve">
+    <value>Profilo salvato con successo</value>
+  </data>
+  <data name="ConfirmEditProfileTitle" xml:space="preserve">
+    <value>Profilo</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Account Utente</value>
+  </data>
+  <data name="EditProfileTitle" xml:space="preserve">
+    <value>Modifica del profilo</value>
+  </data>
+  <data name="Modules" xml:space="preserve">
+    <value>Moduli attivi</value>
+  </data>
+  <data name="MyCompany" xml:space="preserve">
+    <value>La Mia Azienda</value>
+  </data>
+  <data name="RecoveryPasswordMessage" xml:space="preserve">
+    <value>Verrà inviata una mail con la password all'indirizzo di registrazione.</value>
+  </data>
+  <data name="Pending1" xml:space="preserve">
+    <value>Attenzione!</value>
+    <comment>!</comment>
+  </data>
+  <data name="Pending2" xml:space="preserve">
+    <value>Non risulta ancora associata una carta di credito.</value>
+  </data>
+  <data name="Pending3" xml:space="preserve">
+    <value>Per poter usare il PapiroStar è indispensabile associare l'account ad una carta di credito. Questo anche se si userà il software solo nelle sezioni gratuite.</value>
+  </data>
+  <data name="Pending4" xml:space="preserve">
+    <value>L'introduzione di una carta di credito è una operazione sicura. I dati della carta sono mantenuti da un istituto bancario e nessun'altro, compreso gli amminstratori del sito può venirne a conoscenza.</value>
+  </data>
+  <data name="PendingBack" xml:space="preserve">
+    <value>Riprova</value>
+  </data>
+  <data name="PendingAmm1" xml:space="preserve">
+    <value>Attenzione!</value>
+  </data>
+  <data name="PendingAmm2" xml:space="preserve">
+    <value>Questo account non risulta ancora attivato dall'amministrazione.</value>
+  </data>
+  <data name="PendingAmm3" xml:space="preserve">
+    <value>Per poter usare il PapiroStar in versione "Candiate Release" è indispensabile l'apporvazione dell'amministrazione del portale. </value>
+  </data>
+  <data name="EmailNotFound" xml:space="preserve">
+    <value>Mail errata oppure non inserita nel sistema</value>
+  </data>
+  <data name="Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="CardNumber" xml:space="preserve">
+    <value>Numero carta di credito</value>
+  </data>
+  <data name="CVV" xml:space="preserve">
+    <value>CVV</value>
+  </data>
+  <data name="Expiration" xml:space="preserve">
+    <value>Scadenza (MM/AAAA)</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Sei già registrato? Usa il link qui sotto per accedere al sistema, altrimenti registrati gratuitamente per iniziare.</value>
+  </data>
+  <data name="Payments" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profilo</value>
+  </data>
+  <data name="CodModuleLabel" xml:space="preserve">
+    <value>Etichette</value>
+  </data>
+  <data name="CodModuleSmallFormat" xml:space="preserve">
+    <value>Piccolo formato</value>
+  </data>
+  <data name="CodModuleWIdeFormat" xml:space="preserve">
+    <value>Grande formato</value>
+  </data>
+  <data name="BuyButton" xml:space="preserve">
+    <value>Acquista ora</value>
+  </data>
+  <data name="BuyTitle" xml:space="preserve">
+    <value>Acquista</value>
+  </data>
+  <data name="TryButton" xml:space="preserve">
+    <value>Attiva</value>
+  </data>
+  <data name="TryTitle" xml:space="preserve">
+    <value>Prova</value>
+  </data>
+  <data name="Assessable" xml:space="preserve">
+    <value>Valutabile</value>
+  </data>
+  <data name="Buy" xml:space="preserve">
+    <value>Acquista</value>
+  </data>
+  <data name="CodModuleLabel_Desc1" xml:space="preserve">
+    <value>Rotative</value>
+  </data>
+  <data name="CodModuleLabel_Desc2" xml:space="preserve">
+    <value>Semirotative</value>
+  </data>
+  <data name="CodModuleLabel_Desc3" xml:space="preserve">
+    <value>Archivio Z</value>
+  </data>
+  <data name="CodModuleLabel_Desc4" xml:space="preserve">
+    <value>Calcolo automatico</value>
+  </data>
+  <data name="CodModuleLabel_Desc5" xml:space="preserve">
+    <value>Nobilitazione</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc1" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc2" xml:space="preserve">
+    <value>Digitale</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc3" xml:space="preserve">
+    <value>Calcolo automatico</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc4" xml:space="preserve">
+    <value>Varianti</value>
+  </data>
+  <data name="CodModuleSmallFormat_Desc5" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="EvaluatedFrom" xml:space="preserve">
+    <value>Valutabile dal</value>
+  </data>
+  <data name="ExpiresOn" xml:space="preserve">
+    <value>Scade il</value>
+  </data>
+  <data name="FreeActivation" xml:space="preserve">
+    <value>Attivazione gratuita</value>
+  </data>
+  <data name="From" xml:space="preserve">
+    <value>A partire da</value>
+  </data>
+  <data name="InactiveSince" xml:space="preserve">
+    <value>Disattivato dal</value>
+  </data>
+  <data name="InTestFrom" xml:space="preserve">
+    <value>In prova dal</value>
+  </data>
+  <data name="Month" xml:space="preserve">
+    <value>Mese</value>
+  </data>
+  <data name="Months" xml:space="preserve">
+    <value>Mesi</value>
+  </data>
+  <data name="PurchasedOn" xml:space="preserve">
+    <value>Acquistato il</value>
+  </data>
+  <data name="Try" xml:space="preserve">
+    <value>Prova</value>
+  </data>
+  <data name="CcNotValid" xml:space="preserve">
+    <value>Carta non inserita, o non valida. Procedere nell'immisione di una nuova carta.</value>
+  </data>
+  <data name="CcValid" xml:space="preserve">
+    <value>La carta di credito inserita risulta regolare. Per inserirne una nuova compilare il modulo sottostante e premere Salva, altrimenti Annulla.</value>
+  </data>
+  <data name="CodModuleCliche" xml:space="preserve">
+    <value>Incisoria</value>
+  </data>
+  <data name="CodModuleCliche_Desc1" xml:space="preserve">
+    <value>Fotopolimeri</value>
+  </data>
+  <data name="CodModuleCliche_Desc2" xml:space="preserve">
+    <value>Clichè magnesio</value>
+  </data>
+  <data name="CodModuleCliche_Desc3" xml:space="preserve">
+    <value>Calcolo pellicole</value>
+  </data>
+  <data name="CodModuleCliche_Desc4" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="CodModulePlanning" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="CodModulePlanning_Desc1" xml:space="preserve">
+    <value>Centri di lavoro</value>
+  </data>
+  <data name="CodModulePlanning_Desc2" xml:space="preserve">
+    <value>Avanzamento commesse</value>
+  </data>
+  <data name="CodModulePlanning_Desc3" xml:space="preserve">
+    <value>Ordinamenti</value>
+  </data>
+  <data name="CodModulePlanning_Desc4" xml:space="preserve">
+    <value>Monitor generale</value>
+  </data>
+  <data name="CodModulePlanning_Desc5" xml:space="preserve">
+    <value>Monitor Specifico</value>
+  </data>
+  <data name="CodModulePlanning_Desc6" xml:space="preserve">
+    <value>Avvisi</value>
+  </data>
+  <data name="MultiUser" xml:space="preserve">
+    <value>Utenti</value>
+  </data>
+  <data name="NoRestrictionUser" xml:space="preserve">
+    <value>Utenti illimitati</value>
+  </data>
+  <data name="OneUser" xml:space="preserve">
+    <value>1 Utente</value>
+  </data>
+  <data name="CodModuleEstimate" xml:space="preserve">
+    <value>Preventivi</value>
+  </data>
+  <data name="CodModuleEstimate_Desc1" xml:space="preserve">
+    <value>Ricerca</value>
+  </data>
+  <data name="CodModuleEstimate_Desc2" xml:space="preserve">
+    <value>Invio offerta</value>
+  </data>
+  <data name="CodModuleEstimate_Desc3" xml:space="preserve">
+    <value>Calcolo messe in macchina</value>
+  </data>
+  <data name="CodModuleEstimate_Desc4" xml:space="preserve">
+    <value>Duplicazione</value>
+  </data>
+  <data name="CodModuleEstimate_Desc5" xml:space="preserve">
+    <value>Calcolo immediato</value>
+  </data>
+</root>

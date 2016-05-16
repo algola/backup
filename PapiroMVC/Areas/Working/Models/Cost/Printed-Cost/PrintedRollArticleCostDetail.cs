@@ -36,13 +36,16 @@ namespace PapiroMVC.Models
                 var p = ProductPart.ProductPartPrintableArticles.FirstOrDefault(x => x.CodProductPartPrintableArticle == this.TaskCost.CodProductPartPrintableArticle);
                 //questo dovrebbe far ottenere il costo!!!!!!
                 extract = articles.GetArticlesByProductPartPrintableArticle(p).ToList();
+                
                 if (extract.FirstOrDefault() == null)
                 {
                     throw new Exception();
                 }
 
                 TypeOfQuantity = (int)extract.FirstOrDefault().TypeOfQuantity;
-                var art = extract.FirstOrDefault();
+
+                var art = extract.OfType<RollPrintableArticle>().FirstOrDefault();
+
 
                 var aCost = art.ArticleCosts.OfType<RollPrintableArticleStandardCost>().FirstOrDefault();
                 CostPerMq = ((RollPrintableArticleCost)aCost).GetCostPerMq();   //.CostPerMq;

@@ -424,4 +424,43 @@
   <data name="CodModuleCliche_Desc4" xml:space="preserve">
     <value>...</value>
   </data>
+  <data name="CodModulePlanning" xml:space="preserve">
+    <value>Planning</value>
+  </data>
+  <data name="CodModulePlanning_Desc1" xml:space="preserve">
+    <value>Centri di lavoro</value>
+  </data>
+  <data name="CodModulePlanning_Desc2" xml:space="preserve">
+    <value>Avanzamento commesse</value>
+  </data>
+  <data name="CodModulePlanning_Desc3" xml:space="preserve">
+    <value>Ordinamenti</value>
+  </data>
+  <data name="CodModulePlanning_Desc4" xml:space="preserve">
+    <value>Monitor generale</value>
+  </data>
+  <data name="CodModulePlanning_Desc5" xml:space="preserve">
+    <value>Monitor per centro</value>
+  </data>
+  <data name="CodModulePlanning_Desc6" xml:space="preserve">
+    <value>Avvisi</value>
+  </data>
+  <data name="CodModuleEstimate" xml:space="preserve">
+    <value>Preventivi</value>
+  </data>
+  <data name="CodModuleEstimate_Desc1" xml:space="preserve">
+    <value>Ricerca</value>
+  </data>
+  <data name="CodModuleEstimate_Desc2" xml:space="preserve">
+    <value>Invio offerta</value>
+  </data>
+  <data name="CodModuleEstimate_Desc3" xml:space="preserve">
+    <value>Calcolo messe in macchina</value>
+  </data>
+  <data name="CodModuleEstimate_Desc4" xml:space="preserve">
+    <value>Duplicazione</value>
+  </data>
+  <data name="CodModuleEstimate_Desc5" xml:space="preserve">
+    <value>Calcolo immediato</value>
+  </data>
 </root>

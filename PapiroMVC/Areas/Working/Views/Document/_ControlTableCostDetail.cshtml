@@ -41,6 +41,7 @@
                 type: 'POST',
                 data: JSON.stringify(dataToPass),
                 contentType: 'application/json; charset=utf-8',
+                cache: false,
                 success: function (data) {
 
                     $('#partial').html(data);

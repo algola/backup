@@ -2,8 +2,7 @@
 @model PapiroMVC.Models.Module
 
 @{
-    string strings = "~/Areas/Account/Views/Account/Strings";
-    //    string strings2 = "~/Views/Shared/Strings";
+     string strings = "~/Views/Shared/AccountStrings";
 
     Guid guid = Guid.NewGuid();
 
@@ -28,8 +27,29 @@
             colorTextHeader = "dark";
             break;
         default:
-            break;
+          
+              break;
     }
+
+
+    var stringToPrint = string.Empty;
+
+    if (Model.Users == null || Model.Users == 0)
+    {
+        stringToPrint += Html.T(strings, "NoRestrictionUser");
+    }
+
+    if (Model.Users == 1)
+    {
+        stringToPrint += Html.T(strings, "OneUser");
+    }
+
+    if (Model.Users > 1)
+    {
+        stringToPrint += Model.Users + " " + Html.T(strings, "MultiUser");
+    }
+
+
 }
 
 <div>
@@ -55,6 +75,16 @@
 
             <div class="widget-body">
                 <div class="widget-main">
+
+                    <ul class="unstyled spaced3">
+                        <li>
+                            <i class="icon-ok green"></i>
+
+
+                            <b>@stringToPrint</b>
+                        </li>
+                    </ul>
+
                     <ul class="unstyled spaced3">
                         @for (int k = 1; k < 6; k++)
                         {
@@ -66,11 +96,11 @@
                     </ul>
 
                     <hr>
-                    <div class="price">
+                    @*<div class="price">
                         <small>@Html.T(strings, "From")</small>
                         €@(Model.MontlyPrice)
                         <small>/ @Html.T(strings, "Month")</small>
-                    </div>
+                    </div>*@
                 </div>
 
                 <div>
@@ -138,7 +168,7 @@
                     <div class="space-10"></div>
 
                     <div class="center">
-                        <a href="#" id="btnBuy@(ViewBag.StatusCc != "ok" ? Model.CodModuleName + "RedCc": Model.CodModuleName)" class="dialogRef btn btn-app btn-primary btn-mini">
+                        <a href="#" id="btnBuy@(Model.CodModuleName + "RedCc")" class="dialogRef btn btn-app btn-primary btn-mini">
                             <i class="icon-shopping-cart bigger-110"></i>
                             <span>@Html.T(strings, "Buy")</span>
                         </a>
@@ -194,12 +224,11 @@
     function setupPage@(Model.CodModuleName)() {
 
 
-
-
         $("#btnBuy@(Model.CodModuleName + "RedCc")").on('click', function (e) {
             e.preventDefault();
 
-           window.location.href='@Url.Action("EditProfile", "Account", new {view = "EditProfileCc" })';
+            window.location.href = '@Model.PermaLink';
+//           window.location.href='@Url.Action("EditProfile", "Account", new {view = "EditProfileCc" })';
 
         });
 
@@ -244,6 +273,7 @@
                         months: monthsSelect,
                         totalPrice: 10
                     };
+
 
                     //at firt time save estimate or
                     $.ajax({

@@ -43,6 +43,7 @@ namespace PapiroMVC.Models
         {
             base.Copy(to);
             ((ProductPartPrintRoll)to).PrintSide = this.PrintSide;
+            ((ProductPartPrintRoll)to).ColorFormulation = this.ColorFormulation;
         }
 
         private bool _retro;
@@ -77,6 +78,14 @@ namespace PapiroMVC.Models
             var ext = (string)t.GetProperty("PrintSide" + (this.PrintSide ?? 0).ToString()).GetValue(null, null);
 
             return base.ToString() + (ext == "" ? ext : " " + ext);
+        }
+
+        public override string ToStringInfo()
+        {
+            Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
+            var col = (string)t.GetProperty("ColorFormulation" + (this.ColorFormulation ?? 0).ToString()).GetValue(null, null);
+
+            return (col == "" ? col : col + " ") + ToString();
         }
 
     }

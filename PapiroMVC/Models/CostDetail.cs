@@ -99,6 +99,12 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public Nullable<bool> JustComputed { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<bool> ForceLateral { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<double> Lateral { get; set; }
     
     	[DataMember]
         public virtual Cost TaskCost { get; set; }

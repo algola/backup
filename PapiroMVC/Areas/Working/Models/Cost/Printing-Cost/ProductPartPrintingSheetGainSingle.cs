@@ -101,7 +101,7 @@ namespace PapiroMVC.Models
                     )));
 
                 //LIMITO LA RESA
-                if (MaxGain1 != 0 && (gain1_1 > MaxGain1 || (ForceGain??false)))
+                if (MaxGain1 != 0 && (Math.Max(gain1_1WoLat,gain1_1) > MaxGain1 || (ForceGain??false)))
                 {
                     gain1_1 = MaxGain1;
                     gain1_1WoLat = MaxGain1;

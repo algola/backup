@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
 
             
 
-    //    [MetadataType(typeof(TaskCostDetail_MetaData))]
+    [MetadataType(typeof(CostDetail_MetaData))]
     public partial class CostDetail : ICloneable, IPrintDocX
     {
 

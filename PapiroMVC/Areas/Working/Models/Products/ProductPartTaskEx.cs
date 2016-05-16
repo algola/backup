@@ -70,6 +70,11 @@ namespace PapiroMVC.Models
 
         }
 
+        public virtual string ToStringInfo()
+        {
+            return ToString();
+        }
+
         public virtual string ImplantToString()
         {
             Type t = typeof(PapiroMVC.Models.Resources.Products.ResProductPartTask);
@@ -132,6 +137,7 @@ namespace PapiroMVC.Models
             }
 
         }
+
 
         #region Error Handle
 

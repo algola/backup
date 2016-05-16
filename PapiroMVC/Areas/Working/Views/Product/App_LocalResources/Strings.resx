@@ -220,7 +220,7 @@
     <value>Carico</value>
   </data>
   <data name="NewMovProductMov" xml:space="preserve">
-    <value>Sposta in Magazzino</value>
+    <value>Sposta in</value>
   </data>
   <data name="NewMovProductOrder" xml:space="preserve">
     <value>Ordine</value>
@@ -251,6 +251,9 @@
   </data>
   <data name="TypeOfMovCaption" xml:space="preserve">
     <value>Tipo</value>
+  </data>
+  <data name="CodDocumentMovCaption" xml:space="preserve">
+    <value>Commessa</value>
   </data>
   <data name="LoadType" xml:space="preserve">
     <value>Carico</value>
@@ -341,6 +344,33 @@
   </data>
   <data name="PrintSide2" xml:space="preserve">
     <value>Speculare</value>
+  </data>
+  <data name="ColorFormulation" xml:space="preserve">
+    <value>Composizione</value>
+  </data>
+  <data name="ColorFormulation0" xml:space="preserve">
+    <value>Non Specificato</value>
+  </data>
+  <data name="ColorFormulation1" xml:space="preserve">
+    <value>CMYK</value>
+  </data>
+  <data name="ColorFormulation2" xml:space="preserve">
+    <value>CMYK + Pantone/i</value>
+  </data>
+  <data name="ColorFormulation3" xml:space="preserve">
+    <value>CMYK + Bianco</value>
+  </data>
+  <data name="ColorFormulation4" xml:space="preserve">
+    <value>CMYK + Pantone/i + Bianco</value>
+  </data>
+  <data name="ColorFormulation5" xml:space="preserve">
+    <value>Pantone/i</value>
+  </data>
+  <data name="ColorFormulation6" xml:space="preserve">
+    <value>Pantone/i + Bianco</value>
+  </data>
+  <data name="ColorFormulation7" xml:space="preserve">
+    <value>Bianco</value>
   </data>
   <data name="FormatTypeName0" xml:space="preserve">
     <value>Quadrata</value>

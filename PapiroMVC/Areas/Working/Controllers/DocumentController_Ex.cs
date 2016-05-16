@@ -9,10 +9,10 @@ using System.Resources;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
+   //     [AuthorizeAlgola(Roles = "Estimate")]
+
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
-
-
 
         /// <summary>
         /// List of all DocumentProducts

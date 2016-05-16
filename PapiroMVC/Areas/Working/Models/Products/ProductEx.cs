@@ -168,7 +168,7 @@ namespace PapiroMVC.Models
                 pt = new ProductTask();
                 //default selection
                 pt.OptionTypeOfTask = item.OptionTypeOfTasks.FirstOrDefault(y => y.CodOptionTypeOfTask == item.CodTypeOfTask + "_NO");
-               
+
                 pt.CodOptionTypeOfTask = pt.OptionTypeOfTask.CodOptionTypeOfTask;
                 pt.Hidden = true;
                 tsksInProduct.Add(pt);
@@ -193,7 +193,7 @@ namespace PapiroMVC.Models
             ProductSingleLabelRoll = 4,
             ProductSoft = 5,
             ProductEmpty = 6,
-            ProductDoubleLabelRoll=7
+            ProductDoubleLabelRoll = 7
 
         }
 
@@ -261,6 +261,19 @@ namespace PapiroMVC.Models
         }
 
 
+        public string GetColorOfPrinting()
+        {
+            string ret = String.Empty;
+            foreach (var item in ProductParts)
+            {
+                ret += item.GetColorOfPrinting();
+            }
+
+            return ret;
+        }
+
+
+
         public void CheckConsistency()
         {
             foreach (var productPart in ProductParts)
@@ -279,7 +292,7 @@ namespace PapiroMVC.Models
                         {
                             var ptToReset = productPart.ProductPartTasks.SingleOrDefault(x => x.CodItemGraph == it);
                             ptToReset.CodOptionTypeOfTask = ptToReset.CodOptionTypeOfTask.Substring(0, ptToReset.CodOptionTypeOfTask.IndexOf("_")) + "_NO";
-                            ptToReset.Hidden = true;                           
+                            ptToReset.Hidden = true;
                             Console.WriteLine(ptToReset.CodOptionTypeOfTask);
                         }
 
@@ -309,9 +322,9 @@ namespace PapiroMVC.Models
                 item.Product = this;
                 item.UpdateOpenedFormat();
 
-                if (item.CodProductPart == null || item.CodProductPart == string.Empty  || item.CodProductPart.Length == 10)
+                if (item.CodProductPart == null || item.CodProductPart == string.Empty || item.CodProductPart.Length == 10)
                 {
-                    item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString().PadLeft(3, '0');                                        
+                    item.CodProductPart = this.CodProduct + "-" + ppart.IndexOf(item).ToString().PadLeft(3, '0');
                 }
                 else
                 {
@@ -323,7 +336,7 @@ namespace PapiroMVC.Models
                 item.TimeStampTable = DateTime.Now;
 
                 //task della parte del prodotto
-                var pptask = item.ProductPartTasks.OrderBy(y => y.CodProductPartTask,new EmptyStringsAreLast()).ToList();
+                var pptask = item.ProductPartTasks.OrderBy(y => y.CodProductPartTask, new EmptyStringsAreLast()).ToList();
                 foreach (var item2 in item.ProductPartTasks)
                 {
                     item2.ProductPart = item;

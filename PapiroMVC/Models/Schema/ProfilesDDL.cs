@@ -53,6 +53,11 @@ namespace PapiroMVC.Model
             dbS.AddColumnToTable("modules", "Discount", SchemaDb.Double, "0");
             dbS.AddColumnToTable("modules", "Status", SchemaDb.Int, "0");
 
+            dbS.AddColumnToTable("modules", "Users", SchemaDb.Int, "0");
+            dbS.AddColumnToTable("modules", "PermaLink", SchemaDb.String, "255");
+
+            dbS.AddColumnToTable("modules", "IndexOf", SchemaDb.Int, "0");
+
             //---------------------------------------------------------------------------------------------
 
             //Second Table

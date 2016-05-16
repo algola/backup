@@ -663,6 +663,33 @@
   <data name="PrintSideToolTip" xml:space="preserve">
     <value>Indica se la stampa su film trasparente è normale (fronte) oppure in retro (speculare)</value>
   </data>
+  <data name="ColorFormulation" xml:space="preserve">
+    <value>Composizione</value>
+  </data>
+  <data name="ColorFormulation0" xml:space="preserve">
+    <value>Non Specificato</value>
+  </data>
+  <data name="ColorFormulation1" xml:space="preserve">
+    <value>CMYK</value>
+  </data>
+  <data name="ColorFormulation2" xml:space="preserve">
+    <value>CMYK + Pantone/i</value>
+  </data>
+  <data name="ColorFormulation3" xml:space="preserve">
+    <value>CMYK + Bianco</value>
+  </data>
+  <data name="ColorFormulation4" xml:space="preserve">
+    <value>CMYK + Pantone/i + Bianco</value>
+  </data>
+  <data name="ColorFormulation5" xml:space="preserve">
+    <value>Pantone/i</value>
+  </data>
+  <data name="ColorFormulation6" xml:space="preserve">
+    <value>Pantone/i + Bianco</value>
+  </data>
+  <data name="ColorFormulation7" xml:space="preserve">
+    <value>Bianco</value>
+  </data>
   <data name="CodSTAMPAETICHROTOLO_7" xml:space="preserve">
     <value>stampa a 7 colori</value>
   </data>

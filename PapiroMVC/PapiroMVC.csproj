@@ -223,6 +223,17 @@
       <DependentUpon>gestionestampa.com.resx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Areas\Working\Models\Cost\PrintingCostDetail_MetaData.cs" />
+    <Compile Include="Areas\Working\Models\Cost\CostDetail_MetaData.cs" />
+    <Compile Include="Models\Resources\Document\ResCostDetail.Designer.cs">
+      <DependentUpon>ResCostDetail.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Models\WarehouseItem.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\App_LocalResources\TypeOfTaskAndCodTypeOfTask.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -844,9 +855,6 @@
     <Compile Include="Models\Module.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\News.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\NoPrintable.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -873,9 +881,6 @@
     </Compile>
     <Compile Include="Models\Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\OrderRow.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Plotter.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -1080,9 +1085,6 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Profile.cs">
-      <DependentUpon>Model2.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProfileOrder.cs">
       <DependentUpon>Model2.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RepassRollCostDetail.cs">
@@ -1622,9 +1624,6 @@
     <Compile Include="Models\TypeOfTask.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Warehouse.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\WarehouseArticle.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -2018,6 +2017,7 @@
     <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-ua.js" />
     <Content Include="Content\acetheme\assets\js\jqGrid\i18n\grid.locale-vi.js" />
     <Content Include="Content\acetheme\assets\js\jqGrid\jquery.jqGrid.min.js" />
+    <Content Include="Content\acetheme\assets\js\jqGrid\jquery.jqGrid.min_original.js" />
     <Content Include="Content\acetheme\assets\js\jquery-1.10.2.min.js" />
     <Content Include="Content\acetheme\assets\js\jquery-2.0.3.min.js" />
     <Content Include="Content\acetheme\assets\js\jquery-ui-1.10.3.custom.min.js" />
@@ -2811,6 +2811,8 @@
     <Content Include="Areas\Working\Views\Document\_ListPlanningDetail.cshtml" />
     <Content Include="Areas\Working\Views\Document\PlanningDetail.cshtml" />
     <Content Include="Areas\DataBase\Views\TaskExecutor\_OptionTypeOfTasks.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\OnlyMov.cshtml" />
+    <Content Include="Areas\DataBase\Views\Article\_ListWarehouseArticlesMov.cshtml" />
     <None Include="Areas\Working\Views\Product\_EditAndEditProduct.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListWarehouseArticlesMov.cshtml" />
     <Content Include="Areas\Working\Views\Product\_ListProductNameGenerator.cshtml" />
@@ -2965,7 +2967,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Adv.cshtml" />
     <Content Include="Views\Home\algolino.docx" />
     <Content Include="Views\Home\ECommerce.cshtml" />
@@ -2990,6 +2991,9 @@
     <Content Include="Views\Shared\_SideBarAceTheme.cshtml" />
     <Content Include="Views\Shared\_TopBarAceTheme.cshtml" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Home\_Module.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home\App_LocalResources\Strings.resx">
@@ -3029,6 +3033,7 @@
   <ItemGroup>
     <Content Include="Areas\Account\Views\Account\App_LocalResources\Strings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\DataBase\Views\Article\App_LocalResources\ArticleStrings.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3119,6 +3124,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Registration.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Account\ResChangePasswordModel.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3133,6 +3139,11 @@
     <EmbeddedResource Include="Models\Resources\Articles\ResNoPrintableArticleCost.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResNoPrintableArticleCost.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Models\Resources\Document\ResCostDetail.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResCostDetail.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductPartSingleLabelRoll.resx">
@@ -3313,6 +3324,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResProductPart.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\Products\ResProductPartBlockSheet.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3502,6 +3514,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResTaskExecutor.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\Resources\ViewModels\ResArticleViewModelAutoChanges.resx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -3520,6 +3533,10 @@
     <EmbeddedResource Include="Validation\Strings.resx">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Content Include="Views\Shared\App_LocalResources\AccountStrings.resx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Docx\DocX\DocX.csproj">
@@ -3572,7 +3589,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49450</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49453/</IISUrl>
+          <IISUrl>http://localhost:49452/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

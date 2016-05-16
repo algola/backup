@@ -1,4 +1,6 @@
-﻿@{
+﻿@using PapiroMVC.Validation;
+
+@{
     string strings = "~/Areas/DataBase/Views/TaskExecutor/Strings";
 }
 
@@ -19,38 +21,38 @@
         var ctrlTblRoll = '@HttpContext.GetLocalResourceObject(strings, "ControlTableRollType")';
         var prePostPress = '@HttpContext.GetLocalResourceObject(strings, "PrePostPressType")';
 
-            if (cellvalue == "LithoSheet")
-                return link.replace("type", sheet);
+        if (cellvalue == "LithoSheet")
+            return link.replace("type", sheet);
 
-            if (cellvalue == "LithoRoll")
-                return link.replace("type", roll);
+        if (cellvalue == "LithoRoll")
+            return link.replace("type", roll);
 
-            if (cellvalue == "DigitalSheet")
-                return link.replace("type", sheet);
+        if (cellvalue == "DigitalSheet")
+            return link.replace("type", sheet);
 
-            if (cellvalue == "DigitalRoll")
-                return link.replace("type", roll);
+        if (cellvalue == "DigitalRoll")
+            return link.replace("type", roll);
 
-            if (cellvalue == "PlotterRoll")
-                return link.replace("type", plotterRoll);
+        if (cellvalue == "PlotterRoll")
+            return link.replace("type", plotterRoll);
 
-            if (cellvalue == "PlotterSheet")
-                return link.replace("type", plotterSheet);
+        if (cellvalue == "PlotterSheet")
+            return link.replace("type", plotterSheet);
 
-            if (cellvalue == "Flexo")
-                return link.replace("type", flexo);
+        if (cellvalue == "Flexo")
+            return link.replace("type", flexo);
 
-            if (cellvalue == "FlatRoll")
-                return link.replace("type", flatRoll);
+        if (cellvalue == "FlatRoll")
+            return link.replace("type", flatRoll);
 
-            if (cellvalue == "ControlTableRoll")
-                return link.replace("type", ctrlTblRoll);
+        if (cellvalue == "ControlTableRoll")
+            return link.replace("type", ctrlTblRoll);
 
-            if (cellvalue == "PrePostPress")
-                return link.replace("type", prePostPress);
+        if (cellvalue == "PrePostPress")
+            return link.replace("type", prePostPress);
 
-            return link;
-        }
+        return link;
+    }
 
 
     function editRow(cellvalue, options, rowobject) {
@@ -102,8 +104,8 @@
                                           new {@class=""})';
         }
 
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1", returnUrl = ViewBag.ReturnUrl }, new { @class = "" })';
-
+        //var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1", returnUrl = ViewBag.ReturnUrl }, new { @class = "" })';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", "TaskExecutor", new { area = "DataBase", id = "-1" }, "fa fa-book fa-fw")';
         @* var link = '@Ajax.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"),
                  "Edit",
                  new {id= "-1"},

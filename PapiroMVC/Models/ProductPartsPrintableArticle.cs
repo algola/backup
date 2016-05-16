@@ -21,6 +21,7 @@ namespace PapiroMVC.Models
         public ProductPartsPrintableArticle()
         {
             this.Costs = new HashSet<Cost>();
+            this.warehousearticlemovs = new HashSet<WarehouseArticleMov>();
         }
     
     	
@@ -58,5 +59,7 @@ namespace PapiroMVC.Models
         public virtual ProductPart ProductPart { get; set; }
     	[DataMember]
         public virtual ICollection<Cost> Costs { get; set; }
+    	[DataMember]
+        public virtual ICollection<WarehouseArticleMov> warehousearticlemovs { get; set; }
     }
 }

@@ -267,6 +267,9 @@
   <data name="Weight" xml:space="preserve">
     <value>Gr/mq</value>
   </data>
+  <data name="Height" xml:space="preserve">
+    <value>h</value>
+  </data>
   <data name="BusinessNameToolTip" xml:space="preserve">
     <value>Ragione sociale del cliente o del fornitore</value>
   </data>

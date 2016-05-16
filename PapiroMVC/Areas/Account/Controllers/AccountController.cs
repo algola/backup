@@ -63,12 +63,15 @@ namespace PapiroMVC.Areas.Account.Controllers
         }
 
         [HttpPost]
-        public ActionResult BuyModule(String codModuleName, int months, double totalPrice)
+        public ActionResult BuyModule(String codModuleName, int months, int users)
         {
             //Acquisto
             var m = profDataRep.GetSingleModule(codModuleName);
             m.ChangeAcquired(months);
+            m.Users = users;
+
             profDataRep.SaveModule(m);
+
 
             this.CheckModuleRole(profDataRep.GetSingle(CurrentUser.UserName));
             return PartialView("_Module", m);
@@ -81,7 +84,9 @@ namespace PapiroMVC.Areas.Account.Controllers
             //Prova
             var m = profDataRep.GetSingleModule(codModuleName);
             m.ChangeInValuating();
+            m.Users = 0;
             profDataRep.SaveModule(m);
+
             this.CheckModuleRole(profDataRep.GetSingle(CurrentUser.UserName));
 
             return PartialView("_Module", m);
@@ -394,7 +399,6 @@ namespace PapiroMVC.Areas.Account.Controllers
 
             if (ModelState.IsValid)
             {
-
                 // Attempt to register the user
                 MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName,
@@ -423,18 +427,20 @@ namespace PapiroMVC.Areas.Account.Controllers
                     profDataRep.Add(nProf);
                     profDataRep.Save();
 
-                    //Sincronizzazione dei moduli
-                    profDataRep.SyncroModules(nProf.Name);
+                    //if (nProf.Name.GetDatabase() == nProf.Name.GetUser())
+                    //{
+                        //Sincronizzazione dei moduli
+                        profDataRep.SyncroModules(nProf.Name);
 
+                        this.CheckModuleRole(nProf);
+                        ////Carta di credito
+                        //this.SearchOrCreateBTCustomer(nProf);
 
-                    this.CheckModuleRole(nProf);
-                    //Carta di credito
-                    this.SearchOrCreateBTCustomer(nProf);
+                        this.SendConfirmationEmail(model.UserName);
+                        //                    return RedirectToAction("Confirmation", "Account");
+                    //}
 
-                    this.SendConfirmationEmail(model.UserName);
-                    //                    return RedirectToAction("Confirmation", "Account");
                     return Json(new { redirectUrl = Url.Action("Confirmation") });
-
                 }
                 else
                 {
@@ -814,21 +820,29 @@ namespace PapiroMVC.Areas.Account.Controllers
             if (!user.IsApproved)
             {
                 user.IsApproved = true;
+                Membership.UpdateUser(user);
 
-                if (!Roles.RoleExists("Pending"))
-                    Roles.CreateRole("Pending");
-
-
-                if (!Roles.IsUserInRole(user.UserName, "Pending"))
+                if (user.UserName.GetDatabase() == user.UserName.GetUser())
                 {
-                    Roles.AddUserToRole(user.UserName, "Pending");
-                    Membership.UpdateUser(user);                    
+                    if (!Roles.RoleExists("Pending"))
+                        Roles.CreateRole("Pending");
+
+
+                    if (!Roles.IsUserInRole(user.UserName, "Pending"))
+                    {
+                        Roles.AddUserToRole(user.UserName, "Pending");
+                        Membership.UpdateUser(user);
+                    }
+
+                    var task = Task.Factory.StartNew(() => { Stuff(user); }, TaskCreationOptions.LongRunning);
+                }
+                else
+                {
+                    var task = Task.Factory.StartNew(() => { StuffOnlyClient(user); }, TaskCreationOptions.LongRunning);
                 }
 
                 FormsAuthentication.SetAuthCookie(Membership.GetUser(user.ProviderUserKey).UserName, createPersistentCookie: false);
                 TempData["message"] = "Activated";
-
-                var task = Task.Factory.StartNew(() => { Stuff(user); }, TaskCreationOptions.LongRunning);
 
             }
             else
@@ -840,9 +854,20 @@ namespace PapiroMVC.Areas.Account.Controllers
             return View();
         }
 
+        private async void StuffOnlyClient(MembershipUser user)
+        {
+            disposable = false;
+            var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+            ChatHub.Update("Procedura di inizializzazione terminata");
+            disposable = true;
+        }
+
+
+
+
         private async void Stuff(MembershipUser user)
         {
-
+            disposable = false;
             var hubContext = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
             ChatHub.Update("creazione del database in corso... attendere");
 
@@ -871,9 +896,8 @@ namespace PapiroMVC.Areas.Account.Controllers
             foreach (var a in aFs)
             {
                 arTo.Add(a);
+                arTo.Save();
             }
-
-            arTo.Save();
 
 
             ChatHub.Update("copia delle macchine da stampa di esempio... attendere");
@@ -892,13 +916,16 @@ namespace PapiroMVC.Areas.Account.Controllers
             trTo.SetDbName(user.UserName);
             trFrom.SetDbName("examples");
             var tFs = trFrom.GetAll();
+
             foreach (var a in tFs)
             {
+                a.TypeOfTasks = null;
                 trTo.Add(a);
             }
 
             trTo.Save();
             ChatHub.Update("Procedura di inizializzazione terminata");
+            disposable = true;
         }
 
 

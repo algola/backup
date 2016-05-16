@@ -43,6 +43,12 @@ namespace PapiroMVC.Models
                  gain.Laterale = 0;
              }
 
+
+             if (ForceLateral)
+             {
+                 gain.Laterale = Lateral;
+             }
+
              gain.LargerFormat = PrintingFormat;
              gain.SmallerFormat = Part.FormatOpened;
 
@@ -81,6 +87,7 @@ namespace PapiroMVC.Models
 
                     break;
                 case ProductPart.ProductPartType.ProductPartSoft:
+                    ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).GiraVerso = true;
                     ((ProductPartPrintingSheetGainSingle)this.GainPartOnPrinting).SubjectNumber = ((ProductPartSoft)Part).SubjectNumber ?? 1;
                     break;
                 case ProductPart.ProductPartType.ProductPartCoverSheet:

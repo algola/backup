@@ -68,7 +68,14 @@ namespace PapiroMVC.Models
 
             if (codOptionTypeOfTask.Contains("STAMPAETICHROTOLO"))
             {
-                ret = Math.Ceiling(total / this.PrintingUnit ?? 1);
+                if ((this.PrintingUnit??0) == 0)
+                {
+                    ret = Math.Ceiling(total);
+                }
+                else
+                {
+                    ret = Math.Ceiling(total / (this.PrintingUnit ?? 1));
+                }
 //                ret = total;
             }
 

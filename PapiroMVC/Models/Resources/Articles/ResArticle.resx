@@ -300,4 +300,7 @@
   <data name="AniloxRowToolTip" xml:space="preserve">
     <value>Numero di celle/cm2</value>
   </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
 </root>

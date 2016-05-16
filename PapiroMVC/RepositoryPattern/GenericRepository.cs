@@ -246,7 +246,7 @@ namespace Services
         {
             this.Context.Set<T>().Remove(entity);
         }
-
+        
         public virtual void Edit(T entity)
         {
             this.Context.Entry(entity).State = System.Data.Entity.EntityState.Modified;

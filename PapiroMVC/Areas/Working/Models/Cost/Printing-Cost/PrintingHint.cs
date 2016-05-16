@@ -23,6 +23,10 @@ namespace PapiroMVC.Models
 
         public bool IsDie { get; set; }
 
+        //prova lateral
+        public double Lateral { get; set; }
+
+
         [DisplayNameLocalized(typeof(ResProductPart), "DCut1")]
         [Tooltip(typeof(ResProductPart), "DCut1ToolTip")]
         public Nullable<double> DCut1 { get; set; }

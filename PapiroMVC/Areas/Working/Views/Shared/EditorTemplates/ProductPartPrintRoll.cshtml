@@ -12,8 +12,21 @@
 
     printSideList.Add(0, Html.T(strings, "PrintSide0"));
     printSideList.Add(1, Html.T(strings, "PrintSide1"));
-    printSideList.Add(2, Html.T(strings, "PrintSide2"));         
-       
+    printSideList.Add(2, Html.T(strings, "PrintSide2"));
+
+
+    Dictionary<int, string> colorFormulationList = new Dictionary<int, string>();
+
+    colorFormulationList.Add(0, Html.T(strings, "ColorFormulation0"));
+    colorFormulationList.Add(1, Html.T(strings, "ColorFormulation1"));
+    colorFormulationList.Add(2, Html.T(strings, "ColorFormulation2"));
+    colorFormulationList.Add(3, Html.T(strings, "ColorFormulation3"));
+    colorFormulationList.Add(4, Html.T(strings, "ColorFormulation4"));
+    colorFormulationList.Add(5, Html.T(strings, "ColorFormulation5"));
+    colorFormulationList.Add(6, Html.T(strings, "ColorFormulation6"));
+    colorFormulationList.Add(7, Html.T(strings, "ColorFormulation7"));         
+      
+     
     var tsksInPage = (List<PapiroMVC.Models.TypeOfTask>)Session["TsksInPage"];
     List<PapiroMVC.Models.OptionTypeOfTask> c = tsksInPage.FirstOrDefault(x => x.CodTypeOfTask == Model.OptionTypeOfTask.CodTypeOfTask).OptionTypeOfTasks.Where(y => !y.CodOptionTypeOfTask.ToLower().Contains("retro") && !y.CodOptionTypeOfTask.ToLower().Contains("vernice")).OrderBy(x => x.IdexOf).ToList();
     
@@ -50,6 +63,18 @@
 
     <div class="form-group">
 
+        @Html.LabelFor(model => model.ColorFormulation, new { @class = "col-sm-3 control-label no-padding-right" })
+
+        <div class="controls col-sm-9">
+            @Html.DropDownListFor((model => model.ColorFormulation),
+            new SelectList(colorFormulationList, "Key", "Value"), new { @class = "col-xs-10 col-sm-5" })
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+
         @Html.LabelFor(model => model.PrintSide, new { @class = "col-sm-3 control-label no-padding-right" })
 
         <div class="controls col-sm-9">
@@ -57,6 +82,7 @@
             new SelectList(printSideList, "Key", "Value"), new { @class = "col-xs-10 col-sm-5" })
         </div>
     </div>
+
 
     @Html.EditorFor(x=>x.Retro)
     @Html.EditorFor(x=>x.Vernice)

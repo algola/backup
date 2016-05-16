@@ -13,13 +13,11 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(ProductTask_MetaData))]
     public partial class ProductTask
     {
-
         public bool IsSelected
         {
             get;
             set;
         }
-
 
         public override string ToString()
         {

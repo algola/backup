@@ -4,6 +4,7 @@
 @{
     string strings = "~/Areas/Database/Views/Article/Strings";
     ViewBag.Title = (string)HttpContext.GetLocalResourceObject(strings, "WarehouseTitle");
+    Console.Write(Model.ArticleOrProduct);
 }
 
 <fieldset>
@@ -26,7 +27,6 @@
     @Html.HiddenFor(model => model.ArticleOrProduct.CodArticle)
 
     @Html.AlgolaEditorFor(model => model.ArticleOrProduct.MinQuantity)
-
 
     <button class="btn" type="submit" id="updateMinQuantity">
         @HttpContext.GetLocalResourceObject(strings, "UpdateMinQuantity")

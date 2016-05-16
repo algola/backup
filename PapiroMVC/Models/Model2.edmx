@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="profilesModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="profilesModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="modules">
           <Key>
             <PropertyRef Name="CodModuleName" />
@@ -18,44 +18,9 @@
           <Property Name="MontlyPrice" Type="char" MaxLength="50" />
           <Property Name="Discount" Type="double" />
           <Property Name="Status" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'def.profiles.news' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="news">
-          <Key>
-            <PropertyRef Name="CodNew" />
-          </Key>
-          <Property Name="CodNew" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DateNew" Type="datetime" Precision="0" />
-          <Property Name="Title" Type="char" MaxLength="50" />
-          <Property Name="Body" Type="text" />
-        </EntityType>
-        <EntityType Name="orderrows">
-          <Key>
-            <PropertyRef Name="CodOrderRows" />
-          </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CodOrderRows" Type="char" MaxLength="50" Nullable="false" />
-          <Property Name="CodModuleName" Type="char" MaxLength="50" />
-          <Property Name="CodOrder" Type="char" MaxLength="50" />
-          <Property Name="Description" Type="char" MaxLength="255" />
-          <Property Name="MontlyPrice" Type="char" MaxLength="50" />
-          <Property Name="Months" Type="int" />
-          <Property Name="Discount" Type="char" MaxLength="50" />
-          <Property Name="Total" Type="char" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="orders">
-          <Key>
-            <PropertyRef Name="CodOrder" />
-          </Key>
-          <Property Name="TimeStampTable" Type="timestamp" Precision="0" Nullable="false" />
-          <Property Name="CodOrder" Type="char" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="char" MaxLength="50" />
-          <Property Name="OrderDate" Type="date" />
-          <Property Name="Status" Type="int" />
-          <Property Name="Price" Type="char" MaxLength="50" />
-          <Property Name="Discount" Type="double" />
-          <Property Name="Total" Type="char" MaxLength="50" />
+          <Property Name="permaLink" Type="char" MaxLength="255" />
+          <Property Name="Users" Type="int" />
+          <Property Name="IndexOf" Type="int" />
         </EntityType>
         <EntityType Name="profile">
           <Key>
@@ -78,82 +43,21 @@ warning 6002: The table/view 'def.profiles.news' does not have a primary key def
           <Property Name="BrainTreeToken" Type="char" MaxLength="255" />
           <Property Name="City" Type="char" MaxLength="255" />
         </EntityType>
-        <Association Name="FK_orderRows_CodModuleName">
-          <End Role="modules" Type="Self.modules" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="orderrows" Type="Self.orderrows" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="modules">
-              <PropertyRef Name="CodModuleName" />
-            </Principal>
-            <Dependent Role="orderrows">
-              <PropertyRef Name="CodModuleName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orderRows_CodOrder">
-          <End Role="orders" Type="Self.orders" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="orderrows" Type="Self.orderrows" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="orders">
-              <PropertyRef Name="CodOrder" />
-            </Principal>
-            <Dependent Role="orderrows">
-              <PropertyRef Name="CodOrder" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="profilesModelStoreContainer">
           <EntitySet Name="modules" EntityType="Self.modules" Schema="profiles" store:Type="Tables" />
-          <EntitySet Name="orderrows" EntityType="Self.orderrows" Schema="profiles" store:Type="Tables" />
-          <EntitySet Name="orders" EntityType="Self.orders" Schema="profiles" store:Type="Tables" />
           <EntitySet Name="profile" EntityType="Self.profile" Schema="profiles" store:Type="Tables" />
-          <EntitySet Name="news" EntityType="Self.news" store:Type="Tables" store:Schema="profiles">
-            <DefiningQuery>SELECT
-`news`.`CodNew`, 
-`news`.`DateNew`, 
-`news`.`Title`, 
-`news`.`Body`
-FROM `news` AS `news`</DefiningQuery>
-          </EntitySet>
-          <AssociationSet Name="FK_orderRows_CodModuleName" Association="Self.FK_orderRows_CodModuleName">
-            <End Role="modules" EntitySet="modules" />
-            <End Role="orderrows" EntitySet="orderrows" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orderRows_CodOrder" Association="Self.FK_orderRows_CodOrder">
-            <End Role="orders" EntitySet="orders" />
-            <End Role="orderrows" EntitySet="orderrows" />
-          </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="profilesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="profilesEntities" p1:LazyLoadingEnabled="false" >
           <EntitySet Name="Profiles" EntityType="profilesModel.Profile" />
-          <EntitySet Name="OrderRows" EntityType="profilesModel.OrderRow" />
-          <EntitySet Name="ProfileOrders" EntityType="profilesModel.ProfileOrder" />
-          <AssociationSet Name="FK_orderRows_CodOrder" Association="profilesModel.FK_orderRows_CodOrder">
-            <End Role="order" EntitySet="ProfileOrders" />
-            <End Role="orderRow" EntitySet="OrderRows" />
-          </AssociationSet>
-          <AssociationSet Name="FK_orders_Name" Association="profilesModel.FK_orders_Name">
-            <End Role="Profile" EntitySet="Profiles" />
-            <End Role="order" EntitySet="ProfileOrders" />
-          </AssociationSet>
           <EntitySet Name="Modules" EntityType="profilesModel.Module" />
           <AssociationSet Name="FK_modules_Name1" Association="profilesModel.FK_modules_Name1">
             <End Role="Profile" EntitySet="Profiles" />
             <End Role="module1" EntitySet="Modules" />
           </AssociationSet>
-          <AssociationSet Name="FK_orderRows_CodModuleName1" Association="profilesModel.FK_orderRows_CodModuleName1">
-            <End Role="module1" EntitySet="Modules" />
-            <End Role="OrderRow" EntitySet="OrderRows" />
-          </AssociationSet>
-          <EntitySet Name="News" EntityType="profilesModel.News" />
           </EntityContainer>
         <EntityType Name="Profile">
           <Key>
@@ -173,70 +77,10 @@ FROM `news` AS `news`</DefiningQuery>
           <Property Type="String" Name="ExpiredM" MaxLength="2" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ExpiredY" MaxLength="4" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="BrianTreeCustomerId" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Orders" Relationship="profilesModel.FK_orders_Name" FromRole="Profile" ToRole="order" />
           <NavigationProperty Name="Modules" Relationship="profilesModel.FK_modules_Name1" FromRole="Profile" ToRole="module1" />
           <Property Name="BrainTreeToken" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="OrderRow">
-          <Key>
-            <PropertyRef Name="CodOrderRows" />
-          </Key>
-          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
-          <Property Name="CodOrderRows" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CodModuleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CodOrder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="MontlyPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Months" Type="Int32" />
-          <Property Name="Discount" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Order" Relationship="profilesModel.FK_orderRows_CodOrder" FromRole="orderRow" ToRole="order" />
-          <NavigationProperty Name="Module" Relationship="profilesModel.FK_orderRows_CodModuleName1" FromRole="OrderRow" ToRole="module1" />
-        </EntityType>
-        <EntityType Name="ProfileOrder">
-          <Key>
-            <PropertyRef Name="CodOrder" />
-          </Key>
-          <Property Name="TimeStampTable" Type="DateTime" Nullable="false" />
-          <Property Name="CodOrder" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OrderDate" Type="DateTime" />
-          <Property Name="Status" Type="Int32" />
-          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Discount" Type="Double" />
-          <Property Name="Total" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="OrderRows" Relationship="profilesModel.FK_orderRows_CodOrder" FromRole="order" ToRole="orderRow" />
-          <NavigationProperty Name="Profile" Relationship="profilesModel.FK_orders_Name" FromRole="order" ToRole="Profile" />
-        </EntityType>
-        <Association Name="FK_orderRows_CodOrder">
-          <End Type="profilesModel.ProfileOrder" Role="order" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="profilesModel.OrderRow" Role="orderRow" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="order">
-              <PropertyRef Name="CodOrder" />
-            </Principal>
-            <Dependent Role="orderRow">
-              <PropertyRef Name="CodOrder" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_orders_Name">
-          <End Type="profilesModel.Profile" Role="Profile" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="profilesModel.ProfileOrder" Role="order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Profile">
-              <PropertyRef Name="Name" />
-            </Principal>
-            <Dependent Role="order">
-              <PropertyRef Name="Name" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Module">
           <Key>
             <PropertyRef Name="CodModuleName" />
@@ -251,7 +95,9 @@ FROM `news` AS `news`</DefiningQuery>
           <Property Name="Discount" Type="Double" />
           <Property Name="Status" Type="Int32" />
           <NavigationProperty Name="Profile" Relationship="profilesModel.FK_modules_Name1" FromRole="module1" ToRole="Profile" />
-          <NavigationProperty Name="OrderRows" Relationship="profilesModel.FK_orderRows_CodModuleName1" FromRole="module1" ToRole="OrderRow" />
+          <Property Name="PermaLink" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Users" Type="Int32" />
+          <Property Name="IndexOf" Type="Int32" />
         </EntityType>
         <Association Name="FK_modules_Name1">
           <End Type="profilesModel.Profile" Role="Profile" Multiplicity="0..1">
@@ -267,29 +113,6 @@ FROM `news` AS `news`</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_orderRows_CodModuleName1">
-          <End Type="profilesModel.Module" Role="module1" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="profilesModel.OrderRow" Role="OrderRow" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="module1">
-              <PropertyRef Name="CodModuleName" />
-            </Principal>
-            <Dependent Role="OrderRow">
-              <PropertyRef Name="CodModuleName" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="News">
-          <Key>
-            <PropertyRef Name="CodNew" />
-          </Key>
-          <Property Name="CodNew" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateNew" Type="DateTime" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Body" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -318,23 +141,12 @@ FROM `news` AS `news`</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProfileOrders">
-            <EntityTypeMapping TypeName="profilesModel.ProfileOrder">
-              <MappingFragment StoreEntitySet="orders">
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CodOrder" ColumnName="CodOrder" />
-                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Modules">
             <EntityTypeMapping TypeName="profilesModel.Module">
               <MappingFragment StoreEntitySet="modules">
+                <ScalarProperty Name="IndexOf" ColumnName="IndexOf" />
+                <ScalarProperty Name="Users" ColumnName="Users" />
+                <ScalarProperty Name="PermaLink" ColumnName="permaLink" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Discount" ColumnName="Discount" />
                 <ScalarProperty Name="MontlyPrice" ColumnName="MontlyPrice" />
@@ -343,31 +155,6 @@ FROM `news` AS `news`</DefiningQuery>
                 <ScalarProperty Name="CodModule" ColumnName="CodModule" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CodModuleName" ColumnName="CodModuleName" />
-                <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="News">
-            <EntityTypeMapping TypeName="profilesModel.News">
-              <MappingFragment StoreEntitySet="news">
-                <ScalarProperty Name="Body" ColumnName="Body" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="DateNew" ColumnName="DateNew" />
-                <ScalarProperty Name="CodNew" ColumnName="CodNew" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderRows">
-            <EntityTypeMapping TypeName="IsTypeOf(profilesModel.OrderRow)">
-              <MappingFragment StoreEntitySet="orderrows">
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Months" ColumnName="Months" />
-                <ScalarProperty Name="MontlyPrice" ColumnName="MontlyPrice" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CodOrder" ColumnName="CodOrder" />
-                <ScalarProperty Name="CodModuleName" ColumnName="CodModuleName" />
-                <ScalarProperty Name="CodOrderRows" ColumnName="CodOrderRows" />
                 <ScalarProperty Name="TimeStampTable" ColumnName="TimeStampTable" />
               </MappingFragment>
             </EntityTypeMapping>

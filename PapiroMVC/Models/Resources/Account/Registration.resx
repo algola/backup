@@ -307,7 +307,7 @@
     <value>Il nome utente contiene spazi o caratteri non validi</value>
   </data>
   <data name="UserNameRegex" xml:space="preserve">
-    <value>^[a-zA-Z0-9]*$</value>
+    <value>^[a-zA-Z0-9.]*$</value>
   </data>
   <data name="ValidationConfirmPassword" xml:space="preserve">
     <value>Le due password non combaciano</value>

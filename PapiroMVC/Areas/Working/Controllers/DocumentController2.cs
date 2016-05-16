@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 
 namespace PapiroMVC.Areas.Working.Controllers
 {
+    //[AuthorizeAlgola(Roles = "Estimate")]
     public partial class DocumentController : PapiroMVC.Controllers.ControllerAlgolaBase
     {
 
@@ -592,39 +593,31 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var documentProducts = estimate.DocumentProducts.Where(x => x.CodProduct == codProduct).OrderBy(x => x.Quantity);
 
+            String hashControl = "";
+            String hashControlCalculated = "";
+            String nomeExtHeaderDest = "";
+            String costiFileDest = "";
+
             foreach (var docProd in documentProducts)
             {
-                var dProdFileName = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + dbName + ".docx");
-                if (!System.IO.File.Exists(dProdFileName))
+                var dProdFileNameSource = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + dbName + ".docx");
+                if (!System.IO.File.Exists(dProdFileNameSource))
                 {
-                    dProdFileName = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + ".docx");
+                    dProdFileNameSource = Path.Combine(Server.MapPath(@"~/Report"), "DocumentProduct" + ".docx");
                 }
 
                 docProd.Product = product;
-                var docPrint = DocX.Load(dProdFileName);
+                var docPrint = DocX.Load(dProdFileNameSource);
 
                 docProd.MergeField(docPrint);
 
-                docPrint.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "DocPro" + docProd.CodDocumentProduct + ".docx"));
-                files.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "DocPro" + docProd.CodDocumentProduct + ".docx"));
+                costiFileDest = Path.Combine(Server.MapPath(@"~/Report"), "DocPro" + docProd.CodDocumentProduct + ".docx");
+                docPrint.SaveAs(costiFileDest);
 
                 #region costi supplementari
 
                 //questo array mi serve per il merge
                 Queue<string> filesExtCost = new Queue<string>();
-
-                //apro l'header dei costi supplementari e lo salvo
-                var nomeExt = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + estimate.CodDocument + ".docx");
-
-                var docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader" + dbName + ".docx");
-                if (!System.IO.File.Exists(docECHeaderFile))
-                {
-                    docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx");
-                }
-                var docECHeader = DocX.Load(docECHeaderFile);
-
-                docECHeader.SaveAs(nomeExt);
-                files.Enqueue(nomeExt);
 
                 var costs = docProd.Costs;
 
@@ -643,11 +636,31 @@ namespace PapiroMVC.Areas.Working.Controllers
                     cost.MergeField(docPrePress);
                     docPrePress.SaveAs(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
                     filesExtCost.Enqueue(Path.Combine(Server.MapPath(@"~/Report"), "ExtCost" + cost.CodCost + ".docx"));
+
+                    hashControlCalculated = cost.Quantity.Value.ToString() + cost.TotalCost;
                 }
+
+                //fusione dei file COSTI SUPPLEMENTARI 
+
+                #region external cost header
+                //apro l'header dei costi supplementari e lo salvo
+                nomeExtHeaderDest = Path.Combine(Server.MapPath(@"~/Report"), "ExtCostHeader" + estimate.CodDocument + ".docx");
+
+                var docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader" + dbName + ".docx");
+                if (!System.IO.File.Exists(docECHeaderFile))
+                {
+                    docECHeaderFile = Path.Combine(Server.MapPath(@"~/Report"), "ExternalCostHeader.docx");
+                }
+                var docECHeader = DocX.Load(docECHeaderFile);
+
+                docECHeader.SaveAs(nomeExtHeaderDest);
+
+
+
 
                 foreach (var file in filesExtCost.Reverse())
                 {
-                    using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExt, true))
+                    using (WordprocessingDocument myDoc = WordprocessingDocument.Open(nomeExtHeaderDest, true))
                     {
                         var altChunkId = "AltChunkId" + id++;
                         Console.WriteLine(altChunkId);
@@ -669,8 +682,27 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
                 #endregion
+                #endregion
+
+                if (hashControl != "")
+                {
+                    if (hashControl != hashControlCalculated)
+                    {
+                        //metto in coda l'header
+                        files.Enqueue(nomeExtHeaderDest);                        
+                    }
+                }
+
+                hashControl = hashControlCalculated;
+                
+
+                files.Enqueue(costiFileDest);
 
             }
+
+            //metto in coda l'header
+            files.Enqueue(nomeExtHeaderDest);
+
 
             docMain.SaveAs(fileNameSaveAs);
             docMain.Dispose();
@@ -1401,9 +1433,46 @@ namespace PapiroMVC.Areas.Working.Controllers
 
 
         [HttpPost]
+        public ActionResult ChangeLateralAndFuzzy(string lateral)
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            cv.ForceLateral = true;
+            cv.Lateral = Convert.ToDouble(lateral);
+            
+            cv.Update();
+            Session["CostDetail"] = cv;
+
+            SaveCostDetail();
+
+            return GetPrintingZRollCostDetailPartial(cv.CodTaskExecutorSelected, cv.CodCostDetail);
+            //return PartialView(cv.PartialViewName, cv);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult RemoveLateralAndFuzzy()
+        {
+            PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
+
+            cv.ForceLateral = false;
+
+            cv.Update();
+            Session["CostDetail"] = cv;
+
+            SaveCostDetail();
+
+            return GetPrintingZRollCostDetailPartial(cv.CodTaskExecutorSelected, cv.CodCostDetail);
+            //return PartialView(cv.PartialViewName, cv);
+        }
+
+
+
+        [HttpPost]
         public ActionResult ChangePPartFormatAndFuzzy(string format, string dCut1, string dCut2, string minDCut, string maxDCut, string maxGain1 = "", string maxGain2 = "")
         {
-            var x = ChangePPartFormat(format, dCut1, dCut2, minDCut,maxDCut, maxGain1, maxGain2 );
+            var x = ChangePPartFormat(format, dCut1, dCut2, minDCut, maxDCut, maxGain1, maxGain2);
             PrintingCostDetail cv = (PrintingCostDetail)Session["CostDetail"];
             return GetPrintingZRollCostDetailPartial(cv.CodTaskExecutorSelected, cv.CodCostDetail);
         }
@@ -1413,7 +1482,7 @@ namespace PapiroMVC.Areas.Working.Controllers
         /// <param name="format"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string minDCut, string maxDCut,  string maxGain1 = "", string maxGain2 = "")
+        public ActionResult ChangePPartFormat(string format, string dCut1, string dCut2, string minDCut, string maxDCut, string maxGain1 = "", string maxGain2 = "")
         {
 
             string[] formats = new string[2];
@@ -1595,7 +1664,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
-            return ChangePPartFormat(format, dCut1, dCut2, minDCut, maxDCut );
+            return ChangePPartFormat(format, dCut1, dCut2, minDCut, maxDCut);
         }
 
         /// <summary>
@@ -1629,7 +1698,7 @@ namespace PapiroMVC.Areas.Working.Controllers
 
             //   var myFirstTask = System.Threading.Tasks.Task.Factory.StartNew(() => SaveCostDetail());
 
-            return ChangePPartFormat(format, dCut1, dCut2, "","", maxGain1, maxGain2);
+            return ChangePPartFormat(format, dCut1, dCut2, "", "", maxGain1, maxGain2);
         }
 
         /// <summary>
@@ -1902,6 +1971,9 @@ namespace PapiroMVC.Areas.Working.Controllers
 
                     break;
             }
+
+            Session["CostDetail"] = cv;
+            Session["PapiroService"] = p;
 
             return View(viewName, cv);
         }

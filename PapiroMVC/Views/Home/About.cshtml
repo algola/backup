@@ -1,55 +1,100 @@
 ﻿@using PapiroMVC.Validation
 
-@{   
+@model IEnumerable<PapiroMVC.Models.Profile>
+
+
+@{
     string strings = "~/Views/Home/Strings";
-    ViewBag.MetaTitle = "Gestionale per Tipografie, Litografie e Stampa Digitale. Il migliore";     
+    string groupName = "gruppo";
 }
 
-@Html.Action("MetaGenerator", new
-{ 
-    area = "",    
-    page = @Path.GetFileNameWithoutExtension(Server.MapPath(VirtualPath))
-})
-
-
 @section title{
-    @Html.T(strings, "AboutTitle")
+    @Html.T(strings, "HomeTitle")
 }
 
 @section description{
-    @Html.T(strings, "AboutDesc")
+    @Html.T(strings, "HomeDesc")
 }
 
-<div class="span12">
-
-    <div class="span12">
-
-        <p>
-            Il miglior software gestionale per tipografie e service di stampa offset e digitale completamente cloud. PapiroStar è il gestionale ideato per preventivi, gestione commesse, magazzino per tipografie. 
-        </p>
-
-    </div>
-
-</div>
 
 
-@*@Html.Action("LoginInvite", "Account", new { area = "Account" }).If(!User.Identity.IsAuthenticated)*@
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CardIsValid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Base)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Refeere)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VatNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BrianTreeCustomerId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BrainTreeToken)
+        </th>
+        <th></th>
+    </tr>
 
-<div class="span12">
-    <div class="space-5"></div>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CardIsValid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Base)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Refeere)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VatNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrianTreeCustomerId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BrainTreeToken)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.Name }) |
+            @*@Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })*@
+        </td>
+    </tr>
+}
 
-    @section specificPlugInStyle {
-        <link rel="stylesheet" href="~/Content/acetheme/assets/css/ui.jqgrid.css" />
-    }
-
-    @section specificPluginScript {
-        <script src="~/Content/acetheme/assets/js/jquery-ui.min.js"></script>
-        <script src="~/Content/acetheme/assets/js/jquery.ui.touch-punch.min.js"></script>
-    }
-
-    @section Scripts{
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-
-</div>
+</table>

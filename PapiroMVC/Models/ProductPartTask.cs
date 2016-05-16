@@ -55,6 +55,9 @@ namespace PapiroMVC.Models
     	
     	[DataMember] 		
         public string IfSelectedResetOtherCodItemGraph { get; set; }
+    	
+    	[DataMember] 		
+        public Nullable<int> ColorFormulation { get; set; }
     
     	[DataMember]
         public virtual ProductPart ProductPart { get; set; }

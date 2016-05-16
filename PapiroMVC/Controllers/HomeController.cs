@@ -1,6 +1,8 @@
 ﻿using Braintree;
 using Microsoft.AspNet.SignalR;
 using PapiroMVC.Hubs;
+using PapiroMVC.Models;
+using PapiroMVC.Validation;
 using Services;
 using System;
 using System.Collections.Generic;
@@ -133,12 +135,12 @@ namespace PapiroMVC.Controllers
         public async Task<ActionResult> Index()
         {
 
-            var profile = 
+            var profile =
             profDataRep.GetSingle(CurrentDatabase);
 
-            if (profile !=null)
+            if (profile != null)
             {
-                foreach (var item in profile.Modules.Where(x=>x.IsValid))
+                foreach (var item in profile.Modules.Where(x => x.IsValid))
                 {
                     Console.WriteLine(item.CodModule);
                 }
@@ -150,8 +152,44 @@ namespace PapiroMVC.Controllers
 
         public ActionResult About()
         {
-            return View();
+            var x = profDataRep.GetAll();
+
+            return View(x.ToList());
         }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        { 
+            var c = profDataRep.GetSingle(id);
+
+            foreach (var item in c.Modules)
+            {
+                Console.WriteLine(item.CodModuleName);
+                Console.WriteLine(item.CodModule);
+            }
+
+            return View( c);
+        }
+
+
+        [HttpPost]
+        public ActionResult Edit(Profile c)
+        {
+
+            if (ModelState.IsValid)
+            {
+                profDataRep.Edit(c);
+                profDataRep.Save();
+                return RedirectToAction("About");
+            }
+
+            return View(c);        
+        }
+
+
+
+
+
 
         public ActionResult Contact()
         {

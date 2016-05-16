@@ -40,6 +40,7 @@ namespace PapiroMVC.Models
             Match match = pattern.Match(format);
             return double.Parse(match.Groups["side1"].Value);
         }
+
         public static double GetSide2(this string format)
         {
             format = format == null ? "0x0" : format;
@@ -47,6 +48,23 @@ namespace PapiroMVC.Models
             Regex pattern = new Regex(@"^(?<side1>(\d{1,4})((\,\d{0,5}){0,1}))[xX](?<side2>(\d{1,4})((\,\d{0,5}){0,1})?$)");
             Match match = pattern.Match(format);
             return double.Parse(match.Groups["side2"].Value);
+        }
+
+        public static string GetDatabase(this string user)
+        {
+            user = user == null ? "" : user;
+
+            var parts = user.Split('.');            
+            return parts[parts.Count()-1];
+        }
+
+        public static string GetUser(this string user)
+        {
+            user = user == null ? "" : user;
+
+            var parts = user.Split('.');
+            parts = parts.Reverse().ToArray();
+            return parts[parts.Count() - 1];
         }
     }
 

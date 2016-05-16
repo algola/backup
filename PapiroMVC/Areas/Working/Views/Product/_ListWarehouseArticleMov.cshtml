@@ -1,4 +1,4 @@
-﻿@model PapiroMVC.Models.Warehouse
+﻿@model PapiroMVC.Models.WarehouseItem
 @using Mvc.HtmlHelpers
 @using PapiroMVC.Validation
 
@@ -145,6 +145,7 @@
                         { name: 'Date', label: '@HttpContext.GetLocalResourceObject(strings, "DateCaption")', width: 80, sortable: true },
                         { name: 'WarehouseName', label: '@HttpContext.GetLocalResourceObject(strings, "WarehouseNameCaption")', width: 80, sortable: true },
                         { name: "TypeOfMov", label: '@HttpContext.GetLocalResourceObject(strings, "TypeOfMovCaption")', width: 80, align: "right", search: true, formatter: typeOfMov },
+                        { name: "CodDocument", label: '@HttpContext.GetLocalResourceObject(strings, "CodDocumentMovCaption")', width: 80, align: "right", search: true, formatter: openOrder },
                         { name: "Quantity", label: '@HttpContext.GetLocalResourceObject(strings, "QuantityCaption")', width: 80, align: "right", search: true }
             ],
 
@@ -239,6 +240,8 @@
             postData: isColState ? { filters: myColumnsState.filters } : {},
             sortname: isColState ? myColumnsState.sortname : 'invdate',
             sortorder: isColState ? myColumnsState.sortorder : 'desc',
+            sortable: true,
+
             ignoreCase: true,
             //shrinkToFit: false,
             //viewrecords: true,

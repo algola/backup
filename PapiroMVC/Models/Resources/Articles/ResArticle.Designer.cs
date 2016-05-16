@@ -412,6 +412,15 @@ namespace PapiroMVC.Models.Resources.Articles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Note.
+        /// </summary>
+        public static string Note {
+            get {
+                return ResourceManager.GetString("Note", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Potenziale disponibile.
         /// </summary>
         public static string PotentialAvailable {

@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PapiroMVC.Models;
 using Services;
-using Ninject.Planning.Bindings;
-using System.Web.Security;
-using PapiroMVC.DbCodeManagement;
 using PapiroMVC.Validation;
 using Newtonsoft.Json;
 using Mvc.HtmlHelpers;
@@ -58,6 +54,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         }
 
 
+
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult IndexWarehouse()
         {
             return View();
@@ -143,17 +141,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     ds.ReadXml(xmlreader);
                     xmlreader.Close();
                 }
-                
+
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    
+
                     var a = new DieFlexo();
                     //a.CodArticle = (ds.Tables[0].Rows[i][0].ToString()).PadLeft(6, '0');
                     //a.ArticleName = ds.Tables[0].Rows[i][1].ToString();
                     //a.CodDie = "Vuoto";
-                    
+
                     var str = ds.Tables[0].Rows[i][0].ToString();
-                    string format=String.Empty;
+                    string format = String.Empty;
                     var leftstr = str.IndexOf(" ");
                     format = str.Substring(0, leftstr);
                     try
@@ -163,7 +161,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     catch (Exception)
                     {
                         format = "0x0";
-                    }                    
+                    }
 
                     a.Format = format;
                     a.Description = (ds.Tables[0].Rows[i][1].ToString()) + "-" + (ds.Tables[0].Rows[i][2].ToString());
@@ -171,7 +169,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
                     try
                     {
-                        a.Width = Convert.ToDouble(ds.Tables[0].Rows[i][3])/10;
+                        a.Width = Convert.ToDouble(ds.Tables[0].Rows[i][3]) / 10;
                     }
                     catch (Exception)
                     {
@@ -194,7 +192,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     a.TaskExecutorName = "GALLUS";
 
                     int resatot = 0;
-                    string str2= ds.Tables[0].Rows[i][6].ToString();
+                    string str2 = ds.Tables[0].Rows[i][6].ToString();
                     try
                     {
                         if (str2.Contains(" "))
@@ -212,7 +210,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     {
                         resatot = 0;
                     }
-                    
+
 
                     a.MaxGain2 = resatot / a.MaxGain1;
 
@@ -224,7 +222,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     else
                     {
                         (ds.Tables[0].Rows[i][0].ToString()).Replace(" ", "");
-                        a.CodDie= ds.Tables[0].Rows[i][0].ToString();
+                        a.CodDie = ds.Tables[0].Rows[i][0].ToString();
                     }
                     var typeFormat = ds.Tables[0].Rows[i][0].ToString();
 
@@ -236,7 +234,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     if (typeFormat.ToLower().Contains("trian")) a.FormatType = 4;
 
 
-                    a.CodArticle = articleRepository.GetNewCode(a,customerSupplierRepository,"Die","Die");
+                    a.CodArticle = articleRepository.GetNewCode(a, customerSupplierRepository, "Die", "Die");
                     var b = articleRepository.GetSingle(a.CodArticle);
                     if (b == null)
                     {
@@ -339,17 +337,17 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     xmlreader.Close();
                 }
 
-                for (int i = 2; i <= ds.Tables[0].Rows.Count-1; i++)
+                for (int i = 2; i <= ds.Tables[0].Rows.Count - 1; i++)
                 {
                     Die a;
 
-                    if ((ds.Tables[0].Rows[i][6].ToString()).Equals("")) 
+                    if ((ds.Tables[0].Rows[i][6].ToString()).Equals(""))
                     {
                         a = new DieFlatRoll();
                     }
-                    else 
+                    else
                     {
-                        a = new DieFlexo(); 
+                        a = new DieFlexo();
                     }
 
                     if (a.TypeOfArticle.ToString().Equals("DieFlexo"))
@@ -381,7 +379,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         a.TaskExecutorName = ds.Tables[0].Rows[i][11].ToString();
                         a.CodDie = ds.Tables[0].Rows[i][13].ToString();
                         a.Description = ds.Tables[0].Rows[i][0].ToString() + "x" + ds.Tables[0].Rows[i][1].ToString();
-                  //      a.ArticleName = a.Description;
+                        //      a.ArticleName = a.Description;
 
                         var typeFormat = ds.Tables[0].Rows[i][0].ToString();
 
@@ -402,7 +400,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                                     a.FormatType = 3;
                                 }
                             }
-                            
+
                         }
                         catch (Exception)
                         {
@@ -432,11 +430,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                         {
                             a.Width = 0;
                         }
-                        a.PrintingFormat = a.Width + "x" + (Convert.ToInt32(ds.Tables[0].Rows[i][7])/10);
+                        a.PrintingFormat = a.Width + "x" + (Convert.ToInt32(ds.Tables[0].Rows[i][7]) / 10);
                         a.TaskExecutorName = ds.Tables[0].Rows[i][11].ToString();
                         a.CodDie = ds.Tables[0].Rows[i][13].ToString();
                         a.Description = ds.Tables[0].Rows[i][0].ToString() + "x" + ds.Tables[0].Rows[i][1].ToString();
-                  //      a.ArticleName = a.Description;
+                        //      a.ArticleName = a.Description;
 
                         var typeFormat = ds.Tables[0].Rows[i][0].ToString();
 
@@ -464,8 +462,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.FormatType = 3;
                         }
                     }
-                    
-                    
+
+
                     a.CodArticle = articleRepository.GetNewCode(a, customerSupplierRepository, "Die", "Die");
                     var b = articleRepository.GetSingle(a.CodArticle);
                     if (b == null)
@@ -492,6 +490,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
 
         [HttpGet]
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult EditArticleOnlyMov(string id)
         {
             //devo caricare nel prodotto anche tutte le informazioni per il magazzino
@@ -1642,7 +1641,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(new { redirectUrl = Url.Action(urlBack, "Article", new { area = "Database" }) });
         }
 
- 
+
         [AuthorizeUser]
         [HttpParamAction]
         [HttpGet]
@@ -1665,7 +1664,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                     c.CodArticle = articleRepository.GetNewCode(c, customerSupplierRepository, c.SupplierMaker, c.SupplierMaker);
                     //c.PrintingFormat = c.Width + "x" + Math.Truncate(Convert.ToDouble((Convert.ToDouble(c.Z) / 8) * 2.54) * 100) / 100;
 
-                    c.PrintingFormat = c.Width + "x" + c.GetCmFromZ(Convert.ToInt32(c.Z??0));
+                    c.PrintingFormat = c.Width + "x" + c.GetCmFromZ(Convert.ToInt32(c.Z ?? 0));
 
                     //CHECK IF TASKEXECUTOR EXIST
                     var resTask = taskExecutorRepository.GetAll().FirstOrDefault(x => x.TaskExecutorName == c.TaskExecutorName);
@@ -1978,19 +1977,12 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return Json(projection.Distinct().ToList(), JsonRequestBehavior.AllowGet);
         }
 
-
-
-
-
-
-
-
         #region Warehouse
-
 
 
         [HttpParamAction]
         [AcceptVerbs(HttpVerbs.Post)]
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult NewMovArticle(NewMovViewModel c)
         {
 
@@ -2034,6 +2026,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
         /// </summary>
         /// <param name="c"></param>
         /// <returns></returns>
+
+        [AuthorizeAlgola(Roles = "Warehouse")]
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult NewMovArticle(string codArticle, string codWarehouse)
         {
@@ -2047,9 +2041,9 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             var c = warehouseRepository.GetSingleArticle(codArticle, codWarehouse);
             var newMov = new NewMovViewModel();
-            newMov.ArticleOrProduct = c;
             newMov.IsProduct = false;
 
+            newMov.ArticleOrProduct = c;
             newMov.Mov = new WarehouseArticleMov { WarehouseArticle = c, CodWarehouseArticle = c == null ? "" : c.CodWarehouseArticle };
 
             return View("NewMovArticle", newMov);
@@ -2081,7 +2075,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             {
                 try
                 {
-                    PapiroMVC.Models.Warehouse art;
+                    PapiroMVC.Models.WarehouseItem art;
                     //  prod = warehouseRepository.GetSingleProduct(c.ArticleOrProduct.CodProduct, c.ArticleOrProduct.CodWarehouse);
 
                     c.Mov.TypeOfMov = 0; //scarico!!!!
@@ -2143,6 +2137,7 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return NewMovArticle(c);
         }
 
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult UpdateWarehouseArticleInfo(string codWarehouseArticle, string codArticle, string codWarehouse)
         {
 
@@ -2154,6 +2149,8 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
         }
 
+
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult UpdateWarehouseMinQuantity(string codWarehouseArticle, string minQuantity)
         {
 
@@ -2170,16 +2167,14 @@ namespace PapiroMVC.Areas.DataBase.Controllers
             return PartialView("_WarehouseArticleInfo", new NewMovViewModel { ArticleOrProduct = c });
         }
 
-
-
-
-
+        [AuthorizeAlgola(Roles = "Warehouse")]
         public ActionResult ArticleWarehouseList(GridSettings gridSettings)
         {
             string codArticleFilter = string.Empty;
             string productNameFilter = string.Empty;
             string typeOfProductFilter = string.Empty;
-            string warehouseName = string.Empty;
+            string warehouseNameFilter = string.Empty;
+            string sottoScortaFilter = string.Empty;
             //read from validation's language file
 
             //LANGFILE
@@ -2196,14 +2191,15 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                 typeOfProductFilter = gridSettings.where.rules.Any(r => r.field == "TypeOfProduct") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "TypeOfProduct").data : string.Empty;
 
-                warehouseName = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
+                warehouseNameFilter = gridSettings.where.rules.Any(r => r.field == "WarehouseName") ?
                     gridSettings.where.rules.FirstOrDefault(r => r.field == "WarehouseName").data : string.Empty;
 
+                sottoScortaFilter = gridSettings.where.rules.Any(r => r.field == "MinQuantity") ?
+                    gridSettings.where.rules.FirstOrDefault(r => r.field == "MinQuantity").data : string.Empty;
             }
 
 
             var fff = articleRepository.GetAll().ToArray();
-
             var q = warehouseRepository.GetAll();
 
             if (!string.IsNullOrEmpty(codArticleFilter))
@@ -2213,12 +2209,23 @@ namespace PapiroMVC.Areas.DataBase.Controllers
 
             if (!string.IsNullOrEmpty(productNameFilter))
             {
-                q = q.Where(c => c.Article.ArticleName.ToLower().Contains(productNameFilter.ToLower()));
+                var names = productNameFilter.Split(' ');
+
+                foreach (var name in names)
+                {
+                    q = q.Where(c => c.Article.ArticleName.ToLower().Contains(name.ToLower()));
+                }
+
             }
 
-            if (!string.IsNullOrEmpty(warehouseName))
+            if (!string.IsNullOrEmpty(warehouseNameFilter))
             {
-                q = q.Where(c => c.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseName.ToLower()));
+                q = q.Where(c => c.WarehouseSpec.WarehouseName.ToLower().Contains(warehouseNameFilter.ToLower()));
+            }
+
+            if (!string.IsNullOrEmpty(sottoScortaFilter))
+            {
+                q = q.Where(a => ((a.PotentialAvailable ?? 0) < (a.MinQuantity ?? 0)));
             }
 
 
@@ -2269,8 +2276,11 @@ namespace PapiroMVC.Areas.DataBase.Controllers
                             a.CodArticle,
                             a.WarehouseSpec.WarehouseName,
                             a.Article.ArticleName,
-                            ((a.QuantityOnHand??0) <= (a.MinQuantity??0))?"Sotto Scorta":"",
-                            a.QuantityOnHand==null?"0":a.QuantityOnHand.ToString()
+                            ((a.PotentialAvailable??0) < (a.MinQuantity??0))?"Sotto Scorta":"",
+                            a.QuantityOnHand==null?"0":a.QuantityOnHand.ToString(),
+                            a.Available==null?"0":a.Available.ToString(),
+                            a.PotentialQuantityOnHand==null?"0":a.PotentialQuantityOnHand.ToString(),
+                            a.PotentialAvailable==null?"0":a.PotentialAvailable.ToString()
                         }
                     }
                 ).ToArray()

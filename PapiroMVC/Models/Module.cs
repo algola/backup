@@ -14,11 +14,6 @@ namespace PapiroMVC.Models
     
     public partial class Module
     {
-        public Module()
-        {
-            this.OrderRows = new HashSet<OrderRow>();
-        }
-    
         public System.DateTime TimeStampTable { get; set; }
         public string CodModuleName { get; set; }
         public string Name { get; set; }
@@ -28,8 +23,10 @@ namespace PapiroMVC.Models
         public string MontlyPrice { get; set; }
         public Nullable<double> Discount { get; set; }
         public Nullable<int> Status { get; set; }
+        public string PermaLink { get; set; }
+        public Nullable<int> Users { get; set; }
+        public Nullable<int> IndexOf { get; set; }
     
         public virtual Profile Profile { get; set; }
-        public virtual ICollection<OrderRow> OrderRows { get; set; }
     }
 }

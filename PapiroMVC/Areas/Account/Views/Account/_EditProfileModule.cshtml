@@ -14,7 +14,7 @@
 <div class="container-fluid">
     <div class="row">
 
-        @foreach (var m in Model.Profile.Modules)
+        @foreach (var m in Model.Profile.Modules.OrderBy(x=>x.IndexOf))
         {
             <div id="div@(m.CodModuleName)" class="col-xs-12 col-md-3 col-sm-4">
                 @*visualizzazione dei moduli*@

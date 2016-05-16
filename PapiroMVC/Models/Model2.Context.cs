@@ -27,9 +27,6 @@ namespace PapiroMVC.Models
         }
     
         public DbSet<Profile> Profiles { get; set; }
-        public DbSet<OrderRow> OrderRows { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<Module> Modules { get; set; }
-        public DbSet<News> News { get; set; }
     }
 }

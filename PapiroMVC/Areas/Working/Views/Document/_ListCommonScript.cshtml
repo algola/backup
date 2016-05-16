@@ -7,12 +7,16 @@
 
 <script type="text/javascript">
     function editDocument(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocument", new {id= "-1"},new {@class="tbutton smalledit"})';
+        //var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocument", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditDocument", "Document", new { area = "Working", id = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", cellvalue);
     }
 
     function editEstimate(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        //var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditEstimate", "Document", new { area = "Working", id = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", cellvalue);
     }
 
@@ -22,11 +26,15 @@
         var codDocument = s[1];
 
         var link = '@Html.ActionLink("-2", "EditOrder", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        //var link = '@Html.ActionLinkImage("-2", "EditOrder", "Document", new { area = "Working", id = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", codDocument).replace("-2", caption);
     }
 
     function createOrder(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateOrder"), "CreateOrder", new { codDocumentProduct = "-1" }, new { @class = "tbutton smalledit" })';
+        //var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "CreateOrder"), "CreateOrder", new { codDocumentProduct = "-1" }, new { @class = "tbutton smalledit" })';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "CreateOrder"), "CreateOrder", "Document", new { area = "Working", codDocumentProduct = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", cellvalue);
     }
 
@@ -37,11 +45,15 @@
         var codDocument = s[1];
 
         var link = '@Html.ActionLink("-2", "EditEstimate", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+        //var link = '@Html.ActionLinkImage("-2", "EditEstimate", "Document", new { area = "Working", id = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", codDocument).replace("-2", caption);
     }
 
     function editOrder(cellvalue, options, rowobject) {
-        var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditOrder", new {id= "-1"},new {@class="tbutton smalledit"})';
+        //var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditOrder", new {id= "-1"},new {@class="tbutton smalledit"})';
+        var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "EditOrder", "Document", new { area = "Working", id = "-1" }, "fa fa-book fa-fw")';
+
         return link.replace("-1", cellvalue);
     }
 

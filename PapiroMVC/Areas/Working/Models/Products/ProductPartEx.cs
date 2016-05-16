@@ -16,34 +16,50 @@ namespace PapiroMVC.Models
     public partial class ProductPart : ICloneable, IPrintDocX
     {
 
+
+        public virtual string GetColorOfPrinting()
+        {
+            var tsk = ProductPartTasks.FirstOrDefault(x=>x.CodItemGraph.Contains("ST"));
+
+            if (tsk!=null)
+            {
+                return tsk.ToStringInfo();
+            }
+            else
+            {
+                return String.Empty;
+            }
+        }
+
+
         public virtual List<PrintingHint> SelectValidpHint(List<PrintingHint> pHint, double smallerCalculatedDCutLessZero, double smallerCalculatedDCut)
         {
             List<PrintingHint> pHint1;
 
-            pHint1 = pHint.Where(x=>x.IsDie || ( x.DCut2 >= this.MinDCut
+            pHint1 = pHint.Where(x => x.IsDie || (x.DCut2 >= this.MinDCut
                     && x.DCut2 <= this.MaxDCut && (x.DCut1 >= x.DCut2 || (x.DCut1 == 0 && x.MaxGain1 == 1)))).ToList();
 
             var c = pHint1.Where(y => !y.IsDie);
 
-            if (c.Count()==0 || MinDCut==0)
+            if (c.Count() == 0 || MinDCut == 0)
             {
                 //fascette gommate
                 if (MinDCut == 0 && MaxDCut == 0)
                 {
-                    var pHint2 = pHint.Where(x=>x.IsDie ||( x.DCut2 == smallerCalculatedDCutLessZero * -1));
-                    pHint1 = pHint.Where(x=>x.IsDie || (x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0))).ToList();
+                    var pHint2 = pHint.Where(x => x.IsDie || (x.DCut2 == smallerCalculatedDCutLessZero * -1));
+                    pHint1 = pHint.Where(x => x.IsDie || (x.DCut2 >= 0 && x.DCut2 <= smallerCalculatedDCut && (x.DCut1 >= x.DCut2 || x.DCut1 == 0))).ToList();
                     var pHint3 = pHint1.Union(pHint2);
                     pHint1 = pHint3.ToList();
                 }
                 else
                 {
                     var smaller = pHint.Where(x => x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1).Select(x => x.DeltaDCut2).Min();
-                    var pHintLast1 = pHint.Where(x=>x.IsDie || (x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
+                    var pHintLast1 = pHint.Where(x => x.IsDie || (x.DeltaDCut2 == smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
 
                     try
                     {
                         var smaller2 = pHint.Where(x => (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1) && x.DeltaDCut2 != smaller).Select(x => x.DeltaDCut2).Min();
-                        var pHintLast2 = pHint.Where(x=>x.IsDie ||( x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
+                        var pHintLast2 = pHint.Where(x => x.IsDie || (x.DeltaDCut2 == smaller2 && x.DeltaDCut2 != smaller && (x.DCut1 >= x.DCut2 || x.DCut1 == 0 && x.MaxGain1 == 1)));
 
 
                         pHint1 = pHintLast1.Union(pHintLast2).ToList();
@@ -60,6 +76,8 @@ namespace PapiroMVC.Models
 
             var pRemove = pHint1.Select(x => x.BuyingFormat.GetSide1() == 0);
             Console.WriteLine(pRemove);
+
+            pHint1 = pHint1.Where(x => x.GainOnSide2 > 0 && x.GainOnSide1 > 0).ToList();
 
             return pHint1.Where(x => x.BuyingFormat.GetSide1() != 0).ToList();
         }
@@ -111,10 +129,10 @@ namespace PapiroMVC.Models
         //used to have format and doubleLabel format!!!
         public virtual String FormatDesc
         {
-            get 
+            get
             {
                 return Format;
-            }        
+            }
         }
 
 

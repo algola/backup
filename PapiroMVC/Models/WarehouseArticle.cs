@@ -16,7 +16,7 @@ namespace PapiroMVC.Models
     
     	
     [DataContract] 
-    public partial class WarehouseArticle : Warehouse
+    public partial class WarehouseArticle : WarehouseItem
     {
     }
 }

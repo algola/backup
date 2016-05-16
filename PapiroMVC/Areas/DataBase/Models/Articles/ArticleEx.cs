@@ -12,7 +12,6 @@ namespace PapiroMVC.Models
     [MetadataType(typeof(Article_MetaData))]
     abstract partial class Article: IAlgolaEdit
     {
-
         /// <summary>
         /// return the type of quantity to display 
         /// </summary>
@@ -85,6 +84,13 @@ namespace PapiroMVC.Models
         {
             throw new NotImplementedException();        
         }
+
+        public virtual Double TransformQuantity(double quantity, CostDetail.QuantityType from)
+        {
+
+            throw new NotImplementedException();        
+        }
+
 
     }
 }

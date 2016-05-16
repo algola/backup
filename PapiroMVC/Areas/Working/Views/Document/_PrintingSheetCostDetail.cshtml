@@ -189,7 +189,6 @@
                 //maxDCut: $("#ddPartMaxDCut").val(),
 
             };
-
             $.ajax({
                 url: '@(Url.Action("ChangePPartFormat", "Document", new { area = "Working" }))',
                 type: 'POST',
@@ -202,7 +201,6 @@
                 error: function () {
                     alert("error");
                 },
-
             });
         }
     });

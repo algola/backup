@@ -396,6 +396,9 @@
   <data name="MovProductMenu" xml:space="preserve">
     <value>Movimenti Prodotti</value>
   </data>
+  <data name="MovArticleMenu" xml:space="preserve">
+    <value>Carico/Scarico Materie</value>
+  </data>
   <data name="ProductNameGeneratorMenu" xml:space="preserve">
     <value>Descrizioni Prodotti</value>
   </data>

@@ -210,7 +210,7 @@ saveObjectInLocalStorage = function (storageItemName, object) {
 
             loadtext: '',
             viewrecords: true,
-            
+
             print: true,
             rowNum: 10,
 
@@ -305,13 +305,16 @@ saveObjectInLocalStorage = function (storageItemName, object) {
 
 
         function editCustomerSupplier(cellvalue, options, rowobject) {
-            var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1" }, new { @class = "tbutton smalledit" })';
+            @*var link = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", new { id = "-1" }, new { @class = "tbutton smalledit" })';
 
             var link2 = '@Html.ActionLink((string)HttpContext.GetLocalResourceObject(strings, "Bases"),
             "IndexBase",
             "CustomerSupplier",
             (object)new { id = -1 },
-            new { @class = "tbutton smallbase" })';
+            new { @class = "tbutton smallbase" })';*@
+
+            var link = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Edit"), "Edit", "CustomerSupplier", new { area = "DataBase", id = "-1" }, "fa fa-book fa-fw")';
+            var link2 = '@Html.ActionLinkImage((string)HttpContext.GetLocalResourceObject(strings, "Bases"), "IndexBase", "CustomerSupplier", new { area = "DataBase", id = "-1" }, "fa fa-book fa-fw")';
 
             return link.replace("-1", cellvalue) + " | " +
                     link2.replace("-1", cellvalue);

@@ -20,7 +20,7 @@ namespace PapiroMVC.Models
     {
         public WarehouseSpec()
         {
-            this.warehousearticles = new HashSet<Warehouse>();
+            this.warehousearticles = new HashSet<WarehouseItem>();
         }
     
     	
@@ -34,6 +34,6 @@ namespace PapiroMVC.Models
         public string WarehouseName { get; set; }
     
     	[DataMember]
-        public virtual ICollection<Warehouse> warehousearticles { get; set; }
+        public virtual ICollection<WarehouseItem> warehousearticles { get; set; }
     }
 }
